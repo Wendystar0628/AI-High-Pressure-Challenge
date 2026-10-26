@@ -1,0 +1,806 @@
+{
+  "date": "2026-10-25",
+  "environment": {
+    "cpu": "Intel Core i7-14700KF",
+    "cpu_affinity": "0xffff",
+    "priority": "HIGH_PRIORITY_CLASS",
+    "omp_num_threads": 16,
+    "gpu": "NVIDIA GeForce RTX 4080",
+    "driver": "610.88",
+    "cuda_toolkit": "13.2"
+  },
+  "protocol": "evaluate.py, one session: candidate (strong) correctness inputs; one untimed weak warm-up process on input_01; per performance input 3 weak and 3 candidate runs interleaved as W C C W W C (odd inputs) / C W W C C W (even inputs), 1 s pause before every run; 60 s per process; medians per role.",
+  "weak_baseline_medians_ms": {
+    "input_01": 13105.227,
+    "input_02": 14369.328,
+    "input_03": 13367.963,
+    "input_04": 14412.261,
+    "input_05": 14493.593,
+    "input_06": 14340.542,
+    "input_07": 14083.382,
+    "input_08": 13914.46
+  },
+  "strong_baseline_medians_ms": {
+    "input_01": 2002.542,
+    "input_02": 2402.566,
+    "input_03": 2608.586,
+    "input_04": 2673.747,
+    "input_05": 2555.576,
+    "input_06": 2348.985,
+    "input_07": 3591.759,
+    "input_08": 2502.795
+  },
+  "strong_speedups": {
+    "input_01": 6.544295700165091,
+    "input_02": 5.980825500735464,
+    "input_03": 5.124601220737978,
+    "input_04": 5.390285991905742,
+    "input_05": 5.671360585637054,
+    "input_06": 6.104995136197123,
+    "input_07": 3.921026438577867,
+    "input_08": 5.559568402525976
+  },
+  "strong_G": 5.482311020702504,
+  "s_max": 576,
+  "strong_score": 26.8,
+  "official_session": {
+    "task": "sand",
+    "started": "2026-10-25 23:49:47",
+    "exe": "grader/grader.cu + baselines/strong_solution.cu, compiled with the statement command",
+    "weak_exe": "grader/grader.cu + baselines/weak_solution.cu, compiled with the statement command",
+    "reference_exe": null,
+    "repeats": 3,
+    "pause_s": 1.0,
+    "affinity_mask": "0xffff",
+    "process_timeout_s": 60,
+    "s_max": 576,
+    "official": true,
+    "correctness": [
+      {
+        "case": "01_single_cell",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.207,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "02_corners",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.203,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "03_sample",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.217,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "04_tile_boundary",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.255,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "05_stable_grid",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.193,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "06_dense_tiles",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.509,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "07_duplicates_random",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.493,
+          "returncode": 0
+        }
+      }
+    ],
+    "warmup": {
+      "exe": "weak",
+      "case": "input_01",
+      "status": "PASS",
+      "time_ms": 13137.905,
+      "returncode": 0
+    },
+    "performance": [
+      {
+        "case": "input_01",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13105.227,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2004.816,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1989.867,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13167.465,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12997.515,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2002.542,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 13105.227,
+        "candidate_median_ms": 2002.542,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 6.544295700165091
+      },
+      {
+        "case": "input_02",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2455.183,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14413.289,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14369.328,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2392.332,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2402.566,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13956.874,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 14369.328,
+        "candidate_median_ms": 2402.566,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 5.980825500735464
+      },
+      {
+        "case": "input_03",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13871.959,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2608.586,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2554.497,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13220.59,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13367.963,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2632.984,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 13367.963,
+        "candidate_median_ms": 2608.586,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 5.124601220737978
+      },
+      {
+        "case": "input_04",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2725.819,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14412.261,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14317.252,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2656.276,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2673.747,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14506.647,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 14412.261,
+        "candidate_median_ms": 2673.747,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 5.390285991905742
+      },
+      {
+        "case": "input_05",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14493.593,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2555.576,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2574.982,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14356.963,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14549.464,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2543.272,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 14493.593,
+        "candidate_median_ms": 2555.576,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 5.671360585637054
+      },
+      {
+        "case": "input_06",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2341.631,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14842.123,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14340.542,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2348.985,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2368.399,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13999.446,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 14340.542,
+        "candidate_median_ms": 2348.985,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 6.104995136197123
+      },
+      {
+        "case": "input_07",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14083.382,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 3591.759,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 3584.769,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14064.502,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14281.564,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 3670.332,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 14083.382,
+        "candidate_median_ms": 3591.759,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 3.921026438577867
+      },
+      {
+        "case": "input_08",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2442.31,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 14034.66,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13914.46,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2502.795,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2530.0,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13899.332,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 13914.46,
+        "candidate_median_ms": 2502.795,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 5.559568402525976
+      }
+    ],
+    "correctness_passed": 7,
+    "performance_passed": 8,
+    "G": 5.482311020702504,
+    "session_valid": true,
+    "session_errors": [],
+    "zero_score": false,
+    "zero_score_reasons": [],
+    "manual_review_required": false,
+    "score": 26.8,
+    "summary": [
+      {
+        "case": "input_01",
+        "W_i_ms": 13105.227,
+        "C_i_ms": 2002.542,
+        "s_i": 6.544295700165091
+      },
+      {
+        "case": "input_02",
+        "W_i_ms": 14369.328,
+        "C_i_ms": 2402.566,
+        "s_i": 5.980825500735464
+      },
+      {
+        "case": "input_03",
+        "W_i_ms": 13367.963,
+        "C_i_ms": 2608.586,
+        "s_i": 5.124601220737978
+      },
+      {
+        "case": "input_04",
+        "W_i_ms": 14412.261,
+        "C_i_ms": 2673.747,
+        "s_i": 5.390285991905742
+      },
+      {
+        "case": "input_05",
+        "W_i_ms": 14493.593,
+        "C_i_ms": 2555.576,
+        "s_i": 5.671360585637054
+      },
+      {
+        "case": "input_06",
+        "W_i_ms": 14340.542,
+        "C_i_ms": 2348.985,
+        "s_i": 6.104995136197123
+      },
+      {
+        "case": "input_07",
+        "W_i_ms": 14083.382,
+        "C_i_ms": 3591.759,
+        "s_i": 3.921026438577867
+      },
+      {
+        "case": "input_08",
+        "W_i_ms": 13914.46,
+        "C_i_ms": 2502.795,
+        "s_i": 5.559568402525976
+      }
+    ],
+    "health": {
+      "ok": false,
+      "warnings": [
+        "validation.json has no weak_baseline_medians_ms"
+      ]
+    },
+    "finished": "2026-10-25 23:57:38"
+  },
+  "weak_correctness": {
+    "task": "sand",
+    "started": "2026-10-25 23:58:18",
+    "exe": "grader/grader.cu + baselines/weak_solution.cu, compiled with the statement command",
+    "weak_exe": null,
+    "reference_exe": null,
+    "repeats": 3,
+    "pause_s": 1.0,
+    "affinity_mask": "0xffff",
+    "process_timeout_s": 60,
+    "s_max": 576,
+    "official": false,
+    "correctness": [
+      {
+        "case": "01_single_cell",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.272,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "02_corners",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.252,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "03_sample",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.266,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "04_tile_boundary",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.299,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "05_stable_grid",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.155,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "06_dense_tiles",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.328,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "07_duplicates_random",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.406,
+          "returncode": 0
+        }
+      }
+    ],
+    "warmup": null,
+    "performance": [],
+    "correctness_passed": 7,
+    "performance_passed": 0,
+    "G": null,
+    "session_valid": true,
+    "session_errors": [],
+    "zero_score": false,
+    "zero_score_reasons": [],
+    "manual_review_required": false,
+    "score": null,
+    "summary": [],
+    "finished": "2026-10-25 23:58:19"
+  },
+  "interface": "void init(int L) untimed, called before every solve() and possibly with a new L; void solve(uint32_t* grid, int L) stabilizes the device grid (index y*L+x) in place; timed region = solve() + cudaDeviceSynchronize().",
+  "inputs": [
+    {
+      "case": "input_01",
+      "generator_args": "single 830172645513 860000",
+      "P": 1,
+      "C": 860000,
+      "synchronous_rounds_R": 165406,
+      "total_topplings": 12912050404,
+      "toppling_cell_rounds": 8259936417
+    },
+    {
+      "case": "input_02",
+      "generator_args": "few 271940388615 2120000",
+      "P": 4,
+      "C": 2120000,
+      "synchronous_rounds_R": 171942,
+      "total_topplings": 27178508934,
+      "toppling_cell_rounds": 18332433422
+    },
+    {
+      "case": "input_03",
+      "generator_args": "many 664018273951 4520000",
+      "P": 16,
+      "C": 4520000,
+      "synchronous_rounds_R": 166627,
+      "total_topplings": 32021175031,
+      "toppling_cell_rounds": 20086257367
+    },
+    {
+      "case": "input_04",
+      "generator_args": "dust 918273645501 5860000",
+      "P": 91591,
+      "C": 5860000,
+      "synchronous_rounds_R": 168048,
+      "total_topplings": 30410741429,
+      "toppling_cell_rounds": 20941499909
+    },
+    {
+      "case": "input_05",
+      "generator_args": "edge 345612987734 3370000",
+      "P": 12,
+      "C": 3370000,
+      "synchronous_rounds_R": 168379,
+      "total_topplings": 33347862265,
+      "toppling_cell_rounds": 20414421272
+    },
+    {
+      "case": "input_06",
+      "generator_args": "dense 572839104656 675 8",
+      "P": 227813,
+      "C": 1822504,
+      "synchronous_rounds_R": 166633,
+      "total_topplings": 21832578832,
+      "toppling_cell_rounds": 21806835907
+    },
+    {
+      "case": "input_07",
+      "generator_args": "ring 103948576613 6600000 700",
+      "P": 20000,
+      "C": 6576692,
+      "synchronous_rounds_R": 168034,
+      "total_topplings": 71578167446,
+      "toppling_cell_rounds": 67174581981
+    },
+    {
+      "case": "input_08",
+      "generator_args": "mixed 486120375597 3700000",
+      "P": 839598,
+      "C": 5379592,
+      "synchronous_rounds_R": 165920,
+      "total_topplings": 25239545000,
+      "toppling_cell_rounds": 17133148300
+    }
+  ],
+  "weak_outputs_identical_to_expected": {
+    "input_01": true,
+    "input_02": true,
+    "input_03": true,
+    "input_04": true,
+    "input_05": true,
+    "input_06": true,
+    "input_07": true,
+    "input_08": true
+  },
+  "weak_strategy": "Full-grid 32x32 output tiles, four shared-memory rounds per launch; no activity masks.",
+  "source_sha256": {
+    "gen_sand.cpp": "50fcca9704c950d595a78b1a414d50daf48d96b2faae7e27b0fdde3e01b04dd7",
+    "grader.cu": "203275d555b3156c4adda73ce747d3ebb7d8d18d249b974f7e269df971837029",
+    "strong_solution.cu": "7a67847a40283e1e4db3cbd49365a20496f138339a51eeba0f29ea3aac4137c0",
+    "weak_solution.cu": "b443a73c44efc72d9dda056e88488ed425a56a484cdd65fc20a221305e1e5ade"
+  }
+}

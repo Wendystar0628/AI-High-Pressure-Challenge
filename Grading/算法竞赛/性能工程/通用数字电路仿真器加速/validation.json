@@ -1,0 +1,820 @@
+{
+  "date": "2026-10-25",
+  "environment": {
+    "cpu": "Intel Core i7-14700KF",
+    "cpu_affinity": "0xffff",
+    "priority": "HIGH_PRIORITY_CLASS",
+    "omp_num_threads": 16,
+    "compiler": "g++ 16.1.0 (MSYS2)"
+  },
+  "protocol": "evaluate.py, one session: candidate (strong) correctness inputs; one untimed weak warm-up process on input_01; per performance input 3 weak and 3 candidate runs interleaved as W C C W W C (odd inputs) / C W W C C W (even inputs), 1 s pause before every run; 60 s per process; medians per role.",
+  "weak_baseline_medians_ms": {
+    "input_01": 11403.775,
+    "input_02": 15722.906,
+    "input_03": 12226.245,
+    "input_04": 11807.729,
+    "input_05": 12787.713,
+    "input_06": 13382.188,
+    "input_07": 11712.992,
+    "input_08": 11777.413
+  },
+  "strong_baseline_medians_ms": {
+    "input_01": 1021.958,
+    "input_02": 1980.417,
+    "input_03": 963.469,
+    "input_04": 991.124,
+    "input_05": 988.746,
+    "input_06": 1005.516,
+    "input_07": 1027.032,
+    "input_08": 1024.792
+  },
+  "strong_speedups": {
+    "input_01": 11.158751142414854,
+    "input_02": 7.9391895747208805,
+    "input_03": 12.689816693635187,
+    "input_04": 11.913472986225738,
+    "input_05": 12.93326395252168,
+    "input_06": 13.308776787241577,
+    "input_07": 11.404700145662453,
+    "input_08": 11.492491159181572
+  },
+  "strong_G": 11.482295746491474,
+  "s_max": 316,
+  "strong_score": 42.4,
+  "official_session": {
+    "task": "circuit",
+    "started": "2026-10-25 23:58:30",
+    "exe": "grader/grader.cpp + baselines/strong_solution.cpp, compiled with the statement command",
+    "weak_exe": "grader/grader.cpp + baselines/weak_solution.cpp, compiled with the statement command",
+    "reference_exe": null,
+    "repeats": 3,
+    "pause_s": 1.0,
+    "affinity_mask": "0xffff",
+    "process_timeout_s": 60,
+    "s_max": 316,
+    "official": true,
+    "correctness": [
+      {
+        "case": "01_ff_forward",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.142,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "02_ff_reverse",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.21,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "03_direct_sources",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.32,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "04_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.241,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "05_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.207,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "06_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.249,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "07_fullsize_ff_snapshot",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 18.157,
+          "returncode": 0
+        }
+      }
+    ],
+    "warmup": {
+      "exe": "weak",
+      "case": "input_01",
+      "status": "PASS",
+      "time_ms": 11423.256,
+      "returncode": 0
+    },
+    "performance": [
+      {
+        "case": "input_01",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11403.775,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1012.721,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1024.641,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11695.219,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11374.923,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1021.958,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 11403.775,
+        "candidate_median_ms": 1021.958,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 11.158751142414854
+      },
+      {
+        "case": "input_02",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1980.417,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 15631.281,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 15722.906,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1965.094,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 2014.085,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 15915.958,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 15722.906,
+        "candidate_median_ms": 1980.417,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 7.9391895747208805
+      },
+      {
+        "case": "input_03",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12352.692,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 963.469,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 971.699,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12226.245,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12117.074,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 961.697,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 12226.245,
+        "candidate_median_ms": 963.469,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 12.689816693635187
+      },
+      {
+        "case": "input_04",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 991.124,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11586.217,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11933.009,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 985.061,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 994.053,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11807.729,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 11807.729,
+        "candidate_median_ms": 991.124,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 11.913472986225738
+      },
+      {
+        "case": "input_05",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12293.911,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 988.994,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 984.512,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12787.713,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 12811.934,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 988.746,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 12787.713,
+        "candidate_median_ms": 988.746,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 12.93326395252168
+      },
+      {
+        "case": "input_06",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1006.291,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13609.118,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13351.366,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1005.516,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 997.707,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 13382.188,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 13382.188,
+        "candidate_median_ms": 1005.516,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 13.308776787241577
+      },
+      {
+        "case": "input_07",
+        "order": "WCCWWC",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11712.316,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1027.032,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1036.367,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11799.369,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11712.992,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1019.608,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 11712.992,
+        "candidate_median_ms": 1027.032,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 11.404700145662453
+      },
+      {
+        "case": "input_08",
+        "order": "CWWCCW",
+        "runs": [
+          {
+            "seq": 1,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1024.792,
+            "returncode": 0
+          },
+          {
+            "seq": 2,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11777.413,
+            "returncode": 0
+          },
+          {
+            "seq": 3,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11897.257,
+            "returncode": 0
+          },
+          {
+            "seq": 4,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1014.348,
+            "returncode": 0
+          },
+          {
+            "seq": 5,
+            "role": "candidate",
+            "status": "PASS",
+            "time_ms": 1048.388,
+            "returncode": 0
+          },
+          {
+            "seq": 6,
+            "role": "weak",
+            "status": "PASS",
+            "time_ms": 11687.157,
+            "returncode": 0
+          }
+        ],
+        "weak_median_ms": 11777.413,
+        "candidate_median_ms": 1024.792,
+        "candidate_passed": true,
+        "weak_passed": true,
+        "speedup": 11.492491159181572
+      }
+    ],
+    "correctness_passed": 7,
+    "performance_passed": 8,
+    "G": 11.482295746491474,
+    "session_valid": true,
+    "session_errors": [],
+    "zero_score": false,
+    "zero_score_reasons": [],
+    "manual_review_required": false,
+    "score": 42.4,
+    "summary": [
+      {
+        "case": "input_01",
+        "W_i_ms": 11403.775,
+        "C_i_ms": 1021.958,
+        "s_i": 11.158751142414854
+      },
+      {
+        "case": "input_02",
+        "W_i_ms": 15722.906,
+        "C_i_ms": 1980.417,
+        "s_i": 7.9391895747208805
+      },
+      {
+        "case": "input_03",
+        "W_i_ms": 12226.245,
+        "C_i_ms": 963.469,
+        "s_i": 12.689816693635187
+      },
+      {
+        "case": "input_04",
+        "W_i_ms": 11807.729,
+        "C_i_ms": 991.124,
+        "s_i": 11.913472986225738
+      },
+      {
+        "case": "input_05",
+        "W_i_ms": 12787.713,
+        "C_i_ms": 988.746,
+        "s_i": 12.93326395252168
+      },
+      {
+        "case": "input_06",
+        "W_i_ms": 13382.188,
+        "C_i_ms": 1005.516,
+        "s_i": 13.308776787241577
+      },
+      {
+        "case": "input_07",
+        "W_i_ms": 11712.992,
+        "C_i_ms": 1027.032,
+        "s_i": 11.404700145662453
+      },
+      {
+        "case": "input_08",
+        "W_i_ms": 11777.413,
+        "C_i_ms": 1024.792,
+        "s_i": 11.492491159181572
+      }
+    ],
+    "health": {
+      "ok": false,
+      "warnings": [
+        "validation.json has no weak_baseline_medians_ms"
+      ]
+    },
+    "finished": "2026-10-26 00:05:05"
+  },
+  "weak_correctness": {
+    "task": "circuit",
+    "started": "2026-10-26 00:05:17",
+    "exe": "grader/grader.cpp + baselines/weak_solution.cpp, compiled with the statement command",
+    "weak_exe": null,
+    "reference_exe": null,
+    "repeats": 3,
+    "pause_s": 1.0,
+    "affinity_mask": "0xffff",
+    "process_timeout_s": 60,
+    "s_max": 316,
+    "official": false,
+    "correctness": [
+      {
+        "case": "01_ff_forward",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.178,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "02_ff_reverse",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.121,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "03_direct_sources",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.144,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "04_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.19,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "05_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.303,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "06_shuffled_dag",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 0.296,
+          "returncode": 0
+        }
+      },
+      {
+        "case": "07_fullsize_ff_snapshot",
+        "passed": true,
+        "run": {
+          "status": "PASS",
+          "time_ms": 3370.006,
+          "returncode": 0
+        }
+      }
+    ],
+    "warmup": null,
+    "performance": [],
+    "correctness_passed": 7,
+    "performance_passed": 0,
+    "G": null,
+    "session_valid": true,
+    "session_errors": [],
+    "zero_score": false,
+    "zero_score_reasons": [],
+    "manual_review_required": false,
+    "score": null,
+    "summary": [],
+    "finished": "2026-10-26 00:05:21"
+  },
+  "performance_inputs_and_answers_unchanged": true,
+  "sequential_update_mutant": {
+    "task": "circuit",
+    "repeats": 3,
+    "affinity_mask": "0xffff",
+    "correctness": [
+      {
+        "case": "01_ff_forward",
+        "passed": false,
+        "runs": [
+          {
+            "status": "WRONG_ANSWER",
+            "time_ms": 0.302,
+            "returncode": 0,
+            "stderr": "simulate_ms=0.302\r\n"
+          }
+        ],
+        "median_ms": null
+      },
+      {
+        "case": "02_ff_reverse",
+        "passed": true,
+        "runs": [
+          {
+            "status": "PASS",
+            "time_ms": 0.361,
+            "returncode": 0
+          }
+        ],
+        "median_ms": 0.361
+      },
+      {
+        "case": "03_direct_sources",
+        "passed": true,
+        "runs": [
+          {
+            "status": "PASS",
+            "time_ms": 0.202,
+            "returncode": 0
+          }
+        ],
+        "median_ms": 0.202
+      },
+      {
+        "case": "04_shuffled_dag",
+        "passed": true,
+        "runs": [
+          {
+            "status": "PASS",
+            "time_ms": 0.236,
+            "returncode": 0
+          }
+        ],
+        "median_ms": 0.236
+      },
+      {
+        "case": "05_shuffled_dag",
+        "passed": false,
+        "runs": [
+          {
+            "status": "WRONG_ANSWER",
+            "time_ms": 0.373,
+            "returncode": 0,
+            "stderr": "simulate_ms=0.373\r\n"
+          }
+        ],
+        "median_ms": null
+      },
+      {
+        "case": "06_shuffled_dag",
+        "passed": true,
+        "runs": [
+          {
+            "status": "PASS",
+            "time_ms": 0.279,
+            "returncode": 0
+          }
+        ],
+        "median_ms": 0.279
+      },
+      {
+        "case": "07_fullsize_ff_snapshot",
+        "passed": false,
+        "runs": [
+          {
+            "status": "WRONG_ANSWER",
+            "time_ms": 14.834,
+            "returncode": 0,
+            "stderr": "simulate_ms=14.834\r\n"
+          }
+        ],
+        "median_ms": null
+      }
+    ],
+    "performance": [],
+    "correctness_passed": 4,
+    "performance_passed": 0,
+    "ranking_eligible": false,
+    "performance_total_ms": null,
+    "source": "strong baseline with deliberately sequential FF updates"
+  },
+  "note": "After the session, one comment line in grader/grader.cpp was shortened to match the statement (\"// Untimed warm-up on the sample circuit.\"); the code is unchanged.",
+  "source_sha256": {
+    "gen_hidden.cpp": "5cf7fdfa15c75b171594edbb256e28a11a022c1245a306581b5196c47ddeb989",
+    "grader.cpp": "18d8036998a836e1501c96cd69792a15d9bfad63c5e697f8fe721335f2f53246",
+    "strong_solution.cpp": "4aac0c23e278728a45b157c1a7d046486c9b986b9e12d42472a749325ba9512e",
+    "weak_solution.cpp": "ea76d199730ac77d06b347ace66ec42bd772988628bc20444721d91e7b2cc4e1"
+  }
+}
