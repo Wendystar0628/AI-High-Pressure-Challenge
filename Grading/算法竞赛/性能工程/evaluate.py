@@ -6,7 +6,7 @@ python evaluate.py --task sand --exe C:\eval\sand\grader.exe --weak C:\eval\sand
 Session: candidate correctness inputs first (any failure -> score 0, nothing else is run); then every
 performance input once with the weak baseline, once with the strong baseline, and once with the
 candidate, in that order, each in its own process.
-Score: s_i = W_i / C_i, G = exp(mean ln s_i), score = 100 * min(1, ln G / ln S_max).
+Score: s_i = W_i / C_i, G = exp(mean ln s_i); the score interpolates the task's anchor table linearly in ln G.
 The strong baseline is reported for reference only and does not affect the score.
 """
 import argparse
@@ -23,9 +23,11 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parent
-TASKS = {
-    'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms', 'smax': 316},
-    'sand': {'folder': '网格沙粒倒塌的GPU加速', 'timer': 'solve_ms', 'smax': 576},
+TASKS = {  # anchors: (G, points), as in the statement's scoring section
+    'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms',
+                'anchors': ((1, 0), (4, 3), (8, 15), (12, 30), (20, 52), (32, 75), (48, 100))},
+    'sand': {'folder': '网格沙粒倒塌的GPU加速', 'timer': 'solve_ms',
+             'anchors': ((1, 0), (2, 2), (4, 10), (8, 30), (16, 60), (32, 100))},
 }
 PROCESS_TIMEOUT_S = 60           # hang guard for every process
 HEALTH_PER_INPUT = 0.05          # weak time vs validation.json, per input
@@ -80,9 +82,15 @@ def cases(folder, count, kind):
             for inp in inputs]
 
 
-def points(G, smax):
-    """Official conversion: 100 * min(1, ln G / ln S_max), one decimal place."""
-    raw = 100.0 * min(1.0, max(0.0, math.log(G) / math.log(smax)))
+def points(G, anchors):
+    """Official conversion: the anchor table interpolated linearly in ln G, clamped at both ends, one decimal place."""
+    if G <= anchors[0][0]:
+        raw = float(anchors[0][1])
+    elif G >= anchors[-1][0]:
+        raw = float(anchors[-1][1])
+    else:
+        (a, p), (b, q) = next(seg for seg in zip(anchors, anchors[1:]) if seg[0][0] <= G <= seg[1][0])
+        raw = p + (q - p) * math.log(G / a) / math.log(b / a)
     return float(Decimal(repr(raw)).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
 
 
@@ -122,14 +130,14 @@ def evaluate(args):
     strong = Path(args.strong).resolve(strict=True) if args.strong else None
     if (weak is None or strong is None) and not args.correctness_only:
         raise SystemExit('--weak and --strong are required unless --correctness-only is given')
-    smax = args.smax if args.smax is not None else task['smax']
+    anchors = task['anchors']
     report_path = Path(args.report).resolve()
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report = {'task': args.task, 'started': time.strftime('%Y-%m-%d %H:%M:%S'),
               'exe': str(exe), 'weak_exe': str(weak) if weak else None,
               'strong_exe': str(strong) if strong else None, 'pause_s': args.pause,
-              'affinity_mask': hex(args.affinity), 'process_timeout_s': PROCESS_TIMEOUT_S, 's_max': smax,
-              'official': not args.correctness_only and smax == task['smax'],
+              'affinity_mask': hex(args.affinity), 'process_timeout_s': PROCESS_TIMEOUT_S, 'anchors': anchors,
+              'official': not args.correctness_only,
               'correctness': [], 'performance': []}
     save = lambda: report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
@@ -197,8 +205,8 @@ def evaluate(args):
     elif G is None:
         report['score'] = None
     else:
-        report['score'] = points(G, smax)
-        notes = ['G 达到或超过 S_max'] if G >= smax else []
+        report['score'] = points(G, anchors)
+        notes = ['G 达到或超过满分锚点'] if G >= anchors[-1][0] else []
         if clamped: notes.append(f"提交在 {', '.join(clamped)} 上的计时低于 {MIN_MS} ms，已按 {MIN_MS} ms 计算")
         report['manual_review_required'] = bool(notes)
         if notes: report['manual_review_note'] = '需人工复核：' + '；'.join(notes)
@@ -208,13 +216,13 @@ def evaluate(args):
     strong_speedups = [x['strong_speedup'] for x in items]
     if len(items) == 8 and None not in strong_speedups:
         report['strong_G'] = geomean(strong_speedups)
-        report['strong_score'] = points(report['strong_G'], smax)
+        report['strong_score'] = points(report['strong_G'], anchors)
     if items:
         report['health'] = health_check(suite, {x['case']: x['W_i_ms'] for x in items})
         for w in report['health']['warnings']: print('HEALTH WARNING: ' + w, flush=True)
     report['finished'] = time.strftime('%Y-%m-%d %H:%M:%S')
     save()
-    print(json.dumps({k: report.get(k) for k in ('correctness_passed', 'performance_passed', 'G', 's_max', 'score',
+    print(json.dumps({k: report.get(k) for k in ('correctness_passed', 'performance_passed', 'G', 'score',
                                                  'strong_G', 'strong_score', 'zero_score_reasons',
                                                  'session_errors', 'manual_review_required', 'official')},
                      ensure_ascii=False), flush=True)
@@ -232,7 +240,6 @@ if __name__ == '__main__':
                                          'reported for reference only)')
     parser.add_argument('--report', required=True)
     parser.add_argument('--pause', type=float, default=0.0, help='seconds slept before every run')
-    parser.add_argument('--smax', type=float, help='override S_max (diagnostic only; the report is then not official)')
     parser.add_argument('--affinity', type=lambda s: int(s, 0), default=0xffff)
     parser.add_argument('--correctness-only', action='store_true')
     raise SystemExit(evaluate(parser.parse_args()))
