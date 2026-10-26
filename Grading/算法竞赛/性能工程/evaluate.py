@@ -189,10 +189,13 @@ def evaluate(args):
     report['manual_review_required'] = False
     if args.correctness_only:
         report['score'] = None
+    elif session_errors:
+        report['score'] = None  # the weak baseline itself failed: the session must be repeated, whatever the submission did
+        report['zero_score'] = False
     elif zero:
         report['score'] = 0.0
-    elif session_errors or G is None:
-        report['score'] = None  # the weak baseline itself failed: the session must be repeated
+    elif G is None:
+        report['score'] = None
     else:
         report['score'] = points(G, smax)
         notes = ['G 达到或超过 S_max'] if G >= smax else []

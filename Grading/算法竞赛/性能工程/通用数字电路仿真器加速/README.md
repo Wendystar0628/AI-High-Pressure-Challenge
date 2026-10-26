@@ -14,7 +14,6 @@
 | `baselines/strong_solution.cpp` | 强基线：出题人写的通用优化解法，仅作参考 |
 | `correctness/inputs/`、`correctness/expected/` | 7 个正确性输入及独立参考答案，不计分，任一失败记 0 分 |
 | `validation.json` | 正式评测会话的逐次记录、弱基线参考中位数（健康检查用）、正确性记录和工具指纹 |
-| `SHA256SUMS.txt` | 性能输入、正确性输入、答案、工具和验证记录的 SHA-256 指纹 |
 
 所有文件都使用 LF 换行。
 
@@ -121,7 +120,3 @@ start "" /b /wait /high /affinity FFFF grader.exe input_01.txt > out_01.txt 2> t
 g++ -O2 -std=c++20 -march=native -o gen_hidden.exe gen_hidden.cpp
 gen_hidden.exe deep 6151827736420917 > input_01.txt
 ```
-
-## SHA-256 指纹
-
-完整指纹见 [SHA256SUMS.txt](SHA256SUMS.txt)。其中 `../` 路径指本目录上一级的公共评测与参考生成工具。校验时按文件字节计算 SHA-256。
