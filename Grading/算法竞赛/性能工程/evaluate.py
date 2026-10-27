@@ -6,8 +6,10 @@ python evaluate.py --task sand --exe C:\eval\sand\grader.exe --weak C:\eval\sand
 Session: candidate correctness inputs first (any failure -> score 0, nothing else is run); then every
 performance input once with the weak baseline, once with the strong baseline, and once with the
 candidate, in that order, each in its own process.
-Score: s_i = W_i / C_i, G = exp(mean ln s_i); the score interpolates the task's anchor table linearly in ln G.
-The strong baseline is reported for reference only and does not affect the score.
+Score: each performance input is scored on its own: s_i = W_i / C_i, and the task's anchor table interpolated
+linearly in ln s_i gives 0-100 points (0 for s_i <= 1); an input the candidate fails (wrong answer, crash,
+timeout) scores 0. The task score is the mean of the 8 input scores. G = exp(mean ln s_i) is reported for
+reference. The strong baseline is reported for reference only and does not affect the score.
 """
 import argparse
 import ctypes
@@ -30,8 +32,8 @@ TASKS = {  # anchors: (G, points), as in the statement's scoring section
              'anchors': ((1, 0), (2, 2), (4, 10), (8, 30), (16, 60), (32, 100))},
 }
 PROCESS_TIMEOUT_S = 60           # hang guard for every process
-HEALTH_PER_INPUT = 0.05          # weak time vs validation.json, per input
-HEALTH_GEOMEAN = 0.03            # weak times vs validation.json, geometric mean
+HEALTH_PER_INPUT = 0.10          # weak time vs validation.json, per input; a single run varies about 5-7%
+HEALTH_GEOMEAN = 0.05            # weak times vs validation.json, geometric mean
 MIN_MS = 0.001                   # graders print 3 decimals; faster readings are clamped to this
 
 
@@ -96,6 +98,11 @@ def points(G, anchors):
 
 def geomean(values):
     return math.exp(statistics.fmean(math.log(v) for v in values))
+
+
+def mean_points(values):
+    """The task score: mean of the per-input points, one decimal place."""
+    return float(Decimal(repr(statistics.fmean(values))).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
 
 
 def health_check(suite, weak_ms):
@@ -164,9 +171,8 @@ def evaluate(args):
                 r = run(role_exe, inp, expected)
                 perf.setdefault(inp.stem, {'case': inp.stem})[role] = r
                 print(f"{role}/{inp.stem}: {r['status']} {r['time_ms']} ms", flush=True)
-                if r['status'] != 'PASS':
-                    if role == 'weak': session_errors.append(f"weak baseline failed on {inp.stem}: {r['status']}")
-                    if role == 'candidate': zero.append(f"{inp.stem} candidate: {r['status']}")
+                if r['status'] != 'PASS' and role == 'weak':
+                    session_errors.append(f"weak baseline failed on {inp.stem}: {r['status']}")
                 report['performance'] = list(perf.values())
                 save()
         for item in perf.values():
@@ -177,11 +183,10 @@ def evaluate(args):
                 session_errors.append(f"weak baseline reported {W:.3f} ms on {item['case']}")
                 W = None
             if C is not None and C < MIN_MS: clamped.append(item['case'])
-            item.update(W_i_ms=W, strong_ms=S, C_i_ms=C,
-                        s_i=W / max(C, MIN_MS) if W is not None and C is not None else None,
-                        strong_speedup=W / max(S, MIN_MS) if W is not None and S is not None else None)
-            if W is not None and C is not None and C > W:
-                zero.append(f"{item['case']}: candidate {C:.3f} ms > weak {W:.3f} ms")
+            s = W / max(C, MIN_MS) if W is not None and C is not None else None
+            item.update(W_i_ms=W, strong_ms=S, C_i_ms=C, s_i=s,
+                        strong_speedup=W / max(S, MIN_MS) if W is not None and S is not None else None,
+                        points_i=points(s, anchors) if s is not None else (0.0 if W is not None else None))
 
     # 3. Metric and score.
     items = list(perf.values())
@@ -202,21 +207,24 @@ def evaluate(args):
         report['zero_score'] = False
     elif zero:
         report['score'] = 0.0
-    elif G is None:
+    elif len(items) != 8 or any(x['points_i'] is None for x in items):
         report['score'] = None
     else:
-        report['score'] = points(G, anchors)
-        notes = ['G 达到或超过满分锚点'] if G >= anchors[-1][0] else []
+        report['score'] = mean_points(x['points_i'] for x in items)
+        report['failed_inputs'] = [x['case'] for x in items if x['candidate']['status'] != 'PASS']
+        top = [x['case'] for x in items if x['s_i'] is not None and x['s_i'] >= anchors[-1][0]]
+        notes = [f"{', '.join(top)} 的加速比达到或超过满分锚点"] if top else []
         if clamped: notes.append(f"提交在 {', '.join(clamped)} 上的计时低于 {MIN_MS} ms，已按 {MIN_MS} ms 计算")
         report['manual_review_required'] = bool(notes)
         if notes: report['manual_review_note'] = '需人工复核：' + '；'.join(notes)
     report['official'] = report['official'] and not session_errors
     report['summary'] = [{'case': x['case'], 'W_i_ms': x['W_i_ms'], 'strong_ms': x['strong_ms'],
-                          'C_i_ms': x['C_i_ms'], 's_i': x['s_i']} for x in items]
+                          'C_i_ms': x['C_i_ms'], 's_i': x['s_i'], 'points_i': x['points_i'],
+                          'candidate': x['candidate']['status']} for x in items]
     strong_speedups = [x['strong_speedup'] for x in items]
     if len(items) == 8 and None not in strong_speedups:
         report['strong_G'] = geomean(strong_speedups)
-        report['strong_score'] = points(report['strong_G'], anchors)
+        report['strong_score'] = mean_points(points(s, anchors) for s in strong_speedups)
     if items:
         report['health'] = health_check(suite, {x['case']: x['W_i_ms'] for x in items})
         for w in report['health']['warnings']: print('HEALTH WARNING: ' + w, flush=True)
