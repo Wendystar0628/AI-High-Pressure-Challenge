@@ -1,6 +1,7 @@
-// Strong baseline for 通用数字电路仿真器加速: a general-purpose optimized solution written by the
+// Reference solution for 通用数字电路仿真器加速: a general-purpose optimized solution written by the
 // setter. It implements simulate() for grader.cpp and follows the problem rules (single file,
-// C++ standard library + OpenMP, CPU only).
+// C++ standard library + OpenMP, CPU only). Its time on each performance input is the denominator
+// of the speedup, and it computes the expected outputs.
 //   - only gates that can affect an output or flip-flop are kept (DFS from the sinks)
 //   - evaluation order: DFS post-order or level order, whichever needs fewer value slots;
 //     slots of dead values are reused so the working set per block stays small
@@ -8,7 +9,7 @@
 //   - 256 stimuli per AVX2 vector, V vectors per block, blocks spread over threads
 //   - branch-free gate kernel: out = inv ^ (a&ka) ^ (b&kb) ^ (a&b&kab) ^ (s&(a^b)&ks)
 //   - 64x64 bit transposes for the primary inputs and for the output digest
-// Build: g++ -O2 -std=c++20 -march=native -fopenmp -o strong.exe grader.cpp strong_solution.cpp
+// Build: g++ -O2 -std=c++20 -march=native -fopenmp -o reference.exe grader.cpp reference_solution.cpp
 #include <immintrin.h>
 #include <omp.h>
 #include <algorithm>

@@ -1,4 +1,5 @@
 // Weak baseline for 网格沙粒倒塌的GPU加速: a simple full-grid tiled implementation.
+// Used only to cross-check the expected outputs computed by the reference solution; it is not timed.
 //   - 32x32 output tiles with a four-cell halo
 //   - four synchronous rounds in shared memory per launch
 //   - every tile is processed; no activity masks or sparse-region scheduling

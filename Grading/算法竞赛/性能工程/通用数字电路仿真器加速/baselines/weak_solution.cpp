@@ -2,7 +2,7 @@
 // for grader.cpp and follows the problem rules.
 //   - Kahn topological order; every gate evaluated with a switch
 //   - 256 stimuli per thread block (4 x 64-bit words per signal), blocks spread over threads
-// Its running time sets the time limit.
+// Used only to cross-check the expected outputs computed by the reference solution; it is not timed.
 // Build: g++ -O2 -std=c++20 -march=native -fopenmp -o weak.exe grader.cpp weak_solution.cpp
 #include <algorithm>
 #include <cstdint>

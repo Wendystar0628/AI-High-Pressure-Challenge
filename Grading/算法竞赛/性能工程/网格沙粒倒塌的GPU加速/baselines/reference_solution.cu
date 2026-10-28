@@ -1,4 +1,5 @@
-// Strong baseline for 网格沙粒倒塌的GPU加速: a general-purpose optimized solution by the setter.
+// Reference solution for 网格沙粒倒塌的GPU加速: a general-purpose optimized solution by the setter.
+// Its time on each performance input is the denominator of the speedup, and it computes the expected outputs.
 //   - same synchronous rule as the weak baseline (each cell topples floor(h/4) times per round)
 //   - temporal blocking: a block loads a 64x64 tile (48x48 inner part + 8-cell halo) into
 //     shared memory and runs 8 rounds there, then writes back the inner part
@@ -6,7 +7,7 @@
 //     active in the previous launch; stable regions cost almost nothing
 //   - init() allocates the second grid buffer and the activity masks; solve() works in place on
 //     the grader's grid and copies the result back into it if the last launch wrote the other buffer
-// Build: nvcc -O3 -std=c++17 -arch=sm_89 -Xcompiler "/O2 /utf-8" -o strong.exe grader.cu strong_solution.cu
+// Build: nvcc -O3 -std=c++17 -arch=sm_89 -Xcompiler "/O2 /utf-8" -o reference.exe grader.cu reference_solution.cu
 #include <cuda_runtime.h>
 #include <cstdint>
 #include <utility>

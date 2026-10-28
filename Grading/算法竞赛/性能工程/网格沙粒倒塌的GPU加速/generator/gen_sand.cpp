@@ -2,8 +2,16 @@
 // Usage: gen_sand <type> <seed> <scale> [extra] > input.txt
 //   type : single | few | many | dust | edge | noise | ring | mixed | dense
 //   scale: grains in main piles; for dense, the side length of the active square
-//   extra: optional; ring radius for ring (default 1100), grains on each active cell for dense
-//          (default 4). Omitting it reproduces the earlier inputs of these families.
+//   extra: optional family parameter; omitting it gives the default in brackets and reproduces
+//          the earlier inputs of every family byte for byte:
+//            single  maximal offset of the pile from the grid centre in x and in y  [200]
+//            few     number of large piles near the centre                          [4]
+//            many    number of piles anywhere on the grid                           [16]
+//            dust    number of medium piles (the small piles are unchanged)         [8]
+//            edge    maximal distance of a pile from its border                     [250]
+//            ring    ring radius                                                    [1100]
+//            dense   grains on each active cell                                     [4]
+//            mixed   number of large piles near the centre                          [5]
 // Output is deterministic for given arguments. The generator refuses to write an input with
 // P > 2000000 or C > 2^23 (the limits of the problem statement).
 // Build: g++ -O2 -std=c++20 -o gen_sand.exe gen_sand.cpp
@@ -52,16 +60,26 @@ int main(int argc, char** argv) {
     };
     auto anywhere = [&] { return pair<int, int>((int)uni(0, L - 1), (int)uni(0, L - 1)); };
     auto central = [&] { return pair<int, int>((int)uni(L / 4, 3 * L / 4), (int)uni(L / 4, 3 * L / 4)); };
+    // The optional family parameter: `def` when omitted, otherwise it must lie in [lo, hi].
+    auto param = [&](long long def, long long lo, long long hi, const char* what) {
+        if (extra < 0) return def;
+        if (extra < lo || extra > hi) {
+            fprintf(stderr, "%s must be in [%lld,%lld]\n", what, lo, hi);
+            exit(1);
+        }
+        return extra;
+    };
     if (type == "single") {
-        piles.push_back({(int)uni(L / 2 - 200, L / 2 + 200), (int)uni(L / 2 - 200, L / 2 + 200), scale});
+        int off = (int)param(200, 0, L / 2 - 1, "single pile offset");
+        piles.push_back({(int)uni(L / 2 - off, L / 2 + off), (int)uni(L / 2 - off, L / 2 + off), scale});
     } else if (type == "few") {
-        split(4, scale, central);
+        split((int)param(4, 1, 64, "few pile count"), scale, central);
     } else if (type == "many") {
-        split(16, scale, anywhere);
+        split((int)param(16, 1, 4096, "many pile count"), scale, anywhere);
     } else if (type == "dust") {
         // many small piles everywhere, plus a few medium ones
         long long big = scale / 2;
-        split(8, big, anywhere);
+        split((int)param(8, 1, 4096, "dust medium pile count"), big, anywhere);
         long long rest = scale - big;
         while (rest > 0) {
             long long c = min(rest, uni(4, 60));
@@ -71,8 +89,9 @@ int main(int argc, char** argv) {
         }
     } else if (type == "edge") {
         // piles close to the border, so a large share of the sand leaves the grid
+        int band = (int)param(250, 0, L / 2 - 1, "edge band width");
         split(12, scale, [&] {
-            int side = (int)uni(0, 3), a = (int)uni(0, L - 1), b = (int)uni(0, 250);
+            int side = (int)uni(0, 3), a = (int)uni(0, L - 1), b = (int)uni(0, band);
             if (side == 0) return pair<int, int>(a, b);
             if (side == 1) return pair<int, int>(a, L - 1 - b);
             if (side == 2) return pair<int, int>(b, a);
@@ -123,7 +142,7 @@ int main(int argc, char** argv) {
             for (int x = 0; x < side; x++)
                 if ((x + y) % 2 == 0) piles.push_back({ox + x, oy + y, h});
     } else if (type == "mixed") {
-        split(5, scale * 6 / 10, central);
+        split((int)param(5, 1, 4096, "mixed large pile count"), scale * 6 / 10, central);
         long long rest = scale * 4 / 10;
         while (rest > 0) {
             long long c = min(rest, uni(50, 4000));

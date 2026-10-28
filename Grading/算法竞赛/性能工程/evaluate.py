@@ -1,15 +1,19 @@
-r"""Score an already compiled submission against the weak baseline, re-run in the same session.
+r"""Score an already compiled submission against the reference solution, re-run in the same session.
 
-python evaluate.py --task sand --exe C:\eval\sand\grader.exe --weak C:\eval\sand\weak.exe
-    --strong C:\eval\sand\strong.exe --report result.json
+python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe
+    --report result.json
 
-Session: candidate correctness inputs first (any failure -> score 0, nothing else is run); then every
-performance input once with the weak baseline, once with the strong baseline, and once with the
-candidate, in that order, each in its own process.
-Score: each performance input is scored on its own: s_i = W_i / C_i, and the task's anchor table interpolated
-linearly in ln s_i gives 0-100 points (0 for s_i <= 1); an input the candidate fails (wrong answer, crash,
-timeout) scores 0. The task score is the mean of the 8 input scores. G = exp(mean ln s_i) is reported for
-reference. The strong baseline is reported for reference only and does not affect the score.
+Session: the candidate's correctness inputs first (any failure -> score 0, nothing else is run). Then, input by
+input, every performance input is run --repeats times (default 1) by the reference solution and --repeats times by
+the candidate, each run in its own process, interleaved: odd inputs start with the reference, even inputs with the
+candidate, and the order flips after every pair (R C C R R C ... / C R R C C R ...). Each role's time on an input
+is the median of its runs. The inputs are whatever performance/inputs holds (24 per task, at least 3).
+Score: each performance input is scored on its own: s_i = R_i / C_i (R_i reference time, C_i candidate time), and
+the task's anchor table interpolated linearly in ln s_i gives 0-100 points, one decimal place: 0 at or below the
+lowest anchor, 100 at or above the highest anchor (flagged for manual review). An input the candidate fails (wrong
+answer, crash, timeout) scores 0. The task score is the mean of the input scores, one decimal place.
+G = exp(mean ln s_i) is reported for reference only. If the reference solution itself fails, the session is void:
+score null, exit code 2.
 """
 import argparse
 import ctypes
@@ -25,15 +29,17 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parent
-TASKS = {  # anchors: (G, points), as in the statement's scoring section
+TASKS = {  # anchors: (s_i, points), s_i relative to the reference solution, as in the statement's scoring section
     'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms',
-                'anchors': ((1, 0), (4, 3), (8, 15), (12, 30), (20, 52), (32, 75), (48, 100))},
+                'anchors': ((0.1, 0), (0.5, 10), (1, 30), (1.75, 52), (2.75, 75), (4, 100))},
     'sand': {'folder': '网格沙粒倒塌的GPU加速', 'timer': 'solve_ms',
-             'anchors': ((1, 0), (2, 2), (4, 10), (8, 30), (16, 60), (32, 100))},
+             'anchors': ((0.2, 0), (0.5, 5), (1, 20), (1.5, 34), (3, 60), (6, 100))},
 }
+CORRECTNESS_INPUTS = 7
+MIN_PERFORMANCE_INPUTS = 3
 PROCESS_TIMEOUT_S = 60           # hang guard for every process
-HEALTH_PER_INPUT = 0.10          # weak time vs validation.json, per input; a single run varies about 5-7%
-HEALTH_GEOMEAN = 0.05            # weak times vs validation.json, geometric mean
+HEALTH_PER_INPUT = 0.10          # reference time vs validation.json, per input; a single run varies about 5-7%
+HEALTH_GEOMEAN = 0.05            # reference times vs validation.json, geometric mean
 MIN_MS = 0.001                   # graders print 3 decimals; faster readings are clamped to this
 
 
@@ -76,23 +82,33 @@ def run_once(exe, inp, expected, timer, affinity):
         return record
 
 
-def cases(folder, count, kind):
+def cases(folder, kind, exact=None, minimum=1):
+    """(input, expected file) pairs, sorted by name; the expected bytes are read when the input is run."""
     inputs = sorted((folder / 'inputs').glob('*.txt'))
-    if len(inputs) != count:
-        raise RuntimeError(f'Expected {count} {kind} inputs, found {len(inputs)}: {folder}')
-    return [(inp, (folder / 'expected' / inp.name.replace('input_', 'expected_')).read_bytes().replace(b'\r\n', b'\n'))
-            for inp in inputs]
+    if exact is not None and len(inputs) != exact:
+        raise RuntimeError(f'Expected {exact} {kind} inputs, found {len(inputs)}: {folder}')
+    if len(inputs) < minimum:
+        raise RuntimeError(f'Expected at least {minimum} {kind} inputs, found {len(inputs)}: {folder}')
+    pairs = [(inp, folder / 'expected' / inp.name.replace('input_', 'expected_')) for inp in inputs]
+    missing = [str(e) for _, e in pairs if not e.is_file()]
+    if missing:
+        raise RuntimeError(f'Missing expected outputs: {", ".join(missing)}')
+    return pairs
 
 
-def points(G, anchors):
-    """Official conversion: the anchor table interpolated linearly in ln G, clamped at both ends, one decimal place."""
-    if G <= anchors[0][0]:
+def read_expected(path):
+    return path.read_bytes().replace(b'\r\n', b'\n')
+
+
+def points(s, anchors):
+    """Official conversion: the anchor table interpolated linearly in ln s, clamped at both ends, one decimal place."""
+    if s <= anchors[0][0]:
         raw = float(anchors[0][1])
-    elif G >= anchors[-1][0]:
+    elif s >= anchors[-1][0]:
         raw = float(anchors[-1][1])
     else:
-        (a, p), (b, q) = next(seg for seg in zip(anchors, anchors[1:]) if seg[0][0] <= G <= seg[1][0])
-        raw = p + (q - p) * math.log(G / a) / math.log(b / a)
+        (a, p), (b, q) = next(seg for seg in zip(anchors, anchors[1:]) if seg[0][0] <= s <= seg[1][0])
+        raw = p + (q - p) * math.log(s / a) / math.log(b / a)
     return float(Decimal(repr(raw)).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
 
 
@@ -105,45 +121,81 @@ def mean_points(values):
     return float(Decimal(repr(statistics.fmean(values))).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
 
 
-def health_check(suite, weak_ms):
-    """Compare this session's weak times with those recorded in validation.json."""
+def load_validation(suite):
     try:
-        recorded = json.loads((suite / 'validation.json').read_text(encoding='utf-8'))['weak_baseline_medians_ms']
-    except (OSError, KeyError, ValueError):
-        return {'ok': False, 'warnings': ['validation.json has no weak_baseline_medians_ms']}
+        data = json.loads((suite / 'validation.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def families(validation):
+    """case -> family from validation.json's inputs (a list of {case, family, ...} or a dict keyed by case)."""
+    inputs = validation.get('inputs')
+    if isinstance(inputs, dict):
+        inputs = [dict(v, case=k) for k, v in inputs.items() if isinstance(v, dict)]
+    if not isinstance(inputs, list):
+        return {}
+    return {x['case']: x.get('family') for x in inputs if isinstance(x, dict) and 'case' in x}
+
+
+def health_check(validation, reference_ms):
+    """Compare this session's reference times with reference_medians_ms recorded in validation.json."""
+    recorded = validation.get('reference_medians_ms')
+    if not isinstance(recorded, dict):
+        return {'ok': False, 'warnings': ['validation.json has no reference_medians_ms']}
     ratios, warnings = {}, []
-    for case, w in weak_ms.items():
+    for case, r in reference_ms.items():
         ref = recorded.get(case)
-        if ref is None or w is None:
-            warnings.append(f'{case}: no weak time to compare')
+        if not isinstance(ref, (int, float)) or ref <= 0 or r is None:
+            warnings.append(f'{case}: no reference time to compare')
             continue
-        ratios[case] = w / ref
-        if abs(w / ref - 1) > HEALTH_PER_INPUT:
-            warnings.append(f'{case}: weak time {w:.3f} ms is {100 * (w / ref - 1):+.1f}% '
+        ratios[case] = r / ref
+        if abs(r / ref - 1) > HEALTH_PER_INPUT:
+            warnings.append(f'{case}: reference time {r:.3f} ms is {100 * (r / ref - 1):+.1f}% '
                             f'from the recorded {ref:.3f} ms (limit {100 * HEALTH_PER_INPUT:.0f}%)')
+    extra = sorted(set(recorded) - set(reference_ms))
+    if extra:
+        warnings.append(f'validation.json records inputs that were not run: {", ".join(extra)}')
     gm = geomean(ratios.values()) if ratios else None
     if gm is not None and abs(gm - 1) > HEALTH_GEOMEAN:
-        warnings.append(f'weak times are {100 * (gm - 1):+.1f}% from validation.json in geometric mean '
+        warnings.append(f'reference times are {100 * (gm - 1):+.1f}% from validation.json in geometric mean '
                         f'(limit {100 * HEALTH_GEOMEAN:.0f}%)')
-    return {'ok': not warnings, 'weak_ratio_to_recorded': ratios, 'geomean_ratio': gm, 'warnings': warnings}
+    return {'ok': not warnings, 'reference_ratio_to_recorded': ratios, 'geomean_ratio': gm, 'warnings': warnings}
+
+
+def run_order(position, repeats):
+    """Roles for the performance input at 1-based position: odd inputs start with the reference, even inputs with
+    the candidate, and the order flips after every pair."""
+    pair = ('reference', 'candidate') if position % 2 else ('candidate', 'reference')
+    return [role for k in range(repeats) for role in (pair if k % 2 == 0 else pair[::-1])]
+
+
+def first_failure(runs):
+    return next((x['status'] for x in runs if x['status'] != 'PASS'), None)
 
 
 def evaluate(args):
     task = TASKS[args.task]
     suite = ROOT / task['folder']
     timer = task['timer']
-    exe = Path(args.exe).resolve(strict=True)
-    weak = Path(args.weak).resolve(strict=True) if args.weak else None
-    strong = Path(args.strong).resolve(strict=True) if args.strong else None
-    if (weak is None or strong is None) and not args.correctness_only:
-        raise SystemExit('--weak and --strong are required unless --correctness-only is given')
     anchors = task['anchors']
+    if args.repeats < 1:
+        raise SystemExit('--repeats must be at least 1')
+    exe = Path(args.exe).resolve(strict=True)
+    reference = Path(args.reference).resolve(strict=True) if args.reference else None
+    if reference is None and not args.correctness_only:
+        raise SystemExit('--reference is required unless --correctness-only is given')
+    correctness_cases = cases(suite / 'correctness', 'correctness', exact=CORRECTNESS_INPUTS)
+    perf_cases = None if args.correctness_only else \
+        cases(suite / 'performance', 'performance', minimum=MIN_PERFORMANCE_INPUTS)
+    validation = load_validation(suite)
     report_path = Path(args.report).resolve()
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report = {'task': args.task, 'started': time.strftime('%Y-%m-%d %H:%M:%S'),
-              'exe': str(exe), 'weak_exe': str(weak) if weak else None,
-              'strong_exe': str(strong) if strong else None, 'pause_s': args.pause,
-              'affinity_mask': hex(args.affinity), 'process_timeout_s': PROCESS_TIMEOUT_S, 'anchors': anchors,
+              'exe': str(exe), 'reference_exe': str(reference) if reference else None,
+              'repeats': args.repeats, 'pause_s': args.pause, 'affinity_mask': hex(args.affinity),
+              'process_timeout_s': PROCESS_TIMEOUT_S, 'anchors': anchors, 's_max': anchors[-1][0],
               'official': not args.correctness_only,
               'correctness': [], 'performance': []}
     save = lambda: report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -153,48 +205,54 @@ def evaluate(args):
         return run_once(role_exe, inp, expected, timer, args.affinity)
 
     # 1. Candidate correctness inputs, one process each.
-    for inp, expected in cases(suite / 'correctness', 7, 'correctness'):
-        r = run(exe, inp, expected)
+    for inp, expected_path in correctness_cases:
+        r = run(exe, inp, read_expected(expected_path))
         report['correctness'].append({'case': inp.stem, 'passed': r['status'] == 'PASS', 'run': r})
         print(f"correctness/{inp.stem}: {r['status']}", flush=True)
         save()
     failed = [x['case'] for x in report['correctness'] if not x['passed']]
-    report['correctness_passed'] = 7 - len(failed)
+    report['correctness_passed'] = CORRECTNESS_INPUTS - len(failed)
     zero = [f'correctness input {c} failed' for c in failed]
 
-    # 2. Performance inputs: weak baseline, then strong baseline, then the candidate, once each.
-    session_errors, perf, clamped = [], {}, []
-    if not args.correctness_only and not failed:
-        perf_cases = cases(suite / 'performance', 8, 'performance')
-        for role, role_exe in (('weak', weak), ('strong', strong), ('candidate', exe)):
-            for inp, expected in perf_cases:
-                r = run(role_exe, inp, expected)
-                perf.setdefault(inp.stem, {'case': inp.stem})[role] = r
-                print(f"{role}/{inp.stem}: {r['status']} {r['time_ms']} ms", flush=True)
-                if r['status'] != 'PASS' and role == 'weak':
-                    session_errors.append(f"weak baseline failed on {inp.stem}: {r['status']}")
-                report['performance'] = list(perf.values())
+    # 2. Performance inputs, one at a time: the reference solution and the candidate, --repeats runs each, interleaved.
+    session_errors, items, clamped = [], [], []
+    if perf_cases is not None and not failed:
+        family = families(validation)
+        for position, (inp, expected_path) in enumerate(perf_cases, 1):
+            expected = read_expected(expected_path)
+            order = run_order(position, args.repeats)
+            item = {'case': inp.stem, 'family': family.get(inp.stem),
+                    'order': ''.join('R' if role == 'reference' else 'C' for role in order), 'runs': []}
+            items.append(item)
+            report['performance'] = items
+            for seq, role in enumerate(order, 1):
+                r = run(reference if role == 'reference' else exe, inp, expected)
+                item['runs'].append({'seq': seq, 'role': role, **r})
+                print(f"{inp.stem} #{seq} {role}: {r['status']} {r['time_ms']} ms", flush=True)
                 save()
-        for item in perf.values():
-            W = item['weak']['time_ms'] if item['weak']['status'] == 'PASS' else None
-            S = item['strong']['time_ms'] if item['strong']['status'] == 'PASS' else None
-            C = item['candidate']['time_ms'] if item['candidate']['status'] == 'PASS' else None
-            if W is not None and W < MIN_MS:
-                session_errors.append(f"weak baseline reported {W:.3f} ms on {item['case']}")
-                W = None
-            if C is not None and C < MIN_MS: clamped.append(item['case'])
-            s = W / max(C, MIN_MS) if W is not None and C is not None else None
-            item.update(W_i_ms=W, strong_ms=S, C_i_ms=C, s_i=s,
-                        strong_speedup=W / max(S, MIN_MS) if W is not None and S is not None else None,
-                        points_i=points(s, anchors) if s is not None else (0.0 if W is not None else None))
+            ref_runs = [x for x in item['runs'] if x['role'] == 'reference']
+            cand_runs = [x for x in item['runs'] if x['role'] == 'candidate']
+            ref_failure, cand_failure = first_failure(ref_runs), first_failure(cand_runs)
+            R = statistics.median(x['time_ms'] for x in ref_runs) if ref_failure is None else None
+            C = statistics.median(x['time_ms'] for x in cand_runs) if cand_failure is None else None
+            if ref_failure is not None:
+                session_errors.append(f'reference solution failed on {inp.stem}: {ref_failure}')
+            elif R < MIN_MS:
+                session_errors.append(f'reference solution reported {R:.3f} ms on {inp.stem}')
+                R = None
+            if C is not None and C < MIN_MS: clamped.append(inp.stem)
+            s = R / max(C, MIN_MS) if R is not None and C is not None else None
+            item.update(reference_status=ref_failure or 'PASS', status=cand_failure or 'PASS',
+                        R_i_ms=R, C_i_ms=C, s_i=s,
+                        points_i=points(s, anchors) if s is not None else (0.0 if R is not None else None))
+            save()
 
     # 3. Metric and score.
-    items = list(perf.values())
     report['performance'] = items
-    report['performance_passed'] = sum(x['candidate']['status'] == 'PASS' for x in items)
+    report['performance_inputs'] = len(items)
+    report['performance_passed'] = sum(x['status'] == 'PASS' for x in items)
     speedups = [x['s_i'] for x in items]
-    G = geomean(speedups) if len(items) == 8 and None not in speedups else None
-    report['G'] = G
+    report['G'] = geomean(speedups) if items and None not in speedups else None
     report['session_valid'] = not session_errors
     report['session_errors'] = session_errors
     report['zero_score'] = bool(zero)
@@ -203,36 +261,31 @@ def evaluate(args):
     if args.correctness_only:
         report['score'] = None
     elif session_errors:
-        report['score'] = None  # the weak baseline itself failed: the session must be repeated, whatever the submission did
+        report['score'] = None  # the reference solution itself failed: the session must be repeated
         report['zero_score'] = False
     elif zero:
         report['score'] = 0.0
-    elif len(items) != 8 or any(x['points_i'] is None for x in items):
+    elif not items or any(x['points_i'] is None for x in items):
         report['score'] = None
     else:
         report['score'] = mean_points(x['points_i'] for x in items)
-        report['failed_inputs'] = [x['case'] for x in items if x['candidate']['status'] != 'PASS']
+        report['failed_inputs'] = [x['case'] for x in items if x['status'] != 'PASS']
         top = [x['case'] for x in items if x['s_i'] is not None and x['s_i'] >= anchors[-1][0]]
-        notes = [f"{', '.join(top)} 的加速比达到或超过满分锚点"] if top else []
+        notes = [f"{', '.join(top)} 的加速比达到或超过最高锚点 {anchors[-1][0]}"] if top else []
         if clamped: notes.append(f"提交在 {', '.join(clamped)} 上的计时低于 {MIN_MS} ms，已按 {MIN_MS} ms 计算")
         report['manual_review_required'] = bool(notes)
         if notes: report['manual_review_note'] = '需人工复核：' + '；'.join(notes)
     report['official'] = report['official'] and not session_errors
-    report['summary'] = [{'case': x['case'], 'W_i_ms': x['W_i_ms'], 'strong_ms': x['strong_ms'],
-                          'C_i_ms': x['C_i_ms'], 's_i': x['s_i'], 'points_i': x['points_i'],
-                          'candidate': x['candidate']['status']} for x in items]
-    strong_speedups = [x['strong_speedup'] for x in items]
-    if len(items) == 8 and None not in strong_speedups:
-        report['strong_G'] = geomean(strong_speedups)
-        report['strong_score'] = mean_points(points(s, anchors) for s in strong_speedups)
+    report['summary'] = [{k: x[k] for k in ('case', 'family', 'R_i_ms', 'C_i_ms', 's_i', 'points_i', 'status')}
+                         for x in items]
     if items:
-        report['health'] = health_check(suite, {x['case']: x['W_i_ms'] for x in items})
+        report['health'] = health_check(validation, {x['case']: x['R_i_ms'] for x in items})
         for w in report['health']['warnings']: print('HEALTH WARNING: ' + w, flush=True)
     report['finished'] = time.strftime('%Y-%m-%d %H:%M:%S')
     save()
-    print(json.dumps({k: report.get(k) for k in ('correctness_passed', 'performance_passed', 'G', 'score',
-                                                 'strong_G', 'strong_score', 'zero_score_reasons',
-                                                 'session_errors', 'manual_review_required', 'official')},
+    print(json.dumps({k: report.get(k) for k in ('correctness_passed', 'performance_inputs', 'performance_passed',
+                                                 'G', 'score', 'zero_score_reasons', 'session_errors',
+                                                 'manual_review_required', 'official')},
                      ensure_ascii=False), flush=True)
     if session_errors: return 2
     if args.correctness_only: return 1 if failed else 0
@@ -243,10 +296,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--task', required=True, choices=TASKS)
     parser.add_argument('--exe', required=True, help='compiled grader + candidate solution')
-    parser.add_argument('--weak', help='compiled grader + baselines/weak_solution (required for performance)')
-    parser.add_argument('--strong', help='compiled grader + baselines/strong_solution (required for performance, '
-                                         'reported for reference only)')
+    parser.add_argument('--reference', help='compiled grader + baselines/reference_solution, the denominator of s_i '
+                                            '(required unless --correctness-only)')
     parser.add_argument('--report', required=True)
+    parser.add_argument('--repeats', type=int, default=1,
+                        help='runs per role on every performance input; each role takes the median (default 1)')
     parser.add_argument('--pause', type=float, default=0.0, help='seconds slept before every run')
     parser.add_argument('--affinity', type=lambda s: int(s, 0), default=0xffff)
     parser.add_argument('--correctness-only', action='store_true')

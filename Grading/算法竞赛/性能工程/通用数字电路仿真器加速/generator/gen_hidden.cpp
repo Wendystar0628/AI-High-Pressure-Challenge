@@ -1,6 +1,18 @@
 // Hidden test circuit generator for 通用数字电路仿真器加速.
-// Usage: gen_hidden <family> <seed> > input.txt
+// Usage: gen_hidden <family> <seed> [p1 [p2 [p3]]] > input.txt
 // Families: deep | wide | multiplier | cipher | control | regfile | pipeline | soc
+// Optional structure parameters; omitting them gives the defaults in brackets and reproduces the
+// earlier inputs of every family byte for byte:
+//   deep        p1 = window of recent gates the inputs are drawn from                  [64]
+//   wide        p1 = number of levels                                               [40]
+//   multiplier  p1 = operand width of the array multipliers (2..32)                 [16]
+//   cipher      p1 = minimal number of rounds; a block has p1 .. p1+6 rounds         [6]
+//   control     p1 = select bits of the multiplexer tree and of the decoder (1..8)  [5]
+//   regfile     p1 = address bits: 2^p1 registers of 4096 >> p1 bits (6..9)         [7]
+//               p2 = write ports (1..32)                                            [16]
+//   pipeline    p1 = number of stages; each writes min(448, 8192 / p1) flip-flops   [16]
+//   soc         p1 p2 p3 = cumulative percentages of multiplier, cipher and control
+//               blocks; the rest are random logic blocks                            [25 50 70]
 // Build: g++ -O2 -std=c++20 -o gen_hidden.exe gen_hidden.cpp
 //
 // Every circuit has exactly the sizes below. Every gate has a structural path to a flip-flop
@@ -13,6 +25,7 @@
 #include <cstdlib>
 #include <random>
 #include <string>
+#include <utility>
 #include <vector>
 #ifdef _WIN32
 #include <fcntl.h>
@@ -36,6 +49,7 @@ static const int MAIN = G - OUTFOLD - RESERVE; // target size of the family-spec
 
 struct Gen {
     mt19937_64 rng;
+    vector<long long> par;        // optional structure parameters from the command line
     vector<array<int, 4>> gates;  // creation order; a gate's signal id is BASE_G + creation index
     vector<int> uses;             // fan-out count per gate
     vector<int> pool;             // candidates for "unused gate" picks (lazily cleaned)
@@ -43,7 +57,16 @@ struct Gen {
     vector<int> ffd = vector<int>(F, -1);
     int unsetFF = F;
     vector<int> outs;
-    explicit Gen(u64 s) : rng(s) {}
+    explicit Gen(u64 s, vector<long long> p) : rng(s), par(std::move(p)) {}
+    // Structure parameter k (0-based): `def` when omitted, otherwise it must lie in [lo, hi].
+    long long param(size_t k, long long def, long long lo, long long hi, const char* what) const {
+        if (k >= par.size()) return def;
+        if (par[k] < lo || par[k] > hi) {
+            fprintf(stderr, "%s must be in [%lld,%lld]\n", what, lo, hi);
+            exit(1);
+        }
+        return par[k];
+    }
 
     u64 r(u64 n) { return rng() % n; }
     bool chance(int percent) { return (int)r(100) < percent; }
@@ -157,15 +180,16 @@ struct Gen {
         for (size_t i = 0; i < a.size(); i++) s[i] = add(MUX, sel, a[i], b[i]);
         return s;
     }
-    W multiplier16(const W& a, const W& b) {  // array multiplier, 32-bit product
-        int pp[16][16];
-        for (int i = 0; i < 16; i++)
-            for (int j = 0; j < 16; j++) pp[i][j] = add(AND, a[j], b[i]);
-        W acc(32, CONST0);
-        for (int j = 0; j < 16; j++) acc[j] = pp[0][j];
-        for (int i = 1; i < 16; i++) {
+    W multiplier(const W& a, const W& b) {  // w x w array multiplier, 2w-bit product
+        const int w = (int)a.size();
+        vector<vector<int>> pp(w, vector<int>(w));
+        for (int i = 0; i < w; i++)
+            for (int j = 0; j < w; j++) pp[i][j] = add(AND, a[j], b[i]);
+        W acc(2 * w, CONST0);
+        for (int j = 0; j < w; j++) acc[j] = pp[0][j];
+        for (int i = 1; i < w; i++) {
             int c = -1;
-            for (int j = 0; j < 16; j++) {
+            for (int j = 0; j < w; j++) {
                 int k = i + j, x = acc[k], y = pp[i][j];
                 if (j == 0) {
                     acc[k] = add(XOR, x, y);
@@ -176,7 +200,7 @@ struct Gen {
                     c = add(OR, add(AND, x, y), add(AND, t1, c));
                 }
             }
-            acc[i + 16] = c;
+            acc[i + w] = c;
         }
         return acc;
     }
@@ -259,37 +283,38 @@ struct Gen {
             });
         }
     }
+    int mulW = 16, cipherR = 6, ctrlK = 5;  // block parameters (defaults of the earlier inputs)
     void multiplierBlock() {
-        W a = operand(16, 60), b = operand(16, 60);
-        W p = multiplier16(a, b);
-        if (chance(50)) p = adder(p, widen(operand(32, 40), 32));
+        W a = operand(mulW, 60), b = operand(mulW, 60);
+        W p = multiplier(a, b);
+        if (chance(50)) p = adder(p, widen(operand(2 * mulW, 40), 2 * mulW));
     }
     void cipherBlock() {
         vector<int> perm(64);
         for (int i = 0; i < 64; i++) perm[i] = i;
         shuffle(perm.begin(), perm.end(), rng);
         W st = widen(operand(64, 50), 64);
-        int rounds = 6 + (int)r(7);
+        int rounds = cipherR + (int)r(7);
         for (int k = 0; k < rounds; k++) st = cipherRound(st, chance(50) ? ffWord(64) : piWord(64), perm);
     }
     void controlBlock() {
-        W idx = operand(5, 40);
-        vector<W> ops(32);
+        W idx = operand(ctrlK, 40);
+        vector<W> ops(1 << ctrlK);
         for (auto& o : ops) o = operand(16, 50);
         W sel = muxTree(idx, ops);
         W other = operand(16, 50);
         int lt = lessThan(sel, other);
         int eq = equal(sel, operand(16, 30));
-        muxWords(lt, sel, xorWords(other, ops[r(32)]));
-        W dec = decoder(operand(5, 40));
+        muxWords(lt, sel, xorWords(other, ops[r(ops.size())]));
+        W dec = decoder(operand(ctrlK, 40));
         for (int line : dec) add(AND, line, eq);
     }
     void build(const string& fam) {
         if (fam == "deep") {
-            randomBlock(MAIN, 64, 50);
+            randomBlock(MAIN, (int)param(0, 64, 1, MAIN, "deep window"), 50);
         } else if (fam == "wide") {
-            // Layered: 40 levels; inputs mostly from the previous level, every gate there gets used.
-            const int LEVELS = 40, PER = MAIN / LEVELS;
+            // Layered (default 40 levels); inputs mostly from the previous level, every gate there gets used.
+            const int LEVELS = (int)param(0, 40, 1, 4000, "wide levels"), PER = MAIN / LEVELS;
             vector<int> prev;
             for (int lv = 0; lv < LEVELS; lv++) {
                 vector<int> order = prev;
@@ -308,40 +333,45 @@ struct Gen {
                 prev.swap(cur);
             }
         } else if (fam == "multiplier") {
+            mulW = (int)param(0, 16, 2, 32, "multiplier width");
             while (count() < MAIN - 2000) multiplierBlock();
         } else if (fam == "cipher") {
+            cipherR = (int)param(0, 6, 1, 64, "cipher minimal rounds");
             while (count() < MAIN - 8000) cipherBlock();
         } else if (fam == "control") {
+            ctrlK = (int)param(0, 5, 1, 8, "control select bits");
             while (count() < MAIN - 2000) controlBlock();
         } else if (fam == "regfile") {
-            // 128 registers x 32 bits in flip-flops 0..4095; 64 read ports, 16 write ports.
-            const int R = 128, RP = 64, WPN = 16;
-            auto regWord = [&](int k) { W w(32); for (int i = 0; i < 32; i++) w[i] = ff(32 * k + i); return w; };
+            // 2^A registers x (4096 >> A) bits in flip-flops 0..4095; 64 read ports, WPN write ports.
+            // Default: 128 registers x 32 bits, 16 write ports.
+            const int A = (int)param(0, 7, 6, 9, "regfile address bits"), R = 1 << A, WD = 4096 >> A, RP = 64;
+            const int WPN = (int)param(1, 16, 1, RP / 2, "regfile write ports");
+            auto regWord = [&](int k) { W w(WD); for (int i = 0; i < WD; i++) w[i] = ff(WD * k + i); return w; };
             vector<W> regs(R);
             for (int k = 0; k < R; k++) regs[k] = regWord(k);
             auto addrBits = [&](int n) { W a(n); for (int i = 0; i < n; i++) a[i] = chance(50) ? pi((int)r(I)) : ff(4096 + (int)r(4096)); return a; };
             vector<W> rd(RP);
-            for (int p = 0; p < RP; p++) rd[p] = muxTree(addrBits(7), regs);
+            for (int p = 0; p < RP; p++) rd[p] = muxTree(addrBits(A), regs);
             vector<W> data(WPN), we(WPN);
             for (int p = 0; p < WPN; p++) {
                 W s = adder(rd[2 * p], rd[2 * p + 1]);
-                data[p] = muxWords(pi((int)r(I)), s, xorWords(rd[2 * p], piWord(32)));
-                W dec = decoder(addrBits(7));
+                data[p] = muxWords(pi((int)r(I)), s, xorWords(rd[2 * p], piWord(WD)));
+                W dec = decoder(addrBits(A));
                 int wen = ff(4096 + (int)r(4096));
                 we[p] = W(R);
                 for (int k = 0; k < R; k++) we[p][k] = add(AND, dec[k], wen);
             }
-            int glue = MAIN - count() - R * 32 * WPN;
+            int glue = MAIN - count() - R * WD * WPN;
             randomBlock(max(glue, 0), 4000, 50);
             for (int k = 0; k < R; k++)
-                for (int i = 0; i < 32; i++) {
-                    int v = ff(32 * k + i);
+                for (int i = 0; i < WD; i++) {
+                    int v = ff(WD * k + i);
                     for (int p = 0; p < WPN; p++) v = add(MUX, we[p][k], v, data[p][i]);
-                    setFF(32 * k + i, v);
+                    setFF(WD * k + i, v);
                 }
         } else if (fam == "pipeline") {
-            // 16-stage ring; stage s reads register group s-1 and writes register group s.
-            const int S = 16, REG = 448, PER = MAIN / S;
+            // S-stage ring (default 16); stage s reads register group s-1 and writes register group s.
+            const int S = (int)param(0, 16, 2, 256, "pipeline stages"), REG = min(448, F / S), PER = MAIN / S;
             for (int s = 0; s < S; s++) {
                 int start = count(), prev = (s + S - 1) % S;
                 for (int k = 0; k < PER; k++) {
@@ -362,11 +392,14 @@ struct Gen {
                 }
             }
         } else if (fam == "soc") {
+            const int pm = (int)param(0, 25, 0, 100, "soc multiplier percentage");
+            const int pc = (int)param(1, 50, pm, 100, "soc cumulative cipher percentage");
+            const int pk = (int)param(2, 70, pc, 100, "soc cumulative control percentage");
             while (count() < MAIN - 8000) {
                 int x = (int)r(100);
-                if (x < 25) multiplierBlock();
-                else if (x < 50) cipherBlock();
-                else if (x < 70) controlBlock();
+                if (x < pm) multiplierBlock();
+                else if (x < pc) cipherBlock();
+                else if (x < pk) controlBlock();
                 else randomBlock(2000, 300, 50);
             }
         } else {
@@ -466,11 +499,13 @@ struct Gen {
 };
 
 int main(int argc, char** argv) {
-    if (argc != 3) { fprintf(stderr, "usage: gen_hidden <family> <seed>\n"); return 1; }
+    if (argc < 3 || argc > 6) { fprintf(stderr, "usage: gen_hidden <family> <seed> [p1 [p2 [p3]]]\n"); return 1; }
 #ifdef _WIN32
     _setmode(_fileno(stdout), _O_BINARY);  // write LF line endings on Windows too
 #endif
-    Gen g(strtoull(argv[2], nullptr, 10));
+    vector<long long> par;
+    for (int k = 3; k < argc; k++) par.push_back(atoll(argv[k]));
+    Gen g(strtoull(argv[2], nullptr, 10), par);
     g.build(argv[1]);
     g.emit();
     return 0;

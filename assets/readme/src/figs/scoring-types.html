@@ -65,12 +65,12 @@
   <div class="row two">
     <section class="panel">
       <h3>极值构造题</h3>
-      <p class="rule">以已知最好的构造值为满分基准，查锚点表分段线性插值。越接近已知最好，每段斜率越大；超过已知最好记 100，提交无效记 0。</p>
+      <p class="rule">以已知最好的构造值为满分基准查锚点表。低段到中高段斜率逐段加大，逼近纪录的最后一段不额外加权。</p>
       <svg id="extremal" width="432" height="214"></svg>
     </section>
     <section class="panel">
       <h3>性能工程题</h3>
-      <p class="rule">8 个性能输入，各算加速比 s = 弱基线用时 ÷ 提交用时，在对数尺度上查锚点，再取平均。任一正确性输入失败，整题记 0。</p>
+      <p class="rule">24 个性能输入，各算加速比 s = 参考解法用时 ÷ 提交用时，在对数尺度上查锚点，再取平均。任一正确性输入失败，整题记 0。</p>
       <svg id="perf" width="432" height="214"></svg>
     </section>
   </div>
@@ -195,70 +195,44 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
 
 /* 极值构造题: the anchor table of the minimum-triangle-area problem, piecewise linear in r. */
 {
-  const A = [[.05, 0], [.20, 8], [.35, 20], [.50, 34], [.65, 49], [.80, 65], [.90, 77], [.95, 84], [.99, 94], [1, 100]];
+  const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
   const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
   const { g, X, Y, B, R, L } = plot('extremal', { xs: [0, 1], ys: [0, 100], yTicks: [0, 50, 100],
     xTicks: [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], xMinor: minor });
+  // The steepest segment, 0.8-0.9, is drawn heavier.
   el('polyline', { points: A.map(([r, p]) => `${X(r)},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+  line(g, X(.8), Y(60), X(.9), Y(81), 'var(--ink)', 4.5, { 'stroke-linecap': 'round' });
   A.forEach(([r, p], i) => {
     el('circle', { cx: X(r), cy: Y(p), r: i >= 7 ? 2.2 : 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    if (i >= 1 && i <= 5) txt(g, X(r) - 4, Y(p) - 8, 'tick n', String(p), 'end');
+    if (i >= 2 && i <= 6) txt(g, X(r) - 5, Y(p) - 8, 'tick n', String(p), 'end');
   });
-  // Zoom on 0.90–1.00, where the steps get steep.
-  const zx0 = .9, zy0 = 74;
-  el('rect', { x: X(zx0) - 4, y: Y(100) - 5, width: X(1) - X(zx0) + 9, height: Y(zy0) - Y(100) + 6, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1, 'stroke-dasharray': '3 2', rx: 3 }, g);
-  const ix = L + 22, iy = 2, iw = 196, ih = 98;
-  el('rect', { x: ix, y: iy, width: iw, height: ih, rx: 8, fill: 'var(--paper)', stroke: 'var(--line)', 'stroke-width': 1, 'stroke-dasharray': '3 2' }, g);
-  const il = ix + 36, ir = ix + iw - 22, it = iy + 34, ib = iy + ih - 24;
-  const IX = r => il + (r - .9) / .1 * (ir - il), IY = p => ib - (p - 76) / 24 * (ib - it);
-  const Z = A.slice(6);
-  line(g, il, ib, ir, ib, 'var(--ink-3)', 1);
-  el('polyline', { points: Z.map(([r, p]) => `${IX(r)},${IY(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-  Z.forEach(([r, p]) => {
-    el('circle', { cx: IX(r), cy: IY(p), r: 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    const [dx, dy, an] = p === 77 ? [-7, 4, 'end'] : p === 100 ? [7, 4, 'start'] : [-4, -8, 'end'];
-    txt(g, IX(r) + dx, IY(p) + dy, 'tick n', String(p), an).setAttribute('style', 'fill: var(--ink)');
-    line(g, IX(r), ib, IX(r), ib + 3, 'var(--ink-3)', 1);
-  });
-  txt(g, IX(.9), ib + 15, 'tick n', '0.90', 'middle');
-  txt(g, IX(.95), ib + 15, 'tick n', '0.95', 'middle');
-  txt(g, IX(.99) - 3, ib + 15, 'tick n', '0.99', 'end');
-  txt(g, IX(1) + 3, ib + 15, 'tick n', '1', 'start');
-  const cap = el('text', { x: ix + 12, y: iy + 19, class: 'lab' }, g);
-  cap.innerHTML = '放大 <tspan class="n">0.90–1</tspan>：最后 <tspan class="n">0.01</tspan> 值 <tspan class="n" style="font-weight:700;fill:var(--ink)">6</tspan> 分';
+  txt(g, X(.85) + 8, Y(70) + 14, 'lab', '0.8–0.9 最陡', 'start');
+  txt(g, X(1) - 2, Y(100) - 8, 'tick n', '100', 'end');
   // Bottom row: what the axis is, and where the anchors come from.
   txt(g, R, B + 38, 'lab', 'r = 构造值 ÷ 已知最好值', 'end');
   txt(g, L - 34, B + 38, 'lab', '锚点取自最小三角形面积题');
 }
 
-/* 性能工程题: per-input lookup on a log axis (sand-pile anchors), then the mean of eight scores. */
+/* 性能工程题: per-input lookup on a log axis (sand-pile anchors, multiples of the reference solution), then the mean of 24 scores. */
 {
-  const A = [[1, 0], [2, 2], [4, 10], [8, 30], [16, 60], [32, 100]];
-  const lg = Math.log2;
+  const A = [[.2, 0], [.5, 5], [1, 20], [1.5, 34], [3, 60], [6, 100]];
+  const lg = Math.log;
   const f = s => {
-    if (s <= 1) return 0;
-    if (s >= 32) return 100;
+    if (s <= .2) return 0;
+    if (s >= 6) return 100;
     for (let k = 0; k < 5; k++) if (s <= A[k + 1][0]) return A[k][1] + (A[k + 1][1] - A[k][1]) * Math.log(s / A[k][0]) / Math.log(A[k + 1][0] / A[k][0]);
   };
-  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [0, 6], ys: [0, 100], yTicks: [0, 50, 100],
-    xTicks: [1, 2, 4, 8, 16, 32, 64].map(s => [lg(s), `${s}×`]) });
-  el('polyline', { points: [...A, [64, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.2), lg(8)], ys: [0, 100], yTicks: [0, 50, 100],
+    xTicks: A.map(([s]) => [lg(s), `${s}×`]) });
+  el('polyline', { points: [...A, [8, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
   A.forEach(([s, p]) => {
     el('circle', { cx: X(lg(s)), cy: Y(p), r: 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    if (s > 1) txt(g, X(lg(s)) - 4, Y(p) - 8, 'tick n', String(p), 'end');
+    if (s > .2) txt(g, X(lg(s)) - 4, Y(p) - 8, 'tick n', String(p), 'end');
   });
-  // Eight example inputs: each looked up on the curve, then averaged.
-  const ex = [2.8, 4.6, 6.5, 9.5, 13, 18, 26, 45];
-  const mean = ex.reduce((a, s) => a + f(s), 0) / ex.length;
-  line(g, L, Y(mean), R, Y(mean), 'var(--ink-2)', 1.25, { 'stroke-dasharray': '5 3' });
-  ex.forEach(s => {
-    el('circle', { cx: X(lg(s)), cy: Y(f(s)), r: 3.6, fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1.4 }, g);
-  });
-  const t = el('text', { x: L + 8, y: Y(mean) - 7, class: 'lab' }, g);
-  t.innerHTML = `8 个得分的平均 <tspan class="n" style="font-weight:700;fill:var(--ink);font-size:13px">${mean.toFixed(1)}</tspan> = 本题得分`;
+  txt(g, L + 8, Y(100) + 4, 'lab', '本题得分 = 24 个输入得分的平均', 'start');
   txt(g, R, B + 38, 'lab', '加速比 s（对数刻度）', 'end');
   const c = el('text', { x: L - 34, y: B + 38, class: 'lab' }, g);
-  c.innerHTML = '锚点取自沙粒题；空心点是 8 个示例输入';
+  c.innerHTML = '锚点取自沙粒题';
 }
 </script>
 </body>
