@@ -3,15 +3,15 @@ r"""Score an already compiled submission against the reference solution, re-run 
 python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe
     --report result.json
 
-Session: the candidate's correctness inputs first (any failure -> score 0, nothing else is run). Then, input by
-input, every performance input is run --repeats times (default 1) by the reference solution and --repeats times by
+Session: the candidate's correctness inputs first, then, input by input, every performance input is run --repeats times (default 1) by the reference solution and --repeats times by
 the candidate, each run in its own process, interleaved: odd inputs start with the reference, even inputs with the
 candidate, and the order flips after every pair (R C C R R C ... / C R R C C R ...). Each role's time on an input
 is the median of its runs. The inputs are whatever performance/inputs holds (24 per task, at least 3).
 Score: each performance input is scored on its own: s_i = R_i / C_i (R_i reference time, C_i candidate time), and
 the task's anchor table interpolated linearly in ln s_i gives 0-100 points, one decimal place: 0 at or below the
 lowest anchor, 100 at or above the highest anchor (flagged for manual review). An input the candidate fails (wrong
-answer, crash, timeout) scores 0. The task score is the mean of the input scores, one decimal place.
+answer, crash, timeout) scores 0. The task score is the mean of the input scores times the share of correctness
+inputs passed (each of the 7 is worth 1/7: a failed one removes its share), one decimal place.
 G = exp(mean ln s_i) is reported for reference only. If the reference solution itself fails, the session is void:
 score null, exit code 2.
 """
@@ -116,9 +116,14 @@ def geomean(values):
     return math.exp(statistics.fmean(math.log(v) for v in values))
 
 
-def mean_points(values):
-    """The task score: mean of the per-input points, one decimal place."""
-    return float(Decimal(repr(statistics.fmean(values))).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+def one_decimal(x):
+    return float(Decimal(repr(x)).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+
+
+def mean_points(values, passed=None, total=None):
+    """The task score: mean of the per-input points, times passed/total correctness inputs when given; one decimal."""
+    m = statistics.fmean(values)
+    return one_decimal(m if passed is None else m * passed / total)
 
 
 def load_validation(suite):
@@ -212,11 +217,11 @@ def evaluate(args):
         save()
     failed = [x['case'] for x in report['correctness'] if not x['passed']]
     report['correctness_passed'] = CORRECTNESS_INPUTS - len(failed)
-    zero = [f'correctness input {c} failed' for c in failed]
+    zero = []  # compile failures and rule violations are judged by the grader; correctness failures only scale the score
 
     # 2. Performance inputs, one at a time: the reference solution and the candidate, --repeats runs each, interleaved.
     session_errors, items, clamped = [], [], []
-    if perf_cases is not None and not failed:
+    if perf_cases is not None:
         family = families(validation)
         for position, (inp, expected_path) in enumerate(perf_cases, 1):
             expected = read_expected(expected_path)
@@ -268,7 +273,9 @@ def evaluate(args):
     elif not items or any(x['points_i'] is None for x in items):
         report['score'] = None
     else:
-        report['score'] = mean_points(x['points_i'] for x in items)
+        report['performance_score'] = mean_points([x['points_i'] for x in items])
+        report['correctness_factor'] = f"{report['correctness_passed']}/{CORRECTNESS_INPUTS}"
+        report['score'] = mean_points([x['points_i'] for x in items], report['correctness_passed'], CORRECTNESS_INPUTS)
         report['failed_inputs'] = [x['case'] for x in items if x['status'] != 'PASS']
         top = [x['case'] for x in items if x['s_i'] is not None and x['s_i'] >= anchors[-1][0]]
         notes = [f"{', '.join(top)} 的加速比达到或超过最高锚点 {anchors[-1][0]}"] if top else []
@@ -284,7 +291,7 @@ def evaluate(args):
     report['finished'] = time.strftime('%Y-%m-%d %H:%M:%S')
     save()
     print(json.dumps({k: report.get(k) for k in ('correctness_passed', 'performance_inputs', 'performance_passed',
-                                                 'G', 'score', 'zero_score_reasons', 'session_errors',
+                                                 'G', 'performance_score', 'score', 'zero_score_reasons', 'session_errors',
                                                  'manual_review_required', 'official')},
                      ensure_ascii=False), flush=True)
     if session_errors: return 2

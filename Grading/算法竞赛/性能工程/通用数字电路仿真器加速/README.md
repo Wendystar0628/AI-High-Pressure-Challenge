@@ -12,7 +12,7 @@
 | `grader/grader.cpp` | 官方评测程序，与题面第五节中的代码逐字节一致 |
 | `baselines/reference_solution.cpp` | 参考解法：出题人写的通用优化解法，每次评测重新运行，其用时 $R_i$ 是加速比的分母 |
 | `baselines/weak_solution.cpp` | 弱基线：认真的第一版写法，只用来交叉核对标准答案，不参与计分 |
-| `correctness/inputs/`、`correctness/expected/` | 7 个正确性输入及独立参考答案，不计分，任一失败记 0 分 |
+| `correctness/inputs/`、`correctness/expected/` | 7 个正确性输入及独立参考答案，每个占本题得分的 1/7，失败一个就去掉那一份 |
 | `validation.json` | 参考解法 24 个输入的逐次计时与中位数（健康检查用）、输入统计、交叉核对与正确性记录、工具指纹 |
 
 所有文件都使用 LF 换行。
@@ -132,7 +132,7 @@
 python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json
 ```
 
-工具先运行提交的 7 个正确性输入（任一失败即记 0 分，后面不再运行）；再在每个性能输入上让参考解法和提交各运行一次（`--repeats N` 时各 N 次，奇数输入先参考解法后提交，偶数输入先提交后参考解法，取各自中位数），按题面评分标准输出 $R_i$、$C_i$、$s_i$、各输入得分、作参考的 $G$ 和本题得分。参考解法本身运行失败时这次评测作废。具体说明见上一级 README。
+工具先运行提交的 7 个正确性输入（失败一个，本题得分去掉 1/7，后面照常运行）；再在每个性能输入上让参考解法和提交各运行一次（`--repeats N` 时各 N 次，奇数输入先参考解法后提交，偶数输入先提交后参考解法，取各自中位数），按题面评分标准输出 $R_i$、$C_i$、$s_i$、各输入得分、作参考的 $G$ 和本题得分。参考解法本身运行失败时这次评测作废。具体说明见上一级 README。
 
 以下命令展示单次运行和性能输入重建方式；手工评测时也必须执行正确性检查，并在同一次评测中运行参考解法。
 
