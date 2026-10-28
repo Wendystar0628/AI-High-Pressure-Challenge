@@ -1,4 +1,4 @@
-# 初等数学证明题 · 评分表（Claude Opus 5.5）
+# IMO难题精选 · 评分表（Claude Opus 5.5）
 
 ## 分项得分
 
