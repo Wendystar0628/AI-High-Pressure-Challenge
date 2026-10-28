@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x300">
+<title>权重分配</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head { position: absolute; left: 32px; right: 32px; top: 26px; display: flex; align-items: baseline; gap: 16px; }
+  .head h2 { font-size: 24px; line-height: 32px; }
+  .head p { font-size: 14px; color: var(--ink-2); }
+
+  .plot { position: absolute; left: 32px; top: 80px; width: 896px; }
+  .plot > * { position: absolute; }
+
+  .cn { font-size: 14px; line-height: 20px; color: var(--ink); white-space: nowrap; }
+  .cw { font-size: 26px; line-height: 28px; color: var(--c); white-space: nowrap; font-weight: 600; }
+  .blk { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block); }
+  .div { width: 1px; background: var(--c); opacity: .55; }
+  .tw { font-size: 15px; line-height: 18px; color: var(--c); white-space: nowrap; }
+  .tw .cnx { font-family: var(--font-cn); font-size: 13px; margin-right: 4px; color: var(--ink-2); }
+  .tn { font-size: 13px; line-height: 17px; color: var(--ink-2); white-space: nowrap; }
+
+  .rl { height: 1px; background: var(--ink-3); }
+  .tk { width: 1px; background: var(--ink-3); }
+  .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>权重分配</h2>
+    <p>先分到 6 个类别，类别内各题平分；条长按权重精确绘制。</p>
+  </div>
+  <div class="plot" id="plot"></div>
+</div>
+<script>
+// Weights in percent, exact. Category weight = sum of its tasks.
+const CATS = [
+  ['visual',   '视觉设计与渲染', '20%',   [['NVIDIA_B200<br>网页艺术', 10], ['太阳雨渔港<br>3D渲染', 10]]],
+  ['reason',   '深度推理',       '17.5%', [['形式化<br>证明题', 8.75], ['IMO难题精选', 8.75]]],
+  ['algo',     '算法竞赛',       '17.5%', [[null, 4.375], [null, 4.375], [null, 4.375], [null, 4.375]]],
+  ['interact', '复杂交互应用',   '15%',   [['AE风味动效<br>设计编辑器', 15]]],
+  ['game',     '游戏设计与开发', '15%',   [['动态路由塔防', 15]]],
+  ['physics',  '物理建模与仿真', '15%',   [['多物理连锁机关', 15]]],
+];
+const W = 896, P = W / 100;               // px per percentage point
+const GAP = 3;                            // white gap between categories, centred on the exact boundary
+const CAT_Y = 0, BAR_Y = 56, BAR_H = 40, TW_Y = BAR_Y + BAR_H + 8, TN_Y = TW_Y + 21, RULER_Y = TN_Y + 50;
+const plot = document.getElementById('plot');
+function put(cls, css, html = '') {
+  const d = document.createElement('div');
+  d.className = cls;
+  d.style.cssText = css;
+  d.innerHTML = html;
+  plot.appendChild(d);
+  return d;
+}
+
+let at = 0;
+CATS.forEach(([k, name, w, tasks], ci) => {
+  const total = tasks.reduce((s, t) => s + t[1], 0);
+  const x0 = at * P, x1 = (at + total) * P;
+  const l = x0 + (ci ? GAP / 2 : 0), r = x1 - (ci < CATS.length - 1 ? GAP / 2 : 0);
+  const c = `--c:var(--${k});--t:var(--${k}-tint)`;
+  put('cn', `left:${l + 6}px;top:${CAT_Y}px`, name);
+  put('cw num', `left:${l + 5}px;top:${CAT_Y + 22}px;${c}`, w);
+  put('blk', `left:${l}px;top:${BAR_Y}px;width:${r - l}px;height:${BAR_H}px;${c}`);
+  let t0 = at;
+  tasks.forEach(([tn, tw], ti) => {
+    const tx = t0 * P;
+    if (ti) put('div', `left:${tx - 0.5}px;top:${BAR_Y + 1.5}px;height:${BAR_H - 3}px;${c}`);
+    const lx = (ti ? tx : l) + 6;
+    if (tn) {
+      put('tw num', `left:${lx}px;top:${TW_Y}px;${c}`, `${tw}%`);
+      put('tn', `left:${lx}px;top:${TN_Y}px`, tn);
+    }
+    t0 += tw;
+  });
+  if (k === 'algo') put('tw num', `left:${l + 6}px;top:${TW_Y}px;${c}`, `<span class="cnx">四题各</span>4.375%`);
+  at += total;
+});
+
+// Scale: 0–100 %, minor tick every 5 %.
+put('rl', `left:0;top:${RULER_Y}px;width:${W}px`);
+for (let p = 0; p <= 100; p += 5) {
+  const major = p % 25 === 0, h = major ? 8 : 4;
+  put('tk', `left:${Math.min(p * P, W - 1)}px;top:${RULER_Y - h}px;height:${h}px`);
+  if (major) {
+    const lab = put('tl num', `left:${p * P}px;top:${RULER_Y + 5}px`, p === 100 ? '100%' : p);
+    lab.style.transform = p === 0 ? 'none' : p === 100 ? 'translateX(-100%)' : 'translateX(-50%)';
+  }
+}
+</script>
+</body>
+</html>

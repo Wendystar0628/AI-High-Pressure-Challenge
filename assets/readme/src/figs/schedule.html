@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x726">
+<title>测试赛程</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head { position: absolute; left: 32px; right: 32px; top: 28px; }
+  .head h2 { font-size: 26px; line-height: 34px; }
+  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+  .legend { display: grid; grid-template-columns: repeat(3, auto); column-gap: 28px; row-gap: 10px;
+            font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  .legend b { grid-column: 1 / -1; font-size: 13px; font-weight: 400; color: var(--ink-3); }
+  .legend span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .legend i { width: 16px; height: 10px; border-radius: 3px; border: 1.5px solid var(--c); background: var(--t); }
+
+  .plot { position: absolute; left: 32px; top: 112px; width: 896px; }
+  .plot > * { position: absolute; }
+
+  /* timing ruler */
+  .rl { height: 1px; background: var(--ink-3); }
+  .tk { width: 1px; background: var(--ink-3); }
+  .tk.key { background: var(--ink); width: 1.5px; }
+  .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-50%); white-space: nowrap; }
+  .tl.key { color: var(--ink); font-weight: 600; }
+  .unit { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-100%); }
+
+  /* lanes */
+  .lane { height: 1px; background: var(--line-2); }
+  .ln { width: 18px; font-size: 12px; color: var(--ink-3); }
+  .name { font-size: 14px; color: var(--ink); white-space: nowrap; transform: translateX(-100%); text-align: right; }
+  .bar { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block);
+         display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;
+         font-size: 12px; line-height: 1; color: var(--c); white-space: nowrap; }
+  .bar .num { font-size: 13px; margin-right: 3px; }
+  .wait { height: 0; border-top: 1.5px dotted var(--ink-3); }
+  .relay { width: 1.5px; background: var(--ink-2); }
+
+  /* batch headers and the lines between batches */
+  .bh { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; line-height: 20px; }
+  .bh span { font-weight: 400; font-size: 13px; color: var(--ink-2); margin-left: 12px; }
+  .done { font-size: 13px; line-height: 20px; color: var(--ink-2); white-space: nowrap; transform: translateX(-100%); }
+  .vline { width: 1.5px; background: var(--ink); }
+  .vline.start { width: 2px; }
+
+  /* the scoreboard that closes the schedule */
+  .board { border: 1.5px solid var(--ink); border-radius: var(--radius-block) 0 var(--radius-block) var(--radius-block); background: var(--paper); padding: 12px 16px 14px; }
+  .board .bt { font-size: 15px; font-weight: 700; line-height: 20px; }
+  .board .bt span { font-weight: 400; font-size: 13px; color: var(--ink-2); margin-left: 10px; }
+  .board .row { display: flex; align-items: center; margin-top: 10px; }
+  .judges { display: flex; flex-direction: column; gap: 6px; }
+  .judge { width: 120px; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--stage);
+           font-size: 14px; line-height: 24px; text-align: center; color: var(--ink); }
+  .merge { display: block; flex: none; }
+  .step { font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+  .link { width: 16px; height: 1.5px; background: var(--ink-2); margin: 0 7px; flex: none; }
+  .total { border: 1.5px solid var(--ink); border-radius: 6px; padding: 3px 10px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>测试赛程</h2>
+    <p>11 道题分三批测试，前一批全部到时后才开始下一批。条长按限时绘制。</p>
+  </div>
+  <div class="plot" id="plot"></div>
+</div>
+<script>
+const CATS = {
+  reason: '深度推理', algo: '算法竞赛', interact: '复杂交互应用',
+  game: '游戏设计与开发', physics: '物理建模与仿真', visual: '视觉设计与渲染'
+};
+const TASKS = [
+  ['形式化证明题', 'reason', 0, 60],
+  ['IMO难题精选', 'reason', 0, 60],
+  ['AE风味动效设计编辑器', 'interact', 0, 90],
+  ['动态路由塔防', 'game', 0, 90],
+  ['NVIDIA_B200网页艺术', 'visual', 0, 90],
+  ['太阳雨渔港3D渲染', 'visual', 0, 90],
+  ['单位正方形内最小三角形面积最大化', 'algo', 90, 60],
+  ['正负一序列的自相关能量最小化', 'algo', 90, 60],
+  ['网格沙粒倒塌的GPU加速', 'algo', 150, 60],
+  ['通用数字电路仿真器加速', 'algo', 210, 60],
+  ['多物理连锁机关', 'physics', 270, 90],
+];
+const BATCHES = [
+  { title: '第一批　并行批', note: '6 题同时开测', at: 0, lanes: [0, 1, 2, 3, 4, 5] },
+  { title: '第二批　分核同测', note: '两题同时进行，各限 14 个逻辑处理器', at: 90, lanes: [6, 7], done: '6 题全部到时' },
+  { title: '第三批　串行独占', note: '三题首尾相接，每题独占整台机器', at: 150, lanes: [8, 9, 10], done: '2 题全部到时' },
+];
+
+const W = 896, X0 = 196, END = 360;
+const S = (W - X0) / END;                 // px per minute, one scale for every bar
+const x = m => X0 + m * S;
+const LANE = 28, HEAD = 30, BAR = 20, RULER = 30;
+const plot = document.getElementById('plot');
+const cv = c => `--c:var(--${c});--t:var(--${c}-tint)`;
+function put(cls, css, html = '') {
+  const d = document.createElement('div');
+  d.className = cls;
+  d.style.cssText = css;
+  d.innerHTML = html;
+  plot.appendChild(d);
+  return d;
+}
+
+// Timing ruler: a tick every 10 minutes, a label every 30; the three hand-over times in ink.
+const KEY = [90, 150, 360];
+put('rl', `left:${x(0)}px;top:${RULER - 1}px;width:${END * S}px`);
+for (let m = 0; m <= END; m += 10) {
+  const major = m % 30 === 0, key = KEY.includes(m);
+  const h = key ? 10 : major ? 7 : 4;
+  put('tk' + (key ? ' key' : ''), `left:${x(m) - (key ? 0.75 : 0.5)}px;top:${RULER - h}px;height:${h}px`);
+  if (major) put('tl num' + (key ? ' key' : ''), `left:${x(m)}px;top:${RULER - 26}px`, m);
+}
+put('unit', `left:${x(0) - 14}px;top:${RULER - 26}px`, '分钟');
+
+// Batches: header row, then one lane per task.
+let y = RULER + 10;
+const laneTop = [];
+BATCHES.forEach(b => {
+  if (b.done) put('done', `left:${x(b.at) - 10}px;top:${y + 6}px`, b.done);
+  put('bh', `left:${x(b.at) + 10}px;top:${y + 6}px`, `${b.title}<span>${b.note}</span>`);
+  y += HEAD;
+  b.top = y;
+  b.lanes.forEach(i => {
+    laneTop[i] = y;
+    put('lane', `left:0;top:${y}px;width:${W}px`);
+    put('ln num', `left:0;top:${y + 6}px`, i + 1);
+    y += LANE;
+  });
+  put('lane', `left:0;top:${y}px;width:${W}px`);
+  b.bottom = y;
+});
+
+TASKS.forEach(([n, c, s, d], i) => {
+  const t = laneTop[i], by = t + (LANE - BAR) / 2;
+  put('name', `left:${x(s) - 10}px;top:${t + 4}px;line-height:20px`, n);
+  put('bar', `left:${x(s)}px;top:${by}px;width:${d * S}px;height:${BAR}px;${cv(c)}`,
+      `<span class="num">${d}</span>分钟`);
+});
+
+// The 60-minute tasks of batch 1 finish early and wait for the 90-minute ones.
+[0, 1].forEach(i => put('wait', `left:${x(60) + 4}px;top:${laneTop[i] + LANE / 2}px;width:${30 * S - 8}px`));
+// Batch 3 runs end to end.
+[[8, 9, 210], [9, 10, 270]].forEach(([a, b, m]) =>
+  put('relay', `left:${x(m) - 0.75}px;top:${laneTop[a] + (LANE + BAR) / 2}px;height:${laneTop[b] - laneTop[a] - BAR}px`));
+
+// Start line, and each batch's finish line doubling as the next batch's start line.
+const [b1, b2, b3] = BATCHES;
+put('vline start', `left:${x(0) - 1}px;top:${b1.top}px;height:${b1.bottom - b1.top}px`);
+put('vline', `left:${x(90) - 0.75}px;top:${b1.top}px;height:${b2.bottom - b1.top}px`);
+put('vline', `left:${x(150) - 0.75}px;top:${b2.top}px;height:${laneTop[8] + LANE - b2.top}px`);
+
+// Scoring: after the last batch, not on the time axis.
+put('done', `left:${x(360) - 10}px;top:${y + 6}px`, '11 题全部到时');
+y += HEAD;
+put('vline', `left:${x(360) - 0.75}px;top:${b3.top}px;height:${y - b3.top}px`);
+const merge = `<svg class="merge" width="26" height="58" viewBox="0 0 26 58" fill="none" stroke="var(--ink-2)" stroke-width="1.5">
+  <path d="M0 13 H12 V45 H0 M12 29 H26"/></svg>`;
+const board = put('board', `left:${x(150)}px;top:${y}px;width:${x(360) - x(150)}px`,
+  `<div class="bt">评分<span>两位评分 AI 各自独立评分，不限时</span></div>
+   <div class="row">
+     <div class="judges"><div class="judge num">Claude Opus 5.5</div><div class="judge num">GPT 6.1 Sol</div></div>
+     ${merge}
+     <div class="step" style="margin-left:8px">每题取平均</div>
+     <div class="link"></div>
+     <div class="total">按权重加权汇总</div>
+   </div>`);
+
+// Category key, in the empty corner left of the scoreboard.
+put('legend', `left:0;top:${y + 14}px`, '<b>条的颜色表示题目类别</b>' + Object.entries(CATS)
+  .map(([k, v]) => `<span style="${cv(k)}"><i></i>${v}</span>`).join(''));
+</script>
+</body>
+</html>

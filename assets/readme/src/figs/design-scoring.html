@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x516">
+<title>设计题计分</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 24px; letter-spacing: .01em; }
+  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .head p .num { color: var(--ink); }
+
+  svg.chart { position: absolute; left: 0; top: 0; overflow: visible; }
+  svg text { font-family: var(--font-cn); fill: var(--ink); }
+  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+  svg .tick { font-size: 12px; fill: var(--ink-3); }
+  svg .axis { font-size: 13px; fill: var(--ink-2); }
+  svg .anchor { font-size: 13px; fill: var(--ink-2); }
+  svg .anchor-v { font-size: 15px; font-weight: 700; fill: var(--ink); }
+  svg .lane { font-size: 12px; fill: var(--ink-3); }
+  svg .name { font-size: 13px; font-weight: 500; fill: var(--ink); }
+  svg .calc { font-size: 13px; fill: var(--ink-2); }
+  svg .calc .pts { font-weight: 700; fill: var(--ink); }
+
+  .side { position: absolute; left: 640px; top: 116px; width: 288px; }
+  .side h3 { font-size: 16px; margin-bottom: 14px; }
+  .rule { display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; align-items: start; margin-bottom: 13px; }
+  .rule svg { display: block; margin-top: 2px; }
+  .rule p { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+  .rule p b { color: var(--ink); font-weight: 700; }
+  .sum { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
+  .foot { position: absolute; right: 32px; bottom: 16px; font-size: 13px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>设计题：每个分项的得分是一块面积</h2>
+    <p>分项得分 = 分值 × 完成份额 × 做得多好，满分是整个正方形。例子是一个 <span class="num">8</span> 分的分项、四种作品。</p>
+  </div>
+
+  <svg class="chart" id="chart" width="960" height="516"></svg>
+
+  <div class="side">
+    <h3>三部分要点怎样改变矩形</h3>
+    <div class="rule">
+      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="wide"></svg>
+      <p><b>完成</b>：题面要求这一项做出什么。<br>按分量估做到几成，定下完成份额，<br>也就是矩形的宽。</p>
+    </div>
+    <div class="rule">
+      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="tall"></svg>
+      <p><b>质量</b>：只看已经做到的部分，<br>定下做得多好，也就是矩形的高。</p>
+    </div>
+    <div class="rule">
+      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="lower"></svg>
+      <p><b>规则局部不成立</b>：降低做得多好，<br>矩形变矮。</p>
+    </div>
+    <div class="rule">
+      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="narrow"></svg>
+      <p><b>规则根本不成立、只是冒充</b>：<br>不计入完成份额，矩形变窄。</p>
+    </div>
+    <p class="sum">每题 <span class="num">18–23</span> 个分项都这样计分，<br>相加为本题总分，满分 <span class="num">100</span>。</p>
+  </div>
+
+  <p class="foot">违规条款另按题面执行：记 <span class="num">0</span> 分、扣分或某部分记 <span class="num">0</span>。</p>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+};
+const txt = (parent, x, y, cls, s, anchor = 'start') => {
+  const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
+  t.textContent = s;
+  return t;
+};
+
+// Square geometry: x = 完成份额, y = 做得多好, both 0–1. The whole square is the item's full value (8 points).
+const S = 360, X0 = 210, Y0 = 118;
+const X = v => X0 + v * S, Y = v => Y0 + (1 - v) * S;
+const VALUE = 8;
+const svg = document.getElementById('chart');
+
+const works = [
+  { name: '参照',           c: 1.0, q: 0.5,  cs: '1.0', qs: '0.5'  },
+  { name: '做得多但粗糙',   c: 1.0, q: 0.35, cs: '1.0', qs: '0.35' },
+  { name: '做得少但精',     c: 0.5, q: 0.8,  cs: '0.5', qs: '0.8'  },
+  { name: '字面做到但敷衍', c: 0.3, q: 0.3,  cs: '0.3', qs: '0.3'  },
+];
+
+// Layers: fills, equal-score lanes (masked under labels), edges, dots, labels.
+const gFill = el('g', {}, svg);
+const defs = el('defs', {}, svg);
+const mask = el('mask', { id: 'm', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 960, height: 516 }, defs);
+el('rect', { x: 0, y: 0, width: 960, height: 516, fill: '#fff' }, mask);
+const gLane = el('g', { mask: 'url(#m)' }, svg);
+const gEdge = el('g', {}, svg);
+const gDot = el('g', {}, svg);
+const gLab = el('g', {}, svg);
+
+// Full square: the item's full value.
+el('rect', { x: X0, y: Y0, width: S, height: S, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
+
+// Equal-score lanes: c × q = k / 8, the curve on which every work scores k points.
+for (let k = 1; k <= 7; k++) {
+  const a = k / VALUE, pts = [];
+  for (let i = 0; i <= 80; i++) {
+    const c = a + (1 - a) * i / 80;
+    pts.push(`${X(c).toFixed(2)},${Y(a / c).toFixed(2)}`);
+  }
+  el('polyline', { points: pts.join(' '), fill: 'none', stroke: 'var(--line)', 'stroke-width': 1.1 }, gLane);
+  txt(svg, X(1) + 9, Y(a) + 4, 'lane n', String(k));
+}
+txt(svg, X(1) + 9, Y(1) + 4, 'lane n', '8');
+txt(svg, X(1) + 9, Y(1) - 14, 'lane', '得分');
+
+// Rectangles: each work's score is its area.
+for (const w of works) {
+  el('rect', { x: X0, y: Y(w.q), width: w.c * S, height: w.q * S, fill: 'var(--ink)', 'fill-opacity': .03 }, gFill);
+  el('polyline', { points: `${X0},${Y(w.q)} ${X(w.c)},${Y(w.q)} ${X(w.c)},${Y(0)}`, fill: 'none',
+                   stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, gEdge);
+  el('circle', { cx: X(w.c), cy: Y(w.q), r: 4.5, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 2 }, gDot);
+}
+
+// Axes: the left and bottom edges, with ruler ticks every 0.1 outside the square.
+el('polyline', { points: `${X0},${Y0} ${X0},${Y(0)} ${X(1)},${Y(0)}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, gEdge);
+for (let i = 0; i <= 10; i++) {
+  const v = i / 10, major = i % 5 === 0;
+  el('line', { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + (major ? 7 : 4), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
+  el('line', { x1: X0, x2: X0 - (major ? 7 : 4), y1: Y(v), y2: Y(v), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
+}
+for (const [v, s] of [[0, '0'], [0.5, '0.5'], [1, '1']]) txt(svg, X(v), Y(0) + 22, 'tick n', s, 'middle');
+txt(svg, X(0.75), Y(0) + 22, 'axis', '完成份额', 'middle');
+txt(svg, X0 - 11, Y(0) + 4, 'tick n', '0', 'end');
+for (const [v, s] of [[0.5, '0.5'], [1, '1']]) txt(svg, X0 - 11, Y(v) + 5, 'anchor-v n', s, 'end');
+txt(svg, X0, Y0 - 12, 'axis', '做得多好');
+
+// The two anchors of 做得多好, written beside the axis.
+const anchor = (v, lines) => {
+  const top = Y(v) - (lines.length * 18) / 2 + 13;
+  lines.forEach((s, i) => txt(svg, X0 - 40, top + i * 18, 'anchor', s, 'end'));
+};
+anchor(1, ['大型限时创作竞赛', '获奖作品的水准']);
+anchor(0.5, ['照题面做到、', '做得平平']);
+
+// Labels sit inside each rectangle, under its top-right corner.
+for (const w of works) {
+  const x = X(w.c) - 7, y = Y(w.q) + 19;
+  const t1 = txt(gLab, x, y, 'name', w.name, 'end');
+  const t2 = el('text', { x, y: y + 17, class: 'calc n', 'text-anchor': 'end' }, gLab);
+  const a = el('tspan', {}, t2); a.textContent = `${w.cs} × ${w.qs} = `;
+  const b = el('tspan', { class: 'pts' }, t2); b.textContent = (VALUE * w.c * w.q).toFixed(1);
+  const u = el('tspan', { style: 'font-family: var(--font-cn)' }, t2); u.textContent = ' 分';
+  for (const t of [t1, t2]) {
+    const bb = t.getBBox();
+    el('rect', { x: bb.x - 4, y: bb.y - 2, width: bb.width + 8, height: bb.height + 4, fill: '#000' }, mask);
+  }
+}
+
+// Small glyphs in the side panel: which edge of the rectangle each kind of point moves.
+const glyph = (g, kind) => {
+  const u = 30, o = 2, gx = v => o + v * u, gy = v => o + (1 - v) * u;
+  el('rect', { x: o, y: o, width: u, height: u, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
+  const draw = (c, q, dash) => {
+    el('rect', { x: o, y: gy(q), width: c * u, height: q * u, fill: dash ? 'none' : 'var(--ink)', 'fill-opacity': .06 }, g);
+    el('polyline', { points: `${o},${gy(q)} ${gx(c)},${gy(q)} ${gx(c)},${gy(0)}`, fill: 'none', stroke: 'var(--ink)',
+                     'stroke-width': dash ? 1 : 1.4, 'stroke-dasharray': dash ? '2 2' : 'none', opacity: dash ? .55 : 1 }, g);
+  };
+  const thick = (x1, y1, x2, y2) => el('line', { x1, y1, x2, y2, stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }, g);
+  if (kind === 'wide')   { draw(.7, .55); thick(gx(0), gy(0), gx(.7), gy(0)); }
+  if (kind === 'tall')   { draw(.7, .55); thick(gx(0), gy(0), gx(0), gy(.55)); }
+  if (kind === 'lower')  { draw(.7, .55, true); draw(.7, .32); }
+  if (kind === 'narrow') { draw(.7, .55, true); draw(.38, .55); }
+};
+document.querySelectorAll('[data-glyph]').forEach(g => glyph(g, g.dataset.glyph));
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+/* AI OneShot Hexathlon README figures: one shared token set. Every figure links this file and uses only these tokens. */
+
+/* Type: HarmonyOS Sans SC for Chinese, Bahnschrift (DIN-like, scoreboard feel) for numerals and Latin titles. */
+@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC"), local("HarmonyOS_Sans_SC_Regular"); font-weight: 400; }
+@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC Medium"), local("HarmonyOS_Sans_SC_Medium"); font-weight: 500; }
+@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC Bold"), local("HarmonyOS_Sans_SC_Bold"); font-weight: 700; }
+
+:root {
+  /* Surfaces: white paper on a cool near-white stage. */
+  --paper: #FFFFFF;
+  --stage: #F4F6F9;
+  --ink: #1B2333;          /* text, and the one structural colour: headings, axes, focus */
+  --ink-2: #4A5468;        /* secondary text */
+  --ink-3: #8A93A5;        /* tertiary text, tick labels */
+  --line: #DCE1E9;         /* hairlines, card borders */
+  --line-2: #EBEEF3;       /* lane lines, faint grid */
+
+  /* The six categories: unordered, similar lightness, separated hues. Each colour means its category everywhere. */
+  --reason: #6A44BE;   --reason-tint: #F0EBFA;    /* 深度推理 */
+  --algo: #0B7A87;     --algo-tint: #E3F2F4;      /* 算法竞赛 */
+  --interact: #A8650A; --interact-tint: #F8EFE0;  /* 复杂交互应用 */
+  --game: #B23A5F;     --game-tint: #F8E7ED;      /* 游戏设计与开发 */
+  --physics: #2E7B33;  --physics-tint: #E7F2E7;   /* 物理建模与仿真 */
+  --visual: #1E6BC0;   --visual-tint: #E5EFFA;    /* 视觉设计与渲染 */
+
+  --radius-frame: 18px;   /* the outer card of a figure */
+  --radius-block: 8px;    /* bars, chips and inner blocks */
+  --shadow: 0 1px 2px rgba(27, 35, 51, .06), 0 4px 16px rgba(27, 35, 51, .05);
+
+  --font-cn: "HX Sans", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --font-num: "Bahnschrift", "DIN Alternate", "HX Sans", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; }
+body {
+  font-family: var(--font-cn);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+/* A figure is one white card that fills the canvas; the canvas size comes from <meta name="size">. */
+.frame {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  overflow: hidden;
+  padding: 28px 32px;
+}
+
+/* Track-lane motif: faint horizontal lanes with lane numbers, kept to edges and empty space. */
+.lanes { position: absolute; inset: 0; pointer-events: none; }
+.lanes i { position: absolute; left: 0; right: 0; height: 1px; background: var(--line-2); }
+
+h1, h2, h3 { font-weight: 700; color: var(--ink); }
+h2 { font-size: 22px; line-height: 1.3; }
+h3 { font-size: 16px; line-height: 1.35; }
+.muted { color: var(--ink-2); }
+.faint { color: var(--ink-3); }
