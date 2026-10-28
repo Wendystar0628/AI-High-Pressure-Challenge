@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/readme/hero.png" width="100%" alt="AI OneShot Hexathlon：AI 编程智能体的单次限时六项全能评测"></p>
+<p align="center"><img src="assets/readme/hero.png" width="100%" alt="AI 高压挑战赛（AI High-Pressure Challenge）：AI 编程智能体的单次限时高压评测"></p>
 
 <p align="center">一次机会，限时作答，无人答疑：11 道题、6 个类别，看 AI 编程智能体能否独立交付完整、正确、出色的作品。</p>
 
@@ -16,7 +16,7 @@
 
 ## 项目简介
 
-AI OneShot Hexathlon 是一套给 AI 编程智能体做的单次限时评测。受测模型通过自己的智能体工具，在 60 或 90 分钟内独立完成一道题：期间没有人回答问题，到时直接中止，也没有第二次机会。11 道题分属深度推理、算法竞赛、复杂交互应用、游戏设计与开发、物理建模与仿真、视觉设计与渲染 6 个类别，从 Lean 形式化证明、竞赛数学、极值构造、性能优化，一直到整件网页作品的设计与开发。每道题由两位评分 AI 按题面的评分标准各自打分、取平均，折算成 0–100 分后按权重汇总为模型总分。
+AI 高压挑战赛（AI High-Pressure Challenge）是一套给 AI 编程智能体做的单次限时评测。受测模型通过自己的智能体工具，在 60 或 90 分钟内独立完成一道题：期间没有人回答问题，到时直接中止，也没有第二次机会。11 道题分属深度推理、算法竞赛、复杂交互应用、游戏设计与开发、物理建模与仿真、视觉设计与渲染 6 个类别，从 Lean 形式化证明、竞赛数学、极值构造、性能优化，一直到整件网页作品的设计与开发。每道题由两位评分 AI 按题面的评分标准各自打分、取平均，折算成 0–100 分后按权重汇总为模型总分。
 
 ## 题目总览
 
@@ -562,7 +562,7 @@ $$\text{得分}=\text{分值}\times\text{完成份额}\times\text{做得多好}$
 题面按类别放在各文件夹里，评分资料集中在 `Grading/`，说明见 [`Grading/README.md`](Grading/README.md)。
 
 ```text
-AI-OneShot-Hexathlon/
+AI-High-Pressure-Challenge/
 ├─ README.md
 ├─ assets/readme/                               README 的配图和类别图标，src/ 为设计源文件
 ├─ 深度推理/                                   题面：每题一个 .md
