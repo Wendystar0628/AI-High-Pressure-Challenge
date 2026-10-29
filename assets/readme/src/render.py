@@ -27,7 +27,8 @@ for name in names:
     pinned.write_text(src.read_text(encoding='utf-8').replace(
         '</head>', f'<style>html,body{{width:{w}px;height:{h}px;position:relative;overflow:hidden}}</style></head>', 1),
         encoding='utf-8')
-    subprocess.run([CHROME, '--headless=new', '--hide-scrollbars', '--default-background-color=00000000',
+    # --do-not-de-elevate: from an elevated shell Chrome would relaunch itself unelevated and never write the file.
+    subprocess.run([CHROME, '--headless=new', '--do-not-de-elevate', '--hide-scrollbars', '--default-background-color=00000000',
                     '--force-device-scale-factor=2', f'--window-size={w},{h}', '--virtual-time-budget=3000',
                     f'--screenshot={out}', pinned.as_uri()], check=True, capture_output=True, timeout=60)
     pinned.unlink()

@@ -215,16 +215,16 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
 
 /* 性能工程题: per-input lookup on a log axis (sand-pile anchors, multiples of the reference solution), then the mean of 24 scores. */
 {
-  const A = [[.2, 0], [.5, 5], [1, 20], [1.5, 34], [3, 60], [6, 100]];
+  const A = [[.2, 0], [.5, 5], [1, 20], [2, 37], [4, 55], [8, 74], [20, 100]];
   const lg = Math.log;
   const f = s => {
     if (s <= .2) return 0;
-    if (s >= 6) return 100;
-    for (let k = 0; k < 5; k++) if (s <= A[k + 1][0]) return A[k][1] + (A[k + 1][1] - A[k][1]) * Math.log(s / A[k][0]) / Math.log(A[k + 1][0] / A[k][0]);
+    if (s >= 20) return 100;
+    for (let k = 0; k < A.length - 1; k++) if (s <= A[k + 1][0]) return A[k][1] + (A[k + 1][1] - A[k][1]) * Math.log(s / A[k][0]) / Math.log(A[k + 1][0] / A[k][0]);
   };
-  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.2), lg(8)], ys: [0, 100], yTicks: [0, 50, 100],
+  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.2), lg(28)], ys: [0, 100], yTicks: [0, 50, 100],
     xTicks: A.map(([s]) => [lg(s), `${s}×`]) });
-  el('polyline', { points: [...A, [8, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+  el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
   A.forEach(([s, p]) => {
     el('circle', { cx: X(lg(s)), cy: Y(p), r: 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
     if (s > .2) txt(g, X(lg(s)) - 4, Y(p) - 8, 'tick n', String(p), 'end');

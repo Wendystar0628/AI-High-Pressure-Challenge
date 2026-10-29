@@ -33,7 +33,7 @@ TASKS = {  # anchors: (s_i, points), s_i relative to the reference solution, as 
     'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms',
                 'anchors': ((0.1, 0), (0.5, 10), (1, 30), (1.75, 52), (2.75, 75), (4, 100))},
     'sand': {'folder': '网格沙粒倒塌的GPU加速', 'timer': 'solve_ms',
-             'anchors': ((0.2, 0), (0.5, 5), (1, 20), (1.5, 34), (3, 60), (6, 100))},
+             'anchors': ((0.2, 0), (0.5, 5), (1, 20), (2, 37), (4, 55), (8, 74), (20, 100))},
 }
 CORRECTNESS_INPUTS = 7
 MIN_PERFORMANCE_INPUTS = 3
