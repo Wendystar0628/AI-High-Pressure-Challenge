@@ -15,7 +15,8 @@
   svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
   svg .tick { font-size: 12px; fill: var(--ink-3); }
   svg .axis { font-size: 13px; fill: var(--ink-2); }
-  svg .anchor { font-size: 13px; fill: var(--ink-2); }
+  svg .tier { font-size: 13.5px; font-weight: 700; fill: var(--ink); }
+  svg .tier-d { font-size: 12px; fill: var(--ink-2); }
   svg .anchor-v { font-size: 15px; font-weight: 700; fill: var(--ink); }
   svg .lane { font-size: 12px; fill: var(--ink-3); }
   svg .name { font-size: 13px; font-weight: 500; fill: var(--ink); }
@@ -49,7 +50,7 @@
     </div>
     <div class="rule">
       <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="tall"></svg>
-      <p><b>做得多好</b>：只看已经做到的部分，<br>是矩形的高。</p>
+      <p><b>做得多好</b>：只看做到的部分，按左侧<br>五档给、可取中间值，是矩形的高。</p>
     </div>
     <div class="rule">
       <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="lower"></svg>
@@ -62,7 +63,7 @@
     <p class="sum">每题 <span class="num">19–31</span> 个分项都这样计分，<br>相加为本题总分，满分 <span class="num">100</span>。<br>例外：AE 的性能 <span class="num">10</span> 分按计时公式计分。</p>
   </div>
 
-  <p class="foot">另有扣分：每个问题由评分员酌情扣 <span class="num">1–3</span> 分。</p>
+  <p class="foot">不另扣分：发现的问题只体现在矩形的宽或高里。</p>
 </div>
 
 <script>
@@ -86,10 +87,10 @@ const VALUE = 8;
 const svg = document.getElementById('chart');
 
 const works = [
-  { name: '参照',           c: 1.0, q: 0.5,  cs: '1.0', qs: '0.5'  },
-  { name: '做得多但粗糙',   c: 1.0, q: 0.35, cs: '1.0', qs: '0.35' },
-  { name: '做得少但精',     c: 0.5, q: 0.8,  cs: '0.5', qs: '0.8'  },
-  { name: '字面做到但敷衍', c: 0.3, q: 0.3,  cs: '0.3', qs: '0.3'  },
+  { name: '都做了、做得好', c: 1.0, q: 0.8, cs: '1.0', qs: '0.8' },
+  { name: '都做了、较普通', c: 1.0, q: 0.6, cs: '1.0', qs: '0.6' },
+  { name: '做得少但精',     c: 0.5, q: 1.0, cs: '0.5', qs: '1.0' },
+  { name: '有其名缺其实',   c: 0.3, q: 0.2, cs: '0.3', qs: '0.2' },
 ];
 
 // Layers: fills, equal-score lanes (masked under labels), edges, dots, labels.
@@ -126,26 +127,32 @@ for (const w of works) {
   el('circle', { cx: X(w.c), cy: Y(w.q), r: 4.5, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 2 }, gDot);
 }
 
-// Axes: the left and bottom edges, with ruler ticks every 0.1 outside the square.
+// Axes: the left and bottom edges, with ruler ticks every 0.1 outside the square
+// (major ticks at 0.5 steps across, at the 0.2 tiers up).
 el('polyline', { points: `${X0},${Y0} ${X0},${Y(0)} ${X(1)},${Y(0)}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, gEdge);
 for (let i = 0; i <= 10; i++) {
-  const v = i / 10, major = i % 5 === 0;
-  el('line', { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + (major ? 7 : 4), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
-  el('line', { x1: X0, x2: X0 - (major ? 7 : 4), y1: Y(v), y2: Y(v), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
+  const v = i / 10;
+  el('line', { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + (i % 5 === 0 ? 7 : 4), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
+  el('line', { x1: X0, x2: X0 - (i % 2 === 0 ? 7 : 4), y1: Y(v), y2: Y(v), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
 }
 for (const [v, s] of [[0, '0'], [0.5, '0.5'], [1, '1']]) txt(svg, X(v), Y(0) + 22, 'tick n', s, 'middle');
 txt(svg, X(0.75), Y(0) + 22, 'axis', '完成份额', 'middle');
 txt(svg, X0 - 11, Y(0) + 4, 'tick n', '0', 'end');
-for (const [v, s] of [[0.5, '0.5'], [1, '1']]) txt(svg, X0 - 11, Y(v) + 5, 'anchor-v n', s, 'end');
 txt(svg, X0, Y0 - 12, 'axis', '做得多好');
 
-// The two anchors of 做得多好, written beside the axis.
-const anchor = (v, lines) => {
-  const top = Y(v) - (lines.length * 18) / 2 + 13;
-  lines.forEach((s, i) => txt(svg, X0 - 40, top + i * 18, 'anchor', s, 'end'));
-};
-anchor(1, ['大型限时创作竞赛', '获奖作品的水准']);
-anchor(0.5, ['照题面做到、', '做得平平']);
+// The five tiers of 做得多好, written beside the axis; graders may also give values in between.
+const TIERS = [
+  [1.0, '出色', '挑不出明显问题，', '细节丰富、精致统一'],
+  [0.8, '良好', '做得好，', '只有零星小瑕疵'],
+  [0.6, '合格', '能用能看，但有明显', '粗糙处，或较为普通'],
+  [0.4, '较差', '明显粗糙，或有', '影响观感、使用的问题'],
+  [0.2, '很差', '勉强做出，', '问题很多'],
+];
+for (const [v, name, ...desc] of TIERS) {
+  txt(svg, X0 - 11, Y(v) + 5, 'anchor-v n', v.toFixed(1), 'end');
+  txt(svg, X0 - 44, Y(v) + 5, 'tier', name, 'end');
+  desc.forEach((s, i) => txt(svg, X0 - 44, Y(v) + 22 + i * 15, 'tier-d', s, 'end'));
+}
 
 // Labels sit inside each rectangle, under its top-right corner.
 for (const w of works) {

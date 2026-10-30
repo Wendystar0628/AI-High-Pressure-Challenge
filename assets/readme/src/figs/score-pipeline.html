@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x676">
+<meta name="size" content="960x652">
 <title>总分合成</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -110,10 +110,6 @@
     <div class="chip">GPT 6.1 Sol</div>
     <div class="what">性能分项（仅 AE）<span class="eg">6.0 / 10</span></div>
   </div>
-  <div class="abs src" id="s4" style="left:32px; top:434px">
-    <div class="chip cut">扣分</div>
-    <div class="what">每个问题 1–3 分<span class="eg">Opus 2，Sol 4</span></div>
-  </div>
 
   <div class="abs op" id="oavg" style="left:348px">
     <div class="do">逐项取两位的平均</div>
@@ -123,35 +119,31 @@
     <div class="do">只用 Sol</div>
     <div class="eg">6.0</div>
   </div>
-  <div class="abs op" id="ocut" style="left:348px">
-    <div class="do">主体段取平均，性能段只用 Sol</div>
-    <div class="eg">(2 + 4) ÷ 2 + 0 = 3.0</div>
-  </div>
 
   <div class="abs op" id="osum" style="left:598px">
-    <div class="do">相加，减去扣分</div>
-    <div class="eg">50.0 + 6.0 − 3.0 = 53.0</div>
+    <div class="do">相加</div>
+    <div class="eg">50.0 + 6.0 = 56.0</div>
   </div>
 
   <!-- Where the lanes meet -->
-  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:340px">
+  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:294px">
     <div class="v" id="v0">50.0</div>
     <div class="mid" id="tmid"><div class="t">本题得分</div><div class="s">S<sub>t</sub></div><div class="r">0–100</div></div>
-    <div class="v" id="v1">53.0</div>
+    <div class="v" id="v1">56.0</div>
   </div>
 
   <!-- Bottom row -->
-  <div class="rule" style="top:502px; height:1.5px; background:var(--ink)"></div>
-  <div class="abs weights" id="weights" style="left:32px; top:516px; width:690px">
+  <div class="rule" style="top:478px; height:1.5px; background:var(--ink)"></div>
+  <div class="abs weights" id="weights" style="left:32px; top:492px; width:690px">
     <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，11 题合计 100%</p>
     <div class="wbar" id="wbar"></div>
   </div>
-  <div class="abs total" id="total" style="left:770px; top:526px; width:158px">
+  <div class="abs total" id="total" style="left:770px; top:502px; width:158px">
     <div class="t">模型总分</div>
     <div class="f">Σ w<sub>t</sub> S<sub>t</sub></div>
   </div>
 
-  <svg class="wires" id="wires" width="960" height="676"></svg>
+  <svg class="wires" id="wires" width="960" height="652"></svg>
 
   <div class="foot">
     <div><b>只有一位主体评分员的结果有效</b>：主体用这一位的</div>
@@ -178,10 +170,9 @@ const part = (id, sel) => rect(document.querySelector(`#${id} ${sel}`));
 // Place each lane-2 operation level with its source rows (the average sits between the two main rows).
 const chipY = id => part(id, '.chip').cy;
 const place = (id, y, sel = '.do') => { const n = document.getElementById(id); n.style.top = `${y - part(id, sel).cy + parseFloat(n.style.top || 0)}px`; };
-for (const id of ['oavg', 'operf', 'ocut', 'osum']) document.getElementById(id).style.top = '0px';
+for (const id of ['oavg', 'operf', 'osum']) document.getElementById(id).style.top = '0px';
 place('oavg', (chipY('s1') + chipY('s2')) / 2);
 place('operf', chipY('s3'));
-place('ocut', chipY('s4'));
 place('osum', chipY('s3'));
 place('o0', chipY('s0'), '.f');
 
@@ -225,14 +216,14 @@ const G = 10, T = box('task');
   const a = box('oavg'), ya = part('oavg', '.do').cy, xm = (box('s1').r + a.l) / 2;
   for (const id of ['s1', 's2']) path(elbow(box(id).r + G, chipY(id), a.l - G, ya, xm));
   head(a.l - G, ya);
-  for (const [sid, oid] of [['s3', 'operf'], ['s4', 'ocut']]) {
+  for (const [sid, oid] of [['s3', 'operf']]) {
     const y = part(oid, '.do').cy; path(`M${box(sid).r + G},${y} H${box(oid).l - G}`); head(box(oid).l - G, y);
   }
 }
-// Operations -> sum: a bracket collecting the three results.
+// Operations -> sum: the average joins from above, the performance score runs straight in.
 {
   const sum = box('osum'), ys = part('osum', '.do').cy, xb = sum.l - 22;
-  for (const id of ['oavg', 'operf', 'ocut']) {
+  for (const id of ['oavg', 'operf']) {
     const y = part(id, '.do').cy, x0 = part(id, '.do').r + G;
     if (id === 'operf') { path(`M${x0},${y} H${sum.l - G}`); continue; }
     path(elbow(x0, y, xb + 0.01, ys, xb));
@@ -241,7 +232,7 @@ const G = 10, T = box('task');
   // Sum -> task column, with the rest of the composition written under the arrow.
   const xe = T.l - 2, x1 = sum.r + G;
   path(`M${x1},${ys} H${xe}`); head(xe, ys);
-  label(sum.l, part('osum', '.eg').b + 20, '不低于 0，再 ÷ 100 × 100', 'start');
+  label(sum.l, part('osum', '.eg').b + 20, '再 ÷ 100 × 100', 'start');
   const v = document.getElementById('v1'); v.style.top = `${ys - T.t - 12}px`;
 }
 // Task title sits midway between the two entries.

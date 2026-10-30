@@ -26,7 +26,7 @@
   svg .note { font-size: 13px; fill: var(--ink-2); }
   svg .big { font-size: 17px; font-weight: 700; }
 
-  /* What scores 0 or costs points: the last line of every panel. */
+  /* Special cases (zero scores, no deductions): the last line of every panel. */
   .zero { margin-top: auto; padding-top: 12px; }
   .zero p { font-size: 13px; line-height: 1.5; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; }
   .zero b { color: var(--ink); font-weight: 500; }
@@ -36,7 +36,7 @@
 <div class="frame">
   <div class="head">
     <h2>五种题型怎样计分</h2>
-    <p>各题型先得出原始分，再折算成 0–100 分。每块最下一行是记 0 分或扣分的情形。</p>
+    <p>各题型先得出原始分，再折算成 0–100 分。每块最下一行是需要单独说明的情形。</p>
   </div>
 
   <div class="row three">
@@ -56,7 +56,7 @@
       <h3>设计题</h3>
       <p class="rule">每题 19–31 个分项，相加满分 100。<br>分项得分 = 分值 × 完成份额 × 做得多好</p>
       <svg id="design" width="277" height="100"></svg>
-      <div class="zero"><p><b>扣分</b>：每个问题酌情扣 1–3 分</p></div>
+      <div class="zero"><p><b>不另扣分</b>：问题只体现在宽或高里</p></div>
     </section>
   </div>
 
