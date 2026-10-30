@@ -1,0 +1,74 @@
+[
+  {
+    "文件": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-performance-media\\normal-0-A-1920x1080-180-h264.mp4",
+    "SHA256": "07e38991adc35fb22f89e0486cc44e1f90e43e534afb42f2b092470e4625bef5",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1",
+          "duration": "10.000000",
+          "nb_read_frames": "600"
+        }
+      ]
+    }
+  },
+  {
+    "文件": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-performance-media\\normal-0-B-1920x1080-180-h264.mp4",
+    "SHA256": "be6d2d251c73d50eb0aeb8c9c0032a0d703267f49b3d201ea31f24d260bf1578",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1",
+          "duration": "10.000000",
+          "nb_read_frames": "600"
+        }
+      ]
+    }
+  },
+  {
+    "文件": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-performance-media\\normal-0-C-1920x1080-180-h264.mp4",
+    "SHA256": "31d6ba4c64df32125b3902a9dbca87044e1eb75e252cbe7170376ec3c3314424",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1",
+          "duration": "10.000000",
+          "nb_read_frames": "600"
+        }
+      ]
+    }
+  },
+  {
+    "文件": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-performance-media\\normal-0-C-1920x1080-360-h264.mp4",
+    "SHA256": "9aa440ad5e1507c6208e10cae9e07edf2f0c40d568253231fa4ca689b4c7e4f8",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1",
+          "duration": "10.000000",
+          "nb_read_frames": "600"
+        }
+      ]
+    }
+  }
+]

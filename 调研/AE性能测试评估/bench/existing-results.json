@@ -1,0 +1,53 @@
+{
+  "profile": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-existing-cQv3z8",
+  "fable": {
+    "title": "帧生万象 · 动效设计编辑器",
+    "body": "帧生万象\n帧生万象 · 示例工程\n文件\n编辑\n合成\n图层\n关键帧\n视图\n帮助\n操作说明\n绘制\n形状\n蒙版\n填充\n描边\n4\npx\n导出\n项目\n性能\n名称\n尺寸\n帧率\n时长\n引用\n主合成\n1920×1080\n60\n10:00\n0\n机关\n1920×1080\n60\n10:00\n1\n字阵\n1920×1080\n60\n10:00\n1\n新建合成\n合成设置\n主合成\n×\n主合成\n缩放\n35%\n显示\n显示 ▾\n视角\n摄像机：主摄像机\n品质\n完整\n停止\n属性\n未选中图层。在时间轴或画布上选择图层后，这里显示它的属性；选中关键帧时显示关键帧信息。\n▼\n合成\n名称\n主合成\n尺寸\n1920 × 1080 px · 60 fps · 10 s（600 帧）\n背景\n工作区\n0\n帧\n600\n帧\n运动模糊\n快门角度\n180\n°\n快门相位\n-90\n°\n采样数\n10\n时间显示\n时间码\n合成设置…\n缓动预设\n先选中关键帧\n线性\n缓入缓出\n缓入\n缓出\n强缓入缓出\n强缓入\n强缓出\n平滑\n预备\n过冲\n预备+过冲\n急停\n蓄力\n弹落\n轻过冲\n缓起急停\n00:00:00\n第 0 帧 · 60 fps\n时间轴\n曲线\n分屏\nfx\n#\n名称\n混合",
+    "canvas": 3,
+    "errors": []
+  },
+  "haikuOpen": {
+    "title": "AE风味动效设计编辑器",
+    "available": true,
+    "errors": []
+  },
+  "haiku": [
+    {
+      "scene": "A",
+      "t": 2.5,
+      "layers": 4096,
+      "storedLayers": 4096,
+      "ms": 12.800000011920929,
+      "stats": {
+        "layers": 4096,
+        "sdf": 4096,
+        "ms": 0
+      }
+    },
+    {
+      "scene": "B",
+      "t": 2.5,
+      "layers": 8,
+      "storedLayers": 1032,
+      "ms": 6.300000011920929,
+      "stats": {
+        "layers": 3075,
+        "sdf": 3072,
+        "ms": 0
+      }
+    },
+    {
+      "scene": "C",
+      "t": 2.5,
+      "layers": 1024,
+      "storedLayers": 1024,
+      "ms": 6416.099999964237,
+      "stats": {
+        "layers": 8192,
+        "sdf": 0,
+        "ms": 0
+      }
+    }
+  ],
+  "haikuErrors": []
+}

@@ -1,0 +1,161 @@
+[
+  {
+    "kind": "vp9-software-A",
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "vp09.00.10.08",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 24000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-software",
+        "latencyMode": "quality"
+      },
+      "submitMs": 2366.300000011921,
+      "encodedMs": 2372.800000011921,
+      "totalMs": 2405.800000011921,
+      "bytes": 15723692,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.51638153212519,
+        "2500000": 47.34295486036079,
+        "7500000": 45.587755367549725
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-vp9.ivf"
+    }
+  },
+  {
+    "kind": "readback-C",
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 6701.900000035763,
+      "encodedMs": 6713.699999988079,
+      "totalMs": 6720.400000035763,
+      "bytes": 3607045,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.37021059012615,
+        "2500000": 51.154041066624664,
+        "7500000": 52.00400385116711
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "4k-environment",
+    "value": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 (0x00002704) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "w": 3840,
+      "h": 2160,
+      "webcodecs": true
+    }
+  },
+  {
+    "kind": "4k",
+    "read": false,
+    "value": {
+      "scene": "A",
+      "cfg": {
+        "codec": "avc1.420034",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  },
+  {
+    "kind": "4k",
+    "read": true,
+    "value": {
+      "scene": "A",
+      "cfg": {
+        "codec": "avc1.420034",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  },
+  {
+    "kind": "4k",
+    "read": false,
+    "value": {
+      "scene": "C",
+      "cfg": {
+        "codec": "avc1.420034",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  },
+  {
+    "kind": "4k",
+    "read": true,
+    "value": {
+      "scene": "C",
+      "cfg": {
+        "codec": "avc1.420034",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  }
+]

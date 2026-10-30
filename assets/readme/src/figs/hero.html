@@ -44,9 +44,9 @@
 const lanes = [
   { key: 'reason',   name: '深度推理',       n: 2, w: 17.5, t: 60 },
   { key: 'algo',     name: '算法竞赛',       n: 4, w: 17.5, t: 60 },
-  { key: 'interact', name: '复杂交互应用',   n: 1, w: 15,   t: 90 },
-  { key: 'game',     name: '游戏设计与开发', n: 1, w: 15,   t: 90 },
-  { key: 'physics',  name: '物理建模与仿真', n: 1, w: 15,   t: 90 },
+  { key: 'interact', name: '复杂交互应用',   n: 1, w: 15,   t: 100 },
+  { key: 'game',     name: '游戏设计与开发', n: 1, w: 15,   t: 100 },
+  { key: 'physics',  name: '物理建模与仿真', n: 1, w: 15,   t: 100 },
   { key: 'visual',   name: '视觉设计与渲染', n: 2, w: 20,   t: 90 },
 ];
 const ICON = 'file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-';
@@ -57,7 +57,7 @@ const LANE_BOTTOM = LANE_TOP + LANE_H * LANES;
 const X0 = 258;            // start line: weight 0
 const PX_PER_PCT = 22;     // 20% -> 440 px
 const BAR_H = 16, GAP = 4;
-const T0 = 792, PX_PER_MIN = 1.2;   // time ruler: 0..90 min -> 108 px
+const T0 = 774, PX_PER_MIN = 1.2, T_MAX = 100;   // time ruler: 0..100 min -> 120 px
 
 const f = document.getElementById('f');
 const svg = document.getElementById('track');
@@ -100,16 +100,16 @@ html('colhead', `left:${X0 + 8}px;top:${LANE_TOP - 22}px`, '类别权重，每�
 
 // Time ruler (minutes) heading the time column.
 const RULER_Y = LANE_TOP - 6;
-el('line', { x1: T0, x2: T0 + 90 * PX_PER_MIN, y1: RULER_Y + .5, y2: RULER_Y + .5, stroke: css('--ink-3'), 'stroke-width': 1 });
-for (let m = 0; m <= 90; m += 10) {
-  const major = m % 30 === 0;
+el('line', { x1: T0, x2: T0 + T_MAX * PX_PER_MIN, y1: RULER_Y + .5, y2: RULER_Y + .5, stroke: css('--ink-3'), 'stroke-width': 1 });
+for (let m = 0; m <= T_MAX; m += 10) {
+  const major = m % 20 === 0;
   el('line', { x1: T0 + m * PX_PER_MIN + .5, x2: T0 + m * PX_PER_MIN + .5, y1: RULER_Y - (major ? 6 : 3), y2: RULER_Y, stroke: css('--ink-3'), 'stroke-width': 1 });
 }
-for (const m of [0, 30, 60, 90]) {
+for (let m = 0; m <= T_MAX; m += 20) {
   html('tick num', `left:${T0 + m * PX_PER_MIN}px;top:${RULER_Y - 22}px`, String(m));
 }
 html('colhead', `right:${960 - T0 + 14}px;top:${RULER_Y - 22}px;text-align:right`, '限时');
-html('colhead', `left:${T0 + 90 * PX_PER_MIN + 10}px;top:${RULER_Y - 22}px`, '分钟');
+html('colhead', `left:${T0 + T_MAX * PX_PER_MIN + 16}px;top:${RULER_Y - 22}px`, '分钟');
 
 // The six lanes.
 lanes.forEach((L, i) => {
@@ -143,7 +143,7 @@ const FOOT_Y = LANE_BOTTOM + 30;
 html('foot', `left:86px;top:${FOOT_Y}px`, '合计');
 html('count', `left:176px;top:${FOOT_Y - 1}px`, `<b>11</b><span>题</span>`);
 html('foot', `right:32px;top:${FOOT_Y}px;text-align:right`,
-     '每题由两位评分 AI 各自打分取平均：<span class="num" style="color:var(--ink)">Claude Opus 5.5</span>、<span class="num" style="color:var(--ink)">GPT 6.1 Sol</span>');
+     '设计题由 <span class="num" style="color:var(--ink)">Claude Opus 5.5</span> 与 <span class="num" style="color:var(--ink)">GPT 6.1 Sol</span> 各评取平均，其余由 Sol 单评');
 </script>
 </body>
 </html>

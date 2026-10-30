@@ -1,0 +1,795 @@
+[
+  {
+    "kind": "environment",
+    "value": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 (0x00002704) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "w": 1920,
+      "h": 1080,
+      "webcodecs": true
+    }
+  },
+  {
+    "kind": "edit",
+    "value": {
+      "N": 16384,
+      "keys": 147456,
+      "buildMs": 9.199999988079071,
+      "steps": [
+        {
+          "op": "F9",
+          "ms": 7.600000023841858
+        },
+        {
+          "op": "undo",
+          "ms": 0.10000002384185791
+        },
+        {
+          "op": "redo",
+          "ms": 0.30000001192092896
+        },
+        {
+          "op": "undo",
+          "ms": 0
+        },
+        {
+          "op": "F9",
+          "ms": 7.600000023841858
+        },
+        {
+          "op": "undo",
+          "ms": 0
+        },
+        {
+          "op": "redo",
+          "ms": 0.09999996423721313
+        },
+        {
+          "op": "undo",
+          "ms": 0
+        },
+        {
+          "op": "F9",
+          "ms": 3.699999988079071
+        },
+        {
+          "op": "undo",
+          "ms": 0
+        },
+        {
+          "op": "redo",
+          "ms": 0.09999996423721313
+        },
+        {
+          "op": "undo",
+          "ms": 0.10000002384185791
+        },
+        {
+          "op": "F9",
+          "ms": 14.400000035762787
+        },
+        {
+          "op": "undo",
+          "ms": 0.30000001192092896
+        },
+        {
+          "op": "redo",
+          "ms": 0.10000002384185791
+        },
+        {
+          "op": "undo",
+          "ms": 0.10000002384185791
+        },
+        {
+          "op": "F9",
+          "ms": 2.599999964237213
+        },
+        {
+          "op": "undo",
+          "ms": 0.09999996423721313
+        },
+        {
+          "op": "redo",
+          "ms": 0.09999996423721313
+        },
+        {
+          "op": "undo",
+          "ms": 0.09999996423721313
+        }
+      ],
+      "task4Ms": 37.39999997615814,
+      "duplicates": [
+        {
+          "copyMs": 3.5,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 6.699999988079071,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 5.300000011920929,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 2.300000011920929,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 2.100000023841858,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 4.399999976158142,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 4.300000011920929,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 2.199999988079071,
+          "undoMs": 0,
+          "valid": true
+        }
+      ],
+      "task5Ms": 30.80000001192093,
+      "startHeap": 5950534,
+      "baseHeap": 18092482,
+      "maxHeap": 115685354,
+      "validEase": true,
+      "validFinal": true,
+      "note": "只测数据层，未含四视图重绘；峰值是采样值，不是操作系统 RSS"
+    }
+  },
+  {
+    "kind": "edit",
+    "value": {
+      "N": 65536,
+      "keys": 589824,
+      "buildMs": 22.899999976158142,
+      "steps": [
+        {
+          "op": "F9",
+          "ms": 21.80000001192093
+        },
+        {
+          "op": "undo",
+          "ms": 0.800000011920929
+        },
+        {
+          "op": "redo",
+          "ms": 0.40000003576278687
+        },
+        {
+          "op": "undo",
+          "ms": 0.5
+        },
+        {
+          "op": "F9",
+          "ms": 20.5
+        },
+        {
+          "op": "undo",
+          "ms": 0.699999988079071
+        },
+        {
+          "op": "redo",
+          "ms": 0.5
+        },
+        {
+          "op": "undo",
+          "ms": 0.5999999642372131
+        },
+        {
+          "op": "F9",
+          "ms": 34
+        },
+        {
+          "op": "undo",
+          "ms": 0.800000011920929
+        },
+        {
+          "op": "redo",
+          "ms": 1
+        },
+        {
+          "op": "undo",
+          "ms": 0.8999999761581421
+        },
+        {
+          "op": "F9",
+          "ms": 20.30000001192093
+        },
+        {
+          "op": "undo",
+          "ms": 0.800000011920929
+        },
+        {
+          "op": "redo",
+          "ms": 0.6000000238418579
+        },
+        {
+          "op": "undo",
+          "ms": 0.5
+        },
+        {
+          "op": "F9",
+          "ms": 17.5
+        },
+        {
+          "op": "undo",
+          "ms": 0.699999988079071
+        },
+        {
+          "op": "redo",
+          "ms": 0.699999988079071
+        },
+        {
+          "op": "undo",
+          "ms": 0.5
+        }
+      ],
+      "task4Ms": 124.10000002384186,
+      "duplicates": [
+        {
+          "copyMs": 16.099999964237213,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 15,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.399999976158142,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.599999964237213,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.699999988079071,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.300000011920929,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.599999964237213,
+          "undoMs": 0,
+          "valid": true
+        },
+        {
+          "copyMs": 14.599999964237213,
+          "undoMs": 0,
+          "valid": true
+        }
+      ],
+      "task5Ms": 118.299999833107,
+      "startHeap": 115809430,
+      "baseHeap": 138787282,
+      "maxHeap": 730858110,
+      "validEase": true,
+      "validFinal": true,
+      "note": "只测数据层，未含四视图重绘；峰值是采样值，不是操作系统 RSS"
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "A",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": false,
+      "ms": 24.5,
+      "msPerFrame": 0.20416666666666666,
+      "firstMs": 0.09999996423721313,
+      "evaluations": 457932,
+      "error": 0
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "A",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": true,
+      "ms": 388.89999997615814,
+      "msPerFrame": 3.2408333331346513,
+      "firstMs": 62.89999997615814,
+      "evaluations": 457932,
+      "error": 0
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "B",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": false,
+      "ms": 31.19999998807907,
+      "msPerFrame": 0.2599999999006589,
+      "firstMs": 0,
+      "evaluations": 586827,
+      "error": 0
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "B",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": true,
+      "ms": 393.4000000357628,
+      "msPerFrame": 3.2783333336313567,
+      "firstMs": 19.200000047683716,
+      "evaluations": 586827,
+      "error": 0
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "C",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": false,
+      "ms": 42.39999997615814,
+      "msPerFrame": 0.3533333331346512,
+      "firstMs": 0.5999999642372131,
+      "evaluations": 933888,
+      "error": 0
+    }
+  },
+  {
+    "kind": "render",
+    "value": {
+      "scene": "C",
+      "frames": 120,
+      "angle": 180,
+      "n": 0,
+      "read": true,
+      "ms": 549.5999999642372,
+      "msPerFrame": 4.579999999701977,
+      "firstMs": 103.39999997615814,
+      "evaluations": 933888,
+      "error": 0
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 0,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1378.199999988079,
+      "encodedMs": 1392.800000011921,
+      "totalMs": 1406.699999988079,
+      "bytes": 9333355,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.16740901537154,
+        "7500000": 45.26383192246698
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 0,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1475.0999999642372,
+      "encodedMs": 1489.0999999642372,
+      "totalMs": 1503.2999999523163,
+      "bytes": 10385729,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.26709543323387,
+        "7500000": 47.29167096731367
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 0,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1551.9000000357628,
+      "encodedMs": 1566.800000011921,
+      "totalMs": 1572.800000011921,
+      "bytes": 3535445,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.375572816481586,
+        "2500000": 51.1384765879485,
+        "7500000": 52.0081564620694
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 0,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 360,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1549.8999999761581,
+      "encodedMs": 1565,
+      "totalMs": 1570.7999999523163,
+      "bytes": 3473530,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.152090555213505,
+        "2500000": 51.29789565978886,
+        "7500000": 52.19979302834294
+      },
+      "evaluations": 4687872,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-360-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 1,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1383.300000011921,
+      "encodedMs": 1397.7000000476837,
+      "totalMs": 1410.6000000238419,
+      "bytes": 9333355,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.16740901537154,
+        "7500000": 45.26383192246698
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 1,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1431.4000000357628,
+      "encodedMs": 1446.300000011921,
+      "totalMs": 1460.7000000476837,
+      "bytes": 10385729,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.26709543323387,
+        "7500000": 47.29167096731367
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 1,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1581.699999988079,
+      "encodedMs": 1599.0999999642372,
+      "totalMs": 1605.0999999642372,
+      "bytes": 3535445,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.375572816481586,
+        "2500000": 51.1384765879485,
+        "7500000": 52.0081564620694
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "repeat": 1,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 360,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1637.199999988079,
+      "encodedMs": 1653,
+      "totalMs": 1659.1000000238419,
+      "bytes": 3473530,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.152090555213505,
+        "2500000": 51.29789565978886,
+        "7500000": 52.19979302834294
+      },
+      "evaluations": 4687872,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-360-h264.mp4"
+    }
+  },
+  {
+    "kind": "export-readback",
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 2750.699999988079,
+      "encodedMs": 2765.399999976158,
+      "totalMs": 2772.5,
+      "bytes": 4451149,
+      "chunks": 600,
+      "psnr": {
+        "0": 31.932192831552143,
+        "2500000": 31.288315319587575,
+        "7500000": 31.135369579911988
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export-vp9",
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "vp09.00.10.08",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 24000000,
+        "framerate": 60,
+        "hardwareAcceleration": "no-preference",
+        "latencyMode": "quality"
+      },
+      "submitMs": 2398.300000011921,
+      "encodedMs": 2407.300000011921,
+      "totalMs": 2428,
+      "bytes": 15236641,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.52642945415491,
+        "2500000": 47.34784551135676,
+        "7500000": 45.566699948698286
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-vp9.ivf"
+    }
+  },
+  {
+    "kind": "environment-4k",
+    "value": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 (0x00002704) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "w": 3840,
+      "h": 2160,
+      "webcodecs": true
+    }
+  },
+  {
+    "kind": "4k",
+    "value": {
+      "scene": "A",
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  },
+  {
+    "kind": "4k",
+    "value": {
+      "scene": "C",
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 3840,
+        "height": 2160,
+        "bitrate": 100000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "supported": false
+    }
+  }
+]

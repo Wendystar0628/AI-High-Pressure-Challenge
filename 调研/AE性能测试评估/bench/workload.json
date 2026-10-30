@@ -1,0 +1,54 @@
+{
+  "resolution": [
+    1920,
+    1080
+  ],
+  "frames": 600,
+  "output_pixels": 1244160000,
+  "raw_rgba_bytes": 4976640000,
+  "A": {
+    "active_layer_samples": 2297856,
+    "unclipped_quad_pixels": 64651300409,
+    "key_property_evaluations": 6893568
+  },
+  "B": {
+    "active_layer_samples": 2942463,
+    "unclipped_quad_pixels": 72324816320,
+    "key_property_evaluations": 8827389,
+    "child_comp_samples": 3120,
+    "full_canvas_child_pixel_bound": 6469632000
+  },
+  "C180": {
+    "active_layer_samples": 4685824,
+    "unclipped_quad_pixels": 132907035164,
+    "key_property_evaluations": 14057472
+  },
+  "C360": {
+    "active_layer_samples": 4687872,
+    "unclipped_quad_pixels": 132988927431,
+    "key_property_evaluations": 14063616
+  },
+  "C_pixel_temporal_samples": 9953280000,
+  "edit4": {
+    "layers": 65536,
+    "keys": 589824,
+    "key_visits_if_each_step_full_scan": 11796480,
+    "F9_key_changes": 2949120,
+    "layer_redraw_instances": 1310720,
+    "unclipped_quad_pixel_bound_per_redraw": 2621440000
+  },
+  "edit5": {
+    "layers_before": 65536,
+    "layers_peak": 131072,
+    "keys_peak": 1179648,
+    "new_layers_total": 524288,
+    "new_keys_total": 4718592,
+    "redraw_layer_instances": 1572864
+  },
+  "4k": {
+    "output_pixels": 4976640000,
+    "raw_rgba_bytes": 19906560000,
+    "C_pixel_temporal_samples": 39813120000,
+    "note": "同几何坐标与仅扩大输出画布时，图层面积不自动乘四；同比放大几何才乘四。"
+  }
+}

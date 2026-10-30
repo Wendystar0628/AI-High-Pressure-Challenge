@@ -1,0 +1,676 @@
+[
+  {
+    "kind": "environment",
+    "profile": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-practical-QWT0Fo",
+    "value": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 (0x00002704) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "w": 1920,
+      "h": 1080,
+      "webcodecs": true
+    }
+  },
+  {
+    "kind": "checks",
+    "value": {
+      "layers": [
+        4096,
+        1024,
+        1024
+      ],
+      "keys": [
+        36864,
+        9228,
+        9216
+      ],
+      "maxStartFrames": 78,
+      "parentOK": true,
+      "remap75": 2.5,
+      "shutterChangeAbsDiff": 251671,
+      "uniqueIds": true
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 371.60000002384186,
+      "submitMs": 3492.199999988079,
+      "encodedMs": 3503.899999976158,
+      "totalMs": 3889.5,
+      "bytes": 8942468,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.37182585524506,
+        "2500000": 47.20697037420999,
+        "7500000": 45.277695301295225
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0.19999998807907104,
+      "submitMs": 3717.199999988079,
+      "encodedMs": 3727.600000023842,
+      "totalMs": 3741.899999976158,
+      "bytes": 10381153,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.37182585524506,
+        "2500000": 47.268397441539435,
+        "7500000": 47.29663725876472
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0,
+      "submitMs": 4165.699999988079,
+      "encodedMs": 4177.5,
+      "totalMs": 4183.300000011921,
+      "bytes": 3607045,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.37021059012615,
+        "2500000": 51.154041066624664,
+        "7500000": 52.00400385116711
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 360,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0.20000004768371582,
+      "submitMs": 4099.199999988079,
+      "encodedMs": 4110.5,
+      "totalMs": 4118.300000011921,
+      "bytes": 3499525,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.15654780199377,
+        "2500000": 51.31321504773334,
+        "7500000": 52.217553746568385
+      },
+      "evaluations": 4687872,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-360-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0.10000002384185791,
+      "submitMs": 1564.800000011921,
+      "encodedMs": 1580.1000000238419,
+      "totalMs": 1592.9000000357628,
+      "bytes": 8942468,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.37182585524506,
+        "2500000": 47.20697037420999,
+        "7500000": 45.277695301295225
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0.10000002384185791,
+      "submitMs": 1602.800000011921,
+      "encodedMs": 1615.6000000238419,
+      "totalMs": 1630.7000000476837,
+      "bytes": 10381153,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.37182585524506,
+        "2500000": 47.268397441539435,
+        "7500000": 47.29663725876472
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0,
+      "submitMs": 1746.300000011921,
+      "encodedMs": 1756.5,
+      "totalMs": 1762.199999988079,
+      "bytes": 3607045,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.37021059012615,
+        "2500000": 51.154041066624664,
+        "7500000": 52.00400385116711
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 360,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "preparationMs": 0.19999998807907104,
+      "submitMs": 1717.3999999761581,
+      "encodedMs": 1728.300000011921,
+      "totalMs": 1734,
+      "bytes": 3499525,
+      "chunks": 600,
+      "psnr": {
+        "0": 52.15654780199377,
+        "2500000": 51.31321504773334,
+        "7500000": 52.217553746568385
+      },
+      "evaluations": 4687872,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-360-h264.mp4"
+    }
+  },
+  {
+    "kind": "edit",
+    "rep": 0,
+    "value": {
+      "N": 65536,
+      "keys": 589824,
+      "steps": [
+        {
+          "op": "F9",
+          "dataMs": 28.399999976158142,
+          "totalMs": 74.19999998807907
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.6000000238418579,
+          "totalMs": 34.89999997615814
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.699999988079071,
+          "totalMs": 32.80000001192093
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 31.799999952316284
+        },
+        {
+          "op": "F9",
+          "dataMs": 24.399999976158142,
+          "totalMs": 68.59999996423721
+        },
+        {
+          "op": "undo",
+          "dataMs": 2.199999988079071,
+          "totalMs": 41.69999998807907
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.6000000238418579,
+          "totalMs": 35.10000002384186
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 32
+        },
+        {
+          "op": "F9",
+          "dataMs": 22.399999976158142,
+          "totalMs": 56.09999996423721
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 30.099999964237213
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 30.299999952316284
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.5,
+          "totalMs": 29.799999952316284
+        },
+        {
+          "op": "F9",
+          "dataMs": 21.69999998807907,
+          "totalMs": 61.10000002384186
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.30000001192092896,
+          "totalMs": 29.80000001192093
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.40000003576278687,
+          "totalMs": 29.69999998807907
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 30.899999976158142
+        },
+        {
+          "op": "F9",
+          "dataMs": 23,
+          "totalMs": 62.5
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.3999999761581421,
+          "totalMs": 30.80000001192093
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.19999998807907104,
+          "totalMs": 30.19999998807907
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.5,
+          "totalMs": 49
+        }
+      ],
+      "copies": [
+        {
+          "dataMs": 21.099999964237213,
+          "copyMs": 85,
+          "undoMs": 30.799999952316284,
+          "valid": true
+        },
+        {
+          "dataMs": 18.399999976158142,
+          "copyMs": 87.19999998807907,
+          "undoMs": 29.899999976158142,
+          "valid": true
+        },
+        {
+          "dataMs": 19,
+          "copyMs": 86.09999996423721,
+          "undoMs": 29.19999998807907,
+          "valid": true
+        },
+        {
+          "dataMs": 20.100000023841858,
+          "copyMs": 84.60000002384186,
+          "undoMs": 30,
+          "valid": true
+        },
+        {
+          "dataMs": 22.200000047683716,
+          "copyMs": 85.60000002384186,
+          "undoMs": 29.899999976158142,
+          "valid": true
+        },
+        {
+          "dataMs": 20.80000001192093,
+          "copyMs": 108.5,
+          "undoMs": 30,
+          "valid": true
+        },
+        {
+          "dataMs": 18.200000047683716,
+          "copyMs": 83,
+          "undoMs": 28.899999976158142,
+          "valid": true
+        },
+        {
+          "dataMs": 20.600000023841858,
+          "copyMs": 84.30000001192093,
+          "undoMs": 29.399999976158142,
+          "valid": true
+        }
+      ],
+      "task4Ms": 821.3999997377396,
+      "task5Ms": 942.3999998569489,
+      "baseHeap": 114619635,
+      "peakHeap": 687726859,
+      "validEase": true,
+      "validFinal": true
+    }
+  },
+  {
+    "kind": "edit-small",
+    "value": {
+      "N": 16384,
+      "keys": 147456,
+      "steps": [
+        {
+          "op": "F9",
+          "dataMs": 5.5,
+          "totalMs": 11.799999952316284
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.19999998807907104,
+          "totalMs": 8.699999988079071
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.20000004768371582,
+          "totalMs": 6.700000047683716
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 7.600000023841858
+        },
+        {
+          "op": "F9",
+          "dataMs": 3.300000011920929,
+          "totalMs": 9.600000023841858
+        },
+        {
+          "op": "undo",
+          "dataMs": 0,
+          "totalMs": 7.900000035762787
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.09999996423721313,
+          "totalMs": 8.099999964237213
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 6.300000011920929
+        },
+        {
+          "op": "F9",
+          "dataMs": 2.899999976158142,
+          "totalMs": 10.699999988079071
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 6.199999988079071
+        },
+        {
+          "op": "redo",
+          "dataMs": 0,
+          "totalMs": 6.399999976158142
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 6.300000011920929
+        },
+        {
+          "op": "F9",
+          "dataMs": 3,
+          "totalMs": 9.599999964237213
+        },
+        {
+          "op": "undo",
+          "dataMs": 0,
+          "totalMs": 8.300000011920929
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.19999998807907104,
+          "totalMs": 6.5
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 7.899999976158142
+        },
+        {
+          "op": "F9",
+          "dataMs": 3,
+          "totalMs": 9.699999988079071
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.19999998807907104,
+          "totalMs": 6.300000011920929
+        },
+        {
+          "op": "redo",
+          "dataMs": 0.10000002384185791,
+          "totalMs": 8.400000035762787
+        },
+        {
+          "op": "undo",
+          "dataMs": 0.09999996423721313,
+          "totalMs": 6.199999988079071
+        }
+      ],
+      "copies": [
+        {
+          "dataMs": 2.700000047683716,
+          "copyMs": 20,
+          "undoMs": 6.100000023841858,
+          "valid": true
+        },
+        {
+          "dataMs": 4.100000023841858,
+          "copyMs": 18.700000047683716,
+          "undoMs": 6.299999952316284,
+          "valid": true
+        },
+        {
+          "dataMs": 4.200000047683716,
+          "copyMs": 19,
+          "undoMs": 6.300000011920929,
+          "valid": true
+        },
+        {
+          "dataMs": 3.599999964237213,
+          "copyMs": 20.099999964237213,
+          "undoMs": 8.100000023841858,
+          "valid": true
+        },
+        {
+          "dataMs": 3.300000011920929,
+          "copyMs": 19,
+          "undoMs": 8,
+          "valid": true
+        },
+        {
+          "dataMs": 2.800000011920929,
+          "copyMs": 17.599999964237213,
+          "undoMs": 7.600000023841858,
+          "valid": true
+        },
+        {
+          "dataMs": 2.600000023841858,
+          "copyMs": 18.700000047683716,
+          "undoMs": 8,
+          "valid": true
+        },
+        {
+          "dataMs": 2.700000047683716,
+          "copyMs": 18.700000047683716,
+          "undoMs": 8.399999976158142,
+          "valid": true
+        }
+      ],
+      "task4Ms": 159.19999998807907,
+      "task5Ms": 210.6000000834465,
+      "baseHeap": 386918031,
+      "peakHeap": 581163807,
+      "validEase": true,
+      "validFinal": true
+    }
+  }
+]

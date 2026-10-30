@@ -1,0 +1,261 @@
+[
+  {
+    "kind": "environment",
+    "profile": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ae-sol-practical-2cGp8I",
+    "value": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 (0x00002704) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "w": 1920,
+      "h": 1080,
+      "webcodecs": true
+    }
+  },
+  {
+    "kind": "checks",
+    "value": {
+      "layers": [
+        4096,
+        1024,
+        1024
+      ],
+      "keys": [
+        36864,
+        9228,
+        9216
+      ],
+      "maxStartFrames": 78,
+      "parentOK": true,
+      "remap75": 2.5,
+      "shutterChangeAbsDiff": 251633,
+      "uniqueIds": true
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 2759.800000011921,
+      "encodedMs": 2771.900000035763,
+      "totalMs": 2788.5,
+      "bytes": 9925528,
+      "chunks": 600,
+      "psnr": {
+        "0": 31.988944890183753,
+        "2500000": 30.471657594428876,
+        "7500000": 30.389345450025683
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 2947.899999976158,
+      "encodedMs": 2963.5,
+      "totalMs": 2984.199999988079,
+      "bytes": 10988877,
+      "chunks": 600,
+      "psnr": {
+        "0": 31.988944890183753,
+        "2500000": 31.231266176342064,
+        "7500000": 30.977130884565845
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 3567.099999964237,
+      "encodedMs": 3576.399999976158,
+      "totalMs": 3583,
+      "bytes": 4473416,
+      "chunks": 600,
+      "psnr": {
+        "0": 31.932192831552143,
+        "2500000": 31.289594023667323,
+        "7500000": 31.139175275811724
+      },
+      "evaluations": 4685824,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": false,
+    "value": {
+      "scene": "C",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 360,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 3472.300000011921,
+      "encodedMs": 3481.100000023842,
+      "totalMs": 3487.900000035763,
+      "bytes": 4125647,
+      "chunks": 600,
+      "psnr": {
+        "0": 31.936762390847807,
+        "2500000": 31.289612864307156,
+        "7500000": 31.13759696153927
+      },
+      "evaluations": 4687872,
+      "error": 0,
+      "fail": null,
+      "name": "C-1920x1080-360-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "A",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1603.6000000238419,
+      "encodedMs": 1617.800000011921,
+      "totalMs": 1631.300000011921,
+      "bytes": 9313892,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.15722768240845,
+        "7500000": 45.266702504826235
+      },
+      "evaluations": 2297856,
+      "error": 0,
+      "fail": null,
+      "name": "A-1920x1080-180-h264.mp4"
+    }
+  },
+  {
+    "kind": "export",
+    "rep": 0,
+    "optimized": true,
+    "value": {
+      "scene": "B",
+      "w": 1920,
+      "h": 1080,
+      "frames": 600,
+      "angle": 180,
+      "cfg": {
+        "codec": "avc1.420033",
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 80000000,
+        "framerate": 60,
+        "hardwareAcceleration": "prefer-hardware",
+        "latencyMode": "quality",
+        "avc": {
+          "format": "avc"
+        }
+      },
+      "submitMs": 1573.5,
+      "encodedMs": 1586.1000000238419,
+      "totalMs": 1600.5,
+      "bytes": 10364139,
+      "chunks": 600,
+      "psnr": {
+        "0": 50.48334656570826,
+        "2500000": 47.260860363617105,
+        "7500000": 47.28854899877596
+      },
+      "evaluations": 2942463,
+      "error": 0,
+      "fail": null,
+      "name": "B-1920x1080-180-h264.mp4"
+    }
+  }
+]

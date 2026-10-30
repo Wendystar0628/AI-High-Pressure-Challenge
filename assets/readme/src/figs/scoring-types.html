@@ -51,13 +51,13 @@
       <svg id="formal" width="277" height="96"></svg>
     </section>
     <section class="panel">
-      <h3>IMO难题精选</h3>
-      <p class="rule">6 题，每题 0–7 的整数分，满分 42，再乘以 100/42 折算。</p>
+      <h3>IMO风味难题</h3>
+      <p class="rule">12 题，每题 0–7 的整数分，满分 84，再乘以 100/84 折算。</p>
       <svg id="imo" width="277" height="124"></svg>
     </section>
     <section class="panel">
       <h3>设计题</h3>
-      <p class="rule">每题 18–23 个分项，相加满分 100。<br>分项得分 = 分值 × 完成份额 × 做得多好</p>
+      <p class="rule">每题 19–31 个分项，相加满分 100。<br>分项得分 = 分值 × 完成份额 × 做得多好</p>
       <svg id="design" width="277" height="100"></svg>
     </section>
   </div>
@@ -83,8 +83,8 @@
     </div>
     <svg class="chev" viewBox="0 0 18 28"><polyline points="5,6 13,14 5,22" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/></svg>
     <div class="step">
-      <div class="what">两位评分 AI 的分数取平均</div>
-      <div class="f">S<sub>t</sub> = (S<span class="ss"><span>Opus</span><span>t</span></span> + S<span class="ss"><span>Sol</span><span>t</span></span>) ÷ 2</div>
+      <div class="what">设计主体：双评分项平均</div>
+      <div class="f"><span class="cn">标准与性能：Sol 单评</span></div>
     </div>
     <svg class="chev" viewBox="0 0 18 28"><polyline points="5,6 13,14 5,22" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/></svg>
     <div class="step">
@@ -129,10 +129,10 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   t.innerHTML = '例：3 题全部满足，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；差 1 条的也是 0 分。';
 }
 
-/* IMO难题精选: six columns of seven points, then the 42-point bar read against a 0–100 ruler. */
+/* IMO风味难题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
 {
   const g = document.getElementById('imo');
-  const sc = [7, 7, 5, 2, 0, 0], W = 26, G = 10, PH = 6, PG = 2.5;
+  const sc = [7, 7, 7, 7, 5, 3, 2, 2, 1, 1, 0, 0], W = 11, G = 5, PH = 6, PG = 2.5;
   sc.forEach((s, i) => {
     const x = i * (W + G);
     for (let j = 0; j < 7; j++) {
@@ -142,18 +142,18 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
     }
     txt(g, x + W / 2, 7 * (PH + PG) + 12, 'n', String(s), 'middle').setAttribute('style', 'font-size: 13px');
   });
-  const span = 6 * W + 5 * G;
+  const span = sc.length * W + (sc.length - 1) * G;
   txt(g, span + 14, 22, 'cap', '例：合计');
-  txt(g, span + 14, 44, 'n', '21').setAttribute('style', 'font-size: 20px; font-weight: 700');
-  // Ruler: the same length read as 0–42 above and 0–100 below.
+  txt(g, span + 14, 44, 'n', '42').setAttribute('style', 'font-size: 20px; font-weight: 700');
+  // Ruler: the same length read as 0–84 above and 0–100 below.
   const y0 = 94, L = span, BH = 7;
   el('rect', { x: 0, y: y0, width: L, height: BH, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)' }, g);
-  el('rect', { x: 0, y: y0, width: L * 21 / 42, height: BH, rx: 2, fill: 'var(--ink)' }, g);
+  el('rect', { x: 0, y: y0, width: L * 42 / 84, height: BH, rx: 2, fill: 'var(--ink)' }, g);
   for (let k = 0; k <= 6; k++) line(g, L * k / 6, y0 - 4, L * k / 6, y0, 'var(--ink-3)');
   for (let k = 0; k <= 4; k++) line(g, L * k / 4, y0 + BH, L * k / 4, y0 + BH + 4, 'var(--ink-3)');
   txt(g, 0, y0 - 8, 'tick n', '0', 'middle');
-  txt(g, L, y0 - 8, 'tick n', '42', 'middle');
-  txt(g, L / 2, y0 - 8, 'tick n', '21', 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
+  txt(g, L, y0 - 8, 'tick n', '84', 'middle');
+  txt(g, L / 2, y0 - 8, 'tick n', '42', 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
   txt(g, 0, y0 + BH + 17, 'tick n', '0', 'middle');
   txt(g, L, y0 + BH + 17, 'tick n', '100', 'middle');
   txt(g, L / 2, y0 + BH + 17, 'tick n', '50.0', 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');

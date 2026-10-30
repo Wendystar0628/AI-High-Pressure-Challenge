@@ -1,0 +1,3 @@
+const fs=require('fs'),path=require('path'),os=require('os'),{pathToFileURL}=require('url');
+const {chromium}=require('C:/Users/Administrator/AppData/Local/npm-cache/_npx/31e32ef8478fbf80/node_modules/playwright-core');
+(async()=>{let context=await chromium.launchPersistentContext(fs.mkdtempSync(path.join(os.tmpdir(),'ae-sol-diag-')),{headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',args:['--noerrdialogs']});try{let page=context.pages()[0];await page.goto(pathToFileURL(path.join(__dirname,'index.html')).href);console.log(await page.evaluate(async()=>{let b=createBench();return b.encode('A',{read:true,frames:160})}));}finally{await context.close()}})().catch(console.error);

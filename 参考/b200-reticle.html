@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reticle — NVIDIA B200 / Blackwell</title>
+<meta name="description" content="An interactive, scale-by-scale study of the NVIDIA B200 Tensor Core GPU and the Blackwell architecture: die, precision, memory, interconnect, system.">
+<meta name="theme-color" content="#050605">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RETICLE — visual system
+   black = substrate / silicon / space ; green = signal, active compute
+   amber (single auxiliary) = power / thermal only
+   ============================================================ */
+:root{
+  --ink:#050605;
+  --ink-1:#0a0c0a;
+  --ink-2:#11140f;
+  --ink-3:#1a1e18;
+  --ink-4:#262b24;
+  --line:#242923;
+  --line-2:#363c34;
+  --txt:#e3e6de;
+  --txt-2:#9ba197;
+  --txt-3:#5f665c;
+  --nv:#76b900;
+  --nv-hi:#b6ff3f;
+  --nv-lo:#2c4900;
+  --nv-dim:rgba(118,185,0,.16);
+  --amber:#ffb000;
+  --sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --cjk:'PingFang SC','Hiragino Sans GB','Noto Sans CJK SC','Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
+  --g:clamp(18px,3vw,56px);
+  --vh:100vh;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%;background:var(--ink)}
+body{
+  font-family:var(--sans);
+  font-weight:400;
+  color:var(--txt);
+  background:var(--ink);
+  overflow-x:hidden;
+  line-height:1.4;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+/* substrate grain: the page is not flat black */
+body::before{
+  content:"";position:fixed;inset:0;z-index:2;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.6 0 0 0 0 0.5 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity:.055;mix-blend-mode:screen;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 110%, rgba(118,185,0,.06), transparent 55%),
+    radial-gradient(70% 60% at 50% 40%, rgba(255,255,255,.025), transparent 70%);
+}
+::selection{background:var(--nv);color:var(--ink)}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--nv-hi);outline-offset:3px}
+.skip{position:fixed;left:var(--g);top:-60px;z-index:50;padding:8px 12px;background:var(--nv);color:var(--ink);font:500 13px var(--mono);transition:top .2s}
+.skip:focus{top:12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- type roles ---------- */
+.mono{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.01em;color:var(--txt-2);font-variant-numeric:tabular-nums}
+.mono b{font-weight:500;color:var(--txt)}
+.cjk{font-family:var(--cjk);font-weight:400;color:var(--txt-2);font-size:14px;line-height:1.75;letter-spacing:.02em}
+.num{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1,"lnum" 1}
+.display{font-weight:800;font-stretch:62%;letter-spacing:-.035em;line-height:.82}
+.wide{font-weight:300;font-stretch:118%;letter-spacing:-.01em;line-height:1.02}
+.unit{font-family:var(--mono);font-weight:400;letter-spacing:.02em}
+.nv{color:var(--nv-hi)}
+.amber{color:var(--amber)}
+.rule{height:1px;background:var(--line-2)}
+
+/* ---------- fixed layers ---------- */
+#gl{position:fixed;inset:0;z-index:0;width:100%;height:100%;display:block;opacity:1;transition:none}
+.frame{position:fixed;inset:0;z-index:5;pointer-events:none}
+.fid{position:absolute;width:18px;height:18px;border-color:var(--txt-3);border-style:solid;border-width:0}
+.fid.tl{top:14px;left:14px;border-top-width:1px;border-left-width:1px}
+.fid.tr{top:14px;right:14px;border-top-width:1px;border-right-width:1px}
+.fid.bl{bottom:14px;left:14px;border-bottom-width:1px;border-left-width:1px}
+.fid.br{bottom:14px;right:14px;border-bottom-width:1px;border-right-width:1px}
+.ro{position:absolute;font-family:var(--mono);font-size:11px;line-height:1;color:var(--txt-2);letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap;background:rgba(5,6,5,.72);padding:4px 6px;margin:-4px -6px}
+.ro em{font-style:normal;color:var(--txt-3)}
+.ro.tl{top:20px;left:40px}
+.ro.tr{top:20px;right:40px;text-align:right}
+.ro.bl{bottom:20px;left:40px}
+.ro.br{bottom:20px;right:40px;text-align:right}
+.ro .val{color:var(--txt)}
+.ro .bar{display:inline-block;vertical-align:middle;width:120px;height:1px;background:var(--line-2);margin:0 8px;position:relative;top:-1px}
+.ro .bar i{position:absolute;left:0;top:-2px;height:5px;width:1px;background:var(--nv-hi)}
+.ro .bar b{position:absolute;left:0;top:0;height:1px;width:0;background:var(--nv);}
+/* crosshair that tracks the pointer — the objective */
+.xh{position:absolute;left:0;top:0;width:0;height:0;opacity:0;transition:opacity .3s}
+.xh i{position:absolute;background:var(--nv);opacity:.35}
+.xh i.h{left:-14px;top:0;width:28px;height:1px}
+.xh i.v{top:-14px;left:0;height:28px;width:1px}
+
+/* ---------- scene scaffolding ---------- */
+main{position:relative;z-index:3}
+.scene{position:relative}
+.stage{position:sticky;top:0;height:var(--vh);overflow:hidden}
+.cap{position:absolute;max-width:min(560px,60vw)}
+.cap h2{font-weight:300;font-stretch:118%;letter-spacing:-.015em;line-height:1;font-size:clamp(30px,4.6vw,72px);color:var(--txt);margin:0 0 14px -.03em}
+.cap p{font-size:15px;line-height:1.55;color:var(--txt-2);max-width:46ch}
+.cap .cjk{margin-top:10px;max-width:38em}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--txt-3);display:block;margin-bottom:16px}
+
+/* ============================================================
+   S0 — reticle limit / 208,000,000,000
+   ============================================================ */
+#hero{height:170vh}
+#hero .stage{background:transparent}
+.hero-meta{position:absolute;top:calc(var(--g) + 26px);right:var(--g);text-align:right}
+.hero-meta .mono{display:block;line-height:1.7}
+.hero-title{position:absolute;top:calc(var(--g) + 26px);left:var(--g);max-width:36vw}
+.hero-title h1{font-weight:300;font-stretch:118%;letter-spacing:-.02em;line-height:.98;font-size:clamp(28px,3.6vw,56px);color:var(--txt)}
+.hero-title h1 span{display:block;color:var(--txt-2)}
+.hero-title .cjk{margin-top:14px;font-size:13px;max-width:26em}
+.hero-number{
+  position:absolute;left:calc(var(--g) - .02em);bottom:7vh;
+  font-size:clamp(150px,23.5vw,420px);
+  white-space:nowrap;color:var(--txt);
+  will-change:transform;
+}
+.hero-number .tail{font-weight:200;font-stretch:62%;color:var(--txt-3);letter-spacing:-.02em}
+.hero-number .tail i{font-style:normal;color:var(--line-2)}
+.hero-sub{position:absolute;left:var(--g);bottom:calc(7vh - 30px);display:flex;gap:28px;align-items:baseline}
+.hero-sub .mono{font-size:12px}
+.hero-sub .mono b{color:var(--nv-hi)}
+.scalebar{position:absolute;right:var(--g);top:calc(var(--g) + 26px + 108px);width:180px}
+.scalebar .l{height:1px;background:var(--txt-3);position:relative}
+.scalebar .l::before,.scalebar .l::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--txt-3)}
+.scalebar .l::after{right:0}
+.scalebar .mono{display:block;margin-top:8px;text-align:right}
+.scan-hint{position:absolute;left:50%;top:calc(var(--g) + 26px);transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--txt-3);letter-spacing:.06em;text-align:center}
+.scan-hint i{display:block;width:1px;height:26px;margin:8px auto 0;background:linear-gradient(var(--nv-hi),transparent);animation:drip 1.8s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============================================================
+   S1 — the seam / NV-HBI
+   ============================================================ */
+#die{height:300vh}
+.seam{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--nv-hi) 18%,var(--nv-hi) 82%,transparent);transform:scaleY(0);transform-origin:50% 0;opacity:.9}
+.seam::after{content:"";position:absolute;left:-1px;top:0;bottom:0;width:3px;background:var(--nv);filter:blur(3px);opacity:.5}
+.seam-num{
+  position:absolute;left:calc(50% + 18px);bottom:8vh;
+  writing-mode:vertical-rl;transform:rotate(180deg);transform-origin:center;
+  font-size:clamp(64px,9vw,170px);color:var(--nv-hi);
+  line-height:.85;white-space:nowrap;
+  clip-path:inset(100% 0 0 0);
+}
+.seam-num .unit{font-size:.15em;color:var(--txt-2);margin-top:.2em;display:inline-block;letter-spacing:.04em}
+.die-lab{position:absolute;top:calc(var(--g) + 26px);font-family:var(--mono);font-size:11px;color:var(--txt-2);line-height:1.8}
+.die-lab.l{left:var(--g)}
+.die-lab.r{right:var(--g);text-align:right}
+.die-lab .val{color:var(--txt)}
+#die .cap{right:var(--g);bottom:9vh;text-align:right;max-width:min(460px,calc(50vw - 210px))}
+#die .cap p{margin-left:auto}
+#die .cap .cjk{margin-left:auto}
+.readout-act{position:absolute;left:var(--g);bottom:9vh;font-family:var(--mono);font-size:11px;color:var(--txt-2);line-height:1.9}
+.readout-act .big{display:block;font-family:var(--sans);font-weight:800;font-stretch:62%;font-size:clamp(40px,5vw,84px);line-height:.9;color:var(--txt);letter-spacing:-.03em;margin:4px 0 6px}
+.readout-act .big small{font:400 .3em var(--mono);color:var(--txt-3);letter-spacing:0}
+
+/* ============================================================
+   S2 — precision / Transformer Engine (pure DOM kinetic type)
+   ============================================================ */
+#prec{height:340vh}
+#prec .stage{
+  background:
+    linear-gradient(90deg, transparent calc(50% - .5px), rgba(255,255,255,.035) calc(50% - .5px), rgba(255,255,255,.035) calc(50% + .5px), transparent calc(50% + .5px));
+}
+.plist{position:absolute;left:var(--g);top:calc(var(--g) + 26px);font-family:var(--mono);font-size:12px;color:var(--txt-3);line-height:1.95;letter-spacing:.02em}
+.plist li{list-style:none;display:grid;grid-template-columns:52px 34px 124px 84px;gap:12px;align-items:baseline;transition:color .35s;white-space:nowrap}
+.plist li .per{color:var(--txt-3);text-align:right}
+.plist li.on .per{color:var(--txt)}
+.plist li .bits{color:var(--txt-3);text-align:right}
+.plist li .lay{font-size:10px;color:var(--txt-3);letter-spacing:.06em}
+.plist li.on{color:var(--txt)}
+.plist li.on .bits{color:var(--nv-hi)}
+.plist li.on .lay{color:var(--txt-2)}
+.bitfield{
+  position:absolute;left:8vw;top:50%;transform:translateY(-50%);
+  display:flex;align-items:stretch;
+  width:60vw;height:clamp(24px,3.2vw,46px);
+}
+.lane{position:absolute;left:8vw;top:calc(50% - 44px);width:60vw;font-family:var(--mono);font-size:10px;color:var(--txt-3);display:flex;justify-content:space-between;letter-spacing:.04em}
+.lane::before{content:"";position:absolute;left:0;right:0;top:16px;height:1px;background:var(--line-2)}
+.bit{flex:1 1 0;min-width:0;margin-left:3px;background:var(--ink-4);border:1px solid var(--line-2);transition:background .35s,border-color .35s,opacity .35s,margin .45s cubic-bezier(.7,0,.2,1)}
+.bit:first-child{margin-left:0}
+.bit.s{background:var(--txt);border-color:var(--txt)}
+.bit.e{background:var(--nv);border-color:var(--nv-hi)}
+.bit.m{background:var(--ink-4);border-color:var(--txt-3)}
+.bit.g{margin-left:12px}
+.bit.x{opacity:.3;background:transparent;border-style:dashed}
+.bitkey{position:absolute;left:8vw;top:calc(50% + 40px);font-family:var(--mono);font-size:11px;color:var(--txt-3);display:flex;gap:22px;white-space:nowrap}
+.bitkey i{display:inline-block;width:9px;height:12px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line-2)}
+.bitkey .s i{background:var(--txt)}
+.bitkey .e i{background:var(--nv)}
+.bitkey .m i{background:var(--ink-4)}
+.bitkey .x i{border-style:dashed;opacity:.5}
+.pname{position:absolute;left:calc(8vw - .04em);top:calc(50% - 160px);font-weight:300;font-stretch:118%;font-size:clamp(36px,6vw,110px);letter-spacing:-.02em;line-height:1;color:var(--txt);white-space:nowrap}
+.pname small{font:400 .22em var(--mono);color:var(--txt-3);vertical-align:.3em;margin-left:.6em;letter-spacing:.02em}
+.pnum{position:absolute;right:var(--g);top:50%;transform:translateY(-50%);text-align:right;line-height:.85}
+.pnum .v{font-weight:800;font-stretch:62%;font-size:clamp(80px,11vw,200px);letter-spacing:-.04em;color:var(--txt);display:block}
+.pnum .u{font-family:var(--mono);font-size:clamp(12px,1.1vw,16px);color:var(--txt-2);display:block;margin-top:14px;letter-spacing:.02em}
+.pnum .u b{color:var(--nv-hi);font-weight:500}
+.pnum .alt{display:block;margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--txt-3)}
+#prec .cap{left:var(--g);bottom:9vh}
+#prec .cap h2{font-size:clamp(24px,3vw,46px)}
+.switch{position:absolute;right:var(--g);bottom:9vh;display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:var(--txt-2);padding:6px 0}
+.switch .trk{width:44px;height:16px;border:1px solid var(--line-2);position:relative;background:var(--ink-1)}
+.switch .trk i{position:absolute;top:2px;left:2px;width:18px;height:10px;background:var(--txt-3);transition:transform .25s cubic-bezier(.7,0,.2,1),background .25s}
+.switch[aria-checked="true"] .trk i{transform:translateX(20px);background:var(--nv-hi)}
+.switch span.on{color:var(--txt-3)}
+.switch[aria-checked="true"] span.on{color:var(--txt)}
+.switch[aria-checked="false"] span.off{color:var(--txt)}
+
+/* ============================================================
+   S3 — HBM3e stack
+   ============================================================ */
+#hbm{height:270vh}
+.hbm-num{position:absolute;right:var(--g);top:calc(var(--g) + 26px);text-align:right;line-height:.82}
+.hbm-num .v{font-weight:800;font-stretch:62%;font-size:clamp(120px,17vw,320px);letter-spacing:-.045em;color:var(--txt);display:block}
+.hbm-num .u{display:block;font-family:var(--mono);font-size:clamp(12px,1.1vw,16px);color:var(--txt-2);margin-top:12px;letter-spacing:.02em}
+.hbm-num .bw{display:block;margin-top:34px;font-weight:300;font-stretch:118%;font-size:clamp(28px,3.6vw,64px);letter-spacing:-.02em;color:var(--txt)}
+.hbm-num .bw .unit{font-size:.4em;color:var(--txt-2);margin-left:.3em}
+.hbm-layer{position:absolute;left:var(--g);top:44%;font-family:var(--mono);font-size:11px;color:var(--txt-2);line-height:1.9}
+.hbm-layer .big{display:block;font-family:var(--sans);font-weight:800;font-stretch:62%;font-size:clamp(40px,5vw,84px);line-height:.9;color:var(--nv-hi);letter-spacing:-.03em;margin:4px 0 6px}
+.hbm-layer .big small{font:400 .3em var(--mono);color:var(--txt-3)}
+#hbm .cap{left:var(--g);bottom:9vh}
+.hbm-tsv{position:absolute;left:var(--g);top:calc(var(--g) + 26px);font-family:var(--mono);font-size:11px;color:var(--txt-3);line-height:1.9;max-width:240px}
+.hbm-tsv b{color:var(--txt-2);font-weight:400}
+
+/* ============================================================
+   S4 — NVLink fabric (canvas 2D, horizontal progression)
+   ============================================================ */
+#fabric{height:400vh}
+#fab{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fab-count{position:absolute;left:var(--g);top:calc(var(--g) + 26px);line-height:.85}
+.fab-count .v{font-weight:800;font-stretch:62%;font-size:clamp(96px,14vw,260px);letter-spacing:-.045em;color:var(--txt);display:block}
+.fab-count .u{font-family:var(--mono);font-size:clamp(12px,1.1vw,16px);color:var(--txt-2);display:block;margin-top:12px}
+.fab-count .u b{color:var(--nv-hi);font-weight:500}
+.fab-steps{position:absolute;right:var(--g);top:calc(var(--g) + 26px);text-align:right;font-family:var(--mono);font-size:11px;color:var(--txt-3);line-height:2}
+.fab-steps li{list-style:none;transition:color .3s}
+.fab-steps li.on{color:var(--txt)}
+.fab-steps li.on::before{content:"";display:inline-block;width:18px;height:1px;background:var(--nv-hi);vertical-align:middle;margin-right:10px}
+#fabric .cap{left:var(--g);bottom:9vh;max-width:min(500px,36vw)}
+.tip{position:fixed;z-index:6;pointer-events:none;font-family:var(--mono);font-size:11px;color:var(--txt);background:var(--ink);border:1px solid var(--nv);padding:6px 8px;opacity:0;transform:translate(12px,-50%);transition:opacity .15s;white-space:nowrap}
+.tip b{color:var(--nv-hi);font-weight:500}
+
+/* ============================================================
+   S5 — nomenclature ledger (static, quiet)
+   ============================================================ */
+#ledger{padding:18vh var(--g) 16vh;position:relative;background:linear-gradient(180deg,transparent,rgba(10,12,10,.9) 12%,rgba(10,12,10,.9) 88%,transparent)}
+.led-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--g);align-items:end;margin-bottom:60px}
+.led-head h2{font-weight:300;font-stretch:118%;font-size:clamp(34px,5vw,80px);letter-spacing:-.02em;line-height:.98;margin-left:-.03em}
+.led-head h2 span{display:block;color:var(--txt-3)}
+.led-head .cjk{margin-top:10px}
+.led-note{font-family:var(--mono);font-size:12px;color:var(--txt-2);line-height:1.8;max-width:52ch;justify-self:end}
+.led-note b{color:var(--txt);font-weight:500}
+.ledwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.led{width:100%;min-width:980px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.led caption{text-align:left;font-family:var(--mono);font-size:11px;color:var(--txt-3);padding:0 0 18px;letter-spacing:.02em}
+.led th,.led td{text-align:right;vertical-align:top;padding:16px 14px 16px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.35;font-weight:400}
+.led th{color:var(--txt-2);font-family:var(--mono);font-size:11px;letter-spacing:.02em;font-weight:400}
+.led thead th{border-top:0;vertical-align:bottom;padding-bottom:22px}
+.led thead th .nm{display:block;font-family:var(--sans);font-weight:500;font-size:17px;color:var(--txt);letter-spacing:-.01em;margin-bottom:6px}
+.led thead th .cmp{display:block;color:var(--txt-3);line-height:1.6}
+.led thead th svg{display:block;margin:0 0 12px auto;width:64px;height:28px}
+.led th[scope=row]{text-align:left;color:var(--txt-2);width:150px;padding-right:20px}
+.led th[scope=row] small{display:block;color:var(--txt-3);font-size:10px;margin-top:4px}
+.led td{color:var(--txt)}
+.led td small{display:block;color:var(--txt-3);font-family:var(--mono);font-size:11px;margin-top:3px}
+.led td .dash{color:var(--txt-3)}
+.led td .amber{color:var(--amber)}
+.led col.gpu{border-right:1px solid var(--line-2)}
+.led tbody tr{transition:background .2s}
+.led tbody tr:hover{background:rgba(118,185,0,.05)}
+.led tbody tr:hover th[scope=row]{color:var(--nv-hi)}
+.led tfoot td{text-align:left;font-family:var(--mono);font-size:11px;color:var(--txt-3);line-height:1.8;padding-top:22px;border-top:1px solid var(--line-2)}
+.led tfoot td p{max-width:90ch}
+.led svg *{vector-effect:non-scaling-stroke}
+
+/* ============================================================
+   S6 — epilogue: annotated package
+   ============================================================ */
+#epi{height:220vh}
+.leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.leaders line{stroke:var(--txt-3);stroke-width:1;opacity:0}
+.leaders circle{fill:var(--nv-hi);opacity:0}
+.ann{position:absolute;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--txt-2);max-width:230px;opacity:0;transform:translateY(6px);transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.ann.in{opacity:1;transform:none}
+.ann b{display:block;font-family:var(--sans);font-weight:500;font-size:15px;color:var(--txt);letter-spacing:-.01em;margin-bottom:3px}
+.ann.r{text-align:right}
+.ann.amber b{color:var(--amber)}
+#ann-te{left:var(--g);top:16vh}
+#ann-hbi{left:var(--g);top:44vh}
+#ann-dec{left:var(--g);top:70vh}
+#ann-hbm{right:var(--g);top:16vh}
+#ann-nvl{right:var(--g);top:44vh}
+#ann-ras{right:var(--g);top:70vh}
+#ann-pwr{left:50%;transform:translateX(-50%);top:13vh;text-align:center;max-width:none}
+#ann-pwr.in{transform:translateX(-50%)}
+.leaders line{transition:opacity .5s}
+.leaders circle{transition:opacity .5s}
+#epi .cap{left:50%;transform:translateX(-50%);bottom:7vh;text-align:center;max-width:860px}
+#epi .cap h2{font-size:clamp(26px,3.4vw,54px)}
+#epi .cap p,#epi .cap .cjk{margin-left:auto;margin-right:auto}
+
+/* ---------- footer ---------- */
+footer{position:relative;z-index:3;padding:10vh var(--g) 12vh;background:var(--ink-1);border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--g)}
+.foot h3{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--txt-3);margin-bottom:16px;letter-spacing:.02em}
+.foot p,.foot li{font-size:13px;color:var(--txt-2);line-height:1.7;list-style:none}
+.foot a{color:var(--txt);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.foot a:hover{border-color:var(--nv)}
+.foot .big{font-weight:300;font-stretch:118%;font-size:clamp(28px,4vw,60px);letter-spacing:-.02em;line-height:1;color:var(--txt);margin-bottom:22px}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .pname{top:calc(50% - 130px)}
+}
+@media (max-width:820px){
+  :root{--g:18px}
+  .ro.tl,.ro.bl{left:20px}.ro.tr,.ro.br{right:20px}
+  .ro .bar{width:60px}
+  .hero-title{max-width:70vw;top:56px}
+  .hero-meta{top:auto;bottom:calc(7vh + 110px);right:var(--g)}
+  .hero-number{font-size:clamp(96px,30vw,160px);bottom:12vh}
+  .hero-sub{bottom:calc(12vh - 26px);gap:14px;flex-wrap:wrap}
+  .scalebar{display:none}
+  .scan-hint{display:none}
+  .cap{max-width:calc(100vw - 2*var(--g))}
+  .cap h2{font-size:clamp(28px,8vw,44px)}
+  .cap p{font-size:14px}
+  .seam-num{bottom:auto;top:96px;left:calc(50% + 8px);font-size:15vw}
+  #die .cap{bottom:7vh;text-align:left;right:auto;left:var(--g);max-width:calc(100vw - 2*var(--g))}
+  #die .cap p,#die .cap .cjk{margin-left:0}
+  .readout-act{bottom:auto;top:38vh;left:var(--g)}
+  .die-lab.r{display:none}
+  .plist{top:96px;transform:none;line-height:1.9;font-size:11px}
+  .plist li{grid-template-columns:44px 30px 1fr;gap:8px}
+  .pname{top:38%;font-size:11vw;left:var(--g);transform:none}
+  .bitfield{width:calc(100vw - 2*var(--g));left:var(--g);top:50%;transform:translateY(-50%);height:26px}
+  .bit{margin-left:2px}.bit.g{margin-left:7px}
+  .lane{width:calc(100vw - 2*var(--g));left:var(--g);transform:none;top:calc(50% - 40px)}
+  .bitkey{top:calc(50% + 24px);left:var(--g);transform:none;gap:12px;font-size:10px}
+  .pnum{top:auto;bottom:22vh;right:var(--g);transform:none}
+  .pnum .v{font-size:22vw}
+  #prec .cap{bottom:7vh;max-width:56vw}
+  #prec .cap p{display:none}
+  .plist li{grid-template-columns:40px 26px 96px 56px;gap:6px;font-size:10px}
+  .switch{bottom:7vh}
+  .hbm-num .v{font-size:32vw}
+  .hbm-num .bw{margin-top:16px}
+  .hbm-layer{top:auto;bottom:34vh}
+  .hbm-tsv{display:none}
+  .fab-count .v{font-size:22vw}
+  .fab-steps{top:calc(var(--g) + 26px + 24vw);text-align:left;left:var(--g);right:auto;line-height:1.8;font-size:10px}
+  #fabric .cap{bottom:4vh;max-width:calc(100vw - 2*var(--g))}
+  #fabric .cap h2{font-size:7vw}
+  #fabric .cap p:not(.cjk){display:none}
+  #fabric .cap .cjk{font-size:12px;line-height:1.6}
+  .led-head{grid-template-columns:1fr;margin-bottom:30px}
+  .led-note{justify-self:start}
+  .ann{max-width:150px;font-size:10px}
+  .ann b{font-size:12px}
+  #ann-te{top:10vh}#ann-hbi{top:28vh}#ann-dec{top:46vh}
+  #ann-hbm{top:10vh}#ann-nvl{top:28vh}#ann-ras{top:46vh}
+  #ann-pwr{top:60vh}
+  #epi .cap{max-width:calc(100vw - 2*var(--g));bottom:4vh}
+  #epi .cap h2{font-size:5.8vw}
+  .foot{grid-template-columns:1fr;gap:32px}
+}
+@media (max-height:640px){
+  .hero-number{font-size:clamp(90px,16vw,200px)}
+}
+/* ---------- motion safety ---------- */
+@media (prefers-reduced-motion:reduce){
+  .scan-hint i{animation:none}
+  .scene{height:auto !important}
+  .stage{position:relative;height:auto;min-height:var(--vh)}
+  .seam{transform:none}
+  .seam-num{clip-path:none}
+  .ann{opacity:1;transform:none}
+  .bit{transition:none}
+}
+html.reduced .scene{height:auto !important}
+html.reduced .stage{position:relative;height:auto;min-height:var(--vh)}
+</style>
+</head>
+<body>
+<a class="skip" href="#ledger">Skip to specifications</a>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<!-- fixed instrument frame -->
+<div class="frame" aria-hidden="true">
+  <span class="fid tl"></span><span class="fid tr"></span><span class="fid bl"></span><span class="fid br"></span>
+  <div class="ro tl">NVIDIA Blackwell <em>/</em> B200 Tensor Core GPU</div>
+  <div class="ro tr">scale <span class="val" id="ro-scale">10 mm</span></div>
+  <div class="ro bl">z <span class="val" id="ro-z">0.000</span><span class="bar"><b id="ro-bar"></b><i id="ro-tick"></i></span><span id="ro-scene">reticle</span></div>
+  <div class="ro br" id="ro-fps"><em>frame</em> <span class="val">16.7</span> ms</div>
+  <div class="xh" id="xh"><i class="h"></i><i class="v"></i></div>
+</div>
+
+<main id="top">
+
+<!-- ================= S0 ================= -->
+<section class="scene" id="hero" aria-labelledby="h1">
+  <div class="stage">
+    <div class="hero-title">
+      <h1 id="h1">Two dies at the reticle limit.<span>One GPU.</span></h1>
+      <p class="cjk">Blackwell B200：两颗达到光刻掩模极限尺寸的裸片，封装为一颗 GPU。本页按尺度递进：裸片 → 数值精度 → 显存 → 互联 → 系统。</p>
+    </div>
+    <div class="hero-meta">
+      <span class="mono">TSMC 4NP <em>·</em> 208 × 10<sup>9</sup> transistors</span>
+      <span class="mono">2 dies <em>·</em> NV-HBI 10 TB/s</span>
+      <span class="mono">8 × HBM3e <em>·</em> 180 GB</span>
+      <span class="mono">NVLink 5 <em>·</em> 1.8 TB/s</span>
+    </div>
+    <div class="hero-number display num" id="hero-number" aria-label="208 billion transistors">
+      <span class="lead">208</span><span class="tail">,000<i>,</i>000<i>,</i>000</span>
+    </div>
+    <div class="hero-sub">
+      <span class="mono"><b>transistors</b></span>
+      <span class="mono">per package</span>
+      <span class="mono">≈ 2.6 × Hopper H100</span>
+    </div>
+    <div class="scalebar" aria-hidden="true"><div class="l"></div><span class="mono">10 mm</span></div>
+    <div class="scan-hint" aria-hidden="true">descend<i></i></div>
+  </div>
+</section>
+
+<!-- ================= S1 ================= -->
+<section class="scene" id="die" aria-labelledby="h-die">
+  <div class="stage">
+    <div class="seam" id="seam" aria-hidden="true"></div>
+    <div class="seam-num display num" id="seam-num" aria-hidden="true">10 TB/s<span class="unit">NV-HBI · chip-to-chip</span></div>
+    <div class="die-lab l" aria-hidden="true">die 0<br><span class="val">reticle-limited</span><br>TSMC 4NP</div>
+    <div class="die-lab r" aria-hidden="true">die 1<br><span class="val">reticle-limited</span><br>TSMC 4NP</div>
+    <div class="readout-act" aria-live="off">
+      <span>activation</span>
+      <span class="big num"><span id="act-pct">0</span><small>%</small></span>
+      <span>crossings <span class="val num" id="act-x">0</span></span>
+    </div>
+    <div class="cap">
+      <h2 id="h-die">One coherent device.</h2>
+      <p>Each die is built at the lithographic reticle limit. NV-HBI joins them at 10 TB/s so both halves address one memory space and present as a single CUDA GPU — no split, no host-visible seam.</p>
+      <p class="cjk">两颗裸片各自达到光刻极限面积。NV-HBI 以 10 TB/s 将两者连接为一个统一的地址空间和单一 CUDA 设备。滚动使两侧计算单元逐步激活，数据跨越中缝流动。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S2 ================= -->
+<section class="scene" id="prec" aria-labelledby="h-prec">
+  <div class="stage">
+    <ul class="plist" id="plist" aria-label="Precision formats">
+      <li data-i="0"><span>FP64</span><span class="bits">64</span><span class="lay">1 · 11 · 52</span><span class="per">×1 / lane</span></li>
+      <li data-i="1"><span>TF32</span><span class="bits">19</span><span class="lay">1 · 8 · 10</span><span class="per">×3 / lane</span></li>
+      <li data-i="2"><span>FP16</span><span class="bits">16</span><span class="lay">1 · 5 · 10</span><span class="per">×4 / lane</span></li>
+      <li data-i="3"><span>BF16</span><span class="bits">16</span><span class="lay">1 · 8 · 7</span><span class="per">×4 / lane</span></li>
+      <li data-i="4"><span>FP8</span><span class="bits">8</span><span class="lay">1 · 4 · 3 (E4M3)</span><span class="per">×8 / lane</span></li>
+      <li data-i="5"><span>FP4</span><span class="bits">4</span><span class="lay">1 · 2 · 1 (E2M1)</span><span class="per">×16 / lane</span></li>
+    </ul>
+    <div class="pname num" id="pname" aria-hidden="true">FP64<small>64 bit · 1 per lane</small></div>
+    <div class="lane" aria-hidden="true"><span>bit 63</span><span>one 64-bit lane</span><span>bit 0</span></div>
+    <div class="bitfield" id="bitfield" aria-hidden="true"></div>
+    <div class="bitkey" aria-hidden="true"><span class="s"><i></i>sign</span><span class="e"><i></i>exponent</span><span class="m"><i></i>mantissa</span><span class="x"><i></i>unused</span></div>
+    <div class="pnum" aria-live="off">
+      <span class="v num" id="pnum">37</span>
+      <span class="u"><b id="punit">TFLOPS</b> <span id="ptype">FP64 Tensor Core</span></span>
+      <span class="alt num" id="palt">dense · no sparsity path</span>
+    </div>
+    <div class="cap">
+      <span class="tag">Transformer Engine, second generation</span>
+      <h2 id="h-prec">Fewer bits, more operations.</h2>
+      <p>A 64-bit lane carries one FP64 value or sixteen FP4 values. Micro-tensor scaling keeps FP4 usable, so the same silicon moves more values per cycle.</p>
+      <p class="cjk">一条 64 位通道可承载 1 个 FP64 值或 16 个 FP4 值。第二代 Transformer Engine 的微张量缩放使 FP4 保持可用精度，同一片硅每周期处理更多数值。</p>
+    </div>
+    <button class="switch" id="sw" role="switch" aria-checked="false" aria-label="Toggle 2:4 structured sparsity figures">
+      <span class="off">dense</span><span class="trk"><i></i></span><span class="on">2:4 sparse</span>
+    </button>
+  </div>
+</section>
+
+<!-- ================= S3 ================= -->
+<section class="scene" id="hbm" aria-labelledby="h-hbm">
+  <div class="stage">
+    <div class="hbm-tsv" aria-hidden="true">HBM3e <b>8-high</b> stacks<br>through-silicon vias<br>bond to the interposer<br>beside each die edge</div>
+    <div class="hbm-num" aria-live="off">
+      <span class="v display num" id="hbm-cap">180</span>
+      <span class="u">GB HBM3e <em>·</em> 8 stacks <em>·</em> HGX B200</span>
+      <span class="bw num"><span id="hbm-bw">7.7</span><span class="unit">TB/s</span></span>
+    </div>
+    <div class="hbm-layer" aria-hidden="true">
+      <span>stack 05 / 08 · layer</span>
+      <span class="big num"><span id="hbm-layer">00</span><small>/ 08</small></span>
+      <span id="hbm-state">closed</span>
+    </div>
+    <div class="cap">
+      <h2 id="h-hbm">Memory is stacked, not spread.</h2>
+      <p>Eight HBM3e stacks surround the die pair on the interposer. 180 GB at 7.7 TB/s in HGX B200; 186 GB at 8 TB/s in the GB200 NVL72 configuration.</p>
+      <p class="cjk">八颗 HBM3e 堆栈环绕两颗裸片，直接键合在中介层上。滚动将一颗堆栈逐层展开，露出贯穿各层的硅通孔。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S4 ================= -->
+<section class="scene" id="fabric" aria-labelledby="h-fab">
+  <div class="stage">
+    <canvas id="fab" aria-hidden="true"></canvas>
+    <div class="fab-count" aria-live="off">
+      <span class="v display num" id="fab-v">1.8</span>
+      <span class="u"><b>TB/s</b> <span id="fab-u">NVLink 5 · per GPU · bidirectional</span></span>
+    </div>
+    <ul class="fab-steps" id="fab-steps" aria-hidden="true">
+      <li class="on">1 GPU · 18 links × 100 GB/s</li>
+      <li>HGX B200 · 8 GPUs · 2 NVSwitch</li>
+      <li>GB200 NVL72 · 72 GPUs · 36 Grace CPUs</li>
+    </ul>
+    <div class="cap">
+      <h2 id="h-fab">One NVLink domain of 72.</h2>
+      <p>Fifth-generation NVLink gives each GPU 1.8 TB/s. NVSwitch makes eight GPUs fully connected on an HGX baseboard at 14.4 TB/s; in GB200 NVL72, 72 GPUs share a 130 TB/s domain.</p>
+      <p class="cjk">第五代 NVLink 为每颗 GPU 提供 1.8 TB/s。NVSwitch 使 HGX B200 上的 8 颗 GPU 全互联（14.4 TB/s）；GB200 NVL72 将 72 颗 GPU 置于同一个 130 TB/s 的 NVLink 域。悬停节点查看其链路。</p>
+    </div>
+  </div>
+</section>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<!-- ================= S5 ================= -->
+<section id="ledger" aria-labelledby="h-led">
+  <div class="led-head">
+    <div>
+      <h2 id="h-led">Five names,<span>five scales.</span></h2>
+      <p class="cjk">B200 是一颗 GPU；HGX 是一块 8 GPU 基板；DGX 是一台整机；GB200 是 CPU + 2 GPU 的超级芯片；NVL72 是一整机柜。以下数据来自 NVIDIA 数据手册与产品页。</p>
+    </div>
+    <div class="led-note">
+      Tensor Core figures are listed <b>sparse / dense</b>. NVIDIA datasheets quote peak with 2:4 structured sparsity; dense is half. FP64 has no sparsity path.<br>Memory: HGX B200 lists 180 GB / 7.7 TB/s per GPU; the GB200 NVL72 configuration lists 186 GB / 8 TB/s.
+    </div>
+  </div>
+  <div class="ledwrap">
+  <table class="led">
+    <caption>Peak specifications, preliminary per NVIDIA, subject to change</caption>
+    <colgroup><col><col class="gpu"><col><col><col><col></colgroup>
+    <thead>
+      <tr>
+        <th scope="col"><span class="sr">Metric</span></th>
+        <th scope="col"><svg viewBox="0 0 64 28" aria-hidden="true"><rect x="22" y="4" width="9" height="20" fill="none" stroke="currentColor"/><rect x="33" y="4" width="9" height="20" fill="none" stroke="currentColor"/><line x1="32" y1="4" x2="32" y2="24" stroke="#b6ff3f"/></svg><span class="nm">B200</span><span class="cmp">1 GPU · 2 dies · SXM6</span></th>
+        <th scope="col"><svg viewBox="0 0 64 28" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="4" y="4" width="10" height="9"/><rect x="18" y="4" width="10" height="9"/><rect x="36" y="4" width="10" height="9"/><rect x="50" y="4" width="10" height="9"/><rect x="4" y="15" width="10" height="9"/><rect x="18" y="15" width="10" height="9"/><rect x="36" y="15" width="10" height="9"/><rect x="50" y="15" width="10" height="9"/></g><line x1="32" y1="2" x2="32" y2="26" stroke="#b6ff3f"/></svg><span class="nm">HGX B200</span><span class="cmp">8 GPUs · 2 NVSwitch · baseboard</span></th>
+        <th scope="col"><svg viewBox="0 0 64 28" aria-hidden="true"><rect x="3" y="3" width="58" height="22" fill="none" stroke="currentColor"/><g stroke="currentColor" opacity=".6"><line x1="10" y1="8" x2="54" y2="8"/><line x1="10" y1="14" x2="54" y2="14"/><line x1="10" y1="20" x2="54" y2="20"/></g><line x1="32" y1="3" x2="32" y2="25" stroke="#b6ff3f"/></svg><span class="nm">DGX B200</span><span class="cmp">8 GPUs · 2 Xeon · 10 RU system</span></th>
+        <th scope="col"><svg viewBox="0 0 64 28" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="4" y="6" width="18" height="16"/><rect x="30" y="6" width="13" height="16"/><rect x="45" y="6" width="13" height="16"/></g><line x1="22" y1="14" x2="30" y2="14" stroke="#b6ff3f"/></svg><span class="nm">GB200</span><span class="cmp">1 Grace CPU + 2 GPUs · superchip</span></th>
+        <th scope="col"><svg viewBox="0 0 64 28" aria-hidden="true"><rect x="22" y="1" width="20" height="26" fill="none" stroke="currentColor"/><g stroke="currentColor" opacity=".7"><line x1="25" y1="5" x2="39" y2="5"/><line x1="25" y1="9" x2="39" y2="9"/><line x1="25" y1="19" x2="39" y2="19"/><line x1="25" y1="23" x2="39" y2="23"/></g><line x1="25" y1="14" x2="39" y2="14" stroke="#b6ff3f"/></svg><span class="nm">GB200 NVL72</span><span class="cmp">36 superchips · 72 GPUs · rack</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Composition</th>
+        <td>2 × reticle-limited dies<small>208 B transistors · TSMC 4NP</small></td>
+        <td>8 × B200<small>5th-gen NVLink · NVSwitch</small></td>
+        <td>8 × Blackwell GPUs<small>2 × Xeon Platinum 8570 · 112 cores</small></td>
+        <td>2 × B200 + 1 × Grace<small>72 Arm Neoverse V2 cores</small></td>
+        <td>72 GPUs + 36 CPUs<small>2,592 Arm cores · liquid-cooled</small></td>
+      </tr>
+      <tr>
+        <th scope="row">GPU memory<small>HBM3e</small></th>
+        <td>180 GB<small>8 stacks</small></td>
+        <td>up to 1.4 TB<small>8 × 180 GB</small></td>
+        <td>1,440 GB</td>
+        <td>2 × 186 GB<small>NVL72 configuration</small></td>
+        <td>up to 30 TB fast memory<small>HBM3e + LPDDR5X</small></td>
+      </tr>
+      <tr>
+        <th scope="row">Memory bandwidth</th>
+        <td>7.7 TB/s</td>
+        <td>up to 62 TB/s</td>
+        <td>64 TB/s<small>as listed on the DGX page</small></td>
+        <td>2 × 8 TB/s</td>
+        <td>up to 576 TB/s</td>
+      </tr>
+      <tr>
+        <th scope="row">FP4 Tensor Core<small>sparse / dense</small></th>
+        <td>18 / 9 PFLOPS</td>
+        <td>144 / 72 PFLOPS</td>
+        <td>144 / 72 PFLOPS</td>
+        <td>40 / 20 PFLOPS</td>
+        <td>1,440 / 720 PFLOPS</td>
+      </tr>
+      <tr>
+        <th scope="row">FP8 · FP6 Tensor Core<small>sparse / dense</small></th>
+        <td>9 / 4.5 PFLOPS</td>
+        <td>72 / 36 PFLOPS</td>
+        <td>72 / 36 PFLOPS</td>
+        <td>20 / 10 PFLOPS</td>
+        <td>720 / 360 PFLOPS</td>
+      </tr>
+      <tr>
+        <th scope="row">FP16 · BF16<small>sparse / dense</small></th>
+        <td>4.5 / 2.25 PFLOPS</td>
+        <td>36 / 18 PFLOPS</td>
+        <td>36 / 18 PFLOPS</td>
+        <td>10 / 5 PFLOPS</td>
+        <td>360 / 180 PFLOPS</td>
+      </tr>
+      <tr>
+        <th scope="row">FP64<small>vector · Tensor Core</small></th>
+        <td>37 TFLOPS</td>
+        <td><span class="dash">8 ×</span> 37 TFLOPS</td>
+        <td><span class="dash">8 ×</span> 37 TFLOPS</td>
+        <td><span class="dash">2 ×</span> 40 TFLOPS</td>
+        <td><span class="dash">72 ×</span> 40 TFLOPS</td>
+      </tr>
+      <tr>
+        <th scope="row">NVLink bandwidth</th>
+        <td>1.8 TB/s<small>per GPU · 18 links</small></td>
+        <td>14.4 TB/s<small>aggregate</small></td>
+        <td>14.4 TB/s<small>aggregate · 2 NVSwitch</small></td>
+        <td>900 GB/s<small>NVLink-C2C, CPU to GPU</small></td>
+        <td>130 TB/s<small>single NVLink domain</small></td>
+      </tr>
+      <tr>
+        <th scope="row">Power</th>
+        <td><span class="amber">up to 1,000 W</span><small>configurable · air-cooled</small></td>
+        <td><span class="dash">—</span><small>chassis dependent</small></td>
+        <td><span class="amber">~14.3 kW</span><small>max, system</small></td>
+        <td><span class="dash">—</span></td>
+        <td><span class="dash">—</span><small>liquid-cooled rack</small></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="6"><p>Sources: NVIDIA Blackwell / HGX B200 datasheet (per-GPU and system columns), NVIDIA DGX B200 product page, NVIDIA GB200 NVL72 product page, NVIDIA Blackwell architecture materials. Per-GPU figures for GB200 NVL72 are the higher-binned NVL configuration (20 PFLOPS FP4 sparse, 186 GB). NVIDIA lists Tensor Core peaks with sparsity; dense values shown are half. Dashes mark values NVIDIA does not publish at that level.</p></td></tr>
+    </tfoot>
+  </table>
+  </div>
+</section>
+
+<!-- ================= S6 ================= -->
+<section class="scene" id="epi" aria-labelledby="h-epi">
+  <div class="stage">
+    <svg class="leaders" id="leaders" aria-hidden="true"></svg>
+    <div class="ann" id="ann-te"><b>Transformer Engine, 2nd gen</b>FP4 · FP6 · FP8 with micro-tensor scaling<br>FP8 training, FP4 inference</div>
+    <div class="ann" id="ann-hbi"><b>NV-HBI</b>10 TB/s die-to-die<br>one coherent GPU</div>
+    <div class="ann" id="ann-dec"><b>Decompression engine</b>LZ4 · Snappy · Deflate<br>database and analytics pipelines</div>
+    <div class="ann r" id="ann-hbm"><b>HBM3e × 8</b>180 GB · 7.7 TB/s<br>8-high stacks on interposer</div>
+    <div class="ann r" id="ann-nvl"><b>NVLink 5</b>18 links · 1.8 TB/s per GPU<br>NVSwitch to 72-GPU domains</div>
+    <div class="ann r" id="ann-ras"><b>RAS engine · Confidential Computing</b>AI-based predictive maintenance<br>TEE for models and data</div>
+    <div class="ann amber" id="ann-pwr"><b>up to 1,000 W</b>SXM6 module · air or liquid</div>
+    <div class="cap">
+      <h2 id="h-epi">Trained at FP8. Served at FP4. Simulated at FP64.</h2>
+      <p class="cjk">训练、推理与 HPC 在同一颗封装上完成：万亿参数模型训练、实时大模型推理、双精度科学计算、数据库解压加速与机密计算。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="big">Reticle</div>
+      <p>A scale-by-scale study of the NVIDIA B200 Tensor Core GPU and the Blackwell architecture. Every green element denotes signal or active compute; amber denotes power. Nothing on this page is decorative without a meaning.</p>
+      <p class="cjk" style="margin-top:12px">NVIDIA、Blackwell、NVLink、NVSwitch、HGX、DGX 为 NVIDIA Corporation 的商标。本页为独立视觉作品，与 NVIDIA 无关联。</p>
+    </div>
+    <div>
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.nvidia.com/en-us/data-center/hgx/" rel="noopener">NVIDIA HGX B200 datasheet</a></li>
+        <li><a href="https://www.nvidia.com/en-us/data-center/dgx-b200/" rel="noopener">NVIDIA DGX B200</a></li>
+        <li><a href="https://www.nvidia.com/en-us/data-center/gb200-nvl72/" rel="noopener">NVIDIA GB200 NVL72</a></li>
+        <li><a href="https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/" rel="noopener">Blackwell architecture</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Built with</h3>
+      <ul>
+        <li>Three.js — package, dies, HBM stack (procedural geometry, PMREM lighting)</li>
+        <li>Canvas 2D — NVLink topology and data flow</li>
+        <li>SVG — leader annotations, product glyphs</li>
+        <li>CSS — kinetic typography, bit-field morphing, masks</li>
+        <li>Archivo (wdth 62–118) · JetBrains Mono</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============================================================
+   JS follows: scroll engine → three scene → precision → fabric → epilogue → init
+   ============================================================ */
+(function(){
+'use strict';
+/* ------------------------------------------------------------
+   utilities
+------------------------------------------------------------ */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const sm=t=>{t=clamp(t,0,1);return t*t*(3-2*t)};
+const smr=(a,b,t)=>sm((t-a)/(b-a));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePtr=matchMedia('(pointer:fine)').matches;
+const doc=document.documentElement;
+const isSmall=()=>innerWidth<=820;
+if(reduced) doc.classList.add('reduced');
+
+let vw=innerWidth, vh=innerHeight, docH=1;
+function setVH(){ vw=innerWidth; vh=innerHeight; doc.style.setProperty('--vh',vh+'px'); }
+setVH();
+
+/* pointer (normalised, smoothed) */
+const ptr={x:.5,y:.5,sx:.5,sy:.5,px:0,py:0,active:false};
+const xh=$('#xh');
+addEventListener('pointermove',e=>{
+  ptr.x=e.clientX/vw; ptr.y=e.clientY/vh; ptr.px=e.clientX; ptr.py=e.clientY; ptr.active=true;
+  if(finePtr){ xh.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; xh.style.opacity=1; }
+},{passive:true});
+addEventListener('pointerleave',()=>{ptr.active=false; xh.style.opacity=0;});
+document.addEventListener('mouseleave',()=>{ptr.active=false; xh.style.opacity=0;});
+
+/* ------------------------------------------------------------
+   scroll timeline: every scene has a pinned span (h - vh) and a
+   hand-off span (last vh) during which the next scene arrives.
+------------------------------------------------------------ */
+const ORDER=['hero','die','prec','hbm','fabric','ledger','epi'];
+const TL=ORDER.map(id=>({id,el:document.getElementById(id),top:0,h:0,p:0,hand:0,vis:0,ps:0,hands:0,viss:0}));
+const byId={}; TL.forEach(s=>byId[s.id]=s);
+function measure(){
+  TL.forEach(s=>{const r=s.el.getBoundingClientRect(); s.top=r.top+window.scrollY; s.h=r.height;});
+  docH=Math.max(1,document.documentElement.scrollHeight-vh);
+}
+function params(s,yy){
+  const span=Math.max(1,s.h-vh);
+  const p=clamp((yy-s.top)/span,0,1);
+  const hand=clamp((yy-(s.top+s.h-vh))/vh,0,1);
+  const a=Math.max(s.top,yy), b=Math.min(s.top+s.h,yy+vh);
+  return {p,hand,vis:clamp((b-a)/vh,0,1)};
+}
+let y=0, ys=0;
+function updateTL(){
+  y=window.scrollY;
+  TL.forEach(s=>{
+    const r=params(s,y); s.p=r.p; s.hand=r.hand; s.vis=r.vis;
+    const q=params(s,ys); s.ps=q.p; s.hands=q.hand; s.viss=q.vis;
+    if(reduced){ s.p=s.ps=(s.id==='hero'?0:1); s.hand=s.hands=0; }
+  });
+}
+function activeScene(){ let best=TL[0]; TL.forEach(s=>{ if(s.vis>=best.vis) best=s; }); return best; }
+
+/* ------------------------------------------------------------
+   GL — the package: substrate, interposer, two dies, seam,
+   8 HBM3e stacks (instanced), decoupling caps (instanced),
+   scan line, seam-crossing particles, TSV lines.
+   Units: millimetres.
+------------------------------------------------------------ */
+const GL=(function(){
+  const canvas=document.getElementById('gl');
+  const api={ok:false,render(){},resize(){},project(){return null},stats:{act:0},setDPR(){},dpr:1};
+  if(!window.THREE){ canvas.style.display='none'; return api; }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'}); }
+  catch(e){ canvas.style.display='none'; return api; }
+  api.ok=true;
+  api.dpr=Math.min(devicePixelRatio||1,isSmall()?1.5:2);
+  renderer.setPixelRatio(api.dpr);
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.0;
+  renderer.setClearColor(0x000000,0);
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(32,1,1,900);
+  scene.add(camera);
+
+  /* studio environment → PMREM (reflections on silicon and metal) */
+  (function(){
+    const es=new THREE.Scene(); es.background=new THREE.Color(0x050605);
+    const add=(w,h,c,pos,rot)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:c,side:THREE.DoubleSide}));m.position.set(pos[0],pos[1],pos[2]);m.rotation.set(rot[0],rot[1],rot[2]);es.add(m);};
+    add(140,44,0xffffff,[0,70,0],[Math.PI/2,0,0]);
+    add(70,36,0x8e9493,[-80,24,-30],[0,Math.PI/2,0]);
+    add(44,90,0x76b900,[84,12,24],[0,-Math.PI/2,0]);
+    add(160,22,0x3a3f39,[0,-4,-90],[0,0,0]);
+    const pm=new THREE.PMREMGenerator(renderer);
+    scene.environment=pm.fromScene(es,0.02,0.1,400).texture;
+    pm.dispose();
+  })();
+
+  scene.add(new THREE.AmbientLight(0x30352e,0.35));
+  const key=new THREE.DirectionalLight(0xfff5e6,1.5); key.position.set(40,90,30); scene.add(key);
+  const rim=new THREE.DirectionalLight(0x9fd63a,0.45); rim.position.set(-70,30,-60); scene.add(rim);
+  const ptl=new THREE.PointLight(0x76b900,0,110,2); ptl.position.set(0,16,0); scene.add(ptl);
+
+  /* ---------- textures ---------- */
+  const maxAniso=renderer.capabilities.getMaxAnisotropy();
+  function tex(c,srgb){ const t=new THREE.CanvasTexture(c); t.anisotropy=maxAniso; if(srgb) t.encoding=THREE.sRGBEncoding; return t; }
+
+  /* die floorplan: PHY strips at the outer edge, NV-HBI at the inner edge,
+     SM tile array in the middle, L2 band across the centre */
+  function dieCanvas(){
+    const W=512,H=640,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+    g.fillStyle='#292b28';g.fillRect(0,0,W,H);
+    g.strokeStyle='rgba(255,255,255,0.028)';g.lineWidth=1;
+    for(let x=0;x<W;x+=8){g.beginPath();g.moveTo(x+.5,0);g.lineTo(x+.5,H);g.stroke();}
+    for(let yy=0;yy<H;yy+=8){g.beginPath();g.moveTo(0,yy+.5);g.lineTo(W,yy+.5);g.stroke();}
+    const block=(x,yy,w,h,f,s)=>{g.fillStyle=f;g.fillRect(x,yy,w,h);if(s){g.strokeStyle=s;g.strokeRect(x+.5,yy+.5,w-1,h-1);}};
+    /* outer edge: 4 HBM PHY blocks */
+    for(let i=0;i<4;i++){ const yy=12+i*(H-24)/4; block(10,yy+4,40,(H-24)/4-8,'#1f221f','#151715');
+      g.strokeStyle='rgba(255,255,255,0.06)'; for(let k=0;k<12;k++){g.beginPath();g.moveTo(14,yy+8+k*((H-24)/4-16)/12);g.lineTo(46,yy+8+k*((H-24)/4-16)/12);g.stroke();} }
+    /* inner edge: NV-HBI — dense fine wires */
+    block(W-44,12,34,H-24,'#1c1f1c','#141614');
+    g.strokeStyle='rgba(255,255,255,0.09)';
+    for(let k=0;k<(H-32)/3;k++){g.beginPath();g.moveTo(W-40,18+k*3);g.lineTo(W-14,18+k*3);g.stroke();}
+    /* top & bottom: NVLink / PCIe PHY */
+    for(let i=0;i<6;i++){ block(60+i*66,10,58,26,'#232624','#171917'); block(60+i*66,H-36,58,26,'#232624','#171917'); }
+    /* SM array, 8 columns × 10 rows, L2 band in the middle */
+    const x0=58,x1=W-52,y0=44,y1=H-44,cols=8,rows=10,cw=(x1-x0)/cols,rh=(y1-y0)/rows;
+    for(let r=0;r<rows;r++)for(let cc=0;cc<cols;cc++){
+      const x=x0+cc*cw,yy=y0+r*rh,v=42+Math.floor(Math.random()*7);
+      block(x+1,yy+1,cw-2,rh-2,'rgb('+v+','+(v+2)+','+(v-1)+')','#1b1d1b');
+      g.strokeStyle='rgba(0,0,0,0.35)';g.beginPath();g.moveTo(x+cw/2,yy+2);g.lineTo(x+cw/2,yy+rh-2);g.moveTo(x+2,yy+rh/2);g.lineTo(x+cw-2,yy+rh/2);g.stroke();
+    }
+    block(x0,H/2-38,x1-x0,76,'#24262a','#191b1e');
+    g.strokeStyle='rgba(255,255,255,0.07)';
+    for(let k=0;k<(x1-x0)/4;k++){g.beginPath();g.moveTo(x0+2+k*4,H/2-34);g.lineTo(x0+2+k*4,H/2+34);g.stroke();}
+    /* scribe-line marks */
+    g.strokeStyle='rgba(255,255,255,0.18)';g.strokeRect(2.5,2.5,W-5,H-5);
+    return c;
+  }
+  /* activity map: 32×40 cells over the SM region; activation spreads from the seam */
+  const ACT_W=32,ACT_H=40;
+  const actCanvas=document.createElement('canvas');actCanvas.width=ACT_W;actCanvas.height=ACT_H;
+  const actCtx=actCanvas.getContext('2d');
+  const actImg=actCtx.createImageData(ACT_W,ACT_H);
+  const actTh=new Float32Array(ACT_W*ACT_H), actSeed=new Float32Array(ACT_W*ACT_H);
+  for(let j=0;j<ACT_H;j++)for(let i=0;i<ACT_W;i++){
+    const k=j*ACT_W+i; const dist=(ACT_W-1-i)/(ACT_W-1);
+    actTh[k]=0.04+dist*0.72+Math.random()*0.22; actSeed[k]=Math.random()*6.28;
+    if(i<3||i>ACT_W-1||j<2||j>ACT_H-3) actTh[k]=2; /* PHY strips never "compute" */
+  }
+  let actLevel=0, actLast=-1, actCount=0;
+  function paintAct(level,t){
+    const d=actImg.data; let n=0;
+    for(let k=0;k<ACT_W*ACT_H;k++){
+      let v=sm((level-actTh[k]+0.06)/0.12);
+      if(v>0){ v*=0.62+0.38*(0.5+0.5*Math.sin(t*2.4+actSeed[k]*3)); n+= v>0.5?1:0; }
+      const o=k*4; d[o]=Math.round(118*v); d[o+1]=Math.round(230*v); d[o+2]=Math.round(40*v); d[o+3]=255;
+    }
+    /* NV-HBI strip lights with the seam */
+    for(let j=0;j<ACT_H;j++){ const k=j*ACT_W+ACT_W-1, o=k*4, v=sm(level*1.6)*(0.7+0.3*Math.sin(t*6+j*.8)); d[o]=Math.round(150*v);d[o+1]=Math.round(255*v);d[o+2]=Math.round(70*v); }
+    actCtx.putImageData(actImg,0,0);
+    actCount=n/(ACT_W*ACT_H);
+    api.stats.act=actCount/0.78;
+  }
+  paintAct(0,0);
+  const dieC=dieCanvas();
+  const dieMap0=tex(dieC,true), dieMap1=tex(dieC,true);
+  dieMap1.repeat.x=-1; dieMap1.offset.x=1;
+  const actMap0=new THREE.CanvasTexture(actCanvas), actMap1=new THREE.CanvasTexture(actCanvas);
+  [actMap0,actMap1].forEach(m=>{m.magFilter=THREE.NearestFilter;m.minFilter=THREE.NearestFilter;m.generateMipmaps=false;m.encoding=THREE.sRGBEncoding;});
+  actMap1.repeat.x=-1; actMap1.offset.x=1;
+
+  /* substrate: traces fanning from the interposer to the edge, four fiducials, marking */
+  function substrateCanvas(){
+    const W=1024,H=800,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+    g.fillStyle='#0f130e';g.fillRect(0,0,W,H);
+    const rg=g.createRadialGradient(W/2,H/2,100,W/2,H/2,700);rg.addColorStop(0,'rgba(255,255,255,0.05)');rg.addColorStop(1,'rgba(0,0,0,0.35)');
+    g.fillStyle=rg;g.fillRect(0,0,W,H);
+    g.strokeStyle='rgba(150,190,110,0.10)';g.lineWidth=1.2;
+    const ix0=W*0.1,ix1=W*0.9,iy0=H*0.2,iy1=H*0.8;
+    for(let i=0;i<150;i++){
+      const side=i%4, u=(Math.floor(i/4)+0.5)/38;
+      let sx,sy,ex,ey;
+      if(side===0){sx=ix0+u*(ix1-ix0);sy=iy0;ex=sx+(u-0.5)*160;ey=8;}
+      else if(side===1){sx=ix0+u*(ix1-ix0);sy=iy1;ex=sx+(u-0.5)*160;ey=H-8;}
+      else if(side===2){sx=ix0;sy=iy0+u*(iy1-iy0);ex=8;ey=sy+(u-0.5)*120;}
+      else {sx=ix1;sy=iy0+u*(iy1-iy0);ex=W-8;ey=sy+(u-0.5)*120;}
+      const mx=lerp(sx,ex,0.55),my=lerp(sy,ey,0.55);
+      g.beginPath();g.moveTo(sx,sy);g.lineTo(mx,my);g.lineTo(ex,ey);g.stroke();
+    }
+    g.strokeStyle='rgba(200,215,190,0.35)';g.lineWidth=2;
+    [[40,40],[W-40,40],[40,H-40],[W-40,H-40]].forEach(p=>{g.beginPath();g.arc(p[0],p[1],9,0,6.283);g.stroke();g.beginPath();g.arc(p[0],p[1],2,0,6.283);g.stroke();});
+    g.fillStyle='rgba(200,215,190,0.30)';g.font='500 20px JetBrains Mono, Menlo, monospace';g.textBaseline='top';
+    g.fillText('B200',W-40-64,H-40-52);g.font='400 14px JetBrains Mono, Menlo, monospace';g.fillText('SXM6',W-40-64,H-40-28);
+    g.fillText('4NP',40+24,40-8);
+    return c;
+  }
+  const subMap=tex(substrateCanvas(),true);
+
+  /* ---------- geometry ---------- */
+  const pkg=new THREE.Group(); scene.add(pkg);
+  const M=o=>new THREE.MeshStandardMaterial(o);
+  const sideDark=M({color:0x0b0e0b,roughness:.7,metalness:.1});
+  const substrate=new THREE.Mesh(new THREE.BoxGeometry(92,1.6,72),[sideDark,sideDark,M({color:0xffffff,map:subMap,roughness:.6,metalness:.1}),sideDark,sideDark,sideDark]);
+  substrate.position.y=-0.8; pkg.add(substrate);
+  const interposer=new THREE.Mesh(new THREE.BoxGeometry(72,.6,42),M({color:0x1a1c18,roughness:.42,metalness:.35}));
+  interposer.position.y=0.3; pkg.add(interposer);
+
+  const dieSide=M({color:0x111311,roughness:.5,metalness:.3});
+  const DIE_W=24,DIE_D=30,DIE_X=12.35;
+  const dieMat0=M({color:0xffffff,map:dieMap0,roughness:.26,metalness:.62,emissive:0x76b900,emissiveMap:actMap0,emissiveIntensity:0});
+  const dieMat1=M({color:0xffffff,map:dieMap1,roughness:.26,metalness:.62,emissive:0x76b900,emissiveMap:actMap1,emissiveIntensity:0});
+  const die0=new THREE.Mesh(new THREE.BoxGeometry(DIE_W,1,DIE_D),[dieSide,dieSide,dieMat0,dieSide,dieSide,dieSide]);
+  const die1=new THREE.Mesh(new THREE.BoxGeometry(DIE_W,1,DIE_D),[dieSide,dieSide,dieMat1,dieSide,dieSide,dieSide]);
+  die0.position.set(-DIE_X,1.1,0); die1.position.set(DIE_X,1.1,0); pkg.add(die0,die1);
+  const seamMat=new THREE.MeshBasicMaterial({color:0xa8f03a,transparent:true,opacity:.15});
+  const seam=new THREE.Mesh(new THREE.BoxGeometry(.7,1.04,DIE_D),seamMat); seam.position.set(0,1.1,0); pkg.add(seam);
+
+  /* HBM3e: 8 stacks × (1 base + 8 DRAM layers), instanced */
+  const HBM_X=30.35, HBM_Z=[-13.5,-4.5,4.5,13.5], LAYERS=9, LT=.18, LG=.04, BASE=.32;
+  const hbmGeo=new THREE.BoxGeometry(9,LT,7.6);
+  const hbm=new THREE.InstancedMesh(hbmGeo,M({color:0x33362f,roughness:.3,metalness:.55}),8*LAYERS);
+  const _m=new THREE.Matrix4(),_q=new THREE.Quaternion(),_p=new THREE.Vector3(),_s=new THREE.Vector3();
+  const EXPLODE_STACK=5, EXPLODE_GAP=.62;
+  function layerY(i){ return i===0 ? 0.6+BASE/2 : 0.6+BASE+LG+(i-1)*(LT+LG)+LT/2; }
+  function setStacks(explode){
+    for(let k=0;k<8;k++){
+      const x=k<4?-HBM_X:HBM_X, z=HBM_Z[k%4];
+      for(let i=0;i<LAYERS;i++){
+        let yy=layerY(i); if(k===EXPLODE_STACK) yy+=explode*i*EXPLODE_GAP;
+        _p.set(x,yy,z); _s.set(1,i===0?BASE/LT:1,1);
+        _m.compose(_p,_q,_s); hbm.setMatrixAt(k*LAYERS+i,_m);
+      }
+    }
+    hbm.instanceMatrix.needsUpdate=true;
+  }
+  setStacks(0); hbm.frustumCulled=false; pkg.add(hbm);
+
+  /* TSVs of the exploded stack */
+  const TSV_N=5*4;
+  const tsvPos=new Float32Array(TSV_N*2*3);
+  const tsvGeo=new THREE.BufferGeometry(); tsvGeo.setAttribute('position',new THREE.BufferAttribute(tsvPos,3));
+  const tsvMat=new THREE.LineBasicMaterial({color:0x9be02a,transparent:true,opacity:0});
+  const tsv=new THREE.LineSegments(tsvGeo,tsvMat); tsv.frustumCulled=false; pkg.add(tsv);
+  function setTSV(explode,op){
+    const x0=HBM_X, z0=HBM_Z[EXPLODE_STACK%4]; let o=0;
+    const yTop=layerY(LAYERS-1)+explode*(LAYERS-1)*EXPLODE_GAP+LT/2, yBot=0.6+BASE;
+    for(let a=0;a<5;a++)for(let b=0;b<4;b++){
+      const x=x0-3.2+a*1.6, z=z0-2.4+b*1.6;
+      tsvPos[o++]=x;tsvPos[o++]=yBot;tsvPos[o++]=z; tsvPos[o++]=x;tsvPos[o++]=yTop;tsvPos[o++]=z;
+    }
+    tsvGeo.attributes.position.needsUpdate=true; tsvMat.opacity=op*0.85;
+  }
+
+  /* decoupling capacitors */
+  const capPos=[];
+  for(const zz of [24.2,25.9,-24.2,-25.9]) for(let x=-40;x<=40;x+=1.6) capPos.push([x,zz,0]);
+  for(const xx of [42.2,43.9,-42.2,-43.9]) for(let z=-18;z<=18;z+=1.6) capPos.push([xx,z,Math.PI/2]);
+  const caps=new THREE.InstancedMesh(new THREE.BoxGeometry(1.0,.5,.55),M({color:0x53574f,roughness:.28,metalness:.85}),capPos.length);
+  capPos.forEach((c,i)=>{ _p.set(c[0],.25,c[1]); _q.setFromAxisAngle(new THREE.Vector3(0,1,0),c[2]); _s.set(1,1,1); _m.compose(_p,_q,_s); caps.setMatrixAt(i,_m); });
+  _q.set(0,0,0,1); caps.instanceMatrix.needsUpdate=true; caps.frustumCulled=false; pkg.add(caps);
+
+  /* scan line (inspection sweep) */
+  const scanMat=new THREE.MeshBasicMaterial({color:0xc4ff55,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false});
+  const scan=new THREE.Mesh(new THREE.PlaneGeometry(.35,74),scanMat); scan.rotation.x=-Math.PI/2; scan.position.y=2.0; pkg.add(scan);
+  const scanGlowMat=new THREE.MeshBasicMaterial({color:0x76b900,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false});
+  const scanGlow=new THREE.Mesh(new THREE.PlaneGeometry(6,74),scanGlowMat); scanGlow.rotation.x=-Math.PI/2; scanGlow.position.y=1.98; pkg.add(scanGlow);
+
+  /* particles crossing the seam */
+  const PN=isSmall()?90:180;
+  const pPos=new Float32Array(PN*3), pState=new Float32Array(PN*3); /* z, speed, phase */
+  for(let i=0;i<PN;i++){ pState[i*3]=(Math.random()*2-1)*14; pState[i*3+1]=.35+Math.random()*.9; pState[i*3+2]=Math.random(); }
+  const pGeo=new THREE.BufferGeometry(); pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+  const pMat=new THREE.PointsMaterial({color:0xc8ff66,size:.55,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true});
+  const parts=new THREE.Points(pGeo,pMat); parts.frustumCulled=false; pkg.add(parts);
+  let crossings=0;
+  function stepParts(dt,t,strength){
+    for(let i=0;i<PN;i++){
+      let ph=pState[i*3+2]+dt*pState[i*3+1]*.35*strength; if(ph>=1){ph-=1;crossings++;}
+      pState[i*3+2]=ph;
+      const dir=(i%2?1:-1), u=ph*2-1; /* -1 → 1 across both dies */
+      pPos[i*3]=dir*u*22; pPos[i*3+1]=1.75+Math.abs(Math.sin(u*Math.PI))*.35; pPos[i*3+2]=pState[i*3]+Math.sin(t*.7+i)*.4;
+    }
+    pGeo.attributes.position.needsUpdate=true;
+  }
+  api.crossings=()=>crossings;
+
+  /* ---------- camera states ---------- */
+  const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+  function stateAt(id,p){
+    const s={pos:V(0,0,0),tgt:V(0,0,0),up:V(0,1,0),fov:32,op:1,act:0,explode:0,seam:.18,scan:0,ptr:0,rot:0,spin:0,tsv:0,part:0,fit:1};
+    switch(id){
+      case 'hero': s.pos.set(lerp(60,44,p),lerp(68,84,p),lerp(88,62,p)); s.tgt.set(-6,0,8); s.scan=1; s.ptr=1; s.seam=.28; s.fit=1; break;
+      case 'die': { const d=lerp(108,64,sm(p)); s.pos.set(0,d,0.001); s.tgt.set(0,1,0); s.up.set(0,0,-1); s.act=p; s.seam=lerp(.35,1,sm(p)); s.part=smr(.08,.4,p); s.fit=.6; break; }
+      case 'prec': s.pos.set(0,28,250); s.tgt.set(0,0,0); s.op=.14; s.act=1; s.seam=.6; s.part=.3; s.fit=1; break;
+      case 'hbm': s.pos.set(49,lerp(13,17,p),12); s.tgt.set(34,lerp(2.4,3.6,p),-6); s.explode=smr(.06,.72,p); s.tsv=smr(.28,.8,p); s.act=.55; s.seam=.4; s.fit=.7; break;
+      case 'fabric': s.op=0; s.pos.set(49,17,12); s.tgt.set(34,3.6,-6); s.explode=1; s.tsv=1; s.act=.4; break;
+      case 'ledger': s.op=0; s.pos.set(-60,52,110); s.tgt.set(0,0,0); s.act=.4; s.seam=.4; break;
+      case 'epi': s.pos.set(-72,60,98); s.tgt.set(0,0,0); s.act=.5; s.seam=.55; s.ptr=1; s.rot=lerp(-.35,.35,p); s.spin=1; s.scan=.55; s.fit=1; break;
+    }
+    return s;
+  }
+  function mix(a,b,t){
+    const s={};
+    for(const k in a){ const va=a[k]; if(va&&va.isVector3){ s[k]=va.clone().lerp(b[k],t); } else s[k]=lerp(va,b[k],t); }
+    return s;
+  }
+  function stateNow(){
+    for(let i=0;i<TL.length;i++){
+      const s=TL[i], nx=TL[i+1];
+      const inPin = ys>=s.top && ys<=s.top+s.h-vh;
+      const inHand = ys>s.top+s.h-vh && ys<s.top+s.h;
+      if(i===0 && ys<s.top) return stateAt(s.id,0);
+      if(inPin) return stateAt(s.id,s.ps);
+      if(inHand){ const A=stateAt(s.id,1), B=nx?stateAt(nx.id,0):A; return mix(A,B,sm(s.hands)); }
+    }
+    return stateAt('epi',1);
+  }
+
+  /* ---------- per-frame ---------- */
+  const ray=new THREE.Raycaster(), plane=new THREE.Plane(new THREE.Vector3(0,1,0),-12), hit=new THREE.Vector3(), ndc=new THREE.Vector2();
+  const _right=new THREE.Vector3(), _upv=new THREE.Vector3(), _f=new THREE.Vector3();
+  let lastExplode=-1, frame=0, curOp=1;
+  api.render=function(dt,t){
+    const st=stateNow();
+    /* fit for narrow viewports */
+    const aspect=vw/vh; const k=aspect<1.5 ? lerp(1,clamp(1.55/aspect,1,2.4),st.fit) : 1;
+    const pos=st.tgt.clone().add(st.pos.clone().sub(st.tgt).multiplyScalar(k));
+    /* pointer parallax on camera */
+    _f.copy(st.tgt).sub(pos).normalize(); _right.crossVectors(_f,st.up).normalize(); _upv.crossVectors(_right,_f).normalize();
+    const pw=st.ptr*(ptr.active?1:0)*(reduced?0:1);
+    pos.addScaledVector(_right,(ptr.sx-.5)*6*pw).addScaledVector(_upv,-(ptr.sy-.5)*4*pw);
+    camera.position.copy(pos); camera.up.copy(st.up).normalize(); camera.lookAt(st.tgt);
+    if(camera.fov!==st.fov){camera.fov=st.fov;camera.updateProjectionMatrix();}
+
+    pkg.rotation.y=st.rot+(st.spin&&!reduced?t*.045:0);
+    seamMat.opacity=st.seam;
+    dieMat0.emissiveIntensity=dieMat1.emissiveIntensity=st.act*1.35;
+
+    /* activation texture: repaint when level moves or while flickering */
+    frame++;
+    if(st.act>0.001 && (frame%2===0)){ paintAct(st.act,t); actMap0.needsUpdate=actMap1.needsUpdate=true; }
+
+    if(Math.abs(st.explode-lastExplode)>0.0005){ setStacks(st.explode); lastExplode=st.explode; }
+    setTSV(st.explode,st.tsv);
+
+    /* scan sweep: 6 s period, 4 s travel, 2 s hold */
+    if(st.scan>0.001 && !reduced){
+      const c=(t%6)/6, u=c<0.66? sm(c/0.66):1;
+      const x=lerp(-46,46,u);
+      scan.position.x=scanGlow.position.x=x;
+      const env= c<0.66 ? 1 : 1-sm((c-0.66)/0.34);
+      scanMat.opacity=st.scan*env*.95; scanGlowMat.opacity=st.scan*env*.10;
+    } else { scanMat.opacity=scanGlowMat.opacity=0; }
+
+    /* pointer light: project pointer onto a plane above the package */
+    if(st.ptr>0.001 && ptr.active && !reduced){
+      ndc.set(ptr.sx*2-1,-(ptr.sy*2-1)); ray.setFromCamera(ndc,camera);
+      if(ray.ray.intersectPlane(plane,hit)){ ptl.position.copy(hit); ptl.position.y=14; }
+      ptl.intensity=st.ptr*2.6;
+    } else ptl.intensity=0;
+
+    /* seam particles */
+    if(st.part>0.001){ pMat.opacity=st.part*.9; stepParts(reduced?0:dt,t,st.part); parts.visible=true; } else parts.visible=false;
+
+    /* opacity / skip */
+    if(Math.abs(curOp-st.op)>0.002){ curOp=st.op; canvas.style.opacity=curOp.toFixed(3); }
+    if(st.op<0.005) return false;
+    renderer.render(scene,camera);
+    return true;
+  };
+  api.resize=function(){ renderer.setSize(vw,vh,false); camera.aspect=vw/vh; camera.updateProjectionMatrix(); };
+  api.setDPR=function(d){ api.dpr=d; renderer.setPixelRatio(d); };
+  const _pr=new THREE.Vector3();
+  api.project=function(a){
+    _pr.set(a[0],a[1],a[2]); pkg.localToWorld(_pr); _pr.project(camera);
+    if(_pr.z>1) return null;
+    return {x:(_pr.x*.5+.5)*vw, y:(-_pr.y*.5+.5)*vh};
+  };
+  api.resize();
+  return api;
+})();
+
+/* ------------------------------------------------------------
+   PREC — bit-field morphing + throughput counter
+------------------------------------------------------------ */
+const PREC=(function(){
+  const F=[
+    {n:'FP64',bits:64,lay:[1,11,52],dense:0.037,sparse:null,type:'FP64 Tensor Core',alt:'dense · no sparsity path'},
+    {n:'TF32',bits:19,lay:[1,8,10],dense:1.1,sparse:2.2,type:'TF32 Tensor Core',alt:'2.2 PFLOPS with 2:4 sparsity'},
+    {n:'FP16',bits:16,lay:[1,5,10],dense:2.25,sparse:4.5,type:'FP16 Tensor Core',alt:'4.5 PFLOPS with 2:4 sparsity'},
+    {n:'BF16',bits:16,lay:[1,8,7],dense:2.25,sparse:4.5,type:'BF16 Tensor Core',alt:'4.5 PFLOPS with 2:4 sparsity'},
+    {n:'FP8',bits:8,lay:[1,4,3],dense:4.5,sparse:9,type:'FP8 Tensor Core',alt:'9 PFLOPS with 2:4 sparsity · same for FP6'},
+    {n:'FP4',bits:4,lay:[1,2,1],dense:9,sparse:18,type:'FP4 Tensor Core',alt:'18 PFLOPS with 2:4 sparsity'}
+  ];
+  const field=$('#bitfield'), cells=[];
+  for(let i=0;i<64;i++){ const d=document.createElement('div'); d.className='bit'; d.style.transitionDelay=(i*5)+'ms'; field.appendChild(d); cells.push(d); }
+  const li=$$('#plist li'), pname=$('#pname'), pnum=$('#pnum'), punit=$('#punit'), ptype=$('#ptype'), palt=$('#palt'), sw=$('#sw');
+  let sparse=false, lastKey='';
+  sw.addEventListener('click',()=>{ sparse=!sparse; sw.setAttribute('aria-checked',String(sparse)); lastKey=''; });
+  function val(f){ return sparse&&f.sparse?f.sparse:f.dense; }
+  function fmt(v){ /* v in PFLOPS */
+    if(v<0.5) return {n:Math.round(v*1000).toString(),u:'TFLOPS'};
+    let s=v<10? v.toFixed(2):v.toFixed(1); s=s.replace(/\.?0+$/,''); return {n:s,u:'PFLOPS'};
+  }
+  function update(p){
+    const N=F.length-1; const k=p*N; let i=Math.min(N-1,Math.floor(k)); let f=k-i;
+    if(p>=1){i=N-1;f=1;}
+    const t=smr(0.22,0.78,f);                 /* dwell on each format, morph between */
+    const A=F[i], B=F[i+1], near=t<.5?A:B, ni=t<.5?i:i+1;
+    /* the 64-bit lane is re-partitioned into as many values as fit */
+    const key=ni+':'+sparse;
+    if(key!==lastKey){
+      lastKey=key;
+      const b=near.bits, s=near.lay[0], e=near.lay[1], groups=Math.floor(64/b);
+      for(let c=0;c<64;c++){
+        const el=cells[c], gi=Math.floor(c/b);
+        if(gi>=groups){ el.className='bit x'; continue; }
+        const pos=c-gi*b;
+        el.className='bit '+(pos<s?'s':pos<s+e?'e':'m')+(pos===0&&gi>0?' g':'');
+      }
+      li.forEach((l,j)=>l.classList.toggle('on',j===ni));
+      pname.innerHTML=near.n+'<small>'+near.bits+' bit · '+groups+' per lane</small>';
+      ptype.textContent=near.type;
+      palt.textContent= sparse&&near.sparse ? 'dense '+fmt(near.dense).n+' '+fmt(near.dense).u : near.alt;
+    }
+    const v=Math.exp(lerp(Math.log(val(A)),Math.log(val(B)),t));
+    const o=fmt(v); pnum.textContent=o.n; punit.textContent=o.u;
+  }
+  return {update};
+})();
+
+/* ------------------------------------------------------------
+   FAB — NVLink topology on Canvas 2D: 1 GPU → HGX 8 → NVL72
+------------------------------------------------------------ */
+const FAB=(function(){
+  const cv=document.getElementById('fab'), g=cv.getContext('2d'), stage=cv.parentElement;
+  const vEl=$('#fab-v'), uEl=$('#fab-u'), steps=$$('#fab-steps li'), tip=$('#tip');
+  let W=1,H=1,dpr=1,hover=null; const hits=[];
+  const C={nv:'#76b900',hi:'#b6ff3f',lo:'#2c4900',txt:'#e3e6de',t2:'#9ba197',t3:'#5f665c',line:'#363c34',ink:'#050605',ink2:'#11140f'};
+  const MONO='JetBrains Mono, SF Mono, Menlo, monospace';
+  function resize(){ W=stage.clientWidth||vw; H=stage.clientHeight||vh; dpr=Math.min(devicePixelRatio||1,1.5); cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+  const small=()=>W<820;
+
+  /* path helpers */
+  function pathLen(pts){ let L=0; for(let i=1;i<pts.length;i++) L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]); return L; }
+  function pointAt(pts,u){ const L=pathLen(pts); let d=u*L; for(let i=1;i<pts.length;i++){ const seg=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]); if(d<=seg||i===pts.length-1){ const k=seg?d/seg:0; return [lerp(pts[i-1][0],pts[i][0],k),lerp(pts[i-1][1],pts[i][1],k)]; } d-=seg; } return pts[pts.length-1]; }
+  function strokePath(pts,frac){
+    if(frac<=0) return; g.beginPath(); g.moveTo(pts[0][0],pts[0][1]);
+    if(frac>=1){ for(let i=1;i<pts.length;i++) g.lineTo(pts[i][0],pts[i][1]); g.stroke(); return; }
+    const L=pathLen(pts); let d=frac*L;
+    for(let i=1;i<pts.length;i++){ const seg=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]); if(d<=seg){ const k=seg?d/seg:0; g.lineTo(lerp(pts[i-1][0],pts[i][0],k),lerp(pts[i-1][1],pts[i][1],k)); break; } g.lineTo(pts[i][0],pts[i][1]); d-=seg; }
+    g.stroke();
+  }
+  function dot(x,y,r,c){ g.fillStyle=c; g.beginPath(); g.arc(x,y,r,0,6.283); g.fill(); }
+  /* package glyph: two dies + seam (+ HBM when large) */
+  function gpu(x,y,w,h,on,a,hbmToo){
+    g.globalAlpha=a; g.lineWidth=1;
+    g.fillStyle=on?'#1a2210':C.ink2; g.strokeStyle=on?C.nv:C.line;
+    g.fillRect(x-w/2,y-h/2,w,h); g.strokeRect(x-w/2+.5,y-h/2+.5,w-1,h-1);
+    const dw=w*(hbmToo?.22:.36), dh=h*.7, gap=Math.max(1,w*.02);
+    g.fillStyle=on?'#2a3d10':'#1b1e1a'; g.strokeStyle=on?C.nv:'#4a5046';
+    g.fillRect(x-gap-dw,y-dh/2,dw,dh); g.strokeRect(x-gap-dw+.5,y-dh/2+.5,dw-1,dh-1);
+    g.fillRect(x+gap,y-dh/2,dw,dh); g.strokeRect(x+gap+.5,y-dh/2+.5,dw-1,dh-1);
+    g.strokeStyle=on?C.hi:'#4a5046'; g.beginPath(); g.moveTo(x+.5,y-dh/2); g.lineTo(x+.5,y+dh/2); g.stroke();
+    if(hbmToo){ const s=w*.075; g.fillStyle='#22251f'; g.strokeStyle='#3a3f37';
+      for(let i=0;i<4;i++){ const yy=y-dh/2+dh*(i+.5)/4; [x-gap-dw-s*1.4, x+gap+dw+s*.4].forEach(xx=>{ g.fillRect(xx,yy-s/2,s,s); g.strokeRect(xx+.5,yy-s/2+.5,s-1,s-1); }); } }
+    g.globalAlpha=1;
+  }
+  function label(t,x,y,c,align,size){ g.fillStyle=c||C.t2; g.font=(size||11)+'px '+MONO; g.textAlign=align||'left'; g.textBaseline='middle'; g.fillText(t,x,y); }
+
+  /* particles: phase per link */
+  const PA=Array.from({length:18},(_,i)=>Math.random()), PB=Array.from({length:32},()=>Math.random()), PC=Array.from({length:small()?20:44},()=>Math.random());
+  let tAcc=0;
+
+  function draw(p,dt,t){
+    const s=small(); tAcc+= reduced?0:dt;
+    g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H);
+    hits.length=0;
+    /* camera pan */
+    let camX=0;
+    if(p<.3) camX=0; else if(p<.45) camX=lerp(0,W,sm((p-.3)/.15)); else if(p<.66) camX=W; else if(p<.8) camX=lerp(W,2*W,sm((p-.66)/.14)); else camX=2*W;
+    const pa=smr(0,.28,p), pb=smr(.42,.66,p), pc=smr(.78,1,p);
+    g.translate(-camX,0);
+    const cxOf=z=>z*W;
+
+    /* ---------- zone A: one GPU, 18 links ---------- */
+    if(camX<W){
+      const ax=cxOf(0)+W*(s?.42:.5), ay=H*(s?.36:.5), gw=s?140:210, gh=s?94:140;
+      const x0=ax+gw/2;
+      const spread=s?H*.018:H*.026;
+      for(let i=0;i<18;i++){
+        const yy=ay+(i-8.5)*spread, ex=s?W-24:ax+W*.36;
+        const pts=[[x0,ay+(i-8.5)*(gh*.04)],[x0+18,ay+(i-8.5)*(gh*.04)],[x0+58,yy],[ex,yy]];
+        const f=clamp(pa*18-i,0,1);
+        g.strokeStyle=C.lo; g.lineWidth=1; strokePath(pts,1);
+        g.strokeStyle=C.nv; strokePath(pts,f);
+        if(f>=1){ const u=(tAcc*.18+PA[i])%1; const q=pointAt(pts,u); dot(q[0],q[1],1.6,C.hi); if(i===8&&!s) label('100 GB/s',ex+10,yy,C.t3,'left',10); }
+      }
+      gpu(ax,ay,gw,gh,pa>0,1,true);
+      label('B200',ax-gw/2,ay+gh/2+18,C.t2,'left',11);
+      label('18 × NVLink 5',ax-gw/2,ay+gh/2+34,C.t3,'left',10);
+      hits.push({x:ax-gw/2,y:ay-gh/2,w:gw,h:gh,tip:'<b>B200</b> · 18 links · 1.8 TB/s bidirectional'});
+    }
+    /* ---------- zone B: HGX B200, 8 GPUs + 2 NVSwitch ---------- */
+    if(camX>0 && camX<2*W){
+      const bx=cxOf(1)+W*(s?.5:.56), rowY=[H*(s?.3:.33),H*(s?.52:.58)], swY=H*(s?.41:.455), gw=s?54:86, gh=s?36:56, dx=s?W*.2:W*.115;
+      const nodes=[]; for(let r=0;r<2;r++)for(let c=0;c<4;c++) nodes.push([bx+(c-1.5)*dx,rowY[r]]);
+      const sws=[[bx-W*(s?.13:.08),swY],[bx+W*(s?.13:.08),swY]];
+      const links=[]; nodes.forEach((n,i)=>sws.forEach((sw,j)=>{ const dir=i<4?1:-1; links.push({i,j,pts:[[n[0],n[1]+dir*gh/2],[n[0],lerp(n[1]+dir*gh/2,sw[1],.5)],[sw[0],lerp(n[1]+dir*gh/2,sw[1],.5)],[sw[0],sw[1]-dir*9]]}); }));
+      links.forEach((l,k)=>{
+        const f=clamp(pb*16-k,0,1); const hl=hover&&hover.gpu===l.i;
+        g.lineWidth=hl?1.5:1; g.strokeStyle=C.lo; strokePath(l.pts,1);
+        g.strokeStyle=hl?C.hi:C.nv; strokePath(l.pts,f);
+        if(f>=1){ for(let q=0;q<2;q++){ const u=(tAcc*.22+PB[k*2+q]+q*.5)%1; const pt=pointAt(l.pts,u); dot(pt[0],pt[1],hl?2.2:1.5,C.hi); } }
+      });
+      sws.forEach((sw,j)=>{ const on=pb>0; g.fillStyle=on?'#1a2210':C.ink2; g.strokeStyle=on?C.nv:C.line; g.lineWidth=1; g.fillRect(sw[0]-40,sw[1]-9,80,18); g.strokeRect(sw[0]-39.5,sw[1]-8.5,79,17); if(!s) label('NVSwitch '+j,sw[0]+(j?48:-48),sw[1],C.t3,j?'left':'right',10); });
+      nodes.forEach((n,i)=>{ const on=pb*16>i*2; gpu(n[0],n[1],gw,gh,on,1,false); hits.push({x:n[0]-gw/2,y:n[1]-gh/2,w:gw,h:gh,gpu:i,tip:'<b>GPU '+i+'</b> · 1.8 TB/s · 2 × NVSwitch'}); if(!s) label('GPU '+i,n[0],n[1]+(i<4?-gh/2-12:gh/2+12),C.t3,'center',10); });
+      label('HGX B200 baseboard',bx-1.5*dx-gw/2,rowY[1]+gh/2+(s?30:40),C.t2,'left',11);
+      label('fully connected · 14.4 TB/s aggregate',bx-1.5*dx-gw/2,rowY[1]+gh/2+(s?46:56),C.t3,'left',10);
+    }
+    /* ---------- zone C: GB200 NVL72 rack ---------- */
+    if(camX>W){
+      const rx=cxOf(2)+W*(s?.5:.62), top=H*(s?.29:.13), bot=H*(s?.68:.87), tw=s?W*.5:W*.22, n=27, th=(bot-top)/n;
+      const spineL=rx-tw/2-(s?16:34), spineR=rx+tw/2+(s?16:34);
+      /* spine */
+      const sp=clamp(pc*1.2,0,1);
+      g.lineWidth=1; g.strokeStyle=C.lo; g.beginPath(); g.moveTo(spineL,bot); g.lineTo(spineL,top); g.moveTo(spineR,bot); g.lineTo(spineR,top); g.stroke();
+      g.strokeStyle=C.nv; g.beginPath(); g.moveTo(spineL,bot); g.lineTo(spineL,lerp(bot,top,sp)); g.moveTo(spineR,bot); g.lineTo(spineR,lerp(bot,top,sp)); g.stroke();
+      /* trays, bottom-up */
+      for(let j=0;j<n;j++){
+        const idx=n-1-j, yy=top+idx*th, f=clamp(pc*n*1.15-j,0,1); if(f<=0) continue;
+        const isSw=idx>=10&&idx<19;
+        g.globalAlpha=f;
+        g.fillStyle=isSw?'#1a2210':C.ink2; g.strokeStyle=isSw?C.nv:C.line;
+        g.fillRect(rx-tw/2,yy+1,tw,th-2); g.strokeRect(rx-tw/2+.5,yy+1.5,tw-1,th-3);
+        /* stubs to spine */
+        g.strokeStyle=isSw?C.hi:C.nv; g.beginPath(); g.moveTo(spineL,yy+th/2); g.lineTo(rx-tw/2,yy+th/2); g.moveTo(rx+tw/2,yy+th/2); g.lineTo(spineR,yy+th/2); g.stroke();
+        if(isSw){ for(let q=0;q<2;q++){ const xx=rx+(q-.5)*tw*.34; g.fillStyle='#2a3d10'; g.strokeStyle=C.nv; g.fillRect(xx-tw*.13,yy+3,tw*.26,th-6); g.strokeRect(xx-tw*.13+.5,yy+3.5,tw*.26-1,th-7); } }
+        else { /* 2 superchips: CPU + 2 GPU each */
+          for(let q=0;q<2;q++){ const base=rx-tw/2+tw*.06+q*tw*.47; const cw=tw*.09, gw2=tw*.13;
+            g.fillStyle='#1d201c'; g.strokeStyle='#4a5046'; g.fillRect(base,yy+3,cw,th-6); g.strokeRect(base+.5,yy+3.5,cw-1,th-7);
+            for(let k=0;k<2;k++){ const xx=base+cw+tw*.02+k*(gw2+tw*.015); g.fillStyle='#1b1e1a'; g.strokeStyle='#5a6156'; g.fillRect(xx,yy+3,gw2,th-6); g.strokeRect(xx+.5,yy+3.5,gw2-1,th-7); g.strokeStyle=C.nv; g.beginPath(); g.moveTo(xx+gw2/2+.5,yy+4); g.lineTo(xx+gw2/2+.5,yy+th-4); g.stroke(); } }
+        }
+        g.globalAlpha=1;
+        hits.push({x:rx-tw/2,y:yy,w:tw,h:th,tip:isSw?'<b>NVLink switch tray</b> '+(idx-9)+' / 9':'<b>compute tray</b> '+(idx<10?idx+1:idx-8)+' / 18 · 2 × GB200 · 4 GPUs'});
+      }
+      /* particles on spine */
+      if(sp>0.05){ PC.forEach((ph,i)=>{ const u=((tAcc*.09+ph)%1); if(u>sp) return; const xx=i%2?spineL:spineR; dot(xx,lerp(bot,top,u),1.6,C.hi); }); }
+      label('GB200 NVL72',rx-tw/2,top-(s?22:30),C.txt,'left',12);
+      label(s?'18 compute · 9 switch trays':'18 compute trays · 9 NVLink switch trays · liquid-cooled',rx-tw/2,bot+(s?18:24),C.t3,'left',10);
+      if(!s){ label('72 Blackwell GPUs',spineR+22,top+th*4,C.t2,'left',11); label('36 Grace CPUs',spineR+22,top+th*5.2,C.t2,'left',11); label('130 TB/s · one NVLink domain',spineR+22,top+th*6.4,C.hi,'left',11);
+        label('13.4 TB HBM3e + LPDDR5X → up to 30 TB',spineR+22,top+th*7.6,C.t3,'left',10); }
+    }
+    /* adjust hit boxes into screen space */
+    hits.forEach(h=>{h.x-=camX;});
+    /* counter */
+    let val,u,step;
+    if(p<.42){val=1.8;u='NVLink 5 · per GPU · bidirectional';step=0;}
+    else if(p<.66){val=lerp(1.8,14.4,pb);u='HGX B200 · 8 GPUs · aggregate';step=1;}
+    else if(p<.78){val=14.4;u='HGX B200 · 8 GPUs · aggregate';step=1;}
+    else {val=lerp(14.4,130,pc);u='GB200 NVL72 · 72 GPUs · one domain';step=2;}
+    vEl.textContent= val>=100? val.toFixed(0): val.toFixed(1);
+    if(uEl.textContent!==u) uEl.textContent=u;
+    steps.forEach((l,i)=>l.classList.toggle('on',i===step));
+  }
+  /* hover */
+  stage.addEventListener('pointermove',e=>{
+    const r=stage.getBoundingClientRect(), x=e.clientX-r.left, y2=e.clientY-r.top; let h=null;
+    for(const b of hits){ if(x>=b.x&&x<=b.x+b.w&&y2>=b.y&&y2<=b.y+b.h){h=b;break;} }
+    hover=h;
+    if(h){ tip.innerHTML=h.tip; tip.style.left=e.clientX+'px'; tip.style.top=e.clientY+'px'; tip.style.opacity=1; }
+    else tip.style.opacity=0;
+  },{passive:true});
+  stage.addEventListener('pointerleave',()=>{hover=null;tip.style.opacity=0;});
+  return {draw,resize};
+})();
+
+/* ------------------------------------------------------------
+   EPI — leader lines from annotations to projected features
+------------------------------------------------------------ */
+const EPI=(function(){
+  const svg=$('#leaders'), stage=$('#epi .stage');
+  const items=[
+    {el:$('#ann-te'),side:'l',a:[-12.35,1.7,-6]},
+    {el:$('#ann-hbi'),side:'l',a:[0,1.7,5]},
+    {el:$('#ann-dec'),side:'l',a:[-14,1.7,12]},
+    {el:$('#ann-hbm'),side:'r',a:[30.35,2.6,-13.5]},
+    {el:$('#ann-nvl'),side:'r',a:[42,0,-8]},
+    {el:$('#ann-ras'),side:'r',a:[14,1.7,10]},
+    {el:$('#ann-pwr'),side:'c',a:[0,-.2,-34]}
+  ];
+  const NS='http://www.w3.org/2000/svg';
+  items.forEach(it=>{
+    it.line=document.createElementNS(NS,'line'); it.c=document.createElementNS(NS,'circle'); it.c.setAttribute('r','2.5');
+    svg.appendChild(it.line); svg.appendChild(it.c);
+  });
+  let wasOn=false;
+  function update(p,vis){
+    if(vis<=0){ if(wasOn){ svg.style.display='none'; wasOn=false; } return; }
+    if(!wasOn){ svg.style.display=''; wasOn=true; }
+    const sr=stage.getBoundingClientRect();
+    items.forEach((it,i)=>{
+      const show=reduced||p>0.06+i*0.07;
+      it.el.classList.toggle('in',show);
+      const pt=GL.project(it.a); const op=show&&pt?1:0;
+      it.line.style.opacity=op; it.c.style.opacity=op;
+      if(!pt) return;
+      const r=it.el.getBoundingClientRect(); let x1,y1;
+      if(it.side==='l'){x1=r.right-sr.left+10;y1=r.top-sr.top+10;}
+      else if(it.side==='r'){x1=r.left-sr.left-10;y1=r.top-sr.top+10;}
+      else {x1=r.left+r.width/2-sr.left;y1=r.bottom-sr.top+8;}
+      const x2=pt.x-sr.left,y2=pt.y-sr.top;
+      it.line.setAttribute('x1',x1);it.line.setAttribute('y1',y1);it.line.setAttribute('x2',x2);it.line.setAttribute('y2',y2);
+      it.c.setAttribute('cx',x2);it.c.setAttribute('cy',y2);
+    });
+  }
+  return {update};
+})();
+
+/* ------------------------------------------------------------
+   FRAME — instrument readouts, and DOM bound to scroll
+------------------------------------------------------------ */
+const FRAME=(function(){
+  const scaleEl=$('#ro-scale'), zEl=$('#ro-z'), barEl=$('#ro-bar'), tickEl=$('#ro-tick'), sceneEl=$('#ro-scene'), fpsEl=$('#ro-fps .val');
+  const names={hero:'reticle',die:'seam',prec:'precision',hbm:'memory',fabric:'fabric',ledger:'ledger',epi:'package'};
+  const scales={hero:'10 mm',die:'100 µm',prec:'1 bit',hbm:'50 µm',fabric:'1 m',ledger:'—',epi:'10 mm'};
+  const heroNum=$('#hero-number'), heroTitle=$('.hero-title'), heroMeta=$('.hero-meta'), heroSub=$('.hero-sub');
+  const seamEl=$('#seam'), seamNum=$('#seam-num'), actPct=$('#act-pct'), actX=$('#act-x');
+  const hbmLayer=$('#hbm-layer'), hbmState=$('#hbm-state'), hbmCap=$('#hbm-cap'), hbmBw=$('#hbm-bw'), hbmU=$('#hbm .hbm-num .u');
+  let lastScene='', fpsAcc=0, fpsN=0, lastZ='';
+  function update(dt){
+    const a=activeScene();
+    if(a.id!==lastScene){ lastScene=a.id; sceneEl.textContent=names[a.id]; scaleEl.textContent=scales[a.id]; }
+    const z=(y/docH).toFixed(3); if(z!==lastZ){ lastZ=z; zEl.textContent=z; barEl.style.width=(y/docH*100).toFixed(1)+'%'; tickEl.style.left=(y/docH*100).toFixed(1)+'%'; }
+    fpsAcc+=dt*1000; fpsN++; if(fpsN>=30){ fpsEl.textContent=(fpsAcc/fpsN).toFixed(1); fpsAcc=0; fpsN=0; }
+
+    /* hero: the number slides off as the reticle descends */
+    const h=byId.hero; const hp=reduced?0:h.hand;
+    heroNum.style.transform='translate3d('+(-hp*14)+'vw,'+(hp*8)+'vh,0)'; heroNum.style.opacity=1-hp*1.4;
+    heroTitle.style.opacity=heroMeta.style.opacity=heroSub.style.opacity=1-hp*1.6;
+
+    /* die: seam grows, vertical number reveals, readouts */
+    const d=byId.die, dp=reduced?1:d.ps;
+    seamEl.style.transform='scaleY('+smr(0,.35,dp)+')';
+    seamNum.style.clipPath='inset('+((1-smr(.1,.5,dp))*100).toFixed(1)+'% 0 0 0)';
+    actPct.textContent=Math.round(clamp(GL.stats.act,0,1)*100);
+    actX.textContent=(GL.crossings?GL.crossings():0).toLocaleString('en-US');
+
+    /* hbm: layer readout, capacity/bandwidth flip to the NVL72 configuration late in the scene */
+    const m=byId.hbm, mp=reduced?1:m.ps, ex=smr(.06,.72,mp);
+    const layer=Math.round(ex*8); hbmLayer.textContent=String(layer).padStart(2,'0');
+    hbmState.textContent= ex<=0?'closed': ex<1?'opening':'open · TSVs exposed';
+    const nvl=mp>.9; hbmCap.textContent=nvl?'186':'180'; hbmBw.textContent=nvl?'8':'7.7';
+    const ut=nvl?'GB HBM3e · 8 stacks · GB200 NVL72':'GB HBM3e · 8 stacks · HGX B200'; if(hbmU.textContent!==ut) hbmU.textContent=ut;
+  }
+  return {update};
+})();
+
+/* ------------------------------------------------------------
+   main loop
+------------------------------------------------------------ */
+let last=performance.now(), slow=0, t0=last;
+function loop(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now; const t=(now-t0)/1000;
+  ys+= (y-ys)*(1-Math.exp(-dt*(reduced?60:8)));
+  updateTL();
+  ptr.sx+=(ptr.x-ptr.sx)*(1-Math.exp(-dt*6)); ptr.sy+=(ptr.y-ptr.sy)*(1-Math.exp(-dt*6));
+
+  const rendered=GL.render(dt,t);
+  if(byId.prec.vis>0) PREC.update(reduced?1:byId.prec.ps);
+  if(byId.fabric.vis>0) FAB.draw(reduced?1:byId.fabric.ps,dt,t);
+  EPI.update(reduced?1:byId.epi.ps, byId.epi.vis);
+  FRAME.update(dt);
+
+  /* dynamic DPR: sustained slow frames lower the render resolution */
+  if(rendered){ if(dt>0.03) slow++; else slow=Math.max(0,slow-1); if(slow>70 && GL.dpr>0.9){ GL.setDPR(Math.max(0.75,GL.dpr-0.25)); slow=0; } }
+  requestAnimationFrame(loop);
+}
+
+/* ------------------------------------------------------------
+   init / resize
+------------------------------------------------------------ */
+let lastW=vw, lastH=vh;
+function onResize(){
+  const nw=innerWidth, nh=innerHeight;
+  if(nw===lastW && Math.abs(nh-lastH)<160) return;   /* ignore mobile URL-bar height jitter */
+  lastW=nw; lastH=nh; setVH(); GL.resize(); FAB.resize(); measure();
+}
+addEventListener('resize',onResize,{passive:true});
+addEventListener('orientationchange',()=>setTimeout(onResize,300));
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+addEventListener('load',()=>{ measure(); FAB.resize(); });
+measure(); FAB.resize(); updateTL(); ys=y;
+PREC.update(reduced?1:0);
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

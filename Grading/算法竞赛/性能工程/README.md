@@ -1,89 +1,43 @@
 # 性能工程评测数据与工具
 
-两题各包含固定的 24 个性能输入，另各有 7 个正确性输入。
+## 数据
 
-- 性能输入分 8 类，每类 3 个参数不同的实例，按类连续编号：`input_01`–`input_03` 为第 1 类，`input_04`–`input_06` 为第 2 类，依此类推。
-- 电路正确性输入包括 6 个小规模用例及 1 个完整规模的同步语义用例；沙粒正确性输入为小规模网格。
-- 7 个正确性用例各占本题得分的 1/7：失败一个，本题得分乘以 6/7，以此类推；性能输入照常测试。
+- 两题各有 24 个性能输入和 7 个正确性输入。性能输入分 8 类，每类 3 个参数不同的实例，按类连续编号（`input_01`–`input_03` 为第 1 类，依此类推）；个数以 `performance/inputs` 中的实际文件为准，少于 3 个或缺标准答案时脚本报错退出。
+- 电路正确性输入是 6 个小规模用例和 1 个完整规模的同步语义用例；沙粒正确性输入是小规模网格。
+- `baselines/reference_solution.*` 是参考解法；`baselines/weak_solution.*` 只用来交叉核对标准答案，评测时不用。生成参数、参考解法耗时和核对结论见各题目录的 `README.md` 和 `validation.json`。
 
 ## 使用方法
 
-1. 按各题题面的编译命令，将对应 `grader/grader.cpp` 或 `grader/grader.cu` 分别与最终提交、`baselines/reference_solution.*`（参考解法，即出题人写的通用优化解法）编译成两个可执行文件。编译失败直接记 0 分，本脚本不负责编译。`baselines/weak_solution.*`（弱基线）只用来交叉核对标准答案，评测时不用编译。
-2. 在本目录使用 Python 3.12 运行：
+按各题题面的编译命令，把 `grader/grader.cpp` 或 `grader/grader.cu` 分别与提交、参考解法编译成两个可执行文件（编译失败直接记 0 分，脚本不负责编译），再在本目录用 Python 3.12 运行：
 
 ```powershell
-python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json
-python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe --report C:\eval\sand-result.json
+python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json --pause 1
+python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe --report C:\eval\sand-result.json --pause 1
 ```
 
 ## 一次评测会话
 
-每个进程以高优先级、CPU 亲和掩码 `0xffff`（可用 `--affinity` 指定）和 `OMP_NUM_THREADS=16` 启动，最长 60 秒，超时判为失败。所有进程顺序运行，不同会话不能同时进行。
-
-1. 提交的 7 个正确性输入各运行一次，记下通过个数 $k$。失败的不影响后面的步骤。
-2. 按编号逐个处理性能输入。参考解法和提交在每个输入上各运行 `--repeats` 次（默认 1 次），交错进行：
-   - 奇数编号的输入先运行参考解法，偶数编号的先运行提交；
-   - 多次运行时，每运行完一对就交换先后，例如 3 次为“参考、提交、提交、参考、参考、提交”。
-3. 每个输入上，参考解法和提交各取运行用时的中位数，记为 $R_i$ 和 $C_i$。
-
-性能输入的个数以 `performance/inputs` 中的实际文件数为准，现为 24 个。少于 3 个或缺少对应的标准答案时，脚本直接报错退出，不生成报告。
+- 所有进程顺序运行，不同会话不能同时进行；每个进程以高优先级、亲和掩码 `0xffff` 和 `OMP_NUM_THREADS=16` 启动，超过 60 秒判为失败。
+- 先跑 7 个正确性输入，记下通过个数 $k$，失败不影响后续步骤。
+- 再逐个跑性能输入：参考解法和提交各运行 `--repeats` 次，交错进行（奇数编号先跑参考解法，偶数编号先跑提交，每跑完一对交换先后），各取中位数记为 $R_i$、$C_i$。
 
 ## 计分
 
-计分与题面一致。每个性能输入单独计分：$s_i=R_i/C_i$，按下面的锚点表在 $\ln s_i$ 上分段线性插值，得到该输入的 0–100 分，保留一位小数。本题得分为 24 个输入得分的平均值，保留一位小数。
+- 每个性能输入按 $s_i=R_i/C_i$ 在题面锚点表上对 $\ln s_i$ 分段线性插值，得 0–100 分，保留一位小数；不高于最低锚点得 0 分，达到最高锚点得 100 分并标注需人工复核。
+- 提交在某个输入上答案错误、崩溃、超时或计时无效，该输入记 0 分；`--repeats` 大于 1 时任一次失败即算失败。
+- 本题得分 `score` = 24 个输入得分的平均 × $k/7$，保留一位小数；`performance_score` 是未乘系数的平均；$G=\exp(\mathrm{mean}\ \ln s_i)$ 只作参考。
+- 提交计时低于 0.001 ms 时按 0.001 ms 计，并标注需人工复核；参考解法本身运行失败或计时低于 0.001 ms 时会话作废，`score` 为 `null`，排查环境后重测。
 
-沙粒：
+## 报告
 
-| $s_i$（相对参考解法的倍数） | 0.2 | 0.5 | 1 | 2 | 4 | 8 | 20 |
-|---|---|---|---|---|---|---|---|
-| 得分 | 0 | 5 | 20 | 37 | 55 | 74 | 100 |
-
-电路：
-
-| $s_i$（相对参考解法的倍数） | 0.1 | 0.5 | 1 | 1.75 | 2.75 | 4 |
-|---|---|---|---|---|---|---|
-| 得分 | 0 | 10 | 30 | 52 | 75 | 100 |
-
-- $s_i$ 不高于最低锚点（沙粒 0.2，电路 0.1）的输入得 0 分。
-- $s_i$ 达到或超过最高锚点（沙粒 20，电路 4）的输入得 100 分，并标注需人工复核。
-- 提交在某个性能输入上运行失败（答案错误、崩溃、超时或计时无效），该输入记 0 分，其余照常计分。`--repeats` 大于 1 时，任一次失败即算该输入失败。
-- 本题得分 = 24 个输入得分的平均值 × $k/7$，保留一位小数；报告另给出未乘系数的 `performance_score`。
-- 提交的计时低于 0.001 ms（评测程序输出为 0.000）时按 0.001 ms 计算，同样标注需人工复核。
-- 参考解法本身运行失败，或计时低于 0.001 ms，本次会话作废，`score` 为 `null`，排查环境后重测。
-- 报告另给出 $G=\exp(\mathrm{mean}\ \ln s_i)$ 作参考，不用于计分。
-
-报告的 `summary` 每个性能输入一行，字段为 `case`、`family`、`R_i_ms`、`C_i_ms`、`s_i`、`points_i`、`status`：
-
-- `family` 是该输入所属的类，取自 `validation.json` 的 `inputs`，读不到时为空；
-- `status` 是提交的运行结果，`PASS` 为通过。
-
-`performance` 另记每次运行的原始结果和运行顺序。整题的 `score`、`G`、`health` 等字段在报告顶层。
-
-## 健康检查
-
-报告中的 `health` 把本次参考解法的耗时 $R_i$ 与 `validation.json` 的 `reference_medians_ms` 比较。单输入偏差超过 10% 或几何平均偏差超过 5% 时给出警告，不改变得分。
-
-单次运行的正常波动约 5–7%。超过阈值通常意味着有别的程序占用 GPU 或 CPU、降频或绑核错误，应排查环境后重测。
+- `summary` 每个性能输入一行：`case`、`family`（取自 `validation.json`）、`R_i_ms`、`C_i_ms`、`s_i`、`points_i`、`status`（`PASS` 为通过）；`performance` 记每次运行的原始结果和顺序；`score`、`G`、`health` 等在顶层。
+- `health` 把本次 $R_i$ 与 `validation.json` 的 `reference_medians_ms`（在 `--pause 1` 下标定）比较，单输入偏差超过 10% 或几何平均偏差超过 5% 时警告，不改变得分；单次运行的正常波动约 5–7%，超过阈值时排查 GPU/CPU 占用、降频或绑核后重测。
 
 ## 选项与退出码
 
-- `--repeats N`：每个性能输入上参考解法和提交各运行 N 次，各取中位数，默认 1。
-- `--pause S`：每次运行前停顿 S 秒，默认 0。
-- `--affinity MASK`：CPU 亲和掩码，默认 `0xffff`。
-- `--correctness-only`：只检查正确性，此时不需要 `--reference`。
+- `--repeats N`：每个输入各运行 N 次取中位数，默认 1；`--pause S`：每次运行前停顿 S 秒，默认 0；`--affinity MASK`：亲和掩码，默认 `0xffff`；`--correctness-only`：只检查正确性，不需要 `--reference`。
+- 退出码：0 得分大于 0；1 记 0 分（只检查正确性时表示有输入未通过）；2 会话作废。
 
-退出码：
+## 重新生成正确性输入
 
-- 0：得分大于 0；
-- 1：记 0 分（只检查正确性时，表示有输入未通过）；
-- 2：会话作废。
-
-## 重新生成与校验
-
-```powershell
-python gen_correctness.py
-```
-
-此命令重建两题的小规模正确性输入及答案。答案由脚本内独立的串行求解器算出：电路逐激励、逐周期做标量计算并同时更新；沙粒用串行工作队列做合法倒塌，与 GPU 同步迭代的基线解法相互独立。
-
-性能输入的生成参数、参考解法耗时，以及标准答案与弱基线的交叉核对结论，见各题目录的 `README.md` 和 `validation.json`。
+`python gen_correctness.py` 重建两题的小规模正确性输入及答案，答案由脚本内独立的串行求解器算出。

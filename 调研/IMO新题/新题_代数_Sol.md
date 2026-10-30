@@ -235,12 +235,12 @@ f(16u^2-u)=16f(u)^2-f(u)\qquad(u\ge0). \tag{2.6}
 \]
 记 \(P(u)=16u^2-u\)。在 \([0,\infty)\) 上，它的值域为
 \[
-\left[-\frac1{64},\infty\right],
+\left[-\frac1{64},\infty\right),
 \]
 且最小值唯一在 \(u=1/32\) 处达到。因为 \(f\) 把非负实数映满到非负实数，(2.6) 给出
 \[
-f\left(\left[-\frac1{64},\infty\right]\right)
-=\left[-\frac1{64},\infty\right].
+f\left(\left[-\frac1{64},\infty\right)\right)
+=\left[-\frac1{64},\infty\right).
 \]
 由严格递增性，端点必须对应，因此
 \(f(-1/64)=-1/64\)。将 \(u=1/32\) 代入 (2.6)，得到
