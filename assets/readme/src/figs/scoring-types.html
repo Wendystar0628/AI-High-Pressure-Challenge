@@ -42,7 +42,7 @@
   <div class="row three">
     <section class="panel">
       <h3>形式化证明题</h3>
-      <p class="rule">5 题，每题只有 0 分或 20 分。格下 4 个点是 4 项检查，全部通过才得 20 分，没有部分分。</p>
+      <p class="rule">5 题，每题只有 0 分或 20 分。单独编译没有错误、也没有 sorry 警告才得 20 分。</p>
       <svg id="formal" width="277" height="96"></svg>
       <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
@@ -54,9 +54,9 @@
     </section>
     <section class="panel">
       <h3>设计题</h3>
-      <p class="rule">每题 19–31 个分项，相加满分 100。<br>分项得分 = 分值 × 完成份额 × 做得多好</p>
+      <p class="rule">每题 19–29 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
       <svg id="design" width="277" height="100"></svg>
-      <div class="zero"><p><b>不另扣分</b>：问题只体现在宽或高里</p></div>
+      <div class="zero"><p><b>不分档、不扣分</b>：AE 的性能另按用时公式</p></div>
     </section>
   </div>
 
@@ -93,23 +93,20 @@ const txt = (parent, x, y, cls, s, anchor = 'start') => {
 const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
 
-/* 形式化证明题: five cells, all or nothing. Example: problems 1, 2, 4 pass all four checks. */
+/* 形式化证明题: five cells, all or nothing on the compile result. Example: problems 1, 2, 4 compile cleanly. */
 {
   const g = document.getElementById('formal');
-  const met = [4, 4, 3, 4, 1], C = 44, G = 10;
-  met.forEach((m, i) => {
-    const x = i * (C + G), full = m === 4;
+  const res = ['通过', '通过', 'sorry', '通过', '报错'], C = 44, G = 10;
+  res.forEach((r, i) => {
+    const x = i * (C + G), full = r === '通过';
     el('rect', { x: x + .75, y: .75, width: C - 1.5, height: C - 1.5, rx: 8,
                  fill: full ? 'var(--ink)' : 'var(--paper)', stroke: full ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.5 }, g);
     const t = txt(g, x + C / 2, C / 2 + 6, 'n big', full ? '20' : '0', 'middle');
     t.setAttribute('style', `fill: ${full ? 'var(--paper)' : 'var(--ink-3)'}`);
-    for (let j = 0; j < 4; j++) {
-      const cx = x + C / 2 + (j - 1.5) * 9, ok = j < m;
-      el('circle', { cx, cy: C + 11, r: 2.6, fill: ok ? 'var(--ink)' : 'var(--paper)', stroke: ok ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.1 }, g);
-    }
+    txt(g, x + C / 2, C + 16, 'lab', r, 'middle');
   });
   const t = el('text', { x: 0, y: C + 40, class: 'cap' }, g);
-  t.innerHTML = '例：3 题全部通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；差 1 项的也是 0 分。';
+  t.innerHTML = '例：3 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；另两题 0 分。';
 }
 
 /* IMO原创新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
@@ -144,19 +141,30 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   txt(g, L + 18, y0 + BH + 17, 'lab', '折算后');
 }
 
-/* 设计题: the area of a rectangle in the unit square. */
+/* 设计题: each item is a row of cells, one per point; the grader fills cells up to the score given, and the rows add up. */
 {
   const g = document.getElementById('design');
-  const S = 92, x0 = 0, y0 = 4, c = .75, q = .6;
-  el('rect', { x: x0, y: y0, width: S, height: S, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
-  el('rect', { x: x0, y: y0 + (1 - q) * S, width: c * S, height: q * S, fill: 'var(--ink)', 'fill-opacity': .05 }, g);
-  el('polyline', { points: `${x0},${y0 + (1 - q) * S} ${x0 + c * S},${y0 + (1 - q) * S} ${x0 + c * S},${y0 + S}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, g);
-  el('polyline', { points: `${x0},${y0} ${x0},${y0 + S} ${x0 + S},${y0 + S}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, g);
-  const tx = S + 18;
-  txt(g, tx, y0 + 14, 'note', '整个正方形 = 分值');
-  txt(g, tx, y0 + 40, 'note', '宽 = 完成份额');
-  txt(g, tx, y0 + 62, 'note', '高 = 做得多好');
-  txt(g, tx, y0 + 88, 'note', '矩形面积 = 得分');
+  const C = 12, G = 2, H = 14;
+  const rows = [[5, 3.5], [3, 3.0], [4, 2.6]];
+  const NX = 34;
+  rows.forEach(([v, sc], i) => {
+    const y = 4 + i * 24;
+    txt(g, NX, y + 11, 'n', sc.toFixed(1), 'end').setAttribute('style', 'font-size: 13px');
+    for (let k = 0; k < v; k++) {
+      const x = NX + 8 + k * (C + G);
+      el('rect', { x, y, width: C, height: H, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, g);
+      const part = Math.max(0, Math.min(1, sc - k));
+      if (part > 0) el('rect', { x, y, width: C * part, height: H, rx: part === 1 ? 2 : 0, fill: 'var(--ink)' }, g);
+    }
+  });
+  line(g, 0, 78, NX + 8 + 5 * (C + G) - G, 78, 'var(--ink)', 1.25);
+  txt(g, NX, 96, 'n', '9.1', 'end').setAttribute('style', 'font-size: 15px; font-weight: 700');
+  txt(g, NX + 8, 96, 'note', '相加');
+  const tx = 132;
+  txt(g, tx, 15, 'note', '格数 = 分值');
+  txt(g, tx, 39, 'note', '涂黑 = 给的分');
+  txt(g, tx, 63, 'note', '可给小数');
+  txt(g, tx, 96, 'note', '各项相加 = 总分');
 }
 
 /* A shared plot frame for the two anchor curves. */

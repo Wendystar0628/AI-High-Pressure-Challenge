@@ -115,7 +115,7 @@
 - **参考解法**：只保留能影响输出的门；在深度优先序和按层序中选需要存储位置更少的一种，并复用已不再使用的存储位置；软件预取；AVX2 一次处理 256 组激励；门计算无分支；用 64×64 位矩阵转置生成主输入、计算摘要。
 - **弱基线**（只用于交叉核对）：Kahn 拓扑序；每个门用 switch 计算；每个信号存 4 个 64 位字，一个线程一次处理 256 组激励。
 - 每次运行的原始计时见 `validation.json`。其中 `reference_medians_ms` 是 `evaluate.py` 健康检查的参考值：正式评测中参考解法在每个输入上默认只运行一次，其用时若在任一输入上偏离超过 10%，或几何平均偏离超过 5%，报告会给出警告，不改变得分。
-- 题面不设固定的单输入时间上限：提交在某个输入上的 $s_i\le0.1$（不到参考解法速度的十分之一）时，该输入得 0 分；每个进程仍有 60 秒的防挂起限制。参考解法每个输入约 1.0–2.5 秒，0.1 倍速的提交约 10–25 秒。
+- 提交在某个输入上的 $s_i\le0.1$（不到参考解法速度的十分之一）时，该输入得 0 分；题面第十节另规定每次运行的整个进程不超过 60 秒，`evaluate.py` 对超过 60 秒的运行判为失败。参考解法每个输入约 1.0–2.5 秒，0.1 倍速的提交约 10–25 秒。
 
 ## 校验
 
@@ -129,14 +129,14 @@
 在本目录的上一级运行统一工具，参考解法可执行文件必需：
 
 ```powershell
-python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json
+python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json --pause 1
 ```
 
 工具先运行提交的 7 个正确性输入（失败一个，本题得分去掉 1/7，后面照常运行）；再在每个性能输入上让参考解法和提交各运行一次（`--repeats N` 时各 N 次，奇数输入先参考解法后提交，偶数输入先提交后参考解法，取各自中位数），按题面评分标准输出 $R_i$、$C_i$、$s_i$、各输入得分、作参考的 $G$ 和本题得分。参考解法本身运行失败时这次评测作废。具体说明见上一级 README。
 
 以下命令展示单次运行和性能输入重建方式；手工评测时也必须执行正确性检查，并在同一次评测中运行参考解法。
 
-把 `grader/grader.cpp` 与选手解法放在同一目录编译（参考解法同理，把 `solution.cpp` 换成 `baselines/reference_solution.cpp`）：
+把 `grader/grader.cpp` 与选手解法放在同一目录编译（参考解法同理，把 `solution.cpp` 换成 `baselines/reference_solution.cpp`；g++ 在 `C:\msys64\ucrt64\bin`，运行时也要在 PATH 中）：
 
 ```
 g++ -O2 -std=c++20 -march=native -fopenmp -o grader.exe grader.cpp solution.cpp

@@ -112,7 +112,7 @@
 | **合计 / 几何平均** | | **67003.135 / 2665.139** |
 
 - 24 个中位数在 1.15–4.59 秒之间，合计约 67 秒。同一输入 3 次实测的差异（最大值÷最小值−1）中位数为 5.6%，最大为 11.2%（02 号）。第 2 遍中 02–06 号整体比另外两遍慢 3–11%，中位数取的是另外两次之间的值，不受影响；单次运行偶尔出现这样的波动时，健康检查的单输入警告（阈值 10%）可能被触发。
-- 题面不设固定的单输入时间上限：提交在某个输入上的 $s_i\le0.2$（不到参考解法速度的五分之一）时，该输入得 0 分；每个进程仍有 60 秒的防挂起限制。参考解法最慢的输入约 4.6 秒，0.2 倍速的提交约 23 秒。
+- 提交在某个输入上的 $s_i\le0.2$（不到参考解法速度的五分之一）时，该输入得 0 分；题面第九节另规定每次运行的整个进程不超过 60 秒，`evaluate.py` 对超过 60 秒的运行判为失败。参考解法最慢的输入约 4.6 秒，0.2 倍速的提交约 23 秒。
 - **参考解法**：同步规则；每个线程块把 64×64 的区域（48×48 内部加 8 格边缘）载入共享内存，在里面连续算 8 轮再写回内部；只处理自身或 8 个相邻区域在上一次启动中仍有变化的区域。`init()` 分配第二个缓冲区和活跃标记；若最后一次启动写在第二个缓冲区，则在显存内复制回评测程序的网格。
 - **弱基线**（只用于交叉核对）：全图同步更新，以 32×32 为输出分块、外加 4 格边缘，在共享内存双缓冲中连续计算 4 轮；每 64 个逻辑轮次读回一次终止标志；不使用活跃区域筛选。每个同步轮在全图上约需 84 µs，耗时几乎与 $R$ 成正比。
 - 每次运行的原始计时见 `validation.json`。其中 `reference_medians_ms` 是 `evaluate.py` 健康检查的参考值：正式评测中参考解法在每个输入上默认只运行一次，其用时若在任一输入上偏离超过 10%，或几何平均偏离超过 5%，报告会给出警告，不改变得分。
@@ -130,14 +130,14 @@
 在本目录的上一级运行统一工具，参考解法可执行文件必需：
 
 ```powershell
-python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe --report C:\eval\sand-result.json
+python evaluate.py --task sand --exe C:\eval\sand\grader.exe --reference C:\eval\sand\reference.exe --report C:\eval\sand-result.json --pause 1
 ```
 
 工具先运行提交的 7 个正确性输入（失败一个，本题得分去掉 1/7，后面照常运行）；再在每个性能输入上让参考解法和提交各运行一次（`--repeats N` 时各 N 次，奇数输入先参考解法后提交，偶数输入先提交后参考解法，取各自中位数），按题面评分标准输出 $R_i$、$C_i$、$s_i$、各输入得分、作参考的 $G$ 和本题得分。参考解法本身运行失败时这次评测作废。具体说明见上一级 README。
 
 以下命令展示单次运行和性能输入重建方式；手工评测时也必须执行正确性检查，并在同一次评测中运行参考解法。
 
-在 Visual Studio 的 x64 开发环境中，把 `grader/grader.cu` 与选手解法放在同一目录编译（参考解法同理，把 `solution.cu` 换成 `baselines/reference_solution.cu`）：
+在 Visual Studio 的 x64 开发环境中（先执行 `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat`），把 `grader/grader.cu` 与选手解法复制到同一个纯英文路径的目录编译（中文路径会触发大量无害警告；参考解法同理，把 `solution.cu` 换成 `baselines/reference_solution.cu`）：
 
 ```
 nvcc -O3 -std=c++17 -arch=sm_89 -Xcompiler "/O2 /utf-8" -o grader.exe grader.cu solution.cu

@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-31T01:41:15.757865",
+  "test_result": "99 passed, 80 subtests passed in 33.99s",
+  "supervisor": {
+    "pid": 75260,
+    "created": 1793381924.2424412,
+    "running": true,
+    "heartbeat": 1793382074.900107
+  },
+  "supervisor_identity_verified": true,
+  "event_seq": 335,
+  "event_ack": 335,
+  "pending_events": 0,
+  "rewake_token": "26532-1793381961040584300",
+  "rewake_running": true,
+  "playbook_delivery": {
+    "session_id": "00229dd5-4e38-471e-895e-c1790288b388",
+    "source": "upgrade",
+    "generation": "00229dd5-4e38-471e-895e-c1790288b388:1793381906544610000",
+    "files": [
+      "0-总纲.md",
+      "1-准备与启动.md",
+      "2-计时与关闭.md",
+      "3-评分.md",
+      "4-汇报.md",
+      "Agent使用说明.md",
+      "排班表.md"
+    ]
+  },
+  "playbook_pending": 0,
+  "playbook_refresh": null,
+  "playbook_documents": {
+    "0-总纲.md": {
+      "characters": 2395,
+      "sha256": "627a9f232a68339ba033fd18276871bacebdd7be7086c77d7296320714102be4"
+    },
+    "1-准备与启动.md": {
+      "characters": 1425,
+      "sha256": "b4c9f5ca154f39f327e9d2cb8a7e33ce33ab050022cb8af436301c69c12d2dff"
+    },
+    "2-计时与关闭.md": {
+      "characters": 1925,
+      "sha256": "372abca87bcdcf9f94f40cd387edb3303527e22e64e9d6055efb4748ebdcee96"
+    },
+    "3-评分.md": {
+      "characters": 1569,
+      "sha256": "a1d962b2a7c40a6a1ebdbd4faf3c007dee5b9517690e28593c8141eca1270897"
+    },
+    "4-汇报.md": {
+      "characters": 628,
+      "sha256": "15ebee207be5803908af5866d1f39570d77df4e0e0d2c51180a8b89493a2017a"
+    },
+    "Agent使用说明.md": {
+      "characters": 3031,
+      "sha256": "406cca70785a738951936d7e19e87d49cb5358f3838ad01d6609d5c5ead9e54a"
+    },
+    "排班表.md": {
+      "characters": 1951,
+      "sha256": "07526bdabdd7300c0cc7fbe59874f382f73d612b70bfe2ca04b5b8c68d65c3f2"
+    }
+  },
+  "playbook_total_characters": 12924,
+  "playbook_chunk_count": 2,
+  "playbook_chunk_utf16_lengths": [
+    8038,
+    5084
+  ],
+  "e2e_message_seq": 332,
+  "e2e_receipt": "指挥于 01:35 的 Stop 钩子收件里收到，送达正常。",
+  "bench": {
+    "OpusIMO-ord": {
+      "bench:OpusIMO-ord:1793378030.4811003:deadline": 328,
+      "bench:OpusIMO-ord:1793378030.4811003:terminal": 330
+    },
+    "SolIMO-ord": {
+      "bench:SolIMO-ord:1793378033.7428393:deadline": 329,
+      "bench:SolIMO-ord:1793378033.7428393:terminal": 331
+    }
+  },
+  "threads": {
+    "patrol-research": {
+      "run_id": "e5f76e49a93f4b32b520a3fae0c57c92",
+      "terminal_seq": 326
+    },
+    "cn-fonts": {
+      "run_id": "83e5a5b3740e49fca3920d49b4c05762",
+      "terminal_seq": 327
+    },
+    "comms-rework": {
+      "run_id": "ec2a381af2a74d7eb8568574d94b56fd",
+      "terminal_seq": null
+    }
+  },
+  "physics": {
+    "key": "Claude/Opus5.5/物理仿真连锁机关",
+    "start": 1793380288.6461263,
+    "minutes": 100,
+    "deadline": "2026-10-31T02:51:28.646126",
+    "host_pid": 60504,
+    "busy": true,
+    "failed": false,
+    "heartbeat_age_s": 0.12481951713562012
+  },
+  "code_sha256": {
+    "codex_thread.py": "5dcd1af28ff7009d7c5fc567aa1fe7d093cf8c2ac0a529864d863c2e44ac631f",
+    "commander.py": "e0fef2440cfb6461f402345eaea61753e9db4924852b00803bf241eb22685833",
+    "common.py": "30b0e2816f632bd01e31e225d5b927a31056e71f2c654386e45536fe514d1da3",
+    "grader_runner.py": "4382786004127c313956de0b19abd1400f889fd99d50281ae5744db0269f84fb",
+    "grading.py": "e5f79786a556ba48a91696e011bdcfc9fbd1becbaba8d8e65155e56f4c406a26",
+    "patrol.py": "e4ee40e1bb9967af9b27ae9169df6e62cf7fff3053c928769367c637f4b7a330",
+    "quota.py": "e856e15b99f07f36e0195f24bc4691442b6bfb4c52ab9f66bb015c0d74999a7f",
+    "reminders.py": "e7ca6a49adc3a0a3403412a95d4a69df064a3f78224ca5de7f397a7419ba16b7",
+    "run_state.py": "efc9650cc22abe53bd2fc41fdc51187429dad6973ddbca8af2afb1fc8b63c2e6",
+    "session_runtime.py": "53d93ac4a9bb6fd96d52b5315ac1230958a7a5590183d63cce2ae5809e70864e",
+    "supervisor.py": "3a628e60c1d758955326ef5cc9f59e1cc6e8fe25e2ae63355d52d8f1c03bc0b3",
+    "tasks.py": "4dab1c87c0ece3086f34e3ce74151cbec636c752b3c07aa7e34a6616e1596a72",
+    "timer.py": "215c24cb8c0ab63ea5c5f858bdf6152bc020a799e8e84931298752d464fc2b09",
+    "work_events.py": "93afc11c369e84b788182000446f9eb4eb6cc5752bb7ceaf9e3677c65c69e6d7"
+  }
+}

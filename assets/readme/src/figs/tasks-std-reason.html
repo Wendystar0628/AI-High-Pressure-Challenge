@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x584">
+<meta name="size" content="960x568">
 <title>深度推理两种判法</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -19,9 +19,11 @@
   .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; }
   code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; color: var(--ink); }
 
-  /* Formal proof: four gates on one track, then the two possible results. */
+  /* Formal proof: two compile checks on one track, a note on what is not checked, then the two possible results. */
   .gates { position: relative; margin-top: 14px; padding-left: 40px; }
-  .gates .track { position: absolute; left: 13px; top: 14px; height: 138px; width: 2px; background: var(--reason-tint); }
+  .gates .track { position: absolute; left: 13px; top: 14px; height: 46px; width: 2px; background: var(--reason-tint); }
+  .gates .note { font-size: 12.5px; line-height: 1.55; color: var(--ink-2); margin: 6px 0 20px -40px; padding: 8px 12px;
+                 border-left: 2px solid var(--reason-tint); background: var(--paper); }
   .gate { position: relative; height: 46px; }
   .gate .no { position: absolute; left: -40px; top: 1px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--reason);
               background: var(--paper); color: var(--reason); font-family: var(--font-num); font-size: 15px; font-weight: 600;
@@ -65,21 +67,20 @@
 <div class="frame">
   <div class="head">
     <h2>深度推理：同是证明，两种判法</h2>
-    <p>形式化证明交给 Lean 编译器和公理检查，过关才得分；IMO 题由 GPT 6.1 Sol 按 IMO 阅卷惯例逐题给分。</p>
+    <p>形式化证明只看 Lean 编译结果，过关才得分；IMO 题由 GPT 6.1 Sol 按 IMO 阅卷惯例逐题给分。</p>
   </div>
 
   <div class="row">
     <section>
       <div class="ph"><h3>形式化证明题</h3><div class="tag">5 × 20<span class="cn">分</span></div></div>
-      <p class="rule">每题一个 <code>.lean</code> 文件，单独检查。四关全过得 20 分，没有部分分。</p>
+      <p class="rule">每题一个 <code>.lean</code> 文件，单独编译。两关都过得 20 分，没有部分分。</p>
       <div class="gates">
         <div class="track"></div>
-        <div class="gate"><div class="no">1</div><b>编译通过</b><span>单独编译没有错误，只导入 Mathlib 及其依赖</span></div>
-        <div class="gate"><div class="no">2</div><b>命题不变</b><span>定理名和 Lean 命题与题面一字不差</span></div>
-        <div class="gate"><div class="no">3</div><b>没有捷径</b><span>无 sorry、admit、native_decide、新公理，不绕过内核</span></div>
-        <div class="gate"><div class="no">4</div><b>公理干净</b><span>#print axioms 只含 propext、Classical.choice、Quot.sound</span></div>
+        <div class="gate"><div class="no">1</div><b>编译无错误</b><span>用 Lean 单独编译这个文件，没有报错</span></div>
+        <div class="gate"><div class="no">2</div><b>没有 sorry 警告</b><span>编译输出里没有 sorry 警告，其他警告不影响</span></div>
+        <p class="note">只看编译结果：不另查公理，不逐字核对命题；<br>证明的长短和写法不影响得分。</p>
         <div class="result">
-          <div class="res"><div class="box on">20</div><div class="lab">四关全过</div></div>
+          <div class="res"><div class="box on">20</div><div class="lab">两关都过</div></div>
           <div class="res"><div class="box off">0</div><div class="lab">任一关不过</div></div>
         </div>
       </div>
@@ -119,7 +120,7 @@
     <section>
       <div class="tools-h">作答时能用的工具</div>
       <div class="chips">
-        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>只靠推理，一题一个答案文件</span>
+        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>只靠推理，按题号逐题作答</span>
         <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>编写或运行程序验算</span>
         <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>计算机代数系统、数值库</span>
         <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>定理证明器</span>

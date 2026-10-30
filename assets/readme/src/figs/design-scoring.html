@@ -2,68 +2,49 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x516">
+<meta name="size" content="960x568">
 <title>设计题计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .head h2 { font-size: 24px; letter-spacing: .01em; }
   .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
-  .head p .num { color: var(--ink); }
 
   svg.chart { position: absolute; left: 0; top: 0; overflow: visible; }
   svg text { font-family: var(--font-cn); fill: var(--ink); }
   svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-  svg .tick { font-size: 12px; fill: var(--ink-3); }
-  svg .axis { font-size: 13px; fill: var(--ink-2); }
-  svg .tier { font-size: 13.5px; font-weight: 700; fill: var(--ink); }
-  svg .tier-d { font-size: 12px; fill: var(--ink-2); }
-  svg .anchor-v { font-size: 15px; font-weight: 700; fill: var(--ink); }
-  svg .lane { font-size: 12px; fill: var(--ink-3); }
-  svg .name { font-size: 13px; font-weight: 500; fill: var(--ink); }
-  svg .calc { font-size: 13px; fill: var(--ink-2); }
-  svg .calc .pts { font-weight: 700; fill: var(--ink); }
+  svg .colh { font-size: 13px; fill: var(--ink-3); }
+  svg .dir { font-size: 16px; font-weight: 700; }
+  svg .dirv { font-size: 13px; fill: var(--ink-2); font-weight: 400; }
+  svg .item { font-size: 14px; font-weight: 500; }
+  svg .itemv { font-size: 13px; fill: var(--ink-2); font-weight: 400; }
+  svg .point { font-size: 12.5px; fill: var(--ink-2); }
+  svg .hint { font-size: 12px; fill: var(--ink-3); }
+  svg .sc { font-size: 14px; }
+  svg .avg { font-size: 16px; font-weight: 700; }
+  svg .sum { font-size: 15px; font-weight: 700; }
+  svg .sum-l { font-size: 13px; fill: var(--ink-2); }
+  svg .blk { font-size: 15px; font-weight: 700; }
+  svg .seg { font-size: 12px; fill: var(--ink-2); }
+  svg .seg.on { fill: var(--ink); font-weight: 700; }
+  svg .segv { font-size: 12px; }
+  svg .total { font-size: 26px; font-weight: 700; }
+  svg .total-u { font-size: 14px; fill: var(--ink-3); }
 
-  .side { position: absolute; left: 640px; top: 116px; width: 288px; }
-  .side h3 { font-size: 16px; margin-bottom: 14px; }
-  .rule { display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; align-items: start; margin-bottom: 13px; }
-  .rule svg { display: block; margin-top: 2px; }
-  .rule p { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
-  .rule p b { color: var(--ink); font-weight: 700; }
-  .sum { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; }
-  .foot { position: absolute; right: 32px; bottom: 16px; font-size: 13px; color: var(--ink-3); }
+  .foot { position: absolute; left: 32px; right: 32px; bottom: 20px; font-size: 13px; line-height: 1.5; color: var(--ink-2);
+          border-top: 1px dashed var(--line); padding-top: 9px; }
+  .foot b { color: var(--ink); font-weight: 500; }
 </style>
 </head>
 <body>
 <div class="frame">
   <div class="head">
-    <h2>设计题：每个分项的得分是一块面积</h2>
-    <p>分项得分 = 分值 × 完成份额 × 做得多好，满分是整个正方形。例子是一个 <span class="num">8</span> 分的分项、四种作品。</p>
+    <h2>设计题：每个分项在分值内直接打分</h2>
+    <p>指南只列方向、分项、分值和一行打分点，不写评判标准。下例取物理题的一个方向，分数为示意。</p>
   </div>
 
-  <svg class="chart" id="chart" width="960" height="516"></svg>
+  <svg class="chart" id="chart" width="960" height="568"></svg>
 
-  <div class="side">
-    <h3>什么会改变矩形</h3>
-    <div class="rule">
-      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="wide"></svg>
-      <p><b>完成份额</b>：按分量估题面要求<br>做到了几成，是矩形的宽。</p>
-    </div>
-    <div class="rule">
-      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="tall"></svg>
-      <p><b>做得多好</b>：只看做到的部分，按左侧<br>五档给、可取中间值，是矩形的高。</p>
-    </div>
-    <div class="rule">
-      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="lower"></svg>
-      <p><b>必须成立的规则不成立</b>：<br>降低做得多好，矩形变矮。</p>
-    </div>
-    <div class="rule">
-      <svg width="34" height="34" viewBox="0 0 34 34" data-glyph="narrow"></svg>
-      <p><b>冒充</b>：用图片、视频、预渲染等<br>冒充的部分不计入完成份额，<br>矩形变窄。</p>
-    </div>
-    <p class="sum">每题 <span class="num">19–31</span> 个分项都这样计分，<br>相加为本题总分，满分 <span class="num">100</span>。<br>例外：AE 的性能 <span class="num">10</span> 分按计时公式计分。</p>
-  </div>
-
-  <p class="foot">不另扣分：发现的问题只体现在矩形的宽或高里。</p>
+  <p class="foot"><b>不分档、不扣分、不清零</b>：分项得分就是评分员在分值内给的分。例外：AE 的“性能”10 分只由 GPT 6.1 Sol 评，按实测用时公式计分。</p>
 </div>
 
 <script>
@@ -79,111 +60,111 @@ const txt = (parent, x, y, cls, s, anchor = 'start') => {
   t.textContent = s;
   return t;
 };
-
-// Square geometry: x = 完成份额, y = 做得多好, both 0–1. The whole square is the item's full value (8 points).
-const S = 360, X0 = 210, Y0 = 118;
-const X = v => X0 + v * S, Y = v => Y0 + (1 - v) * S;
-const VALUE = 8;
+const span = (t, cls, s, attrs = {}) => { const e = el('tspan', { class: cls, ...attrs }, t); e.textContent = s; return e; };
 const svg = document.getElementById('chart');
 
-const works = [
-  { name: '都做了、做得好', c: 1.0, q: 0.8, cs: '1.0', qs: '0.8' },
-  { name: '都做了、较普通', c: 1.0, q: 0.6, cs: '1.0', qs: '0.6' },
-  { name: '做得少但精',     c: 0.5, q: 1.0, cs: '0.5', qs: '1.0' },
-  { name: '有其名缺其实',   c: 0.3, q: 0.2, cs: '0.3', qs: '0.2' },
+/* Upper block: one direction of the physics guide, as the guide writes it, and each grader's score per item.
+   Every item is a row of cells, one cell per point; a grader fills cells up to the score given (decimals allowed). */
+const L = 32, R = 928;
+const COLS = [
+  { head: 'Claude Opus 5.5', numR: 440, gauge: 450 },
+  { head: 'GPT 6.1 Sol',     numR: 636, gauge: 646 },
 ];
+const CELL = 12, GAP = 2;
 
-// Layers: fills, equal-score lanes (masked under labels), edges, dots, labels.
-const gFill = el('g', {}, svg);
-const defs = el('defs', {}, svg);
-const mask = el('mask', { id: 'm', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 960, height: 516 }, defs);
-el('rect', { x: 0, y: 0, width: 960, height: 516, fill: '#fff' }, mask);
-const gLane = el('g', { mask: 'url(#m)' }, svg);
-const gEdge = el('g', {}, svg);
-const gDot = el('g', {}, svg);
-const gLab = el('g', {}, svg);
-
-// Full square: the item's full value.
-el('rect', { x: X0, y: Y0, width: S, height: S, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
-
-// Equal-score lanes: c × q = k / 8, the curve on which every work scores k points.
-for (let k = 1; k <= 7; k++) {
-  const a = k / VALUE, pts = [];
-  for (let i = 0; i <= 80; i++) {
-    const c = a + (1 - a) * i / 80;
-    pts.push(`${X(c).toFixed(2)},${Y(a / c).toFixed(2)}`);
-  }
-  el('polyline', { points: pts.join(' '), fill: 'none', stroke: 'var(--line)', 'stroke-width': 1.1 }, gLane);
-  txt(svg, X(1) + 9, Y(a) + 4, 'lane n', String(k));
-}
-txt(svg, X(1) + 9, Y(1) + 4, 'lane n', '8');
-txt(svg, X(1) + 9, Y(1) - 14, 'lane', '得分');
-
-// Rectangles: each work's score is its area.
-for (const w of works) {
-  el('rect', { x: X0, y: Y(w.q), width: w.c * S, height: w.q * S, fill: 'var(--ink)', 'fill-opacity': .03 }, gFill);
-  el('polyline', { points: `${X0},${Y(w.q)} ${X(w.c)},${Y(w.q)} ${X(w.c)},${Y(0)}`, fill: 'none',
-                   stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, gEdge);
-  el('circle', { cx: X(w.c), cy: Y(w.q), r: 4.5, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 2 }, gDot);
-}
-
-// Axes: the left and bottom edges, with ruler ticks every 0.1 outside the square
-// (major ticks at 0.5 steps across, at the 0.2 tiers up).
-el('polyline', { points: `${X0},${Y0} ${X0},${Y(0)} ${X(1)},${Y(0)}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, gEdge);
-for (let i = 0; i <= 10; i++) {
-  const v = i / 10;
-  el('line', { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + (i % 5 === 0 ? 7 : 4), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
-  el('line', { x1: X0, x2: X0 - (i % 2 === 0 ? 7 : 4), y1: Y(v), y2: Y(v), stroke: 'var(--ink-3)', 'stroke-width': 1 }, gEdge);
-}
-for (const [v, s] of [[0, '0'], [0.5, '0.5'], [1, '1']]) txt(svg, X(v), Y(0) + 22, 'tick n', s, 'middle');
-txt(svg, X(0.75), Y(0) + 22, 'axis', '完成份额', 'middle');
-txt(svg, X0 - 11, Y(0) + 4, 'tick n', '0', 'end');
-txt(svg, X0, Y0 - 12, 'axis', '做得多好');
-
-// The five tiers of 做得多好, written beside the axis; graders may also give values in between.
-const TIERS = [
-  [1.0, '出色', '挑不出明显问题，', '细节丰富、精致统一'],
-  [0.8, '良好', '做得好，', '只有零星小瑕疵'],
-  [0.6, '合格', '能用能看，但有明显', '粗糙处，或较为普通'],
-  [0.4, '较差', '明显粗糙，或有', '影响观感、使用的问题'],
-  [0.2, '很差', '勉强做出，', '问题很多'],
+const DIR = { name: '连锁运转', value: 14 };
+const ITEMS = [
+  { name: '环节与布局', value: 2, point: '10 环按 2.1 做出，三维中折转成一线，标出机制', s: [1.5, 1.7] },
+  { name: '交接与走通', value: 10, point: '9 次交接由物理推动、看得清，默认参数下一次敲击走到光谱', s: [6.0, 7.0] },
+  { name: '实时与重放', value: 2, point: '与真实时间同步，变速、跳转与重放不改变过程', s: [1.8, 1.4] },
 ];
-for (const [v, name, ...desc] of TIERS) {
-  txt(svg, X0 - 11, Y(v) + 5, 'anchor-v n', v.toFixed(1), 'end');
-  txt(svg, X0 - 44, Y(v) + 5, 'tier', name, 'end');
-  desc.forEach((s, i) => txt(svg, X0 - 44, Y(v) + 22 + i * 15, 'tier-d', s, 'end'));
+const f1 = v => v.toFixed(1);
+
+// Column heads and the rule under them.
+txt(svg, L, 122, 'colh', '评分指南（物理题共 8 个方向、29 个分项）');
+COLS.forEach(c => txt(svg, c.numR - 36, 122, 'colh', c.head));
+txt(svg, R, 122, 'colh', '逐项取平均', 'end');
+el('line', { x1: L, x2: R, y1: 132, y2: 132, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
+
+// Direction heading, written the way the guide writes it.
+{
+  const t = el('text', { x: L, y: 162, class: 'dir' }, svg);
+  span(t, '', DIR.name);
+  span(t, 'dirv n', `共 ${DIR.value} 分`, { dx: 10 });
+  txt(svg, COLS[0].gauge, 161, 'hint', '每格 1 分，格数就是分值；涂黑的部分是给的分');
 }
 
-// Labels sit inside each rectangle, under its top-right corner.
-for (const w of works) {
-  const x = X(w.c) - 7, y = Y(w.q) + 19;
-  const t1 = txt(gLab, x, y, 'name', w.name, 'end');
-  const t2 = el('text', { x, y: y + 17, class: 'calc n', 'text-anchor': 'end' }, gLab);
-  const a = el('tspan', {}, t2); a.textContent = `${w.cs} × ${w.qs} = `;
-  const b = el('tspan', { class: 'pts' }, t2); b.textContent = (VALUE * w.c * w.q).toFixed(1);
-  const u = el('tspan', { style: 'font-family: var(--font-cn)' }, t2); u.textContent = ' 分';
-  for (const t of [t1, t2]) {
-    const bb = t.getBBox();
-    el('rect', { x: bb.x - 4, y: bb.y - 2, width: bb.width + 8, height: bb.height + 4, fill: '#000' }, mask);
+const gauge = (x, yMid, value, score) => {
+  for (let k = 0; k < value; k++) {
+    const cx = x + k * (CELL + GAP), y = yMid - 7;
+    el('rect', { x: cx, y, width: CELL, height: 14, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, svg);
+    const part = Math.max(0, Math.min(1, score - k));
+    if (part > 0) el('rect', { x: cx, y, width: CELL * part, height: 14, rx: part === 1 ? 2 : 0, fill: 'var(--ink)' }, svg);
   }
-}
-
-// Small glyphs in the side panel: which edge of the rectangle each kind of point moves.
-const glyph = (g, kind) => {
-  const u = 30, o = 2, gx = v => o + v * u, gy = v => o + (1 - v) * u;
-  el('rect', { x: o, y: o, width: u, height: u, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
-  const draw = (c, q, dash) => {
-    el('rect', { x: o, y: gy(q), width: c * u, height: q * u, fill: dash ? 'none' : 'var(--ink)', 'fill-opacity': .06 }, g);
-    el('polyline', { points: `${o},${gy(q)} ${gx(c)},${gy(q)} ${gx(c)},${gy(0)}`, fill: 'none', stroke: 'var(--ink)',
-                     'stroke-width': dash ? 1 : 1.4, 'stroke-dasharray': dash ? '2 2' : 'none', opacity: dash ? .55 : 1 }, g);
-  };
-  const thick = (x1, y1, x2, y2) => el('line', { x1, y1, x2, y2, stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }, g);
-  if (kind === 'wide')   { draw(.7, .55); thick(gx(0), gy(0), gx(.7), gy(0)); }
-  if (kind === 'tall')   { draw(.7, .55); thick(gx(0), gy(0), gx(0), gy(.55)); }
-  if (kind === 'lower')  { draw(.7, .55, true); draw(.7, .32); }
-  if (kind === 'narrow') { draw(.7, .55, true); draw(.38, .55); }
 };
-document.querySelectorAll('[data-glyph]').forEach(g => glyph(g, g.dataset.glyph));
+
+const ROW0 = 178, ROWH = 50;
+ITEMS.forEach((it, i) => {
+  const top = ROW0 + i * ROWH, mid = top + 19;
+  const t = el('text', { x: L, y: top + 14, class: 'item' }, svg);
+  span(t, '', it.name);
+  span(t, 'itemv n', `${it.value} 分`, { dx: 8 });
+  txt(svg, L, top + 35, 'point', it.point);
+  COLS.forEach((c, j) => {
+    txt(svg, c.numR, mid + 5, 'sc n', f1(it.s[j]), 'end');
+    gauge(c.gauge, mid, it.value, it.s[j]);
+  });
+  txt(svg, R, mid + 6, 'avg n', f1((it.s[0] + it.s[1]) / 2), 'end');
+});
+
+// Sum line: the items add up to the direction's subtotal, for each grader and for the average.
+{
+  const y = ROW0 + ITEMS.length * ROWH + 4;
+  el('line', { x1: COLS[0].numR - 44, x2: R, y1: y, y2: y, stroke: 'var(--ink)', 'stroke-width': 1.25 }, svg);
+  txt(svg, COLS[0].numR - 56, y + 23, 'sum-l', '相加', 'end');
+  COLS.forEach((c, j) => {
+    const s = ITEMS.reduce((a, it) => a + it.s[j], 0);
+    txt(svg, c.numR, y + 23, 'sum n', f1(s), 'end');
+    txt(svg, c.gauge, y + 23, 'hint n', `/ ${DIR.value}`);
+  });
+  const avg = ITEMS.reduce((a, it) => a + (it.s[0] + it.s[1]) / 2, 0);
+  txt(svg, R, y + 24, 'avg n', f1(avg), 'end');
+  el('line', { x1: L, x2: R, y1: y + 46, y2: y + 46, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
+}
+
+/* Lower block: the whole task. Eight directions side by side, length by value (100 in all); each filled to its averaged subtotal. */
+const DIRS = [
+  ['连锁运转', 14, 9.7], ['基础力学', 4, 3.0], ['双向耦合', 9, 5.5], ['液体', 12, 7.0],
+  ['光学', 7, 4.6], ['参数与稳定', 8, 5.0], ['画面', 27, 17.2], ['界面与数据显示', 19, 12.3],
+];
+{
+  const yH = 408, yBar = 458, BH = 22, SG = 4;
+  const k = (R - L - SG * (DIRS.length - 1)) / 100;
+  const total = DIRS.reduce((a, d) => a + d[2], 0);
+
+  txt(svg, L, yH, 'blk', '8 个方向的平均分相加，就是本题总分');
+  const t = el('text', { x: R, y: yH + 2, 'text-anchor': 'end' }, svg);
+  span(t, 'total n', f1(total));
+  span(t, 'total-u n', ' / 100', { dx: 4 });
+
+  let x = L;
+  DIRS.forEach(([name, v, s], i) => {
+    const w = v * k, on = i === 0;
+    el('rect', { x, y: yBar, width: w, height: BH, rx: 3, fill: 'var(--line-2)', stroke: on ? 'var(--ink)' : 'var(--line)', 'stroke-width': on ? 1.5 : 1 }, svg);
+    el('rect', { x, y: yBar, width: w * s / v, height: BH, rx: 3, fill: on ? 'var(--ink)' : 'var(--ink-3)' }, svg);
+    const cx = x + w / 2;
+    if (w < 48) {
+      txt(svg, cx, yBar - 24, `seg${on ? ' on' : ''}`, name.slice(0, 2), 'middle');
+      txt(svg, cx, yBar - 9, `seg${on ? ' on' : ''}`, name.slice(2), 'middle');
+    } else {
+      txt(svg, cx, yBar - 9, `seg${on ? ' on' : ''}`, name, 'middle');
+    }
+    const st = el('text', { x: cx, y: yBar + BH + 17, 'text-anchor': 'middle', class: 'segv n' }, svg);
+    span(st, '', f1(s), { style: 'font-weight:700' });
+    span(st, '', `/${v}`, { style: 'fill: var(--ink-3)' });
+    x += w + SG;
+  });
+}
 </script>
 </body>
 </html>
