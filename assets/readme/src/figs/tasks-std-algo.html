@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x856">
+<title>算法竞赛计分曲线</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 24px; letter-spacing: .01em; }
+  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+
+  /* One row per task type; the row label states the benchmark that the full score is measured against. */
+  .row { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; }
+  .rl { display: flex; align-items: baseline; gap: 12px; }
+  .rl b { font-size: 16px; font-weight: 700; color: var(--algo); }
+  .rl span { font-size: 13px; color: var(--ink-2); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; margin-top: 10px; }
+  .panel h3 { font-size: 15px; line-height: 1.4; }
+  .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 6px; font-size: 12.5px; white-space: nowrap; }
+  .chip.key { background: var(--algo-tint); color: var(--algo); font-weight: 500; }
+  .chip.env { border: 1px solid var(--line); color: var(--ink-2); }
+  .panel svg { display: block; margin-top: 8px; overflow: visible; }
+
+  svg text { font-family: var(--font-cn); fill: var(--ink); }
+  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+  svg .tick { font-size: 12px; fill: var(--ink-3); }
+  svg .pt { font-size: 12px; fill: var(--ink-2); }
+  svg .lab { font-size: 12px; fill: var(--ink-2); }
+  svg .call { font-size: 12.5px; fill: var(--ink); }
+
+  /* Footer: how a performance task turns 24 lookups and 7 checks into one score. */
+  .foot { display: grid; grid-template-columns: 100px auto 22px auto 22px 1fr; align-items: center; column-gap: 14px;
+          border-top: 1.5px solid var(--ink); margin-top: 18px; padding-top: 16px; }
+  .foot h3 { font-size: 15px; line-height: 1.35; }
+  .blk { display: flex; align-items: center; gap: 10px; }
+  .blk .cap { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
+  .grid24 { display: grid; grid-template-columns: repeat(8, 11px); grid-auto-rows: 11px; gap: 3px; }
+  .grid24 i { border-radius: 2px; background: var(--algo); }
+  .dots7 { display: flex; gap: 4px; }
+  .dots7 i { width: 11px; height: 11px; border-radius: 50%; background: var(--algo); }
+  .dots7 i.miss { background: var(--paper); border: 1.25px solid var(--ink-3); }
+  .op { font-family: var(--font-num); font-size: 20px; color: var(--ink-3); text-align: center; }
+  .res { font-size: 15px; font-weight: 700; }
+  .res small { display: block; font-size: 12.5px; font-weight: 400; color: var(--ink-2); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>算法竞赛：四道题各比什么</h2>
+    <p>极值构造以已知最好的构造为满分线；性能题与参考解法在同一次评测中各跑一遍，按加速比计分。</p>
+  </div>
+
+  <div class="row">
+    <div class="rl"><b>极值构造</b><span>比构造质量，查锚点表分段线性插值；提交无效记 0 分</span></div>
+    <div class="two">
+      <section class="panel">
+        <h3>单位正方形内最小三角形面积最大化</h3>
+        <div class="meta"><span class="chip key">最小面积 Δ 越大越好</span><span class="chip env">作答：14 个逻辑处理器，共用 GPU</span></div>
+        <svg id="tri" width="428" height="200"></svg>
+      </section>
+      <section class="panel">
+        <h3>正负一序列的自相关能量最小化</h3>
+        <div class="meta"><span class="chip key">能量 E 越小越好</span><span class="chip env">作答：14 个逻辑处理器，共用 GPU</span></div>
+        <svg id="seq" width="428" height="200"></svg>
+      </section>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="rl"><b>性能工程</b><span>加速比 s = 参考解法用时 ÷ 提交用时，在对数尺度上查锚点；两图横轴相同</span></div>
+    <div class="two">
+      <section class="panel">
+        <h3>网格沙粒倒塌的GPU加速</h3>
+        <div class="meta"><span class="chip key">GPU：RTX 4080，CUDA</span><span class="chip env">作答：独占整机</span></div>
+        <svg id="sand" width="428" height="200"></svg>
+      </section>
+      <section class="panel">
+        <h3>通用数字电路仿真器加速</h3>
+        <div class="meta"><span class="chip key">只用 CPU：评测限 16 个逻辑处理器</span><span class="chip env">作答：独占整机</span></div>
+        <svg id="circ" width="428" height="200"></svg>
+      </section>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h3>性能题的<br>本题得分</h3>
+    <div class="blk"><div class="grid24" id="g24"></div><div class="cap">24 个性能输入各自查表<br>失败的输入记 0 分，取平均</div></div>
+    <div class="op">×</div>
+    <div class="blk"><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i class="miss"></i></div><div class="cap">7 个正确性输入<br>通过数 ÷ 7，图中为 6/7</div></div>
+    <div class="op">=</div>
+    <div class="res">本题得分<small>编译失败或违反规则<br>整题 0 分</small></div>
+  </div>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+};
+const txt = (parent, x, y, cls, s, anchor = 'start') => {
+  const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
+  t.textContent = s;
+  return t;
+};
+const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
+  el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
+
+/* Shared plot frame: x is given as a mapping function u(v) -> [0, 1]. */
+function plot(id, u, xTicks, xMinor = []) {
+  const g = document.getElementById(id);
+  const L = 30, R = 420, T = 14, B = 158;
+  const X = v => L + u(v) * (R - L);
+  const Y = p => B - p / 100 * (B - T);
+  for (const p of [0, 50, 100]) {
+    line(g, L, Y(p), R, Y(p), 'var(--line-2)', 1);
+    txt(g, L - 7, Y(p) + 4, 'tick n', String(p), 'end');
+  }
+  for (const v of xMinor) line(g, X(v), B, X(v), B + 3, 'var(--ink-3)', 1);
+  for (const [v, s] of xTicks) { line(g, X(v), B, X(v), B + 6, 'var(--ink-3)', 1); txt(g, X(v), B + 19, 'tick n', s, 'middle'); }
+  el('polyline', { points: `${L},${T - 6} ${L},${B} ${R},${B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.25 }, g);
+  return { g, X, Y, L, R, T, B };
+}
+function curve(P, pts, extendTo) {
+  const all = extendTo ? [...pts, ...extendTo] : pts;
+  el('polyline', { points: all.map(([v, p]) => `${P.X(v)},${P.Y(p)}`).join(' '), fill: 'none', stroke: 'var(--algo)',
+                   'stroke-width': 2.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, P.g);
+}
+function dot(P, v, p, r = 3.2) {
+  el('circle', { cx: P.X(v), cy: P.Y(p), r, fill: 'var(--algo)', stroke: 'var(--paper)', 'stroke-width': 1.3 }, P.g);
+}
+function star(P, v, p, label) {   // the full-score benchmark point
+  el('circle', { cx: P.X(v), cy: P.Y(p), r: 5.5, fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1.75 }, P.g);
+  el('circle', { cx: P.X(v), cy: P.Y(p), r: 2.2, fill: 'var(--ink)' }, P.g);
+  if (label) txt(P.g, P.X(v) - 10, P.Y(p) + 4, 'call', label, 'end');
+}
+
+/* Minimum triangle area: r = Δ / Δ*, anchors from the grading guide. */
+{
+  const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
+  const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
+  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor);
+  curve(P, [[0, 0], ...A]);
+  line(P.g, P.X(.8), P.Y(60), P.X(.9), P.Y(81), 'var(--algo)', 5, { 'stroke-linecap': 'round' });
+  A.slice(0, -1).forEach(([r, p]) => dot(P, r, p, r >= .95 ? 2.4 : 3.2));
+  for (const [r, p] of [[.5, 20], [.65, 36], [.8, 60], [.9, 81]]) txt(P.g, P.X(r) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
+  txt(P.g, P.X(.9) + 10, P.Y(70) + 6, 'lab', '0.8–0.9 最陡');
+  star(P, 1, 100, '已知最好值 = 100 分');
+  txt(P.g, P.R, P.B + 38, 'lab', 'r = Δ ÷ 已知最好值', 'end');
+}
+
+/* Autocorrelation energy: score falls with E; the x axis runs from large E to small E. */
+{
+  const A = [[10501, 0], [6301, 4], [5253, 10], [4845, 18], [4501, 30], [4205, 46], [3941, 68], [3701, 88], [3581, 100]];
+  const E0 = 11200, E1 = 3450, u = e => (E0 - e) / (E0 - E1);
+  const P = plot('seq', u, [[10501, '10501'], [6301, '6301'], [5253, '5253'], [4501, '4501'], [3581, '3581']],
+                 [4845, 4205, 3941, 3701]);
+  curve(P, [[E0, 0], ...A]);
+  A.slice(0, -1).forEach(([e, p]) => dot(P, e, p));
+  for (const [e, p] of [[6301, 4], [4501, 30], [3941, 68]]) txt(P.g, P.X(e) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
+  star(P, 3581, 100, '已知最好值 = 100 分');
+  txt(P.g, P.R, P.B + 38, 'lab', '能量 E（越往右越小）', 'end');
+}
+
+/* Speed-up: both tasks on the same log axis 0.1x-25x. */
+const LO = Math.log(.1), HI = Math.log(25), us = s => (Math.log(s) - LO) / (HI - LO);
+const sTicks = [[.1, '0.1×'], [.2, '0.2×'], [.5, '0.5×'], [1, '1×'], [2, '2×'], [4, '4×'], [8, '8×'], [20, '20×']];
+function perf(id, A, atRef, fullAt) {
+  const P = plot(id, us, sTicks);
+  // s = 1: as fast as the reference solution.
+  line(P.g, P.X(1), P.B, P.X(1), P.Y(atRef), 'var(--ink-3)', 1, { 'stroke-dasharray': '3 3' });
+  line(P.g, P.L, P.Y(atRef), P.X(1), P.Y(atRef), 'var(--ink-3)', 1, { 'stroke-dasharray': '3 3' });
+  curve(P, [[.1, 0], ...A, [25, 100]]);
+  A.forEach(([s, p]) => { if (s !== 1 && s !== fullAt) dot(P, s, p); });
+  el('circle', { cx: P.X(1), cy: P.Y(atRef), r: 4.2, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.5 }, P.g);
+  txt(P.g, P.X(1) + 9, P.Y(atRef) + 16, 'call', `与参考解法持平：${atRef} 分`);
+  star(P, fullAt, 100, `${fullAt}× 起满分`);
+  txt(P.g, P.R, P.B + 38, 'lab', '加速比 s（对数刻度）', 'end');
+  return P;
+}
+perf('sand', [[.2, 0], [.5, 5], [1, 20], [2, 37], [4, 55], [8, 74], [20, 100]], 20, 20);
+perf('circ', [[.1, 0], [.5, 10], [1, 30], [1.75, 52], [2.75, 75], [4, 100]], 30, 4);
+
+/* Footer: 24 inputs, eight families of three, shaded by an illustrative score. */
+{
+  const g = document.getElementById('g24');
+  const shade = [.9, .75, .85, .55, .7, .6, .95, .8, .35, .5, .4, .65, .3, .45, .7, .2, .6, .8, .5, .9, .4, .25, .55, .15];
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 8; c++) {
+    const i = document.createElement('i');
+    i.style.opacity = String(.25 + .75 * shade[r * 8 + c]);
+    g.appendChild(i);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+/* Shared layout for the tasks-design-* figures (see tasks-design-strip.js). Same block language as weights.html. */
+.head h2 { font-size: 22px; line-height: 30px; }
+.head p { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+.head p .num { color: var(--ink); }
+
+.plot { position: absolute; left: 32px; top: 104px; width: 896px; }
+.plot > * { position: absolute; }
+
+/* Direction value above its block, in the category colour. */
+.pts { font-size: 26px; line-height: 28px; font-weight: 600; color: var(--c); white-space: nowrap; }
+
+/* Direction block: tint fill, category border, name inside. */
+.blk { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block);
+       display: flex; align-items: center; padding: 0 7px; }
+.blk .lab { font-size: 13.5px; line-height: 17px; color: var(--ink); }
+.blk.narrow { padding: 0 4px; }
+.blk.narrow .lab { font-size: 12.5px; line-height: 16px; }
+
+/* Task name over its bar, used when a figure holds more than one task. */
+.rowhead { font-size: 16px; line-height: 22px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.rowhead .meta { font-weight: 400; font-size: 13.5px; color: var(--ink-2); margin-left: 12px; }
+.rowhead .meta .num { color: var(--ink); }
+.blk.perf { background: repeating-linear-gradient(135deg, var(--t) 0 6px, var(--paper) 6px 10px); }
+
+/* One cell per subitem. */
+.cell { background: var(--c); opacity: .42; border-radius: 2px; }
+.cell.perf { opacity: 1; background: repeating-linear-gradient(135deg, var(--c) 0 2px, transparent 2px 5px); }
+
+.legend { position: absolute; left: 32px; right: 32px; bottom: 20px; display: flex; flex-wrap: wrap; column-gap: 28px; row-gap: 6px;
+          font-size: 13px; line-height: 18px; color: var(--ink-2); }
+.legend .item { display: inline-flex; align-items: center; gap: 8px; }
+.legend .sw { display: inline-block; flex: none; }
+.legend .sw.blk { position: static; width: 26px; height: 14px; padding: 0; border-radius: 4px; }
+.legend .sw.cell { width: 26px; height: 6px; }
+.legend .sw.perf { width: 26px; height: 14px; border: 1.5px solid var(--c); border-radius: 4px;
+                   background: repeating-linear-gradient(135deg, var(--t) 0 4px, var(--paper) 4px 7px); }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x452">
+<title>视觉两题评分方向</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="tasks-design-strip.css">
+</head>
+<body>
+<div class="frame">
+  <div class="head"><h2></h2><p></p></div>
+  <div class="plot" id="plot"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<script>
+window.FIG = {
+  cat: 'visual',
+  title: '视觉设计与渲染：两道题的 100 分怎样分配',
+  sub: '同一比例尺，条长按分值精确绘制。',
+  rows: [
+    { head: 'NVIDIA_B200网页艺术<span class="meta"><span class="num">6</span> 个方向、<span class="num">24</span> 个分项</span>', dirs: [
+      ['美术风格',              10, [5, 3, 2]],
+      ['平面设计',              20, [4, 4, 5, 4, 3]],
+      ['SVG 动画与动态图形',    20, [6, 6, 4, 4]],
+      ['三维造型与渲染',        20, [7, 4, 3, 6]],
+      ['转场、滚动与导航',      15, [7, 3, 2, 3]],
+      ['交互',                  15, [5, 3, 4, 3]],
+    ] },
+    { head: '太阳雨渔港3D渲染<span class="meta"><span class="num">6</span> 个方向、<span class="num">19</span> 个分项</span>', dirs: [
+      ['构图与<br>纵深',        8,  [3, 5]],
+      ['造型与陈设',            34, [6, 5, 9, 6, 8]],
+      ['三渲二画风',            15, [6, 3, 6]],
+      ['色彩与光影',            17, [5, 7, 5]],
+      ['动态',                  20, [7, 3, 4, 6]],
+      ['镜头<br>与运行',        6,  [4, 2]],
+    ] },
+  ],
+  legend: [
+    ['cell', '细条每格是一个分项'],
+    ['blk', '两位评分员分别打分，逐项取平均'],
+  ],
+};
+</script>
+<script src="tasks-design-strip.js"></script>
+</body>
+</html>

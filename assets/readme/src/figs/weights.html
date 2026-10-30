@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x300">
+<meta name="size" content="960x348">
 <title>权重分配</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -24,29 +24,37 @@
   .rl { height: 1px; background: var(--ink-3); }
   .tk { width: 1px; background: var(--ink-3); }
   .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); white-space: nowrap; }
+
+  /* Brackets for the two kinds of task. */
+  .kb { height: 8px; border: 1.5px solid var(--ink); border-top: none; border-radius: 0 0 4px 4px; }
+  .kl { font-size: 13px; line-height: 18px; color: var(--ink-2); white-space: nowrap; }
+  .kl b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+  .kl .num { color: var(--ink); font-weight: 600; margin-right: 6px; }
 </style>
 </head>
 <body>
 <div class="frame">
   <div class="head">
     <h2>权重分配</h2>
-    <p>先分到 6 个类别，类别内各题平分；条长按权重精确绘制。</p>
+    <p>先分到 6 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
   </div>
   <div class="plot" id="plot"></div>
 </div>
 <script>
 // Weights in percent, exact. Category weight = sum of its tasks.
 const CATS = [
-  ['visual',   '视觉设计与渲染', '20%',   [['NVIDIA_B200<br>网页艺术', 10], ['太阳雨渔港<br>3D渲染', 10]]],
-  ['reason',   '深度推理',       '17.5%', [['形式化<br>证明题', 8.75], ['IMO风味难题', 8.75]]],
+  ['reason',   '深度推理',       '17.5%', [['形式化<br>证明题', 8.75], ['IMO原创新题', 8.75]]],
   ['algo',     '算法竞赛',       '17.5%', [[null, 4.375], [null, 4.375], [null, 4.375], [null, 4.375]]],
   ['interact', '复杂交互应用',   '15%',   [['AE风味动效<br>设计编辑器', 15]]],
   ['game',     '游戏设计与开发', '15%',   [['动态路由塔防', 15]]],
   ['physics',  '物理建模与仿真', '15%',   [['物理仿真连锁机关', 15]]],
+  ['visual',   '视觉设计与渲染', '20%',   [['NVIDIA_B200<br>网页艺术', 10], ['太阳雨渔港<br>3D渲染', 10]]],
 ];
+// The two kinds of task: contiguous in this order (standard first, as in the task table).
+const KINDS = [['标准评判题', '6 题，Sol 单评', 0, 35], ['主动设计题', '5 题，主体由 Opus 5.5 与 Sol 各评取平均', 35, 100]];
 const W = 896, P = W / 100;               // px per percentage point
 const GAP = 3;                            // white gap between categories, centred on the exact boundary
-const CAT_Y = 0, BAR_Y = 56, BAR_H = 40, TW_Y = BAR_Y + BAR_H + 8, TN_Y = TW_Y + 21, RULER_Y = TN_Y + 50;
+const CAT_Y = 0, BAR_Y = 56, BAR_H = 40, TW_Y = BAR_Y + BAR_H + 8, TN_Y = TW_Y + 21, KIND_Y = TN_Y + 52, RULER_Y = KIND_Y + 54;
 const plot = document.getElementById('plot');
 function put(cls, css, html = '') {
   const d = document.createElement('div');
@@ -79,6 +87,13 @@ CATS.forEach(([k, name, w, tasks], ci) => {
   });
   if (k === 'algo') put('tw num', `left:${l + 6}px;top:${TW_Y}px;${c}`, `<span class="cnx">四题各</span>4.375%`);
   at += total;
+});
+
+// Brackets: which share of the total each kind of task carries.
+KINDS.forEach(([name, note, a, b], i) => {
+  const l = a * P + (i ? GAP / 2 : 0), r = b * P - (i < KINDS.length - 1 ? GAP / 2 : 0);
+  put('kb', `left:${l}px;top:${KIND_Y}px;width:${r - l}px`);
+  put('kl', `left:${l + 6}px;top:${KIND_Y + 14}px`, `<b>${name}</b><span class="num">${b - a}%</span>${note}`);
 });
 
 // Scale: 0–100 %, minor tick every 5 %.

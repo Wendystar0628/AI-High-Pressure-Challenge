@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x676">
+<title>总分合成</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 24px; letter-spacing: .01em; }
+  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+
+  .abs { position: absolute; }
+  svg.wires { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  svg text { font-family: var(--font-cn); }
+
+  /* Lanes: one per grading type, separated by hairlines; the title row names the type and its categories. */
+  .rule { position: absolute; left: 32px; right: 32px; height: 1px; background: var(--line); }
+  .lane-title { display: flex; align-items: baseline; column-gap: 12px; }
+  .lane-title h3 { font-size: 17px; }
+  .lane-title .count { font-family: var(--font-num); font-size: 15px; color: var(--ink-2); }
+  .cat { display: inline-flex; align-items: center; column-gap: 6px; font-size: 13px; color: var(--ink-2); margin-left: 6px; }
+  .cat i { display: inline-block; width: 15px; height: 10px; border-radius: 3px; border: 1.5px solid; transform: translateY(1px); }
+
+  /* Sources: a grader chip, what it scores, and the example value. */
+  .src { display: grid; grid-template-columns: 140px 1fr; column-gap: 12px; align-items: center; width: 268px; }
+  .chip { height: 34px; border-radius: var(--radius-block); background: var(--stage); border: 1px solid var(--line);
+          display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 15px; }
+  .chip.cut { background: var(--paper); border: 1.25px dashed var(--ink-3); font-family: var(--font-cn); font-size: 14px; color: var(--ink-2); }
+  .src .what { font-size: 13.5px; line-height: 1.3; color: var(--ink); }
+  .eg { font-family: var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink-3); }
+  .src .eg { font-size: 14px; display: block; }
+
+  /* Operations: what is done, then the example worked through. */
+  .op .do { font-size: 14px; font-weight: 500; white-space: nowrap; }
+  .op .f { font-family: var(--font-num); font-size: 16px; margin-top: 1px; white-space: nowrap; }
+  .op .f .cn { font-family: var(--font-cn); font-size: 14px; }
+  .op .eg { font-size: 14px; margin-top: 2px; white-space: nowrap; }
+
+  /* The task score column where both lanes meet. */
+  .task { border: 1.5px solid var(--ink); border-radius: var(--radius-block); background: var(--paper); }
+  .task .mid { position: absolute; left: 0; right: 0; text-align: center; }
+  .task .t { font-size: 15px; font-weight: 700; }
+  .task .s { font-family: var(--font-num); font-size: 28px; font-weight: 700; line-height: 1.1; margin-top: 2px; }
+  .task .s sub { font-size: 15px; }
+  .task .r { font-family: var(--font-num); font-size: 14px; color: var(--ink-2); }
+  .task .v { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-num); font-size: 17px; color: var(--ink-3); }
+
+  /* Bottom row: the weights meet the task scores in the model total. */
+  .weights h3 { font-size: 15px; }
+  .weights p { font-size: 13px; color: var(--ink-2); }
+  .weights .wt { font-size: 15px; color: var(--ink); margin-right: 12px; }
+  .wbar { display: flex; column-gap: 3px; margin-top: 12px; }
+  .wbar div { min-width: 0; }
+  .wbar i { display: block; height: 14px; border-radius: 4px; border: 1.5px solid; }
+  .wbar b { display: block; font-family: var(--font-num); font-size: 15px; font-weight: 700; margin-top: 5px; }
+  .wbar span { display: block; font-size: 12px; color: var(--ink-2); line-height: 1.3; white-space: nowrap; }
+  .total { border-radius: var(--radius-block); background: var(--ink); color: var(--paper); padding: 14px 18px; }
+  .total .t { font-size: 15px; font-weight: 700; }
+  .total .f { font-family: var(--font-num); font-size: 24px; margin-top: 4px; }
+  .total .f sub { font-size: 13px; }
+  .total .c { font-size: 12.5px; color: #C9CFDA; margin-top: 4px; }
+
+  .foot { position: absolute; left: 32px; right: 32px; bottom: 20px; border-top: 1px solid var(--line); padding-top: 11px;
+          display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+  .foot b { color: var(--ink); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>每道题的分数怎样进入总分</h2>
+    <p>两类题分开合成，各折算成 0–100 分，再按权重加权。浅灰数字是一组示例。</p>
+  </div>
+
+  <!-- Lane 1: standard tasks -->
+  <div class="rule" style="top:110px"></div>
+  <div class="abs lane-title" style="left:32px; top:122px">
+    <h3>标准评判题</h3><span class="count">6 题</span>
+    <span class="cat"><i style="border-color:var(--reason); background:var(--reason-tint)"></i>深度推理</span>
+    <span class="cat"><i style="border-color:var(--algo); background:var(--algo-tint)"></i>算法竞赛</span>
+  </div>
+  <div class="abs src" id="s0" style="left:32px; top:164px">
+    <div class="chip">GPT 6.1 Sol</div>
+    <div class="what">整题单评<span class="eg">IMO 42 / 84</span></div>
+  </div>
+  <div class="abs op" id="o0" style="left:348px; top:150px">
+    <div class="do">折算</div>
+    <div class="f"><span class="cn">原始分 ÷ 满分</span> × 100</div>
+    <div class="eg">42 ÷ 84 × 100 = 50.0</div>
+  </div>
+
+  <!-- Lane 2: design tasks -->
+  <div class="rule" style="top:234px"></div>
+  <div class="abs lane-title" style="left:32px; top:246px">
+    <h3>主动设计题</h3><span class="count">5 题</span>
+    <span class="cat"><i style="border-color:var(--interact); background:var(--interact-tint)"></i>复杂交互应用</span>
+    <span class="cat"><i style="border-color:var(--game); background:var(--game-tint)"></i>游戏设计与开发</span>
+    <span class="cat"><i style="border-color:var(--physics); background:var(--physics-tint)"></i>物理建模与仿真</span>
+    <span class="cat"><i style="border-color:var(--visual); background:var(--visual-tint)"></i>视觉设计与渲染</span>
+  </div>
+  <div class="abs src" id="s1" style="left:32px; top:284px">
+    <div class="chip">Claude Opus 5.5</div>
+    <div class="what">主体分项<span class="eg">52.0</span></div>
+  </div>
+  <div class="abs src" id="s2" style="left:32px; top:334px">
+    <div class="chip">GPT 6.1 Sol</div>
+    <div class="what">主体分项<span class="eg">48.0</span></div>
+  </div>
+  <div class="abs src" id="s3" style="left:32px; top:384px">
+    <div class="chip">GPT 6.1 Sol</div>
+    <div class="what">性能分项（仅 AE）<span class="eg">6.0 / 10</span></div>
+  </div>
+  <div class="abs src" id="s4" style="left:32px; top:434px">
+    <div class="chip cut">扣分</div>
+    <div class="what">每个问题 1–3 分<span class="eg">Opus 2，Sol 4</span></div>
+  </div>
+
+  <div class="abs op" id="oavg" style="left:348px">
+    <div class="do">逐项取两位的平均</div>
+    <div class="eg">(52.0 + 48.0) ÷ 2 = 50.0</div>
+  </div>
+  <div class="abs op" id="operf" style="left:348px">
+    <div class="do">只用 Sol</div>
+    <div class="eg">6.0</div>
+  </div>
+  <div class="abs op" id="ocut" style="left:348px">
+    <div class="do">主体段取平均，性能段只用 Sol</div>
+    <div class="eg">(2 + 4) ÷ 2 + 0 = 3.0</div>
+  </div>
+
+  <div class="abs op" id="osum" style="left:598px">
+    <div class="do">相加，减去扣分</div>
+    <div class="eg">50.0 + 6.0 − 3.0 = 53.0</div>
+  </div>
+
+  <!-- Where the lanes meet -->
+  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:340px">
+    <div class="v" id="v0">50.0</div>
+    <div class="mid" id="tmid"><div class="t">本题得分</div><div class="s">S<sub>t</sub></div><div class="r">0–100</div></div>
+    <div class="v" id="v1">53.0</div>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="rule" style="top:502px; height:1.5px; background:var(--ink)"></div>
+  <div class="abs weights" id="weights" style="left:32px; top:516px; width:690px">
+    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，11 题合计 100%</p>
+    <div class="wbar" id="wbar"></div>
+  </div>
+  <div class="abs total" id="total" style="left:770px; top:526px; width:158px">
+    <div class="t">模型总分</div>
+    <div class="f">Σ w<sub>t</sub> S<sub>t</sub></div>
+  </div>
+
+  <svg class="wires" id="wires" width="960" height="676"></svg>
+
+  <div class="foot">
+    <div><b>只有一位主体评分员的结果有效</b>：主体用这一位的</div>
+    <div><b>某段没有有效结果</b>：本题没有分数，总分里暂按 0 分计</div>
+  </div>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+};
+const frame = document.querySelector('.frame');
+const F = () => frame.getBoundingClientRect();
+const rect = node => { const r = node.getBoundingClientRect(), f = F();
+  return { l: r.left - f.left, r: r.right - f.left, t: r.top - f.top, b: r.bottom - f.top,
+           cx: (r.left + r.right) / 2 - f.left, cy: (r.top + r.bottom) / 2 - f.top }; };
+const box = id => rect(document.getElementById(id));
+const part = (id, sel) => rect(document.querySelector(`#${id} ${sel}`));
+
+// Place each lane-2 operation level with its source rows (the average sits between the two main rows).
+const chipY = id => part(id, '.chip').cy;
+const place = (id, y, sel = '.do') => { const n = document.getElementById(id); n.style.top = `${y - part(id, sel).cy + parseFloat(n.style.top || 0)}px`; };
+for (const id of ['oavg', 'operf', 'ocut', 'osum']) document.getElementById(id).style.top = '0px';
+place('oavg', (chipY('s1') + chipY('s2')) / 2);
+place('operf', chipY('s3'));
+place('ocut', chipY('s4'));
+place('osum', chipY('s3'));
+place('o0', chipY('s0'), '.f');
+
+// Weight bar: six categories, widths proportional to weight.
+const W = [['visual', '视觉设计与渲染', 20, '10% × 2'], ['reason', '深度推理', 17.5, '8.75% × 2'], ['algo', '算法竞赛', 17.5, '4.375% × 4'],
+           ['interact', '复杂交互应用', 15, ''], ['game', '游戏设计与开发', 15, ''], ['physics', '物理建模与仿真', 15, '']];
+document.getElementById('wbar').innerHTML = W.map(([c, n, w, each]) =>
+  `<div style="flex:${w}"><i style="border-color:var(--${c}); background:var(--${c}-tint)"></i>` +
+  `<b style="color:var(--${c})">${w}%</b><span>${n}</span></div>`).join('');
+
+const svg = document.getElementById('wires');
+const STROKE = 'var(--ink-3)';
+const path = d => el('path', { d, fill: 'none', stroke: STROKE, 'stroke-width': 1.25, 'stroke-linejoin': 'round' }, svg);
+const head = (x, y, dir = 'r') => {
+  const p = { r: [[-6, -4.5], [0, 0], [-6, 4.5]], d: [[-4.5, -6], [0, 0], [4.5, -6]] }[dir];
+  el('polyline', { points: p.map(([dx, dy]) => `${x + dx},${y + dy}`).join(' '), fill: 'none', stroke: STROKE,
+                   'stroke-width': 1.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+};
+// Elbow from (x1,y1) to (x2,y2) turning at xm with rounded bends.
+const elbow = (x1, y1, x2, y2, xm) => {
+  if (Math.abs(y2 - y1) < 1) return `M${x1},${y1} H${x2}`;
+  const r = Math.min(8, Math.abs(y2 - y1) / 2), s = Math.sign(y2 - y1);
+  return `M${x1},${y1} H${xm - r} Q${xm},${y1} ${xm},${y1 + s * r} V${y2 - s * r} Q${xm},${y2} ${xm + r},${y2} H${x2}`;
+};
+const label = (x, y, s, anchor = 'middle', size = 13) => {
+  const t = el('text', { x, y, 'text-anchor': anchor, style: `font-size:${size}px; fill: var(--ink-2)` }, svg);
+  t.innerHTML = s;
+  return t;
+};
+const G = 10, T = box('task');
+
+// Lane 1: Sol -> 折算 -> task column.
+{
+  const c = part('s0', '.chip'), s = box('s0'), o = box('o0'), y = part('o0', '.f').cy;
+  path(`M${s.r + G},${y} H${o.l - G}`); head(o.l - G, y);
+  path(`M${o.r + G},${y} H${T.l - 2}`); head(T.l - 2, y);
+  const v = document.getElementById('v0'); v.style.top = `${y - T.t - 12}px`;
+}
+// Lane 2: sources -> operations.
+{
+  const a = box('oavg'), ya = part('oavg', '.do').cy, xm = (box('s1').r + a.l) / 2;
+  for (const id of ['s1', 's2']) path(elbow(box(id).r + G, chipY(id), a.l - G, ya, xm));
+  head(a.l - G, ya);
+  for (const [sid, oid] of [['s3', 'operf'], ['s4', 'ocut']]) {
+    const y = part(oid, '.do').cy; path(`M${box(sid).r + G},${y} H${box(oid).l - G}`); head(box(oid).l - G, y);
+  }
+}
+// Operations -> sum: a bracket collecting the three results.
+{
+  const sum = box('osum'), ys = part('osum', '.do').cy, xb = sum.l - 22;
+  for (const id of ['oavg', 'operf', 'ocut']) {
+    const y = part(id, '.do').cy, x0 = part(id, '.do').r + G;
+    if (id === 'operf') { path(`M${x0},${y} H${sum.l - G}`); continue; }
+    path(elbow(x0, y, xb + 0.01, ys, xb));
+  }
+  head(sum.l - G, ys);
+  // Sum -> task column, with the rest of the composition written under the arrow.
+  const xe = T.l - 2, x1 = sum.r + G;
+  path(`M${x1},${ys} H${xe}`); head(xe, ys);
+  label(sum.l, part('osum', '.eg').b + 20, '不低于 0，再 ÷ 100 × 100', 'start');
+  const v = document.getElementById('v1'); v.style.top = `${ys - T.t - 12}px`;
+}
+// Task title sits midway between the two entries.
+{
+  const m = document.getElementById('tmid'), y0 = parseFloat(document.getElementById('v0').style.top) + 24,
+        y1 = parseFloat(document.getElementById('v1').style.top);
+  m.style.top = `${(y0 + y1) / 2 - m.offsetHeight / 2}px`;
+}
+// Task column and weights -> total.
+{
+  const tot = box('total'), xc = T.cx;
+  path(`M${xc},${T.b + 2} V${tot.t - 2}`); head(xc, tot.t - 2, 'd');
+  const w = box('wbar'), y = tot.cy;
+  path(`M${w.r + 12},${y} H${tot.l - 2}`); head(tot.l - 2, y);
+}
+</script>
+</body>
+</html>

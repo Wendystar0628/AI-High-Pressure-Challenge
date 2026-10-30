@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x262">
+<title>AE 评分方向</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="tasks-design-strip.css">
+</head>
+<body>
+<div class="frame">
+  <div class="head"><h2></h2><p></p></div>
+  <div class="plot" id="plot"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<script>
+window.FIG = {
+  cat: 'interact',
+  title: 'AE风味动效设计编辑器：100 分怎样分配',
+  sub: '<span class="num">8</span> 个评分方向、<span class="num">31</span> 个分项；条长按分值精确绘制。',
+  rows: [{ dirs: [
+    ['关键帧、时间轴<br>与表达式', 16, [2, 2, 3, 3, 3, 3]],
+    ['图层、形状与文字',          16, [2, 3, 2, 4, 2, 2, 1]],
+    ['蒙版、效果<br>与时间',      13, [3, 4, 3, 3]],
+    ['三维与<br>摄像机',          10, [4, 4, 2]],
+    ['一致性<br>与导出',          10, [2, 3, 3, 2]],
+    ['界面设计',                  10, [3, 4, 1, 2]],
+    ['性能',                      10, [10], 'perf'],
+    ['示例动画',                  15, [7, 8]],
+  ] }],
+  legend: [
+    ['cell', '细条每格是一个分项'],
+    ['blk', '两位评分员分别打分，逐项取平均'],
+    ['perf', '性能：只由 GPT 6.1 Sol 在评分最后计时，按实测用时公式计分'],
+  ],
+};
+</script>
+<script src="tasks-design-strip.js"></script>
+</body>
+</html>

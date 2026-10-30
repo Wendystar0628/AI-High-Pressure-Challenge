@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x764">
+<meta name="size" content="960x760">
 <title>题型计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -13,6 +13,7 @@
   .row { display: grid; column-gap: 32px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
   .row.three { grid-template-columns: repeat(3, 1fr); }
   .row.two { grid-template-columns: repeat(2, 1fr); }
+  .panel { display: flex; flex-direction: column; }
   .panel h3 { font-size: 16px; }
   .panel .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; min-height: 40px; }
   .panel svg { display: block; margin-top: 10px; overflow: visible; }
@@ -25,40 +26,37 @@
   svg .note { font-size: 13px; fill: var(--ink-2); }
   svg .big { font-size: 17px; font-weight: 700; }
 
-  /* The finish: how every task score becomes the model's total. */
-  .total { display: grid; grid-template-columns: 112px 1fr 18px 1fr 18px 1.25fr; align-items: center; column-gap: 14px;
-           border-top: 1.5px solid var(--ink); margin-top: 18px; padding-top: 16px; }
-  .total h3 { font-size: 16px; }
-  .step .what { font-size: 13px; color: var(--ink-2); }
-  .step .f { font-family: var(--font-num); font-size: 17px; color: var(--ink); margin-top: 2px; white-space: nowrap; }
-  .step .f .cn { font-family: var(--font-cn); font-size: 15px; }
-  .step .f sub { font-size: 11px; line-height: 0; }
-  .ss { display: inline-flex; flex-direction: column; vertical-align: 7px; font-size: 11px; line-height: 1.05; margin-left: 1px; }
-  .chev { width: 18px; height: 28px; }
+  /* What scores 0 or costs points: the last line of every panel. */
+  .zero { margin-top: auto; padding-top: 12px; }
+  .zero p { font-size: 13px; line-height: 1.5; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; }
+  .zero b { color: var(--ink); font-weight: 500; }
 </style>
 </head>
 <body>
 <div class="frame">
   <div class="head">
     <h2>五种题型怎样计分</h2>
-    <p>各题型先得出原始分，每题再折算成 0–100 分，最后合成模型总分。</p>
+    <p>各题型先得出原始分，再折算成 0–100 分。每块最下一行是记 0 分或扣分的情形。</p>
   </div>
 
   <div class="row three">
     <section class="panel">
       <h3>形式化证明题</h3>
-      <p class="rule">5 题，每题只有 0 分或 20 分。格下 5 个点是 5 条要求，全部满足才得 20 分，没有部分分。</p>
+      <p class="rule">5 题，每题只有 0 分或 20 分。格下 4 个点是 4 项检查，全部通过才得 20 分，没有部分分。</p>
       <svg id="formal" width="277" height="96"></svg>
+      <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
     <section class="panel">
-      <h3>IMO风味难题</h3>
+      <h3>IMO原创新题</h3>
       <p class="rule">12 题，每题 0–7 的整数分，满分 84，再乘以 100/84 折算。</p>
       <svg id="imo" width="277" height="124"></svg>
+      <div class="zero"><p><b>多种做法未注明</b>：按得分最低的一份评</p></div>
     </section>
     <section class="panel">
       <h3>设计题</h3>
       <p class="rule">每题 19–31 个分项，相加满分 100。<br>分项得分 = 分值 × 完成份额 × 做得多好</p>
       <svg id="design" width="277" height="100"></svg>
+      <div class="zero"><p><b>扣分</b>：每个问题酌情扣 1–3 分</p></div>
     </section>
   </div>
 
@@ -67,31 +65,16 @@
       <h3>极值构造题</h3>
       <p class="rule">以已知最好的构造值为满分基准查锚点表。低段到中高段斜率逐段加大，逼近纪录的最后一段不额外加权。</p>
       <svg id="extremal" width="432" height="214"></svg>
+      <div class="zero"><p><b>记 0 分</b>：提交无效，如点数不对、点在正方形外</p></div>
     </section>
     <section class="panel">
       <h3>性能工程题</h3>
-      <p class="rule">24 个性能输入，各算加速比 s = 参考解法用时 ÷ 提交用时，在对数尺度上查锚点，再取平均。7 个正确性输入每错一个，去掉 1/7。</p>
+      <p class="rule">24 个性能输入各算加速比 s = 参考解法用时 ÷ 提交用时，在对数尺度上查锚点后取平均，再乘以正确性输入的通过比例 k/7。</p>
       <svg id="perf" width="432" height="214"></svg>
+      <div class="zero"><p><b>记 0 分</b>：编译失败或违反题面规则；单个输入失败只丢这个输入</p></div>
     </section>
   </div>
 
-  <div class="total">
-    <h3>总分合成</h3>
-    <div class="step">
-      <div class="what">每题折算成 0–100 分</div>
-      <div class="f"><span class="cn">原始分 ÷ 满分</span> × 100</div>
-    </div>
-    <svg class="chev" viewBox="0 0 18 28"><polyline points="5,6 13,14 5,22" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/></svg>
-    <div class="step">
-      <div class="what">设计主体：双评分项平均</div>
-      <div class="f"><span class="cn">标准与性能：Sol 单评</span></div>
-    </div>
-    <svg class="chev" viewBox="0 0 18 28"><polyline points="5,6 13,14 5,22" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/></svg>
-    <div class="step">
-      <div class="what">按权重加权，11 题权重合计 100%</div>
-      <div class="f"><span class="cn">模型总分</span> = Σ w<sub>t</sub> S<sub>t</sub></div>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -110,26 +93,26 @@ const txt = (parent, x, y, cls, s, anchor = 'start') => {
 const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
 
-/* 形式化证明题: five cells, all or nothing. Example: problems 1, 2, 4 meet all five requirements. */
+/* 形式化证明题: five cells, all or nothing. Example: problems 1, 2, 4 pass all four checks. */
 {
   const g = document.getElementById('formal');
-  const met = [5, 5, 4, 5, 2], C = 44, G = 10;
+  const met = [4, 4, 3, 4, 1], C = 44, G = 10;
   met.forEach((m, i) => {
-    const x = i * (C + G), full = m === 5;
+    const x = i * (C + G), full = m === 4;
     el('rect', { x: x + .75, y: .75, width: C - 1.5, height: C - 1.5, rx: 8,
                  fill: full ? 'var(--ink)' : 'var(--paper)', stroke: full ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.5 }, g);
     const t = txt(g, x + C / 2, C / 2 + 6, 'n big', full ? '20' : '0', 'middle');
     t.setAttribute('style', `fill: ${full ? 'var(--paper)' : 'var(--ink-3)'}`);
-    for (let j = 0; j < 5; j++) {
-      const cx = x + C / 2 + (j - 2) * 8, ok = j < m;
+    for (let j = 0; j < 4; j++) {
+      const cx = x + C / 2 + (j - 1.5) * 9, ok = j < m;
       el('circle', { cx, cy: C + 11, r: 2.6, fill: ok ? 'var(--ink)' : 'var(--paper)', stroke: ok ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.1 }, g);
     }
   });
   const t = el('text', { x: 0, y: C + 40, class: 'cap' }, g);
-  t.innerHTML = '例：3 题全部满足，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；差 1 条的也是 0 分。';
+  t.innerHTML = '例：3 题全部通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；差 1 项的也是 0 分。';
 }
 
-/* IMO风味难题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
+/* IMO原创新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
 {
   const g = document.getElementById('imo');
   const sc = [7, 7, 7, 7, 5, 3, 2, 2, 1, 1, 0, 0], W = 11, G = 5, PH = 6, PG = 2.5;
@@ -213,26 +196,32 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
   txt(g, L - 34, B + 38, 'lab', '锚点取自最小三角形面积题');
 }
 
-/* 性能工程题: per-input lookup on a log axis (sand-pile anchors, multiples of the reference solution), then the mean of 24 scores. */
+/* 性能工程题: per-input lookup on a log axis, in multiples of the reference solution; sand and circuit anchors. */
 {
-  const A = [[.2, 0], [.5, 5], [1, 20], [2, 37], [4, 55], [8, 74], [20, 100]];
+  const SAND = [[.2, 0], [.5, 5], [1, 20], [2, 37], [4, 55], [8, 74], [20, 100]];
+  const CIRC = [[.1, 0], [.5, 10], [1, 30], [1.75, 52], [2.75, 75], [4, 100]];
   const lg = Math.log;
-  const f = s => {
-    if (s <= .2) return 0;
-    if (s >= 20) return 100;
-    for (let k = 0; k < A.length - 1; k++) if (s <= A[k + 1][0]) return A[k][1] + (A[k + 1][1] - A[k][1]) * Math.log(s / A[k][0]) / Math.log(A[k + 1][0] / A[k][0]);
-  };
-  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.2), lg(28)], ys: [0, 100], yTicks: [0, 50, 100],
-    xTicks: A.map(([s]) => [lg(s), `${s}×`]) });
-  el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-  A.forEach(([s, p]) => {
+  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.1), lg(28)], ys: [0, 100], yTicks: [0, 50, 100],
+    xTicks: [[lg(.1), '0.1×'], [lg(.5), '0.5×'], [lg(1), '1×'], [lg(2), '2×'], [lg(4), '4×'], [lg(8), '8×'], [lg(20), '20×']],
+    xMinor: [lg(.2), lg(1.75), lg(2.75)] });
+  const curve = (A, attrs) => el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '),
+                                               fill: 'none', 'stroke-linejoin': 'round', ...attrs }, g);
+  curve(CIRC, { stroke: 'var(--ink-3)', 'stroke-width': 1.75, 'stroke-dasharray': '5 3' });
+  CIRC.forEach(([s, p]) => el('circle', { cx: X(lg(s)), cy: Y(p), r: 2.6, fill: 'var(--paper)', stroke: 'var(--ink-3)', 'stroke-width': 1.4 }, g));
+  curve(SAND, { stroke: 'var(--ink)', 'stroke-width': 2 });
+  SAND.forEach(([s, p]) => {
     el('circle', { cx: X(lg(s)), cy: Y(p), r: 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    if (s > .2) txt(g, X(lg(s)) - 4, Y(p) - 8, 'tick n', String(p), 'end');
+    if (s > .5 && s < 20) txt(g, X(lg(s)) + 6, Y(p) + 15, 'tick n', String(p), 'start');
   });
-  txt(g, L + 8, Y(100) + 4, 'lab', '本题得分 = 24 个输入得分的平均', 'start');
+  // Legend, top left where both curves are low.
+  const key = (y, dash, stroke, w, s) => {
+    line(g, L + 10, y - 4, L + 34, y - 4, stroke, w, dash ? { 'stroke-dasharray': '5 3' } : {});
+    txt(g, L + 42, y, 'lab', s);
+  };
+  key(T + 10, false, 'var(--ink)', 2, '沙粒：20× 满分');
+  key(T + 30, true, 'var(--ink-3)', 1.75, '电路：4× 满分');
   txt(g, R, B + 38, 'lab', '加速比 s（对数刻度）', 'end');
-  const c = el('text', { x: L - 34, y: B + 38, class: 'lab' }, g);
-  c.innerHTML = '锚点取自沙粒题';
+  txt(g, L - 34, B + 38, 'lab', '两题锚点不同，越往右越陡');
 }
 </script>
 </body>

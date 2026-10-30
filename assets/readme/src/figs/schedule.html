@@ -67,7 +67,7 @@
 <div class="frame">
   <div class="head">
     <h2>测试赛程</h2>
-    <p>11 道题分三批测试，前一批全部到时后才开始下一批。条长按限时绘制。</p>
+    <p>11 道题分三批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制。</p>
   </div>
   <div class="plot" id="plot"></div>
 </div>
@@ -78,7 +78,7 @@ const CATS = {
 };
 const TASKS = [
   ['形式化证明题', 'reason', 0, 60],
-  ['IMO风味难题', 'reason', 0, 60],
+  ['IMO原创新题', 'reason', 0, 60],
   ['AE风味动效设计编辑器', 'interact', 0, 100],
   ['动态路由塔防', 'game', 0, 100],
   ['NVIDIA_B200网页艺术', 'visual', 0, 90],
@@ -91,8 +91,8 @@ const TASKS = [
 ];
 const BATCHES = [
   { title: '第一批　并行批', note: '7 题同时开测', at: 0, lanes: [0, 1, 2, 3, 4, 5, 6] },
-  { title: '第二批　分核同测', note: '两题同时进行，各限 14 个逻辑处理器', at: 100, lanes: [7, 8], done: '7 题全部到时' },
-  { title: '第三批　串行独占', note: '两题首尾相接，独占机器', at: 160, lanes: [9, 10], done: '2 题全部到时' },
+  { title: '第二批　分核同测', note: '两题同时进行，各限 14 个逻辑处理器', at: 100, lanes: [7, 8], done: '7 题全部到时，清理' },
+  { title: '第三批　串行独占', note: '两题依次独占，中间清理', at: 160, lanes: [9, 10], done: '2 题全部到时，清理' },
 ];
 
 const W = 896, X0 = 196, END = 280;
@@ -164,7 +164,7 @@ put('vline', `left:${x(100) - 0.75}px;top:${b1.top}px;height:${b2.bottom - b1.to
 put('vline', `left:${x(160) - 0.75}px;top:${b2.top}px;height:${laneTop[9] + LANE - b2.top}px`);
 
 // Scoring: after the last batch, not on the time axis.
-put('done', `left:${x(END) - 10}px;top:${y + 6}px`, '11 题全部到时');
+put('done', `left:${x(END) - 10}px;top:${y + 6}px`, '11 题全部到时，清理后开始评分');
 y += HEAD;
 put('vline', `left:${x(END) - 0.75}px;top:${b3.top}px;height:${y - b3.top}px`);
 const BOARD_LEFT = 290;

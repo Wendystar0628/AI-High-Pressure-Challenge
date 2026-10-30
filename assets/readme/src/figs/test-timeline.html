@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x584">
+<title>一场作答的时间线</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head { position: absolute; left: 32px; right: 32px; top: 28px; }
+  .head h2 { font-size: 26px; line-height: 34px; }
+  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+
+  .plot { position: absolute; left: 32px; top: 112px; width: 896px; }
+  .plot > * { position: absolute; }
+
+  /* minute ruler, same drawing as the schedule figure */
+  .rl { height: 1px; background: var(--ink-3); }
+  .tk { width: 1px; background: var(--ink-3); }
+  .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-50%); white-space: nowrap; }
+  .unit { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-100%); }
+
+  .lane { height: 1px; background: var(--line-2); }
+  .name { font-size: 15px; font-weight: 700; line-height: 20px; white-space: nowrap; }
+  .sub { font-size: 12px; line-height: 16px; color: var(--ink-3); white-space: nowrap; }
+
+  /* one bar per turn of the agent */
+  .turn { height: 22px; border: 1.5px solid var(--ink-3); background: var(--stage); border-radius: 6px; }
+  .idle { height: 0; border-top: 1.5px dotted var(--ink-3); }
+  .cut { width: 10px; height: 26px; }
+  .deadline { width: 2px; background: var(--ink); }
+
+  .lab { font-size: 13px; line-height: 16px; color: var(--ink); white-space: nowrap; }
+  .lab.soft { color: var(--ink-2); }
+  .lab.c { transform: translateX(-50%); }
+  .lab.r { transform: translateX(-100%); }
+  .stem { width: 1px; background: var(--ink-3); }
+  .end { font-size: 14px; font-weight: 700; line-height: 20px; white-space: nowrap; }
+
+  /* glyphs: what reaches the model, and when */
+  .g { width: 12px; height: 12px; overflow: visible; }
+
+  .legend { position: absolute; left: 32px; right: 32px; bottom: 26px; border-top: 1px solid var(--line);
+            padding-top: 14px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 36px; row-gap: 8px; }
+  .legend div { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 19px; color: var(--ink-2); }
+  .legend b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+  .legend svg { flex: none; margin-top: 3px; width: 14px; height: 14px; overflow: visible; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>一场作答的时间线</h2>
+    <p>示意图。条是模型的一轮工作。受测模型看不到限时，所有提示都不报时间。</p>
+  </div>
+  <div class="plot" id="plot"></div>
+  <div class="legend">
+    <div><svg viewBox="0 0 14 14"><path d="M1 2 H13 L7 12 Z" fill="var(--ink)"/></svg><span><b>新的一轮</b>开场、接回原会话，或一轮正常结束后立即续做</span></div>
+    <div><svg viewBox="0 0 14 14"><path d="M7 0.5 L13.5 7 L7 13.5 L0.5 7 Z" fill="var(--ink)" stroke="#fff" stroke-width="1.5"/></svg><span><b>整体进度提示</b>只发给主动设计题，在完整限时的一半，按累计用时算</span></div>
+    <div><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="var(--ink)" stroke="#fff" stroke-width="1.5"/></svg><span><b>提交提醒</b>两类题每段作答剩余 10 分钟时各一次</span></div>
+    <div><svg viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="1.5 2.5"/></svg><span><b>空闲</b>剩余不多于 10 分钟时，一轮结束后不再续做</span></div>
+  </div>
+</div>
+<script>
+const W = 896, X0 = 172, END = 100, RIGHT = 78;      // room right of the 100-minute line for its label
+const S = (W - RIGHT - X0) / END;
+const x = m => X0 + m * S;
+const plot = document.getElementById('plot');
+function put(cls, css, html = '') {
+  const d = document.createElement('div');
+  d.className = cls;
+  d.style.cssText = css;
+  d.innerHTML = html;
+  plot.appendChild(d);
+  return d;
+}
+const NS = 'http://www.w3.org/2000/svg';
+function glyph(kind, cx, cy) {
+  const s = document.createElementNS(NS, 'svg');
+  s.setAttribute('class', 'g');
+  s.setAttribute('viewBox', '0 0 12 12');
+  s.style.cssText = `left:${cx - 6}px;top:${cy - 6}px`;
+  const shapes = {
+    msg: '<path d="M0.5 1 H11.5 L6 11 Z" fill="var(--ink)"/>',
+    half: '<path d="M6 0 L12 6 L6 12 L0 6 Z" fill="var(--ink)" stroke="#fff" stroke-width="1.5"/>',
+    final: '<circle cx="6" cy="6" r="5.4" fill="var(--ink)" stroke="#fff" stroke-width="1.5"/>',
+  };
+  s.innerHTML = shapes[kind];
+  plot.appendChild(s);
+}
+
+// ruler
+const RULER = 26;
+put('rl', `left:${x(0)}px;top:${RULER - 1}px;width:${END * S}px`);
+for (let m = 0; m <= END; m += 10) {
+  const h = m % 50 === 0 ? 8 : 5;
+  put('tk', `left:${x(m) - 0.5}px;top:${RULER - h}px;height:${h}px`);
+  put('tl num', `left:${x(m)}px;top:${RULER - 24}px`, m);
+}
+put('unit', `left:${x(0) - 14}px;top:${RULER - 24}px`, '分钟');
+
+const LANES = [
+  { name: '主动设计题', sub: '以 100 分钟题为例', end: 100,
+    turns: [[0, 24], [24, 47], [47, 71], [71, 94]], idle: [94, 100],
+    msgs: [0, 24, 47, 71], half: 50, final: 90,
+    above: [[0, '开场提示', 'l'], [24, '立即续做', 'c'], [50, '整体进度提示', 'c'], [90, '提交提醒', 'c']],
+    below: [[97, '不再续做', 'c']] },
+  { name: '标准评判题', sub: '以 60 分钟题为例', end: 60,
+    turns: [[0, 29], [29, 42], [42, 56]], idle: [56, 60],
+    msgs: [0, 29, 42], final: 50,
+    above: [[0, '开场提示', 'l'], [50, '提交提醒', 'c']],
+    below: [[50, '没有整体进度提示', 'c']] },
+  { name: '中断后续做', sub: '同一道 100 分钟题', end: 100,
+    turns: [[0, 28], [28, 66], [66, 93]], idle: [93, 100], cut: 28,
+    msgs: [0, 28, 66], half: 50, final: 90,
+    above: [[28, '额度用尽，中断', 'r'], [28, '续做提示', 'l'], [50, '整体进度提示', 'c'], [90, '本段的提交提醒', 'c']],
+    below: [[28, '用剩余的 72 分钟接回原会话，故障处理的时间不计', 'l']] },
+];
+
+const LANE_H = 108, ABOVE = 10, BAR_TOP = 46, BAR_H = 22, BELOW = 78;
+let y = RULER + 14;
+put('lane', `left:0;top:${y}px;width:${W}px`);
+LANES.forEach(L => {
+  const top = y, barY = top + BAR_TOP, mid = barY + BAR_H / 2;
+  put('name', `left:0;top:${barY - 9}px`, L.name);
+  put('sub', `left:0;top:${barY + 13}px`, L.sub);
+
+  L.turns.forEach(([a, b]) => put('turn', `left:${x(a) + 1.5}px;top:${barY}px;width:${(b - a) * S - 3}px`));
+  put('idle', `left:${x(L.idle[0]) + 3}px;top:${mid}px;width:${(L.idle[1] - L.idle[0]) * S - 6}px`);
+
+  if (L.cut !== undefined) {   // the interrupted turn: a cross where it stopped
+    const s = document.createElementNS(NS, 'svg');
+    s.setAttribute('class', 'cut');
+    s.setAttribute('viewBox', '0 0 10 26');
+    s.style.cssText = `left:${x(L.cut) - 5}px;top:${barY - 2}px`;
+    s.innerHTML = '<path d="M1.5 26 L6.5 0" stroke="var(--ink)" stroke-width="1.5"/>' +
+                  '<path d="M3.5 26 L8.5 0" stroke="var(--ink)" stroke-width="1.5"/>';
+    plot.appendChild(s);
+    const k = document.createElementNS(NS, 'svg');   // the stop mark
+    k.setAttribute('class', 'g');
+    k.setAttribute('viewBox', '0 0 12 12');
+    k.style.cssText = `left:${x(L.cut) - 15}px;top:${mid - 6}px`;
+    k.innerHTML = '<path d="M2 2 L10 10 M10 2 L2 10" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>';
+    plot.appendChild(k);
+  }
+
+  L.msgs.forEach(m => glyph('msg', x(m) + (m === 0 ? 6 : 0), barY - 9));
+  if (L.half !== undefined) glyph('half', x(L.half), mid);
+  glyph('final', x(L.final), mid);
+
+  put('deadline', `left:${x(L.end) - 1}px;top:${barY - 10}px;height:${BAR_H + 20}px`);
+  put('end', `left:${x(L.end) + 8}px;top:${mid - 10}px`, '到时中止');
+
+  const anchor = (m, kind) => kind === 'l' ? x(m) + (m === 0 ? 0 : 10) : kind === 'r' ? x(m) - 12 : x(m);
+  L.above.forEach(([m, text, kind]) => {
+    const cls = kind === 'c' ? 'lab c' : kind === 'r' ? 'lab r' : 'lab';
+    put(cls, `left:${anchor(m, kind)}px;top:${top + ABOVE}px`, text);
+    if (kind === 'c' && (m === L.half || m === L.final))   // in-turn markers get a stem down to the bar
+      put('stem', `left:${x(m) - 0.5}px;top:${top + ABOVE + 20}px;height:${mid - 7 - (top + ABOVE + 20)}px`);
+  });
+  L.below.forEach(([m, text, kind]) => {
+    const cls = (kind === 'c' ? 'lab c' : 'lab') + ' soft';
+    put(cls, `left:${kind === 'l' ? x(m) + 2 : x(m)}px;top:${top + BELOW}px`, text);
+  });
+
+  y += LANE_H;
+  if (L !== LANES[LANES.length - 1]) put('lane', `left:0;top:${y}px;width:${W}px`);
+});
+</script>
+</body>
+</html>

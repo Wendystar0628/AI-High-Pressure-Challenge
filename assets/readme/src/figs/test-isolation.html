@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x748">
+<title>作答环境的隔离</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 26px; line-height: 34px; }
+  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+
+  /* who (columns) can reach what (rows) */
+  .grid { display: grid; grid-template-columns: 300px 1fr 1fr; margin-top: 22px; }
+  .grid > div { border-top: 1px solid var(--line-2); padding: 10px 0; }
+  .grid .ch { border-top: none; padding: 0 0 10px; min-height: 0; }
+  .ch b { display: block; font-size: 16px; line-height: 22px; }
+  .ch span { font-size: 12.5px; line-height: 18px; color: var(--ink-3); }
+  .grid .rh { padding-right: 20px; }
+  .rh b { display: block; font-size: 14.5px; font-weight: 700; line-height: 20px; }
+  .rh span { font-size: 12.5px; line-height: 18px; color: var(--ink-3); }
+  .cell { display: flex; align-items: flex-start; gap: 10px; padding-left: 4px; padding-right: 18px; }
+  .cell svg { flex: none; width: 16px; height: 16px; margin-top: 2px; overflow: visible; }
+  .cell p { font-size: 13.5px; line-height: 20px; color: var(--ink); }
+  .cell.none p { color: var(--ink-3); }
+  .grid .first { border-top: 1.5px solid var(--ink); }
+
+  .key { display: flex; gap: 26px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-2);
+         font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+  .key span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .key svg { width: 14px; height: 14px; overflow: visible; }
+
+  /* the shell around every tested session */
+  .shell { margin-top: 18px; border: 1.5px solid var(--ink); border-radius: var(--radius-block);
+           display: grid; grid-template-columns: 150px repeat(4, 1fr); }
+  .shell > div { padding: 12px 14px; }
+  .shell > div + div { border-left: 1px solid var(--line); }
+  .shell .t { font-size: 15px; font-weight: 700; line-height: 20px; display: flex; align-items: center; }
+  .shell b { display: block; font-size: 13.5px; line-height: 19px; }
+  .shell span { display: block; font-size: 12.5px; line-height: 18px; color: var(--ink-2); margin-top: 3px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="rw" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="var(--ink)"/></symbol>
+    <symbol id="ro" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M1.5 8.5 H14.5 V12 A2.5 2.5 0 0 1 12 14.5 H4 A2.5 2.5 0 0 1 1.5 12 Z" fill="var(--ink)"/></symbol>
+    <symbol id="sys" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M5.2 5.2 L10.8 10.8 M10.8 5.2 L5.2 10.8" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="rule" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="var(--ink-2)" stroke-width="1.4" stroke-dasharray="2.2 1.8"/><path d="M5.2 5.2 L10.8 10.8 M10.8 5.2 L5.2 10.8" stroke="var(--ink-2)" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="fresh" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="none" stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="2.2 1.8"/></symbol>
+    <symbol id="na" viewBox="0 0 16 16"><path d="M4 8 H12" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+<div class="frame">
+  <div class="head">
+    <h2>谁能看到什么</h2>
+    <p>受测会话和评分员在同一台机器上，分别用两个 Windows 账户运行。评分在全部作答结束后才开始。</p>
+  </div>
+
+  <div class="grid" id="grid">
+    <div class="ch"></div>
+    <div class="ch"><b>受测会话</b><span>专用的普通账户，每个会话单独登录</span></div>
+    <div class="ch"><b>评分员</b><span>管理员账户，每个评分任务一个新会话</span></div>
+  </div>
+
+  <div class="key">
+    <span><svg><use href="#rw"/></svg>读写</span>
+    <span><svg><use href="#ro"/></svg>只读</span>
+    <span><svg><use href="#sys"/></svg>系统拒绝：Windows 权限挡住</span>
+    <span><svg><use href="#rule"/></svg>规定禁止：题面或评分提示词禁止</span>
+    <span><svg><use href="#fresh"/></svg>从空白开始</span>
+  </div>
+
+  <div class="shell">
+    <div class="t">每个受测会话<br>的外壳</div>
+    <div><b>单独登录</b><span>每个会话是受测账户的一次单独登录</span></div>
+    <div><b>进程保护</b><span>其他会话结束不了这些进程，按进程名也不行</span></div>
+    <div><b>作业对象</b><span>到时结束模型启动的程序；极值构造题在此绑核</span></div>
+    <div><b>不开沙箱</b><span>智能体不开沙箱和审批，能做什么由账户权限决定</span></div>
+  </div>
+</div>
+<script>
+const ROWS = [
+  ['题库仓库', '题面原件、评分指南、参考答案、测评程序',
+    ['sys', '整个仓库拒绝访问'], ['ro', '读题面、评分指南、答案和评测脚本']],
+  ['本题作答目录', 'git 仓库，开场时只有题面这一次提交',
+    ['rw', '读写，每个可用阶段提交一次'], ['ro', '原件只读，复制或 clone 到自己的目录再评；只写自己的评分表']],
+  ['同一模型其他题的作答目录', '',
+    ['rule', '不得访问'], ['na', '不涉及']],
+  ['评测工具', '启动脚本、提示模板、提醒钩子',
+    ['ro', '只读，宿主写日志的信箱目录除外'], ['na', '不涉及']],
+  ['其他受测会话的进程', '同时作答的会话',
+    ['sys', '看得见，结束不了'], ['na', '不涉及']],
+  ['会话历史与记忆', '',
+    ['fresh', '开测前清空，作答时关闭自动记忆'], ['fresh', '每次新会话，关闭自动记忆']],
+  ['另一位评分员的目录和结果', '只有设计题主体有两位评分员',
+    ['na', '不涉及'], ['rule', '不得查看，各评各的']],
+];
+const grid = document.getElementById('grid');
+ROWS.forEach(([name, sub, a, b], i) => {
+  const first = i === 0 ? ' first' : '';
+  grid.insertAdjacentHTML('beforeend', `<div class="rh${first}"><b>${name}</b>${sub ? `<span>${sub}</span>` : ''}</div>`);
+  [a, b].forEach(([icon, text]) => grid.insertAdjacentHTML('beforeend',
+    `<div class="cell${icon === 'na' ? ' none' : ''}${first}"><svg><use href="#${icon}"/></svg><p>${text}</p></div>`));
+});
+</script>
+</body>
+</html>

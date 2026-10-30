@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x262">
+<title>塔防评分方向</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="tasks-design-strip.css">
+</head>
+<body>
+<div class="frame">
+  <div class="head"><h2></h2><p></p></div>
+  <div class="plot" id="plot"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<script>
+window.FIG = {
+  cat: 'game',
+  title: '动态路由塔防：100 分怎样分配',
+  sub: '<span class="num">5</span> 个评分方向、<span class="num">22</span> 个分项；条长按分值精确绘制。',
+  rows: [{ dirs: [
+    ['寻路与改道', 14, [4, 5, 5]],
+    ['单位与战斗', 24, [8, 9, 7]],
+    ['关卡与经济', 18, [7, 4, 4, 3]],
+    ['美术',       25, [6, 6, 6, 5, 2]],
+    ['信息与操作', 19, [4, 3, 2, 4, 2, 2, 2]],
+  ] }],
+  legend: [
+    ['cell', '细条每格是一个分项'],
+    ['blk', '两位评分员分别打分，逐项取平均'],
+  ],
+};
+</script>
+<script src="tasks-design-strip.js"></script>
+</body>
+</html>

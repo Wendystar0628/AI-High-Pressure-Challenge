@@ -2,74 +2,83 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x428">
+<meta name="size" content="960x514">
 <title>AI六项全能·限时高压挑战赛</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .frame { padding: 0; }
   .abs { position: absolute; white-space: nowrap; }
 
-  /* Header: quiet, left-aligned; the track below is the one bold element. */
-  .title { left: 32px; top: 24px; font-size: 28px; font-weight: 700; line-height: 36px; letter-spacing: .5px; }
-  .sub.en { font-family: var(--font-num); font-size: 17px; font-weight: 500; letter-spacing: .3px; top: 64px; }
-  .sub { left: 32px; top: 62px; font-size: 15px; line-height: 22px; color: var(--ink-2); }
-  .rule { right: 32px; top: 30px; text-align: right; font-size: 14px; line-height: 22px; }
+  /* Header: quiet, left-aligned; the six lanes below are the one bold element. */
+  .title { left: 32px; top: 26px; font-size: 30px; font-weight: 700; line-height: 38px; letter-spacing: .5px; }
+  .sub { left: 33px; top: 68px; font-family: var(--font-num); font-size: 17px; font-weight: 500; line-height: 22px; letter-spacing: .3px; color: var(--ink-2); }
+  .rule { right: 32px; top: 32px; text-align: right; font-size: 15px; line-height: 24px; color: var(--ink); }
   .rule .faint { font-size: 13px; }
 
+  /* Group rows: which kind of task the lanes below belong to, and who grades it. */
+  .group { font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  .group b { font-size: 15px; font-weight: 700; color: var(--ink); margin-right: 10px; }
+  .group .num { color: var(--ink); font-weight: 600; }
   .colhead { font-size: 12px; line-height: 16px; color: var(--ink-3); }
-  .tick { font-size: 11px; line-height: 14px; color: var(--ink-3); transform: translateX(-50%); }
 
-  .lane-no { width: 18px; text-align: center; font-size: 16px; color: var(--ink-3); }
+  .lane-no { width: 18px; text-align: center; font-size: 16px; color: var(--ink-3); line-height: 20px; }
+  .lane-icon { width: 20px; height: 20px; display: block; }
   .lane-name { font-size: 15px; font-weight: 500; line-height: 20px; }
-  .lane-icon { width: 20px; height: 20px; }
-  .count { text-align: right; width: 60px; line-height: 20px; }
+  .count { text-align: right; width: 40px; line-height: 20px; }
   .count b { font-family: var(--font-num); font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
-  .count span { font-size: 13px; color: var(--ink-2); margin-left: 3px; }
-  .weight { font-family: var(--font-num); font-size: 17px; font-weight: 600; line-height: 20px; font-variant-numeric: tabular-nums; background: var(--paper); padding: 0 5px; margin-left: -5px; }
+  .count span { font-size: 13px; color: var(--ink-2); margin-left: 2px; }
+
+  /* A task: a pill whose length is its time limit. */
+  .task { display: flex; align-items: center; justify-content: space-between; padding: 0 10px 0 11px; gap: 6px;
+          border: 1.5px solid var(--c); background: var(--t); border-radius: 15px; height: 30px; }
+  .task .tn { font-size: 13px; line-height: 18px; color: var(--ink); }
+  .task .tm { font-family: var(--font-num); font-size: 14px; font-weight: 600; color: var(--c); font-variant-numeric: tabular-nums; }
+  .task .tm small { font-family: var(--font-cn); font-size: 11px; font-weight: 400; margin-left: 2px; }
 
   .foot { font-size: 13px; line-height: 18px; color: var(--ink-2); }
 </style>
 </head>
 <body>
 <div class="frame" id="f">
-  <svg id="track" class="abs" style="left:0;top:0" width="960" height="428"></svg>
+  <svg id="lines" class="abs" style="left:0;top:0" width="960" height="514"></svg>
 
   <div class="abs title">AI六项全能·限时高压挑战赛</div>
-  <div class="abs sub en">AI Hexathlon · Timed High-Pressure Challenge</div>
-  <div class="abs rule">一次作答，无人答疑<br><span class="faint">到时直接中止</span></div>
+  <div class="abs sub">AI Hexathlon · Timed High-Pressure Challenge</div>
+  <div class="abs rule">每题一次作答，无人答疑<br><span class="faint">到时直接中止，不延长</span></div>
 </div>
 
 <script>
-// Facts from README / brief: order, question count, category weight (%), time limit (minutes).
-const lanes = [
-  { key: 'reason',   name: '深度推理',       n: 2, w: 17.5, t: 60 },
-  { key: 'algo',     name: '算法竞赛',       n: 4, w: 17.5, t: 60 },
-  { key: 'interact', name: '复杂交互应用',   n: 1, w: 15,   t: 100 },
-  { key: 'game',     name: '游戏设计与开发', n: 1, w: 15,   t: 100 },
-  { key: 'physics',  name: '物理建模与仿真', n: 1, w: 15,   t: 100 },
-  { key: 'visual',   name: '视觉设计与渲染', n: 2, w: 20,   t: 90 },
+// Facts from orchestrator/tasks.py: lanes in table order; short task names for the figure only; time limit in minutes.
+const GROUPS = [
+  { kind: '标准评判题', note: '<span class="num">6</span> 题，GPT 6.1 Sol 单评', lanes: [
+    { key: 'reason', name: '深度推理', tasks: [['形式化证明题', 60], ['IMO原创新题', 60]] },
+    { key: 'algo',   name: '算法竞赛', tasks: [['最小三角形面积', 60], ['±1 序列自相关', 60], ['沙粒 GPU 加速', 60], ['电路仿真加速', 60]] },
+  ]},
+  { kind: '主动设计题', note: '<span class="num">5</span> 题，主体由 Claude Opus 5.5 与 GPT 6.1 Sol 各评取平均', lanes: [
+    { key: 'interact', name: '复杂交互应用',   tasks: [['AE风味动效设计编辑器', 100]] },
+    { key: 'game',     name: '游戏设计与开发', tasks: [['动态路由塔防', 100]] },
+    { key: 'physics',  name: '物理建模与仿真', tasks: [['物理仿真连锁机关', 100]] },
+    { key: 'visual',   name: '视觉设计与渲染', tasks: [['NVIDIA_B200网页艺术', 90], ['太阳雨渔港3D渲染', 90]] },
+  ]},
 ];
 const ICON = 'file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-';
 
 // Geometry (CSS px).
-const LANE_TOP = 128, LANE_H = 40, LANES = lanes.length;
-const LANE_BOTTOM = LANE_TOP + LANE_H * LANES;
-const X0 = 258;            // start line: weight 0
-const PX_PER_PCT = 22;     // 20% -> 440 px
-const BAR_H = 16, GAP = 4;
-const T0 = 774, PX_PER_MIN = 1.2, T_MAX = 100;   // time ruler: 0..100 min -> 120 px
+const TOP = 118, GROUP_H = 34, LANE_H = 46;
+const X0 = 262, X1 = 928, GAP = 8;
+const PX_PER_MIN = (X1 - X0 - 3 * GAP) / 240;   // the longest lane (4 x 60 min) fills the track exactly
 
 const f = document.getElementById('f');
-const svg = document.getElementById('track');
+const svg = document.getElementById('lines');
 const NS = 'http://www.w3.org/2000/svg';
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-function el(tag, attrs, parent = svg) {
-  const e = document.createElementNS(NS, tag);
-  for (const k in attrs) e.setAttribute(k, attrs[k]);
-  parent.appendChild(e);
-  return e;
+function line(x1, y1, x2, y2, stroke, w = 1, dash) {
+  const e = document.createElementNS(NS, 'line');
+  Object.entries({ x1, y1, x2, y2, stroke, 'stroke-width': w }).forEach(([k, v]) => e.setAttribute(k, v));
+  if (dash) e.setAttribute('stroke-dasharray', dash);
+  svg.appendChild(e);
 }
-function html(cls, style, inner) {
+function put(cls, style, inner) {
   const d = document.createElement('div');
   d.className = 'abs ' + cls;
   d.setAttribute('style', style);
@@ -78,72 +87,41 @@ function html(cls, style, inner) {
   return d;
 }
 
-// Lane lines across the whole card, like painted track lines.
-for (let k = 0; k <= LANES; k++) {
-  el('line', { x1: 0, x2: 960, y1: LANE_TOP + k * LANE_H + .5, y2: LANE_TOP + k * LANE_H + .5, stroke: css('--line'), 'stroke-width': 1 });
-}
-
-// Weight grid (every 5%) and its labels under the last lane.
-for (let p = 5; p <= 20; p += 5) {
-  const x = X0 + p * PX_PER_PCT;
-  el('line', { x1: x + .5, x2: x + .5, y1: LANE_TOP + 1, y2: LANE_BOTTOM, stroke: css('--line'), 'stroke-width': 1, 'stroke-dasharray': '2 3' });
-}
-for (let p = 0; p <= 20; p += 5) {
-  html('tick num', `left:${X0 + p * PX_PER_PCT}px;top:${LANE_BOTTOM + 6}px`, p === 0 ? '0' : p + '%');
-}
-
-// Start line.
-el('line', { x1: X0 - 1, x2: X0 - 1, y1: LANE_TOP - 6, y2: LANE_BOTTOM + 2, stroke: css('--ink'), 'stroke-width': 2 });
-
-// Column heads.
-html('colhead', `left:${X0 + 8}px;top:${LANE_TOP - 22}px`, '类别权重，每段一道题');
-
-// Time ruler (minutes) heading the time column.
-const RULER_Y = LANE_TOP - 6;
-el('line', { x1: T0, x2: T0 + T_MAX * PX_PER_MIN, y1: RULER_Y + .5, y2: RULER_Y + .5, stroke: css('--ink-3'), 'stroke-width': 1 });
-for (let m = 0; m <= T_MAX; m += 10) {
-  const major = m % 20 === 0;
-  el('line', { x1: T0 + m * PX_PER_MIN + .5, x2: T0 + m * PX_PER_MIN + .5, y1: RULER_Y - (major ? 6 : 3), y2: RULER_Y, stroke: css('--ink-3'), 'stroke-width': 1 });
-}
-for (let m = 0; m <= T_MAX; m += 20) {
-  html('tick num', `left:${T0 + m * PX_PER_MIN}px;top:${RULER_Y - 22}px`, String(m));
-}
-html('colhead', `right:${960 - T0 + 14}px;top:${RULER_Y - 22}px;text-align:right`, '限时');
-html('colhead', `left:${T0 + T_MAX * PX_PER_MIN + 16}px;top:${RULER_Y - 22}px`, '分钟');
-
-// The six lanes.
-lanes.forEach((L, i) => {
-  const top = LANE_TOP + i * LANE_H, cy = top + LANE_H / 2;
-  const col = css('--' + L.key), tint = css('--' + L.key + '-tint');
-
-  html('lane-no num', `left:32px;top:${cy - 10}px;line-height:20px`, String(i + 1));
-  html('', `left:58px;top:${cy - 10}px`, `<img class="lane-icon" src="${ICON}${L.key}.svg" alt="">`);
-  html('lane-name', `left:86px;top:${cy - 10}px`, L.name);
-  html('count', `left:176px;top:${cy - 10}px`, `<b>${L.n}</b><span>题</span>`);
-
-  // Run: total length = category weight; split into one segment per question (questions share the weight equally).
-  const len = L.w * PX_PER_PCT, seg = len / L.n;
-  for (let q = 0; q < L.n; q++) {
-    const x = X0 + q * seg, w = seg - (q < L.n - 1 ? GAP : 0);
-    el('rect', { x: x + .75, y: cy - BAR_H / 2 + .75, width: w - 1.5, height: BAR_H - 1.5, rx: (BAR_H - 1.5) / 2,
-                 fill: tint, stroke: col, 'stroke-width': 1.5 });
-  }
-  // Finish mark at the exact value.
-  el('line', { x1: X0 + len, x2: X0 + len, y1: cy - 12, y2: cy + 12, stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round' });
-  html('weight', `left:${X0 + len + 10}px;top:${cy - 10}px;color:${col}`, L.w + '%');
-
-  // Time limit on the minute ruler.
-  const tx = T0 + L.t * PX_PER_MIN;
-  el('line', { x1: T0, x2: tx, y1: cy, y2: cy, stroke: css('--ink-2'), 'stroke-width': 1.5, 'stroke-linecap': 'round' });
-  el('line', { x1: tx, x2: tx, y1: cy - 6, y2: cy + 6, stroke: css('--ink-2'), 'stroke-width': 1.5, 'stroke-linecap': 'round' });
+let y = TOP, laneNo = 0, total = 0;
+GROUPS.forEach((G, gi) => {
+  // Group row: a heavier rule, the kind of task and its graders.
+  line(0, y + .5, 960, y + .5, css('--line'));
+  put('group', `left:32px;top:${y + 9}px`, `<b>${G.kind}</b>${G.note}`);
+  if (gi === 0) put('colhead', `right:${960 - X1}px;top:${y + 11}px;text-align:right`, '每条一道题，条长按单题限时绘制');
+  y += GROUP_H;
+  const laneTop = y;
+  G.lanes.forEach(L => {
+    laneNo++;
+    const cy = y + LANE_H / 2, c = `--c:var(--${L.key});--t:var(--${L.key}-tint)`;
+    line(0, y + .5, 960, y + .5, css('--line-2'));
+    put('lane-no num', `left:32px;top:${cy - 10}px`, String(laneNo));
+    put('', `left:58px;top:${cy - 10}px`, `<img class="lane-icon" src="${ICON}${L.key}.svg" alt="">`);
+    put('lane-name', `left:86px;top:${cy - 10}px`, L.name);
+    put('count', `left:${X0 - 58}px;top:${cy - 10}px`, `<b>${L.tasks.length}</b><span>题</span>`);
+    let x = X0;
+    L.tasks.forEach(([name, min]) => {
+      const w = min * PX_PER_MIN;
+      put('task', `left:${x}px;top:${cy - 15}px;width:${w}px;${c}`,
+          `<span class="tn">${name}</span><span class="tm">${min}<small>分钟</small></span>`);
+      x += w + GAP;
+      total++;
+    });
+    y += LANE_H;
+  });
+  // Start line through this group's lanes, like the line the runners leave from.
+  line(X0 - 10, laneTop + 6, X0 - 10, y - 6, css('--ink'), 2);
 });
+line(0, y + .5, 960, y + .5, css('--line'));
 
-// Totals and graders, quiet, on the bottom line.
-const FOOT_Y = LANE_BOTTOM + 30;
-html('foot', `left:86px;top:${FOOT_Y}px`, '合计');
-html('count', `left:176px;top:${FOOT_Y - 1}px`, `<b>11</b><span>题</span>`);
-html('foot', `right:32px;top:${FOOT_Y}px;text-align:right`,
-     '设计题由 <span class="num" style="color:var(--ink)">Claude Opus 5.5</span> 与 <span class="num" style="color:var(--ink)">GPT 6.1 Sol</span> 各评取平均，其余由 Sol 单评');
+
+// Footer.
+put('foot', `left:86px;top:${y + 16}px`, `合计 <span class="num" style="color:var(--ink);font-size:16px;font-weight:600">${total}</span> 题，6 个类别`);
+put('foot', `right:32px;top:${y + 16}px;text-align:right`, '每题折算 0–100 分，按权重合成模型总分');
 </script>
 </body>
 </html>

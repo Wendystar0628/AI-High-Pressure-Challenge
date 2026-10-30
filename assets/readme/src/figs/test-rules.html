@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x820">
+<title>工具与联网规定</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 26px; line-height: 34px; }
+  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+
+  .grid { display: grid; grid-template-columns: 236px repeat(5, 1fr); margin-top: 20px; }
+  .grid > div { border-top: 1px solid var(--line-2); padding: 9px 6px; }
+
+  /* column heads: a category-coloured rule on top, then the task group */
+  .grid .ch { border-top: none; padding: 0 6px 10px; text-align: center; }
+  .ch i { display: flex; height: 4px; border-radius: 2px; overflow: hidden; margin: 0 4px 9px; }
+  .ch i em { flex: 1; background: var(--c); }
+  .ch b { display: block; font-size: 14.5px; line-height: 20px; }
+  .ch span { display: block; font-size: 12px; line-height: 17px; color: var(--ink-3); }
+
+  .grid .sec { grid-column: 1 / -1; border-top: 1.5px solid var(--ink); padding: 12px 0 4px;
+               font-size: 13px; line-height: 18px; color: var(--ink-3); }
+  .grid .rh { padding-left: 0; padding-right: 14px; display: flex; flex-direction: column; justify-content: center; }
+  .rh b { font-size: 14px; font-weight: 700; line-height: 20px; }
+  .rh span { font-size: 12px; line-height: 17px; color: var(--ink-3); }
+
+  .cell { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+  .cell svg { width: 16px; height: 16px; overflow: visible; flex: none; }
+  .cell p { font-size: 12px; line-height: 16px; color: var(--ink-2); }
+  .cell.txt p { font-size: 13px; line-height: 18px; color: var(--ink); margin-top: 2px; }
+
+  /* a rule that holds for every task spans the five columns */
+  .grid .all { grid-column: 2 / -1; display: flex; align-items: center; padding-left: 0; padding-right: 0; }
+  .all .rail { flex: 1; position: relative; height: 16px; }
+  .all .rail::before { content: ''; position: absolute; left: 10%; right: 10%; top: 7.5px; height: 1px; background: var(--line); }
+  .all .rail svg { position: absolute; top: 0; width: 16px; height: 16px; overflow: visible; background: var(--paper); }
+
+  .key { display: flex; gap: 26px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
+         font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+  .key span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .key svg { width: 14px; height: 14px; overflow: visible; }
+  .foot { margin-top: 8px; font-size: 12.5px; line-height: 19px; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="yes" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.2" fill="var(--ink)"/><path d="M4.6 8.2 L7 10.6 L11.5 5.6" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="no" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="var(--ink-2)" stroke-width="1.4" stroke-dasharray="2.2 1.8"/><path d="M5.2 5.2 L10.8 10.8 M10.8 5.2 L5.2 10.8" stroke="var(--ink-2)" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="na" viewBox="0 0 16 16"><path d="M4 8 H12" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+<div class="frame">
+  <div class="head">
+    <h2>各类题能用什么</h2>
+    <p>以各题面的“规定”一节为准。规定的执行情况不由评分员评，由出题人处理。</p>
+  </div>
+  <div class="grid" id="grid">
+    <div class="ch"></div>
+    <div class="ch" style="--c:var(--reason)"><i><em></em></i><b>形式化证明题</b><span>Lean 4</span></div>
+    <div class="ch" style="--c:var(--reason)"><i><em></em></i><b>IMO原创新题</b><span>纸面证明</span></div>
+    <div class="ch" style="--c:var(--algo)"><i><em></em></i><b>极值构造</b><span>2 题</span></div>
+    <div class="ch" style="--c:var(--algo)"><i><em></em></i><b>性能工程</b><span>2 题</span></div>
+    <div class="ch"><i><em style="--c:var(--interact)"></em><em style="--c:var(--game)"></em><em style="--c:var(--physics)"></em><em style="--c:var(--visual)"></em></i><b>网页题</b><span>5 题</span></div>
+  </div>
+  <div class="key">
+    <span><svg><use href="#yes"/></svg>可以</span>
+    <span><svg><use href="#no"/></svg>规定禁止</span>
+    <span><svg><use href="#na"/></svg>题面没有写</span>
+  </div>
+  <p class="foot">所有受测会话都接入同一个浏览器 MCP（无窗口的本机 Chrome，使用显卡），只有网页题的题面提到它。</p>
+</div>
+<script>
+const ALL = [
+  ['访问 GitHub 上的任何仓库', '网页、git、gh 命令行和 API 都不行'],
+  ['开启子代理或多代理协作', '全程独立作答'],
+  ['访问作答目录以外的路径', '必需工具的安装路径和临时目录除外'],
+  ['换账户登录、按进程名结束进程', 'runas、taskkill /IM 等'],
+];
+const ROWS = [
+  ['联网、其他 AI、安装软件', '网页搜索与抓取，调用其他模型或服务，下载或安装软件包',
+    [['no'], ['no'], ['no'], ['no'], ['na']]],
+  ['编写和运行程序', '',
+    [['yes', 'Lean 编译和本机已装的程序'], ['no', '只靠推理，只写答案和草稿'], ['yes', '本机已装的软件和库'],
+     ['yes', '开发时不限，提交另有规则'], ['yes', '可开本地服务器']]],
+  ['浏览器 MCP', '打开作品、操作、截图',
+    [['na'], ['na'], ['na'], ['na'], ['yes', '题面写明']]],
+  ['处理器与显卡', '作答时的分配',
+    [['t', '与并行批共用'], ['t', '与并行批共用'], ['t', '各 14 个逻辑处理器，显卡两题共用'],
+     ['t', '独占整台机器'], ['t', '与并行批共用']]],
+];
+const grid = document.getElementById('grid');
+const add = html => grid.insertAdjacentHTML('beforeend', html);
+const rowHead = (name, sub) => `<div class="rh"><b>${name}</b>${sub ? `<span>${sub}</span>` : ''}</div>`;
+
+add('<div class="sec">所有题都禁止</div>');
+ALL.forEach(([name, sub], i) => {
+  add(rowHead(name, sub).replace('class="rh"', `class="rh"${i === 0 ? ' style="border-top:none"' : ''}`));
+  const marks = [0, 1, 2, 3, 4].map(k => `<svg style="left:calc(${10 + k * 20}% - 8px)"><use href="#no"/></svg>`).join('');
+  add(`<div class="all"${i === 0 ? ' style="border-top:none"' : ''}><div class="rail">${marks}</div></div>`);
+});
+add('<div class="sec">按类别不同</div>');
+ROWS.forEach(([name, sub, cells], i) => {
+  add(rowHead(name, sub).replace('class="rh"', `class="rh"${i === 0 ? ' style="border-top:none"' : ''}`));
+  cells.forEach(([icon, text]) => {
+    const top = i === 0 ? ' style="border-top:none"' : '';
+    if (icon === 't') add(`<div class="cell txt"${top}><p>${text}</p></div>`);
+    else add(`<div class="cell"${top}><svg><use href="#${icon}"/></svg>${text ? `<p>${text}</p>` : ''}</div>`);
+  });
+});
+</script>
+</body>
+</html>

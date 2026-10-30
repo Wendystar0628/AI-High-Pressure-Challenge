@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x584">
+<title>深度推理两种判法</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 24px; letter-spacing: .01em; }
+  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+
+  /* Two columns divided by one hairline; rows divided by lane lines, as in the other figures. */
+  .row { display: grid; grid-template-columns: 1fr 1px 1fr; column-gap: 28px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
+  .vr { background: var(--line); }
+  .ph { display: flex; align-items: baseline; justify-content: space-between; }
+  .ph h3 { font-size: 17px; }
+  .ph .tag { font-family: var(--font-num); font-size: 18px; font-weight: 600; color: var(--reason); }
+  .ph .tag .cn { font-family: var(--font-cn); font-size: 13px; font-weight: 400; color: var(--ink-2); margin-left: 2px; }
+  .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; color: var(--ink); }
+
+  /* Formal proof: four gates on one track, then the two possible results. */
+  .gates { position: relative; margin-top: 14px; padding-left: 40px; }
+  .gates .track { position: absolute; left: 13px; top: 14px; height: 138px; width: 2px; background: var(--reason-tint); }
+  .gate { position: relative; height: 46px; }
+  .gate .no { position: absolute; left: -40px; top: 1px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--reason);
+              background: var(--paper); color: var(--reason); font-family: var(--font-num); font-size: 15px; font-weight: 600;
+              display: flex; align-items: center; justify-content: center; }
+  .gate b { font-size: 14.5px; font-weight: 700; }
+  .gate span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+  .result { display: flex; gap: 14px; margin-top: 6px; margin-left: -40px; }
+  .res { display: flex; align-items: center; gap: 10px; }
+  .res .box { width: 54px; height: 40px; border-radius: var(--radius-block); display: flex; align-items: center; justify-content: center;
+              font-family: var(--font-num); font-size: 21px; font-weight: 700; }
+  .res .on { background: var(--ink); color: var(--paper); }
+  .res .off { border: 1.5px solid var(--ink-3); color: var(--ink-3); }
+  .res .lab { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+
+  /* IMO: a 0-7 ladder with what each band means. */
+  .ladder { display: grid; grid-template-columns: 52px 1fr; column-gap: 14px; margin-top: 14px; }
+  .rungs { display: flex; flex-direction: column; gap: 4px; }
+  .rung { height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center;
+          font-family: var(--font-num); font-size: 13px; font-weight: 600; }
+  .r7 { background: var(--reason); color: var(--paper); }
+  .rp { background: var(--reason-tint); color: var(--reason); }
+  .r0 { border: 1.25px solid var(--ink-3); color: var(--ink-3); }
+  .bands { position: relative; }
+  .band { position: absolute; left: 0; right: 0; padding-left: 14px; border-left: 2px solid var(--reason-tint); }
+  .band b { font-size: 14.5px; font-weight: 700; display: block; line-height: 1.35; }
+  .band span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+  .band.top { border-left-color: var(--reason); }
+  .band.zero { border-left-color: var(--line); }
+
+  /* Tools allowed while answering. */
+  .tools-h { font-size: 13px; color: var(--ink-3); margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px 0 9px; border-radius: var(--radius-block);
+          font-size: 13px; white-space: nowrap; }
+  .chip svg { width: 14px; height: 14px; flex: none; }
+  .yes { background: var(--reason-tint); color: var(--ink); }
+  .no { border: 1px solid var(--line); color: var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="head">
+    <h2>深度推理：同是证明，两种判法</h2>
+    <p>形式化证明交给 Lean 编译器和公理检查，过关才得分；IMO 题由 GPT 6.1 Sol 按 IMO 阅卷惯例逐题给分。</p>
+  </div>
+
+  <div class="row">
+    <section>
+      <div class="ph"><h3>形式化证明题</h3><div class="tag">5 × 20<span class="cn">分</span></div></div>
+      <p class="rule">每题一个 <code>.lean</code> 文件，单独检查。四关全过得 20 分，没有部分分。</p>
+      <div class="gates">
+        <div class="track"></div>
+        <div class="gate"><div class="no">1</div><b>编译通过</b><span>单独编译没有错误，只导入 Mathlib 及其依赖</span></div>
+        <div class="gate"><div class="no">2</div><b>命题不变</b><span>定理名和 Lean 命题与题面一字不差</span></div>
+        <div class="gate"><div class="no">3</div><b>没有捷径</b><span>无 sorry、admit、native_decide、新公理，不绕过内核</span></div>
+        <div class="gate"><div class="no">4</div><b>公理干净</b><span>#print axioms 只含 propext、Classical.choice、Quot.sound</span></div>
+        <div class="result">
+          <div class="res"><div class="box on">20</div><div class="lab">四关全过</div></div>
+          <div class="res"><div class="box off">0</div><div class="lab">任一关不过</div></div>
+        </div>
+      </div>
+    </section>
+    <div class="vr"></div>
+    <section>
+      <div class="ph"><h3>IMO原创新题</h3><div class="tag">12 × 7<span class="cn">分</span></div></div>
+      <p class="rule">Sol 对照参考答案和每题的评分要点评阅，满分 84，乘以 100/84 折算。</p>
+      <div class="ladder">
+        <div class="rungs">
+          <div class="rung r7">7</div>
+          <div class="rung rp">6</div><div class="rung rp">5</div><div class="rung rp">4</div>
+          <div class="rung rp">3</div><div class="rung rp">2</div><div class="rung rp">1</div>
+          <div class="rung r0">0</div>
+        </div>
+        <div class="bands">
+          <div class="band top" style="top:0;height:22px"><b>完整正确（解法可以与参考答案不同）</b></div>
+          <div class="band" style="top:26px;height:152px">
+            <b>不完整：按完成程度给部分分</b>
+            <span>参照每题的评分要点</span>
+            <span style="margin-top:10px">只有答案没有证明、关键步骤缺失、论证有漏洞的，按 IMO 惯例扣分；写得简练但阅卷认可的不扣</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row">
+    <section>
+      <div class="tools-h">作答时能用的工具</div>
+      <div class="chips">
+        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Lean 编译检查，随时可跑</span>
+        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>读取、检索 Mathlib 源码</span>
+      </div>
+    </section>
+    <div class="vr"></div>
+    <section>
+      <div class="tools-h">作答时能用的工具</div>
+      <div class="chips">
+        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>只靠推理，写进 answer.md</span>
+        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>编写或运行程序验算</span>
+        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>计算机代数系统、数值库</span>
+        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>定理证明器</span>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>
