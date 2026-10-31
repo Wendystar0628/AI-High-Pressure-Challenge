@@ -15,7 +15,7 @@ namespace {
 
 const int THREADS = 256;
 const int SHARED_BYTES = 88 * 1024;
-const double LAUNCH_FMA = 2e12;   // about a quarter of a second of attention per launch
+const double LAUNCH_FMA = 2e12;   // under a second of attention per launch
 constexpr float NEVER = -1e30f;
 
 // Shared-memory tiles have fixed power-of-two sizes, so an item number splits into its two indices by shift and mask;

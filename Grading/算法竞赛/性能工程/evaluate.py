@@ -1,17 +1,17 @@
 r"""Score an already compiled submission against the reference solution, re-run in the same session.
 
-python evaluate.py --task transformer --exe C:\eval\transformer\grader.exe --reference C:\eval\transformer\reference.exe
+python evaluate.py --task transformer --exe grader.exe --reference reference.exe
     --report result.json
 
-Session: the candidate's correctness inputs first, then, input by input, every performance input is run 3 times by the reference solution and 3 times by
+Session: the candidate's correctness inputs first, if the task has them, then, input by input, every performance input is run 3 times by the reference solution and 3 times by
 the candidate, each run in its own process, interleaved: odd inputs start with the reference, even inputs with the
 candidate, and the order flips after every pair (R C C R R C ... / C R R C C R ...). Each role's time on an input
-is the median of its runs. The inputs are whatever performance/inputs holds (24 per task).
+is the median of its runs. The inputs are whatever performance/inputs holds.
 Score: each performance input is scored on its own: s_i = R_i / C_i (R_i reference time, C_i candidate time), and
 the task's anchor table interpolated linearly in ln s_i gives 0-100 points, one decimal place: 0 at or below the
 lowest anchor, 100 at or above the highest anchor. An input the candidate fails (wrong answer, crash, timeout)
-scores 0. The task score is the mean of the input scores times the share of correctness inputs passed (each of
-the 7 is worth 1/7: a failed one removes its share), one decimal place.
+scores 0. The task score is the mean of the input scores, one decimal place; a task with correctness inputs multiplies
+it by the share passed (each of the 7 is worth 1/7: a failed one removes its share).
 G = exp(mean ln s_i) is reported for reference only. If the reference solution itself fails, the session is void:
 score null, exit code 2.
 """
@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parent
 TASKS = {  # anchors: (s_i, points), s_i relative to the reference solution, as in the statement's scoring section
     'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms',
                 'anchors': ((0.1, 0), (0.5, 10), (1, 30), (1.75, 52), (2.75, 75), (4, 100))},
-    'transformer': {'folder': 'Transformer前向推理的GPU加速', 'timer': 'forward_ms', 'binary': True,
+    'transformer': {'folder': 'Transformer前向推理的GPU加速', 'timer': 'forward_ms', 'binary': True, 'correctness': False,
                     'process_timeout_s': 120,
                     'anchors': ((0.2, 0), (0.6, 5), (1.2, 15), (2, 25), (4, 45), (8, 70), (12, 86), (16, 100))},
 }
@@ -46,9 +46,11 @@ ATOL, RTOL = 0.005, 0.02        # tolerance of the binary answers
 def tolerance_ratio(actual, expected):
     """Worst element's error as a share of its tolerance (above 1 is wrong), for little-endian float32 answers."""
     import numpy as np
+    if len(actual) != len(expected):
+        return math.inf
     a = np.frombuffer(actual, '<f4')
     e = np.frombuffer(expected, '<f4')
-    if a.size != e.size or not np.isfinite(a).all():
+    if not np.isfinite(a).all():
         return math.inf
     worst = 0.0
     for start in range(0, a.size, 1 << 24):
@@ -167,7 +169,8 @@ def evaluate(args):
     process_timeout_s = task.get('process_timeout_s', PROCESS_TIMEOUT_S)
     exe = Path(args.exe).resolve(strict=True)
     reference = Path(args.reference).resolve(strict=True)
-    correctness_cases = cases(suite / 'correctness', pattern)
+    has_correctness = task.get('correctness', True)
+    correctness_cases = cases(suite / 'correctness', pattern) if has_correctness else []
     perf_cases = cases(suite / 'performance', pattern)
     family = families(suite)
     report_path = Path(args.report).resolve()
@@ -185,7 +188,8 @@ def evaluate(args):
         report['correctness'].append({'case': inp.stem, 'passed': r['status'] == 'PASS', 'run': r})
         print(f"correctness/{inp.stem}: {r['status']}", flush=True)
         save()
-    report['correctness_passed'] = sum(x['passed'] for x in report['correctness'])
+    if has_correctness:
+        report['correctness_passed'] = sum(x['passed'] for x in report['correctness'])
 
     # 2. Performance inputs, one at a time: the reference solution and the candidate, 3 runs each, interleaved.
     for position, (inp, expected_path) in enumerate(perf_cases, 1):
@@ -195,6 +199,9 @@ def evaluate(args):
                 'order': ''.join('R' if role == 'reference' else 'C' for role in order), 'runs': []}
         items.append(item)
         for seq, role in enumerate(order, 1):
+            # This input already scores 0; rerunning a crash could stack driver resets up to a blue screen.
+            if role == 'candidate' and first_failure(x for x in item['runs'] if x['role'] == role):
+                continue
             r = run(reference if role == 'reference' else exe, inp, expected)
             item['runs'].append({'seq': seq, 'role': role, **r})
             print(f"{inp.stem} #{seq} {role}: {r['status']} {r['time_ms']} ms", flush=True)
@@ -222,8 +229,10 @@ def evaluate(args):
         report['score'] = None  # the reference solution itself failed: the session must be repeated
     else:
         report['performance_score'] = mean_points([x['points_i'] for x in items])
-        report['correctness_factor'] = f"{report['correctness_passed']}/{CORRECTNESS_INPUTS}"
-        report['score'] = mean_points([x['points_i'] for x in items], report['correctness_passed'], CORRECTNESS_INPUTS)
+        report['score'] = report['performance_score']
+        if has_correctness:
+            report['correctness_factor'] = f"{report['correctness_passed']}/{CORRECTNESS_INPUTS}"
+            report['score'] = mean_points([x['points_i'] for x in items], report['correctness_passed'], CORRECTNESS_INPUTS)
         report['failed_inputs'] = [x['case'] for x in items if x['status'] != 'PASS']
     report['summary'] = [{k: x[k] for k in ('case', 'family', 'R_i_ms', 'C_i_ms', 's_i', 'points_i', 'status')}
                          for x in items]
@@ -240,6 +249,6 @@ if __name__ == '__main__':
     parser.add_argument('--task', required=True, choices=TASKS)
     parser.add_argument('--exe', required=True, help='compiled grader + candidate solution')
     parser.add_argument('--reference', required=True,
-                        help='compiled grader + baselines/reference_solution, the denominator of s_i')
+                        help='compiled grader + baselines/reference_solution, the numerator of s_i')
     parser.add_argument('--report', required=True)
     raise SystemExit(evaluate(parser.parse_args()))

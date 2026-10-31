@@ -1,6 +1,6 @@
 // Reference solution for 通用数字电路仿真器加速: a general-purpose optimized solution written by the
 // setter. It implements simulate() for grader.cpp and follows the problem rules (single file,
-// C++ standard library + OpenMP, CPU only). Its time on each performance input is the denominator
+// C++ standard library + OpenMP, CPU only). Its time on each performance input is the numerator
 // of the speedup, and it computes the expected outputs.
 //   - only gates that can affect an output or flip-flop are kept (DFS from the sinks)
 //   - evaluation order: DFS post-order or level order, whichever needs fewer value slots;

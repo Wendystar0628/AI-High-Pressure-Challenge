@@ -1,7 +1,7 @@
-// gen_hidden.cpp: hidden inputs of the Transformer task and their double-precision answers.
+// gen_hidden.cpp: the Transformer task's performance inputs and their double-precision answers.
 // Build: g++ -O3 -march=native -fopenmp -std=c++17 -o gen_hidden.exe gen_hidden.cpp
-// Usage, from the task folder: gen_hidden.exe [case ...]   (cases like p01 or c07; no argument: all 31)
-// Writes performance/ and correctness/, each with inputs/input_NN.bin and expected/expected_NN.bin.
+// Usage, from the task folder: gen_hidden.exe [case ...]   (cases p01 to p08; no argument: all 8)
+// Writes performance/inputs/input_NN.bin and performance/expected/expected_NN.bin.
 #include <immintrin.h>
 #include <algorithm>
 #include <chrono>
@@ -19,59 +19,39 @@ struct Spec {
     const char* name;
     int B, S, D, H, F, L;
     uint64_t seed;
-    bool mixed_x;  // x is not standard normal: constant, huge and tiny tokens
 };
 
-// 8 families, 3 instances each, numbered by family. Every instance outside the very long family does at least
-// 800 GFLOP by L(2BS^2D + 8BSD^2 + 4BSDF), so that the timed run stays well above the noise of short measurements.
+// The public shapes of the statement. Every one except the very long sequence does at least 800 GFLOP by
+// L(2BS^2D + 8BSD^2 + 4BSDF), so that the timed run stays well above the noise of short measurements.
 static const Spec PERFORMANCE[] = {
-    {"p01", 3900, 64, 256, 8, 256, 4, 0x51c7a30e91d4a601ULL, false},   // large batch, short sequences
-    {"p02", 7000, 128, 128, 4, 128, 4, 0x2f6b81d4c07e3902ULL, false},
-    {"p03", 10000, 128, 128, 4, 128, 4, 0x9ae03d57b16c8403ULL, false},
-    {"p04", 128, 128, 1024, 4, 1024, 4, 0x74d29c60ea3f1b04ULL, false},  // high dimension
-    {"p05", 48, 256, 1024, 8, 2048, 4, 0xc85f13b7420d9e05ULL, false},
-    {"p06", 32, 128, 2048, 16, 2048, 4, 0x06a7e49d35b1c206ULL, false},
-    {"p07", 144, 2048, 128, 4, 128, 4, 0xe13c58a26f07d907ULL, false},   // long sequences
-    {"p08", 40, 4096, 128, 8, 128, 4, 0x3bd0f672c9a54e08ULL, false},
-    {"p09", 4, 16384, 128, 4, 128, 4, 0x8f24c1e07d36ba09ULL, false},
-    {"p10", 1, 100000, 1024, 16, 1024, 2, 0x5ae97b032cd8f110ULL, false},  // very long sequences
-    {"p11", 2, 50000, 512, 8, 512, 2, 0xd2016f8ea47c3b11ULL, false},
-    {"p12", 1, 200000, 256, 8, 256, 1, 0x47b8e3d15f90a612ULL, false},
-    {"p13", 1200, 512, 128, 16, 128, 4, 0xa96c02f7d3e18b13ULL, false},  // narrow heads
-    {"p14", 430, 1024, 128, 32, 128, 4, 0x1e75d84ab60c9f14ULL, false},
-    {"p15", 1100, 1024, 64, 8, 64, 4, 0xf30a6c927be1d415ULL, false},
-    {"p16", 380, 512, 256, 1, 256, 4, 0x68c1b5f04ed72a16ULL, false},    // few wide heads
-    {"p17", 430, 1024, 128, 1, 128, 4, 0xb74e29d3a1068c17ULL, false},
-    {"p18", 110, 512, 512, 2, 512, 4, 0x2c9f70e6d85b3a18ULL, false},
-    {"p19", 200, 512, 128, 4, 128, 24, 0x95d3a8176ec04f19ULL, false},   // deep
-    {"p20", 38, 1024, 256, 8, 256, 16, 0x7e20c4b9f1a65d20ULL, false},
-    {"p21", 1200, 256, 64, 4, 64, 32, 0xc06b1fe2583d9a21ULL, false},
-    {"p22", 144, 512, 256, 8, 1024, 6, 0x3a8df6107cb24e22ULL, false},   // common shape, F = 4D
-    {"p23", 13, 2048, 384, 6, 1536, 6, 0xe5714c0a9d3fb623ULL, false},
-    {"p24", 18, 1024, 512, 8, 2048, 6, 0x10fb97d2c6e8a524ULL, false},
-};
-
-static const Spec CORRECTNESS[] = {
-    {"c01", 3, 1, 64, 4, 128, 2, 0x8d1e60b7f2a43c01ULL, false},    // S = 1
-    {"c02", 1, 2, 30, 3, 17, 3, 0x46f2ca09e7d15b02ULL, false},     // B = 1, S = 2, D and F not multiples of 4
-    {"c03", 4, 32, 16, 16, 32, 2, 0xb3097de1a65c8f03ULL, false},   // H = D
-    {"c04", 2, 64, 2048, 1, 64, 2, 0x29e8c5f4037db104ULL, false},  // H = 1 with the largest D, F < D
-    {"c05", 2, 128, 90, 6, 25, 1, 0xf6a13b7e0c82d905ULL, false},   // L = 1, F != D
-    {"c06", 2, 5000, 32, 4, 32, 2, 0x71cd04e9b8f36a06ULL, false},  // medium S, crosses any tile boundary
-    {"c07", 2, 64, 64, 4, 64, 2, 0xda583f2c6b019e07ULL, true},     // constant, huge and tiny tokens
+    {"p01", 10000, 128, 128, 4, 128, 4, 0x9ae03d57b16c8403ULL},  // 大批量短序列
+    {"p02", 48, 256, 1024, 8, 2048, 4, 0xc85f13b7420d9e05ULL},  // 高维
+    {"p03", 4, 16384, 128, 4, 128, 4, 0x8f24c1e07d36ba09ULL},  // 长序列
+    {"p04", 1, 100000, 1024, 16, 1024, 2, 0x5ae97b032cd8f110ULL},  // 超长序列
+    {"p05", 430, 1024, 128, 32, 128, 4, 0x1e75d84ab60c9f14ULL},  // 窄头
+    {"p06", 380, 512, 256, 1, 256, 4, 0x68c1b5f04ed72a16ULL},  // 少头宽头
+    {"p07", 1200, 256, 64, 4, 64, 32, 0xc06b1fe2583d9a21ULL},  // 深层
+    {"p08", 144, 512, 256, 8, 1024, 6, 0x3a8df6107cb24e22ULL},  // 常见配比
 };
 
 // Weights as in the statement's sample, checked before anything is written.
-static const float SAMPLE_WEIGHTS[53] = {
-    1.0f, 0.875f, 0.125f, 0.0f, -0.75f, 1.0f, -0.875f, -0.25f, -0.125f, 0.875f,
-    -0.125f, -0.375f, -0.625f, -0.875f, 0.0f, -0.125f, -0.25f, -0.125f, 0.25f, 0.125f,
-    -0.125f, 0.125f, 0.375f, -0.125f, -0.625f, -0.875f, 0.125f, -0.125f, 1.125f, 1.0f,
-    0.0f, 0.125f, 0.25f, 0.75f, 0.375f, 0.5f, 0.375f, 0.5f, 0.0f, -0.25f,
-    0.25f, 0.0f, -0.375f, -0.875f, 0.625f, -0.75f, 0.125f, 0.125f, -0.25f, 1.125f,
-    0.875f, 0.125f, -0.125f,
+static const float SAMPLE_WEIGHTS[126] = {
+    0.875f, 1.0f, 1.125f, 1.125f, 0.75f, 1.0f, -1.0f, -0.25f, -0.25f, 0.25f,
+    0.25f, 0.5f, 0.25f, -1.0f, 0.25f, 0.0f, -0.75f, 0.25f, -0.625f, -0.875f,
+    0.0f, -0.25f, 0.875f, 0.875f, -0.875f, -0.625f, -0.625f, 0.5f, 0.625f, -0.625f,
+    0.25f, -0.125f, 0.5f, 1.0f, -0.625f, 0.125f, -0.25f, -0.875f, 0.5f, 0.625f,
+    0.625f, 1.0f, -0.75f, -0.125f, 0.75f, 0.125f, -0.125f, -1.0f, -0.125f, 0.75f,
+    0.0f, -0.875f, 0.0f, -0.5f, -0.375f, -0.375f, 0.875f, 0.625f, 0.75f, -0.375f,
+    -0.5f, -1.0f, 0.875f, -1.0f, -0.625f, 0.375f, 0.0f, -0.25f, -0.5f, 0.25f,
+    0.0f, 1.0f, 0.5f, -0.125f, -0.875f, 0.875f, 0.625f, -0.25f, 0.125f, -0.625f,
+    -0.875f, -1.0f, -0.375f, 0.75f, 0.0f, 0.625f, 0.75f, -0.875f, 1.125f, 0.875f,
+    1.125f, 1.125f, 1.0f, -0.25f, 0.5f, -0.625f, 0.375f, -0.5f, -0.375f, 0.125f,
+    0.25f, -0.5f, 0.125f, -0.75f, 0.25f, -0.75f, 0.25f, -0.75f, -0.5f, -0.75f,
+    0.625f, -0.125f, -0.875f, 0.25f, -0.625f, 0.375f, 0.75f, 0.875f, 1.125f, 0.875f,
+    1.125f, 0.875f, 0.75f, 0.625f, -0.25f, 0.875f,
 };
-static const float SAMPLE_X[6] = {-1.0f, -1.125f, -0.5f, -1.375f, -0.75f, 2.0f};
-static const float SAMPLE_Y[6] = {1.249621f, -0.999705f, 1.249914f, -0.999933f, -0.999995f, 0.749996f};
+static const float SAMPLE_X[12] = {2.0f, -1.5f, 0.25f, -2.0f, -1.25f, -1.75f, 1.375f, -0.375f, 1.25f, 1.125f, 1.75f, 1.375f};
+static const float SAMPLE_Y[12] = {2.014471f, -0.290267f, -1.312416f, 1.633113f, 0.337171f, -0.505554f, 1.403418f, 1.040652f, 0.158690f, 1.620926f, 0.595426f, -0.318572f};
 
 static void die(const std::string& msg) {
     fprintf(stderr, "gen_hidden: %s\n", msg.c_str());
@@ -119,14 +99,7 @@ static void generate(const Spec& s, std::vector<float>& w, std::vector<float>& x
     size_t pos = 0;
     for (int b = 0; b < s.B; b++)
         for (int i = 0; i < s.S; i++) {
-            const int kind = s.mixed_x ? (i + b) % 4 : -1;
-            for (int k = 0; k < s.D; k++, pos++) {
-                if (kind == 0) x[pos] = 1.5f;
-                else if (kind == 1) x[pos] = -0.25f;
-                else if (kind == 2) x[pos] = (float)(1000.0 * rnd.normal());
-                else if (kind == 3) x[pos] = (float)(0.001 * rnd.normal());
-                else x[pos] = (float)rnd.normal();
-            }
+            for (int k = 0; k < s.D; k++, pos++) x[pos] = (float)rnd.normal();
         }
 }
 
@@ -327,10 +300,10 @@ static void self_check() {
     _mm256_storeu_pd(out, r);
     for (int i = 0; i < 4; i++)
         if (std::fabs(out[i] / std::exp(xs[i]) - 1.0) > 1e-13) die("exp256 is inaccurate");
-    const Spec sample{"sample", 1, 3, 2, 2, 3, 1, 0, false};
-    const std::vector<double> y = solve(sample, std::vector<float>(SAMPLE_WEIGHTS, SAMPLE_WEIGHTS + 53),
-                                        std::vector<float>(SAMPLE_X, SAMPLE_X + 6));
-    for (int i = 0; i < 6; i++)
+    const Spec sample{"sample", 1, 3, 4, 2, 2, 1, 0};
+    const std::vector<double> y = solve(sample, std::vector<float>(SAMPLE_WEIGHTS, SAMPLE_WEIGHTS + 126),
+                                        std::vector<float>(SAMPLE_X, SAMPLE_X + 12));
+    for (int i = 0; i < 12; i++)
         if (std::fabs(y[i] - SAMPLE_Y[i]) > 1e-5) die("the solver does not reproduce the statement's sample");
 }
 
@@ -341,11 +314,6 @@ int main(int argc, char** argv) {
         return wanted.empty() || std::find(wanted.begin(), wanted.end(), name) != wanted.end();
     };
     int i = 0;
-    for (const Spec& s : CORRECTNESS) {
-        i++;
-        if (selected(s.name)) write_case(s, "correctness", (i < 10 ? "0" : "") + std::to_string(i));
-    }
-    i = 0;
     for (const Spec& s : PERFORMANCE) {
         i++;
         if (selected(s.name)) write_case(s, "performance", (i < 10 ? "0" : "") + std::to_string(i));

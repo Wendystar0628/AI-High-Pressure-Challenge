@@ -54,7 +54,7 @@
     </section>
     <section class="panel">
       <h3>设计题</h3>
-      <p class="rule">每题 19–29 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
+      <p class="rule">每题 18–29 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
       <svg id="design" width="277" height="100"></svg>
       <div class="zero"><p><b>不分档、不扣分</b>：AE 的性能另按用时公式</p></div>
     </section>
@@ -63,13 +63,13 @@
   <div class="row two">
     <section class="panel">
       <h3>极值构造题</h3>
-      <p class="rule">以已知最好的构造值为满分基准查锚点表。低段到中高段斜率逐段加大，逼近纪录的最后一段不额外加权。</p>
+      <p class="rule">以固定的参考值为满分基准查锚点表。低段到中高段斜率逐段加大，逼近参考值的最后一段不额外加权。</p>
       <svg id="extremal" width="432" height="214"></svg>
       <div class="zero"><p><b>记 0 分</b>：提交无效，如点数不对、点在正方形外</p></div>
     </section>
     <section class="panel">
       <h3>性能工程题</h3>
-      <p class="rule">24 个性能输入各算加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点后取平均，再乘以正确性输入的通过比例 k/7。</p>
+      <p class="rule">性能输入各算加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点后取平均（Transformer 8 个，电路 24 个）；电路再乘以正确性输入的通过比例 k/7。</p>
       <svg id="perf" width="432" height="214"></svg>
       <div class="zero"><p><b>记 0 分</b>：编译失败或违反题面规则；单个输入失败只丢这个输入</p></div>
     </section>
@@ -200,7 +200,7 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
   txt(g, X(.85) + 8, Y(70) + 14, 'lab', '0.8–0.9 最陡', 'start');
   txt(g, X(1) - 2, Y(100) - 8, 'tick n', '100', 'end');
   // Bottom row: what the axis is, and where the anchors come from.
-  txt(g, R, B + 38, 'lab', 'r = 构造值 ÷ 已知最好值', 'end');
+  txt(g, R, B + 38, 'lab', 'r = 构造值 ÷ 参考值', 'end');
   txt(g, L - 34, B + 38, 'lab', '锚点取自最小三角形面积题');
 }
 

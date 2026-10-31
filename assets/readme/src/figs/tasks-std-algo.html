@@ -49,7 +49,7 @@
 <div class="frame">
   <div class="head">
     <h2>算法竞赛：四道题各比什么</h2>
-    <p>极值构造以已知最好的构造为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
+    <p>极值构造以参考构造或已证明的最优值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
   </div>
 
   <div class="row">
@@ -69,7 +69,7 @@
   </div>
 
   <div class="row">
-    <div class="rl"><b>性能工程</b><span>加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；两图横轴相同</span></div>
+    <div class="rl"><b>性能工程</b><span>加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；Transformer 的 8 个输入直接取平均</span></div>
     <div class="two">
       <section class="panel">
         <h3>Transformer前向推理的GPU加速</h3>
@@ -85,7 +85,7 @@
   </div>
 
   <div class="foot">
-    <h3>性能题的<br>本题得分</h3>
+    <h3>电路题的<br>本题得分</h3>
     <div class="blk"><div class="grid24" id="g24"></div><div class="cap">24 个性能输入各自查表<br>失败的输入记 0 分，取平均</div></div>
     <div class="op">×</div>
     <div class="blk"><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i class="miss"></i></div><div class="cap">7 个正确性输入<br>通过数 ÷ 7，图中为 6/7</div></div>
@@ -133,10 +133,10 @@ function curve(P, pts, extendTo) {
 function dot(P, v, p, r = 3.2) {
   el('circle', { cx: P.X(v), cy: P.Y(p), r, fill: 'var(--algo)', stroke: 'var(--paper)', 'stroke-width': 1.3 }, P.g);
 }
-function star(P, v, p, label) {   // the full-score benchmark point
+function star(P, v, p, label, dy = 4) {   // the full-score benchmark point
   el('circle', { cx: P.X(v), cy: P.Y(p), r: 5.5, fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1.75 }, P.g);
   el('circle', { cx: P.X(v), cy: P.Y(p), r: 2.2, fill: 'var(--ink)' }, P.g);
-  if (label) txt(P.g, P.X(v) - 10, P.Y(p) + 4, 'call', label, 'end');
+  if (label) txt(P.g, P.X(v) - 10, P.Y(p) + dy, 'call', label, 'end');
 }
 
 /* Minimum triangle area: r = Δ / Δ*, anchors from the grading guide. */
@@ -149,8 +149,8 @@ function star(P, v, p, label) {   // the full-score benchmark point
   A.slice(0, -1).forEach(([r, p]) => dot(P, r, p, r >= .95 ? 2.4 : 3.2));
   for (const [r, p] of [[.5, 20], [.65, 36], [.8, 60], [.9, 81]]) txt(P.g, P.X(r) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
   txt(P.g, P.X(.9) + 10, P.Y(70) + 6, 'lab', '0.8–0.9 最陡');
-  star(P, 1, 100, '已知最好值 = 100 分');
-  txt(P.g, P.R, P.B + 38, 'lab', 'r = Δ ÷ 已知最好值', 'end');
+  star(P, 1, 100, '参考值 = 100 分');
+  txt(P.g, P.R, P.B + 38, 'lab', 'r = Δ ÷ 参考值', 'end');
 }
 
 /* Tour length: g = L / L* - 1 on a log-like axis; the x axis runs from large excess to zero. */
@@ -161,7 +161,7 @@ function star(P, v, p, label) {   // the full-score benchmark point
   curve(P, [[G0, 0], ...A]);
   A.slice(0, -1).forEach(([g, p]) => dot(P, g, p));
   for (const [g, p] of [[10, 20], [3, 65], [1.5, 80]]) txt(P.g, P.X(g) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
-  star(P, 0, 100, '已证明最优 = 100 分');
+  star(P, 0, 100, '已证明最优 = 100 分', -8);
   txt(P.g, P.R, P.B + 38, 'lab', '超额 g = 长度 ÷ 最优值 − 1（越往右越小）', 'end');
 }
 

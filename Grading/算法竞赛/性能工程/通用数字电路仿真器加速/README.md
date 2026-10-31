@@ -10,7 +10,7 @@
 | `performance/expected/expected_01.txt` – `expected_24.txt` | 对应的标准答案（评测程序的标准输出），由基线算出 |
 | `generator/gen_hidden.cpp` | 隐藏输入生成器 |
 | `grader/grader.cpp` | 官方评测程序，与题面第五节中的代码逐字节一致 |
-| `baselines/reference_solution.cpp` | 基线：出题人写的通用优化解法，每次评测重新运行，其用时 $R_i$ 是加速比的分母 |
+| `baselines/reference_solution.cpp` | 基线：出题人写的通用优化解法，每次评测重新运行，其用时 $R_i$ 是加速比的分子 |
 | `correctness/inputs/`、`correctness/expected/` | 7 个正确性输入及独立参考答案，每个占本题得分的 1/7，失败一个就去掉那一份 |
 | `validation.json` | 每个性能输入所属的类别，`evaluate.py` 报告用 |
 
@@ -84,7 +84,7 @@
 在本目录的上一级运行统一工具，基线可执行文件必需：
 
 ```powershell
-python evaluate.py --task circuit --exe C:\eval\circuit\grader.exe --reference C:\eval\circuit\reference.exe --report C:\eval\circuit-result.json
+python evaluate.py --task circuit --exe grader.exe --reference reference.exe --report result.json
 ```
 
 工具先运行提交的 7 个正确性输入（失败一个，本题得分去掉 1/7，后面照常运行）；再在每个性能输入上让基线和提交各运行 3 次（奇数输入先基线后提交，偶数输入先提交后基线，取各自中位数），按题面评分标准输出 $R_i$、$C_i$、$s_i$、各输入得分、作参考的 $G$ 和本题得分。基线本身运行失败时这次评测作废。具体说明见上一级 README。
