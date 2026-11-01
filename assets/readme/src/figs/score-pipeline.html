@@ -75,7 +75,7 @@
   <!-- Lane 1: standard tasks -->
   <div class="rule" style="top:110px"></div>
   <div class="abs lane-title" style="left:32px; top:122px">
-    <h3>标准评判题</h3><span class="count">6 题</span>
+    <h3>标准评判题</h3><span class="count">5 题</span>
     <span class="cat"><i style="border-color:var(--reason); background:var(--reason-tint)"></i>深度推理</span>
     <span class="cat"><i style="border-color:var(--algo); background:var(--algo-tint)"></i>算法竞赛</span>
   </div>
@@ -95,7 +95,7 @@
     <h3>主动设计题</h3><span class="count">5 题</span>
     <span class="cat"><i style="border-color:var(--interact); background:var(--interact-tint)"></i>复杂交互应用</span>
     <span class="cat"><i style="border-color:var(--game); background:var(--game-tint)"></i>游戏设计与开发</span>
-    <span class="cat"><i style="border-color:var(--physics); background:var(--physics-tint)"></i>物理建模与仿真</span>
+    <span class="cat"><i style="border-color:var(--physics); background:var(--physics-tint)"></i>物理模拟</span>
     <span class="cat"><i style="border-color:var(--visual); background:var(--visual-tint)"></i>视觉设计与渲染</span>
   </div>
   <div class="abs src" id="s1" style="left:32px; top:284px">
@@ -135,7 +135,7 @@
   <!-- Bottom row -->
   <div class="rule" style="top:478px; height:1.5px; background:var(--ink)"></div>
   <div class="abs weights" id="weights" style="left:32px; top:492px; width:690px">
-    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，11 题合计 100%</p>
+    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，10 题合计 100%</p>
     <div class="wbar" id="wbar"></div>
   </div>
   <div class="abs total" id="total" style="left:770px; top:502px; width:158px">
@@ -177,8 +177,8 @@ place('osum', chipY('s3'));
 place('o0', chipY('s0'), '.f');
 
 // Weight bar: six categories, widths proportional to weight.
-const W = [['visual', '视觉设计与渲染', 20, '10% × 2'], ['reason', '深度推理', 17.5, '8.75% × 2'], ['algo', '算法竞赛', 17.5, '4.375% × 4'],
-           ['interact', '复杂交互应用', 15, ''], ['game', '游戏设计与开发', 15, ''], ['physics', '物理建模与仿真', 15, '']];
+const W = [['visual', '视觉设计与渲染', 20, '10% × 2'], ['reason', '深度推理', 17.5, '8.75% × 2'], ['algo', '算法竞赛', 17.5, '5.833% × 3'],
+           ['interact', '复杂交互应用', 15, ''], ['game', '游戏设计与开发', 15, ''], ['physics', '物理模拟', 15, '']];
 document.getElementById('wbar').innerHTML = W.map(([c, n, w, each]) =>
   `<div style="flex:${w}"><i style="border-color:var(--${c}); background:var(--${c}-tint)"></i>` +
   `<b style="color:var(--${c})">${w}%</b><span>${n}</span></div>`).join('');

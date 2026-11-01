@@ -1,4 +1,4 @@
-/* AI六项全能·限时高压挑战赛 README figures: one shared token set. Every figure links this file and uses only these tokens. */
+/* AI六项全能·限时挑战赛 README figures: one shared token set. Every figure links this file and uses only these tokens. */
 
 /* Type: HarmonyOS Sans SC for Chinese, Bahnschrift (DIN-like, scoreboard feel) for numerals and Latin titles. */
 @font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC"), local("HarmonyOS_Sans_SC_Regular"); font-weight: 400; }
@@ -20,7 +20,7 @@
   --algo: #0B7A87;     --algo-tint: #E3F2F4;      /* 算法竞赛 */
   --interact: #A8650A; --interact-tint: #F8EFE0;  /* 复杂交互应用 */
   --game: #B23A5F;     --game-tint: #F8E7ED;      /* 游戏设计与开发 */
-  --physics: #2E7B33;  --physics-tint: #E7F2E7;   /* 物理建模与仿真 */
+  --physics: #2E7B33;  --physics-tint: #E7F2E7;   /* 物理模拟 */
   --visual: #1E6BC0;   --visual-tint: #E5EFFA;    /* 视觉设计与渲染 */
 
   --radius-frame: 18px;   /* the outer card of a figure */

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x568">
+<meta name="size" content="960x668">
 <title>设计题计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -42,7 +42,7 @@
     <p>指南只列方向、分项、分值和一行打分点，不写评判标准。下例取物理题的一个方向，分数为示意。</p>
   </div>
 
-  <svg class="chart" id="chart" width="960" height="568"></svg>
+  <svg class="chart" id="chart" width="960" height="668"></svg>
 
   <p class="foot"><b>不分档、不扣分、不清零</b>：分项得分就是评分员在分值内给的分。例外：AE 的“性能”15 分只由 GPT 6.1 Sol 评，按实测用时公式计分。</p>
 </div>
@@ -72,16 +72,18 @@ const COLS = [
 ];
 const CELL = 12, GAP = 2;
 
-const DIR = { name: '连锁运转', value: 14 };
+const DIR = { name: '作用关系', value: 22 };
 const ITEMS = [
-  { name: '环节与布局', value: 2, point: '10 环按 2.1 做出，三维中折转成一线，标出机制', s: [1.5, 1.7] },
-  { name: '交接与走通', value: 10, point: '9 次交接由物理推动、看得清，默认参数下一次敲击走到光谱', s: [6.0, 7.0] },
-  { name: '实时与重放', value: 2, point: '与真实时间同步，变速、跳转与重放不改变过程', s: [1.8, 1.4] },
+  { name: '重球接触反应', value: 5, point: '重球接触果冻后的减速、弹起、陷入或滑落，随当时接触状态改变', s: [4.0, 4.5] },
+  { name: '密度与浮沉', value: 5, point: '同尺寸各密度组的浮沉方向、稳定浸入程度和停留位置符合密度关系', s: [4.0, 4.5] },
+  { name: '造浪源响应', value: 3, point: '水体扰动对应可见造浪装置的运动，装置停止后不再输入', s: [2.0, 2.5] },
+  { name: '水流推动响应', value: 4, point: '球体受水流推动的方向和变化，对应当时水体的运动状态', s: [3.0, 3.5] },
+  { name: '刚体接触响应', value: 5, point: '球与球、平台、槽壁和槽底接触时的分离、转向与滚动', s: [3.5, 4.0] },
 ];
 const f1 = v => v.toFixed(1);
 
 // Column heads and the rule under them.
-txt(svg, L, 122, 'colh', '评分指南（物理题共 8 个方向、29 个分项）');
+txt(svg, L, 122, 'colh', '评分指南（物理题共 4 个方向、25 个分项）');
 COLS.forEach(c => txt(svg, c.numR - 36, 122, 'colh', c.head));
 txt(svg, R, 122, 'colh', '逐项取平均', 'end');
 el('line', { x1: L, x2: R, y1: 132, y2: 132, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
@@ -132,24 +134,23 @@ ITEMS.forEach((it, i) => {
   el('line', { x1: L, x2: R, y1: y + 46, y2: y + 46, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
 }
 
-/* Lower block: the whole task. Eight directions side by side, length by value (100 in all); each filled to its averaged subtotal. */
+/* Lower block: the whole task. Four directions side by side, length by value (100 in all); each filled to its averaged subtotal. */
 const DIRS = [
-  ['连锁运转', 14, 9.7], ['基础力学', 4, 3.0], ['双向耦合', 9, 5.5], ['液体', 12, 7.0],
-  ['光学', 7, 4.6], ['参数与稳定', 8, 5.0], ['画面', 27, 17.2], ['界面与数据显示', 19, 12.3],
+  ['现象形态与运动层次', 44, 34.5], ['材质与光影', 24, 18.5], ['作用关系', 22, 17.75], ['演示与交付', 10, 8.5],
 ];
 {
-  const yH = 408, yBar = 458, BH = 22, SG = 4;
+  const yH = 508, yBar = 558, BH = 22, SG = 4;
   const k = (R - L - SG * (DIRS.length - 1)) / 100;
   const total = DIRS.reduce((a, d) => a + d[2], 0);
 
-  txt(svg, L, yH, 'blk', '8 个方向的平均分相加，就是本题总分');
+  txt(svg, L, yH, 'blk', '4 个方向的平均分相加，就是本题总分');
   const t = el('text', { x: R, y: yH + 2, 'text-anchor': 'end' }, svg);
   span(t, 'total n', f1(total));
   span(t, 'total-u n', ' / 100', { dx: 4 });
 
   let x = L;
   DIRS.forEach(([name, v, s], i) => {
-    const w = v * k, on = i === 0;
+    const w = v * k, on = i === 2;
     el('rect', { x, y: yBar, width: w, height: BH, rx: 3, fill: 'var(--line-2)', stroke: on ? 'var(--ink)' : 'var(--line)', 'stroke-width': on ? 1.5 : 1 }, svg);
     el('rect', { x, y: yBar, width: w * s / v, height: BH, rx: 3, fill: on ? 'var(--ink)' : 'var(--ink-3)' }, svg);
     const cx = x + w / 2;

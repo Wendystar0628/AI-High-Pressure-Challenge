@@ -48,22 +48,17 @@
 <body>
 <div class="frame">
   <div class="head">
-    <h2>算法竞赛：四道题各比什么</h2>
-    <p>极值构造以参考构造或已证明的最优值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
+    <h2>算法竞赛：三道题各比什么</h2>
+    <p>极值构造以参考构造值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
   </div>
 
   <div class="row">
     <div class="rl"><b>极值构造</b><span>比构造质量，查锚点表分段线性插值；提交无效记 0 分</span></div>
     <div class="two">
-      <section class="panel">
+      <section class="panel" style="grid-column: 1 / -1">
         <h3>单位正方形内最小三角形面积最大化</h3>
-        <div class="meta"><span class="chip key">最小面积 Δ 越大越好</span><span class="chip env">作答：14 个逻辑处理器，共用 GPU</span></div>
-        <svg id="tri" width="428" height="200"></svg>
-      </section>
-      <section class="panel">
-        <h3>大规模旅行商回路长度最小化</h3>
-        <div class="meta"><span class="chip key">回路长度 L 越小越好</span><span class="chip env">作答：14 个逻辑处理器，共用 GPU</span></div>
-        <svg id="seq" width="428" height="200"></svg>
+        <div class="meta"><span class="chip key">最小面积 Δ 越大越好</span><span class="chip env">作答：14 个逻辑处理器</span></div>
+        <svg id="tri" width="896" height="200"></svg>
       </section>
     </div>
   </div>
@@ -111,9 +106,9 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
 
 /* Shared plot frame: x is given as a mapping function u(v) -> [0, 1]. */
-function plot(id, u, xTicks, xMinor = []) {
+function plot(id, u, xTicks, xMinor = [], R = 420) {
   const g = document.getElementById(id);
-  const L = 30, R = 420, T = 14, B = 158;
+  const L = 30, T = 14, B = 158;
   const X = v => L + u(v) * (R - L);
   const Y = p => B - p / 100 * (B - T);
   for (const p of [0, 50, 100]) {
@@ -143,7 +138,7 @@ function star(P, v, p, label, dy = 4) {   // the full-score benchmark point
 {
   const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
   const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
-  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor);
+  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor, 886);
   curve(P, [[0, 0], ...A]);
   line(P.g, P.X(.8), P.Y(60), P.X(.9), P.Y(81), 'var(--algo)', 5, { 'stroke-linecap': 'round' });
   A.slice(0, -1).forEach(([r, p]) => dot(P, r, p, r >= .95 ? 2.4 : 3.2));
@@ -151,18 +146,6 @@ function star(P, v, p, label, dy = 4) {   // the full-score benchmark point
   txt(P.g, P.X(.9) + 10, P.Y(70) + 6, 'lab', '0.8–0.9 最陡');
   star(P, 1, 100, '参考值 = 100 分');
   txt(P.g, P.R, P.B + 38, 'lab', 'r = Δ ÷ 参考值', 'end');
-}
-
-/* Tour length: g = L / L* - 1 on a log-like axis; the x axis runs from large excess to zero. */
-{
-  const A = [[25, 0], [15, 10], [10, 20], [6, 40], [3, 65], [1.5, 80], [.5, 90], [.1, 98], [0, 100]];
-  const G0 = 30, S = 0.25, u = g => 1 - Math.log(1 + g / S) / Math.log(1 + G0 / S);
-  const P = plot('seq', u, [[25, '25%'], [10, '10%'], [3, '3%'], [.5, '0.5%'], [0, '0']], [15, 6, 1.5, .1]);
-  curve(P, [[G0, 0], ...A]);
-  A.slice(0, -1).forEach(([g, p]) => dot(P, g, p));
-  for (const [g, p] of [[10, 20], [3, 65], [1.5, 80]]) txt(P.g, P.X(g) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
-  star(P, 0, 100, '已证明最优 = 100 分', -8);
-  txt(P.g, P.R, P.B + 38, 'lab', '超额 g = 长度 ÷ 最优值 − 1（越往右越小）', 'end');
 }
 
 /* Speed-up: both tasks on the same log axis 0.1x-25x. */
