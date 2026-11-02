@@ -9,7 +9,7 @@
   .head h2 { font-size: 26px; line-height: 34px; }
   .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
 
-  .grid { display: grid; grid-template-columns: 236px repeat(5, 1fr); margin-top: 20px; }
+  .grid { display: grid; grid-template-columns: 236px repeat(6, 1fr); margin-top: 20px; }
   .grid > div { border-top: 1px solid var(--line-2); padding: 9px 6px; }
 
   /* column heads: a category-coloured rule on top, then the task group */
@@ -30,10 +30,10 @@
   .cell p { font-size: 12px; line-height: 16px; color: var(--ink-2); }
   .cell.txt p { font-size: 13px; line-height: 18px; color: var(--ink); margin-top: 2px; }
 
-  /* a rule that holds for every task spans the five columns */
+  /* a rule that holds for every task spans the six columns */
   .grid .all { grid-column: 2 / -1; display: flex; align-items: center; padding-left: 0; padding-right: 0; }
   .all .rail { flex: 1; position: relative; height: 16px; }
-  .all .rail::before { content: ''; position: absolute; left: 10%; right: 10%; top: 7.5px; height: 1px; background: var(--line); }
+  .all .rail::before { content: ''; position: absolute; left: 8.333%; right: 8.333%; top: 7.5px; height: 1px; background: var(--line); }
   .all .rail svg { position: absolute; top: 0; width: 16px; height: 16px; overflow: visible; background: var(--paper); }
 
   .key { display: flex; gap: 26px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
@@ -63,6 +63,7 @@
     <div class="ch" style="--c:var(--algo)"><i><em></em></i><b>极值构造</b><span>1 题</span></div>
     <div class="ch" style="--c:var(--algo)"><i><em></em></i><b>性能工程</b><span>2 题</span></div>
     <div class="ch"><i><em style="--c:var(--interact)"></em><em style="--c:var(--game)"></em><em style="--c:var(--physics)"></em><em style="--c:var(--visual)"></em></i><b>网页题</b><span>5 题</span></div>
+    <div class="ch" style="--c:var(--system)"><i><em></em></i><b>操作系统嵌套</b><span>桌面项目</span></div>
   </div>
   <div class="key">
     <span><svg><use href="#yes"/></svg>可以</span>
@@ -79,15 +80,15 @@ const ALL = [
 ];
 const ROWS = [
   ['联网、其他 AI、安装软件', '网页搜索与抓取，调用其他模型或服务，下载或安装软件包',
-    [['no'], ['no'], ['no'], ['no'], ['no', '只禁访问 GitHub']]],
+    [['no'], ['no'], ['no'], ['no'], ['no', '只禁访问 GitHub'], ['no', '只禁访问 GitHub']]],
   ['编写和运行程序', '',
-    [['yes', 'Lean 编译和本机已装的程序'], ['no', '只靠推理，只写答案和草稿'], ['yes', '本机已装的软件和库'],
-     ['yes', '开发时不限，提交另有规则'], ['yes', '可开本地服务器']]],
+    [['yes', 'Lean 编译和本机<br>已装的程序'], ['no', '只靠推理，<br>只写答案和草稿'], ['yes', '本机已装的<br>软件和库'],
+     ['yes', '开发时不限，<br>提交另有规则'], ['yes', '可开本地服务器'], ['yes', '可开本地服务器']]],
   ['浏览器 MCP', '打开作品、操作、截图',
-    [['na'], ['na'], ['na'], ['na'], ['yes', '题面写明']]],
+    [['na'], ['na'], ['na'], ['na'], ['yes', '题面写明'], ['yes', '题面写可用<br>自动化工具']]],
   ['处理器与显卡', '作答时的分配',
-    [['t', '与并行批共用'], ['t', '与并行批共用'], ['t', '14 个逻辑处理器'],
-     ['t', '独占整台机器'], ['t', '与并行批共用']]],
+    [['t', '与并行批共用'], ['t', '与并行批共用'], ['t', '并行批，限 14 个逻辑处理器'],
+     ['t', '独占整台机器'], ['t', '与并行批共用'], ['t', '与并行批共用']]],
 ];
 const grid = document.getElementById('grid');
 const add = html => grid.insertAdjacentHTML('beforeend', html);
@@ -96,7 +97,7 @@ const rowHead = (name, sub) => `<div class="rh"><b>${name}</b>${sub ? `<span>${s
 add('<div class="sec">所有题都禁止</div>');
 ALL.forEach(([name, sub], i) => {
   add(rowHead(name, sub).replace('class="rh"', `class="rh"${i === 0 ? ' style="border-top:none"' : ''}`));
-  const marks = [0, 1, 2, 3, 4].map(k => `<svg style="left:calc(${10 + k * 20}% - 8px)"><use href="#no"/></svg>`).join('');
+  const marks = [0, 1, 2, 3, 4, 5].map(k => `<svg style="left:calc(${(2 * k + 1) * 100 / 12}% - 8px)"><use href="#no"/></svg>`).join('');
   add(`<div class="all"${i === 0 ? ' style="border-top:none"' : ''}><div class="rail">${marks}</div></div>`);
 });
 add('<div class="sec">按类别不同</div>');

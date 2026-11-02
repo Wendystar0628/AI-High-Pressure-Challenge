@@ -30,7 +30,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parent
 TASKS = {  # anchors: (s_i, points), s_i relative to the reference solution, as in the statement's scoring section
     'circuit': {'folder': '通用数字电路仿真器加速', 'timer': 'simulate_ms',
-                'anchors': ((0.1, 0), (0.5, 10), (1, 30), (1.75, 52), (2.75, 75), (4, 100))},
+                'anchors': ((0.1, 0), (0.5, 5), (1, 15), (2, 35), (4, 65), (6, 85), (8, 100))},
     'transformer': {'folder': 'Transformer前向推理的GPU加速', 'timer': 'forward_ms', 'binary': True, 'correctness': False,
                     'process_timeout_s': 120,
                     'anchors': ((0.2, 0), (0.6, 5), (1.2, 15), (2, 25), (4, 45), (8, 70), (12, 86), (16, 100))},

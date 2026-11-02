@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x262">
+<title>操作系统嵌套评分方向</title>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="tasks-design-strip.css">
+</head>
+<body>
+<div class="frame">
+  <div class="head"><h2></h2><p></p></div>
+  <div class="plot" id="plot"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<script>
+window.FIG = {
+  cat: 'system',
+  title: '操作系统嵌套：100 分怎样分配',
+  sub: '<span class="num">8</span> 个评分方向、<span class="num">37</span> 个分项；条长按分值精确绘制。',
+  rows: [{ dirs: [
+    ['内核是程序', 28, [7, 5, 4, 3, 4, 3, 2]],
+    ['共享资源<br>与隔离', 12, [4, 3, 3, 2]],
+    ['<span style="display:block;margin:0 -3px;font-size:12px;line-height:15px;white-space:nowrap">递归<br>系统树</span>', 8, [2, 2, 2, 2]],
+    ['跨层投送<br>与实时数据', 10, [3, 2, 1, 2, 1, 1]],
+    ['<span style="display:block;margin:0 -3px;font-size:12px;line-height:15px;white-space:nowrap">子树快照<br>与分叉</span>', 6, [3, 2, 1]],
+    ['闭环飞行<br>与回放', 14, [4, 4, 4, 2]],
+    ['<span style="display:block;margin:0 -3px;font-size:12px;line-height:15px;white-space:nowrap">桌面<br>应用</span>', 5, [1, 1, 1, 1, 1]],
+    ['界面设计与<br>图形呈现', 17, [8, 3, 3, 3]],
+  ] }],
+  legend: [
+    ['cell', '细条每格是一个分项'],
+    ['blk', '两位评分员分别打分，逐项取平均'],
+  ],
+};
+</script>
+<script src="tasks-design-strip.js"></script>
+</body>
+</html>

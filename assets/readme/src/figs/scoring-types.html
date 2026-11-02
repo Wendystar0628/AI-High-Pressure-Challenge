@@ -42,7 +42,7 @@
   <div class="row three">
     <section class="panel">
       <h3>形式化证明题</h3>
-      <p class="rule">5 题，每题只有 0 分或 20 分。单独编译没有错误和 sorry 警告、有主定理才得 20 分。</p>
+      <p class="rule">8 题，每题只有 0 分或 12.5 分。单独编译没有错误和 sorry 警告、有主定理才得 12.5 分。</p>
       <svg id="formal" width="277" height="96"></svg>
       <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
@@ -54,7 +54,7 @@
     </section>
     <section class="panel">
       <h3>设计题</h3>
-      <p class="rule">每题 18–28 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
+      <p class="rule">每题 19–37 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
       <svg id="design" width="277" height="100"></svg>
       <div class="zero"><p><b>不分档、不扣分</b>：AE 的性能另按用时公式</p></div>
     </section>
@@ -96,17 +96,17 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
 /* 形式化证明题: five cells, all or nothing on the compile result. Example: problems 1, 2, 4 compile cleanly. */
 {
   const g = document.getElementById('formal');
-  const res = ['通过', '通过', 'sorry', '通过', '报错'], C = 44, G = 10;
+  const res = ['通过', '通过', 'sorry', '通过', '报错', '通过', '报错', '报错'], C = 28, G = 6;
   res.forEach((r, i) => {
     const x = i * (C + G), full = r === '通过';
     el('rect', { x: x + .75, y: .75, width: C - 1.5, height: C - 1.5, rx: 8,
                  fill: full ? 'var(--ink)' : 'var(--paper)', stroke: full ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.5 }, g);
-    const t = txt(g, x + C / 2, C / 2 + 6, 'n big', full ? '20' : '0', 'middle');
-    t.setAttribute('style', `fill: ${full ? 'var(--paper)' : 'var(--ink-3)'}`);
+    const t = txt(g, x + C / 2, C / 2 + 4, 'n', full ? '12.5' : '0', 'middle');
+    t.setAttribute('style', `font-size: 11px; fill: ${full ? 'var(--paper)' : 'var(--ink-3)'}`);
     txt(g, x + C / 2, C + 16, 'lab', r, 'middle');
   });
   const t = el('text', { x: 0, y: C + 40, class: 'cap' }, g);
-  t.innerHTML = '例：3 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">60</tspan> 分；另两题 0 分。';
+  t.innerHTML = '例：4 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">50</tspan> 分；其余 0 分。';
 }
 
 /* IMO原创新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
@@ -207,11 +207,11 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
 /* 性能工程题: per-input lookup on a log axis, in multiples of the reference solution; Transformer and circuit anchors. */
 {
   const TRANSFORMER = [[.2, 0], [.6, 5], [1.2, 15], [2, 25], [4, 45], [8, 70], [12, 86], [16, 100]];
-  const CIRC = [[.1, 0], [.5, 10], [1, 30], [1.75, 52], [2.75, 75], [4, 100]];
+  const CIRC = [[.1, 0], [.5, 5], [1, 15], [2, 35], [4, 65], [6, 85], [8, 100]];
   const lg = Math.log;
   const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.1), lg(28)], ys: [0, 100], yTicks: [0, 50, 100],
     xTicks: [[lg(.1), '0.1×'], [lg(.5), '0.5×'], [lg(1), '1×'], [lg(2), '2×'], [lg(4), '4×'], [lg(8), '8×'], [lg(16), '16×']],
-    xMinor: [lg(.2), lg(1.75), lg(2.75)] });
+    xMinor: [lg(.2), lg(6)] });
   const curve = (A, attrs) => el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '),
                                                fill: 'none', 'stroke-linejoin': 'round', ...attrs }, g);
   curve(CIRC, { stroke: 'var(--ink-3)', 'stroke-width': 1.75, 'stroke-dasharray': '5 3' });
@@ -227,7 +227,7 @@ function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
     txt(g, L + 42, y, 'lab', s);
   };
   key(T + 10, false, 'var(--ink)', 2, 'Transformer：16× 满分');
-  key(T + 30, true, 'var(--ink-3)', 1.75, '电路：4× 满分');
+  key(T + 30, true, 'var(--ink-3)', 1.75, '电路：8× 满分');
   txt(g, R, B + 38, 'lab', '加速比 s（对数刻度）', 'end');
   txt(g, L - 34, B + 38, 'lab', '两题锚点不同，越往右越陡');
 }
