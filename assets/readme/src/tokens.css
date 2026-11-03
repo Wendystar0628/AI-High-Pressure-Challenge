@@ -1,4 +1,4 @@
-/* AI八项全能·定时挑战赛 README figures: one shared token set. Every figure links this file and uses only these tokens. */
+/* AI七项全能·定时挑战赛 README figures: one shared token set. Every figure links this file and uses only these tokens. */
 
 /* Type: HarmonyOS Sans SC for Chinese, Bahnschrift (DIN-like, scoreboard feel) for numerals and Latin titles. */
 @font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC"), local("HarmonyOS_Sans_SC_Regular"); font-weight: 400; }
@@ -15,7 +15,7 @@
   --line: #DCE1E9;         /* hairlines, card borders */
   --line-2: #EBEEF3;       /* lane lines, faint grid */
 
-  /* The eight categories: unordered, similar lightness, separated hues. Each colour means its category everywhere. */
+  /* The seven categories: unordered, similar lightness, separated hues. Each colour means its category everywhere. */
   --reason: #6A44BE;   --reason-tint: #F0EBFA;    /* 深度推理 */
   --algo: #0B7A87;     --algo-tint: #E3F2F4;      /* 算法竞赛 */
   --interact: #A8650A; --interact-tint: #F8EFE0;  /* 复杂交互应用 */
@@ -23,7 +23,6 @@
   --physics: #2E7B33;  --physics-tint: #E7F2E7;   /* 物理模拟 */
   --visual: #1E6BC0;   --visual-tint: #E5EFFA;    /* 视觉设计与渲染 */
   --system: #B03AB5;   --system-tint: #F7E9F8;    /* 系统架构与实现 */
-  --motion: #C2501E;   --motion-tint: #FBEBE3;    /* 角色运动与空间交互 */
 
   --radius-frame: 18px;   /* the outer card of a figure */
   --radius-block: 8px;    /* bars, chips and inner blocks */

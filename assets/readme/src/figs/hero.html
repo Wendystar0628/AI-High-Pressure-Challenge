@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x606">
-<title>AI八项全能·定时挑战赛</title>
+<meta name="size" content="960x560">
+<title>AI七项全能·定时挑战赛</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .frame { padding: 0; }
   .abs { position: absolute; white-space: nowrap; }
 
-  /* Header: quiet, left-aligned; the eight lanes below are the one bold element. */
+  /* Header: quiet, left-aligned; the seven lanes below are the one bold element. */
   .title { left: 32px; top: 26px; font-size: 30px; font-weight: 700; line-height: 38px; letter-spacing: .5px; }
   .sub { left: 33px; top: 68px; font-family: var(--font-num); font-size: 17px; font-weight: 500; line-height: 22px; letter-spacing: .3px; color: var(--ink-2); }
   .rule { right: 32px; top: 32px; text-align: right; font-size: 15px; line-height: 24px; color: var(--ink); }
@@ -42,8 +42,8 @@
 <div class="frame" id="f">
   <svg id="lines" class="abs" style="left:0;top:0" width="960" height="560"></svg>
 
-  <div class="abs title">AI八项全能·定时挑战赛</div>
-  <div class="abs sub">AI Octathlon · Timed Challenge</div>
+  <div class="abs title">AI七项全能·定时挑战赛</div>
+  <div class="abs sub">AI Heptathlon · Timed Challenge</div>
   <div class="abs rule">每题限时作答，无人答疑<br><span class="faint">到时直接中止，不延长</span></div>
 </div>
 
@@ -54,20 +54,19 @@ const GROUPS = [
     { key: 'reason', name: '深度推理', tasks: [['形式化证明题', 60], ['IMO原创困难新题', 60]] },
     { key: 'algo',   name: '算法竞赛', tasks: [['最小三角形面积', 60], ['Transformer 加速', 60], ['电路仿真加速', 60]] },
   ]},
-  { kind: '主动设计题', note: '<span class="num">7</span> 题，由 Claude Opus 5.5 与 GPT 6.1 Sol 各评取平均', lanes: [
+  { kind: '主动设计题', note: '<span class="num">6</span> 题，由 Claude Opus 5.5 与 GPT 6.1 Sol 各评取平均', lanes: [
     { key: 'interact', name: '复杂交互应用',   tasks: [['AE风味动效设计编辑器', 100]] },
     { key: 'game',     name: '游戏设计与开发', tasks: [['动态路由塔防', 90]] },
     { key: 'physics',  name: '物理模拟', tasks: [['果冻与造浪水槽', 60]] },
     { key: 'visual',   name: '视觉设计与渲染', tasks: [['NVIDIA_B200网页艺术', 90], ['太阳雨渔港3D渲染', 100]] },
     { key: 'system',   name: '系统架构与实现', tasks: [['操作系统嵌套', 90]] },
-    { key: 'motion',   name: '角色运动与空间交互', tasks: [['鹈鹕山海竞速', 100]] },
   ]},
 ];
 const ICON = 'file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-';
 
 // Geometry (CSS px).
 const TOP = 118, GROUP_H = 34, LANE_H = 46;
-const X0 = 272, X1 = 928, GAP = 8;
+const X0 = 262, X1 = 928, GAP = 8;
 const PX_PER_MIN = (X1 - X0 - GAP) / 190;   // the longest lane (90 + 100 min) fills the track exactly
 
 const f = document.getElementById('f');
@@ -122,7 +121,7 @@ line(0, y + .5, 960, y + .5, css('--line'));
 
 
 // Footer.
-put('foot', `left:86px;top:${y + 16}px`, `合计 <span class="num" style="color:var(--ink);font-size:16px;font-weight:600">${total}</span> 题，8 个类别`);
+put('foot', `left:86px;top:${y + 16}px`, `合计 <span class="num" style="color:var(--ink);font-size:16px;font-weight:600">${total}</span> 题，7 个类别`);
 put('foot', `right:32px;top:${y + 16}px;text-align:right`, '每题折算 0–100 分，按权重合成模型总分');
 </script>
 </body>

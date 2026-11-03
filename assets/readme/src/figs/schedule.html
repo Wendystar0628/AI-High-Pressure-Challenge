@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x866">
+<meta name="size" content="960x838">
 <title>测试赛程</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -67,14 +67,14 @@
 <div class="frame">
   <div class="head">
     <h2>测试赛程</h2>
-    <p>12 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制。</p>
+    <p>11 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制。</p>
   </div>
   <div class="plot" id="plot"></div>
 </div>
 <script>
 const CATS = {
   reason: '深度推理', algo: '算法竞赛', interact: '复杂交互应用',
-  game: '游戏设计与开发', physics: '物理模拟', visual: '视觉设计与渲染', system: '系统架构与实现', motion: '角色运动与空间交互'
+  game: '游戏设计与开发', physics: '物理模拟', visual: '视觉设计与渲染', system: '系统架构与实现'
 };
 const TASKS = [
   ['形式化证明题', 'reason', 0, 60],
@@ -84,15 +84,14 @@ const TASKS = [
   ['NVIDIA_B200网页艺术', 'visual', 0, 90],
   ['太阳雨渔港3D渲染', 'visual', 0, 100],
   ['操作系统嵌套', 'system', 0, 90],
-  ['鹈鹕山海竞速', 'motion', 0, 100],
   ['果冻冲击与造浪水槽', 'physics', 0, 60],
   ['单位正方形内最小三角形面积最大化', 'algo', 0, 60],
   ['Transformer前向推理的GPU加速', 'algo', 100, 60],
   ['通用数字电路仿真器加速', 'algo', 160, 60],
 ];
 const BATCHES = [
-  { title: '第一批　并行批', note: '10 题同时开测，单位正方形限 14 个逻辑处理器', at: 0, lanes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
-  { title: '第二批　串行独占', note: '两题依次独占，中间清理', at: 100, lanes: [10, 11], done: '10 题全部到时，清理' },
+  { title: '第一批　并行批', note: '9 题同时开测，单位正方形限 14 个逻辑处理器', at: 0, lanes: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+  { title: '第二批　串行独占', note: '两题依次独占，中间清理', at: 100, lanes: [9, 10], done: '9 题全部到时，清理' },
 ];
 
 const W = 896, X0 = 250, END = 220;
@@ -149,12 +148,12 @@ TASKS.forEach(([n, c, s, d], i) => {
 });
 
 // The shorter tasks of batch 1 finish early and wait for the 100-minute ones.
-[0, 1, 3, 4, 6, 8, 9].forEach(i => {
+[0, 1, 3, 4, 6, 7, 8].forEach(i => {
   const end = TASKS[i][3];
   put('wait', `left:${x(end) + 4}px;top:${laneTop[i] + LANE / 2}px;width:${(100 - end) * S - 8}px`);
 });
 // Batch 2 runs end to end.
-[[10, 11, 160]].forEach(([a, b, m]) =>
+[[9, 10, 160]].forEach(([a, b, m]) =>
   put('relay', `left:${x(m) - 0.75}px;top:${laneTop[a] + (LANE + BAR) / 2}px;height:${laneTop[b] - laneTop[a] - BAR}px`));
 
 // Start line, and each batch's finish line doubling as the next batch's start line.
@@ -163,15 +162,15 @@ put('vline start', `left:${x(0) - 1}px;top:${b1.top}px;height:${b1.bottom - b1.t
 put('vline', `left:${x(100) - 0.75}px;top:${b1.top}px;height:${b2.bottom - b1.top}px`);
 
 // Scoring: after the last batch, not on the time axis.
-put('done', `left:${x(END) - 10}px;top:${y + 6}px`, '12 题全部到时，清理后开始评分');
+put('done', `left:${x(END) - 10}px;top:${y + 6}px`, '11 题全部到时，清理后开始评分');
 y += HEAD;
 put('vline', `left:${x(END) - 0.75}px;top:${b2.top}px;height:${y - b2.top}px`);
 const BOARD_LEFT = 290;
 const judge = n => `<div class="judge num">${n}</div>`;
 put('board', `left:${BOARD_LEFT}px;top:${y}px;width:${x(END) - BOARD_LEFT}px`,
-  `<div class="bt">评分<span>19 个会话，不限时；主体全部评完后，再评性能</span></div>
+  `<div class="bt">评分<span>17 个会话，不限时；主体全部评完后，再评性能</span></div>
    <div class="bgrid">
-     <div class="stage">主体<span>17 个会话同时评</span></div>
+     <div class="stage">主体<span>15 个会话同时评</span></div>
      <div class="scope">设计题</div>
      <div class="chips">${judge('Claude Opus 5.5')}${judge('GPT 6.1 Sol')}<span class="step">取平均</span></div><div></div>
      <div class="scope">形式化、IMO、极值构造</div>
