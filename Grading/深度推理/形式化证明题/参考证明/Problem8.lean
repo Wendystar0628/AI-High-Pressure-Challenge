@@ -679,4 +679,4 @@ theorem problem8 (n : ℕ) (hn : 1 ≤ n)
     simpa only [Int.cast_sum, Int.cast_natCast, ZMod.natCast_zmod_val, Prod.snd_sum,
       Prod.snd_zero] using h
 
-#print axioms problem
+#print axioms problem8

@@ -204,4 +204,4 @@ theorem problem6 (f : ℤ[X]) (hdigit : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤
     · exact Or.inl (digit_factor_unit f g h hdigit hf hfg hg)
     · exact Or.inr (digit_factor_unit f h g hdigit hf (hfg.trans (mul_comm g h)) hh)
 
-#print axioms problem1
+#print axioms problem6

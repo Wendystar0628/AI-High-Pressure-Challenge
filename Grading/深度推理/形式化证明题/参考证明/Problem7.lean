@@ -210,4 +210,4 @@ theorem problem7 (n p r m : ℕ) (hn : 0 < n) (hs : Squarefree n)
   exact Nat.mem_primeFactors.mpr ⟨Nat.prime_of_mem_primeFactors hq,
     dvd_trans (Nat.dvd_of_mem_primeFactors hq) hdn, hn.ne'⟩
 
-#print axioms problem5
+#print axioms problem7

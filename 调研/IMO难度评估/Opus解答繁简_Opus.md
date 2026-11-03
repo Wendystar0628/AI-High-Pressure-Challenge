@@ -1,6 +1,6 @@
-# Opus 解答繁简检查：IMO原创新题
+# Opus 解答繁简检查：IMO原创困难新题
 
-> 对象：Claude Opus 5.5 盲测 12 题的解答 `E:\Test\OpusIMO-Pkk\IMO原创新题\answer.md`（k=01…12，第 k 个目录对应正式题面第 k 题）。对照材料是 `Grading\深度推理\IMO原创新题\参考答案.md` 的“最终答案 + 标准解答”。
+> 对象：Claude Opus 5.5 盲测 12 题的解答 `E:\Test\OpusIMO-Pkk\IMO原创困难新题\answer.md`（k=01…12，第 k 个目录对应正式题面第 k 题）。对照材料是 `Grading\深度推理\IMO原创困难新题\参考答案.md` 的“最终答案 + 标准解答”。
 >
 > 方法：
 > - 篇幅倍数按不计空白的字符数计算，与已有统计一致。

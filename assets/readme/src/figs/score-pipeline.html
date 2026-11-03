@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x652">
+<meta name="size" content="960x602">
 <title>总分合成</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -19,6 +19,7 @@
   .lane-title h3 { font-size: 17px; }
   .lane-title .count { font-family: var(--font-num); font-size: 15px; color: var(--ink-2); }
   .cat { display: inline-flex; align-items: center; column-gap: 6px; font-size: 13px; color: var(--ink-2); margin-left: 6px; }
+  .cats { display: flex; flex-wrap: wrap; width: 560px; row-gap: 4px; }
   .cat i { display: inline-block; width: 15px; height: 10px; border-radius: 3px; border: 1.5px solid; transform: translateY(1px); }
 
   /* Sources: a grader chip, what it scores, and the example value. */
@@ -92,63 +93,52 @@
   <!-- Lane 2: design tasks -->
   <div class="rule" style="top:234px"></div>
   <div class="abs lane-title" style="left:32px; top:246px">
-    <h3>主动设计题</h3><span class="count">6 题</span>
+    <h3>主动设计题</h3><span class="count">7 题</span>
+    <div class="cats">
     <span class="cat"><i style="border-color:var(--interact); background:var(--interact-tint)"></i>复杂交互应用</span>
     <span class="cat"><i style="border-color:var(--game); background:var(--game-tint)"></i>游戏设计与开发</span>
     <span class="cat"><i style="border-color:var(--physics); background:var(--physics-tint)"></i>物理模拟</span>
     <span class="cat"><i style="border-color:var(--visual); background:var(--visual-tint)"></i>视觉设计与渲染</span>
     <span class="cat"><i style="border-color:var(--system); background:var(--system-tint)"></i>系统架构与实现</span>
+    <span class="cat"><i style="border-color:var(--motion); background:var(--motion-tint)"></i>角色运动与空间交互</span>
+    </div>
   </div>
-  <div class="abs src" id="s1" style="left:32px; top:284px">
+  <div class="abs src" id="s1" style="left:32px; top:296px">
     <div class="chip">Claude Opus 5.5</div>
-    <div class="what">主体分项<span class="eg">52.0</span></div>
+    <div class="what">全部分项<span class="eg">52.0</span></div>
   </div>
-  <div class="abs src" id="s2" style="left:32px; top:334px">
+  <div class="abs src" id="s2" style="left:32px; top:346px">
     <div class="chip">GPT 6.1 Sol</div>
-    <div class="what">主体分项<span class="eg">48.0</span></div>
-  </div>
-  <div class="abs src" id="s3" style="left:32px; top:384px">
-    <div class="chip">GPT 6.1 Sol</div>
-    <div class="what">性能分项（仅 AE）<span class="eg">6.0 / 15</span></div>
+    <div class="what">全部分项<span class="eg">48.0</span></div>
   </div>
 
   <div class="abs op" id="oavg" style="left:348px">
-    <div class="do">逐项取两位的平均</div>
+    <div class="do">逐项取两位的平均，再相加</div>
     <div class="eg">(52.0 + 48.0) ÷ 2 = 50.0</div>
   </div>
-  <div class="abs op" id="operf" style="left:348px">
-    <div class="do">只用 Sol</div>
-    <div class="eg">6.0</div>
-  </div>
-
-  <div class="abs op" id="osum" style="left:598px">
-    <div class="do">相加</div>
-    <div class="eg">50.0 + 6.0 = 56.0</div>
-  </div>
-
   <!-- Where the lanes meet -->
-  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:294px">
+  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:244px">
     <div class="v" id="v0">50.0</div>
     <div class="mid" id="tmid"><div class="t">本题得分</div><div class="s">S<sub>t</sub></div><div class="r">0–100</div></div>
-    <div class="v" id="v1">56.0</div>
+    <div class="v" id="v1">50.0</div>
   </div>
 
   <!-- Bottom row -->
-  <div class="rule" style="top:478px; height:1.5px; background:var(--ink)"></div>
-  <div class="abs weights" id="weights" style="left:32px; top:492px; width:690px">
-    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，11 题合计 100%</p>
+  <div class="rule" style="top:428px; height:1.5px; background:var(--ink)"></div>
+  <div class="abs weights" id="weights" style="left:32px; top:442px; width:690px">
+    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，12 题合计 100%</p>
     <div class="wbar" id="wbar"></div>
   </div>
-  <div class="abs total" id="total" style="left:770px; top:502px; width:158px">
+  <div class="abs total" id="total" style="left:770px; top:452px; width:158px">
     <div class="t">模型总分</div>
     <div class="f">Σ w<sub>t</sub> S<sub>t</sub></div>
   </div>
 
-  <svg class="wires" id="wires" width="960" height="652"></svg>
+  <svg class="wires" id="wires" width="960" height="602"></svg>
 
   <div class="foot">
-    <div><b>只有一位主体评分员的结果有效</b>：主体用这一位的</div>
-    <div><b>某段没有有效结果</b>：本题没有分数，总分里暂按 0 分计</div>
+    <div><b>只有一位评分员的结果有效</b>：用这一位的</div>
+    <div><b>没有有效结果</b>：本题没有分数，总分里暂按 0 分计</div>
   </div>
 </div>
 
@@ -168,18 +158,16 @@ const rect = node => { const r = node.getBoundingClientRect(), f = F();
 const box = id => rect(document.getElementById(id));
 const part = (id, sel) => rect(document.querySelector(`#${id} ${sel}`));
 
-// Place each lane-2 operation level with its source rows (the average sits between the two main rows).
+// Place the lane-2 operation level with its source rows, between the two graders.
 const chipY = id => part(id, '.chip').cy;
 const place = (id, y, sel = '.do') => { const n = document.getElementById(id); n.style.top = `${y - part(id, sel).cy + parseFloat(n.style.top || 0)}px`; };
-for (const id of ['oavg', 'operf', 'osum']) document.getElementById(id).style.top = '0px';
+for (const id of ['oavg']) document.getElementById(id).style.top = '0px';
 place('oavg', (chipY('s1') + chipY('s2')) / 2);
-place('operf', chipY('s3'));
-place('osum', chipY('s3'));
 place('o0', chipY('s0'), '.f');
 
-// Weight bar: seven categories, widths proportional to weight. The longest label goes last, where it has room to its right.
-const W = [['visual', '视觉设计与渲染', 17.5, '8.75% × 2'], ['reason', '深度推理', 15, '7.5% × 2'], ['algo', '算法竞赛', 15, '5% × 3'], ['system', '系统架构与实现', 15, ''],
-           ['interact', '复杂交互应用', 12.5, ''], ['physics', '物理模拟', 12.5, ''], ['game', '游戏设计与开发', 12.5, '']];
+// Weight bar: eight categories, widths proportional to weight. The longest label goes last, where it has room to its right.
+const W = [['visual', '视觉设计与渲染', 15, '7.5% × 2'], ['reason', '深度推理', 15, '7.5% × 2'], ['algo', '算法竞赛', 12.5, '约 4.17% × 3'], ['system', '系统架构与实现', 12.5, ''],
+           ['interact', '复杂交互应用', 12.5, ''], ['game', '游戏设计与开发', 12.5, ''], ['physics', '物理模拟', 10, ''], ['motion', '角色运动与空间交互', 10, '']];
 document.getElementById('wbar').innerHTML = W.map(([c, n, w, each]) =>
   `<div style="flex:${w}"><i style="border-color:var(--${c}); background:var(--${c}-tint)"></i>` +
   `<b style="color:var(--${c})">${w}%</b><span>${n}</span></div>`).join('');
@@ -217,24 +205,12 @@ const G = 10, T = box('task');
   const a = box('oavg'), ya = part('oavg', '.do').cy, xm = (box('s1').r + a.l) / 2;
   for (const id of ['s1', 's2']) path(elbow(box(id).r + G, chipY(id), a.l - G, ya, xm));
   head(a.l - G, ya);
-  for (const [sid, oid] of [['s3', 'operf']]) {
-    const y = part(oid, '.do').cy; path(`M${box(sid).r + G},${y} H${box(oid).l - G}`); head(box(oid).l - G, y);
-  }
 }
-// Operations -> sum: the average joins from above, the performance score runs straight in.
+// The average runs straight into the task column.
 {
-  const sum = box('osum'), ys = part('osum', '.do').cy, xb = sum.l - 22;
-  for (const id of ['oavg', 'operf']) {
-    const y = part(id, '.do').cy, x0 = part(id, '.do').r + G;
-    if (id === 'operf') { path(`M${x0},${y} H${sum.l - G}`); continue; }
-    path(elbow(x0, y, xb + 0.01, ys, xb));
-  }
-  head(sum.l - G, ys);
-  // Sum -> task column, with the rest of the composition written under the arrow.
-  const xe = T.l - 2, x1 = sum.r + G;
-  path(`M${x1},${ys} H${xe}`); head(xe, ys);
-  label(sum.l, part('osum', '.eg').b + 20, '再 ÷ 100 × 100', 'start');
-  const v = document.getElementById('v1'); v.style.top = `${ys - T.t - 12}px`;
+  const y = part('oavg', '.do').cy, x0 = part('oavg', '.do').r + G;
+  path(`M${x0},${y} H${T.l - 2}`); head(T.l - 2, y);
+  const v = document.getElementById('v1'); v.style.top = `${y - T.t - 12}px`;
 }
 // Task title sits midway between the two entries.
 {

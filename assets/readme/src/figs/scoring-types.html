@@ -47,7 +47,7 @@
       <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
     <section class="panel">
-      <h3>IMO原创新题</h3>
+      <h3>IMO原创困难新题</h3>
       <p class="rule">12 题，每题 0–7 的整数分，满分 84，再乘以 100/84 折算。</p>
       <svg id="imo" width="277" height="124"></svg>
       <div class="zero"><p><b>多种做法未注明</b>：按得分最低的一份评</p></div>
@@ -56,7 +56,7 @@
       <h3>设计题</h3>
       <p class="rule">每题 19–37 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
       <svg id="design" width="277" height="100"></svg>
-      <div class="zero"><p><b>不分档、不扣分</b>：AE 的性能另按用时公式</p></div>
+      <div class="zero"><p><b>不分档、不扣分</b></p></div>
     </section>
   </div>
 
@@ -109,7 +109,7 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   t.innerHTML = '例：4 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">50</tspan> 分；其余 0 分。';
 }
 
-/* IMO原创新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
+/* IMO原创困难新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
 {
   const g = document.getElementById('imo');
   const sc = [7, 7, 7, 7, 5, 3, 2, 2, 1, 1, 0, 0], W = 11, G = 5, PH = 6, PG = 2.5;
