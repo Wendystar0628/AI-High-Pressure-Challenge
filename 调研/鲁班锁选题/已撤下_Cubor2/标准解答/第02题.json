@@ -1,0 +1,132 @@
+{
+  "puzzle": "02",
+  "plan": {
+    "moves": [
+      {
+        "pieces": [
+          "D"
+        ],
+        "delta": [
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "pieces": [
+          "B",
+          "C",
+          "D"
+        ],
+        "delta": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "pieces": [
+          "C"
+        ],
+        "delta": [
+          -1,
+          0,
+          0
+        ]
+      },
+      {
+        "pieces": [
+          "B",
+          "C"
+        ],
+        "delta": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "pieces": [
+          "D"
+        ],
+        "delta": [
+          0,
+          0,
+          -1
+        ]
+      },
+      {
+        "pieces": [
+          "A"
+        ],
+        "out": [
+          1,
+          0,
+          0
+        ]
+      }
+    ],
+    "removed": null,
+    "remaining": {
+      "moves": [
+        {
+          "pieces": [
+            "C"
+          ],
+          "delta": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "pieces": [
+            "C"
+          ],
+          "delta": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "pieces": [
+            "C"
+          ],
+          "out": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "removed": null,
+      "remaining": {
+        "moves": [
+          {
+            "pieces": [
+              "D"
+            ],
+            "delta": [
+              -1,
+              0,
+              0
+            ]
+          },
+          {
+            "pieces": [
+              "B"
+            ],
+            "out": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "removed": null,
+        "remaining": null
+      }
+    }
+  }
+}

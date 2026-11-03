@@ -1,0 +1,46 @@
+{
+  "name": "Crusade",
+  "designer": "Stéphane Chomine",
+  "year": 2013,
+  "source": "https://puzzlewillbeplayed.com/6BoardBurr/Crusade/solution.html",
+  "design_page": "https://puzzlewillbeplayed.com/6BoardBurr/Crusade/",
+  "source_moves": "23.13.2.3.2",
+  "source_sha256": "a21e57cf51f52c1d909771f310c6733635639d010877f047da34816253c3cfe0",
+  "design_page_sha256": "fe46d749a39dbe667eda67f136bcbc07f4fc727ab4f6fc5a355dcd63b7ef3e3e",
+  "global_optimum_proven": false,
+  "label_mapping": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "F": "F"
+  },
+  "reference_generator": {
+    "name": "BurrTools",
+    "version": "v0.8.0",
+    "commit": "1a14e7319723c44c0187ac776d2a7ce129718831",
+    "implementation": "disassembler_0_c"
+  },
+  "id": "07",
+  "tier": 3,
+  "weight": 16,
+  "piece_count": 6,
+  "reference_first_split": 23,
+  "reference_moves": 43,
+  "reference_stage_moves": [
+    23,
+    13,
+    2,
+    2,
+    3
+  ],
+  "input_sha256": "4d9c09e472f51490e4130dd20189bcc6ebca683142554f5ca9cfb55d7a7310d8",
+  "answer_sha256": "951dd1dcdf83790907657eaa371bfd4836b0a75b48b010e7343ad528d657050d",
+  "raw_puzzle_sha256": "fe160e0c28680e1120194b72a6fe5f7e457a2ef8b0521175f71498a3028198fe",
+  "reference_xml_sha256": "3cc44ce15561fa06b046ebd2df580321d31c47f56ff834a76e4c13281d19a68c",
+  "public_level": "23.13.2.3.2",
+  "public_level_grade": 23,
+  "public_level_label": "Moves",
+  "public_level_page_sha256": "fe46d749a39dbe667eda67f136bcbc07f4fc727ab4f6fc5a355dcd63b7ef3e3e"
+}

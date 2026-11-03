@@ -1,0 +1,347 @@
+<!doctype html>
+<!--
+  Specimen sheet: every token and small part of stellar.css on one page, each
+  with its class name and what it MEANS. Items marked "指向" are shown in their
+  pointed-at state (forced with .is-demo-hover) so a screenshot carries it.
+  Serve the skill folder over HTTP (browsers refuse ES modules from file://).
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>样张 · Stellar UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400..900&display=swap" rel="stylesheet" />
+    <script src="../assets/variant.js"></script>
+    <link rel="stylesheet" href="../assets/stellar.css" />
+    <style>
+      main {
+        max-width: 84rem;
+        margin-inline: auto;
+        padding: 2rem var(--st-pad) 4rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+      }
+      .cell > h2 small {
+        font-stretch: var(--st-wide);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0.4rem 0;
+      }
+      .note {
+        margin: 0.6rem 0 0;
+        font-size: 0.8rem;
+        color: var(--st-ink-2);
+      }
+      .roles {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .role {
+        display: grid;
+        grid-template-columns: 7.5rem minmax(0, 1fr);
+        gap: 1.1rem;
+        align-items: start;
+      }
+      .role .chip-big {
+        aspect-ratio: 1;
+        display: grid;
+        align-content: end;
+        padding: 0.6rem;
+        font-stretch: var(--st-wide);
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .role h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.05rem;
+      }
+      .role p {
+        margin: 0 0 0.35rem;
+        font-size: 0.86rem;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+        gap: 2px;
+      }
+      .sw {
+        display: grid;
+        align-content: end;
+        min-height: 5rem;
+        padding: 0.5rem;
+        font-stretch: var(--st-wide);
+        font-size: 0.7rem;
+        line-height: 1.4;
+        border: 1px solid var(--st-rule);
+      }
+      .type p {
+        margin: 0.3rem 0;
+      }
+      .stack {
+        display: grid;
+        gap: 0.8rem;
+      }
+      /* force the pointed-at state for the screenshot */
+      .is-demo-hover.st-btn {
+        color: var(--st-on-flare);
+      }
+      .is-demo-hover.st-btn::before {
+        transform: none;
+      }
+      .is-demo-hover.st-panel::before {
+        transform: none;
+      }
+      .is-demo-hover.st-chip {
+        --fill: var(--st-flare);
+        color: var(--st-on-flare);
+      }
+      .is-demo-hover.st-record {
+        background: var(--st-paper);
+      }
+      .is-demo-hover.st-record::before {
+        transform: none;
+      }
+      .is-demo-hover.st-record > * {
+        transform: translateX(6px);
+      }
+      .hollow-demo {
+        display: flex;
+        gap: 1.5rem;
+        align-items: end;
+      }
+      .hollow-demo .st-hollow-no {
+        font-size: 5.5rem;
+      }
+      .hollow-demo .full {
+        background-size: 100% 100%;
+      }
+      .mini-dial {
+        width: 15rem;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body class="st st-stars">
+    <div class="st-tri" aria-hidden="true"><i></i><i></i><i></i></div>
+    <main>
+      <header class="st-head">
+        <h1>样张 <small>Specimen</small></h1>
+        <p>stellar.css 的全部部件。每格写着类名和它的意思。<button class="st-btn small" type="button" data-theme-toggle>切换深浅</button></p>
+      </header>
+
+      <div class="roles">
+        <section class="st-panel role">
+          <div class="chip-big" style="background: var(--st-orbit); color: var(--st-on-orbit); font-size: 1.25rem">#9859FF</div>
+          <div>
+            <h3>轨道紫 <span class="st-field">--st-orbit</span></h3>
+            <p><b>当前位置。</b>当前页面、当前一节、当前编号、选中的筛选、打开的开关、进度走到哪、指针停在哪一行。</p>
+            <p class="row"><span class="st-tag is-current">No.024</span><span class="st-chip is-active">全部 <span class="n">24</span></span><span style="border-left: 3px solid var(--st-orbit); padding-left: 0.6rem">当前一节</span></p>
+            <p class="note">做线、色条、括弧和大字。白上 4.03:1，纸上 3.59:1：不做小字的底，当前项用淡紫底加紫条、墨色粗体字。</p>
+          </div>
+        </section>
+        <section class="st-panel role">
+          <div class="chip-big" style="background: var(--st-flare); color: var(--st-on-flare); font-size: 1.25rem">#D1FF57</div>
+          <div>
+            <h3>星火绿 <span class="st-field">--st-flare</span></h3>
+            <p><b>可以按 / 要看一眼。</b>主要操作、按钮被指向时擦入、需要处理的数字和状态、提示小旗、马克笔。</p>
+            <p class="row"><button class="st-btn small is-demo-hover" type="button">指向：擦入</button><span class="st-state is-alert">待审</span><span class="st-marker">一句话说明</span></p>
+            <p class="note">只做填充，上面写墨字（15.20:1）。白上只有 1.16:1：不做线，不写字。</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="st-panel is-demo-hover">
+        <h2>其余颜色 <small>tokens</small></h2>
+        <div class="swatches">
+          <div class="sw" style="background: var(--st-paper)">--st-paper<br />页面</div>
+          <div class="sw" style="background: var(--st-panel)">--st-panel<br />纸、板、输入框</div>
+          <div class="sw" style="background: var(--st-ink); color: var(--st-panel)">--st-ink<br />字和重要的线</div>
+          <div class="sw" style="background: var(--st-ink-2); color: var(--st-panel)">--st-ink-2<br />次要文字</div>
+          <div class="sw" style="background: var(--st-rule)">--st-rule<br />1px 细线</div>
+          <div class="sw" style="background: var(--st-chip)">--st-chip<br />安静的填充</div>
+          <div class="sw" style="background: var(--st-wash)">--st-wash<br />当前项的底</div>
+          <div class="sw" style="background: var(--st-danger); color: var(--st-panel)">--st-danger<br />只用于删除</div>
+          <div class="sw" style="background: var(--st-bar); color: var(--st-bar-text)">--st-bar<br />命令栏、提示条</div>
+          <div class="sw" style="background: var(--st-hatch)">--st-hatch<br />斜线纹</div>
+          <div class="sw" style="background: linear-gradient(90deg, var(--st-spec-a) 33.3%, var(--st-spec-b) 0 66.6%, var(--st-spec-c) 0)">--st-spec-*<br /><span style="background: var(--st-panel); padding: 0 0.2em">光谱条</span></div>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="st-panel cell">
+          <h2>字体 <small>界面 / 阅读 / 代码</small></h2>
+          <div class="type">
+            <p style="font-weight: 800; font-size: 1.6rem; font-stretch: var(--st-wider)">STELLAR 界面 800</p>
+            <p>--st-font-ui：宽体几何英文（Saira）+ 思源黑体。导航、按钮、标签、标题。</p>
+            <p class="st-read" style="font-size: 1.3rem; font-weight: 700">阅读 --st-font-text</p>
+            <p class="st-read">思源黑体常规字重，行高放宽，用于正文。</p>
+            <p class="st-field">字段 .st-field│No.024│2026.10.17│6,380 字</p>
+            <p class="st-eyebrow slash">Section title prefix</p>
+            <p><span class="st-pair"><span class="st-eyebrow">Records</span><span>观测记录</span></span>　英文小字在上，中文粗体在下</p>
+          </div>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>入口 <small>.st-tag .st-kv .st-chip</small></h2>
+          <div class="row">
+            <span class="st-tag">No.024</span>
+            <span class="st-tag is-current">No.017</span>
+            <a class="st-kv" href="#"><span>分类</span><span>目视观测</span></a>
+          </div>
+          <div class="row">
+            <span class="st-chip">器材 <span class="n">2</span></span>
+            <span class="st-chip is-active">全部 <span class="n">16</span></span>
+            <span class="st-chip is-demo-hover">指向</span>
+          </div>
+          <p class="note">切掉一个角 = 可以点进去。淡紫底加紫条 = 当前所在；荧光绿 = 指针停在一个能按的入口上。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>按钮 <small>.st-btn</small></h2>
+          <div class="row">
+            <button class="st-btn go" type="button">主要 .go</button>
+            <button class="st-btn" type="button">次要</button>
+            <button class="st-btn is-demo-hover" type="button">指向：荧光绿擦入</button>
+          </div>
+          <div class="row">
+            <button class="st-btn small" type="button">.small</button>
+            <button class="st-btn small danger" type="button">删除 .danger</button>
+            <button class="st-btn small" type="button" disabled>disabled</button>
+            <button class="st-btn small" type="button" aria-busy="true">处理中</button>
+          </div>
+          <p class="note">红色只在删除按钮被指向时擦入。处理中铺斜线纹。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>状态与提示 <small>.st-state .st-notice</small></h2>
+          <div class="row">
+            <span class="st-state">已发布</span>
+            <span class="st-state is-hidden">隐藏</span>
+            <span class="st-state is-draft">草稿</span>
+            <span class="st-state is-alert">待审</span>
+          </div>
+          <p class="st-notice" style="margin-top: 0.8rem">需要注意的事，前面插一面荧光绿小旗。</p>
+          <p class="note">实线 = 生效；虚线 = 还在后台；荧光绿块 = 要看一眼。没有红色。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>记录字段 <small>.st-field .st-facts .st-marker</small></h2>
+          <ul class="st-facts st-field">
+            <li>2026.10.17</li>
+            <li>6,380 字</li>
+            <li>约 16 分钟</li>
+            <li>第 3 / 24 夜</li>
+          </ul>
+          <p style="margin: 1rem 0 0"><span class="st-marker">一句话说明这是什么</span></p>
+          <p class="note">每个字段都是真实数据。用竖线分隔，不用中间点。</p>
+        </section>
+
+        <section class="st-panel cell is-demo-hover">
+          <h2>看板 <small>.st-panel（指向：页签伸开）</small></h2>
+          <div class="st-figs">
+            <a href="#"><b>16</b><span>已发布</span></a>
+            <a href="#" class="is-alert"><b>2</b><span>待审</span></a>
+            <a href="#"><b>7</b><span>草稿</span></a>
+          </div>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>列表行 <small>.st-records</small></h2>
+          <ol class="st-records">
+            <li><a class="st-record" href="#"><span class="st-tag">No.023</span><span class="st-field">10.14</span><span class="name st-read">普通一行</span><span class="st-field">9,102 字</span></a></li>
+            <li><a class="st-record is-demo-hover" href="#"><span class="st-tag">No.022</span><span class="st-field">10.11</span><span class="name st-read">指向：紫条落下、右移</span><span class="st-field">4,577 字</span></a></li>
+          </ol>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>表单 <small>.st-form .st-search .st-seg .st-switch</small></h2>
+          <form class="st-form stack" onsubmit="return false">
+            <label class="st-search"><input type="search" placeholder="搜索标题、编号" aria-label="搜索" /></label>
+            <label class="field"><span>名字</span><input placeholder="示例名字#0001" /><small>说明写在输入框下面。</small></label>
+            <div class="st-seg" role="radiogroup" aria-label="列表密度">
+              <label><input type="radio" name="d" /><span>紧凑</span></label>
+              <label><input type="radio" name="d" checked /><span>标准</span></label>
+              <label><input type="radio" name="d" /><span>宽松</span></label>
+            </div>
+            <label class="st-setting"><span><b>公开笔记</b><small>开：紫轨道白方块。</small></span><input class="st-switch" type="checkbox" role="switch" checked /></label>
+            <label class="st-setting"><span><b>更新提醒</b><small>关：浅灰轨道深灰方块。</small></span><input class="st-switch" type="checkbox" role="switch" /></label>
+          </form>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>展示 <small>.st-hollow-no .st-bar-title</small></h2>
+          <div class="hollow-demo">
+            <span class="st-hollow-no">024</span>
+            <span class="st-hollow-no full">017</span>
+          </div>
+          <h3 class="st-bar-title" style="margin-top: 1rem">星点结尾的标题线</h3>
+          <p class="note">空心大编号被指向时，墨色从左灌满（右边是灌满后）。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>进度 <small>.st-progress .st-skeleton</small></h2>
+          <div class="stack">
+            <div class="st-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63" style="--p: 0.63"><span class="st-eyebrow">Syncing / 同步中</span><span class="st-field">063%</span><i></i></div>
+            <div aria-hidden="true"><span class="st-skeleton line" style="width: 40%"></span><span class="st-skeleton line"></span></div>
+          </div>
+          <p class="note">亮起的格是紫色：走到哪了。不用转圈，骨架不闪光。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>数据表 <small>.st-table</small></h2>
+          <div class="st-table-wrap">
+            <table class="st-table">
+              <thead><tr><th>天体</th><th class="num">夜数</th><th class="num">照片</th></tr></thead>
+              <tbody>
+                <tr><td>示例：仙女座星系</td><td class="num">3</td><td class="num">128</td></tr>
+                <tr><td>示例：昴星团</td><td class="num">2</td><td class="num">96</td></tr>
+                <tr><td>示例：猎户座大星云</td><td class="num">1</td><td class="num"><span class="st-state is-alert">待整理</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>柱图 <small>.st-bars</small></h2>
+          <ol class="st-bars" aria-label="示例：最近 7 天的访问">
+            <li style="--v: 0.35"><span>10.11</span></li>
+            <li style="--v: 0.52"><span>10.12</span></li>
+            <li style="--v: 0.41"><span>10.13</span></li>
+            <li style="--v: 0.95" class="is-over"><span>10.14</span></li>
+            <li style="--v: 0.6"><span>10.15</span></li>
+            <li style="--v: 0.7"><span>10.16</span></li>
+            <li style="--v: 0.48" class="is-here"><span>10.17</span></li>
+          </ol>
+          <p class="note" style="margin-top: 2rem">灰柱；当前或被指向的一根是紫色；超过阈值的挂荧光绿小方块。</p>
+        </section>
+
+        <section class="st-panel cell">
+          <h2>星盘 <small>.st-dial + dial.js</small></h2>
+          <svg class="st-dial mini-dial" data-dial role="group" aria-label="示例分区"></svg>
+          <p class="note">当前段：淡紫底、外缘一道紫括弧。需要处理的段：粗框加荧光绿小方块。</p>
+        </section>
+      </div>
+    </main>
+    <script type="module">
+      import { wireTheme } from '../assets/fx.js';
+      import { drawDial } from '../assets/dial.js';
+      wireTheme();
+      drawDial(document.querySelector('[data-dial]'), {
+        idle: { label: '示例读数', big: 16, unit: '小时' },
+        sections: ['概览', '笔记', '评论', '统计', '备份'].map((zh, i) => ({ zh, en: '', big: i * 3 + 2, unit: '条', here: i === 0, alert: i === 2 })),
+      });
+    </script>
+  </body>
+</html>

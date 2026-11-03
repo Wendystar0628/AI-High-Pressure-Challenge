@@ -1,0 +1,358 @@
+[
+  {
+    "origin": "official",
+    "file": "CubeInCage.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-reference-v080\\examples\\CubeInCage.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 6,
+    "root": 4,
+    "total": 16,
+    "splits": 3,
+    "volumes": [
+      21,
+      22,
+      22,
+      7,
+      8,
+      12
+    ],
+    "groups": [
+      {
+        "id": "1",
+        "count": "1",
+        "group": "1"
+      },
+      {
+        "id": "2",
+        "count": "2",
+        "group": "1"
+      }
+    ],
+    "comment": "Name: CubeInCage\nDesigned by: Mineyuki Uyematsu\nThis file contains MINE's CUBE in CAGE 333 cube g. This\nfile demonstrates how to use the grouping capabilities. The\npuzzle contains 3 interlocked pieces that construct a cage.\nThe piece move but can not be taken apart. It needs to be\ntold to the program that this is intentional. So here you have\nan example of how to do that.\n"
+  },
+  {
+    "origin": "official",
+    "file": "DraculasDentalDesaster.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-reference-v080\\examples\\DraculasDentalDesaster.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 9,
+    "root": 3,
+    "total": 37,
+    "splits": 8,
+    "volumes": [
+      152,
+      152,
+      152,
+      152,
+      152,
+      152,
+      152,
+      136,
+      136
+    ],
+    "groups": [],
+    "comment": "Name: Draculas Dental Desaster\nDesigned by: Ronald Kint-Bruynseels\nThis puzzle demonstrated the used of colour contraints.\nHalve of the end result must be red and the other halve\nblack. You can see the colours if you enable the checkbox\nin the statusline at the bottom right.\n"
+  },
+  {
+    "origin": "mac",
+    "file": "belle_l_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\belle_l_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 6,
+    "root": 40,
+    "total": 48,
+    "splits": 5,
+    "volumes": [
+      42,
+      41,
+      41,
+      45,
+      47,
+      41
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "CubeInCage.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\CubeInCage.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 6,
+    "root": 4,
+    "total": 16,
+    "splits": 3,
+    "volumes": [
+      21,
+      22,
+      22,
+      7,
+      8,
+      12
+    ],
+    "groups": [
+      {
+        "id": "1",
+        "count": "1",
+        "group": "1"
+      },
+      {
+        "id": "2",
+        "count": "2",
+        "group": "1"
+      }
+    ],
+    "comment": "Name: CubeInCage\nDesigned by: Mineyuki Uyematsu\nThis file contains MINE's CUBE in CAGE 333 cube g. This\nfile demonstrates how to use the grouping capabilities. The\npuzzle contains 3 interlocked pieces that construct a cage.\nThe piece move but can not be taken apart. It needs to be\ntold to the program that this is intentional. So here you have\nan example of how to do that.\n"
+  },
+  {
+    "origin": "mac",
+    "file": "DraculasDentalDesaster.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\DraculasDentalDesaster.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 9,
+    "root": 3,
+    "total": 37,
+    "splits": 8,
+    "volumes": [
+      152,
+      152,
+      152,
+      152,
+      152,
+      152,
+      152,
+      136,
+      136
+    ],
+    "groups": [],
+    "comment": "Name: Draculas Dental Desaster\nDesigned by: Ronald Kint-Bruynseels\nThis puzzle demonstrated the used of colour contraints.\nHalve of the end result must be red and the other halve\nblack. You can see the colours if you enable the checkbox\nin the statusline at the bottom right.\n"
+  },
+  {
+    "origin": "mac",
+    "file": "ii_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\ii_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 6,
+    "root": 24,
+    "total": 57,
+    "splits": 5,
+    "volumes": [
+      39,
+      38,
+      38,
+      37,
+      37,
+      37
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "ii_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\ii_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 1,
+    "n": 6,
+    "root": 24,
+    "total": 57,
+    "splits": 5,
+    "volumes": [
+      39,
+      38,
+      38,
+      37,
+      37,
+      37
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "mini_lock.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\mini_lock.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 4,
+    "root": 6,
+    "total": 14,
+    "splits": 3,
+    "volumes": [
+      67,
+      20,
+      17,
+      15
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "more_visible_moves.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\more_visible_moves.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 5,
+    "root": 19,
+    "total": 42,
+    "splits": 4,
+    "volumes": [
+      97,
+      19,
+      17,
+      13,
+      13
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "power_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\power_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 4,
+    "root": 23,
+    "total": 25,
+    "splits": 3,
+    "volumes": [
+      41,
+      228,
+      41,
+      75
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "power_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\power_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 1,
+    "n": 4,
+    "root": 23,
+    "total": 25,
+    "splits": 3,
+    "volumes": [
+      41,
+      228,
+      41,
+      75
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "power_knot.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\power_knot.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 3,
+    "root": 2,
+    "total": 3,
+    "splits": 2,
+    "volumes": [
+      96,
+      88,
+      88
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "power_knot.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\power_knot.xmpuzzle",
+    "problem": 0,
+    "solution": 1,
+    "n": 3,
+    "root": 2,
+    "total": 3,
+    "splits": 2,
+    "volumes": [
+      96,
+      88,
+      88
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "pushbutton.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\pushbutton.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 10,
+    "root": 8,
+    "total": 20,
+    "splits": 9,
+    "volumes": [
+      19,
+      12,
+      13,
+      25,
+      24,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "stepping_burr.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\stepping_burr.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 6,
+    "root": 10,
+    "total": 14,
+    "splits": 5,
+    "volumes": [
+      26,
+      26,
+      25,
+      23,
+      23,
+      22
+    ],
+    "groups": [],
+    "comment": ""
+  },
+  {
+    "origin": "mac",
+    "file": "titans.xmpuzzle",
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\oneshot-burr-pure-sources\\burr_mac_tool-27323599e6951a370bfb3f55a2c6a268137aed5d\\examples\\titans.xmpuzzle",
+    "problem": 0,
+    "solution": 0,
+    "n": 7,
+    "root": 44,
+    "total": 64,
+    "splits": 6,
+    "volumes": [
+      198,
+      39,
+      38,
+      37,
+      37,
+      37,
+      37
+    ],
+    "groups": [],
+    "comment": ""
+  }
+]

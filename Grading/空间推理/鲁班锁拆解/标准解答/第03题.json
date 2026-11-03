@@ -1,0 +1,164 @@
+{
+  "puzzle": "03",
+  "plan": {
+    "moves": [
+      {
+        "pieces": [
+          "B"
+        ],
+        "delta": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "pieces": [
+          "C"
+        ],
+        "delta": [
+          0,
+          0,
+          -1
+        ]
+      },
+      {
+        "pieces": [
+          "B"
+        ],
+        "delta": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "pieces": [
+          "B",
+          "C",
+          "D"
+        ],
+        "delta": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "pieces": [
+          "B",
+          "D"
+        ],
+        "delta": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "pieces": [
+          "C"
+        ],
+        "out": [
+          0,
+          0,
+          1
+        ]
+      }
+    ],
+    "removed": null,
+    "remaining": {
+      "moves": [
+        {
+          "pieces": [
+            "B",
+            "D"
+          ],
+          "delta": [
+            0,
+            -1,
+            0
+          ]
+        },
+        {
+          "pieces": [
+            "B",
+            "D"
+          ],
+          "delta": [
+            0,
+            0,
+            -1
+          ]
+        },
+        {
+          "pieces": [
+            "B"
+          ],
+          "delta": [
+            -1,
+            0,
+            0
+          ]
+        },
+        {
+          "pieces": [
+            "D"
+          ],
+          "delta": [
+            0,
+            -2,
+            0
+          ]
+        },
+        {
+          "pieces": [
+            "D"
+          ],
+          "delta": [
+            0,
+            0,
+            -1
+          ]
+        },
+        {
+          "pieces": [
+            "B"
+          ],
+          "delta": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "pieces": [
+            "B"
+          ],
+          "out": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "removed": null,
+      "remaining": {
+        "moves": [
+          {
+            "pieces": [
+              "A"
+            ],
+            "out": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "removed": null,
+        "remaining": null
+      }
+    }
+  }
+}

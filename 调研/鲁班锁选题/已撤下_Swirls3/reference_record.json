@@ -1,0 +1,44 @@
+{
+  "name": "Swirls 3",
+  "designer": "Bram Cohen",
+  "year": 2009,
+  "source": "https://puzzlewillbeplayed.com/888/Swirls3/solution.html",
+  "design_page": "https://puzzlewillbeplayed.com/888/Swirls3/",
+  "source_moves": "27.4.12.3",
+  "source_sha256": "f36475411b0f5be48b5bc3b22af283b42457970d8ca0885abb2b2a35177cf279",
+  "design_page_sha256": "a499a26faa7f7961b0eaffa5c11476f9e96581d10cd050d1ecedbe17635175eb",
+  "global_optimum_proven": false,
+  "label_mapping": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "X": "E"
+  },
+  "reference_generator": {
+    "name": "BurrTools",
+    "version": "v0.8.0",
+    "commit": "1a14e7319723c44c0187ac776d2a7ce129718831",
+    "implementation": "disassembler_0_c"
+  },
+  "id": "08",
+  "tier": 3,
+  "weight": 16,
+  "piece_count": 5,
+  "reference_moves": 46,
+  "reference_first_split": 27,
+  "reference_stage_moves": [
+    27,
+    4,
+    12,
+    3
+  ],
+  "input_sha256": "7e68c71c2b8e283aa906d1cfe5d1a0099bfef0e5ef4e9f0a9e013f6b91fdd8f5",
+  "answer_sha256": "5aebc24696bb21da1b1f98b092fdf86b436fa19d2900a0afea0e0022333f34aa",
+  "raw_puzzle_sha256": "1d872d846f0500b5a303b12d837bb9dfe39c8aea93c62b5349642174d7710bf1",
+  "reference_xml_sha256": "a8d2ef5789376c5f83660b2389c91faaf735697954ed1c88289b467f71db1f62",
+  "public_level": "27.4.12.3",
+  "public_level_grade": 27,
+  "public_level_label": "Moves",
+  "public_level_page_sha256": "a499a26faa7f7961b0eaffa5c11476f9e96581d10cd050d1ecedbe17635175eb"
+}

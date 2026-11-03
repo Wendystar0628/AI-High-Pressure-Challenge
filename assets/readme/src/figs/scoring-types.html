@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x760">
+<meta name="size" content="960x1040">
 <title>题型计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -35,28 +35,22 @@
 <body>
 <div class="frame">
   <div class="head">
-    <h2>五种题型怎样计分</h2>
+    <h2>六种题型怎样计分</h2>
     <p>各题型先得出原始分，再折算成 0–100 分。每块最下一行是需要单独说明的情形。</p>
   </div>
 
-  <div class="row three">
+  <div class="row two">
     <section class="panel">
       <h3>形式化证明题</h3>
       <p class="rule">8 题，每题只有 0 分或 12.5 分。单独编译没有错误和 sorry 警告、有主定理才得 12.5 分。</p>
-      <svg id="formal" width="277" height="96"></svg>
+      <svg id="formal" width="432" height="96"></svg>
       <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
     <section class="panel">
-      <h3>IMO原创困难新题</h3>
-      <p class="rule">12 题，每题 0–7 的整数分，满分 84，再乘以 100/84 折算。</p>
-      <svg id="imo" width="277" height="124"></svg>
+      <h3>数学竞赛原创试题</h3>
+      <p class="rule">18 题，每题 0–7 的整数分，满分 126，再乘以 100/126 折算。</p>
+      <svg id="imo" width="432" height="124"></svg>
       <div class="zero"><p><b>多种做法未注明</b>：按得分最低的一份评</p></div>
-    </section>
-    <section class="panel">
-      <h3>设计题</h3>
-      <p class="rule">每题 19–37 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
-      <svg id="design" width="277" height="100"></svg>
-      <div class="zero"><p><b>不分档、不扣分</b></p></div>
     </section>
   </div>
 
@@ -72,6 +66,21 @@
       <p class="rule">性能输入各算加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点后取平均（Transformer 8 个，电路 24 个）；电路再乘以正确性输入的通过比例 k/7。</p>
       <svg id="perf" width="432" height="214"></svg>
       <div class="zero"><p><b>记 0 分</b>：编译失败或违反题面规则；单个输入失败只丢这个输入</p></div>
+    </section>
+  </div>
+
+  <div class="row two">
+    <section class="panel">
+      <h3>鲁班锁拆解</h3>
+      <p class="rule">8 题分三档，每题分值 w 为 8、12 或 18，合计 100。完整合法的拆解按总步数 N 得 w × min(1, B/N)，B 是这一题固定的基准步数。</p>
+      <svg id="burr" width="432" height="100"></svg>
+      <div class="zero"><p><b>记 0 分</b>：没有完整拆开的题；自编程序搜索、模拟或用求解器的整份作答</p></div>
+    </section>
+    <section class="panel">
+      <h3>设计题</h3>
+      <p class="rule">每题 19–37 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
+      <svg id="design" width="432" height="100"></svg>
+      <div class="zero"><p><b>不分档、不扣分</b></p></div>
     </section>
   </div>
 
@@ -96,7 +105,7 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
 /* 形式化证明题: five cells, all or nothing on the compile result. Example: problems 1, 2, 4 compile cleanly. */
 {
   const g = document.getElementById('formal');
-  const res = ['通过', '通过', 'sorry', '通过', '报错', '通过', '报错', '报错'], C = 28, G = 6;
+  const res = ['通过', '通过', 'sorry', '通过', '报错', '通过', '报错', '报错'], C = 34, G = 10;
   res.forEach((r, i) => {
     const x = i * (C + G), full = r === '通过';
     el('rect', { x: x + .75, y: .75, width: C - 1.5, height: C - 1.5, rx: 8,
@@ -109,10 +118,11 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   t.innerHTML = '例：4 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">50</tspan> 分；其余 0 分。';
 }
 
-/* IMO原创困难新题: twelve columns of seven points, then the 84-point bar read against a 0–100 ruler. */
+/* 数学竞赛原创试题: eighteen columns of seven points, then the 126-point bar read against a 0–100 ruler. */
 {
   const g = document.getElementById('imo');
-  const sc = [7, 7, 7, 7, 5, 3, 2, 2, 1, 1, 0, 0], W = 11, G = 5, PH = 6, PG = 2.5;
+  const sc = [7, 7, 7, 7, 6, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0], W = 13, G = 4, PH = 6, PG = 2.5;
+  const SUM = sc.reduce((a, b) => a + b, 0), MAX = 7 * sc.length;
   sc.forEach((s, i) => {
     const x = i * (W + G);
     for (let j = 0; j < 7; j++) {
@@ -124,19 +134,19 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   });
   const span = sc.length * W + (sc.length - 1) * G;
   txt(g, span + 14, 22, 'cap', '例：合计');
-  txt(g, span + 14, 44, 'n', '42').setAttribute('style', 'font-size: 20px; font-weight: 700');
-  // Ruler: the same length read as 0–84 above and 0–100 below.
-  const y0 = 94, L = span, BH = 7;
+  txt(g, span + 14, 44, 'n', String(SUM)).setAttribute('style', 'font-size: 20px; font-weight: 700');
+  // Ruler: the same length read as 0–MAX above (a tick every MAX/7) and 0–100 below.
+  const y0 = 94, L = span, BH = 7, xs = L * SUM / MAX;
   el('rect', { x: 0, y: y0, width: L, height: BH, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)' }, g);
-  el('rect', { x: 0, y: y0, width: L * 42 / 84, height: BH, rx: 2, fill: 'var(--ink)' }, g);
-  for (let k = 0; k <= 6; k++) line(g, L * k / 6, y0 - 4, L * k / 6, y0, 'var(--ink-3)');
+  el('rect', { x: 0, y: y0, width: xs, height: BH, rx: 2, fill: 'var(--ink)' }, g);
+  for (let k = 0; k <= 7; k++) line(g, L * k / 7, y0 - 4, L * k / 7, y0, 'var(--ink-3)');
   for (let k = 0; k <= 4; k++) line(g, L * k / 4, y0 + BH, L * k / 4, y0 + BH + 4, 'var(--ink-3)');
   txt(g, 0, y0 - 8, 'tick n', '0', 'middle');
-  txt(g, L, y0 - 8, 'tick n', '84', 'middle');
-  txt(g, L / 2, y0 - 8, 'tick n', '42', 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
+  txt(g, L, y0 - 8, 'tick n', String(MAX), 'middle');
+  txt(g, xs, y0 - 8, 'tick n', String(SUM), 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
   txt(g, 0, y0 + BH + 17, 'tick n', '0', 'middle');
   txt(g, L, y0 + BH + 17, 'tick n', '100', 'middle');
-  txt(g, L / 2, y0 + BH + 17, 'tick n', '50.0', 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
+  txt(g, xs, y0 + BH + 17, 'tick n', (SUM / MAX * 100).toFixed(1), 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
   txt(g, L + 18, y0 - 8, 'lab', '原始分');
   txt(g, L + 18, y0 + BH + 17, 'lab', '折算后');
 }
@@ -165,6 +175,30 @@ const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   txt(g, tx, 39, 'note', '涂黑 = 给的分');
   txt(g, tx, 63, 'note', '可给小数');
   txt(g, tx, 96, 'note', '各项相加 = 总分');
+}
+
+/* 鲁班锁拆解: the 100 points as eight cells sized by their value w, each filled to min(1, B/N) of an example answer. */
+{
+  const g = document.getElementById('burr');
+  const w = [8, 8, 12, 12, 12, 16, 16, 16], f = [1, 1, .8, .75, 0, .5, 0, 0], P = 4, G = 3, y = 22, H = 20;
+  const xs = [];
+  w.reduce((x, v) => { xs.push(x); return x + v * P + G; }, 0);
+  for (const [name, a, b] of [['简单档', 0, 2], ['中档', 2, 5], ['困难档', 5, 8]]) {
+    const x0 = xs[a], x1 = xs[b - 1] + w[b - 1] * P, pts = w.slice(a, b).reduce((s, v) => s + v, 0);
+    el('polyline', { points: `${x0},${y - 4} ${x0},${y - 8} ${x1},${y - 8} ${x1},${y - 4}`, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
+    const t = el('text', { x: x0, y: y - 13, class: 'lab' }, g);
+    t.innerHTML = `${name} <tspan class="n">${pts}</tspan>`;
+  }
+  w.forEach((v, i) => {
+    el('rect', { x: xs[i], y, width: v * P, height: H, rx: 3, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, g);
+    if (f[i]) el('rect', { x: xs[i], y, width: v * P * f[i], height: H, rx: f[i] === 1 ? 3 : 0, fill: 'var(--ink)' }, g);
+    const s = v * f[i];
+    txt(g, xs[i] + v * P / 2, y + H + 16, 'n', String(+s.toFixed(1)), 'middle')
+      .setAttribute('style', `font-size: 13px; fill: ${s ? 'var(--ink)' : 'var(--ink-3)'}`);
+  });
+  const total = w.reduce((a, v, i) => a + v * f[i], 0);
+  const t = el('text', { x: 0, y: y + H + 42, class: 'cap' }, g);
+  t.innerHTML = `例：06 题步数是 B 的 2 倍，得 16 × ½ = 8 分；8 题合计 <tspan class="n" style="font-weight:700;fill:var(--ink)">${total.toFixed(1)}</tspan> 分。`;
 }
 
 /* A shared plot frame for the two anchor curves. */

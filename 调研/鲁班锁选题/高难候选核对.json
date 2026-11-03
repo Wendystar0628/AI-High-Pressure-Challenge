@@ -1,0 +1,444 @@
+{
+  "date": "2026-11-03",
+  "catalog_source": "https://puzzlewillbeplayed.com/-/puzzle-index.xml",
+  "catalog_sha256": "899b35da622666ff8ef8cca2c343d488ea48dca6addeb2ee507a210a2ad0969a",
+  "catalog_declared_date": "2024-04-04",
+  "catalog_records": 7372,
+  "interlocking_records_with_numeric_moves": 5800,
+  "novelty_scope": "Qualitative long-tail selection. Not a traffic ranking or proof of absence from model training.",
+  "tier_scope": "Candidate planning tiers, not calibrated performance claims about current models.",
+  "reference_scope": {
+    "tool": "BurrTools v0.8.0 Windows x86_64 burrTxt.exe",
+    "mode": "redisassemble supplied assembly; one worker thread; no assembly enumeration",
+    "timing_scope": "Single diagnostic invocation, not an isolated performance benchmark or a prediction of model difficulty.",
+    "results": [
+      {
+        "name": "Baryum",
+        "exit_code": 0,
+        "wall_seconds": 0.296,
+        "output": "",
+        "level_lines": []
+      },
+      {
+        "name": "Choronzon",
+        "exit_code": 0,
+        "wall_seconds": 6.875,
+        "output": "",
+        "level_lines": []
+      },
+      {
+        "name": "ULTRABURR",
+        "exit_code": 0,
+        "wall_seconds": 2.563,
+        "output": "",
+        "level_lines": []
+      },
+      {
+        "name": "Leveler",
+        "exit_code": 0,
+        "wall_seconds": 0.687,
+        "output": "",
+        "level_lines": []
+      },
+      {
+        "name": "Top Ten",
+        "timeout_seconds": 20
+      },
+      {
+        "name": "New Year 2C12",
+        "exit_code": 0,
+        "wall_seconds": 4.25,
+        "output": "",
+        "level_lines": []
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "name": "Baryum",
+      "designer": "Stéphane Chomine",
+      "design_year": 2011,
+      "planning_tier": 1,
+      "source": "https://puzzlewillbeplayed.com/6BoardBurr/Baryum/",
+      "source_html_sha256": "d809c00adb51b1b2b321d5ff649bebcf223ce3f4a7ff89fbdd3fde7f2d456a8f",
+      "movable_piece_count": 6,
+      "frame_count": 0,
+      "extent": [
+        9,
+        9,
+        9
+      ],
+      "catalog_moves": "135.12.6.8.3",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/6BoardBurr/Baryum/solution.html",
+      "occupied_cells": 228,
+      "voxel_counts": {
+        "F": 37,
+        "A": 38,
+        "B": 38,
+        "C": 39,
+        "E": 37,
+        "D": 39
+      },
+      "samples": [
+        {
+          "path": "结构样本/Baryum.json",
+          "sha256": "2e15ba4ccb9db85d7945657f18f7f8ee62f6b7b927179aba41b861c9eb1abe56"
+        },
+        {
+          "path": "结构样本/Baryum.xmpuzzle",
+          "sha256": "673384a678d38fb4c594d23e75fac41c3bc1e57f9e1850799aa8dc3c4f9f69c5"
+        }
+      ],
+      "reference_run": {
+        "name": "Baryum",
+        "exit_code": 0,
+        "wall_seconds": 0.296,
+        "output": "",
+        "level_lines": []
+      }
+    },
+    {
+      "name": "GELO-1125",
+      "designer": "Oleg Smol'yakov",
+      "design_year": 2018,
+      "planning_tier": 1,
+      "source": "https://puzzlewillbeplayed.com/888/GELO/1125/",
+      "source_html_sha256": "2cead19161c1e6e64c08f48aa3071a5f624998c0dba9d96b5f76ff7bab69bc00",
+      "movable_piece_count": 6,
+      "frame_count": 1,
+      "extent": [
+        8,
+        8,
+        8
+      ],
+      "catalog_moves": "128.7.7.7.3.3",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Primary page, specifications and image references inspected; exact geometry and initial pose not reconstructed in this run."
+    },
+    {
+      "name": "FastMaze 3",
+      "designer": "Dan Fast",
+      "design_year": 2022,
+      "planning_tier": 1,
+      "source": "https://puzzlewillbeplayed.com/101003Ring/FastMaze/3/",
+      "source_html_sha256": "3879acf23c43a07afe333cdce08819ab1d86242984255425077eda581c84a85e",
+      "movable_piece_count": 7,
+      "frame_count": 0,
+      "extent": [
+        10,
+        10,
+        5
+      ],
+      "catalog_moves": "121.30.20.8.8.9",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Primary page, specifications and image references inspected; exact geometry and initial pose not reconstructed in this run."
+    },
+    {
+      "name": "Gasconade",
+      "designer": "Lawrence Cuthbert",
+      "design_year": 2015,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/888/Gasconade/",
+      "source_html_sha256": "c30553d4296dfdb0f52e6215033150942129f91bb5d38df56b1043dd18e96ef9",
+      "movable_piece_count": 9,
+      "frame_count": 1,
+      "extent": [
+        8,
+        8,
+        8
+      ],
+      "catalog_moves": "236.11.7.8.5.4.5.3.2",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Primary page, specifications and image references inspected; exact geometry and initial pose not reconstructed in this run."
+    },
+    {
+      "name": "Leveler",
+      "designer": "Frank Worrell",
+      "design_year": 2010,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/FramedBurr10/Leveler/",
+      "source_html_sha256": "3144dedb643b54d7e791172d86003f11983dfe282d8801c7608ca166930a3e5e",
+      "movable_piece_count": 10,
+      "frame_count": 1,
+      "extent": [
+        12,
+        12,
+        5
+      ],
+      "catalog_moves": "288.5.3.8.6.2.5.1.6",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/FramedBurr10/Leveler/solution.html",
+      "occupied_cells": 620,
+      "voxel_counts": {
+        "X": 340,
+        "H": 28,
+        "I": 28,
+        "A": 28,
+        "G": 28,
+        "J": 28,
+        "B": 28,
+        "C": 28,
+        "D": 28,
+        "E": 28,
+        "F": 28
+      },
+      "samples": [
+        {
+          "path": "结构样本/Leveler.json",
+          "sha256": "f66605044691956da5848d9cd00ad6082ce6635a2b91a6186cff8c80369e0ccc"
+        },
+        {
+          "path": "结构样本/Leveler.xmpuzzle",
+          "sha256": "834a131fd679c2cacf691f8442a2711d7664c2f8b8a261a0da3dc9665ba7a1f7"
+        }
+      ],
+      "reference_run": {
+        "name": "Leveler",
+        "exit_code": 0,
+        "wall_seconds": 0.687,
+        "output": "",
+        "level_lines": []
+      }
+    },
+    {
+      "name": "Top Ten",
+      "designer": "Frank Worrell",
+      "design_year": 2010,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/FramedBurr10/Top10/",
+      "source_html_sha256": "3b12d706c6376dbbec3eb923dcca44ab8ffae6988be0909ff3fd8f9d7fb9de14",
+      "movable_piece_count": 10,
+      "frame_count": 1,
+      "extent": [
+        14,
+        14,
+        5
+      ],
+      "catalog_moves": "330.10.12.14.10.8.7.9.8",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/FramedBurr10/Top10/solution.html",
+      "occupied_cells": 894,
+      "voxel_counts": {
+        "X": 520,
+        "F": 37,
+        "G": 37,
+        "I": 38,
+        "C": 37,
+        "E": 37,
+        "A": 38,
+        "D": 37,
+        "H": 37,
+        "J": 37,
+        "B": 39
+      },
+      "samples": [
+        {
+          "path": "结构样本/Top_Ten.json",
+          "sha256": "2b30fdada5713078e8b5a383c2300b705ce99808950b000d34d5b7afe7687ee8"
+        },
+        {
+          "path": "结构样本/Top_Ten.xmpuzzle",
+          "sha256": "f0d84de72cb3043b0a6fcf8fb141de0a1263fa6da6be0a2e07ca1bbe34708973"
+        }
+      ],
+      "reference_run": {
+        "name": "Top Ten",
+        "timeout_seconds": 20
+      }
+    },
+    {
+      "name": "Choronzon",
+      "designer": "Donald Osselaer",
+      "design_year": 2011,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/12BoardBurr/Choronzon/",
+      "source_html_sha256": "9aed22795b4b62bf502853a4e0cac9278b4bcc7fe5de0837c021189a64d02465",
+      "movable_piece_count": 12,
+      "frame_count": 0,
+      "extent": [
+        11,
+        11,
+        11
+      ],
+      "catalog_moves": "347.320.29.9.19.3.3.5.2.3.3",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/12BoardBurr/Choronzon/solution.html",
+      "occupied_cells": 566,
+      "voxel_counts": {
+        "A": 59,
+        "B": 40,
+        "C": 43,
+        "D": 45,
+        "L": 42,
+        "K": 42,
+        "J": 52,
+        "I": 45,
+        "E": 42,
+        "F": 45,
+        "G": 54,
+        "H": 57
+      },
+      "samples": [
+        {
+          "path": "结构样本/Choronzon.json",
+          "sha256": "45caedf854d3d73fe176669a7330e765dcb987e3a7c48608985e18b75cf4331a"
+        },
+        {
+          "path": "结构样本/Choronzon.xmpuzzle",
+          "sha256": "1ccde5013632c074baf6c1b3bf5dfc00ebf6e7482a8fab6be16df6694f081a6f"
+        }
+      ],
+      "reference_run": {
+        "name": "Choronzon",
+        "exit_code": 0,
+        "wall_seconds": 6.875,
+        "output": "",
+        "level_lines": []
+      }
+    },
+    {
+      "name": "ULTRABURR",
+      "designer": "Donald Osselaer",
+      "design_year": 2011,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/12BoardBurr/ULTRABURR/",
+      "source_html_sha256": "466925ff8d4e9c90fdf7aa6da9b3489adf8bca7b1a2a300562099a311c60e424",
+      "movable_piece_count": 12,
+      "frame_count": 0,
+      "extent": [
+        11,
+        11,
+        11
+      ],
+      "catalog_moves": "214.190.75.52.20.20.14.8.3.4.3",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/12BoardBurr/ULTRABURR/solution.html",
+      "occupied_cells": 579,
+      "voxel_counts": {
+        "L": 47,
+        "K": 57,
+        "J": 57,
+        "I": 56,
+        "H": 44,
+        "G": 41,
+        "F": 43,
+        "E": 51,
+        "D": 57,
+        "C": 44,
+        "B": 41,
+        "A": 41
+      },
+      "samples": [
+        {
+          "path": "结构样本/ULTRABURR.json",
+          "sha256": "c5556442d074d0b7773cd46d403285b4be18f1da0b027cde25a5997764ad5724"
+        },
+        {
+          "path": "结构样本/ULTRABURR.xmpuzzle",
+          "sha256": "2896c28fbba12946c40cdda21581f06086ddcb0418ccfcce91bbd253604f774e"
+        }
+      ],
+      "reference_run": {
+        "name": "ULTRABURR",
+        "exit_code": 0,
+        "wall_seconds": 2.563,
+        "output": "",
+        "level_lines": []
+      }
+    },
+    {
+      "name": "New Year 2C12",
+      "designer": "Frank Worrell",
+      "design_year": 2012,
+      "planning_tier": 2,
+      "source": "https://puzzlewillbeplayed.com/FramedBurr12/NewYear2C12/",
+      "source_html_sha256": "76e3f43f1f0e5c7f376bf2ba7be17dd2b043cb5abab50851d5295ad749daafda",
+      "movable_piece_count": 12,
+      "frame_count": 1,
+      "extent": [
+        16,
+        16,
+        5
+      ],
+      "catalog_moves": "365.7.9.8.4.1.1.3.1.1.3",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Exact labelled-layer geometry and initial pose reconstructed; every piece face-connected.",
+      "geometry_source": "https://puzzlewillbeplayed.com/FramedBurr12/NewYear2C12/solution.html",
+      "occupied_cells": 1102,
+      "voxel_counts": {
+        "X": 656,
+        "L": 36,
+        "C": 38,
+        "A": 38,
+        "D": 38,
+        "K": 36,
+        "J": 36,
+        "E": 40,
+        "H": 36,
+        "I": 36,
+        "B": 40,
+        "G": 36,
+        "F": 36
+      },
+      "samples": [
+        {
+          "path": "结构样本/New_Year_2C12.json",
+          "sha256": "329b2e408edbbfa940001f9c87d88cc343d41efaebb7a2b285305b748191a304"
+        },
+        {
+          "path": "结构样本/New_Year_2C12.xmpuzzle",
+          "sha256": "5d1a36106da80c7476d16d228ded4271807c974c1a49b1a2cea244d371f8a082"
+        }
+      ],
+      "reference_run": {
+        "name": "New Year 2C12",
+        "exit_code": 0,
+        "wall_seconds": 4.25,
+        "output": "",
+        "level_lines": []
+      }
+    },
+    {
+      "name": "Sound of Frustration",
+      "designer": "Dan Fast",
+      "design_year": 2022,
+      "planning_tier": 3,
+      "source": "https://puzzlewillbeplayed.com/131303Ring/SoundOfFrustration/",
+      "source_html_sha256": "a89b9cb887cff24c9986e90c6aad5c9ea8c6ec7d993905888cda96cd0f69a1d9",
+      "movable_piece_count": 7,
+      "frame_count": 0,
+      "extent": [
+        13,
+        13,
+        5
+      ],
+      "catalog_moves": "1174.8.13.17.7.9",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Primary page, specifications and image references inspected; exact geometry and initial pose not reconstructed in this run."
+    },
+    {
+      "name": "Be Box Deluxe",
+      "designer": "Derek Bosch",
+      "design_year": 2023,
+      "planning_tier": 3,
+      "source": "https://puzzlewillbeplayed.com/Misc/BeBoxDeluxe/",
+      "source_html_sha256": "2715e508c742a3a3ce47073d2e8f099eafcb269468ae45ce522098f380590928",
+      "movable_piece_count": 24,
+      "frame_count": 0,
+      "extent": [
+        22,
+        22,
+        22
+      ],
+      "catalog_moves": "1156.7036.4.10.3.1.1.2.2.3.1.2",
+      "catalog_moves_are_not_benchmark_optima": true,
+      "geometry_status": "Primary page, specifications and image references inspected; exact geometry and initial pose not reconstructed in this run."
+    }
+  ]
+}

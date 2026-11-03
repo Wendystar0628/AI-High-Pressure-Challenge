@@ -1,0 +1,2154 @@
+/* ==========================================================================
+   stellar.css: a star-atlas interface kit for desktop web pages
+   --------------------------------------------------------------------------
+   Framework-free. Every class starts with st- so it can sit beside anything.
+   Light by default; dark with <html data-theme="dark">, or follows the system
+   when <html> has no data-theme at all.
+
+   Read ../SKILL.md first. In short:
+     - lavender paper, night ink, and two theme colours with one job each:
+       orbit violet marks WHERE YOU ARE (lines, bars, brackets, large type);
+       flare lime fills what to PRESS or LOOK AT (fill only, ink text on it)
+     - cut corners on whatever can be pressed; hairlines, not boxes
+     - real fields (numbers, dates, counts) in the wide face, tabular figures
+     - a faint starfield in two corners, never under the text
+     - motion is short, hard and mechanical, and switches off under
+       prefers-reduced-motion
+
+   Fonts are not loaded here. Self-host them (see references/tokens.md):
+     a wide geometric sans for Latin and figures (Saira, variable width and
+     weight; a copy is in ./fonts) and a Chinese sans (Noto Sans SC).
+   ========================================================================== */
+
+/* ---------- 1. tokens ---------- */
+
+:root {
+  --st-paper: #f2f1f6; /* the page: a cool lavender grey */
+  --st-panel: #ffffff; /* sheets, panels, inputs */
+  --st-ink: #1a1726; /* text and every line that matters: night-sky black */
+  --st-ink-2: #5d5970; /* secondary text, field labels */
+  --st-rule: #dcdae4; /* 1px hairlines */
+  --st-chip: #e7e5ee; /* quiet fills: chips, idle buttons, tracks */
+  --st-orbit: #9859ff; /* WHERE YOU ARE. Lines, bars, brackets, large type */
+  --st-flare: #d1ff57; /* PRESS THIS / LOOK AT THIS. Fill only, ink text on it */
+  --st-on-flare: #1a1726; /* text on flare, in both themes */
+  --st-on-orbit: #ffffff; /* text on an orbit fill: large or bold-large only */
+  --st-wash: color-mix(in srgb, var(--st-orbit) 14%, var(--st-panel)); /* the block under a current item */
+  --st-tag-bg: var(--st-ink); /* number tags */
+  --st-tag-fg: var(--st-panel);
+  --st-danger: #c2263a; /* deleting things. Nothing else. */
+  --st-scrim: rgb(26 23 38 / 0.5);
+  --st-spec-a: var(--st-orbit); /* the spectrum strip: orbit, starlight, flare */
+  --st-spec-b: #62d4f5;
+  --st-spec-c: var(--st-flare);
+  --st-mark: color-mix(in srgb, var(--st-flare) 60%, transparent); /* highlighter, selection */
+  --st-stars: color-mix(in srgb, var(--st-ink) 16%, transparent); /* the starfield ground */
+  --st-hatch: repeating-linear-gradient(-45deg, transparent 0 5px, color-mix(in srgb, var(--st-ink) 22%, transparent) 5px 6.5px);
+  /* the command bar and the toast: dark in both themes */
+  --st-bar: #1a1726;
+  --st-bar-text: #eceaf3;
+  --st-bar-muted: #b7b2c6;
+  --st-bar-hover: #272335;
+  --st-bar-wash: color-mix(in srgb, var(--st-orbit) 30%, var(--st-bar));
+
+  /* type: a wide geometric Latin face for labels and figures, with a plain
+     Chinese sans. Saira's width axis goes up to 125%. */
+  --st-font-ui: 'Saira Variable', 'Saira', 'Noto Sans SC Variable', 'Noto Sans SC', sans-serif;
+  --st-font-text: 'Noto Sans SC Variable', 'Noto Sans SC', sans-serif;
+  --st-font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  --st-wide: 112%; /* fields: numbers, dates, counts */
+  --st-wider: 125%; /* eyebrows, small labels, the wordmark */
+
+  --st-t-h1: 2.5rem;
+  --st-t-title: 1.875rem;
+  --st-t-h2: 1.375rem;
+  --st-t-body: 1.0625rem;
+  --st-t-ui: 0.9375rem;
+  --st-t-field: 0.8125rem;
+
+  --st-measure: 40rem; /* a reading line, about 38 Chinese characters */
+  --st-pad: clamp(1.5rem, 3vw, 2.5rem);
+  --st-cut-k: 1; /* every corner cut scales with this (variant: tight 0.6, wide 1.6) */
+  --st-cut: calc(7px * var(--st-cut-k)); /* the corner cut off small pressable things */
+  --st-bar-w: 3px; /* the orbit bar that marks "here" */
+
+  --st-ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --st-snap: cubic-bezier(0.16, 1, 0.3, 1); /* arrives fast, settles */
+  --st-mech: cubic-bezier(0.7, 0, 0.2, 1); /* starts slow, closes hard, like a shutter */
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --st-paper: #121019;
+  --st-panel: #1b1824;
+  --st-ink: #eceaf3;
+  --st-ink-2: #a39fb4;
+  --st-rule: #2f2b3c;
+  --st-chip: #272333;
+  --st-wash: color-mix(in srgb, var(--st-orbit) 26%, var(--st-panel));
+  --st-tag-bg: #332e44;
+  --st-tag-fg: var(--st-ink);
+  --st-danger: #ff8f8f;
+  --st-scrim: rgb(8 6 13 / 0.66);
+  --st-mark: color-mix(in srgb, var(--st-flare) 26%, transparent);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --st-paper: #121019;
+    --st-panel: #1b1824;
+    --st-ink: #eceaf3;
+    --st-ink-2: #a39fb4;
+    --st-rule: #2f2b3c;
+    --st-chip: #272333;
+    --st-wash: color-mix(in srgb, var(--st-orbit) 26%, var(--st-panel));
+    --st-tag-bg: #332e44;
+    --st-tag-fg: var(--st-ink);
+    --st-danger: #ff8f8f;
+    --st-scrim: rgb(8 6 13 / 0.66);
+    --st-mark: color-mix(in srgb, var(--st-flare) 26%, transparent);
+    color-scheme: dark;
+  }
+}
+
+/* ---------- 2. base ---------- */
+
+.st,
+.st *,
+.st *::before,
+.st *::after {
+  box-sizing: border-box;
+}
+
+.st {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--st-paper);
+  color: var(--st-ink);
+  font-family: var(--st-font-ui);
+  font-size: var(--st-t-ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.st a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.st :is(a, button, summary, label[for]) {
+  cursor: pointer;
+}
+
+.st ::selection {
+  background: var(--st-mark);
+  color: inherit;
+}
+
+.st :focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.st :is(h1, h2, h3, h4) {
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+/* Reading text: plain sans, regular weight, generous leading. */
+.st-read {
+  font-family: var(--st-font-text);
+  font-weight: 400;
+}
+
+/* The starfield: two faint patches of a star chart, upper right and lower
+   left. Put .st-stars on <body> and keep the two SVGs in ./stars next to this
+   file. They are masks, so the colour follows the theme. */
+.st-stars::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--st-stars);
+  -webkit-mask:
+    url('./stars/stars-a.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+  mask:
+    url('./stars/stars-a.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+}
+
+/* ---------- 3. marks that carry meaning ---------- */
+
+/* The spectrum strip: the top edge of a page, or under an article title. Nowhere else. */
+.st-tri {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 3px;
+}
+.st-tri > i:nth-child(1) {
+  background: var(--st-spec-a);
+}
+.st-tri > i:nth-child(2) {
+  background: var(--st-spec-b);
+}
+.st-tri > i:nth-child(3) {
+  background: var(--st-spec-c);
+}
+
+/* A field of a record: number, date, count, path. Wide, geometric, tabular. */
+.st-field {
+  font-family: var(--st-font-ui);
+  font-size: var(--st-t-field);
+  font-stretch: var(--st-wide);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--st-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A small, wide, upper-case label above or beside a heading: "// RECORDS".
+   Add .slash for the double-slash prefix. */
+.st-eyebrow {
+  font-family: var(--st-font-ui);
+  font-size: 0.7rem;
+  font-stretch: var(--st-wider);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+.st-eyebrow.slash::before {
+  content: '// ';
+  letter-spacing: 0;
+}
+
+/* English small and wide above, Chinese heavy below: RECORDS / 记录. */
+.st-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.15;
+}
+.st-pair > :last-child {
+  font-weight: 800;
+}
+
+/* Fields in a row, divided by hairlines; a wrapped line starts clean. */
+.st-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  clip-path: inset(-6px -100vw -6px 0);
+}
+.st-facts > * {
+  margin: 0 calc(0.75rem + 1px) 0 calc(-0.75rem - 1px);
+  padding: 0 0.75rem;
+  border-left: 1px solid var(--st-rule);
+}
+
+/* Small entrances with one corner cut: number tag, key/value block, chip.
+   The cut is painted in the background so the focus ring stays whole.
+   --bar carries the orbit bar of a current item. */
+.st-tag,
+.st-kv,
+.st-chip {
+  --fill: var(--st-chip);
+  --bar: linear-gradient(transparent, transparent);
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--st-font-ui);
+  font-size: var(--st-t-field);
+  font-stretch: var(--st-wide);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--st-ink);
+  background:
+    var(--bar),
+    linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--fill) var(--st-cut));
+  border: 0;
+}
+
+.st-tag {
+  --fill: var(--st-tag-bg);
+  /* the right padding grows with the cut, so the text keeps clear of it */
+  padding: 0.1rem calc(0.45rem + var(--st-cut)) 0.1rem 0.55rem;
+  color: var(--st-tag-fg);
+}
+
+.st-chip {
+  gap: 0.35em;
+  padding: 0.15rem calc(0.5rem + var(--st-cut)) 0.15rem 0.6rem;
+}
+
+.st-chip .n {
+  color: var(--st-ink-2);
+}
+
+.st-kv > * {
+  padding: 0.1rem 0.5rem;
+}
+.st-kv > :first-child {
+  color: var(--st-ink-2);
+  border-right: 1px solid color-mix(in srgb, var(--st-ink) 16%, transparent);
+}
+.st-kv > :last-child {
+  padding-right: calc(0.45rem + var(--st-cut));
+}
+
+/* "Here": the current number, the selected chip. A violet wash, an orbit bar
+   down the left edge, ink text in bold. */
+.st-tag.is-current,
+.st-chip[aria-pressed='true'],
+.st-chip.is-active {
+  --fill: var(--st-wash);
+  --bar: linear-gradient(var(--st-orbit), var(--st-orbit)) left / var(--st-bar-w) 100% no-repeat;
+  color: var(--st-ink);
+  font-weight: 700;
+}
+/* "You can press this": pointing at an entrance fills it with flare. */
+a.st-tag:not(.is-current):is(:hover, :focus-visible),
+a.st-kv:is(:hover, :focus-visible),
+:is(a, button).st-chip:not([aria-pressed='true'], .is-active):is(:hover, :focus-visible) {
+  --fill: var(--st-flare);
+  color: var(--st-on-flare);
+}
+a.st-kv:is(:hover, :focus-visible) > :first-child,
+:is(a, button).st-chip:not([aria-pressed='true'], .is-active):is(:hover, :focus-visible) .n {
+  color: var(--st-on-flare);
+}
+
+/* A highlighter stroke under the one line that says what this is. */
+.st-marker {
+  padding: 0.1em 0.45em;
+  background: linear-gradient(var(--st-flare), var(--st-flare)) left / 100% 100% no-repeat;
+  color: var(--st-on-flare);
+  font-weight: 800;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* A state: live is solid ink, waiting is dashed, needs-a-look is a flare block. */
+.st-state {
+  display: inline-block;
+  padding: 0 0.5em;
+  border: 1px solid currentColor;
+  font-family: var(--st-font-ui);
+  font-stretch: var(--st-wide);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: 0.15em;
+}
+.st-state.is-draft {
+  color: var(--st-ink-2);
+  border-style: dashed;
+}
+.st-state.is-hidden {
+  border-style: dashed;
+}
+.st-state.is-alert {
+  border-color: var(--st-flare);
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-weight: 700;
+}
+
+/* Something needs reading: a flare flag before the words. Red is not used. */
+.st-notice {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--st-ink);
+  background: var(--st-panel);
+}
+.st-notice::before {
+  content: attr(data-flag);
+  flex: none;
+  padding: 0 0.45em;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.st-notice:not([data-flag])::before {
+  content: '注意';
+}
+.st-notice:is([hidden], :empty) {
+  display: none;
+}
+
+/* ---------- 4. buttons ---------- */
+
+/* A block with one corner cut. Pointing at it drives flare across from the
+   left behind an ink edge. The cut is a mask, so the focus ring sits inside. */
+.st-btn {
+  --fill: var(--st-chip);
+  --wipe: var(--st-flare);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 2.25rem;
+  padding: 0.5rem calc(1rem + 0.5rem * var(--st-cut-k)) 0.5rem 1rem;
+  border: 0;
+  background: var(--fill);
+  -webkit-mask: linear-gradient(-45deg, transparent calc(0.5rem * var(--st-cut-k)), #000 calc(0.5rem * var(--st-cut-k) + 0.5px));
+  mask: linear-gradient(-45deg, transparent calc(0.5rem * var(--st-cut-k)), #000 calc(0.5rem * var(--st-cut-k) + 0.5px));
+  color: var(--st-ink);
+  font-family: var(--st-font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.12s 0.06s,
+    transform 0.1s;
+}
+.st-btn:focus-visible {
+  outline-offset: -4px;
+}
+.st-btn.go {
+  --fill: var(--st-ink);
+  color: var(--st-panel);
+}
+.st-btn.small {
+  min-height: 2rem;
+  padding: 0.3rem calc(0.75rem + 0.5rem * var(--st-cut-k)) 0.3rem 0.75rem;
+  font-size: 0.8rem;
+}
+.st-btn.danger {
+  --wipe: var(--st-danger);
+  color: var(--st-danger);
+}
+.st-btn .sub {
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.st-btn::before,
+.st-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform 0.28s var(--st-mech);
+}
+.st-btn::before {
+  background: var(--wipe);
+}
+.st-btn::after {
+  z-index: 0;
+  background: linear-gradient(var(--st-on-flare), var(--st-on-flare)) left / 3px 100% no-repeat;
+  opacity: 0;
+}
+.st-btn:is(:hover, :focus-visible):not(:disabled),
+:is(a, .st-host):is(:hover, :focus-visible) span.st-btn {
+  color: var(--st-on-flare);
+}
+.st-btn.danger:is(:hover, :focus-visible):not(:disabled) {
+  color: var(--st-panel);
+}
+.st-btn:is(:hover, :focus-visible):not(:disabled)::before,
+:is(a, .st-host):is(:hover, :focus-visible) span.st-btn::before {
+  transform: none;
+}
+.st-btn:hover:not(:disabled)::after,
+:is(a, .st-host):hover span.st-btn::after {
+  animation: st-edge 0.3s var(--st-mech);
+}
+/* (a <span class="st-btn"> inside a bigger link wipes when the link is pointed at) */
+.st-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+}
+/* Off: it cannot be pressed now. */
+.st-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Busy: pressed and still working (saving, sending). Hatched, and it waits. */
+.st-btn[aria-busy='true'] {
+  background: var(--st-hatch), var(--fill);
+  cursor: progress;
+  pointer-events: none;
+}
+
+@keyframes st-edge {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.st-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+/* ---------- 5. lists ---------- */
+
+/* Records: one row each, columns are real fields (tag, date, name, count).
+   Pointing at a row drops an orbit bar down its left edge and steps it in. */
+.st-records {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.st-records > li {
+  border-bottom: 1px solid var(--st-rule);
+}
+.st-records .st-record {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.7rem 0.6rem;
+  transition: background-color 0.15s;
+}
+.st-record::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.st-record > * {
+  transition: transform 0.25s var(--st-snap);
+}
+a.st-record:is(:hover, :focus-visible) {
+  background: var(--st-paper);
+}
+a.st-record:is(:hover, :focus-visible)::before {
+  transform: none;
+}
+a.st-record:is(:hover, :focus-visible) > * {
+  transform: translateX(6px);
+}
+.st-record .name {
+  font-size: var(--st-t-body);
+  line-height: 1.5;
+}
+
+/* A column of label / figure pairs, for a margin or a panel. */
+.st-ledger {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.st-ledger > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--st-rule);
+}
+.st-ledger .warn {
+  padding: 0 0.4em;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-weight: 700;
+}
+
+/* ---------- 6. the reading page: a rail, a white sheet and a margin ---------- */
+
+/* Side rail: stacked nav, the current item a violet wash with an orbit bar.
+   Below 1100px wide it lies down as a bar across the top. */
+.st-rail {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0 1rem;
+  border-right: 1px solid var(--st-rule);
+}
+.st-rail .brand {
+  padding: 0 1.25rem 2rem;
+  font-stretch: var(--st-wider);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.st-rail a:not(.brand) {
+  padding: 0.4rem calc(1rem + var(--st-cut)) 0.4rem 1.25rem;
+  color: var(--st-ink-2);
+}
+.st-rail a:not(.brand):hover {
+  color: var(--st-ink);
+}
+.st-rail a[aria-current] {
+  color: var(--st-ink);
+  font-weight: 700;
+  background:
+    linear-gradient(var(--st-orbit), var(--st-orbit)) left / var(--st-bar-w) 100% no-repeat,
+    linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--st-wash) var(--st-cut));
+}
+@media (max-width: 1099px) {
+  .st-rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.75rem var(--st-pad);
+    border-right: 0;
+    border-bottom: 1px solid var(--st-rule);
+  }
+  .st-rail .brand {
+    padding: 0 1rem 0 0;
+  }
+  .st-rail a:not(.brand) {
+    padding: 0.3rem calc(0.8rem + var(--st-cut)) 0.3rem 0.8rem;
+  }
+}
+
+.st-spread {
+  display: grid;
+  grid-template-columns: minmax(0, calc(var(--st-measure) + var(--st-pad) * 2)) minmax(0, 1fr);
+  min-height: 100%;
+}
+.st-sheet {
+  min-width: 0;
+  padding: clamp(2rem, 5vw, 3.5rem) var(--st-pad) 4rem;
+  background: var(--st-panel);
+  border-right: 1px solid var(--st-rule);
+}
+.st-margin {
+  min-width: 0;
+  padding: clamp(2rem, 5vw, 3.5rem) var(--st-pad) 3rem;
+}
+@media (max-width: 959px) {
+  .st-spread {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .st-sheet {
+    border-right: 0;
+    border-bottom: 1px solid var(--st-rule);
+  }
+}
+
+/* Contents in the margin: the section being read carries the orbit bar. */
+.st-toc {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--st-rule);
+}
+.st-toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.28rem 0 0.28rem 0.9rem;
+  border-left: var(--st-bar-w) solid transparent;
+  color: var(--st-ink-2);
+  font-size: 0.875rem;
+}
+.st-toc a:hover {
+  color: var(--st-ink);
+}
+.st-toc a[aria-current] {
+  color: var(--st-ink);
+  font-weight: 700;
+  border-left-color: var(--st-orbit);
+}
+
+/* A page's name with its count, ruled off in ink. */
+.st-sheet-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--st-ink);
+}
+.st-sheet-head h1 {
+  margin: 0;
+  font-size: var(--st-t-h1);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.st-sheet-head p {
+  margin: 0;
+}
+
+.st-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.6em;
+  margin: 0 0 0.75rem;
+}
+.st-crumb a {
+  border-bottom: 1px solid var(--st-rule);
+}
+.st-crumb > * + *::before {
+  content: '/';
+  margin-right: 0.6em;
+  color: var(--st-rule);
+}
+
+.st-lede {
+  max-width: var(--st-measure);
+  margin: 1.25rem 0 0;
+  font-size: var(--st-t-body);
+  line-height: 1.75;
+  color: var(--st-ink-2);
+}
+
+.st-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--st-ink);
+  font-size: var(--st-t-h2);
+  font-weight: 700;
+}
+.st-group-head + .st-records,
+.st-sheet-head + .st-records {
+  border-top: 0;
+}
+
+.st-empty {
+  max-width: 30rem;
+  margin: 1.5rem 0 0;
+  line-height: 1.75;
+  color: var(--st-ink-2);
+}
+
+/* Reading prose: plain Chinese sans, regular weight, generous leading. A link
+   is ink over a flare block (a flare strip on dark, where the block would
+   swallow light text). */
+.st-prose {
+  max-width: var(--st-measure);
+  font-family: var(--st-font-text);
+  font-size: var(--st-t-body);
+  line-height: 1.85;
+}
+.st-prose :is(h2, h3) {
+  font-family: var(--st-font-ui);
+}
+.st-prose a {
+  --link-h: 0.5em;
+  padding-inline: 0.08em;
+  background: linear-gradient(var(--st-flare), var(--st-flare)) left 100% / 100% var(--link-h) no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 0.2s var(--st-mech);
+}
+.st-prose a:is(:hover, :focus-visible) {
+  background-size: 100% 100%;
+  color: var(--st-on-flare);
+}
+:root[data-theme='dark'] .st-prose a {
+  --link-h: 2px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .st-prose a {
+    --link-h: 2px;
+  }
+}
+.st-prose strong {
+  font-weight: 700;
+}
+.st-prose h2 {
+  font-size: var(--st-t-h2);
+  font-weight: 700;
+  margin: 2.4em 0 0.8em;
+  padding-top: 0.9em;
+  border-top: 1px solid var(--st-rule);
+}
+.st-prose blockquote {
+  margin: 1.2em 0;
+  padding-left: 1.2em;
+  border-left: 3px solid var(--st-ink);
+  color: var(--st-ink-2);
+}
+.st-prose code {
+  font-family: var(--st-font-mono);
+  font-size: 0.86em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--st-rule);
+  background: var(--st-paper);
+}
+
+/* ---------- 7. the showcase voice ---------- */
+
+/* The name, as heavy and wide as the column takes: solid, then hollow. */
+.st-wordmark {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--st-font-ui);
+  font-stretch: var(--st-wider);
+  font-weight: 800;
+  line-height: 0.84;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.st-wordmark > * {
+  line-height: 0.84;
+}
+.st-wordmark .solid {
+  font-size: var(--st-wordmark, clamp(3rem, 10vw, 11rem));
+}
+.st-wordmark .hollow {
+  margin-top: 0.12em;
+  font-size: calc(var(--st-wordmark, clamp(3rem, 10vw, 11rem)) * 0.48);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--st-ink);
+}
+
+/* A big hollow number that ink pours into, left to right, when pointed at. */
+.st-hollow-no {
+  font-family: var(--st-font-ui);
+  font-stretch: var(--st-wide);
+  font-size: clamp(5rem, 14vw, 14rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--st-ink);
+  background: linear-gradient(var(--st-ink), var(--st-ink)) left / 0% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 0.45s var(--st-mech);
+}
+:is(a, .st-host):is(:hover, :focus-visible) .st-hollow-no {
+  background-size: 100% 100%;
+}
+
+/* A section title with an orbit line running off beside it: a hairline that
+   ends in a star dot. */
+.st-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.st-bar-title::after {
+  content: '';
+  flex: 1;
+  height: 7px;
+  background:
+    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
+    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
+}
+
+/* A picture in a frame with two corners cut, a hatched shadow set off behind
+   it, and an ink plate carrying one line. */
+.st-frame {
+  position: relative;
+  margin: 0 1rem 1rem 0;
+  min-height: 16rem;
+}
+.st-frame::before {
+  content: '';
+  position: absolute;
+  inset: 1.5rem -1rem -1rem 1.5rem;
+  background: var(--st-hatch);
+}
+.st-frame .window {
+  position: absolute;
+  inset: 0;
+  --frame-cut: calc(3.25rem * var(--st-cut-k));
+  clip-path: polygon(var(--frame-cut) 0, 100% 0, 100% calc(100% - var(--frame-cut)), calc(100% - var(--frame-cut)) 100%, 0 100%, 0 var(--frame-cut));
+  background: var(--st-panel);
+  overflow: hidden;
+}
+.st-frame .window > :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.st-plate {
+  position: absolute;
+  left: -1.25rem;
+  bottom: 1.75rem;
+  max-width: 78%;
+  margin: 0;
+  padding: 0.55rem 1.1rem 0.6rem 0.9rem;
+  background: var(--st-ink); /* square: a caption cannot be pressed */
+  color: var(--st-panel);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+/* A band of recent items passing by; pointing at it stops it. Dark in both
+   themes, like the command bar, so it never turns into a bright strip. */
+.st-ticker {
+  background: var(--st-bar);
+  color: var(--st-bar-text);
+  border-block: 1px solid var(--st-bar);
+  overflow: hidden;
+}
+:root[data-theme='dark'] .st-ticker {
+  border-color: var(--st-rule);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .st-ticker {
+    border-color: var(--st-rule);
+  }
+}
+.st-ticker .track {
+  display: flex;
+  width: max-content;
+}
+.st-ticker ul {
+  display: flex;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.st-ticker a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.st-ticker b {
+  padding: 0 0.45em;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-stretch: var(--st-wide);
+}
+.st-ticker a:is(:hover, :focus-visible) {
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+}
+
+/* ---------- 8. the console voice ---------- */
+
+/* The command bar: dark in both themes. The current section is a violet wash
+   with an orbit bar along the bottom; pointing at another runs a flare bar. */
+.st-cmdbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0 1.5rem;
+  padding-inline: var(--st-pad);
+  background: var(--st-bar);
+  color: var(--st-bar-text);
+}
+.st-cmdbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-block: 0.6rem;
+  font-stretch: var(--st-wider);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.st-cmdbar .seal {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding-right: calc(0.2rem * var(--st-cut-k));
+  background: linear-gradient(-45deg, transparent calc(0.45rem * var(--st-cut-k)), var(--st-flare) calc(0.45rem * var(--st-cut-k) + 0.5px));
+  color: var(--st-on-flare);
+  font-size: 1.3rem;
+  letter-spacing: 0;
+}
+.st-cmdbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: auto;
+}
+.st-cmdbar nav a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 3.4rem;
+  padding: 0.3rem 1.15rem 0.3rem 0.8rem;
+  color: var(--st-bar-muted);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.st-cmdbar nav a small {
+  font-size: 0.6rem;
+  font-stretch: var(--st-wider);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.st-cmdbar nav a::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: var(--st-flare);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s var(--st-mech);
+}
+.st-cmdbar nav a:hover {
+  color: var(--st-bar-text);
+  background: var(--st-bar-hover);
+}
+.st-cmdbar nav a:not([aria-current]):is(:hover, :focus-visible)::after {
+  transform: none;
+}
+.st-cmdbar nav a[aria-current] {
+  color: var(--st-bar-text);
+  font-weight: 700;
+  background: var(--st-bar-wash);
+}
+.st-cmdbar nav a[aria-current]::after {
+  background: var(--st-orbit);
+  transform: none;
+}
+.st-cmdbar .count {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.3rem;
+  min-width: 1.4em;
+  padding: 0 0.3em;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  outline: 2px solid var(--st-bar);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-align: center;
+}
+.st-cmdbar .util {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-size: 0.78rem;
+  color: var(--st-bar-muted);
+}
+
+/* A console page's name: heavy, with an orbit line beside it. */
+.st-head {
+  display: grid;
+  grid-template-columns: auto minmax(2rem, 1fr);
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.st-head::after {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  height: 7px;
+  background:
+    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
+    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
+}
+.st-head h1 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+.st-head h1 small {
+  font-size: 0.7rem;
+  font-stretch: var(--st-wider);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+.st-head p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--st-ink-2);
+}
+
+/* A panel: a plate on the paper with a heavy ink tab on its top edge, which
+   runs out along the whole edge when the panel is pointed at.
+   .cut-tl / .cut-tr / .cut-bl / .cut-br cut away the corner that faces the
+   star dial, so the panels follow its curve instead of forming a grid. This
+   cutaway is layout, not a press cue: it is far larger than a button's cut. */
+.st-panel {
+  --cutaway: calc(1.6rem * var(--st-cut-k));
+  position: relative;
+  min-width: 0;
+  padding: 1rem 1.15rem 1.15rem;
+  background: var(--st-panel);
+  border: 1px solid var(--st-rule);
+}
+.st-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 5px;
+  background: var(--st-ink);
+  transform: scaleX(0.14);
+  transform-origin: left;
+  transition: transform 0.4s var(--st-mech);
+  pointer-events: none;
+}
+.st-panel.tab-right::before {
+  transform-origin: right;
+}
+.st-panel:is(:hover, :focus-within)::before {
+  transform: none;
+}
+.st-panel:is(.cut-tl, .cut-tr, .cut-bl, .cut-br) {
+  border: 0;
+}
+.st-panel.cut-br {
+  background: linear-gradient(-45deg, transparent var(--cutaway), var(--st-panel) calc(var(--cutaway) + 0.5px));
+}
+.st-panel.cut-bl {
+  background: linear-gradient(45deg, transparent var(--cutaway), var(--st-panel) calc(var(--cutaway) + 0.5px));
+}
+.st-panel.cut-tr {
+  background: linear-gradient(-135deg, transparent var(--cutaway), var(--st-panel) calc(var(--cutaway) + 0.5px));
+}
+.st-panel.cut-tl {
+  background: linear-gradient(135deg, transparent var(--cutaway), var(--st-panel) calc(var(--cutaway) + 0.5px));
+}
+.st-panel > h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.st-panel > h2 > :is(a, small) {
+  margin-left: auto;
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.st-panel > h2 > a:hover {
+  color: var(--st-ink);
+}
+
+/* A lead from a panel to whatever it describes: a hairline ending in a star
+   dot. Put .lead-right (or .lead-left) on a panel; set --lead to its length. */
+.st-panel:is(.lead-right, .lead-left)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: var(--lead, 3rem);
+  height: 7px;
+  margin-top: -3.5px;
+  pointer-events: none;
+}
+.st-panel.lead-right::after {
+  left: 100%;
+  background:
+    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
+    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
+}
+.st-panel.lead-left::after {
+  right: 100%;
+  background:
+    radial-gradient(circle at 3.5px 50%, var(--st-ink) 3px, transparent 3.5px),
+    linear-gradient(var(--st-ink), var(--st-ink)) right center / calc(100% - 7px) 1px no-repeat;
+}
+
+/* Big figures, three to a panel. Pointing at one drives flare under it. */
+.st-figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--st-rule);
+}
+.st-figs > * {
+  display: grid;
+  gap: 0.1rem;
+  align-content: start;
+  justify-items: start;
+}
+.st-figs b {
+  font-size: 2.4rem;
+  font-stretch: var(--st-wide);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(var(--st-flare), var(--st-flare)) left / 0% 100% no-repeat;
+  transition: background-size 0.22s var(--st-mech);
+}
+.st-figs span {
+  font-size: 0.85rem;
+  color: var(--st-ink-2);
+}
+.st-figs > :is(a:hover, a:focus-visible) b,
+.st-figs .is-alert b {
+  background-size: 100% 100%;
+  color: var(--st-on-flare);
+}
+
+/* Rows of work inside a panel, edge to edge. */
+.st-rows {
+  margin: 0 -1.15rem;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.st-rows > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 1rem;
+  align-items: center;
+  padding: 0.8rem 1.15rem;
+  border-bottom: 1px solid var(--st-rule);
+  transition: background-color 0.15s;
+}
+.st-rows > li::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.st-rows > li:hover {
+  background: var(--st-paper);
+}
+.st-rows > li:is(:hover, :focus-within)::before {
+  transform: none;
+}
+.st-rows > li:last-child {
+  border-bottom: 0;
+}
+.st-rows .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  font-family: var(--st-font-ui);
+  font-stretch: var(--st-wide);
+  font-size: 0.75rem;
+  color: var(--st-ink-2);
+}
+.st-rows .acts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+/* ---------- 9. forms and settings ---------- */
+
+.st-form .field {
+  display: grid;
+  gap: 0.35rem;
+}
+.st-form .field > span {
+  font-size: var(--st-t-field);
+  font-weight: 600;
+}
+.st-form .field small {
+  color: var(--st-ink-2);
+  font-size: 0.82rem;
+}
+.st-form :is(input:not([type='checkbox'], [type='radio'], [type='range']), select, textarea) {
+  width: 100%;
+  min-width: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--st-rule);
+  border-radius: 0;
+  background: var(--st-panel);
+  color: var(--st-ink);
+  font: inherit;
+  transition: border-color 0.15s;
+}
+.st-form :is(input, select, textarea):hover {
+  border-color: var(--st-ink-2);
+}
+.st-form :is(input, select, textarea):focus-visible {
+  border-color: var(--st-ink);
+  outline: 2px solid var(--st-orbit);
+  outline-offset: -1px;
+}
+.st-form :is(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--st-orbit);
+}
+
+/* Search: white field, "//" prefix, a 2px orbit line at the bottom on focus. */
+.st-search {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--st-rule);
+  background: var(--st-panel);
+}
+.st-search::before {
+  content: '//';
+  color: var(--st-ink-2);
+  font-weight: 700;
+}
+.st-search input {
+  flex: 1;
+  min-width: 0;
+  min-height: 2.5rem;
+  border: 0;
+  background: none;
+  color: var(--st-ink);
+  font: inherit;
+  outline: none;
+}
+.st-search:focus-within {
+  border-bottom-color: var(--st-orbit);
+  box-shadow: inset 0 -1px 0 var(--st-orbit);
+}
+
+/* Square switch on a checkbox: <input type="checkbox" role="switch" class="st-switch">.
+   On is an orbit track with a white block on the right; off is a grey track
+   with a darker block on the left. */
+.st-switch {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 24px;
+  margin: 0;
+  background: var(--st-chip);
+  cursor: pointer;
+  transition: background-color 0.28s var(--st-mech);
+}
+.st-switch::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--st-ink-2);
+  transition:
+    transform 0.28s var(--st-mech),
+    background-color 0.28s var(--st-mech);
+}
+.st-switch:checked {
+  background: var(--st-orbit);
+}
+.st-switch:checked::before {
+  background: #ffffff;
+  transform: translateX(20px);
+}
+.st-switch:focus-visible {
+  outline: 2px solid var(--st-ink);
+  outline-offset: 2px;
+}
+
+/* Segmented choice: an ink frame; the current segment is the violet wash
+   with an orbit bar underneath, like any other "here".
+   <div class="st-seg" role="radiogroup"><label><input type="radio" name="d"><span>标准</span></label>… */
+.st-seg {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border: 1px solid var(--st-ink);
+}
+.st-seg label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.28s var(--st-mech);
+}
+.st-seg label + label {
+  border-left: 1px solid var(--st-rule);
+}
+.st-seg label::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s var(--st-mech);
+}
+.st-seg input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.st-seg label:hover {
+  background: var(--st-paper);
+}
+.st-seg label:has(:checked) {
+  background: var(--st-wash);
+  font-weight: 700;
+}
+.st-seg label:has(:checked)::after {
+  transform: none;
+}
+.st-seg label:has(:focus-visible) {
+  outline: 2px solid var(--st-ink);
+  outline-offset: -4px;
+}
+
+/* Settings row: name and a line of help on the left, the control on the right. */
+.st-setting {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--st-rule);
+}
+.st-setting > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.st-setting b {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.st-setting small {
+  color: var(--st-ink-2);
+  font-size: 0.78rem;
+}
+
+/* ---------- 10. feedback: progress, skeleton, dialog, drawer, toast ---------- */
+
+/* Mechanical progress: 24 cells, lit cells in orbit (how far it has got),
+   a padded readout. Add .is-unknown when there is no figure: a run of lit
+   cells walks left to right.
+   <div class="st-progress" role="progressbar" aria-valuenow="63" style="--p: 0.63">
+     <span class="st-eyebrow">Syncing / 同步中</span><span class="st-field">063%</span><i></i>
+   </div> */
+.st-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+.st-progress > i {
+  --cells: 24;
+  grid-column: 1 / -1;
+  height: 10px;
+  background:
+    linear-gradient(90deg, var(--st-orbit) calc(var(--p, 0) * 100%), transparent 0),
+    var(--st-chip);
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--cells) - 2px), transparent 0 calc(100% / var(--cells)));
+  mask: repeating-linear-gradient(90deg, #000 0 calc(100% / var(--cells) - 2px), transparent 0 calc(100% / var(--cells)));
+}
+.st-progress > .st-field {
+  color: var(--st-ink);
+}
+.st-progress.is-unknown > i {
+  background:
+    linear-gradient(90deg, transparent 0 var(--run-at, 0%), var(--st-orbit) var(--run-at, 0%) calc(var(--run-at, 0%) + 25%), transparent 0),
+    var(--st-chip);
+}
+
+/* Skeleton: plain chip blocks while something loads. No shimmer. */
+.st-skeleton {
+  display: block;
+  height: 1em;
+  background: var(--st-chip);
+}
+.st-skeleton.line {
+  height: 0.8rem;
+  margin: 0.45rem 0;
+}
+
+/* Dialog and side drawer, on <dialog>. Open with showModal(); fx.js
+   wireDialogs() runs the open and close motion and handles Esc.
+   Dialog: a panel with the heavy tab and the bottom-right cutaway.
+   Drawer: a full-height panel pushed in from the right edge, for the
+   details or actions of one item without leaving the list. */
+.st-dialog,
+.st-drawer {
+  padding: 0;
+  border: 0;
+  max-width: none;
+  background: transparent;
+  color: var(--st-ink);
+  font-family: var(--st-font-ui);
+}
+.st-dialog::backdrop,
+.st-drawer::backdrop {
+  background: var(--st-scrim);
+}
+
+.st-dialog {
+  width: min(26rem, calc(100% - 2 * var(--st-pad)));
+}
+.st-dialog > .st-panel {
+  padding: 1.25rem 1.25rem 1.1rem;
+}
+.st-dialog h2 {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.st-dialog p {
+  margin: 0 0 1rem;
+  color: var(--st-ink-2);
+}
+.st-dialog .st-actions {
+  justify-content: flex-end;
+}
+
+.st-drawer {
+  inset: 0 0 0 auto;
+  width: min(28rem, calc(100% - 4rem));
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+}
+.st-drawer > .body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  background: var(--st-panel);
+  border-left: 1px solid var(--st-rule);
+}
+.st-drawer header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem var(--st-pad) 1rem;
+  border-top: 5px solid var(--st-ink);
+}
+.st-drawer header .st-pair {
+  margin-right: auto;
+}
+.st-drawer header .st-pair > :last-child {
+  font-size: 1.3rem;
+}
+.st-drawer .st-actions {
+  margin-top: auto;
+  padding: 1rem var(--st-pad) 1.5rem;
+  border-top: 1px solid var(--st-rule);
+}
+/* one action per row inside a drawer; danger text is red */
+.st-act {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 var(--st-pad);
+  border: 0;
+  border-top: 1px solid var(--st-rule);
+  background: none;
+  color: var(--st-ink);
+  font: 600 0.95rem var(--st-font-ui);
+  text-align: left;
+  transition: background-color 0.15s;
+}
+.st-act > :first-child {
+  flex: 1;
+}
+.st-act::after {
+  content: '›';
+  color: var(--st-ink-2);
+}
+.st-act:is(:hover, :focus-visible) {
+  background: var(--st-paper);
+}
+.st-act.danger {
+  color: var(--st-danger);
+}
+
+/* Toast: a dark bar with a flare strip down the left, one line, then gone.
+   fx.js toast('已保存。') makes one. */
+.st-toast {
+  position: fixed;
+  left: var(--st-pad);
+  bottom: 2rem;
+  z-index: 20;
+  max-width: 26rem;
+  padding: 0.75rem 1.1rem 0.75rem calc(6px + 0.9rem);
+  background:
+    linear-gradient(var(--st-flare), var(--st-flare)) left / 6px 100% no-repeat,
+    var(--st-bar);
+  color: var(--st-bar-text);
+  font-weight: 600;
+}
+
+/* ---------- 11. data: table and bars ---------- */
+
+/* A data table: eyebrow head, hairlines between rows, figures right-aligned
+   in tabular figures, no zebra stripes. */
+.st-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.st-table th {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--st-ink);
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-stretch: var(--st-wider);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.st-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--st-rule);
+}
+.st-table :is(th, td).num {
+  text-align: right;
+  font-stretch: var(--st-wide);
+}
+.st-table tbody tr:hover {
+  background: var(--st-paper);
+  box-shadow: inset var(--st-bar-w) 0 0 var(--st-orbit);
+}
+.st-table-wrap {
+  overflow-x: auto;
+}
+
+/* Bars: grey columns; the one pointed at, or marked .is-here, turns orbit;
+   a reading over its limit gets a flare square on top.
+   <ol class="st-bars"><li style="--v: 0.62"><span>10.12</span></li>… */
+.st-bars {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: end;
+  gap: 4px;
+  height: 8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--st-ink);
+}
+.st-bars > li {
+  position: relative;
+  height: calc(var(--v, 0) * 100%);
+  min-height: 2px;
+  background: color-mix(in srgb, var(--st-ink-2) 40%, transparent);
+  transition: background-color 0.15s;
+}
+.st-bars > li:is(:hover, .is-here) {
+  background: var(--st-orbit);
+}
+.st-bars > li.is-over::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  background: var(--st-flare);
+  outline: 1px solid var(--st-on-flare);
+}
+.st-bars > li > span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 0.3rem;
+  color: var(--st-ink-2);
+  font-size: 0.65rem;
+  font-stretch: var(--st-wide);
+  white-space: nowrap;
+}
+
+/* ---------- 12. motion ---------- */
+
+/* Things that open a page: driven in behind a shutter, switched on from the
+   top down, stepped in row by row. All of it is under a second. */
+@media (prefers-reduced-motion: no-preference) {
+  .st-in-drive {
+    animation: st-drive 620ms var(--st-mech) both;
+  }
+  .st-in-stroke {
+    animation: st-stroke 420ms var(--st-mech) 420ms both;
+  }
+  .st-in-power {
+    animation: st-power 520ms var(--st-mech) backwards;
+    animation-delay: calc(var(--i, 0) * 100ms + 120ms);
+  }
+  .st-in-come {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(var(--i, 0) * 38ms);
+  }
+  .st-tri.st-in-sweep {
+    transform-origin: left;
+    animation: st-sweep 600ms var(--st-ease) both;
+  }
+  .st-ticker .track {
+    animation: st-pass 60s linear infinite;
+  }
+  .st-ticker:is(:hover, :focus-within) .track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes st-drive {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-0.12em);
+  }
+  to {
+    clip-path: inset(0 -5% 0 0);
+    transform: none;
+  }
+}
+@keyframes st-stroke {
+  from {
+    background-size: 0% 100%;
+  }
+}
+@keyframes st-power {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(-6px);
+  }
+}
+@keyframes st-come {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 -2% 0 0);
+  }
+}
+@keyframes st-sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes st-pass {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Going from page to page (same-origin navigations): the new page is drawn
+   across the old one by a slanted shutter. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root) {
+    animation: none;
+  }
+  ::view-transition-new(root) {
+    animation: st-shutter 360ms var(--st-mech) both;
+  }
+}
+@keyframes st-shutter {
+  from {
+    clip-path: polygon(0 0, 0 0, -14% 100%, -14% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 114% 0, 100% 100%, -14% 100%);
+  }
+}
+
+/* Leaving, and changes of state. Every entrance has a way out; exits run at
+   about two-thirds of the entrance and always use mech. */
+@media (prefers-reduced-motion: no-preference) {
+  /* a block appears wiped in from the left: a notice, a toast, a new row */
+  .st-in-wipe {
+    animation: st-wipe-in 280ms var(--st-mech) both;
+  }
+  /* a block leaves wiped out to the right (fx.js removeRow() uses it) */
+  .st-out-wipe {
+    animation: st-wipe-out 200ms var(--st-mech) both;
+  }
+  .st-drawer[open] > .body {
+    animation: st-drawer-in 360ms var(--st-mech) both;
+  }
+  .st-drawer.is-closing > .body {
+    animation: st-drawer-out 240ms var(--st-mech) both;
+  }
+  .st-dialog[open] > * {
+    animation: st-power 280ms var(--st-mech) both;
+  }
+  .st-dialog.is-closing > * {
+    animation: st-shut 180ms var(--st-mech) both;
+  }
+  :is(.st-drawer, .st-dialog)[open]::backdrop {
+    animation: st-fade 200ms linear both;
+  }
+  :is(.st-drawer, .st-dialog).is-closing::backdrop {
+    animation: st-fade 160ms linear reverse both;
+  }
+  .st-toast {
+    animation: st-wipe-in 280ms var(--st-mech) both;
+  }
+  .st-toast.is-closing {
+    animation: st-wipe-out 160ms var(--st-mech) both;
+  }
+  /* unknown progress: a run of lit cells walks across, and stops when done */
+  .st-progress.is-unknown > i {
+    animation: st-run 1.2s steps(24) infinite;
+  }
+  /* "done": after a save, flare passes once through the button and out */
+  .st-btn.is-done {
+    color: var(--st-on-flare);
+  }
+  .st-btn.is-done::before {
+    animation: st-done 600ms var(--st-mech);
+  }
+}
+
+@keyframes st-wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes st-wipe-out {
+  from {
+    clip-path: inset(0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes st-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes st-drawer-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes st-shut {
+  to {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@keyframes st-fade {
+  from {
+    opacity: 0;
+  }
+}
+@property --run-at {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+@keyframes st-run {
+  from {
+    --run-at: -25%;
+  }
+  to {
+    --run-at: 100%;
+  }
+}
+@keyframes st-done {
+  0% {
+    transform: translateX(-101%);
+  }
+  45%,
+  60% {
+    transform: none;
+  }
+  100% {
+    transform: translateX(101%);
+  }
+}
+
+/* Switching themes: fx.js wireTheme() may uncover the new theme in a circle
+   from the toggle. The page shutter must not run at the same time. */
+:root.st-theming::view-transition-old(root),
+:root.st-theming::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the ticker stops and becomes a strip you can scroll */
+  .st-ticker {
+    overflow-x: auto;
+  }
+  .st-ticker ul[aria-hidden] {
+    display: none;
+  }
+  .st *,
+  .st *::before,
+  .st *::after,
+  :is(.st-drawer, .st-dialog)::backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- 13. the star dial (built by dial.js) ----------
+   A ring of sections round a centre readout. The current section is the
+   violet wash with an orbit bracket on its rim; pointing at another fills it
+   with flare and runs an orbit bracket and beam to the centre. */
+
+.st-dial {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--st-font-ui);
+}
+.st-dial .ring {
+  fill: none;
+  stroke: var(--st-ink-2);
+  stroke-dasharray: 2 10;
+}
+.st-dial .plate {
+  fill: var(--st-panel);
+  stroke: var(--st-ink);
+  stroke-width: 1.5;
+  transition: fill 0.15s;
+}
+.st-dial .zh {
+  font-size: 19px;
+  font-weight: 800;
+  fill: var(--st-ink);
+}
+.st-dial .en {
+  font-size: 8px;
+  font-stretch: var(--st-wider);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--st-ink-2);
+}
+.st-dial .seg.is-here .plate {
+  fill: var(--st-wash);
+}
+.st-dial .seg.is-alert .plate {
+  stroke-width: 3;
+}
+.st-dial .flag {
+  fill: var(--st-flare);
+  stroke: var(--st-on-flare);
+}
+.st-dial .lock,
+.st-dial .beam {
+  fill: none;
+  stroke: var(--st-orbit);
+  stroke-width: 3;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.3s var(--st-mech);
+}
+.st-dial .beam {
+  stroke-width: 1.5;
+}
+.st-dial .seg.is-here .lock {
+  stroke-dashoffset: 0;
+}
+.st-dial .seg:is(:hover, :focus-visible) .plate {
+  fill: var(--st-flare);
+}
+.st-dial .seg:is(:hover, :focus-visible) :is(.zh, .en) {
+  fill: var(--st-on-flare);
+}
+.st-dial .seg:is(:hover, :focus-visible) :is(.lock, .beam) {
+  stroke-dashoffset: 0;
+}
+.st-dial .seg:focus-visible {
+  outline: none;
+}
+.st-dial .core-tag {
+  fill: var(--st-flare);
+}
+.st-dial .core-label {
+  font-size: 10px;
+  fill: var(--st-ink-2);
+}
+.st-dial .core-label.on-tag {
+  font-weight: 700;
+  fill: var(--st-on-flare);
+}
+.st-dial .core {
+  font-size: 46px;
+  font-stretch: var(--st-wide);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  fill: var(--st-ink);
+}
+.st-dial .core .unit {
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.st-dial .gauge circle {
+  fill: none;
+  stroke-width: 11;
+}
+.st-dial .gauge .track {
+  stroke: var(--st-chip);
+}
+.st-dial .gauge .arc {
+  stroke: var(--st-ink-2);
+}
+.st-dial .gauge text {
+  font-size: 10px;
+  fill: var(--st-ink-2);
+}
+/* a reading that is nearly full: the arc goes ink, its label sits on flare */
+.st-dial .gauge.is-alert .arc {
+  stroke: var(--st-ink);
+}
+.st-dial .gauge.is-alert text {
+  font-weight: 700;
+  fill: var(--st-on-flare);
+}
+.st-dial .gauge .flag {
+  fill: var(--st-flare);
+  stroke: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .st-dial .seg {
+    animation: st-assemble 360ms var(--st-snap) backwards;
+    animation-delay: calc(var(--i) * 45ms + 80ms);
+    transform-box: view-box;
+    transform-origin: 300px 300px;
+  }
+}
+@keyframes st-assemble {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+/* ---------- 14. variants ----------
+   The same rules with a different face, so two products built from this kit
+   do not look like one. The two theme colours never change. Set the
+   attributes on <html> (assets/variant.js reads ?variant= or the single axes
+   from the address, and data-st-variant presets):
+     data-st-paper    neutral (default) | cool | dusk
+     data-st-cut      standard (default) | tight | wide
+     data-st-ground   stars (default) | chart | hatch | plain   (needs .st-stars on <body>)
+     data-st-density  standard (default) | compact | roomy
+     data-st-motion   full (default) | calm   (calm: no entrances; responses stay)
+   Rules and presets: references/variation.md. */
+
+:root[data-st-paper='cool'] {
+  --st-paper: #eef1f6;
+  --st-panel: #ffffff;
+  --st-rule: #d5dbe5;
+  --st-chip: #e1e6ee;
+}
+:root[data-st-paper='dusk'] {
+  --st-paper: #f4eff3;
+  --st-panel: #fffcfe;
+  --st-rule: #e2d8df;
+  --st-chip: #ece3ea;
+}
+:root[data-st-paper='cool'][data-theme='dark'] {
+  --st-paper: #0f1219;
+  --st-panel: #171b24;
+  --st-rule: #29303d;
+  --st-chip: #212733;
+}
+:root[data-st-paper='dusk'][data-theme='dark'] {
+  --st-paper: #160f18;
+  --st-panel: #201722;
+  --st-rule: #352a37;
+  --st-chip: #2b212d;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-st-paper='cool']:not([data-theme]) {
+    --st-paper: #0f1219;
+    --st-panel: #171b24;
+    --st-rule: #29303d;
+    --st-chip: #212733;
+  }
+  :root[data-st-paper='dusk']:not([data-theme]) {
+    --st-paper: #160f18;
+    --st-panel: #201722;
+    --st-rule: #352a37;
+    --st-chip: #2b212d;
+  }
+}
+
+:root[data-st-cut='tight'] {
+  --st-cut-k: 0.6;
+}
+:root[data-st-cut='wide'] {
+  --st-cut-k: 1.6;
+}
+
+:root[data-st-density='compact'] {
+  font-size: 93.75%;
+}
+:root[data-st-density='roomy'] {
+  font-size: 106.25%;
+}
+
+/* Ground: what lies faintly under the page. */
+:root[data-st-ground='plain'] .st-stars::before {
+  display: none;
+}
+/* chart: circles of a star chart round a pole beyond the top-right corner */
+:root[data-st-ground='chart'] .st-stars::before {
+  background: repeating-radial-gradient(circle at 104% -12%, transparent 0 calc(6rem - 1px), var(--st-stars) calc(6rem - 1px) 6rem);
+  -webkit-mask: radial-gradient(ellipse at 100% 0, #000, transparent 62%);
+  mask: radial-gradient(ellipse at 100% 0, #000, transparent 62%);
+}
+:root[data-st-ground='hatch'] .st-stars::before {
+  background: var(--st-hatch);
+  opacity: 0.4;
+  -webkit-mask: linear-gradient(200deg, #000, transparent 35%), linear-gradient(20deg, #000, transparent 25%);
+  mask: linear-gradient(200deg, #000, transparent 35%), linear-gradient(20deg, #000, transparent 25%);
+}
+
+/* Calm motion: pages open without entrances; pointing, pressing, opening and
+   closing still answer. For tools used all day. */
+:root[data-st-motion='calm'] :is(.st-in-drive, .st-in-stroke, .st-in-power, .st-in-come, .st-in-sweep) {
+  animation: none !important;
+}

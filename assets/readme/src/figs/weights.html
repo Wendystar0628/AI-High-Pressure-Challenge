@@ -36,23 +36,24 @@
 <div class="frame">
   <div class="head">
     <h2>权重分配</h2>
-    <p>先分到 7 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
+    <p>先分到 8 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
   </div>
   <div class="plot" id="plot"></div>
 </div>
 <script>
 // Weights in percent, exact. Category weight = sum of its tasks.
 const CATS = [
-  ['reason',   '深度推理',       '15%',   [['形式化<br>证明题', 7.5], ['IMO<br>原创困难新题', 7.5]]],
-  ['algo',     '算法竞赛',       '15%',   [[null, 5], [null, 5], [null, 5]]],
-  ['interact', '复杂交互应用',   '12.5%', [['AE风味动效<br>设计编辑器', 12.5]]],
+  ['reason',   '数学推理',       '15%',   [['形式化<br>证明题', 7.5], ['数学竞赛<br>原创试题', 7.5]]],
+  ['algo',     '算法竞赛',       '15%', [[null, 5], [null, 5], [null, 5]]],
+  ['spatial',  '空间推理',       '10%',   [['鲁班锁拆解', 10]]],
+  ['interact', '复杂交互应用',   '10%', [['AE风味动效<br>设计编辑器', 10]]],
   ['game',     '游戏设计与开发', '12.5%', [['动态路由塔防', 12.5]]],
-  ['physics',  '物理模拟',       '12.5%', [['果冻冲击与<br>造浪水槽', 12.5]]],
-  ['visual',   '视觉设计与渲染', '17.5%', [['NVIDIA<br>网页艺术', 8.75], ['太阳雨<br>渔港3D渲染', 8.75]]],
-  ['system',   '系统架构与实现', '15%',   [['操作系统嵌套', 15]]],
+  ['physics',  '物理模拟',       '10%',   [['果冻冲击与<br>造浪水槽', 10]]],
+  ['visual',   '视觉设计与渲染', '15%',   [['NVIDIA<br>网页艺术', 7.5], ['太阳雨<br>渔港3D渲染', 7.5]]],
+  ['system',   '系统架构与实现', '12.5%', [['操作系统嵌套', 12.5]]],
 ];
 // The two kinds of task: contiguous in this order (standard first, as in the task table).
-const KINDS = [['标准评判题', '5 题，Sol 单评', 0, 30], ['主动设计题', '6 题，由 Opus 5.5 与 Sol 各评取平均', 30, 100]];
+const KINDS = [['标准评判题', '6 题，Sol 单评', 0, 40], ['主动设计题', '6 题，由 Opus 5.5 与 Sol 各评取平均', 40, 100]];
 const W = 896, P = W / 100;               // px per percentage point
 const GAP = 3;                            // white gap between categories, centred on the exact boundary
 const CAT_Y = 0, BAR_Y = 56, BAR_H = 40, TW_Y = BAR_Y + BAR_H + 8, TN_Y = TW_Y + 21, KIND_Y = TN_Y + 52, RULER_Y = KIND_Y + 54;

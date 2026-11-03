@@ -1,0 +1,5 @@
+interface:
+  display_name: "Stellar UI"
+  short_description: "星辰风味的桌面网页界面：淡紫灰纸面、紫色标当前位置、荧光绿标可按和提醒、切角、宽体标签、两角星图"
+  brand_color: "#9859FF"
+  default_prompt: "Use $stellar-ui to design this desktop web page in the restrained star-atlas style."

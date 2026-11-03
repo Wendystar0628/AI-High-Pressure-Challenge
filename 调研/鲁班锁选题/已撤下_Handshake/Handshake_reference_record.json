@@ -1,0 +1,24 @@
+{
+  "name": "Handshake",
+  "source": "https://puzzlewillbeplayed.com/644Chain/Handshake/solution.html",
+  "design_page": "https://puzzlewillbeplayed.com/644Chain/Handshake/",
+  "source_moves": "4.2.2",
+  "designer": "Yavuz Demirhan",
+  "year": 2013,
+  "source_sha256": "3fc9c4aecf2840ddd4f62d191770e0c4b74f2c316321057d0cb170ae3fec73bd",
+  "global_optimum_proven": false,
+  "id": "01",
+  "tier": 1,
+  "weight": 10,
+  "piece_count": 4,
+  "reference_moves": 8,
+  "reference_first_split": 4,
+  "input_sha256": "59cb8eda512a0b2391caad9c20e0ba27bb914868ec590d5722a29e098c43806d",
+  "answer_sha256": "3038277de4d9d30279da472ec192723baaa927519490b73fab98e39867154cda",
+  "label_mapping": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+  }
+}

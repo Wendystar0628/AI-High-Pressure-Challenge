@@ -1,0 +1,144 @@
+<!doctype html>
+<!--
+  Reading template: the quiet voice (an article, a list of records, a profile).
+  A side rail, a white sheet of one reading measure, and a margin of real
+  figures. Serve the skill folder over HTTP (browsers refuse ES modules from
+  file://). Everything named "示例" is placeholder content.
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>阅读页 · Stellar UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400..900&display=swap" rel="stylesheet" />
+    <script src="../assets/variant.js"></script>
+    <link rel="stylesheet" href="../assets/stellar.css" />
+    <style>
+      /* page-specific layout only */
+      .shell {
+        display: grid;
+        grid-template-columns: 12rem minmax(0, 1fr);
+        min-height: calc(100dvh - 3px);
+      }
+      /* the side rail is .st-rail; here it only sticks to the top */
+      .rail {
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100dvh;
+      }
+      .ids {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 0 0.75rem;
+      }
+      .title {
+        margin: 1.5rem 0 1rem;
+        font-size: var(--st-t-h1);
+        font-weight: 700;
+        line-height: 1.25;
+      }
+      .st-prose {
+        margin-top: 2rem;
+      }
+      .aside {
+        position: sticky;
+        top: 2rem;
+        max-width: 18rem;
+      }
+      .margin-h {
+        margin: 2.5rem 0 0.5rem;
+      }
+      .margin-h:first-child {
+        margin-top: 0;
+      }
+      @media (max-width: 1099px) {
+        .shell {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .rail {
+          position: static;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body class="st st-stars">
+    <div class="st-tri" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="shell">
+      <nav class="st-rail rail" aria-label="主导航">
+        <a class="brand" href="#">LYRA.NOTES</a>
+        <a href="#">首页</a>
+        <a href="#" aria-current="page">笔记</a>
+        <a href="#">分类</a>
+        <a href="#">观测清单</a>
+        <a href="#">关于</a>
+      </nav>
+
+      <article class="st-spread">
+        <div class="st-sheet">
+          <p class="st-eyebrow slash">Notes / Observing</p>
+          <p class="st-crumb st-field"><a href="#">全部笔记</a><span>目视观测</span></p>
+          <p class="ids">
+            <a class="st-tag is-current" href="#" aria-current="page">No.024</a>
+            <a class="st-kv" href="#"><span>分类</span><span>目视观测</span></a>
+            <span class="st-state is-draft">草稿</span>
+          </p>
+          <ul class="st-facts st-field">
+            <li><time>2026.10.16</time></li>
+            <li>6,380 字</li>
+            <li>约 16 分钟</li>
+            <li>阅读 128 次</li>
+          </ul>
+          <h1 class="title st-read">示例：仙女座星系的第一次目视观测</h1>
+          <div class="st-tri" aria-hidden="true"><i></i><i></i><i></i></div>
+          <p class="st-lede st-read">示例摘要：记录一次郊外的目视观测：先等暗适应，再找参照星，最后画下看到的形状。</p>
+
+          <div class="st-prose">
+            <p>示例正文。阅读区只用墨色、次要墨色和纸面，不出现大块的亮色。一行大约三十八个汉字，行高 1.85，正文用常规字重的黑体。<a href="#">链接是墨色字压在一条荧光绿笔划上</a>，深色主题里换成一条荧光绿细条。</p>
+            <h2>一、暗适应</h2>
+            <p>强调用<strong>粗体</strong>。行内代码 <code>exposure = 30 s</code> 用等宽字体，这是唯一用等宽的地方。</p>
+            <blockquote>引用是左边一条墨色竖线，文字退成次要墨色。</blockquote>
+          </div>
+
+          <h2 class="st-group-head st-read"><span>相关笔记</span><span class="st-field">3 篇</span></h2>
+          <ol class="st-records">
+            <li><a class="st-record" href="#"><span class="st-tag">No.023</span><time class="st-field">2026.10.14</time><span class="name st-read">示例：赤道仪的极轴校准</span><span class="st-field">9,102 字</span></a></li>
+            <li><a class="st-record" href="#"><span class="st-tag">No.022</span><time class="st-field">2026.10.11</time><span class="name st-read">示例：城郊光污染的逐月记录</span><span class="st-field">4,577 字</span></a></li>
+            <li><a class="st-record" href="#"><span class="st-tag">No.021</span><time class="st-field">2026.10.07</time><span class="name st-read">示例：野外观测点整理</span><span class="st-field">7,930 字</span></a></li>
+          </ol>
+          <p class="st-empty">空状态写成一句完整的话，说明这里会出现什么。</p>
+        </div>
+
+        <aside class="st-margin" aria-label="目录与统计">
+          <div class="aside">
+            <h2 class="margin-h st-field">目录</h2>
+            <ol class="st-toc">
+              <li><a href="#" aria-current="true">一、暗适应</a></li>
+              <li><a href="#">二、找参照星</a></li>
+              <li><a href="#">三、画下形状</a></li>
+            </ol>
+            <h2 class="margin-h st-field">按分类</h2>
+            <ul class="st-ledger">
+              <li><a href="#">目视观测</a><span class="st-field">9 篇</span></li>
+              <li><a href="#">器材</a><span class="st-field">2 篇</span></li>
+              <li><span>字数合计</span><span class="st-field">48,210 字</span></li>
+            </ul>
+            <p class="st-actions" style="margin-top: 1.5rem">
+              <button class="st-btn small" type="button" data-theme-toggle>切换深浅</button>
+            </p>
+          </div>
+        </aside>
+      </article>
+    </div>
+
+    <script type="module">
+      import { wireTheme } from '../assets/fx.js';
+      wireTheme();
+    </script>
+  </body>
+</html>

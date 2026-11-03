@@ -1,0 +1,224 @@
+<!doctype html>
+<!--
+  Showcase template: the bold voice (a home page, a landing page, a hero).
+  Serve the skill folder over HTTP (e.g. `python3 -m http.server`) — browsers
+  refuse ES modules from file://. Fonts come from Google Fonts here for
+  convenience; self-host them in production (references/tokens.md).
+  Everything named "示例" is placeholder content, and so are the wordmark
+  and the orrery drawing: replace them with the product's own.
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>展示页 · Stellar UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400..900&display=swap" rel="stylesheet" />
+    <script src="../assets/variant.js"></script>
+    <link rel="stylesheet" href="../assets/stellar.css" />
+    <style>
+      /* page-specific layout only; every look comes from stellar.css */
+      .hero {
+        --mx: 0;
+        --my: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 42%);
+        grid-template-rows: auto 1fr auto auto;
+        column-gap: clamp(1.5rem, 4vw, 3.5rem);
+        min-height: min(44rem, calc(100dvh - 3px));
+        padding-top: 1.25rem;
+        border-bottom: 1px solid var(--st-rule);
+        overflow: hidden;
+      }
+      .hero > .meta {
+        grid-column: 1;
+        margin: 0;
+        padding-inline: var(--st-pad);
+      }
+      .hero > .meta > * + *::before {
+        content: '/';
+        margin-inline: 0.75em;
+        color: var(--st-rule);
+      }
+      .hero .st-wordmark {
+        grid-column: 1;
+        align-self: end;
+        margin-top: 2rem;
+        padding-left: var(--st-pad);
+      }
+      .hero .copy {
+        grid-column: 1;
+        padding: 1.75rem var(--st-pad) 2.25rem;
+      }
+      .hero .copy p {
+        margin: 0;
+      }
+      .hero .claim {
+        font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+      }
+      .hero .bio {
+        max-width: 30rem;
+        margin-top: 0.9rem !important;
+        color: var(--st-ink-2);
+      }
+      .hero .st-actions {
+        margin-top: 1.5rem;
+      }
+      .hero .st-frame {
+        grid-column: 2;
+        grid-row: 1 / 4;
+        margin: 0 var(--st-pad) 2.25rem 0;
+      }
+      .hero .st-frame::before {
+        transform: translate(calc(var(--mx) * 12px), calc(var(--my) * 10px));
+      }
+      .hero .st-frame svg {
+        transform: translate(calc(var(--mx) * -14px), calc(var(--my) * -8px));
+        transition: transform 0.4s var(--st-ease);
+      }
+      .hero .st-ticker {
+        grid-column: 1 / -1;
+      }
+      .latest {
+        background: var(--st-panel);
+        border-bottom: 1px solid var(--st-rule);
+      }
+      .latest > a {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: clamp(1.5rem, 5vw, 4rem);
+        padding: clamp(1.75rem, 4vw, 3rem) var(--st-pad);
+      }
+      .latest .body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.9rem;
+        max-width: 44rem;
+      }
+      .latest .title {
+        font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .latest .flag {
+        padding: 0.05em 0.6em;
+        background: var(--st-flare);
+        color: var(--st-on-flare);
+        font-weight: 700;
+      }
+      .index {
+        padding: clamp(2rem, 4vw, 3rem) var(--st-pad) 4rem;
+      }
+    </style>
+  </head>
+  <body class="st st-stars">
+    <div class="st-tri st-in-sweep" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <section class="hero" data-hero>
+      <p class="meta st-field">
+        <time>2026.10.17</time>
+        <span>第 <b data-fx-load>214</b> 夜</span>
+        <span><b data-fx-load>24</b> 篇</span>
+        <span><b data-fx-load>48,210</b> 字</span>
+      </p>
+
+      <h1 class="st-wordmark">
+        <span class="solid st-in-drive">LYRA</span>
+        <span class="hollow st-in-drive" style="animation-delay: 140ms" aria-hidden="true">.NOTES</span>
+      </h1>
+
+      <div class="copy">
+        <p class="claim"><span class="st-marker st-in-stroke">示例：一个人的观测笔记</span></p>
+        <p class="bio">示例简介。目视观测、器材调试和星图整理，按发布顺序编号。</p>
+        <p class="st-actions">
+          <a class="st-btn go" href="#">读最新一篇 <span class="sub">No.024</span></a>
+          <a class="st-btn" href="#">全部笔记</a>
+          <a class="st-btn" href="#">观测清单</a>
+        </p>
+      </div>
+
+      <figure class="st-frame">
+        <div class="window">
+          <!-- placeholder art: a line drawing of an orrery. Use your own picture. -->
+          <svg viewBox="0 0 400 420" fill="none" stroke="currentColor" stroke-width="1.5" role="img" aria-label="示例线稿：一台行星仪">
+            <g fill="currentColor" stroke="none" opacity=".45">
+              <circle cx="46" cy="58" r="1.6" />
+              <circle cx="92" cy="30" r="1" />
+              <circle cx="318" cy="44" r="2" />
+              <circle cx="356" cy="96" r="1" />
+              <circle cx="268" cy="22" r="1" />
+              <circle cx="34" cy="148" r="1" />
+            </g>
+            <path d="M200 214 V344 M174 344 H226 M152 370 H248 M174 344 L152 370 M226 344 L248 370" />
+            <g transform="translate(200 186) rotate(-14)">
+              <ellipse rx="66" ry="22" />
+              <ellipse rx="116" ry="40" />
+              <ellipse rx="168" ry="60" stroke-dasharray="3 7" />
+              <circle cx="-47" cy="15.5" r="5" style="fill: var(--st-panel)" />
+              <circle cx="96" cy="-22.4" r="7.5" style="fill: var(--st-panel)" />
+              <g transform="translate(-119 42.3)">
+                <circle r="6" style="fill: var(--st-panel)" />
+                <ellipse rx="14" ry="3.6" transform="rotate(-24)" />
+              </g>
+            </g>
+            <circle cx="200" cy="186" r="21" style="fill: var(--st-panel)" />
+            <circle cx="200" cy="186" r="11" />
+          </svg>
+        </div>
+        <figcaption class="st-plate">示例座右铭，一行就够。</figcaption>
+      </figure>
+
+      <div class="st-ticker" aria-label="最近的笔记">
+        <div class="track">
+          <ul>
+            <li><a href="#"><b>No.024</b>示例：仙女座星系的第一次目视观测</a></li>
+            <li><a href="#"><b>No.023</b>示例：赤道仪的极轴校准</a></li>
+            <li><a href="#"><b>No.022</b>示例：城郊光污染的逐月记录</a></li>
+            <li><a href="#"><b>No.021</b>示例：野外观测点整理</a></li>
+          </ul>
+          <ul aria-hidden="true">
+            <li><a href="#" tabindex="-1"><b>No.024</b>示例：仙女座星系的第一次目视观测</a></li>
+            <li><a href="#" tabindex="-1"><b>No.023</b>示例：赤道仪的极轴校准</a></li>
+            <li><a href="#" tabindex="-1"><b>No.022</b>示例：城郊光污染的逐月记录</a></li>
+            <li><a href="#" tabindex="-1"><b>No.021</b>示例：野外观测点整理</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="latest">
+      <a href="#" data-fx-host>
+        <span class="st-hollow-no" aria-hidden="true" data-fx>024</span>
+        <span class="body">
+          <span class="st-field"><span class="flag">最新</span> 2026.10.16 │ 6,380 字 │ 约 16 分钟</span>
+          <span class="title">示例：仙女座星系的第一次目视观测</span>
+          <span class="st-read" style="color: var(--st-ink-2); line-height: 1.8">示例摘要。记录一次郊外的目视观测：先等暗适应，再找参照星，最后画下看到的形状。</span>
+          <span class="st-btn go">阅读全文</span>
+        </span>
+      </a>
+    </section>
+
+    <section class="index">
+      <p class="st-eyebrow slash">Index</p>
+      <h2 class="st-bar-title">全站索引</h2>
+      <ol class="st-records">
+        <li><a class="st-record st-in-come" style="--i: 0" href="#"><span class="st-tag">No.024</span><time class="st-field">2026.10.16</time><span class="name st-read">示例：仙女座星系的第一次目视观测</span><span class="st-field">6,380 字</span></a></li>
+        <li><a class="st-record st-in-come" style="--i: 1" href="#"><span class="st-tag">No.023</span><time class="st-field">2026.10.14</time><span class="name st-read">示例：赤道仪的极轴校准</span><span class="st-field">9,102 字</span></a></li>
+        <li><a class="st-record st-in-come" style="--i: 2" href="#"><span class="st-tag">No.022</span><time class="st-field">2026.10.11</time><span class="name st-read">示例：城郊光污染的逐月记录</span><span class="st-field">4,577 字</span></a></li>
+      </ol>
+      <p class="st-actions" style="margin-top: 1.25rem">
+        <button class="st-btn small" type="button" data-theme-toggle>切换深浅</button>
+      </p>
+    </section>
+
+    <script type="module">
+      import { wireReadouts, wireTheme, wireParallax } from '../assets/fx.js';
+      wireReadouts();
+      wireTheme();
+      wireParallax(document.querySelector('[data-hero]'));
+    </script>
+  </body>
+</html>

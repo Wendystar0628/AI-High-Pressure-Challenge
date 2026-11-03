@@ -1,0 +1,363 @@
+<!doctype html>
+<!--
+  ANTI-PATTERNS. Do not copy the left half of any row.
+  Each row shows a mistake (left, "不要") next to the way this kit does it
+  (right, "要"). These are the mistakes that come up again and again with a
+  violet-and-lime palette and a star theme. Serve the skill folder over HTTP.
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>反例 · Stellar UI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400..900&display=swap" rel="stylesheet" />
+    <script src="../assets/variant.js"></script>
+    <link rel="stylesheet" href="../assets/stellar.css" />
+    <style>
+      main {
+        max-width: 84rem;
+        margin-inline: auto;
+        padding: 2rem var(--st-pad) 4rem;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+      }
+      .verdict {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        margin: 0 0 0.75rem;
+        font-weight: 800;
+      }
+      .verdict b {
+        padding: 0 0.5em;
+        font-stretch: var(--st-wider);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+      }
+      .no .verdict b {
+        background: var(--st-ink);
+        color: var(--st-panel);
+      }
+      .yes .verdict b {
+        background: var(--st-wash);
+        box-shadow: inset var(--st-bar-w) 0 0 var(--st-orbit);
+        color: var(--st-ink);
+        padding-left: calc(0.5em + var(--st-bar-w));
+      }
+      .no {
+        background-image: repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in srgb, var(--st-ink) 4%, transparent) 14px 15px);
+      }
+      .why {
+        margin: 0.75rem 0 0;
+        font-size: 0.82rem;
+        color: var(--st-ink-2);
+      }
+      .stage {
+        min-height: 7.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      /* ---- the wrong ways, drawn on purpose ---- */
+      .bad-neon {
+        padding: 1.2rem 1.5rem;
+        background: #07070c;
+        color: #d1ff57;
+        font-size: 2.2rem;
+        font-weight: 900;
+        text-shadow: 0 0 14px #d1ff57;
+      }
+      .bad-alert {
+        padding: 0.6rem 0.9rem;
+        border: 1px solid #e5484d;
+        border-radius: 6px;
+        background: #fde8e8;
+        color: #b4232a;
+      }
+      .bad-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        width: 100%;
+      }
+      .bad-cards > div {
+        padding: 0.8rem;
+        border-radius: 14px;
+        background: #fff;
+        color: #2b2b33;
+        box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+        font-size: 0.85rem;
+      }
+      .bad-pill {
+        padding: 0.6rem 1.6rem;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #9859ff, #d1ff57);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 0 18px #9859ff;
+      }
+      .bad-sky {
+        width: 100%;
+        height: 7rem;
+        background:
+          radial-gradient(color-mix(in srgb, var(--st-ink) 45%, transparent) 1.1px, transparent 1.4px) 0 0 / 11px 11px,
+          radial-gradient(ellipse at 30% 50%, color-mix(in srgb, #9859ff 45%, transparent), transparent 70%),
+          linear-gradient(color-mix(in srgb, var(--st-ink) 12%, transparent) 1px, transparent 1px) 0 0 / 38px 38px,
+          linear-gradient(90deg, color-mix(in srgb, var(--st-ink) 12%, transparent) 1px, transparent 1px) 0 0 / 38px 38px;
+      }
+      .good-stars {
+        position: relative;
+        width: 100%;
+        height: 7rem;
+        overflow: hidden;
+      }
+      .good-stars::before {
+        content: '';
+        position: absolute;
+        inset: -4rem -2rem -4rem 30%;
+        background: color-mix(in srgb, var(--st-ink) 55%, transparent);
+        -webkit-mask: url('../assets/stars/stars-a.svg') center / cover no-repeat;
+        mask: url('../assets/stars/stars-a.svg') center / cover no-repeat;
+      }
+      .bad-fake {
+        position: relative;
+        padding-left: 3rem;
+        font-family: var(--st-font-mono);
+        font-size: 0.7rem;
+        line-height: 1.5;
+        color: var(--st-ink-2);
+      }
+      .bad-fake::before {
+        content: '';
+        position: absolute;
+        left: 0.4rem;
+        top: 50%;
+        width: 1.8rem;
+        height: 1.8rem;
+        margin-top: -0.9rem;
+        border: 1px solid var(--st-ink-2);
+        border-radius: 50%;
+        background:
+          linear-gradient(var(--st-ink-2), var(--st-ink-2)) center / 1px 140% no-repeat,
+          linear-gradient(var(--st-ink-2), var(--st-ink-2)) center / 140% 1px no-repeat;
+      }
+      .bad-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        width: 100%;
+      }
+      .bad-grid > i {
+        height: 2.6rem;
+        background: var(--st-panel);
+        border: 1px solid var(--st-rule);
+      }
+      .good-orbit {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 6.5rem 1fr;
+        grid-template-rows: repeat(3, 2.6rem);
+        gap: 6px 10px;
+        width: 100%;
+      }
+      .good-orbit .ring {
+        grid-column: 2;
+        grid-row: 1 / 4;
+        align-self: center;
+        aspect-ratio: 1;
+        border: 9px solid var(--st-ink);
+        border-radius: 50%;
+        outline: 1px dashed var(--st-ink-2);
+        outline-offset: 4px;
+      }
+      .good-orbit .p {
+        display: block;
+        position: relative;
+        background: var(--st-chip);
+      }
+      .good-orbit .p::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30%;
+        height: 4px;
+        background: var(--st-ink);
+      }
+      .good-orbit .l1 { grid-area: 1 / 1; margin-right: -14px; background: linear-gradient(-45deg, transparent 12px, var(--st-chip) 12.5px); }
+      .good-orbit .l2 { grid-area: 2 / 1; margin-right: 16px; }
+      .good-orbit .l3 { grid-area: 3 / 1; margin-right: -14px; background: linear-gradient(-135deg, transparent 12px, var(--st-chip) 12.5px); }
+      .good-orbit .r1 { grid-area: 1 / 3; margin-left: -14px; background: linear-gradient(45deg, transparent 12px, var(--st-chip) 12.5px); }
+      .good-orbit .r2 { grid-area: 2 / 3; margin-left: 16px; }
+      .good-orbit .r3 { grid-area: 3 / 3; margin-left: -14px; background: linear-gradient(135deg, transparent 12px, var(--st-chip) 12.5px); }
+      .good-orbit .l2::after,
+      .good-orbit .r2::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 26px;
+        height: 7px;
+        margin-top: -3.5px;
+      }
+      .good-orbit .l2::after {
+        left: 100%;
+        background:
+          radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
+          linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
+      }
+      .good-orbit .r2::after {
+        right: 100%;
+        background:
+          radial-gradient(circle at 3.5px 50%, var(--st-ink) 3px, transparent 3.5px),
+          linear-gradient(var(--st-ink), var(--st-ink)) right center / calc(100% - 7px) 1px no-repeat;
+      }
+      .bad-thin-flare {
+        font-size: 1.1rem;
+        color: #d1ff57;
+        border-bottom: 1px solid #d1ff57;
+      }
+      .bad-violet-chip {
+        padding: 0.1rem 0.45rem;
+        background: #9859ff;
+        color: #fff;
+        font-size: 0.75rem;
+      }
+    </style>
+  </head>
+  <body class="st st-stars">
+    <div class="st-tri" aria-hidden="true"><i></i><i></i><i></i></div>
+    <main>
+      <header class="st-head">
+        <h1>反例 <small>Anti-patterns</small></h1>
+        <p>每一行左边是常见的错误，右边是这套界面的做法。<b>不要照抄左边。</b><button class="st-btn small" type="button" data-theme-toggle>切换深浅</button></p>
+      </header>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>深底配荧光绿大字、发光</p>
+          <div class="stage"><span class="bad-neon">SIGNAL 已连接</span></div>
+          <p class="why">霓虹终端的老套路，刺眼；荧光绿铺成了字和光，就不再表示"按这里、看这里"。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>荧光绿只做小块，上面写墨字</p>
+          <div class="stage"><span class="st-marker">一句话说明这是什么</span><span class="st-state is-alert">待审 2</span><button class="st-btn go" type="button">保存</button></div>
+          <p class="why">荧光绿只出现在能按的东西被指向时、需要看一眼的数字和状态上。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>用红色表示告警、失败、待审</p>
+          <div class="stage"><span class="bad-alert">⚠ 备份失败！磁盘空间不足</span></div>
+          <p class="why">红色一出现就像出事了；而且红色已经留给"删除"。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>荧光绿小旗、荧光绿块和墨线</p>
+          <div class="stage" style="display: grid; align-items: start">
+            <p class="st-notice" data-flag="需要处理">备份没有成功：磁盘剩余 2.1 GB。</p>
+            <p style="margin: 0"><span class="st-state is-alert">失败</span> <span class="st-state is-draft">暂停</span> <button class="st-btn small danger" type="button">删除</button></p>
+          </div>
+          <p class="why">红色只在指向"删除"按钮时擦入。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>圆角卡片、柔和投影的网格</p>
+          <div class="stage"><div class="bad-cards"><div>笔记标题一<br /><small>3 天前</small></div><div>笔记标题二<br /><small>5 天前</small></div><div>笔记标题三<br /><small>1 周前</small></div></div></div>
+          <p class="why">像通用的后台模板；"3 天前"也不是记录字段。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>整行记录，列是真实字段</p>
+          <ol class="st-records" style="width: 100%">
+            <li><a class="st-record" href="#"><span class="st-tag">No.024</span><span class="st-field">2026.10.16</span><span class="name st-read">示例：仙女座星系的第一次目视观测</span><span class="st-field">6,380 字</span></a></li>
+            <li><a class="st-record" href="#"><span class="st-tag">No.023</span><span class="st-field">2026.10.14</span><span class="name st-read">示例：赤道仪的极轴校准</span><span class="st-field">9,102 字</span></a></li>
+          </ol>
+          <p class="why">编号、点分日期、计数；指向时左边落下紫条。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>胶囊、紫绿渐变、发光</p>
+          <div class="stage"><button class="bad-pill" type="button">立即开始</button></div>
+          <p class="why">两种主题色混成渐变，各自的意思就没了；发光是霓虹，不是星图的克制。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>切掉一个角的块</p>
+          <div class="stage"><button class="st-btn go" type="button">立即开始</button><button class="st-btn" type="button">了解更多</button></div>
+          <p class="why">切角 = 可以按；指向时荧光绿从左擦入。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>点阵、方格纸、铺满全屏的星空和星云</p>
+          <div class="stage"><div class="bad-sky"></div></div>
+          <p class="why">太满、太像"宇宙感素材"，还压在字下面。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>两角极淡的一小片星图</p>
+          <div class="stage"><div class="good-stars"></div></div>
+          <p class="why">（这里为了看清加深了；实际是墨色 16%，只在两角，并向边缘渐隐。）</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>假技术文字、坐标、十字准星</p>
+          <div class="stage"><span class="bad-fake">TELEMETRY LINK ESTABLISHED<br />RA 00h42m44s · DEC +41°16′09″<br />0101 1101 0010 1110</span></div>
+          <p class="why">只有质感，没有信息。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>真实的字段，宽体排开</p>
+          <div class="stage" style="display: grid; align-items: start">
+            <span class="st-eyebrow slash">Records</span>
+            <ul class="st-facts st-field"><li>2026.10.16</li><li>6,380 字</li><li>约 16 分钟</li><li>3 / 24</li></ul>
+          </div>
+          <p class="why">每个结构元素都要能回答"它显示的是哪个字段"。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>四四方方的仪表盘方格</p>
+          <div class="stage"><div class="bad-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <p class="why">像表格，不像控制台。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>围着星盘的不对称看板</p>
+          <div class="stage">
+            <div class="good-orbit"><div class="ring"></div><i class="p l1"></i><i class="p l2"></i><i class="p l3"></i><i class="p r1"></i><i class="p r2"></i><i class="p r3"></i></div>
+          </div>
+          <p class="why">上下两块靠向星盘并切掉朝它的角；中间一块退开，用以星点结尾的引线接到星盘。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>浅色里用荧光绿画线、写字；紫底配小白字</p>
+          <div class="stage"><span class="bad-thin-flare">当前所在的分区</span><span class="bad-violet-chip">No.024 当前</span></div>
+          <p class="why">荧光绿在白底上只有 1.16:1，看不见；紫底白字 4.03:1，小字读不清。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>当前位置用紫条加淡紫底，字是墨色</p>
+          <div class="stage"><span style="border-left: 3px solid var(--st-orbit); padding-left: 0.6rem; font-weight: 700">当前所在的分区</span><span class="st-tag is-current">No.024</span></div>
+          <p class="why">紫色做线、色条和大字；小字永远写在淡紫底或纸面上。</p>
+        </section>
+      </div>
+    </main>
+    <script type="module">
+      import { wireTheme } from '../assets/fx.js';
+      wireTheme();
+    </script>
+  </body>
+</html>

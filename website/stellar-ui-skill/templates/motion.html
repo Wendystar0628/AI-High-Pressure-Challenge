@@ -1,0 +1,535 @@
+<!doctype html>
+<!--
+  Motion specimen: every motion in the kit, each with what triggers it, its
+  duration and curve, and a button to play it again; the three curves drawn
+  out; and the entrance timelines of the showcase page and the console, on
+  one millisecond scale.
+  Rules and the full table: references/motion.md. Values: assets/tokens.json.
+  Serve the folder over HTTP (browsers refuse ES modules from file://).
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>动效样张 · Stellar UI</title>
+    <script src="../assets/variant.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/stellar.css" />
+    <style>
+      /* page-specific layout only */
+      .page {
+        max-width: 78rem;
+        margin: 0 auto;
+        padding: 2rem var(--st-pad) 5rem;
+      }
+      .top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .top h1 {
+        margin: 0.4rem 0 0;
+        font-size: var(--st-t-h1);
+        font-weight: 800;
+      }
+      .lede {
+        max-width: 40rem;
+        margin: 0 0 2.5rem;
+        color: var(--st-ink-2);
+      }
+      section {
+        margin-top: 3rem;
+      }
+      .curves {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 1rem;
+      }
+      .curve svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+      .curve .axis {
+        fill: none;
+        stroke: var(--st-rule);
+      }
+      .curve .path {
+        fill: none;
+        stroke: var(--st-orbit);
+        stroke-width: 2;
+      }
+      .curve .lane {
+        position: relative;
+        height: 14px;
+        margin-top: 0.75rem;
+        background: var(--st-chip);
+      }
+      .curve .lane i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 14px;
+        height: 14px;
+        background: var(--st-orbit);
+      }
+      .curve.go .lane i {
+        transform: translateX(calc(var(--w) - 14px));
+        transition: transform 0.6s var(--c);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+        gap: 1rem;
+      }
+      .card {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 0.6rem;
+      }
+      .card h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 800;
+      }
+      .stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        place-items: center;
+        min-height: 8.5rem;
+        padding: 1rem;
+        background: var(--st-paper);
+        overflow: hidden;
+      }
+      .stage.left {
+        place-items: center start;
+      }
+      .card footer .st-eyebrow {
+        white-space: nowrap;
+      }
+      .card footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .tri-wide {
+        width: 100%;
+      }
+      .mini-word {
+        --st-wordmark: 3.4rem;
+      }
+      .mini-dial {
+        width: 11rem;
+      }
+      .mini-records {
+        width: 100%;
+      }
+      /* a card is narrow: three fields, tighter gaps, the name on one line */
+      .stage:has(.mini-records) {
+        padding-inline: 0.5rem;
+      }
+      .mini-records .st-record {
+        grid-template-columns: auto auto minmax(0, 1fr);
+        gap: 0 0.6rem;
+      }
+      .mini-records .st-record .name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .mini-panel {
+        width: 100%;
+      }
+      .hollow-demo .st-hollow-no {
+        font-size: 5rem;
+      }
+      .timeline {
+        display: grid;
+        gap: 0.35rem;
+      }
+      .tl-row {
+        display: grid;
+        grid-template-columns: 8rem minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: center;
+        font-size: 0.8rem;
+      }
+      .tl-track {
+        position: relative;
+        height: 14px;
+        background:
+          repeating-linear-gradient(90deg, var(--st-rule) 0 1px, transparent 1px 10%),
+          transparent;
+      }
+      .tl-track b {
+        position: absolute;
+        top: 2px;
+        bottom: 2px;
+        left: calc(var(--a) / 1000 * 100%);
+        width: calc((var(--b) - var(--a)) / 1000 * 100%);
+        background: var(--st-ink-2);
+      }
+      .tl-track b.key {
+        background: var(--st-orbit);
+      }
+      .tl-scale {
+        display: grid;
+        grid-template-columns: 8rem minmax(0, 1fr);
+        gap: 0.75rem;
+      }
+      .tl-scale div {
+        display: flex;
+        justify-content: space-between;
+      }
+      .tl-block + .tl-block {
+        margin-top: 1.75rem;
+      }
+      .note[hidden] {
+        display: none;
+      }
+      @media (max-width: 559px) {
+        .tl-row,
+        .tl-scale {
+          grid-template-columns: 5.5rem minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body class="st st-stars">
+    <div class="st-tri st-in-sweep" aria-hidden="true"><i></i><i></i><i></i></div>
+    <main class="page">
+      <div class="top">
+        <div>
+          <p class="st-eyebrow slash">Motion / 动效</p>
+          <h1>动效样张</h1>
+        </div>
+        <p class="st-actions">
+          <button class="st-btn" type="button" id="all">全部重放</button>
+          <button class="st-btn" type="button" data-theme-toggle>切换深浅</button>
+        </p>
+      </div>
+      <p class="lede st-read">每一个动效都对应一次操作或一次状态变化。下面每格写着它由什么触发、用多长时间、走哪条曲线；带"重放"的点一下再看一遍，其余的用指针去碰，或按 Tab 聚焦。规则和完整的表在 <code>references/motion.md</code>。</p>
+      <p class="st-notice note" id="reduced" hidden data-flag="注意">系统打开了"减少动态效果"，下面的动效都不会播放，这正是期望的行为。</p>
+
+      <section aria-labelledby="h-curves">
+        <h2 class="st-bar-title" id="h-curves">三条曲线</h2>
+        <div class="curves">
+          <div class="st-panel curve" style="--c: var(--st-snap)" data-bezier="0.16,1,0.3,1">
+            <h2>snap <small>--st-snap</small></h2>
+            <p class="st-field">cubic-bezier(0.16, 1, 0.3, 1)</p>
+            <svg viewBox="0 0 200 120" aria-hidden="true"></svg>
+            <p class="st-read">迅速到位后稳住：出现、列表行右移、逐行入场。</p>
+            <div class="lane"><i></i></div>
+          </div>
+          <div class="st-panel curve" style="--c: var(--st-mech)" data-bezier="0.7,0,0.2,1">
+            <h2>mech <small>--st-mech</small></h2>
+            <p class="st-field">cubic-bezier(0.7, 0, 0.2, 1)</p>
+            <svg viewBox="0 0 200 120" aria-hidden="true"></svg>
+            <p class="st-read">慢起、硬停，像闸门：快门、擦入、灌满、页签伸开，以及所有退出。</p>
+            <div class="lane"><i></i></div>
+          </div>
+          <div class="st-panel curve" style="--c: var(--st-ease)" data-bezier="0.2,0.7,0.1,1">
+            <h2>ease <small>--st-ease</small></h2>
+            <p class="st-field">cubic-bezier(0.2, 0.7, 0.1, 1)</p>
+            <svg viewBox="0 0 200 120" aria-hidden="true"></svg>
+            <p class="st-read">普通过渡，只给光谱条扫过和颜色变化。</p>
+            <div class="lane"><i></i></div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-in">
+        <h2 class="st-bar-title" id="h-in">打开页面</h2>
+        <div class="grid">
+          <article class="st-panel card">
+            <h3>光谱条扫过</h3>
+            <div class="stage"><div class="st-tri tri-wide" data-replay="st-in-sweep" aria-hidden="true"><i></i><i></i><i></i></div></div>
+            <footer><span class="st-field">一次访问的第一页 │ 600 │ ease</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>字标推入</h3>
+            <div class="stage left">
+              <p class="st-wordmark mini-word"><span class="solid" data-replay="st-in-drive">LYRA</span><span class="hollow" data-replay="st-in-drive" style="animation-delay: 140ms">.NOTES</span></p>
+            </div>
+            <footer><span class="st-field">展示页 │ 620，第二行晚 140 │ mech</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>马克笔划过</h3>
+            <div class="stage"><p><span class="st-marker" data-replay="st-in-stroke">一句话说明这是什么</span></p></div>
+            <footer><span class="st-field">展示页 │ 晚 420，420 │ mech</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>乱码后落定</h3>
+            <div class="stage"><p class="st-figs mini-panel" style="border: 0"><span><b data-scramble>16</b><span>已发布</span></span><span><b data-scramble>2</b><span>待审</span></span><span><b data-scramble>7</b><span>草稿</span></span></p></div>
+            <footer><span class="st-field">打开页面 │ 600，每个晚 ≤ 40 │ 线性</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>通电</h3>
+            <div class="stage">
+              <div class="mini-panel" style="display: grid; gap: 0.5rem">
+                <div class="st-panel" data-replay="st-in-power" style="--i: 0">第一行看板</div>
+                <div class="st-panel" data-replay="st-in-power" style="--i: 1">第二行看板</div>
+              </div>
+            </div>
+            <footer><span class="st-field">打开控制台 │ 520，每行晚 100 │ mech</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>逐行亮起</h3>
+            <div class="stage">
+              <ol class="st-records mini-records">
+                <li><span class="st-record" data-replay="st-in-come" style="--i: 0"><span class="st-tag">No.024</span><span class="st-field">10.17</span><span class="name">示例笔记</span></span></li>
+                <li><span class="st-record" data-replay="st-in-come" style="--i: 1"><span class="st-tag">No.023</span><span class="st-field">10.10</span><span class="name">示例笔记</span></span></li>
+                <li><span class="st-record" data-replay="st-in-come" style="--i: 2"><span class="st-tag">No.022</span><span class="st-field">10.08</span><span class="name">示例笔记</span></span></li>
+              </ol>
+            </div>
+            <footer><span class="st-field">切换列表内容 │ 320，每行晚 38 │ snap</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>星盘组装</h3>
+            <div class="stage"><svg class="st-dial mini-dial" data-dial role="group" aria-label="示例分区"></svg></div>
+            <footer><span class="st-field">打开控制台 │ 360，每段晚 45 │ snap</span><button class="st-btn small" type="button" data-redraw>重放</button></footer>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-act">
+        <h2 class="st-bar-title" id="h-act">回应操作</h2>
+        <div class="grid">
+          <article class="st-panel card">
+            <h3>荧光绿擦入、按下</h3>
+            <div class="stage"><p class="st-actions"><button class="st-btn go" type="button">主要操作</button><button class="st-btn" type="button">次要</button><button class="st-btn danger" type="button">删除</button></p></div>
+            <footer><span class="st-field">指向 / 聚焦 │ 280 │ mech；按下 100</span><span class="st-eyebrow">Point / 指向它</span></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>紫条落下、整行右移</h3>
+            <div class="stage">
+              <ol class="st-records mini-records">
+                <li><a class="st-record" href="#"><span class="st-tag">No.024</span><span class="st-field">10.17</span><span class="name">指这行</span></a></li>
+                <li><a class="st-record" href="#"><span class="st-tag">No.023</span><span class="st-field">10.10</span><span class="name">或这行</span></a></li>
+              </ol>
+            </div>
+            <footer><span class="st-field">指向 / 按下 │ 200 │ snap</span><span class="st-eyebrow">Point / 指向它</span></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>页签伸开</h3>
+            <div class="stage"><section class="st-panel mini-panel" tabindex="0"><h2>笔记 <small>全部</small></h2><p class="st-field" style="margin: 0">指向或聚焦这块看板</p></section></div>
+            <footer><span class="st-field">指向看板 │ 400 │ mech</span><span class="st-eyebrow">Point / 指向它</span></footer>
+          </article>
+          <article class="st-panel card hollow-demo">
+            <h3>墨色灌满</h3>
+            <div class="stage"><a href="#" data-fx-host aria-label="示例"><span class="st-hollow-no" data-fx>016</span></a></div>
+            <footer><span class="st-field">指向空心大编号 │ 450 │ mech</span><span class="st-eyebrow">Point / 指向它</span></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>保存：处理中，然后完成</h3>
+            <div class="stage"><button class="st-btn go" type="button" id="save">保存</button></div>
+            <footer><span class="st-field">aria-busy → 完成一次擦过 600 │ mech</span><span class="st-eyebrow">Press / 按它</span></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>分段进度</h3>
+            <div class="stage">
+              <div class="mini-panel" style="display: grid; gap: 1rem">
+                <div class="st-progress" id="prog" style="--p: 0.25"><span class="st-eyebrow">Syncing / 同步中</span><span class="st-field">025%</span><i></i></div>
+                <div class="st-progress is-unknown"><span class="st-eyebrow">Connecting / 连接中</span><span class="st-field">——</span><i></i></div>
+              </div>
+            </div>
+            <footer><span class="st-field">按格跳，不平滑 │ 未知进度循环，完成即停</span><button class="st-btn small" type="button" id="step">前进</button></footer>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-out">
+        <h2 class="st-bar-title" id="h-out">进出与状态变化</h2>
+        <div class="grid">
+          <article class="st-panel card">
+            <h3>提示擦入</h3>
+            <div class="stage"><p class="st-notice mini-panel" data-replay="st-in-wipe" data-flag="出错">这个地址已经被另一个笔记本使用。</p></div>
+            <footer><span class="st-field">出错 / 需要注意 │ 280 │ mech；不抖动</span><button class="st-btn small" type="button">重放</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>删除一行</h3>
+            <div class="stage">
+              <ol class="st-records mini-records" id="rows"></ol>
+            </div>
+            <footer><span class="st-field">向右擦掉 200 │ mech；下面的行上移 200 │ snap</span><button class="st-btn small danger" type="button" id="drop">删除第一行</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>提示条</h3>
+            <div class="stage"><p class="st-field" style="text-align: center">从左擦入 280，停 2 秒，<br />向右擦掉 160</p></div>
+            <footer><span class="st-field">操作完成 │ mech</span><button class="st-btn small" type="button" id="toast">弹出</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>侧面板</h3>
+            <div class="stage"><p class="st-field" style="text-align: center">从右推入 360，推出 240；<br />遮罩淡入 200</p></div>
+            <footer><span class="st-field">mech │ 不弹跳</span><button class="st-btn small" type="button" data-open="drawer">打开</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>对话框</h3>
+            <div class="stage"><p class="st-field" style="text-align: center">通电 280，关上 180</p></div>
+            <footer><span class="st-field">mech</span><button class="st-btn small" type="button" data-open="dialog">打开</button></footer>
+          </article>
+          <article class="st-panel card">
+            <h3>深浅揭幕</h3>
+            <div class="stage"><p class="st-field" style="text-align: center">从按钮处扩散的圆，<br />约 3000 像素/秒，240–600</p></div>
+            <footer><span class="st-field">切换主题 │ mech</span><button class="st-btn small" type="button" data-theme-toggle>切换</button></footer>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-tl">
+        <h2 class="st-bar-title" id="h-tl">入场时间轴</h2>
+        <p class="st-read" style="color: var(--st-ink-2); max-width: 40rem">一整段入场不超过 1 秒。紫色的是这一页的主角，最先开始；其余的跟在后面，错开的间隔只用 38、45、100 三档。</p>
+        <div class="tl-scale st-field" aria-hidden="true"><span></span><div><span>0</span><span>250</span><span>500</span><span>750</span><span>1000 ms</span></div></div>
+        <div id="timelines"></div>
+      </section>
+    </main>
+
+    <dialog class="st-drawer" id="drawer" aria-labelledby="drawer-title">
+      <div class="body">
+        <header>
+          <span class="st-pair" id="drawer-title"><span class="st-eyebrow slash">No.023 / Actions</span><span>赤道仪的极轴校准</span></span>
+          <button class="st-btn small" type="button" data-close>关闭</button>
+        </header>
+        <button class="st-act" type="button" data-close><span>打开</span><span class="st-field">9,102 字</span></button>
+        <button class="st-act" type="button" data-close><span>移到草稿</span></button>
+        <button class="st-act danger" type="button" data-close><span>删除</span></button>
+        <p class="st-actions"><button class="st-btn" type="button" data-close>取消</button></p>
+      </div>
+    </dialog>
+    <dialog class="st-dialog" id="dialog" aria-labelledby="dialog-title">
+      <div class="st-panel cut-br">
+        <p class="st-eyebrow slash">Confirm</p>
+        <h2 id="dialog-title">删除这条记录？</h2>
+        <p>No.023 会被永久删除，不能恢复。</p>
+        <p class="st-actions"><button class="st-btn small" type="button" data-close>取消</button><button class="st-btn small danger" type="button" data-close>删除</button></p>
+      </div>
+    </dialog>
+
+    <script type="module">
+      import { wireTheme, wireReadouts, wireDialogs, scramble, toast, removeRow, flashDone } from '../assets/fx.js';
+      import { drawDial } from '../assets/dial.js';
+      wireTheme();
+      wireReadouts();
+      wireDialogs();
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('reduced').hidden = false;
+
+      // curves: plot each bezier, and run a block along a lane with it
+      const bez = (p1, p2, t) => 3 * (1 - t) ** 2 * t * p1 + 3 * (1 - t) * t ** 2 * p2 + t ** 3;
+      document.querySelectorAll('.curve').forEach((card) => {
+        const [x1, y1, x2, y2] = card.dataset.bezier.split(',').map(Number);
+        const pts = Array.from({ length: 41 }, (_, i) => {
+          const t = i / 40;
+          return `${(10 + bez(x1, x2, t) * 180).toFixed(1)},${(110 - bez(y1, y2, t) * 100).toFixed(1)}`;
+        });
+        const svg = card.querySelector('svg');
+        svg.innerHTML = `<path class="axis" d="M10 10V110H190"/><polyline class="path" points="${pts.join(' ')}"/>`;
+        const lane = card.querySelector('.lane');
+        lane.style.setProperty('--w', lane.clientWidth + 'px');
+      });
+      const runCurves = () =>
+        document.querySelectorAll('.curve').forEach((c) => {
+          c.classList.remove('go');
+          void c.offsetWidth;
+          c.classList.add('go');
+        });
+
+      // replay: take the entrance class off and put it back
+      const replay = (root) => {
+        root.querySelectorAll('[data-replay]').forEach((el) => {
+          el.classList.remove(el.dataset.replay);
+          void el.offsetWidth;
+          el.classList.add(el.dataset.replay);
+        });
+        root.querySelectorAll('[data-scramble]').forEach((el, i) => setTimeout(() => scramble(el, 600), i * 40));
+      };
+      document.querySelectorAll('.card').forEach((card) => {
+        const b = [...card.querySelectorAll('footer .st-btn')].find((x) => x.textContent === '重放');
+        if (b && !b.hasAttribute('data-redraw')) b.addEventListener('click', () => replay(card));
+      });
+
+      const dial = document.querySelector('[data-dial]');
+      const drawIt = () =>
+        drawDial(dial, {
+          idle: { label: '示例读数', big: 16, unit: '小时' },
+          sections: ['概览', '笔记', '评论', '统计', '备份', '读者'].map((zh, i) => ({ zh, en: '', big: i * 3 + 2, unit: '条', here: i === 0, alert: i === 2 })),
+        });
+      drawIt();
+      document.querySelector('[data-redraw]').addEventListener('click', drawIt);
+
+      document.getElementById('all').addEventListener('click', () => {
+        replay(document);
+        drawIt();
+        runCurves();
+      });
+      runCurves();
+
+      // progress steps in hard cells
+      let p = 0.25;
+      document.getElementById('step').addEventListener('click', () => {
+        p = p >= 1 ? 0 : Math.min(1, p + 0.125);
+        const el = document.getElementById('prog');
+        el.style.setProperty('--p', p);
+        el.querySelector('.st-field').textContent = String(Math.round(p * 100)).padStart(3, '0') + '%';
+      });
+
+      document.getElementById('save').addEventListener('click', (e) => {
+        const b = e.currentTarget;
+        b.setAttribute('aria-busy', 'true');
+        setTimeout(() => flashDone(b, '已保存'), 800);
+      });
+      document.getElementById('toast').addEventListener('click', () => toast('已保存。'));
+
+      // removing a row; refill when empty
+      const rows = document.getElementById('rows');
+      let n = 24;
+      const fill = () => {
+        rows.innerHTML = [0, 1, 2]
+          .map((i) => `<li><span class="st-record"><span class="st-tag">No.${String(n - i).padStart(3, '0')}</span><span class="st-field">10.${17 - i}</span><span class="name">示例笔记</span></span></li>`)
+          .join('');
+      };
+      fill();
+      document.getElementById('drop').addEventListener('click', async () => {
+        if (!rows.firstElementChild) {
+          n -= 3;
+          return fill();
+        }
+        await removeRow(rows.firstElementChild);
+      });
+
+      // timelines (ms). key = the lead of the page.
+      const lines = {
+        '展示页': [
+          ['光谱条', 0, 600, true],
+          ['字标 实心', 0, 620, true],
+          ['字标 空心', 140, 760],
+          ['字段读数 ×3', 120, 800],
+          ['马克笔', 420, 840],
+        ],
+        '控制台': [
+          ['星盘 6 段', 80, 665, true],
+          ['看板 第 1 行', 120, 640],
+          ['看板 第 2 行', 220, 740],
+          ['看板 第 3 行', 320, 840],
+          ['大数字 ×6', 120, 900],
+        ],
+      };
+      document.getElementById('timelines').innerHTML = Object.entries(lines)
+        .map(
+          ([name, rows]) =>
+            `<div class="tl-block"><p class="st-eyebrow slash">${name}</p><div class="timeline">` +
+            rows
+              .map(([label, a, b, key]) => `<div class="tl-row"><span>${label}</span><div class="tl-track" title="${a}–${b} ms"><b class="${key ? 'key' : ''}" style="--a:${a};--b:${b}"></b></div></div>`)
+              .join('') +
+            `</div></div>`,
+        )
+        .join('');
+    </script>
+  </body>
+</html>

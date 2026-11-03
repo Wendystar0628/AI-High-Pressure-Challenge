@@ -1,0 +1,42 @@
+{
+  "name": "Star Pillar",
+  "designer": "Osanori Yamamoto",
+  "year": 2013,
+  "source": "https://puzzlewillbeplayed.com/4PieceBurr/StarPillar/solution.html",
+  "design_page": "https://puzzlewillbeplayed.com/4PieceBurr/StarPillar/",
+  "source_moves": "14.2.3",
+  "source_sha256": "549bac1ccfc5d0ac4a15c5339516eb7dc255876cd0cc651f3c8992d996420cea",
+  "design_page_sha256": "8e882f5d634c218c8b852839507bee5f81f6281dda41299de033c65a2c85995d",
+  "global_optimum_proven": false,
+  "label_mapping": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D"
+  },
+  "reference_generator": {
+    "name": "BurrTools",
+    "version": "v0.8.0",
+    "commit": "1a14e7319723c44c0187ac776d2a7ce129718831",
+    "implementation": "disassembler_0_c"
+  },
+  "id": "05",
+  "tier": 2,
+  "weight": 12,
+  "piece_count": 4,
+  "reference_first_split": 14,
+  "reference_moves": 20,
+  "reference_stage_moves": [
+    14,
+    3,
+    3
+  ],
+  "input_sha256": "a108f455b62fc8361ab08664cc4cc60250a3cf23dc2047d59888f017a88f5300",
+  "answer_sha256": "1aa3f53ff1fc8e8b65f56cf5bf3820afe8051719f167c6da498dbbb16b75dcb7",
+  "raw_puzzle_sha256": "71be6ec84f03735db7c0c60f478d25348dec3cb02729eec70f6cbfecce526feb",
+  "reference_xml_sha256": "228f91bc58723cfd5bf34dfcc0607b9614ffb7d929b71ad97ec02e3b96cd07ad",
+  "public_level": "14.2.3",
+  "public_level_grade": 14,
+  "public_level_label": "Moves",
+  "public_level_page_sha256": "8e882f5d634c218c8b852839507bee5f81f6281dda41299de033c65a2c85995d"
+}

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x684">
+<title>鲁班锁判法</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .head h2 { font-size: 24px; letter-spacing: .01em; }
+  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+
+  /* Two columns divided by one hairline; rows divided by lane lines, as in the other figures. */
+  .row { display: grid; grid-template-columns: 1fr 1px 1fr; column-gap: 28px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
+  .vr { background: var(--line); }
+  .ph { display: flex; align-items: baseline; justify-content: space-between; }
+  .ph h3 { font-size: 17px; }
+  .ph .tag { font-family: var(--font-num); font-size: 18px; font-weight: 600; color: var(--spatial); }
+  .ph .tag .cn { font-family: var(--font-cn); font-size: 13px; font-weight: 400; color: var(--ink-2); margin: 0 2px; }
+  .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; color: var(--ink); }
+
+  /* Validity: three checks on one track, then the two possible results. */
+  .gates { position: relative; margin-top: 14px; padding-left: 40px; }
+  .gates .track { position: absolute; left: 13px; top: 14px; height: 100px; width: 2px; background: var(--spatial-tint); }
+  .gate { position: relative; height: 50px; }
+  .gate .no { position: absolute; left: -40px; top: 1px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--spatial);
+              background: var(--paper); color: var(--spatial); font-family: var(--font-num); font-size: 15px; font-weight: 600;
+              display: flex; align-items: center; justify-content: center; }
+  .gate b { font-size: 14.5px; font-weight: 700; }
+  .gate span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+  .result { display: flex; gap: 18px; margin-top: 16px; margin-left: -40px; }
+  .res { display: flex; align-items: center; gap: 10px; }
+  .res .box { height: 40px; padding: 0 12px; border-radius: var(--radius-block); display: flex; align-items: center; justify-content: center;
+              font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .res .on { background: var(--ink); color: var(--paper); }
+  .res .off { border: 1.5px solid var(--ink-3); color: var(--ink-3); font-family: var(--font-num); font-size: 21px; }
+  .res .lab { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+
+  svg { display: block; overflow: visible; }
+  svg text { font-family: var(--font-cn); fill: var(--ink); }
+  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+  svg .tick { font-size: 12px; fill: var(--ink-3); }
+  svg .lab { font-size: 12px; fill: var(--ink-2); }
+  svg .call { font-size: 12.5px; fill: var(--ink); }
+
+  /* Tools allowed while answering. */
+  .tools-h { font-size: 13px; color: var(--ink-3); margin-bottom: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px 0 9px; border-radius: var(--radius-block);
+          font-size: 13px; white-space: nowrap; }
+  .chip svg { width: 14px; height: 14px; flex: none; }
+  .yes { background: var(--spatial-tint); color: var(--ink); }
+  .no { border: 1px solid var(--line); color: var(--ink-2); }
+  .note { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); margin-top: 10px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ok" viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--spatial)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ban" viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+<div class="frame">
+  <div class="head">
+    <h2>空间推理：先完整拆开，再比步数</h2>
+    <p>鲁班锁拆解由 GPT 6.1 Sol 单评：程序检查整棵拆解树，完整合法的路线按总步数计分，接受任何合法路线。</p>
+  </div>
+
+  <div class="row">
+    <section>
+      <div class="ph"><h3>拆开才算数</h3><div class="tag">8<span class="cn">副锁</span></div></div>
+      <p class="rule">零件保持初始朝向，只能沿 x、y、z 轴平移；可以几件一起移动，但不能整体搬动整个组件。</p>
+      <div class="gates">
+        <div class="track"></div>
+        <div class="gate"><div class="no">1</div><b>每一步都不碰撞</b><span>移动经过的整个区间都检查，不能跳过中间的碰撞位置</span></div>
+        <div class="gate"><div class="no">2</div><b>分离要移到无限远</b><span>一组零件沿某个轴一直移出、途中不碰其余零件，才分成两组</span></div>
+        <div class="gate"><div class="no">3</div><b>拆到每组只剩一个零件</b><span>分开的两组都要继续拆，框架也要拆开；只找到首次分离不算</span></div>
+        <div class="result">
+          <div class="res"><div class="box on">按步数计分</div><div class="lab">三条都满足</div></div>
+          <div class="res"><div class="box off">0</div><div class="lab">任一条不满足<br>或没有提交</div></div>
+        </div>
+      </div>
+    </section>
+    <div class="vr"></div>
+    <section>
+      <div class="ph"><h3>步数越少，得分越高</h3><div class="tag">w × min(1, B<span class="cn">÷</span>N)</div></div>
+      <p class="rule">同一组零件沿同一轴、同一方向连续移动计一步，距离不计；换组、换轴或反向开始下一步，分开的两组分别计步。</p>
+      <svg id="curve" width="419" height="196"></svg>
+    </section>
+  </div>
+
+  <div class="row">
+    <section>
+      <div class="tools-h">三档分值：题号从易到难，合计 100 分</div>
+      <svg id="tiers" width="419" height="62"></svg>
+      <p class="note">每题提交一份 JSON 拆解树：先写这一组分离前的移动，最后一步是 <code>out</code>；移出的一组和剩下的一组再各写各的拆解。</p>
+    </section>
+    <div class="vr"></div>
+    <section>
+      <div class="tools-h">作答时能用的工具</div>
+      <div class="chips">
+        <span class="chip yes"><svg><use href="#ok"/></svg>读分层图和体素数据，手工推演</span>
+        <span class="chip yes"><svg><use href="#ok"/></svg>路线检查器 <code>check.py</code></span>
+        <span class="chip yes"><svg><use href="#ok"/></svg>位置记账工具 <code>positions.py</code></span>
+        <span class="chip no"><svg><use href="#ban"/></svg>自编程序搜索路线、模拟移动、算碰撞</span>
+        <span class="chip no"><svg><use href="#ban"/></svg>求解器</span>
+        <span class="chip no"><svg><use href="#ban"/></svg>修改这两个工具</span>
+      </div>
+      <p class="note">违反工具规定的作答记 0 分：评分员先读会话记录，再检查路线。</p>
+    </section>
+  </div>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+};
+const txt = (parent, x, y, cls, s, anchor = 'start') => {
+  const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
+  t.innerHTML = s;
+  return t;
+};
+const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
+  el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
+
+/* Score as a share of w against N in multiples of B: full up to B, then B / N. */
+{
+  const g = document.getElementById('curve');
+  const L = 40, R = 410, T = 18, B = 150, X0 = .5, X1 = 4.2;
+  const X = v => L + (v - X0) / (X1 - X0) * (R - L), Y = p => B - p / 100 * (B - T);
+  for (const p of [0, 50, 100]) {
+    line(g, L, Y(p), R, Y(p), 'var(--line-2)', 1);
+    txt(g, L - 8, Y(p) + 4, 'tick n', `${p}%`, 'end');
+  }
+  for (const [v, s] of [[1, 'B'], [2, '2B'], [3, '3B'], [4, '4B']]) {
+    line(g, X(v), B, X(v), B + 6, 'var(--ink-3)', 1);
+    txt(g, X(v), B + 19, 'tick n', s, 'middle');
+  }
+  el('polyline', { points: `${L},${T - 8} ${L},${B} ${R},${B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.25 }, g);
+  const pts = [[X0, 100], [1, 100]];
+  for (let v = 1.02; v <= X1 + 1e-9; v += .02) pts.push([v, 100 / v]);
+  el('polyline', { points: pts.map(([v, p]) => `${X(v)},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--spatial)',
+                   'stroke-width': 2.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
+  // Full score at N = B; fewer steps than B score the same.
+  el('circle', { cx: X(1), cy: Y(100), r: 5.5, fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1.75 }, g);
+  el('circle', { cx: X(1), cy: Y(100), r: 2.2, fill: 'var(--ink)' }, g);
+  txt(g, X(1) + 12, Y(100) + 4, 'call', 'N ≤ B 得满分 w');
+  for (const [v, s] of [[1.25, '80%'], [2, '50%'], [4, '25%']]) {
+    el('circle', { cx: X(v), cy: Y(100 / v), r: 3.2, fill: 'var(--spatial)', stroke: 'var(--paper)', 'stroke-width': 1.3 }, g);
+    txt(g, X(v) + 7, Y(100 / v) - 7, 'tick n', s);
+  }
+  txt(g, R, B + 40, 'lab', '合法完整路线的总步数 N', 'end');
+  txt(g, L - 40, B + 40, 'lab', 'B：每题固定的基准步数，取参考解的完整步数');
+}
+
+/* The 100 points as eight cells sized by value, grouped into the three tiers. */
+{
+  const g = document.getElementById('tiers');
+  const w = [8, 8, 12, 12, 12, 12, 18, 18], P = 3.9, G = 3, y = 22, H = 24;
+  const xs = [];
+  w.reduce((x, v) => { xs.push(x); return x + v * P + G; }, 0);
+  for (const [name, a, b] of [['简单', 0, 2], ['中档', 2, 6], ['困难', 6, 8]]) {
+    const x0 = xs[a], x1 = xs[b - 1] + w[b - 1] * P, pts = w.slice(a, b).reduce((s, v) => s + v, 0);
+    el('polyline', { points: `${x0},${y - 4} ${x0},${y - 8} ${x1},${y - 8} ${x1},${y - 4}`, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
+    txt(g, x0, y - 13, 'lab', `${name} <tspan class="n" style="fill:var(--ink);font-weight:600">${pts}</tspan>`);
+  }
+  w.forEach((v, i) => {
+    el('rect', { x: xs[i], y, width: v * P, height: H, rx: 4, fill: 'var(--spatial-tint)', stroke: 'var(--spatial)', 'stroke-width': 1.5 }, g);
+    txt(g, xs[i] + v * P / 2, y + 16, 'n', String(i + 1).padStart(2, '0'), 'middle').setAttribute('style', 'font-size: 12px; fill: var(--spatial)');
+    txt(g, xs[i] + v * P / 2, y + H + 15, 'tick n', String(v), 'middle');
+  });
+}
+</script>
+</body>
+</html>
