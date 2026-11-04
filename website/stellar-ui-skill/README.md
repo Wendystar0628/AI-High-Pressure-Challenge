@@ -1,8 +1,8 @@
 # stellar-ui
 
-An agent skill for building desktop web UI with a restrained star-atlas look: cool lavender paper, night-sky ink, violet `#9859FF` for "where you are", acid lime `#D1FF57` for "press this / look at this", cut corners on pressable things, wide Latin labels over bold Chinese, hairlines, and a faint star chart in two corners.
+An agent skill for building desktop web UI with a restrained star-atlas look: cool lavender paper, night-sky ink, a complementary pair of theme colours (violet `#9859FF` for brand and structure, acid lime `#D1FF57` for energy and highlight), every star a four-point star, cut corners on pressable things, wide Latin labels over bold Chinese, hairlines, and a faint star chart in two corners.
 
-一个让 AI 写出"星辰风味"桌面网页的 skill：淡紫灰的纸配夜空色的字，只用两种颜色，各管一件事——紫色标出你现在在哪，荧光绿标出能按、要看的东西；能点的按钮切掉一个角，标题上面放一行拉宽的英文小字、下面是粗体中文，列表每一行都有编号，背景只有两角淡淡的一小片星图，动画短而干脆。只做桌面网页。
+一个让 AI 写出"星辰风味"桌面网页的 skill：淡紫灰的纸配夜空色的字，主色是一对互补色——紫色搭起品牌和结构（字标、分节标记、看板页签、图表、你在哪），荧光绿点亮主要操作和高光（最佳成绩、提醒、星星的光点）；中性色为主，有色部分按紫 6、荧光绿 3、星光青 1 分配。星星一律画成四角星；能点的按钮切掉一个角，标题上面放一行拉宽的英文小字、下面是粗体中文，列表每一行都有编号，背景只有两角淡淡的一小片星图，动画短而干脆。只做桌面网页。
 
 基本规则每个产品都一样，外观可以按产品换：底色、切角大小、背景纹理、疏密、动画多少五项都能调，另有四组现成的搭配，免得每个用它的产品都长得一样（见 `references/variation.md`）。两种主题色固定不变。
 
@@ -121,7 +121,7 @@ cd assets/stars
 node draw-stars.mjs
 ```
 
-改脚本底部的 `seed`（随机种子）、`count`（星数）、`circles`（赤纬圈半径）和 `chains`（星座连线从哪里起、连几颗星），就能得到自己的一片。
+改脚本底部的 `seed`（随机种子）、`count`（星数）、`circles`（赤纬圈半径）和 `chains`（星座连线从哪里起、连几颗星），就能得到自己的一片。每片星图写出三份：`stars-a.svg`（单色，线和星在一起）、`stars-a-lines.svg`（线，页面里是淡紫）和 `stars-a-glints.svg`（四角星，页面里是淡墨，深色里是淡荧光绿）。
 
 ## 许可
 

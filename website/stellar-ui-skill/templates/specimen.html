@@ -71,6 +71,56 @@
         margin: 0 0 0.35rem;
         font-size: 0.86rem;
       }
+      .hollow-mini {
+        font-stretch: var(--st-wide);
+        font-size: 1.9rem;
+        font-weight: 800;
+        line-height: 1;
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--st-orbit);
+      }
+      .duo {
+        display: grid;
+        grid-template-columns: 19rem minmax(0, 1fr);
+        gap: 1.5rem;
+        align-items: start;
+        margin-bottom: 1.25rem;
+      }
+      .duo h2 {
+        margin: 0 0 0.4rem;
+        font-size: 1.05rem;
+      }
+      .duo p {
+        margin: 0 0 0.7rem;
+        font-size: 0.86rem;
+      }
+      .duo-block {
+        position: relative;
+        display: grid;
+        grid-template-columns: 7.5rem 1fr;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 1.1rem 1.25rem;
+      }
+      .duo-block svg {
+        width: 100%;
+      }
+      .duo-block figcaption {
+        display: grid;
+        gap: 0.35rem;
+        font-size: 1.6rem;
+        line-height: 1.1;
+      }
+      .share {
+        display: flex;
+        gap: 3px;
+        height: 12px;
+        margin: 0.4rem 0 0.4rem;
+      }
+      .share > i {
+        background: var(--st-chip);
+      }
       .swatches {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
@@ -146,21 +196,37 @@
           <div class="chip-big" style="background: var(--st-orbit); color: var(--st-on-orbit); font-size: 1.25rem">#9859FF</div>
           <div>
             <h3>轨道紫 <span class="st-field">--st-orbit</span></h3>
-            <p><b>当前位置。</b>当前页面、当前一节、当前编号、选中的筛选、打开的开关、进度走到哪、指针停在哪一行。</p>
-            <p class="row"><span class="st-tag is-current">No.024</span><span class="st-chip is-active">全部 <span class="n">24</span></span><span style="border-left: 3px solid var(--st-orbit); padding-left: 0.6rem">当前一节</span></p>
-            <p class="note">做线、色条、括弧和大字。白上 4.03:1，纸上 3.59:1：不做小字的底，当前项用淡紫底加紫条、墨色粗体字。</p>
+            <p><b>品牌和结构。</b>字标、大字和大数字的强调、<span class="st-eyebrow slash" style="font-size: 0.86rem">分节标记</span>、看板页签、图表主色、链接下划线；以及当前位置。</p>
+            <p class="row"><span class="st-tag is-current">No.024</span><span class="st-chip is-active">全部 <span class="n">24</span></span><span style="border-left: 3px solid var(--st-orbit); padding-left: 0.6rem">当前一节</span><span class="hollow-mini">042</span></p>
+            <p class="note">做线、色条、括弧和大字。白上 4.03:1，纸上 3.59:1：不写小字、不做小字的底；当前项用淡紫底加紫条、墨色粗体字。</p>
           </div>
         </section>
         <section class="st-panel role">
           <div class="chip-big" style="background: var(--st-flare); color: var(--st-on-flare); font-size: 1.25rem">#D1FF57</div>
           <div>
             <h3>星火绿 <span class="st-field">--st-flare</span></h3>
-            <p><b>可以按 / 要看一眼。</b>主要操作、按钮被指向时擦入、需要处理的数字和状态、提示小旗、马克笔。</p>
-            <p class="row"><button class="st-btn small is-demo-hover" type="button">指向：擦入</button><span class="st-state is-alert">待审</span><span class="st-marker">一句话说明</span></p>
-            <p class="note">只做填充，上面写墨字（15.20:1）。白上只有 1.16:1：不做线，不写字。</p>
+            <p><b>能量和高光。</b>主要操作、按钮被指向时擦入、最佳成绩和新纪录、需要处理的数字和状态、提示小旗、马克笔、星星的光点。</p>
+            <p class="row"><button class="st-btn small go" type="button">主要操作</button><span>最佳 <span class="st-hi">98.5</span></span><span class="st-state is-alert">待审</span><span class="st-marker">一句话说明</span></p>
+            <p class="note">浅色里只做填充，上面写墨字（15.20:1）；白上只有 1.16:1，不做线、不写字。深色纸上 16.30:1，可以做线和字。</p>
           </div>
         </section>
       </div>
+
+      <section class="st-panel duo">
+        <figure class="st-block duo-block" aria-label="两色同框的示例">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><path fill="var(--st-flare)" d="M60 14Q63 57 106 60Q63 63 60 106Q57 63 14 60Q57 57 60 14Z" /></svg>
+          <figcaption><b class="big">第 214 夜</b><span class="big flare">24 篇</span></figcaption>
+        </figure>
+        <div>
+          <h2>两色同框 <small>只在焦点上</small></h2>
+          <p>紫色块上一颗荧光绿四角星，或紫页签的看板里一个荧光绿高光数字。紫底上只放大号粗字：白字 4.03:1，荧光绿字 3.49:1。整块紫色只在展示页、一页至多一处。</p>
+          <div class="share" role="img" aria-label="用量：中性色约八成七，紫约一成，荧光绿约三分">
+            <i style="flex: 87"></i><i style="flex: 10; background: var(--st-orbit)"></i><i style="flex: 3; background: var(--st-flare); box-shadow: inset 0 0 0 1px var(--st-on-flare)"></i>
+          </div>
+          <p class="st-field">用量：中性色为主 │ 紫约一成 │ 荧光绿点缀</p>
+          <p class="note">不要：等面积并排的紫块和绿块；紫线和荧光绿线贴在一起（边缘会闪）；紫绿渐变。</p>
+        </div>
+      </section>
 
       <section class="st-panel is-demo-hover">
         <h2>其余颜色 <small>tokens</small></h2>
@@ -221,7 +287,7 @@
             <button class="st-btn small" type="button" disabled>disabled</button>
             <button class="st-btn small" type="button" aria-busy="true">处理中</button>
           </div>
-          <p class="note">红色只在删除按钮被指向时擦入。处理中铺斜线纹。</p>
+          <p class="note">主要操作静止是荧光绿，指向时墨色擦入；其余按钮指向时荧光绿擦入。红色只在删除按钮被指向时擦入。处理中铺斜线纹。</p>
         </section>
 
         <section class="st-panel cell">
@@ -255,6 +321,7 @@
             <a href="#" class="is-alert"><b>2</b><span>待审</span></a>
             <a href="#"><b>7</b><span>草稿</span></a>
           </div>
+          <p class="note">顶边是紫色页签；需要处理（.is-alert）或最佳（.is-best）的数字垫荧光绿。</p>
         </section>
 
         <section class="st-panel cell">
@@ -286,8 +353,8 @@
             <span class="st-hollow-no">024</span>
             <span class="st-hollow-no full">017</span>
           </div>
-          <h3 class="st-bar-title" style="margin-top: 1rem">星点结尾的标题线</h3>
-          <p class="note">空心大编号被指向时，墨色从左灌满（右边是灌满后）。</p>
+          <h3 class="st-bar-title" style="margin-top: 1rem">四角星结尾的标题线</h3>
+          <p class="note">空心大编号是紫色描边，被指向时紫色从左灌满（右边是灌满后）。标题线末端的四角星浅色是墨，深色是荧光绿。</p>
         </section>
 
         <section class="st-panel cell">
@@ -321,10 +388,10 @@
             <li style="--v: 0.41"><span>10.13</span></li>
             <li style="--v: 0.95" class="is-over"><span>10.14</span></li>
             <li style="--v: 0.6"><span>10.15</span></li>
-            <li style="--v: 0.7"><span>10.16</span></li>
+            <li style="--v: 0.82" class="is-best"><span>10.16</span></li>
             <li style="--v: 0.48" class="is-here"><span>10.17</span></li>
           </ol>
-          <p class="note" style="margin-top: 2rem">灰柱；当前或被指向的一根是紫色；超过阈值的挂荧光绿小方块。</p>
+          <p class="note" style="margin-top: 2rem">淡紫柱；当前或被指向的一根实紫；最佳的一根荧光绿（.is-best）；超过阈值的挂荧光绿小方块（.is-over）。</p>
         </section>
 
         <section class="st-panel cell">

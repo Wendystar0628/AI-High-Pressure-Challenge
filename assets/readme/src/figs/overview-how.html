@@ -2,113 +2,114 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x634">
+<meta name="size" content="960x708">
 <title>一道题怎么测</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; line-height: 32px; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+  .desc { margin-top: 10px; }
 
-  /* The four steps of one task: a track with four checkpoints, in the order they happen. */
-  .track { position: relative; height: 128px; margin-top: 22px; }
-  .track .rail { position: absolute; left: 9px; right: 9px; top: 9px; height: 2px; background: var(--ink); }
-  .step { position: absolute; top: 0; width: 210px; }
-  .step .dot { width: 20px; height: 20px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink);
-               font-family: var(--font-num); font-size: 12px; font-weight: 600; line-height: 16px; text-align: center; }
-  .step.end .dot { background: var(--ink); color: var(--paper); }
-  .step h3 { font-size: 16px; margin-top: 12px; }
-  .step p { font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 4px; }
+  /* The four steps of one task, on one track: the time limit is the soft bar, the ink stop is the deadline. */
+  .steps { position: relative; height: 178px; margin-top: 24px; }
+  .steps > * { position: absolute; }
+  .sno { top: 0; font-size: 40px; }
+  .track { top: 58px; left: 0; right: 0; height: 18px; }
+  .track .run { position: absolute; left: 0; top: 3px; width: 440px; height: 12px; }
+  .track .stop { position: absolute; left: 439px; top: 0; width: 2px; height: 18px; background: var(--ink); }
+  .track .line { position: absolute; left: 441px; right: 14px; top: 8.5px; height: 1px; background: var(--ink); }
+  .track .star { position: absolute; color: var(--ink); }
+  .step { top: 88px; width: 216px; }
+  .step h3 { font-size: 17px; }
+  .step p { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 4px; }
 
   /* Two kinds of task, side by side; standard first, as in the task table. */
-  .grid { display: grid; grid-template-columns: 96px 1fr 1fr; column-gap: 28px; border-top: 1.5px solid var(--ink); }
-  .grid > div { border-bottom: 1px solid var(--line); padding: 10px 0; font-size: 13.5px; line-height: 21px; }
-  .grid .rh { color: var(--ink-3); font-size: 13px; }
-  .grid .ch { padding: 12px 0 10px; }
-  .grid .ch b { font-size: 17px; font-weight: 700; }
-  .grid .ch span { font-size: 13px; color: var(--ink-2); margin-left: 8px; }
+  .grid { display: grid; grid-template-columns: 92px 1fr 1fr; column-gap: 28px; border-top: 1px solid var(--ink); }
+  .grid > div { border-bottom: 1px solid var(--rule); padding: 10px 0; font-size: 13.5px; line-height: 21px; }
+  .grid .rh { font-size: 13px; color: var(--ink-2); }
+  .grid .ch { display: flex; align-items: baseline; column-gap: 10px; padding: 12px 0 10px; }
+  .grid .ch h3 { font-size: 17px; }
   .grid .last { border-bottom: none; }
-  .cats { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px 14px; }
-  .cat { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .cat img { width: 16px; height: 16px; }
-  .num { font-weight: 600; }
-  .big { font-family: var(--font-num); font-size: 22px; font-weight: 600; line-height: 26px; }
-  .wbar { display: flex; align-items: center; gap: 12px; }
-  .wbar .bar { width: 260px; height: 10px; border-radius: 5px; background: var(--line-2); overflow: hidden; }
-  .wbar .bar i { display: block; height: 100%; border-radius: 5px; background: var(--ink); }
-  .wbar .cap { font-size: 12px; color: var(--ink-3); }
+  .cats { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px 16px; }
+  .cat { display: inline-flex; align-items: center; column-gap: 6px; white-space: nowrap; font-weight: 700; }
+  .cat .icon { width: 16px; height: 16px; vertical-align: 0; }
+  .t { font-family: var(--font-text); }
+  .t .num { font-family: var(--font-ui); font-weight: 700; }
   .sub { color: var(--ink-2); }
+  .share { display: flex; align-items: center; column-gap: 16px; }
+  .share .fig { font-size: 28px; width: 64px; }
+  .seg { display: grid; grid-template-columns: repeat(20, 10px); column-gap: 3px; }
+  .seg i { height: 14px; background: var(--chip); }
+  /* Kind colours: standard = lime with an ink edge (.edge), design = violet; the heading shape marks the kind as well. */
+  #s40 i.on { background: var(--lime); }
+  #s60 i.on { background: var(--violet); }
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>一道题怎么测</h2>
-    <p>12 道题都走同样的四步；两类题在交付、评分员和计分方式上不同。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">How a Task Runs</span><h2 class="title">一道题怎么测</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">12 道题都走同样的四步；两类题在交付、评分员和计分方式上不同。</p>
 
-  <div class="track">
-    <div class="rail"></div>
-    <div class="step" style="left:0">
-      <div class="dot">1</div>
-      <h3>拿到题面</h3>
-      <p>作答目录里只放这道题的题面和材料<br>目录是一个 git 仓库</p>
+  <div class="steps">
+    <div class="sno fig hollow" style="left:0">01</div>
+    <div class="sno fig hollow" style="left:220px">02</div>
+    <div class="sno fig hollow" style="left:440px">03</div>
+    <div class="sno fig hollow" style="left:660px">04</div>
+    <div class="track">
+      <div class="run" style="background:var(--violet-300)"></div><div class="stop"></div><div class="line"></div>
+      <span class="star" style="right:0;top:3px"></span>
     </div>
-    <div class="step" style="left:236px">
-      <div class="dot">2</div>
-      <h3>独立作答</h3>
-      <p>新会话从拿到题面起计时<br>无人答疑，模型看不到限时</p>
-    </div>
-    <div class="step" style="left:472px">
-      <div class="dot">3</div>
-      <h3>到时中止</h3>
-      <p>时间一到立即结束，不延长<br>可用的阶段由模型自己 git 提交</p>
-    </div>
-    <div class="step end" style="left:708px">
-      <div class="dot">4</div>
-      <h3>评分与合成</h3>
-      <p>评完整的工作目录或最近的提交<br>每题折算 0–100，按权重加总</p>
-    </div>
+    <div class="step" style="left:0"><h3>拿到题面</h3><p>作答目录里只放这道题的题面和材料<br>目录是一个 git 仓库</p></div>
+    <div class="step" style="left:220px"><h3>独立作答</h3><p>新会话从拿到题面起计时<br>无人答疑，模型看不到限时</p></div>
+    <div class="step" style="left:440px"><h3>到时中止</h3><p>时间一到立即结束，不延长<br>可用的阶段由模型自己 git 提交</p></div>
+    <div class="step" style="left:660px"><h3>评分与合成</h3><p>评完整的工作目录或最近的提交<br>每题折算 0–100，按权重加总</p></div>
   </div>
 
   <div class="grid">
     <div class="ch"></div>
-    <div class="ch"><b>标准评判题</b><span><span class="num">6</span> 题</span></div>
-    <div class="ch"><b>主动设计题</b><span><span class="num">6</span> 题</span></div>
+    <div class="ch"><span class="eyebrow slash">Standard</span><h3><i class="k std"></i>标准评判题</h3><span class="field">6 题</span></div>
+    <div class="ch"><span class="eyebrow slash">Design</span><h3><span class="star k des"></span>主动设计题</h3><span class="field">6 题</span></div>
 
     <div class="rh">类别</div>
     <div class="cats">
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-reason.svg" alt="">数学推理</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-algo.svg" alt="">算法竞赛</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-spatial.svg" alt="">空间推理</span>
+      <span class="cat"><img class="icon" src="../../icon-reason.svg" alt="">数学推理</span>
+      <span class="cat"><img class="icon" src="../../icon-algo.svg" alt="">算法竞赛</span>
+      <span class="cat"><img class="icon" src="../../icon-spatial.svg" alt="">空间推理</span>
     </div>
     <div class="cats">
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-interact.svg" alt="">复杂交互应用</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-game.svg" alt="">游戏设计与开发</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-physics.svg" alt="">物理模拟</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-visual.svg" alt="">视觉设计与渲染</span>
-      <span class="cat"><img src="file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-system.svg" alt="">系统架构与实现</span>
+      <span class="cat"><img class="icon" src="../../icon-interact.svg" alt="">复杂交互应用</span>
+      <span class="cat"><img class="icon" src="../../icon-game.svg" alt="">游戏设计与开发</span>
+      <span class="cat"><img class="icon" src="../../icon-physics.svg" alt="">物理模拟</span>
+      <span class="cat"><img class="icon" src="../../icon-visual.svg" alt="">视觉设计与渲染</span>
+      <span class="cat"><img class="icon" src="../../icon-system.svg" alt="">系统架构与实现</span>
     </div>
 
     <div class="rh">交付</div>
-    <div>Lean 证明、数学竞赛解答、极值构造、CUDA 或 C++ 源码、鲁班锁拆解路线</div>
-    <div>网页作品（双击 <span class="num" style="font-family:var(--font-num)">index.html</span> 运行）或 Windows 桌面项目</div>
+    <div class="t">Lean 证明、数学竞赛解答、极值构造、CUDA 或 C++ 源码、鲁班锁拆解路线</div>
+    <div class="t">网页作品（双击 <span class="num" style="font-weight:600">index.html</span> 运行）或 Windows 桌面项目</div>
 
     <div class="rh">限时</div>
-    <div><span class="num">60</span> 分钟</div>
-    <div><span class="num">90</span> 或 <span class="num">100</span> 分钟，物理 <span class="num">60</span> 分钟</div>
+    <div class="t"><span class="num">60</span> 分钟</div>
+    <div class="t"><span class="num">90</span> 或 <span class="num">100</span> 分钟，物理 <span class="num">60</span> 分钟</div>
 
     <div class="rh">评分员</div>
-    <div>程序校验生成分数<br><span class="sub">编译、检查器和评测脚本给出分数</span></div>
-    <div>Claude Opus 5.5 与 GPT 6.1 Sol 各评，逐项取平均</div>
+    <div class="t">程序校验生成分数<br><span class="sub">编译、检查器和评测脚本给出分数</span></div>
+    <div class="t">Claude Opus 5.5 与 GPT 6.1 Sol 各评，逐项取平均</div>
 
     <div class="rh">计分</div>
-    <div>编译检查、按 IMO 惯例阅卷、锚点表、加速比、拆解步数</div>
-    <div>每个分项在分值内直接打分，相加满分 100</div>
+    <div class="t">编译检查、按 IMO 惯例阅卷、锚点表、加速比、拆解步数</div>
+    <div class="t">每个分项在分值内直接打分，相加满分 100</div>
 
     <div class="rh last">权重合计</div>
-    <div class="last wbar"><span class="big">40%</span><div class="bar"><i style="width:40%"></i></div></div>
-    <div class="last wbar"><span class="big">60%</span><div class="bar"><i style="width:60%"></i></div></div>
+    <div class="last share"><span class="fig">40%</span><span class="seg" id="s40"></span></div>
+    <div class="last share"><span class="fig">60%</span><span class="seg" id="s60"></span></div>
   </div>
 </div>
+<script>
+// Weight share as 20 segments of 5 % each; lit segments take the kind's colour, lime ones with the ink edge.
+for (const [id, n, lit] of [['s40', 8, 'on edge'], ['s60', 12, 'on']])
+  document.getElementById(id).innerHTML = Array.from({ length: 20 }, (_, i) => `<i${i < n ? ` class="${lit}"` : ''}></i>`).join('');
+</script>
 </body>
 </html>

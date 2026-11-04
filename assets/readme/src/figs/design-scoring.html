@@ -2,47 +2,48 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x668">
+<meta name="size" content="960x740">
 <title>设计题计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; letter-spacing: .01em; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .desc { margin-top: 10px; }
 
   svg.chart { position: absolute; left: 0; top: 0; overflow: visible; }
-  svg text { font-family: var(--font-cn); fill: var(--ink); }
-  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-  svg .colh { font-size: 13px; fill: var(--ink-3); }
-  svg .dir { font-size: 16px; font-weight: 700; }
+  svg text { font-family: var(--font-ui); fill: var(--ink); }
+  svg .n { font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .colh { font-size: 13px; fill: var(--ink-2); }
+  svg .who { font-size: 14px; font-weight: 700; }
+  svg .dir { font-size: 17px; font-weight: 700; }
   svg .dirv { font-size: 13px; fill: var(--ink-2); font-weight: 400; }
-  svg .item { font-size: 14px; font-weight: 500; }
+  svg .item { font-size: 14.5px; font-weight: 700; }
   svg .itemv { font-size: 13px; fill: var(--ink-2); font-weight: 400; }
-  svg .point { font-size: 12.5px; fill: var(--ink-2); }
-  svg .hint { font-size: 12px; fill: var(--ink-3); }
+  svg .point { font-family: var(--font-text); font-size: 13px; fill: var(--ink-2); }
+  svg .hint { font-family: var(--font-text); font-size: 12.5px; fill: var(--ink-2); }
   svg .sc { font-size: 14px; }
   svg .avg { font-size: 16px; font-weight: 700; }
   svg .sum { font-size: 15px; font-weight: 700; }
-  svg .sum-l { font-size: 13px; fill: var(--ink-2); }
+  svg .lb { font-family: var(--font-text); font-size: 13px; fill: var(--ink-2); }
   svg .blk { font-size: 15px; font-weight: 700; }
-  svg .seg { font-size: 12px; fill: var(--ink-2); }
+  svg .seg { font-size: 13px; fill: var(--ink-2); }
   svg .seg.on { fill: var(--ink); font-weight: 700; }
-  svg .segv { font-size: 12px; }
-  svg .total { font-size: 26px; font-weight: 700; }
-  svg .total-u { font-size: 14px; fill: var(--ink-3); }
+  svg .segv { font-size: 13px; }
+  svg .total { font-size: 36px; font-weight: 800; fill: var(--violet); }
+  svg .total-u { font-size: 15px; font-weight: 600; fill: var(--ink-2); }
 
-  .foot { position: absolute; left: 32px; right: 32px; bottom: 20px; font-size: 13px; line-height: 1.5; color: var(--ink-2);
-          border-top: 1px dashed var(--line); padding-top: 9px; }
-  .foot b { color: var(--ink); font-weight: 500; }
+  .foot { position: absolute; left: 40px; right: 40px; bottom: 28px; font-family: var(--font-text); font-size: 13px; line-height: 20px;
+          color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 9px; }
+  .foot b { color: var(--ink); font-weight: 700; }
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>设计题：每个分项在分值内直接打分</h2>
-    <p>指南只列方向、分项、分值和一行打分点，不写评判标准。下例取物理题的一个方向，分数为示意。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Design Task Scoring</span><h2 class="title">设计题：每个分项在分值内直接打分</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">指南只列方向、分项、分值和一行打分点，不写评判标准。下例取物理题的一个方向，分数为示意。</p>
 
-  <svg class="chart" id="chart" width="960" height="668"></svg>
+  <svg class="chart" id="chart" width="960" height="740"></svg>
 
   <p class="foot"><b>不分档、不扣分、不清零</b>：分项得分就是评分员在分值内给的分。</p>
 </div>
@@ -57,20 +58,37 @@ const el = (tag, attrs = {}, parent) => {
 };
 const txt = (parent, x, y, cls, s, anchor = 'start') => {
   const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
-  t.textContent = s;
+  t.innerHTML = s;
   return t;
 };
-const span = (t, cls, s, attrs = {}) => { const e = el('tspan', { class: cls, ...attrs }, t); e.textContent = s; return e; };
+const hr = (y, x1, x2, ink) => el('line', { x1, x2, y1: y + .5, y2: y + .5, stroke: ink ? 'var(--ink)' : 'var(--rule)', 'stroke-width': 1 }, svg);
 const svg = document.getElementById('chart');
+const defs = el('defs', {}, svg);
+const f1 = v => v.toFixed(1);
 
 /* Upper block: one direction of the physics guide, as the guide writes it, and each grader's score per item.
-   Every item is a row of cells, one cell per point; a grader fills cells up to the score given (decimals allowed). */
-const L = 32, R = 928;
+   Design tasks draw four-point stars in the violet family: one star per point, filled up to the score given. */
+const L = 40, R = 920;
 const COLS = [
-  { head: 'Claude Opus 5.5', numR: 440, gauge: 450 },
-  { head: 'GPT 6.1 Sol',     numR: 636, gauge: 646 },
+  { head: 'Claude Opus 5.5', numR: 474, gauge: 486 },
+  { head: 'GPT 6.1 Sol',     numR: 656, gauge: 668 },
 ];
-const CELL = 12, GAP = 2;
+const S = 14, GAP = 3, K = 0.72 / 11;
+const starD = (x, y, r) => `M${x} ${y - r}Q${x + K * r} ${y - K * r} ${x + r} ${y}Q${x + K * r} ${y + K * r} ${x} ${y + r}` +
+                           `Q${x - K * r} ${y + K * r} ${x - r} ${y}Q${x - K * r} ${y - K * r} ${x} ${y - r}Z`;
+let clipN = 0;
+const gauge = (x, cy, value, score) => {
+  for (let k = 0; k < value; k++) {
+    const cx = x + S / 2 + k * (S + GAP), d = starD(cx, cy, S / 2 + 1);
+    el('path', { d, fill: 'var(--rule)' }, svg);
+    const part = Math.max(0, Math.min(1, score - k));
+    if (part > 0) {
+      const id = `c${clipN++}`, cp = el('clipPath', { id }, defs);
+      el('rect', { x: cx - S / 2 - 1, y: cy - S / 2 - 1, width: (S + 2) * part, height: S + 2 }, cp);
+      el('path', { d, fill: 'var(--violet)', 'clip-path': `url(#${id})` }, svg);
+    }
+  }
+};
 
 const DIR = { name: '作用关系', value: 22 };
 const ITEMS = [
@@ -80,38 +98,30 @@ const ITEMS = [
   { name: '水流推动响应', value: 4, point: '球体受水流推动的方向和变化，对应当时水体的运动状态', s: [3.0, 3.5] },
   { name: '刚体接触响应', value: 5, point: '球与球、平台、槽壁和槽底接触时的分离、转向与滚动', s: [3.5, 4.0] },
 ];
-const f1 = v => v.toFixed(1);
 
-// Column heads and the rule under them.
-txt(svg, L, 122, 'colh', '评分指南（物理题共 4 个方向、25 个分项）');
-COLS.forEach(c => txt(svg, c.numR - 36, 122, 'colh', c.head));
-txt(svg, R, 122, 'colh', '逐项取平均', 'end');
-el('line', { x1: L, x2: R, y1: 132, y2: 132, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
+// Column heads between an ink rule and a hairline.
+const H0 = 142;
+hr(H0, L, R, true);
+el('image', { href: '../../icon-physics.svg', x: L, y: H0 + 11, width: 16, height: 16 }, svg);
+txt(svg, L + 22, H0 + 24, 'colh', '评分指南（物理题共 4 个方向、25 个分项）');
+COLS.forEach(c => txt(svg, c.gauge - 46, H0 + 24, 'who', c.head));
+txt(svg, R, H0 + 24, 'colh', '逐项取平均', 'end');
+hr(H0 + 36, L, R);
 
 // Direction heading, written the way the guide writes it.
 {
-  const t = el('text', { x: L, y: 162, class: 'dir' }, svg);
-  span(t, '', DIR.name);
-  span(t, 'dirv n', `共 ${DIR.value} 分`, { dx: 10 });
-  txt(svg, COLS[0].gauge, 161, 'hint', '每格 1 分，格数就是分值；涂黑的部分是给的分');
+  const y = H0 + 68;
+  const t = el('text', { x: L, y, class: 'dir' }, svg);
+  t.innerHTML = `${DIR.name}<tspan class="dirv n" dx="10">共 ${DIR.value} 分</tspan>`;
+  txt(svg, COLS[0].gauge - 46, y - 1, 'hint', '每颗星 1 分，星数就是分值；填色的部分是给的分');
 }
 
-const gauge = (x, yMid, value, score) => {
-  for (let k = 0; k < value; k++) {
-    const cx = x + k * (CELL + GAP), y = yMid - 7;
-    el('rect', { x: cx, y, width: CELL, height: 14, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, svg);
-    const part = Math.max(0, Math.min(1, score - k));
-    if (part > 0) el('rect', { x: cx, y, width: CELL * part, height: 14, rx: part === 1 ? 2 : 0, fill: 'var(--ink)' }, svg);
-  }
-};
-
-const ROW0 = 178, ROWH = 50;
+const ROW0 = H0 + 84, ROWH = 50;
 ITEMS.forEach((it, i) => {
-  const top = ROW0 + i * ROWH, mid = top + 19;
-  const t = el('text', { x: L, y: top + 14, class: 'item' }, svg);
-  span(t, '', it.name);
-  span(t, 'itemv n', `${it.value} 分`, { dx: 8 });
-  txt(svg, L, top + 35, 'point', it.point);
+  const top = ROW0 + i * ROWH, mid = top + 18;
+  const t = el('text', { x: L, y: top + 15, class: 'item' }, svg);
+  t.innerHTML = `${it.name}<tspan class="itemv n" dx="8">${it.value} 分</tspan>`;
+  txt(svg, L, top + 36, 'point', it.point);
   COLS.forEach((c, j) => {
     txt(svg, c.numR, mid + 5, 'sc n', f1(it.s[j]), 'end');
     gauge(c.gauge, mid, it.value, it.s[j]);
@@ -120,51 +130,43 @@ ITEMS.forEach((it, i) => {
 });
 
 // Sum line: the items add up to the direction's subtotal, for each grader and for the average.
+const SUMY = ROW0 + ITEMS.length * ROWH + 6;
 {
-  const y = ROW0 + ITEMS.length * ROWH + 4;
-  el('line', { x1: COLS[0].numR - 44, x2: R, y1: y, y2: y, stroke: 'var(--ink)', 'stroke-width': 1.25 }, svg);
-  txt(svg, COLS[0].numR - 56, y + 23, 'sum-l', '相加', 'end');
+  hr(SUMY, COLS[0].numR - 52, R, true);
+  txt(svg, COLS[0].numR - 64, SUMY + 24, 'lb', '相加', 'end');
   COLS.forEach((c, j) => {
     const s = ITEMS.reduce((a, it) => a + it.s[j], 0);
-    txt(svg, c.numR, y + 23, 'sum n', f1(s), 'end');
-    txt(svg, c.gauge, y + 23, 'hint n', `/ ${DIR.value}`);
+    txt(svg, c.numR, SUMY + 24, 'sum n', f1(s), 'end');
+    txt(svg, c.gauge, SUMY + 24, 'lb n', `/ ${DIR.value}`);
   });
   const avg = ITEMS.reduce((a, it) => a + (it.s[0] + it.s[1]) / 2, 0);
-  txt(svg, R, y + 24, 'avg n', f1(avg), 'end');
-  el('line', { x1: L, x2: R, y1: y + 46, y2: y + 46, stroke: 'var(--line)', 'stroke-width': 1 }, svg);
+  txt(svg, R, SUMY + 25, 'avg n', f1(avg), 'end');
 }
 
-/* Lower block: the whole task. Four directions side by side, length by value (100 in all); each filled to its averaged subtotal. */
+/* Lower block: the whole task. Four directions side by side, length by value (100 in all), each filled to its
+   averaged subtotal; the direction worked through above is violet 500, the others violet 300. */
 const DIRS = [
   ['现象形态与运动层次', 44, 34.5], ['材质与光影', 24, 18.5], ['作用关系', 22, 17.75], ['演示与交付', 10, 8.5],
 ];
 {
-  const yH = 508, yBar = 558, BH = 22, SG = 4;
-  const k = (R - L - SG * (DIRS.length - 1)) / 100;
-  const total = DIRS.reduce((a, d) => a + d[2], 0);
-
+  const yR = SUMY + 46, yH = yR + 34, yBar = yH + 46, BH = 24, SG = 4, BR = 740;
+  hr(yR, L, R, true);
   txt(svg, L, yH, 'blk', '4 个方向的平均分相加，就是本题总分');
-  const t = el('text', { x: R, y: yH + 2, 'text-anchor': 'end' }, svg);
-  span(t, 'total n', f1(total));
-  span(t, 'total-u n', ' / 100', { dx: 4 });
-
+  const k = (BR - L - SG * (DIRS.length - 1)) / 100;
+  const total = DIRS.reduce((a, d) => a + d[2], 0);
   let x = L;
   DIRS.forEach(([name, v, s], i) => {
     const w = v * k, on = i === 2;
-    el('rect', { x, y: yBar, width: w, height: BH, rx: 3, fill: 'var(--line-2)', stroke: on ? 'var(--ink)' : 'var(--line)', 'stroke-width': on ? 1.5 : 1 }, svg);
-    el('rect', { x, y: yBar, width: w * s / v, height: BH, rx: 3, fill: on ? 'var(--ink)' : 'var(--ink-3)' }, svg);
+    el('rect', { x, y: yBar, width: w, height: BH, fill: 'var(--chip)' }, svg);
+    el('rect', { x, y: yBar, width: w * s / v, height: BH, fill: on ? 'var(--violet)' : 'var(--violet-300)' }, svg);
     const cx = x + w / 2;
-    if (w < 48) {
-      txt(svg, cx, yBar - 24, `seg${on ? ' on' : ''}`, name.slice(0, 2), 'middle');
-      txt(svg, cx, yBar - 9, `seg${on ? ' on' : ''}`, name.slice(2), 'middle');
-    } else {
-      txt(svg, cx, yBar - 9, `seg${on ? ' on' : ''}`, name, 'middle');
-    }
-    const st = el('text', { x: cx, y: yBar + BH + 17, 'text-anchor': 'middle', class: 'segv n' }, svg);
-    span(st, '', f1(s), { style: 'font-weight:700' });
-    span(st, '', `/${v}`, { style: 'fill: var(--ink-3)' });
+    txt(svg, cx, yBar - 9, `seg${on ? ' on' : ''}`, name, 'middle');
+    txt(svg, cx, yBar + BH + 18, 'segv n', `<tspan style="font-weight:700">${f1(s)}</tspan><tspan style="fill: var(--ink-2)">/${v}</tspan>`, 'middle');
     x += w + SG;
   });
+  const t = el('text', { x: R, y: yBar + BH - 2, 'text-anchor': 'end' }, svg);
+  t.innerHTML = `<tspan class="total n">${f1(total)}</tspan><tspan class="total-u n" dx="6">/ 100</tspan>`;
+  console.log('lower block bottom', yBar + BH + 18);
 }
 </script>
 </body>

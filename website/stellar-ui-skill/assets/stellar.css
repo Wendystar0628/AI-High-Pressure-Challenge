@@ -6,11 +6,17 @@
    when <html> has no data-theme at all.
 
    Read ../SKILL.md first. In short:
-     - lavender paper, night ink, and two theme colours with one job each:
-       orbit violet marks WHERE YOU ARE (lines, bars, brackets, large type);
-       flare lime fills what to PRESS or LOOK AT (fill only, ink text on it)
+     - lavender paper, night ink, and a pair of complementary theme colours:
+       orbit violet is the brand and the structure (wordmark, large type and
+       big-figure accents, section marks, orbit and chart lines, links, the
+       place you are); flare lime is energy and highlight (the main action,
+       best and record figures, notices, the glint of a star). Neutrals carry
+       the page; violet about a tenth; flare only in touches. The two meet
+       only at a focus, never side by side in equal amounts, never as two
+       thin lines touching.
      - cut corners on whatever can be pressed; hairlines, not boxes
      - real fields (numbers, dates, counts) in the wide face, tabular figures
+     - every star is a four-point star (--st-star)
      - a faint starfield in two corners, never under the text
      - motion is short, hard and mechanical, and switches off under
        prefers-reduced-motion
@@ -29,10 +35,10 @@
   --st-ink-2: #5d5970; /* secondary text, field labels */
   --st-rule: #dcdae4; /* 1px hairlines */
   --st-chip: #e7e5ee; /* quiet fills: chips, idle buttons, tracks */
-  --st-orbit: #9859ff; /* WHERE YOU ARE. Lines, bars, brackets, large type */
-  --st-flare: #d1ff57; /* PRESS THIS / LOOK AT THIS. Fill only, ink text on it */
+  --st-orbit: #9859ff; /* BRAND AND STRUCTURE: wordmark, large type, section marks, orbit and chart lines, links, where you are */
+  --st-flare: #d1ff57; /* ENERGY AND HIGHLIGHT: main action, best figures, notices, star glints. Light theme: fill only */
   --st-on-flare: #1a1726; /* text on flare, in both themes */
-  --st-on-orbit: #ffffff; /* text on an orbit fill: large or bold-large only */
+  --st-on-orbit: #ffffff; /* text on an orbit fill: large or bold only (4.03:1) */
   --st-wash: color-mix(in srgb, var(--st-orbit) 14%, var(--st-panel)); /* the block under a current item */
   --st-tag-bg: var(--st-ink); /* number tags */
   --st-tag-fg: var(--st-panel);
@@ -42,7 +48,12 @@
   --st-spec-b: #62d4f5;
   --st-spec-c: var(--st-flare);
   --st-mark: color-mix(in srgb, var(--st-flare) 60%, transparent); /* highlighter, selection */
-  --st-stars: color-mix(in srgb, var(--st-ink) 16%, transparent); /* the starfield ground */
+  /* the starfield ground: violet chart lines, star glints in ink (flare on dark) */
+  --st-stars-line: color-mix(in srgb, var(--st-orbit) 30%, transparent);
+  --st-stars-glint: color-mix(in srgb, var(--st-ink) 20%, transparent);
+  /* the star itself: four points, used as a mask. Leads and title lines end in one. */
+  --st-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath d='M11 0Q11.72 10.28 22 11Q11.72 11.72 11 22Q10.28 11.72 0 11Q10.28 10.28 11 0Z'/%3E%3C/svg%3E");
+  --st-star-c: var(--st-ink); /* the colour of a lead's star: ink on light, flare on dark */
   --st-hatch: repeating-linear-gradient(-45deg, transparent 0 5px, color-mix(in srgb, var(--st-ink) 22%, transparent) 5px 6.5px);
   /* the command bar and the toast: dark in both themes */
   --st-bar: #1a1726;
@@ -92,6 +103,9 @@
   --st-danger: #ff8f8f;
   --st-scrim: rgb(8 6 13 / 0.66);
   --st-mark: color-mix(in srgb, var(--st-flare) 26%, transparent);
+  --st-stars-line: color-mix(in srgb, var(--st-orbit) 44%, transparent);
+  --st-stars-glint: color-mix(in srgb, var(--st-flare) 30%, transparent);
+  --st-star-c: var(--st-flare);
   color-scheme: dark;
 }
 
@@ -109,6 +123,9 @@
     --st-danger: #ff8f8f;
     --st-scrim: rgb(8 6 13 / 0.66);
     --st-mark: color-mix(in srgb, var(--st-flare) 26%, transparent);
+    --st-stars-line: color-mix(in srgb, var(--st-orbit) 44%, transparent);
+    --st-stars-glint: color-mix(in srgb, var(--st-flare) 30%, transparent);
+    --st-star-c: var(--st-flare);
     color-scheme: dark;
   }
 }
@@ -165,21 +182,34 @@
 }
 
 /* The starfield: two faint patches of a star chart, upper right and lower
-   left. Put .st-stars on <body> and keep the two SVGs in ./stars next to this
-   file. They are masks, so the colour follows the theme. */
-.st-stars::before {
+   left. Put .st-stars on <body> and keep the SVGs in ./stars next to this
+   file. They are masks in two layers: the chart lines in violet, the
+   four-point stars in ink (flare on dark), so the colours follow the theme. */
+.st-stars::before,
+.st-stars::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--st-stars);
+}
+.st-stars::before {
+  background: var(--st-stars-line);
   -webkit-mask:
-    url('./stars/stars-a.svg') right -8rem top -6rem / 54rem auto no-repeat,
-    url('./stars/stars-b.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+    url('./stars/stars-a-lines.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b-lines.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
   mask:
-    url('./stars/stars-a.svg') right -8rem top -6rem / 54rem auto no-repeat,
-    url('./stars/stars-b.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+    url('./stars/stars-a-lines.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b-lines.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+}
+.st-stars::after {
+  background: var(--st-stars-glint);
+  -webkit-mask:
+    url('./stars/stars-a-glints.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b-glints.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
+  mask:
+    url('./stars/stars-a-glints.svg') right -8rem top -6rem / 54rem auto no-repeat,
+    url('./stars/stars-b-glints.svg') left -8rem bottom -12rem / 40rem auto no-repeat;
 }
 
 /* ---------- 3. marks that carry meaning ---------- */
@@ -212,7 +242,8 @@
 }
 
 /* A small, wide, upper-case label above or beside a heading: "// RECORDS".
-   Add .slash for the double-slash prefix. */
+   Add .slash for the double-slash prefix: a violet section mark. The label
+   itself stays secondary ink (violet is too light for 11px text). */
 .st-eyebrow {
   font-family: var(--st-font-ui);
   font-size: 0.7rem;
@@ -226,6 +257,8 @@
 .st-eyebrow.slash::before {
   content: '// ';
   letter-spacing: 0;
+  color: var(--st-orbit);
+  font-weight: 800;
 }
 
 /* English small and wide above, Chinese heavy below: RECORDS / 记录. */
@@ -328,6 +361,29 @@ a.st-kv:is(:hover, :focus-visible) > :first-child,
   color: var(--st-on-flare);
 }
 
+/* A highlight on a figure: the best score, a new record, a reading that needs
+   a look. Flare under ink, the same in both themes. */
+.st-hi {
+  padding: 0 0.4em;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-weight: 700;
+}
+
+/* The one violet block a showcase page may have (at most one per page): large
+   white or flare type on it, and perhaps one flare four-point star. Small text
+   does not go on it (white 4.03:1, flare 3.49:1). Not pressable, so square. */
+.st-block {
+  background: var(--st-orbit);
+  color: var(--st-on-orbit);
+}
+.st-block :is(b, strong, .big) {
+  font-weight: 800;
+}
+.st-block .flare {
+  color: var(--st-flare);
+}
+
 /* A highlighter stroke under the one line that says what this is. */
 .st-marker {
   padding: 0.1em 0.45em;
@@ -394,10 +450,12 @@ a.st-kv:is(:hover, :focus-visible) > :first-child,
 /* ---------- 4. buttons ---------- */
 
 /* A block with one corner cut. Pointing at it drives flare across from the
-   left behind an ink edge. The cut is a mask, so the focus ring sits inside. */
+   left behind an ink edge. The main action (.go) is flare at rest and ink
+   drives across it. The cut is a mask, so the focus ring sits inside. */
 .st-btn {
   --fill: var(--st-chip);
   --wipe: var(--st-flare);
+  --edge: var(--st-on-flare);
   position: relative;
   isolation: isolate;
   display: inline-flex;
@@ -424,8 +482,10 @@ a.st-kv:is(:hover, :focus-visible) > :first-child,
   outline-offset: -4px;
 }
 .st-btn.go {
-  --fill: var(--st-ink);
-  color: var(--st-panel);
+  --fill: var(--st-flare);
+  --wipe: var(--st-ink);
+  --edge: var(--st-flare);
+  color: var(--st-on-flare);
 }
 .st-btn.small {
   min-height: 2rem;
@@ -455,14 +515,15 @@ a.st-kv:is(:hover, :focus-visible) > :first-child,
 }
 .st-btn::after {
   z-index: 0;
-  background: linear-gradient(var(--st-on-flare), var(--st-on-flare)) left / 3px 100% no-repeat;
+  background: linear-gradient(var(--edge), var(--edge)) left / 3px 100% no-repeat;
   opacity: 0;
 }
 .st-btn:is(:hover, :focus-visible):not(:disabled),
 :is(a, .st-host):is(:hover, :focus-visible) span.st-btn {
   color: var(--st-on-flare);
 }
-.st-btn.danger:is(:hover, :focus-visible):not(:disabled) {
+.st-btn:is(.danger, .go):is(:hover, :focus-visible):not(:disabled),
+:is(a, .st-host):is(:hover, :focus-visible) span.st-btn.go {
   color: var(--st-panel);
 }
 .st-btn:is(:hover, :focus-visible):not(:disabled)::before,
@@ -744,8 +805,9 @@ a.st-record:is(:hover, :focus-visible) > * {
 }
 
 /* Reading prose: plain Chinese sans, regular weight, generous leading. A link
-   is ink over a flare block (a flare strip on dark, where the block would
-   swallow light text). */
+   is ink text on a 2px violet underline; pointing at it fills it with flare
+   (the underline goes under the flare, so the two never sit as touching
+   lines). */
 .st-prose {
   max-width: var(--st-measure);
   font-family: var(--st-font-text);
@@ -756,24 +818,19 @@ a.st-record:is(:hover, :focus-visible) > * {
   font-family: var(--st-font-ui);
 }
 .st-prose a {
-  --link-h: 0.5em;
   padding-inline: 0.08em;
-  background: linear-gradient(var(--st-flare), var(--st-flare)) left 100% / 100% var(--link-h) no-repeat;
+  background:
+    linear-gradient(var(--st-flare), var(--st-flare)) left 100% / 100% 0% no-repeat,
+    linear-gradient(var(--st-orbit), var(--st-orbit)) left 100% / 100% 2px no-repeat;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   transition: background-size 0.2s var(--st-mech);
 }
 .st-prose a:is(:hover, :focus-visible) {
-  background-size: 100% 100%;
+  background-size:
+    100% 100%,
+    100% 2px;
   color: var(--st-on-flare);
-}
-:root[data-theme='dark'] .st-prose a {
-  --link-h: 2px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .st-prose a {
-    --link-h: 2px;
-  }
 }
 .st-prose strong {
   font-weight: 700;
@@ -801,7 +858,8 @@ a.st-record:is(:hover, :focus-visible) > * {
 
 /* ---------- 7. the showcase voice ---------- */
 
-/* The name, as heavy and wide as the column takes: solid, then hollow. */
+/* The name, as heavy and wide as the column takes: solid ink, then hollow in
+   violet (the brand colour as a 2px line). */
 .st-wordmark {
   display: flex;
   flex-direction: column;
@@ -823,10 +881,11 @@ a.st-record:is(:hover, :focus-visible) > * {
   margin-top: 0.12em;
   font-size: calc(var(--st-wordmark, clamp(3rem, 10vw, 11rem)) * 0.48);
   color: transparent;
-  -webkit-text-stroke: 2px var(--st-ink);
+  -webkit-text-stroke: 2px var(--st-orbit);
 }
 
-/* A big hollow number that ink pours into, left to right, when pointed at. */
+/* A big hollow number in violet that violet pours into, left to right, when
+   pointed at. */
 .st-hollow-no {
   font-family: var(--st-font-ui);
   font-stretch: var(--st-wide);
@@ -835,8 +894,8 @@ a.st-record:is(:hover, :focus-visible) > * {
   line-height: 0.8;
   letter-spacing: -0.03em;
   color: transparent;
-  -webkit-text-stroke: 2px var(--st-ink);
-  background: linear-gradient(var(--st-ink), var(--st-ink)) left / 0% 100% no-repeat;
+  -webkit-text-stroke: 2px var(--st-orbit);
+  background: linear-gradient(var(--st-orbit), var(--st-orbit)) left / 0% 100% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   transition: background-size 0.45s var(--st-mech);
@@ -845,8 +904,27 @@ a.st-record:is(:hover, :focus-visible) > * {
   background-size: 100% 100%;
 }
 
-/* A section title with an orbit line running off beside it: a hairline that
-   ends in a star dot. */
+/* A hairline that ends in a four-point star: after a section title
+   (.st-bar-title), after a console page name (.st-head) and as a lead from a
+   panel (.st-panel.lead-right / .lead-left). The line is ink; the star is ink
+   on light and a flare glint on dark. Both are drawn by one mask. */
+.st-bar-title::after,
+.st-head::after,
+.st-panel:is(.lead-right, .lead-left)::after {
+  content: '';
+  height: 11px;
+  background:
+    linear-gradient(var(--st-star-c), var(--st-star-c)) var(--star-at, right) / 11px 100% no-repeat,
+    var(--st-ink);
+  -webkit-mask:
+    var(--st-star) var(--star-at, right) center / 11px 11px no-repeat,
+    linear-gradient(#000 0 0) var(--line-at, left) center / calc(100% - 9px) 1px no-repeat;
+  mask:
+    var(--st-star) var(--star-at, right) center / 11px 11px no-repeat,
+    linear-gradient(#000 0 0) var(--line-at, left) center / calc(100% - 9px) 1px no-repeat;
+}
+
+/* A section title with a line running off beside it to a star. */
 .st-bar-title {
   display: flex;
   align-items: center;
@@ -856,12 +934,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   font-weight: 800;
 }
 .st-bar-title::after {
-  content: '';
   flex: 1;
-  height: 7px;
-  background:
-    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
-    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
 }
 
 /* A picture in a frame with two corners cut, a hatched shadow set off behind
@@ -878,12 +951,19 @@ a.st-record:is(:hover, :focus-visible) > * {
   background: var(--st-hatch);
 }
 .st-frame .window {
+  --window: var(--st-panel); /* the window's ground; a drawing inside fills its shapes with it */
   position: absolute;
   inset: 0;
   --frame-cut: calc(3.25rem * var(--st-cut-k));
   clip-path: polygon(var(--frame-cut) 0, 100% 0, 100% calc(100% - var(--frame-cut)), calc(100% - var(--frame-cut)) 100%, 0 100%, 0 var(--frame-cut));
-  background: var(--st-panel);
+  background: var(--window);
   overflow: hidden;
+}
+/* .orbit: the frame is the page's one violet block. A line drawing inside
+   turns white (currentColor); one flare four-point star may sit on it. */
+.st-frame.orbit .window {
+  --window: var(--st-orbit);
+  color: var(--st-on-orbit);
 }
 .st-frame .window > :is(img, svg) {
   display: block;
@@ -979,8 +1059,8 @@ a.st-record:is(:hover, :focus-visible) > * {
   width: 2.25rem;
   height: 2.25rem;
   padding-right: calc(0.2rem * var(--st-cut-k));
-  background: linear-gradient(-45deg, transparent calc(0.45rem * var(--st-cut-k)), var(--st-flare) calc(0.45rem * var(--st-cut-k) + 0.5px));
-  color: var(--st-on-flare);
+  background: linear-gradient(-45deg, transparent calc(0.45rem * var(--st-cut-k)), var(--st-orbit) calc(0.45rem * var(--st-cut-k) + 0.5px));
+  color: var(--st-on-orbit);
   font-size: 1.3rem;
   letter-spacing: 0;
 }
@@ -1055,7 +1135,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   color: var(--st-bar-muted);
 }
 
-/* A console page's name: heavy, with an orbit line beside it. */
+/* A console page's name: heavy, with a line beside it ending in a star. */
 .st-head {
   display: grid;
   grid-template-columns: auto minmax(2rem, 1fr);
@@ -1064,13 +1144,8 @@ a.st-record:is(:hover, :focus-visible) > * {
   margin-bottom: 1.5rem;
 }
 .st-head::after {
-  content: '';
   grid-column: 2;
   grid-row: 1;
-  height: 7px;
-  background:
-    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
-    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
 }
 .st-head h1 {
   display: flex;
@@ -1095,8 +1170,8 @@ a.st-record:is(:hover, :focus-visible) > * {
   color: var(--st-ink-2);
 }
 
-/* A panel: a plate on the paper with a heavy ink tab on its top edge, which
-   runs out along the whole edge when the panel is pointed at.
+/* A panel: a plate on the paper with a heavy violet tab on its top edge,
+   which runs out along the whole edge when the panel is pointed at.
    .cut-tl / .cut-tr / .cut-bl / .cut-br cut away the corner that faces the
    star dial, so the panels follow its curve instead of forming a grid. This
    cutaway is layout, not a press cue: it is far larger than a button's cut. */
@@ -1115,7 +1190,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   left: -1px;
   right: -1px;
   height: 5px;
-  background: var(--st-ink);
+  background: var(--st-orbit);
   transform: scaleX(0.14);
   transform-origin: left;
   transition: transform 0.4s var(--st-mech);
@@ -1160,28 +1235,23 @@ a.st-record:is(:hover, :focus-visible) > * {
   color: var(--st-ink);
 }
 
-/* A lead from a panel to whatever it describes: a hairline ending in a star
-   dot. Put .lead-right (or .lead-left) on a panel; set --lead to its length. */
+/* A lead from a panel to whatever it describes: a hairline ending in a
+   four-point star (drawn with .st-bar-title above). Put .lead-right (or
+   .lead-left) on a panel; set --lead to its length. */
 .st-panel:is(.lead-right, .lead-left)::after {
-  content: '';
   position: absolute;
   top: 50%;
   width: var(--lead, 3rem);
-  height: 7px;
-  margin-top: -3.5px;
+  margin-top: -5.5px;
   pointer-events: none;
 }
 .st-panel.lead-right::after {
   left: 100%;
-  background:
-    radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
-    linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
 }
 .st-panel.lead-left::after {
+  --star-at: left;
+  --line-at: right;
   right: 100%;
-  background:
-    radial-gradient(circle at 3.5px 50%, var(--st-ink) 3px, transparent 3.5px),
-    linear-gradient(var(--st-ink), var(--st-ink)) right center / calc(100% - 7px) 1px no-repeat;
 }
 
 /* Big figures, three to a panel. Pointing at one drives flare under it. */
@@ -1213,7 +1283,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   color: var(--st-ink-2);
 }
 .st-figs > :is(a:hover, a:focus-visible) b,
-.st-figs .is-alert b {
+.st-figs :is(.is-alert, .is-best) b {
   background-size: 100% 100%;
   color: var(--st-on-flare);
 }
@@ -1550,7 +1620,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   align-items: flex-start;
   gap: 1rem;
   padding: 1.5rem var(--st-pad) 1rem;
-  border-top: 5px solid var(--st-ink);
+  border-top: 5px solid var(--st-orbit);
 }
 .st-drawer header .st-pair {
   margin-right: auto;
@@ -1645,8 +1715,9 @@ a.st-record:is(:hover, :focus-visible) > * {
   overflow-x: auto;
 }
 
-/* Bars: grey columns; the one pointed at, or marked .is-here, turns orbit;
-   a reading over its limit gets a flare square on top.
+/* Bars: the series is pale violet; the one pointed at, or marked .is-here,
+   turns full violet; the best (.is-best) is flare with an ink edge; a reading
+   over its limit (.is-over) gets a flare square on top.
    <ol class="st-bars"><li style="--v: 0.62"><span>10.12</span></li>… */
 .st-bars {
   display: grid;
@@ -1664,11 +1735,15 @@ a.st-record:is(:hover, :focus-visible) > * {
   position: relative;
   height: calc(var(--v, 0) * 100%);
   min-height: 2px;
-  background: color-mix(in srgb, var(--st-ink-2) 40%, transparent);
+  background: color-mix(in srgb, var(--st-orbit) 45%, var(--st-panel));
   transition: background-color 0.15s;
 }
 .st-bars > li:is(:hover, .is-here) {
   background: var(--st-orbit);
+}
+.st-bars > li.is-best {
+  background: var(--st-flare);
+  box-shadow: inset 0 0 0 1px var(--st-on-flare);
 }
 .st-bars > li.is-over::before {
   content: '';
@@ -1840,6 +1915,10 @@ a.st-record:is(:hover, :focus-visible) > * {
   .st-btn.is-done::before {
     animation: st-done 600ms var(--st-mech);
   }
+  /* the main action is flare already: ink passes through it instead */
+  .st-btn.go.is-done {
+    animation: st-done-text 600ms var(--st-mech);
+  }
 }
 
 @keyframes st-wipe-in {
@@ -1902,6 +1981,12 @@ a.st-record:is(:hover, :focus-visible) > * {
   }
   100% {
     transform: translateX(101%);
+  }
+}
+@keyframes st-done-text {
+  35%,
+  70% {
+    color: var(--st-panel);
   }
 }
 
@@ -2032,7 +2117,7 @@ a.st-record:is(:hover, :focus-visible) > * {
   stroke: var(--st-chip);
 }
 .st-dial .gauge .arc {
-  stroke: var(--st-ink-2);
+  stroke: var(--st-orbit);
 }
 .st-dial .gauge text {
   font-size: 10px;
@@ -2130,13 +2215,14 @@ a.st-record:is(:hover, :focus-visible) > * {
   font-size: 106.25%;
 }
 
-/* Ground: what lies faintly under the page. */
-:root[data-st-ground='plain'] .st-stars::before {
+/* Ground: what lies faintly under the page. Only stars has the glints layer. */
+:root[data-st-ground='plain'] .st-stars::before,
+:root:is([data-st-ground='plain'], [data-st-ground='chart'], [data-st-ground='hatch']) .st-stars::after {
   display: none;
 }
-/* chart: circles of a star chart round a pole beyond the top-right corner */
+/* chart: violet circles of a star chart round a pole beyond the top-right corner */
 :root[data-st-ground='chart'] .st-stars::before {
-  background: repeating-radial-gradient(circle at 104% -12%, transparent 0 calc(6rem - 1px), var(--st-stars) calc(6rem - 1px) 6rem);
+  background: repeating-radial-gradient(circle at 104% -12%, transparent 0 calc(6rem - 1px), var(--st-stars-line) calc(6rem - 1px) 6rem);
   -webkit-mask: radial-gradient(ellipse at 100% 0, #000, transparent 62%);
   mask: radial-gradient(ellipse at 100% 0, #000, transparent 62%);
 }

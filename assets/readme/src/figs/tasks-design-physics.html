@@ -2,32 +2,26 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x262">
+<meta name="size" content="960x354">
 <title>物理题评分方向</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="tasks-design-strip.css">
 </head>
 <body>
-<div class="frame">
-  <div class="head"><h2></h2><p></p></div>
-  <div class="plot" id="plot"></div>
-  <div class="legend" id="legend"></div>
-</div>
+<div class="frame"></div>
 <script>
+// Directions, points and subitems as in README.md (物理模拟 › 分项与计分).
 window.FIG = {
-  cat: 'physics',
+  cat: 'physics', catName: '物理模拟', partner: 'violet-300',
   title: '果冻冲击与造浪水槽：100 分怎样分配',
-  sub: '<span class="num">4</span> 个评分方向、<span class="num">25</span> 个分项；条长按分值精确绘制。',
-  rows: [{ dirs: [
+  desc: '两位评分员分别打分，逐项取平均。条长按分值精确绘制，各方向从 0 依次排到 100。',
+  facts: ['4 个方向', '25 个分项', '合计 100 分'],
+  groups: [{ dirs: [
     ['现象形态与运动层次', 44, [6, 6, 5, 5, 4, 7, 6, 5]],
-    ['材质与光影', 24, [6, 3, 3, 4, 4, 2, 2]],
-    ['作用关系', 22, [5, 5, 3, 4, 5]],
-    ['演示与交付', 10, [2, 2, 2, 2, 2]],
+    ['材质与光影',         24, [6, 3, 3, 4, 4, 2, 2]],
+    ['作用关系',           22, [5, 5, 3, 4, 5]],
+    ['演示与交付',         10, [2, 2, 2, 2, 2]],
   ] }],
-  legend: [
-    ['cell', '细条每格是一个分项'],
-    ['blk', '两位评分员分别打分，逐项取平均'],
-  ],
 };
 </script>
 <script src="tasks-design-strip.js"></script>

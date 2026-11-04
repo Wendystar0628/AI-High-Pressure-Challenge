@@ -2,61 +2,68 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x348">
+<meta name="size" content="960x462">
 <title>权重分配</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head { position: absolute; left: 32px; right: 32px; top: 26px; display: flex; align-items: baseline; gap: 16px; }
-  .head h2 { font-size: 24px; line-height: 32px; }
-  .head p { font-size: 14px; color: var(--ink-2); }
+  .desc { margin-top: 10px; }
+  .plot { position: absolute; left: 40px; top: 134px; width: 880px; }
+  .plot > * { position: absolute; white-space: nowrap; }
 
-  .plot { position: absolute; left: 32px; top: 80px; width: 896px; }
-  .plot > * { position: absolute; }
+  .ch { display: flex; align-items: center; column-gap: 6px; }
+  .ch .field { font-size: 12px; }
+  .cn { font-size: 13.5px; font-weight: 700; line-height: 20px; }
+  .cw { font-size: 26px; }
+  .cell { height: 44px; }
+  .tw { font-size: 13px; font-weight: 700; line-height: 18px; }
+  .tw .cnx { font-family: var(--font-text); font-weight: 400; color: var(--ink-2); margin-right: 4px; }
+  .tn { font-family: var(--font-text); font-size: 12.5px; line-height: 17px; color: var(--ink-2); }
 
-  .cn { font-size: 14px; line-height: 20px; color: var(--ink); white-space: nowrap; }
-  .cw { font-size: 26px; line-height: 28px; color: var(--c); white-space: nowrap; font-weight: 600; }
-  .blk { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block); }
-  .div { width: 1px; background: var(--c); opacity: .55; }
-  .tw { font-size: 15px; line-height: 18px; color: var(--c); white-space: nowrap; }
-  .tw .cnx { font-family: var(--font-cn); font-size: 13px; margin-right: 4px; color: var(--ink-2); }
-  .tn { font-size: 13px; line-height: 17px; color: var(--ink-2); white-space: nowrap; }
+  /* Brackets: which share each kind of task carries, in that kind's colour; the shape marks the kind as well. */
+  .kb { height: 7px; border: 1px solid var(--ink); border-top: none; }
+  .kb.std { border-color: var(--lime-800); }
+  .kb.des { border-color: var(--violet-600); }
+  .kl { display: flex; align-items: baseline; column-gap: 10px; }
+  .kl h3 { font-size: 16px; }
+  .kl .fig { font-size: 28px; }
+  .kl.std .fig { color: var(--lime-800); }
+  .kl.des .fig { color: var(--violet); }
 
   .rl { height: 1px; background: var(--ink-3); }
   .tk { width: 1px; background: var(--ink-3); }
-  .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); white-space: nowrap; }
-
-  /* Brackets for the two kinds of task. */
-  .kb { height: 8px; border: 1.5px solid var(--ink); border-top: none; border-radius: 0 0 4px 4px; }
-  .kl { font-size: 13px; line-height: 18px; color: var(--ink-2); white-space: nowrap; }
-  .kl b { color: var(--ink); font-weight: 700; margin-right: 6px; }
-  .kl .num { color: var(--ink); font-weight: 600; margin-right: 6px; }
+  .tl { font-size: 12px; color: var(--ink-2); }
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>权重分配</h2>
-    <p>先分到 8 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Weights</span><h2 class="title">权重分配</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">先分到 8 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
   <div class="plot" id="plot"></div>
 </div>
 <script>
 // Weights in percent, exact. Category weight = sum of its tasks.
+// Cells take the category colour --cat-<key>; the first three (standard, lime) add the ink edge.
 const CATS = [
   ['reason',   '数学推理',       '15%',   [['形式化<br>证明题', 7.5], ['数学竞赛<br>原创试题', 7.5]]],
-  ['algo',     '算法竞赛',       '15%', [[null, 5], [null, 5], [null, 5]]],
+  ['algo',     '算法竞赛',       '15%',   [[null, 5], [null, 5], [null, 5]]],
   ['spatial',  '空间推理',       '10%',   [['鲁班锁拆解', 10]]],
-  ['interact', '复杂交互应用',   '10%', [['AE风味动效<br>设计编辑器', 10]]],
+  ['interact', '复杂交互应用',   '10%',   [['AE风味动效<br>设计编辑器', 10]]],
   ['game',     '游戏设计与开发', '12.5%', [['动态路由塔防', 12.5]]],
   ['physics',  '物理模拟',       '10%',   [['果冻冲击与<br>造浪水槽', 10]]],
   ['visual',   '视觉设计与渲染', '15%',   [['NVIDIA<br>网页艺术', 7.5], ['太阳雨<br>渔港3D渲染', 7.5]]],
   ['system',   '系统架构与实现', '12.5%', [['操作系统嵌套', 12.5]]],
 ];
+const STD = 3;
 // The two kinds of task: contiguous in this order (standard first, as in the task table).
-const KINDS = [['标准评判题', '6 题，程序校验生成分数', 0, 40], ['主动设计题', '6 题，由 Opus 5.5 与 6.1Sol 各评取平均', 40, 100]];
-const W = 896, P = W / 100;               // px per percentage point
-const GAP = 3;                            // white gap between categories, centred on the exact boundary
-const CAT_Y = 0, BAR_Y = 56, BAR_H = 40, TW_Y = BAR_Y + BAR_H + 8, TN_Y = TW_Y + 21, KIND_Y = TN_Y + 52, RULER_Y = KIND_Y + 54;
+const KINDS = [['std', '标准评判题', ['6 题', '程序校验生成分数'], 0, 40], ['des', '主动设计题', ['6 题', '由 Opus 5.5 与 6.1Sol 各评取平均'], 40, 100]];
+const MARK = { std: '<i class="k std"></i>', des: '<span class="star k des"></span>' };
+const W = 880, P = W / 100;               // px per percentage point
+const GAP = 4, TGAP = 2;                  // paper gap between categories / between tasks, centred on the exact boundary
+const NO_Y = 0, CN_Y = 22, CW_Y = 46, BAR_Y = 82, BAR_H = 44, TW_Y = BAR_Y + BAR_H + 10, TN_Y = TW_Y + 20,
+      KIND_Y = TN_Y + 50, RULER_Y = KIND_Y + 70;
 const plot = document.getElementById('plot');
 function put(cls, css, html = '') {
   const d = document.createElement('div');
@@ -70,41 +77,39 @@ function put(cls, css, html = '') {
 let at = 0;
 CATS.forEach(([k, name, w, tasks], ci) => {
   const total = tasks.reduce((s, t) => s + t[1], 0);
-  const x0 = at * P, x1 = (at + total) * P;
-  const l = x0 + (ci ? GAP / 2 : 0), r = x1 - (ci < CATS.length - 1 ? GAP / 2 : 0);
-  const c = `--c:var(--${k});--t:var(--${k}-tint)`;
-  put('cn', `left:${l + 6}px;top:${name.includes('<br>') ? CAT_Y - 20 : CAT_Y}px`, name);
-  put('cw num', `left:${l + 5}px;top:${CAT_Y + 22}px;${c}`, w);
-  put('blk', `left:${l}px;top:${BAR_Y}px;width:${r - l}px;height:${BAR_H}px;${c}`);
+  const l = at * P + (ci ? GAP / 2 : 0), r = (at + total) * P - (ci < CATS.length - 1 ? GAP / 2 : 0);
+  put('ch', `left:${l}px;top:${NO_Y}px`, `<span class="field">${String(ci + 1).padStart(2, '0')}</span><img class="icon" src="../../icon-${k}.svg" alt="">`);
+  put('cn', `left:${l}px;top:${CN_Y}px`, name);
+  put('cw fig', `left:${l}px;top:${CW_Y}px`, w);
   let t0 = at;
   tasks.forEach(([tn, tw], ti) => {
-    const tx = t0 * P;
-    if (ti) put('div', `left:${tx - 0.5}px;top:${BAR_Y + 1.5}px;height:${BAR_H - 3}px;${c}`);
-    const lx = (ti ? tx : l) + 6;
+    const a = ti ? t0 * P + TGAP / 2 : l, b = ti < tasks.length - 1 ? (t0 + tw) * P - TGAP / 2 : r;
+    put('cell' + (ci < STD ? ' edge' : ''), `left:${a}px;top:${BAR_Y}px;width:${b - a}px;background:var(--cat-${k})`);
     if (tn) {
-      put('tw num', `left:${lx}px;top:${TW_Y}px;${c}`, `${tw}%`);
-      put('tn', `left:${lx}px;top:${TN_Y}px`, tn);
+      put('tw num', `left:${a}px;top:${TW_Y}px`, `${tw}%`);
+      put('tn', `left:${a}px;top:${TN_Y}px`, tn);
     }
     t0 += tw;
   });
-  if (k === 'algo') put('tw num', `left:${l + 6}px;top:${TW_Y}px;${c}`, `<span class="cnx">三题各</span>5%`);
+  if (k === 'algo') put('tw num', `left:${l}px;top:${TW_Y}px`, `<span class="cnx">三题各</span>5%`);
   at += total;
 });
 
 // Brackets: which share of the total each kind of task carries.
-KINDS.forEach(([name, note, a, b], i) => {
+KINDS.forEach(([kind, name, facts, a, b], i) => {
   const l = a * P + (i ? GAP / 2 : 0), r = b * P - (i < KINDS.length - 1 ? GAP / 2 : 0);
-  put('kb', `left:${l}px;top:${KIND_Y}px;width:${r - l}px`);
-  put('kl', `left:${l + 6}px;top:${KIND_Y + 14}px`, `<b>${name}</b><span class="num">${b - a}%</span>${note}`);
+  put('kb ' + kind, `left:${l}px;top:${KIND_Y}px;width:${r - l}px`);
+  put('kl ' + kind, `left:${l}px;top:${KIND_Y + 18}px`,
+      `<h3>${MARK[kind]}${name}</h3><span class="fig">${b - a}%</span><span class="field facts">${facts.map(t => `<span>${t}</span>`).join('')}</span>`);
 });
 
-// Scale: 0–100 %, minor tick every 5 %.
+// Scale: 0–100 %, a tick every 5 %, labels every 25 %.
 put('rl', `left:0;top:${RULER_Y}px;width:${W}px`);
 for (let p = 0; p <= 100; p += 5) {
-  const major = p % 25 === 0, h = major ? 8 : 4;
+  const major = p % 25 === 0, h = major ? 7 : 4;
   put('tk', `left:${Math.min(p * P, W - 1)}px;top:${RULER_Y - h}px;height:${h}px`);
   if (major) {
-    const lab = put('tl num', `left:${p * P}px;top:${RULER_Y + 5}px`, p === 100 ? '100%' : p);
+    const lab = put('tl num', `left:${p * P}px;top:${RULER_Y + 6}px`, p === 100 ? '100%' : p);
     lab.style.transform = p === 0 ? 'none' : p === 100 ? 'translateX(-100%)' : 'translateX(-50%)';
   }
 }

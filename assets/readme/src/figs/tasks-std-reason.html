@@ -2,102 +2,106 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x568">
+<meta name="size" content="960x690">
 <title>数学推理两种判法</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; letter-spacing: .01em; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .desc { margin-top: 10px; }
+  .title .icon { width: 26px; height: 26px; vertical-align: -4px; margin-right: 10px; }
+  code { font-family: Consolas, 'Cascadia Mono', monospace; font-size: 12.5px; color: var(--ink); }
 
-  /* Two columns divided by one hairline; rows divided by lane lines, as in the other figures. */
-  .row { display: grid; grid-template-columns: 1fr 1px 1fr; column-gap: 28px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
-  .vr { background: var(--line); }
-  .ph { display: flex; align-items: baseline; justify-content: space-between; }
-  .ph h3 { font-size: 17px; }
-  .ph .tag { font-family: var(--font-num); font-size: 18px; font-weight: 600; color: var(--reason); }
-  .ph .tag .cn { font-family: var(--font-cn); font-size: 13px; font-weight: 400; color: var(--ink-2); margin-left: 2px; }
-  .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; }
-  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 12.5px; color: var(--ink); }
+  /* Two tasks side by side under one ink rule; each column: head, rule sentence, the judging device. */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; margin-top: 22px; border-top: 1px solid var(--ink); }
+  .ch { display: flex; align-items: flex-end; justify-content: space-between; padding-top: 12px; }
+  .ch .l { display: flex; flex-direction: column; row-gap: 2px; }
+  .ch h3 { font-size: 17px; }
+  .ch .fig { font-size: 26px; color: var(--violet); }
+  .ch .fig .x { font-size: 18px; font-weight: 600; margin: 0 .2em; }
+  .rule { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 8px; min-height: 40px; }
+  /* One category, so the data is --cat-reason with an ink edge; partial marks take lime-100. Zero is a neutral track. */
+  .full { background: var(--cat-reason); }
+  .part { background: var(--lime-100); }
 
-  /* Formal proof: three checks on one track, then the two possible results. */
-  .gates { position: relative; margin-top: 14px; padding-left: 40px; }
-  .gates .track { position: absolute; left: 13px; top: 14px; height: 92px; width: 2px; background: var(--reason-tint); }
-  .gates .result { margin-top: 18px; }
-  .gate { position: relative; height: 46px; }
-  .gate .no { position: absolute; left: -40px; top: 1px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--reason);
-              background: var(--paper); color: var(--reason); font-family: var(--font-num); font-size: 15px; font-weight: 600;
-              display: flex; align-items: center; justify-content: center; }
-  .gate b { font-size: 14.5px; font-weight: 700; }
-  .gate span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
-  .result { display: flex; gap: 14px; margin-top: 6px; margin-left: -40px; }
-  .res { display: flex; align-items: center; gap: 10px; }
-  .res .box { width: 54px; height: 40px; border-radius: var(--radius-block); display: flex; align-items: center; justify-content: center;
-              font-family: var(--font-num); font-size: 21px; font-weight: 700; }
-  .res .on { background: var(--ink); color: var(--paper); }
-  .res .off { border: 1.5px solid var(--ink-3); color: var(--ink-3); }
-  .res .lab { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+  /* Formal proof: three checks as a numbered list, then condition -> result leads. */
+  .gates { margin-top: 12px; border-top: 1px solid var(--rule); }
+  .gate { display: grid; grid-template-columns: 34px 1fr; padding: 8px 0 9px; border-bottom: 1px solid var(--rule); }
+  .gate .no { line-height: 21px; }
+  .gate b { display: block; font-size: 14.5px; font-weight: 700; line-height: 21px; }
+  .gate span { display: block; font-family: var(--font-text); font-size: 13px; line-height: 19px; color: var(--ink-2); }
+  .outs { display: flex; column-gap: 26px; margin-top: 16px; }
+  .out { display: flex; align-items: center; }
+  .out .lab { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+  .out .lead1 { position: relative; width: 44px; height: 9px; margin: 0 4px 0 10px; }
+  .out .lead1::before { content: ''; position: absolute; left: 0; right: 4px; top: 4px; height: 1px; background: var(--ink); }
+  .out .lead1 .star { position: absolute; right: -4px; top: 0; width: 9px; height: 9px; color: var(--ink); }
+  .box { min-width: 58px; height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: center;
+         font-size: 20px; font-weight: 700; margin-left: 4px; }
+  .box.c-track { color: var(--ink-2); }
 
-  /* 数学竞赛题: a 0-7 ladder with what each band means. */
-  .ladder { display: grid; grid-template-columns: 52px 1fr; column-gap: 14px; margin-top: 14px; }
-  .rungs { display: flex; flex-direction: column; gap: 4px; }
-  .rung { height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center;
-          font-family: var(--font-num); font-size: 13px; font-weight: 600; }
-  .r7 { background: var(--reason); color: var(--paper); }
-  .rp { background: var(--reason-tint); color: var(--reason); }
-  .r0 { border: 1.25px solid var(--ink-3); color: var(--ink-3); }
+  /* Olympiad: the 0-7 scale, with brackets saying what each band means. */
+  .ladder { position: relative; display: grid; grid-template-columns: 40px 1fr; column-gap: 14px; margin-top: 12px; }
+  .rungs { display: flex; flex-direction: column; row-gap: 4px; }
+  .rung { height: 20px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .rung.c-track { color: var(--ink-2); }
   .bands { position: relative; }
-  .band { position: absolute; left: 0; right: 0; padding-left: 14px; border-left: 2px solid var(--reason-tint); }
-  .band b { font-size: 14.5px; font-weight: 700; display: block; line-height: 1.35; }
-  .band span { display: block; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
-  .band.top { border-left-color: var(--reason); }
-  .band.zero { border-left-color: var(--line); }
+  .band { position: absolute; left: 0; right: 0; padding-left: 16px; }
+  .band::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; border: 1px solid var(--ink); border-right: none; }
+  .band b { display: block; font-size: 14.5px; font-weight: 700; line-height: 20px; }
+  .band span { display: block; font-family: var(--font-text); font-size: 13px; line-height: 19px; color: var(--ink-2); }
 
-  /* Tools allowed while answering. */
-  .tools-h { font-size: 13px; color: var(--ink-3); margin-bottom: 8px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px 0 9px; border-radius: var(--radius-block);
-          font-size: 13px; white-space: nowrap; }
-  .chip svg { width: 14px; height: 14px; flex: none; }
-  .yes { background: var(--reason-tint); color: var(--ink); }
-  .no { border: 1px solid var(--line); color: var(--ink-2); }
+  /* Tools allowed while answering: one row per verdict, one line per tool. */
+  .tools { margin-top: 24px; border-top: 1px solid var(--ink); }
+  .th { display: flex; align-items: baseline; column-gap: 10px; padding-top: 12px; }
+  .th h3 { font-size: 15px; }
+  .tcols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; margin-top: 8px; }
+  .trow { display: grid; grid-template-columns: 74px 1fr; padding: 7px 0; border-top: 1px solid var(--rule); }
+  .trow .k { display: flex; align-items: center; column-gap: 7px; height: 22px; font-size: 13px; color: var(--ink-2); }
+  .trow .k i { width: 14px; height: 10px; }
+  .trow .v div { font-family: var(--font-text); font-size: 13.5px; line-height: 22px; }
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>数学推理：同是证明，两种判法</h2>
-    <p>形式化证明只看 Lean 编译结果，过关才得分；数学竞赛题由 GPT 6.1 Sol 按 IMO 阅卷惯例逐题给分。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Math Reasoning</span><h2 class="title"><img class="icon" src="../../icon-reason.svg" alt="">数学推理：同是证明，两种判法</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">形式化证明只看 Lean 编译结果，过关才得分；数学竞赛题由 GPT 6.1 Sol 按 IMO 阅卷惯例逐题给分。</p>
 
-  <div class="row">
+  <div class="cols">
     <section>
-      <div class="ph"><h3>形式化证明题</h3><div class="tag">8 × 12.5<span class="cn">分</span></div></div>
+      <div class="ch">
+        <div class="l"><span class="eyebrow slash">Formal Proof</span><h3>形式化证明题</h3></div>
+        <span class="fig">8<span class="x">×</span>12.5<span class="unit">分</span></span>
+      </div>
       <p class="rule">每题一个 <code>.lean</code> 文件，单独编译。三关都过得 12.5 分，没有部分分。</p>
       <div class="gates">
-        <div class="track"></div>
-        <div class="gate"><div class="no">1</div><b>编译无错误</b><span>用 Lean 单独编译这个文件，没有报错</span></div>
-        <div class="gate"><div class="no">2</div><b>没有 sorry 警告</b><span>编译输出里没有 sorry 警告，其他警告不影响</span></div>
-        <div class="gate"><div class="no">3</div><b>有主定理</b><span>文件里有题面要求的主定理，证明长短和写法不影响得分</span></div>
-        <div class="result">
-          <div class="res"><div class="box on">12.5</div><div class="lab">三关都过</div></div>
-          <div class="res"><div class="box off">0</div><div class="lab">任一关不过</div></div>
-        </div>
+        <div class="gate"><span class="no field">01</span><div><b>编译无错误</b><span>用 Lean 单独编译这个文件，没有报错</span></div></div>
+        <div class="gate"><span class="no field">02</span><div><b>没有 sorry 警告</b><span>编译输出里没有 sorry 警告，其他警告不影响</span></div></div>
+        <div class="gate"><span class="no field">03</span><div><b>有主定理</b><span>文件里有题面要求的主定理，证明长短和写法不影响得分</span></div></div>
+      </div>
+      <div class="outs">
+        <div class="out"><span class="lab">三关都过</span><i class="lead1"><span class="star"></span></i><span class="box full edge num">12.5</span></div>
+        <div class="out"><span class="lab">任一关不过</span><i class="lead1"><span class="star"></span></i><span class="box c-track num">0</span></div>
       </div>
     </section>
-    <div class="vr"></div>
+
     <section>
-      <div class="ph"><h3>数学竞赛原创试题</h3><div class="tag">18 × 7<span class="cn">分</span></div></div>
-      <p class="rule">6.1Sol 对照参考答案和每题评分要点评阅，满分 126，按 100/126 折算。</p>
+      <div class="ch">
+        <div class="l"><span class="eyebrow slash">Olympiad</span><h3>数学竞赛原创试题</h3></div>
+        <span class="fig">18<span class="x">×</span>7<span class="unit">分</span></span>
+      </div>
+      <p class="rule">6.1Sol 对照参考答案和每题评分要点评阅，<br>满分 126，按 100/126 折算。</p>
       <div class="ladder">
         <div class="rungs">
-          <div class="rung r7">7</div>
-          <div class="rung rp">6</div><div class="rung rp">5</div><div class="rung rp">4</div>
-          <div class="rung rp">3</div><div class="rung rp">2</div><div class="rung rp">1</div>
-          <div class="rung r0">0</div>
+          <div class="rung full edge num">7</div>
+          <div class="rung part edge num">6</div><div class="rung part edge num">5</div><div class="rung part edge num">4</div>
+          <div class="rung part edge num">3</div><div class="rung part edge num">2</div><div class="rung part edge num">1</div>
+          <div class="rung c-track num">0</div>
         </div>
         <div class="bands">
-          <div class="band top" style="top:0;height:22px"><b>完整正确（解法可以与参考答案不同）</b></div>
-          <div class="band" style="top:26px;height:152px">
+          <div class="band" style="top:0; height:20px"><b>完整正确（解法可以与参考答案不同）</b></div>
+          <div class="band" style="top:24px; height:140px; padding-top:1px">
             <b>不完整：按完成程度给部分分</b>
             <span>参照每题的评分要点</span>
             <span style="margin-top:10px">只有答案没有证明、关键步骤缺失、论证有漏洞的，按 IMO 惯例扣分；写得简练但阅卷认可的不扣</span>
@@ -107,24 +111,17 @@
     </section>
   </div>
 
-  <div class="row">
-    <section>
-      <div class="tools-h">作答时能用的工具</div>
-      <div class="chips">
-        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Lean 编译检查，随时可跑</span>
-        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>读取、检索 Mathlib 源码</span>
+  <div class="tools">
+    <div class="th"><span class="eyebrow slash">Tools</span><h3>作答时能用的工具</h3></div>
+    <div class="tcols">
+      <div>
+        <div class="trow"><span class="k"><i class="c-ink"></i>可以</span><div class="v"><div>Lean 编译检查，随时可跑</div><div>读取、检索 Mathlib 源码</div></div></div>
       </div>
-    </section>
-    <div class="vr"></div>
-    <section>
-      <div class="tools-h">作答时能用的工具</div>
-      <div class="chips">
-        <span class="chip yes"><svg viewBox="0 0 14 14"><polyline points="2.5,7.5 5.8,10.5 11.5,3.5" fill="none" stroke="var(--reason)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>只靠推理，解完一题就写进答案</span>
-        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>编写或运行程序验算</span>
-        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>计算机代数系统、数值库</span>
-        <span class="chip no"><svg viewBox="0 0 14 14"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round"/></svg>定理证明器</span>
+      <div>
+        <div class="trow"><span class="k"><i class="c-ink"></i>可以</span><div class="v"><div>只靠推理，解完一题就写进答案</div></div></div>
+        <div class="trow"><span class="k"><i class="c-hatch"></i>不可以</span><div class="v"><div>编写或运行程序验算</div><div>计算机代数系统、数值库</div><div>定理证明器</div></div></div>
       </div>
-    </section>
+    </div>
   </div>
 </div>
 </body>

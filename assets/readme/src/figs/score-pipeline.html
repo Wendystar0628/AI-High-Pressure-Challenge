@@ -2,143 +2,129 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x602">
+<meta name="size" content="960x680">
 <title>总分合成</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; letter-spacing: .01em; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
-
-  .abs { position: absolute; }
+  .desc { margin-top: 10px; }
+  .abs { position: absolute; white-space: nowrap; }
   svg.wires { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
-  svg text { font-family: var(--font-cn); }
+  .hr { position: absolute; left: 40px; height: 1px; background: var(--rule); }
+  .hr.ink { background: var(--ink); }
 
-  /* Lanes: one per grading type, separated by hairlines; the title row names the type and its categories. */
-  .rule { position: absolute; left: 32px; right: 32px; height: 1px; background: var(--line); }
-  .lane-title { display: flex; align-items: baseline; column-gap: 12px; }
-  .lane-title h3 { font-size: 17px; }
-  .lane-title .count { font-family: var(--font-num); font-size: 15px; color: var(--ink-2); }
-  .cat { display: inline-flex; align-items: center; column-gap: 6px; font-size: 13px; color: var(--ink-2); margin-left: 6px; }
-  .cats { display: flex; flex-wrap: wrap; width: 560px; row-gap: 4px; }
-  .cat i { display: inline-block; width: 15px; height: 10px; border-radius: 3px; border: 1.5px solid; transform: translateY(1px); }
+  /* Lane title: the kind of task, its count, then its categories on a second line. */
+  .lt { display: flex; align-items: baseline; column-gap: 10px; }
+  .lt h3 { font-size: 17px; }
+  .cats { display: flex; column-gap: 14px; margin-top: 6px; font-size: 13px; color: var(--ink-2); }
+  .cats span { display: inline-flex; align-items: center; column-gap: 5px; }
+  .cats .icon { width: 15px; height: 15px; vertical-align: 0; }
 
-  /* Sources: a grader chip, what it scores, and the example value. */
-  .src { display: grid; grid-template-columns: 140px 1fr; column-gap: 12px; align-items: center; width: 268px; }
-  .chip { height: 34px; border-radius: var(--radius-block); background: var(--stage); border: 1px solid var(--line);
-          display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 15px; }
-  .chip.cut { background: var(--paper); border: 1.25px dashed var(--ink-3); font-family: var(--font-cn); font-size: 14px; color: var(--ink-2); }
-  .src .what { font-size: 13.5px; line-height: 1.3; color: var(--ink); }
-  .eg { font-family: var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink-3); }
-  .src .eg { font-size: 14px; display: block; }
+  /* Sources: who scores, what, and the example value. */
+  .node { width: 150px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; }
+  .what { font-family: var(--font-text); font-size: 13.5px; line-height: 1.35; }
+  .eg { font-family: var(--font-ui); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 13.5px; display: block; }
 
   /* Operations: what is done, then the example worked through. */
-  .op .do { font-size: 14px; font-weight: 500; white-space: nowrap; }
-  .op .f { font-family: var(--font-num); font-size: 16px; margin-top: 1px; white-space: nowrap; }
-  .op .f .cn { font-family: var(--font-cn); font-size: 14px; }
-  .op .eg { font-size: 14px; margin-top: 2px; white-space: nowrap; }
+  .op .do { font-size: 14px; font-weight: 700; }
+  .op .f { font-family: var(--font-text); font-size: 14px; margin-top: 2px; }
+  .op .f .num { font-weight: 600; }
+  .op .eg { margin-top: 2px; }
 
-  /* The task score column where both lanes meet. */
-  .task { border: 1.5px solid var(--ink); border-radius: var(--radius-block); background: var(--paper); }
+  /* Where both lanes meet: the task score. */
+  .task { width: 150px; }
+  .task .v { position: absolute; left: 0; right: 0; text-align: center; font-size: 17px; font-weight: 700; color: var(--ink-2); }
   .task .mid { position: absolute; left: 0; right: 0; text-align: center; }
   .task .t { font-size: 15px; font-weight: 700; }
-  .task .s { font-family: var(--font-num); font-size: 28px; font-weight: 700; line-height: 1.1; margin-top: 2px; }
-  .task .s sub { font-size: 15px; }
-  .task .r { font-family: var(--font-num); font-size: 14px; color: var(--ink-2); }
-  .task .v { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-num); font-size: 17px; color: var(--ink-3); }
+  .task .s { font-size: 34px; color: var(--violet); margin-top: 6px; }
+  .task .s sub { font-size: 17px; }
+  .task .r { font-size: 13px; margin-top: 4px; }
 
   /* Bottom row: the weights meet the task scores in the model total. */
-  .weights h3 { font-size: 15px; }
-  .weights p { font-size: 13px; color: var(--ink-2); }
-  .weights .wt { font-size: 15px; color: var(--ink); margin-right: 12px; }
-  .wbar { display: flex; column-gap: 3px; margin-top: 12px; }
+  .wt { display: flex; align-items: baseline; column-gap: 12px; }
+  .wt h3 { font-size: 15px; }
+  .wt h3 sub { font-size: 11px; }
+  .wt p { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); }
+  .wbar { display: flex; column-gap: 3px; margin-top: 12px; width: 690px; }
   .wbar div { min-width: 0; }
-  .wbar i { display: block; height: 14px; border-radius: 4px; border: 1.5px solid; }
-  .wbar b { display: block; font-family: var(--font-num); font-size: 15px; font-weight: 700; margin-top: 5px; }
-  .wbar span { display: block; font-size: 11px; color: var(--ink-2); line-height: 1.3; white-space: nowrap; }
-  .total { border-radius: var(--radius-block); background: var(--ink); color: var(--paper); padding: 14px 18px; }
+  .wbar i { display: block; height: 14px; }
+  .wbar b { display: block; font-size: 14px; font-weight: 700; margin-top: 6px; }
+  .wbar span { display: block; font-size: 11px; color: var(--ink-2); line-height: 1.3; }
+  .total { width: 150px; padding: 14px 16px; }
   .total .t { font-size: 15px; font-weight: 700; }
-  .total .f { font-family: var(--font-num); font-size: 24px; margin-top: 4px; }
+  .total .f { font-size: 26px; font-weight: 700; margin-top: 6px; font-family: var(--font-ui); }
   .total .f sub { font-size: 13px; }
-  .total .c { font-size: 12.5px; color: #C9CFDA; margin-top: 4px; }
 
-  .foot { position: absolute; left: 32px; right: 32px; bottom: 20px; border-top: 1px solid var(--line); padding-top: 11px;
-          display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
-  .foot b { color: var(--ink); font-weight: 500; }
+  /* Kind colours: the standard lane is lime (fill with an ink edge), the design lane violet; the heading shape marks the kind as well. */
+  #s0::before { height: 6px; background: var(--lime); outline: 1px solid var(--ink); outline-offset: -1px; }
+
+  .foot { position: absolute; left: 40px; right: 40px; bottom: 26px; display: flex; align-items: center; column-gap: 28px;
+          font-family: var(--font-text); font-size: 13px; color: var(--ink-2); }
+  .foot b { color: var(--ink); font-weight: 700; }
+  .foot .hi { font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; }
 </style>
 </head>
 <body>
-<div class="frame">
-  <div class="head">
-    <h2>每道题的分数怎样进入总分</h2>
-    <p>两类题分开合成，各折算成 0–100 分，再按权重加权。浅灰数字是一组示例。</p>
-  </div>
+<div class="frame" id="frame">
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Scoring</span><h2 class="title">每道题的分数怎样进入总分</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">两类题分开合成，各折算成 0–100 分，再按权重加权。灰色数字是一组示例。</p>
 
-  <!-- Lane 1: standard tasks -->
-  <div class="rule" style="top:110px"></div>
-  <div class="abs lane-title" style="left:32px; top:122px">
-    <h3>标准评判题</h3><span class="count">6 题</span>
-    <span class="cat"><i style="border-color:var(--reason); background:var(--reason-tint)"></i>数学推理</span>
-    <span class="cat"><i style="border-color:var(--algo); background:var(--algo-tint)"></i>算法竞赛</span>
-    <span class="cat"><i style="border-color:var(--spatial); background:var(--spatial-tint)"></i>空间推理</span>
+  <!-- Lane 1: standard tasks, on the one full-width lime-100 band -->
+  <div class="abs" style="left:0; top:146px; width:960px; height:154px; background:var(--lime-100)"></div>
+  <div class="hr ink" style="top:146px; width:700px"></div>
+  <div class="abs" style="left:40px; top:158px">
+    <div class="lt"><span class="eyebrow slash">Standard</span><h3><i class="k std"></i>标准评判题</h3><span class="field">6 题</span></div>
+    <div class="cats"><span><img class="icon" src="../../icon-reason.svg" alt="">数学推理</span><span><img class="icon" src="../../icon-algo.svg" alt="">算法竞赛</span><span><img class="icon" src="../../icon-spatial.svg" alt="">空间推理</span></div>
   </div>
-  <div class="abs src" id="s0" style="left:32px; top:164px">
-    <div class="chip">程序校验</div>
-    <div class="what">生成分数<span class="eg">鲁班锁 66.68 / 100</span></div>
-  </div>
-  <div class="abs op" id="o0" style="left:348px; top:150px">
+  <div class="abs node panel tab" id="s0" style="left:40px; top:226px">程序校验</div>
+  <div class="abs what" id="w0" style="left:206px; top:225px">生成分数<span class="eg">鲁班锁 66.68 / 100</span></div>
+  <div class="abs op" id="o0" style="left:400px; top:216px">
     <div class="do">折算</div>
-    <div class="f"><span class="cn">原始分 ÷ 满分</span> × 100</div>
+    <div class="f">原始分 ÷ 满分 × <span class="num">100</span></div>
     <div class="eg">66.68 ÷ 100 × 100 = 66.7</div>
   </div>
 
   <!-- Lane 2: design tasks -->
-  <div class="rule" style="top:234px"></div>
-  <div class="abs lane-title" style="left:32px; top:246px">
-    <h3>主动设计题</h3><span class="count">6 题</span>
-    <div class="cats">
-    <span class="cat"><i style="border-color:var(--interact); background:var(--interact-tint)"></i>复杂交互应用</span>
-    <span class="cat"><i style="border-color:var(--game); background:var(--game-tint)"></i>游戏设计与开发</span>
-    <span class="cat"><i style="border-color:var(--physics); background:var(--physics-tint)"></i>物理模拟</span>
-    <span class="cat"><i style="border-color:var(--visual); background:var(--visual-tint)"></i>视觉设计与渲染</span>
-    <span class="cat"><i style="border-color:var(--system); background:var(--system-tint)"></i>系统架构与实现</span>
-    </div>
+  <div class="hr" style="top:300px; width:700px"></div>
+  <div class="abs" style="left:40px; top:312px">
+    <div class="lt"><span class="eyebrow slash">Design</span><h3><span class="star k des"></span>主动设计题</h3><span class="field">6 题</span></div>
+    <div class="cats"><span><img class="icon" src="../../icon-interact.svg" alt="">复杂交互应用</span><span><img class="icon" src="../../icon-game.svg" alt="">游戏设计与开发</span><span><img class="icon" src="../../icon-physics.svg" alt="">物理模拟</span><span><img class="icon" src="../../icon-visual.svg" alt="">视觉设计与渲染</span><span><img class="icon" src="../../icon-system.svg" alt="">系统架构与实现</span></div>
   </div>
-  <div class="abs src" id="s1" style="left:32px; top:296px">
-    <div class="chip">Claude Opus 5.5</div>
-    <div class="what">全部分项<span class="eg">52.0</span></div>
-  </div>
-  <div class="abs src" id="s2" style="left:32px; top:346px">
-    <div class="chip">GPT 6.1 Sol</div>
-    <div class="what">全部分项<span class="eg">48.0</span></div>
-  </div>
-
-  <div class="abs op" id="oavg" style="left:348px">
+  <div class="abs node panel tab" id="s1" style="left:40px; top:380px">Claude Opus 5.5</div>
+  <div class="abs what" id="w1" style="left:206px; top:379px">全部分项<span class="eg">52.0</span></div>
+  <div class="abs node panel tab" id="s2" style="left:40px; top:434px">GPT 6.1 Sol</div>
+  <div class="abs what" id="w2" style="left:206px; top:433px">全部分项<span class="eg">48.0</span></div>
+  <div class="abs op" id="oavg" style="left:400px; top:405px">
     <div class="do">逐项取两位的平均，再相加</div>
     <div class="eg">(52.0 + 48.0) ÷ 2 = 50.0</div>
   </div>
+
   <!-- Where the lanes meet -->
-  <div class="abs task" id="task" style="left:800px; top:140px; width:128px; height:244px">
-    <div class="v" id="v0">66.7</div>
-    <div class="mid" id="tmid"><div class="t">本题得分</div><div class="s">S<sub>t</sub></div><div class="r">0–100</div></div>
-    <div class="v" id="v1">50.0</div>
+  <div class="abs task panel tab" id="task" style="left:770px; top:200px; height:290px">
+    <div class="v num" id="v0">66.7</div>
+    <div class="mid" id="tmid"><div class="t">本题得分</div><div class="s fig">S<sub>t</sub></div><div class="r field">0–100</div></div>
+    <div class="v num" id="v1">50.0</div>
   </div>
 
   <!-- Bottom row -->
-  <div class="rule" style="top:428px; height:1.5px; background:var(--ink)"></div>
-  <div class="abs weights" id="weights" style="left:32px; top:442px; width:690px">
-    <p><b class="wt">权重 w<sub style="font-size:11px">t</sub></b>先分到类别，类别内各题平分，12 题合计 100%</p>
+  <div class="hr ink" style="top:512px; width:880px"></div>
+  <div class="abs" id="weights" style="left:40px; top:528px">
+    <div class="wt"><h3>权重 w<sub>t</sub></h3><p>先分到类别，类别内各题平分，12 题合计 100%</p></div>
     <div class="wbar" id="wbar"></div>
   </div>
-  <div class="abs total" id="total" style="left:770px; top:452px; width:158px">
+  <div class="abs total solid" id="total" style="left:770px; top:538px">
     <div class="t">模型总分</div>
     <div class="f">Σ w<sub>t</sub> S<sub>t</sub></div>
   </div>
 
-  <svg class="wires" id="wires" width="960" height="602"></svg>
+  <svg class="wires" id="wires" width="960" height="680"></svg>
 
   <div class="foot">
-    <div><b>只有一位评分员的结果有效</b>：用这一位的</div>
-    <div><b>没有有效结果</b>：本题没有分数，总分里暂按 0 分计</div>
+    <span class="hi">特殊情况</span>
+    <span><b>只有一位评分员的结果有效</b>：用这一位的</span>
+    <span><b>没有有效结果</b>：本题没有分数，总分里暂按 0 分计</span>
   </div>
 </div>
 
@@ -150,67 +136,45 @@ const el = (tag, attrs = {}, parent) => {
   if (parent) parent.appendChild(e);
   return e;
 };
-const frame = document.querySelector('.frame');
-const F = () => frame.getBoundingClientRect();
-const rect = node => { const r = node.getBoundingClientRect(), f = F();
+const frame = document.getElementById('frame');
+const rect = node => { const r = node.getBoundingClientRect(), f = frame.getBoundingClientRect();
   return { l: r.left - f.left, r: r.right - f.left, t: r.top - f.top, b: r.bottom - f.top,
            cx: (r.left + r.right) / 2 - f.left, cy: (r.top + r.bottom) / 2 - f.top }; };
 const box = id => rect(document.getElementById(id));
 const part = (id, sel) => rect(document.querySelector(`#${id} ${sel}`));
 
-// Place the lane-2 operation level with its source rows, between the two graders.
-const chipY = id => part(id, '.chip').cy;
-const place = (id, y, sel = '.do') => { const n = document.getElementById(id); n.style.top = `${y - part(id, sel).cy + parseFloat(n.style.top || 0)}px`; };
-for (const id of ['oavg']) document.getElementById(id).style.top = '0px';
-place('oavg', (chipY('s1') + chipY('s2')) / 2);
-place('o0', chipY('s0'), '.f');
+// Weight bar: eight categories, widths proportional to weight, in task-table order so each kind stays together.
+// Fills are the category colours --cat-<key>; the three standard (lime) categories add the ink edge.
+const W = [['reason', '数学推理', 15], ['algo', '算法竞赛', 15], ['spatial', '空间推理', 10],
+           ['interact', '复杂交互应用', 10], ['game', '游戏设计与开发', 12.5], ['physics', '物理模拟', 10],
+           ['visual', '视觉设计与渲染', 15], ['system', '系统架构与实现', 12.5]];
+document.getElementById('wbar').innerHTML = W.map(([c, n, w], i) =>
+  `<div style="flex:${w}"><i${i < 3 ? ' class="edge"' : ''} style="background:var(--cat-${c})"></i><b class="num">${w}%</b><span>${n}</span></div>`).join('');
 
-// Weight bar: eight categories, widths proportional to weight, largest first.
-const W = [['visual', '视觉设计与渲染', 15, '7.5% × 2'], ['reason', '数学推理', 15, '7.5% × 2'], ['algo', '算法竞赛', 15, '5% × 3'], ['system', '系统架构与实现', 12.5, ''],
-           ['game', '游戏设计与开发', 12.5, ''], ['interact', '复杂交互应用', 10, ''], ['physics', '物理模拟', 10, ''], ['spatial', '空间推理', 10, '']];
-document.getElementById('wbar').innerHTML = W.map(([c, n, w, each]) =>
-  `<div style="flex:${w}"><i style="border-color:var(--${c}); background:var(--${c}-tint)"></i>` +
-  `<b style="color:var(--${c})">${w}%</b><span>${n}</span></div>`).join('');
-
+// Leads: 1px ink lines; each ends in a four-point star where it arrives. Measure only after the fonts have loaded.
+document.fonts.ready.then(() => {
 const svg = document.getElementById('wires');
-const STROKE = 'var(--ink-3)';
-const path = d => el('path', { d, fill: 'none', stroke: STROKE, 'stroke-width': 1.25, 'stroke-linejoin': 'round' }, svg);
-const head = (x, y, dir = 'r') => {
-  const p = { r: [[-6, -4.5], [0, 0], [-6, 4.5]], d: [[-4.5, -6], [0, 0], [4.5, -6]] }[dir];
-  el('polyline', { points: p.map(([dx, dy]) => `${x + dx},${y + dy}`).join(' '), fill: 'none', stroke: STROKE,
-                   'stroke-width': 1.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
-};
-// Elbow from (x1,y1) to (x2,y2) turning at xm with rounded bends.
-const elbow = (x1, y1, x2, y2, xm) => {
-  if (Math.abs(y2 - y1) < 1) return `M${x1},${y1} H${x2}`;
-  const r = Math.min(8, Math.abs(y2 - y1) / 2), s = Math.sign(y2 - y1);
-  return `M${x1},${y1} H${xm - r} Q${xm},${y1} ${xm},${y1 + s * r} V${y2 - s * r} Q${xm},${y2} ${xm + r},${y2} H${x2}`;
-};
-const label = (x, y, s, anchor = 'middle', size = 13) => {
-  const t = el('text', { x, y, 'text-anchor': anchor, style: `font-size:${size}px; fill: var(--ink-2)` }, svg);
-  t.innerHTML = s;
-  return t;
-};
-const G = 10, T = box('task');
+const K = 0.72 / 11;
+const star = (x, y, r = 4.5) => el('path', { fill: 'var(--ink)', d:
+  `M${x} ${y - r}Q${x + K * r} ${y - K * r} ${x + r} ${y}Q${x + K * r} ${y + K * r} ${x} ${y + r}` +
+  `Q${x - K * r} ${y + K * r} ${x - r} ${y}Q${x - K * r} ${y - K * r} ${x} ${y - r}Z` }, svg);
+const path = d => el('path', { d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 }, svg);
+const G = 12, T = box('task');
 
-// Lane 1: Sol -> 折算 -> task column.
+// Lane 1: check -> scale -> task column.
 {
-  const c = part('s0', '.chip'), s = box('s0'), o = box('o0'), y = part('o0', '.f').cy;
-  path(`M${s.r + G},${y} H${o.l - G}`); head(o.l - G, y);
-  path(`M${o.r + G},${y} H${T.l - 2}`); head(T.l - 2, y);
-  const v = document.getElementById('v0'); v.style.top = `${y - T.t - 12}px`;
+  const y = part('o0', '.f').cy, w = box('w0'), o = box('o0');
+  path(`M${w.r + G} ${y} H${o.l - G - 6}`); star(o.l - G, y);
+  path(`M${o.r + G} ${y} H${T.l - 6}`); star(T.l, y);
+  document.getElementById('v0').style.top = `${y - T.t - 12}px`;
 }
-// Lane 2: sources -> operations.
+// Lane 2: both graders -> average -> task column, square elbows.
 {
-  const a = box('oavg'), ya = part('oavg', '.do').cy, xm = (box('s1').r + a.l) / 2;
-  for (const id of ['s1', 's2']) path(elbow(box(id).r + G, chipY(id), a.l - G, ya, xm));
-  head(a.l - G, ya);
-}
-// The average runs straight into the task column.
-{
-  const y = part('oavg', '.do').cy, x0 = part('oavg', '.do').r + G;
-  path(`M${x0},${y} H${T.l - 2}`); head(T.l - 2, y);
-  const v = document.getElementById('v1'); v.style.top = `${y - T.t - 12}px`;
+  const ya = part('oavg', '.do').cy, a = box('oavg'), xm = Math.max(box('w1').r, box('w2').r) + 28;
+  for (const id of ['w1', 'w2']) { const y = box(id === 'w1' ? 's1' : 's2').cy; path(`M${box(id).r + G} ${y} H${xm} V${ya}`); }
+  path(`M${xm} ${ya} H${a.l - G - 6}`); star(a.l - G, ya);
+  path(`M${part('oavg', '.do').r + G} ${ya} H${T.l - 6}`); star(T.l, ya);
+  document.getElementById('v1').style.top = `${ya - T.t - 12}px`;
 }
 // Task title sits midway between the two entries.
 {
@@ -220,11 +184,12 @@ const G = 10, T = box('task');
 }
 // Task column and weights -> total.
 {
-  const tot = box('total'), xc = T.cx;
-  path(`M${xc},${T.b + 2} V${tot.t - 2}`); head(xc, tot.t - 2, 'd');
-  const w = box('wbar'), y = tot.cy;
-  path(`M${w.r + 12},${y} H${tot.l - 2}`); head(tot.l - 2, y);
+  const tot = box('total');
+  path(`M${T.cx} ${T.b} V${tot.t - 6}`); star(T.cx, tot.t);
+  const y = part('weights', '.wbar i').cy, x0 = box('wbar').r + G;
+  path(`M${x0} ${y} H${tot.l - 6}`); star(tot.l, y);
 }
+});
 </script>
 </body>
 </html>

@@ -2,85 +2,95 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x606">
+<meta name="size" content="960x728">
 <title>AI八项全能·定时挑战赛</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .frame { padding: 0; }
   .abs { position: absolute; white-space: nowrap; }
+  .sky { position: absolute; right: 0; top: 0; width: 720px; height: 540px; opacity: .45;
+         -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 46%); mask-image: linear-gradient(to bottom, #000 30%, transparent 46%); }
 
-  /* Header: quiet, left-aligned; the eight lanes below are the one bold element. */
-  .title { left: 32px; top: 26px; font-size: 30px; font-weight: 700; line-height: 38px; letter-spacing: .5px; }
-  .sub { left: 33px; top: 68px; font-family: var(--font-num); font-size: 17px; font-weight: 500; line-height: 22px; letter-spacing: .3px; color: var(--ink-2); }
-  .rule { right: 32px; top: 32px; text-align: right; font-size: 15px; line-height: 24px; color: var(--ink); }
-  .rule .faint { font-size: 13px; }
+  /* Wordmark: solid ink name, hollow violet Latin line, one marker. */
+  .mark { left: 40px; top: 34px; }
+  .mark h1 { font-size: 62px; font-weight: 800; line-height: 1; letter-spacing: .01em; margin-top: 10px; font-stretch: 112%; }
+  .mark .latin { font-size: 40px; font-weight: 800; font-stretch: 125%; line-height: 1; letter-spacing: .02em; margin-top: 10px; }
+  .mark .line { display: flex; align-items: center; column-gap: 14px; margin-top: 18px; }
+  .mark .marker { font-size: 18px; line-height: 28px; }
+  .mark .desc { font-size: 14px; color: var(--ink-2); }
 
-  /* Group rows: which kind of task the lanes below belong to, and who grades it. */
-  .group { font-size: 13px; line-height: 18px; color: var(--ink-2); }
-  .group b { font-size: 15px; font-weight: 700; color: var(--ink); margin-right: 10px; }
-  .group .num { color: var(--ink); font-weight: 600; }
-  .colhead { font-size: 12px; line-height: 16px; color: var(--ink-3); }
+  /* The one violet block: two composition cuts, a hatched hard shadow, white large type, the orbit drawing. */
+  .plate, .shade { right: 50px; top: 30px; width: 330px; height: 182px;
+                   clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px); }
+  .shade { transform: translate(10px, 10px); background: var(--hatch); }
+  .plate { background: var(--violet); color: #FFFFFF; overflow: hidden; }
+  .plate img { position: absolute; left: 96px; top: -4px; width: 290px; height: 154px; }
+  .plate .big { position: absolute; left: 30px; bottom: 20px; display: flex; align-items: baseline; column-gap: 22px; }
+  .plate .fig { font-size: 72px; color: #FFFFFF; }
+  .plate .u { font-size: 26px; font-weight: 700; margin-left: 6px; }
 
-  .lane-no { width: 18px; text-align: center; font-size: 16px; color: var(--ink-3); line-height: 20px; }
-  .lane-icon { width: 20px; height: 20px; display: block; }
-  .lane-name { font-size: 15px; font-weight: 500; line-height: 20px; }
-  .count { text-align: right; width: 40px; line-height: 20px; }
-  .count b { font-family: var(--font-num); font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
-  .count span { font-size: 13px; color: var(--ink-2); margin-left: 2px; }
-
-  /* A task: a pill whose length is its time limit. */
-  .task { display: flex; align-items: center; justify-content: space-between; padding: 0 10px 0 11px; gap: 6px;
-          border: 1.5px solid var(--c); background: var(--t); border-radius: 15px; height: 30px; }
-  .task .tn { font-size: 13px; line-height: 18px; color: var(--ink); }
-  .task .tm { font-family: var(--font-num); font-size: 14px; font-weight: 600; color: var(--c); font-variant-numeric: tabular-nums; }
-  .task .tm small { font-family: var(--font-cn); font-size: 11px; font-weight: 400; margin-left: 2px; }
-
-  .foot { font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  /* Start list: one row per task, bar length = time limit on a shared minute scale. */
+  .colh { font-size: 12px; color: var(--ink-2); }
+  .tick { width: 1px; background: var(--ink-3); }
+  .tl { font-size: 12px; color: var(--ink-2); transform: translateX(-50%); }
+  .grid { width: 0; border-left: 1px dashed var(--rule); }
+  .ghead { display: flex; align-items: baseline; column-gap: 12px; }
+  .ghead h3 { font-size: 17px; }
+  .no { font-size: 13px; width: 24px; }
+  .cat { display: flex; align-items: center; column-gap: 8px; font-size: 15px; font-weight: 700; line-height: 20px; }
+  .task { font-size: 14px; line-height: 20px; color: var(--ink); }
+  .bar { height: 12px; }
+  .stop { width: 2px; height: 18px; background: var(--ink); }
+  .min { font-size: 14px; font-weight: 700; line-height: 20px; }
+  .min small { font-family: var(--font-text); font-size: 11px; font-weight: 400; color: var(--ink-2); margin-left: 3px; }
+  .hr { left: 40px; right: 40px; height: 1px; background: var(--rule); }
+  .hr.ink { background: var(--ink); }
+  .glints { position: absolute; left: 0; top: 0; overflow: visible; }
 </style>
 </head>
 <body>
 <div class="frame" id="f">
-  <svg id="lines" class="abs" style="left:0;top:0" width="960" height="606"></svg>
+  <img class="sky" src="../decor/starfield-corner-tr-light.svg" alt="">
+  <svg class="glints" id="glints" width="960" height="260"></svg>
+  <div class="tri"><i></i><i></i><i></i></div>
 
-  <div class="abs title">AI八项全能·定时挑战赛</div>
-  <div class="abs sub">AI Octathlon · Timed Challenge</div>
-  <div class="abs rule">每题限时作答，无人答疑<br><span class="faint">到时直接中止，不延长</span></div>
+  <div class="abs mark">
+    <div class="eyebrow slash">Timed Challenge</div>
+    <h1>AI八项全能</h1>
+    <div class="latin hollow">OCTATHLON</div>
+    <div class="line"><span class="marker">定时挑战赛</span><span class="desc">每题限时作答，无人答疑；到时直接中止，不延长</span></div>
+  </div>
+
+  <div class="abs shade"></div>
+  <div class="abs plate">
+    <img src="../decor/orbit-nested-violet.svg" alt="">
+    <div class="big"><span><span class="fig">12</span><span class="u">题</span></span><span><span class="fig" style="font-size:44px">8</span><span class="u">类</span></span></div>
+  </div>
 </div>
 
 <script>
 // Facts from orchestrator/tasks.py: lanes in table order; short task names for the figure only; time limit in minutes.
+// Bars take the category colour --cat-<key>; standard (lime) bars add the ink edge.
 const GROUPS = [
-  { kind: '标准评判题', note: '<span class="num">6</span> 题，程序校验生成分数', lanes: [
-    { key: 'reason', name: '数学推理', tasks: [['形式化证明题', 60], ['数学竞赛原创试题', 60]] },
-    { key: 'algo',   name: '算法竞赛', tasks: [['最小三角形面积', 60], ['Transformer 加速', 60], ['电路仿真加速', 60]] },
+  { en: 'Standard', kind: '标准评判题', mark: '<i class="k std"></i>', edge: true, facts: ['6 题', '程序校验生成分数'], lanes: [
+    { key: 'reason',  name: '数学推理', tasks: [['形式化证明题', 60], ['数学竞赛原创试题', 60]] },
+    { key: 'algo',    name: '算法竞赛', tasks: [['最小三角形面积', 60], ['Transformer 加速', 60], ['电路仿真加速', 60]] },
     { key: 'spatial', name: '空间推理', tasks: [['鲁班锁拆解', 60]] },
   ]},
-  { kind: '主动设计题', note: '<span class="num">6</span> 题，由 Claude Opus 5.5 与 GPT 6.1 Sol 各评取平均', lanes: [
+  { en: 'Design', kind: '主动设计题', mark: '<span class="star k des"></span>', edge: false, facts: ['6 题', '由 Claude Opus 5.5 与 GPT 6.1 Sol 各评取平均'], lanes: [
     { key: 'interact', name: '复杂交互应用',   tasks: [['AE风味动效设计编辑器', 100]] },
     { key: 'game',     name: '游戏设计与开发', tasks: [['动态路由塔防', 90]] },
-    { key: 'physics',  name: '物理模拟', tasks: [['果冻与造浪水槽', 60]] },
+    { key: 'physics',  name: '物理模拟',       tasks: [['果冻冲击与造浪水槽', 60]] },
     { key: 'visual',   name: '视觉设计与渲染', tasks: [['NVIDIA_B200网页艺术', 90], ['太阳雨渔港3D渲染', 100]] },
     { key: 'system',   name: '系统架构与实现', tasks: [['操作系统嵌套', 90]] },
   ]},
 ];
-const ICON = 'file:///E:/Project/AI_OneShot_Bench/assets/readme/icon-';
 
 // Geometry (CSS px).
-const TOP = 118, GROUP_H = 34, LANE_H = 46;
-const X0 = 262, X1 = 928, GAP = 8;
-const PX_PER_MIN = (X1 - X0 - GAP) / 190;   // the longest lane (90 + 100 min) fills the track exactly
-
+const TOP = 236, AXIS_H = 32, GROUP_H = 40, ROW_H = 26, CAT_GAP = 2;
+const X_NO = 40, X_CAT = 70, X_TASK = 236, X0 = 420, PX_PER_MIN = 4.2;   // 100 min ends at x = 840
 const f = document.getElementById('f');
-const svg = document.getElementById('lines');
-const NS = 'http://www.w3.org/2000/svg';
-const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-function line(x1, y1, x2, y2, stroke, w = 1, dash) {
-  const e = document.createElementNS(NS, 'line');
-  Object.entries({ x1, y1, x2, y2, stroke, 'stroke-width': w }).forEach(([k, v]) => e.setAttribute(k, v));
-  if (dash) e.setAttribute('stroke-dasharray', dash);
-  svg.appendChild(e);
-}
-function put(cls, style, inner) {
+function put(cls, style, inner = '') {
   const d = document.createElement('div');
   d.className = 'abs ' + cls;
   d.setAttribute('style', style);
@@ -89,41 +99,66 @@ function put(cls, style, inner) {
   return d;
 }
 
-let y = TOP, laneNo = 0, total = 0;
-GROUPS.forEach((G, gi) => {
-  // Group row: a heavier rule, the kind of task and its graders.
-  line(0, y + .5, 960, y + .5, css('--line'));
-  put('group', `left:32px;top:${y + 9}px`, `<b>${G.kind}</b>${G.note}`);
-  if (gi === 0) put('colhead', `right:${960 - X1}px;top:${y + 11}px;text-align:right`, '每条一道题，条长按单题限时绘制');
+// Column heads and the minute scale: a tick every 10 minutes, labels every 30.
+put('colh', `left:${X_CAT}px;top:${TOP}px`, '类别');
+put('colh', `left:${X_TASK}px;top:${TOP}px`, '题目');
+for (let m = 0; m <= 100; m += 10) {
+  const x = X0 + m * PX_PER_MIN, major = m % 30 === 0;
+  put('tick', `left:${x}px;top:${TOP + 24 - (major ? 7 : 4)}px;height:${major ? 7 : 4}px`);
+  if (major) put('tl num', `left:${x}px;top:${TOP}px`, m);
+}
+put('colh', `left:${X0 + 100 * PX_PER_MIN + 12}px;top:${TOP}px`, '分钟');
+put('', `left:${X0}px;top:${TOP + 24}px;width:${100 * PX_PER_MIN}px;height:1px;background:var(--ink-3)`);
+
+let y = TOP + AXIS_H, laneNo = 0, total = 0;
+const gridTop = y;
+GROUPS.forEach(G => {
+  put('hr ink', `top:${y}px`);
+  put('ghead', `left:${X_NO}px;top:${y + 9}px`,
+      `<span class="eyebrow slash">${G.en}</span><h3>${G.mark}${G.kind}</h3><span class="field facts">${G.facts.map(t => `<span>${t}</span>`).join('')}</span>`);
   y += GROUP_H;
-  const laneTop = y;
-  G.lanes.forEach(L => {
+  G.lanes.forEach((L, li) => {
     laneNo++;
-    const cy = y + LANE_H / 2, c = `--c:var(--${L.key});--t:var(--${L.key}-tint)`;
-    line(0, y + .5, 960, y + .5, css('--line-2'));
-    put('lane-no num', `left:32px;top:${cy - 10}px`, String(laneNo));
-    put('', `left:58px;top:${cy - 10}px`, `<img class="lane-icon" src="${ICON}${L.key}.svg" alt="">`);
-    put('lane-name', `left:86px;top:${cy - 10}px`, L.name);
-    put('count', `left:${X0 - 58}px;top:${cy - 10}px`, `<b>${L.tasks.length}</b><span>题</span>`);
-    let x = X0;
+    if (li) put('hr', `top:${y}px`);
+    y += CAT_GAP / 2;
+    put('no field', `left:${X_NO}px;top:${y + 3}px`, String(laneNo).padStart(2, '0'));
+    put('cat', `left:${X_CAT}px;top:${y + 3}px`, `<img class="icon" src="../../icon-${L.key}.svg" alt="">${L.name}`);
     L.tasks.forEach(([name, min]) => {
       const w = min * PX_PER_MIN;
-      put('task', `left:${x}px;top:${cy - 15}px;width:${w}px;${c}`,
-          `<span class="tn">${name}</span><span class="tm">${min}<small>分钟</small></span>`);
-      x += w + GAP;
+      put('task', `left:${X_TASK}px;top:${y + 3}px`, name);
+      put('bar' + (G.edge ? ' edge' : ''), `left:${X0}px;top:${y + 7}px;width:${w}px;background:var(--cat-${L.key})`);
+      put('stop', `left:${X0 + w - 1}px;top:${y + 4}px`);
+      put('min num', `left:${X0 + w + 10}px;top:${y + 3}px`, min);
+      y += ROW_H;
       total++;
     });
-    y += LANE_H;
+    y += CAT_GAP / 2;
   });
-  // Start line through this group's lanes, like the line the runners leave from.
-  line(X0 - 10, laneTop + 6, X0 - 10, y - 6, css('--ink'), 2);
 });
-line(0, y + .5, 960, y + .5, css('--line'));
+// Faint guides at 30, 60 and 90 minutes behind the bars.
+for (const m of [30, 60, 90]) {
+  const g = put('grid', `left:${X0 + m * PX_PER_MIN}px;top:${gridTop}px;height:${y - gridTop}px`);
+  f.insertBefore(g, f.children[2]);
+}
+put('hr ink', `top:${y}px`);
+put('field facts', `left:${X_NO}px;top:${y + 13}px`, `<span>合计 ${total} 题</span><span>8 个类别</span>`);
+put('desc', `right:40px;top:${y + 11}px;text-align:right`, '每题折算 0–100 分，按权重合成模型总分');
+console.log('content bottom', y + 44);
 
-
-// Footer.
-put('foot', `left:86px;top:${y + 16}px`, `合计 <span class="num" style="color:var(--ink);font-size:16px;font-weight:600">${total}</span> 题，8 个类别`);
-put('foot', `right:32px;top:${y + 16}px;text-align:right`, '每题折算 0–100 分，按权重合成模型总分');
+// Lime starlight in the sky: four-point stars, lime fill with an ink edge (lime is never a line on light ground).
+const NS = 'http://www.w3.org/2000/svg', sky = document.getElementById('glints'), K = 0.0655;
+function glint(x, y, r, fill = 'var(--lime)') {
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', `M${x} ${y - r}Q${x + K * r} ${y - K * r} ${x + r} ${y}Q${x + K * r} ${y + K * r} ${x} ${y + r}` +
+                      `Q${x - K * r} ${y + K * r} ${x - r} ${y}Q${x - K * r} ${y - K * r} ${x} ${y - r}Z`);
+  p.setAttribute('fill', fill);
+  if (fill !== 'var(--ink)') { p.setAttribute('stroke', 'var(--ink)'); p.setAttribute('stroke-width', 1); p.setAttribute('stroke-linejoin', 'round'); }
+  sky.appendChild(p);
+}
+glint(384, 56, 12); glint(401, 40, 3.5, 'var(--ink)');     // a sparkle off the wordmark
+glint(520, 136, 7);
+glint(455, 22, 5);
+glint(938, 150, 6);
 </script>
 </body>
 </html>

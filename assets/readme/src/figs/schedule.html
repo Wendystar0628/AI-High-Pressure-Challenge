@@ -2,193 +2,200 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x866">
+<meta name="size" content="960x864">
 <title>测试赛程</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head { position: absolute; left: 32px; right: 32px; top: 28px; }
-  .head h2 { font-size: 26px; line-height: 34px; }
-  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
-  .legend { display: grid; grid-template-columns: repeat(3, auto); column-gap: 28px; row-gap: 10px;
-            font-size: 13px; line-height: 18px; color: var(--ink-2); }
-  .legend b { grid-column: 1 / -1; font-size: 13px; font-weight: 400; color: var(--ink-3); }
-  .legend span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-  .legend i { width: 16px; height: 10px; border-radius: 3px; border: 1.5px solid var(--c); background: var(--t); }
+  .desc { margin-top: 10px; }
+  .legend { margin-top: 12px; }
+  .abs { position: absolute; white-space: nowrap; }
+  .plot { position: relative; margin-top: 18px; }
+  svg.wires { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
 
-  .plot { position: absolute; left: 32px; top: 112px; width: 896px; }
-  .plot > * { position: absolute; }
+  /* Two kinds of task: standard = lime family and a square (.k.std), design = violet family and a star (.k.des).
+     Bars take the category colour (--cat-*); lime steps carry the ink edge. */
+  .k { margin-right: 0; flex: none; }
+  .legend i.hatch { background: var(--hatch); outline: 1px solid var(--ink-3); outline-offset: -1px; }
 
-  /* timing ruler */
-  .rl { height: 1px; background: var(--ink-3); }
-  .tk { width: 1px; background: var(--ink-3); }
-  .tk.key { background: var(--ink); width: 1.5px; }
-  .tl { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-50%); white-space: nowrap; }
-  .tl.key { color: var(--ink); font-weight: 600; }
-  .unit { font-size: 12px; line-height: 14px; color: var(--ink-3); transform: translateX(-100%); }
+  /* Minute scale; the two hand-over times are star cyan (reference marks). */
+  .colh { font-size: 12px; line-height: 16px; color: var(--ink-2); }
+  .tl { font-size: 12px; line-height: 16px; color: var(--ink-2); transform: translateX(-50%); }
+  .tl.key { color: var(--cyan-800); font-weight: 700; }
+  .tick { width: 1px; background: var(--ink-3); }
+  .tick.key { width: 1.5px; background: var(--cyan-800); }
+  .axis { height: 1px; background: var(--ink-3); }
+  .guide { width: 0; border-left: 1px dashed var(--rule); }
+  .hand { width: 1px; background: var(--cyan-800); }
+  .hr { left: 0; right: 0; height: 1px; background: var(--rule); }
+  .hr.ink { background: var(--ink); }
 
-  /* lanes */
-  .lane { height: 1px; background: var(--line-2); }
-  .ln { width: 18px; font-size: 12px; color: var(--ink-3); }
-  .name { font-size: 14px; color: var(--ink); white-space: nowrap; transform: translateX(-100%); text-align: right; }
-  .bar { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block);
-         display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;
-         font-size: 12px; line-height: 1; color: var(--c); white-space: nowrap; }
-  .bar .num { font-size: 13px; margin-right: 3px; }
-  .wait { height: 0; border-top: 1.5px dotted var(--ink-3); }
-  .relay { width: 1.5px; background: var(--ink-2); }
+  .ghead { display: flex; align-items: baseline; column-gap: 12px; }
+  .ghead h3 { font-size: 17px; }
+  .task { display: flex; align-items: center; column-gap: 8px; font-size: 14px; line-height: 20px; }
+  .task .icon { margin-left: 2px; }
+  .min { font-size: 14px; font-weight: 700; line-height: 20px; transform: translateX(-100%); }
+  .bar { height: 12px; }
+  .wait { height: 12px; background: var(--hatch); }
+  .stop { width: 2px; height: 18px; background: var(--ink); }
+  .note { font-family: var(--font-text); font-size: 13px; line-height: 22px; color: var(--ink-2); transform: translateX(-100%); }
+  .tag { font-size: 13px; font-weight: 700; line-height: 22px; padding: 0 8px; transform: translateX(-50%); }
 
-  /* batch headers and the lines between batches */
-  .bh { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; line-height: 20px; }
-  .bh span { font-weight: 400; font-size: 13px; color: var(--ink-2); margin-left: 12px; }
-  .done { font-size: 13px; line-height: 20px; color: var(--ink-2); white-space: nowrap; transform: translateX(-100%); }
-  .vline { width: 1.5px; background: var(--ink); }
-  .vline.start { width: 2px; }
-
-  /* the scoreboard that closes the schedule */
-  .board { border: 1.5px solid var(--ink); border-radius: var(--radius-block) 0 var(--radius-block) var(--radius-block); background: var(--paper); padding: 12px 16px 14px; }
-  .board .bt { font-size: 15px; font-weight: 700; line-height: 20px; }
-  .board .bt span { font-weight: 400; font-size: 13px; color: var(--ink-2); margin-left: 10px; }
-  .board .row { display: flex; align-items: center; justify-content: flex-end; margin-top: 12px; }
-  .bgrid { display: grid; grid-template-columns: auto auto 1fr; column-gap: 12px; row-gap: 6px; align-items: center; margin-top: 8px; }
-  .stage { grid-column: 1 / -1; font-size: 14px; font-weight: 700; line-height: 20px; }
-  .stage.next { margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--line-2); }
-  .stage span { font-weight: 400; font-size: 13px; color: var(--ink-2); margin-left: 10px; }
-  .scope { font-size: 13px; line-height: 26px; color: var(--ink-2); white-space: nowrap; padding-left: 14px; }
-  .chips { display: flex; align-items: center; gap: 6px; }
-  .judge { width: 120px; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--stage);
-           font-size: 14px; line-height: 24px; text-align: center; color: var(--ink); }
-  .step { font-size: 13px; color: var(--ink-2); white-space: nowrap; }
-  .chips .step { margin-left: 4px; }
-  .link { width: 16px; height: 1.5px; background: var(--ink-2); margin: 0 7px; flex: none; }
-  .total { border: 1.5px solid var(--ink); border-radius: 6px; padding: 3px 10px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+  /* Scoring: two stages on white boards with an ink tab, then the solid result. */
+  .stage { width: 560px; padding: 12px 16px 6px; }
+  .stage::before { content: ''; position: absolute; left: 0; top: 0; width: 56px; height: 4px; background: var(--ink); }
+  .stage .t { display: flex; align-items: baseline; column-gap: 10px; margin-bottom: 4px; }
+  .stage .t h3 { font-size: 16px; }
+  .stage .r { display: grid; grid-template-columns: 262px 1fr; align-items: center; min-height: 32px; border-top: 1px solid var(--rule); }
+  .stage .scope { display: flex; align-items: center; column-gap: 8px; font-family: var(--font-text); font-size: 13.5px; color: var(--ink); }
+  .stage .who { display: flex; align-items: center; column-gap: 6px; }
+  .judge { font-size: 13.5px; font-weight: 600; line-height: 24px; padding: 0 10px; background: var(--chip); }
+  .who .then { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); margin-left: 4px; }
+  .total { width: 196px; padding: 14px 16px; }
+  .total .s { font-family: var(--font-text); font-size: 13px; color: var(--chip); }
+  .total .t { font-size: 17px; font-weight: 700; margin-top: 4px; }
 </style>
 </head>
 <body>
-<div class="frame">
-  <div class="head">
-    <h2>测试赛程</h2>
-    <p>12 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制。</p>
+<div class="frame" id="frame">
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Schedule</span><h2 class="title">测试赛程</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">12 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制，颜色分两类题，深浅分类别。</p>
+  <div class="legend">
+    <span><i class="k std"></i>标准评判题</span>
+    <span><span class="star k des"></span>主动设计题</span>
+    <span><i class="hatch"></i>已到时，等本批其他题</span>
   </div>
   <div class="plot" id="plot"></div>
 </div>
 <script>
-const CATS = {
-  reason: '数学推理', algo: '算法竞赛', spatial: '空间推理', interact: '复杂交互应用',
-  game: '游戏设计与开发', physics: '物理模拟', visual: '视觉设计与渲染', system: '系统架构与实现'
-};
+// Facts: README.md (两个测试批次, 评分员怎么评) and orchestrator/tasks.py. [name, category, start minute, time limit].
+// Rows in task-table order: standard tasks first, then design tasks.
+const STD = new Set(['reason', 'algo', 'spatial']);
 const TASKS = [
   ['形式化证明题', 'reason', 0, 60],
   ['数学竞赛原创试题', 'reason', 0, 60],
+  ['单位正方形内最小三角形面积最大化', 'algo', 0, 60],
+  ['鲁班锁拆解', 'spatial', 0, 60],
   ['AE风味动效设计编辑器', 'interact', 0, 100],
   ['动态路由塔防', 'game', 0, 90],
+  ['果冻冲击与造浪水槽', 'physics', 0, 60],
   ['NVIDIA_B200网页艺术', 'visual', 0, 90],
   ['太阳雨渔港3D渲染', 'visual', 0, 100],
   ['操作系统嵌套', 'system', 0, 90],
-  ['果冻冲击与造浪水槽', 'physics', 0, 60],
-  ['单位正方形内最小三角形面积最大化', 'algo', 0, 60],
-  ['鲁班锁拆解', 'spatial', 0, 60],
   ['Transformer前向推理的GPU加速', 'algo', 100, 60],
   ['通用数字电路仿真器加速', 'algo', 160, 60],
 ];
 const BATCHES = [
-  { title: '第一批　并行批', note: '10 题同时开测，单位正方形限 14 个逻辑处理器', at: 0, lanes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
-  { title: '第二批　串行独占', note: '两题依次独占，中间清理', at: 100, lanes: [10, 11], done: '10 题全部到时，清理' },
+  { en: 'Batch 1', name: '第一批　并行批', facts: ['10 题同时开测', '单位正方形限 14 个逻辑处理器'], rows: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
+  { en: 'Batch 2', name: '第二批　串行独占', facts: ['两题依次独占', '中间清理'], rows: [10, 11] },
 ];
 
-const W = 896, X0 = 250, END = 220;
-const S = (W - X0) / END;                 // px per minute, one scale for every bar
-const x = m => X0 + m * S;
-const LANE = 28, HEAD = 30, BAR = 20, RULER = 30;
+// Geometry, plot coordinates (the plot is 880 px wide).
+const X_ICON = 20, X_MIN = 312, X0 = 332, X1 = 830, END = 220;
+const S = (X1 - X0) / END, x = m => X0 + m * S;
+const AXIS_H = 30, GROUP_H = 40, ROW_H = 26;
 const plot = document.getElementById('plot');
-const cv = c => `--c:var(--${c});--t:var(--${c}-tint)`;
 function put(cls, css, html = '') {
   const d = document.createElement('div');
-  d.className = cls;
+  d.className = 'abs ' + cls;
   d.style.cssText = css;
   d.innerHTML = html;
   plot.appendChild(d);
   return d;
 }
+const facts = list => `<span class="field facts">${list.map(t => `<span>${t}</span>`).join('')}</span>`;
+const shape = c => STD.has(c) ? '<i class="k std"></i>' : '<span class="star k des"></span>';
 
-// Timing ruler: a tick every 10 minutes, a label every 30; the two hand-over times in ink,
-// each replacing a 30-minute label that would sit next to it.
+// Column heads and the minute scale: a tick every 10 minutes, a label every 30; the hand-over times
+// (100, 220) in cyan, each replacing a 30-minute label next to it.
 const KEY = [100, 220];
-put('rl', `left:${x(0)}px;top:${RULER - 1}px;width:${END * S}px`);
+put('colh', `left:${X_ICON}px;top:0`, '题目');
+put('colh', `left:${X_MIN}px;top:0;transform:translateX(-100%)`, '限时');
 for (let m = 0; m <= END; m += 10) {
-  const major = m % 30 === 0, key = KEY.includes(m);
-  const h = key ? 10 : major ? 7 : 4;
-  put('tk' + (key ? ' key' : ''), `left:${x(m) - (key ? 0.75 : 0.5)}px;top:${RULER - h}px;height:${h}px`);
+  const key = KEY.includes(m), major = m % 30 === 0, h = key ? 10 : major ? 7 : 4;
+  put('tick' + (key ? ' key' : ''), `left:${x(m) - (key ? 0.75 : 0.5)}px;top:${24 - h}px;height:${h}px`);
   const crowded = !key && KEY.some(k => Math.abs(k - m) <= 10);
-  if ((major && !crowded) || key) put('tl num' + (key ? ' key' : ''), `left:${x(m)}px;top:${RULER - 26}px`, m);
+  if ((major && !crowded) || key) put('tl num' + (key ? ' key' : ''), `left:${x(m)}px;top:0`, m);
 }
-put('unit', `left:${x(0) - 14}px;top:${RULER - 26}px`, '分钟');
+put('colh', `left:${X1 + 22}px;top:0`, '分钟');
+put('axis', `left:${X0}px;top:24px;width:${X1 - X0}px`);
 
-// Batches: header row, then one lane per task.
-let y = RULER + 10;
-const laneTop = [];
+// Batches: an ink rule and a head, then one row per task.
+let y = AXIS_H;
 BATCHES.forEach(b => {
-  if (b.done) put('done', `left:${x(b.at) - 10}px;top:${y + 6}px`, b.done);
-  put('bh', `left:${x(b.at) + 10}px;top:${y + 6}px`, `${b.title}<span>${b.note}</span>`);
-  y += HEAD;
   b.top = y;
-  b.lanes.forEach(i => {
-    laneTop[i] = y;
-    put('lane', `left:0;top:${y}px;width:${W}px`);
-    put('ln num', `left:0;top:${y + 6}px`, i + 1);
-    y += LANE;
+  put('hr ink', `top:${y}px`);
+  put('ghead', `left:0;top:${y + 9}px`, `<span class="eyebrow slash">${b.en}</span><h3>${b.name}</h3>${facts(b.facts)}`);
+  y += GROUP_H;
+  b.rows.forEach(i => {
+    const [name, c, s, d] = TASKS[i];
+    put('task', `left:0;top:${y + 3}px`, `${shape(c)}<img class="icon" src="../../icon-${c}.svg" alt="">${name}`);
+    put('min num', `left:${X_MIN}px;top:${y + 3}px`, d);
+    put('bar' + (STD.has(c) ? ' edge' : ''), `left:${x(s)}px;top:${y + 7}px;width:${d * S}px;background:var(--cat-${c})`);
+    put('stop', `left:${x(s + d) - 1}px;top:${y + 4}px`);
+    if (b === BATCHES[0] && s + d < 100)   // finished early: waits for the 100-minute tasks
+      put('wait', `left:${x(s + d) + 3}px;top:${y + 7}px;width:${x(100) - x(s + d) - 5}px`);
+    y += ROW_H;
   });
-  put('lane', `left:0;top:${y}px;width:${W}px`);
   b.bottom = y;
 });
 
-TASKS.forEach(([n, c, s, d], i) => {
-  const t = laneTop[i], by = t + (LANE - BAR) / 2;
-  put('name', `left:${x(s) - 10}px;top:${t + 4}px;line-height:20px`, n);
-  put('bar', `left:${x(s)}px;top:${by}px;width:${d * S}px;height:${BAR}px;${cv(c)}`,
-      `<span class="num">${d}</span>分钟`);
-});
-
-// The shorter tasks of batch 1 finish early and wait for the 100-minute ones.
-[0, 1, 3, 4, 6, 7, 8, 9].forEach(i => {
-  const end = TASKS[i][3];
-  put('wait', `left:${x(end) + 4}px;top:${laneTop[i] + LANE / 2}px;width:${(100 - end) * S - 8}px`);
-});
-// Batch 2 runs end to end.
-[[10, 11, 160]].forEach(([a, b, m]) =>
-  put('relay', `left:${x(m) - 0.75}px;top:${laneTop[a] + (LANE + BAR) / 2}px;height:${laneTop[b] - laneTop[a] - BAR}px`));
-
-// Start line, and each batch's finish line doubling as the next batch's start line.
+// Hand-over lines: batch 1 -> batch 2 at 100 minutes, batch 2 -> scoring at 220.
 const [b1, b2] = BATCHES;
-put('vline start', `left:${x(0) - 1}px;top:${b1.top}px;height:${b1.bottom - b1.top}px`);
-put('vline', `left:${x(100) - 0.75}px;top:${b1.top}px;height:${b2.bottom - b1.top}px`);
+const yS = y;   // scoring head
+put('hand', `left:${x(100) - 0.5}px;top:24px;height:${b2.bottom - 24}px`);
+put('hand', `left:${x(220) - 0.5}px;top:24px;height:${yS + 20 - 24}px`);
+put('note', `left:${x(100) - 28}px;top:${b2.top + 9}px`, '10 题全部到时');
+put('tag solid', `left:${x(100)}px;top:${b2.top + 9}px`, '清理');
+put('note', `left:${x(220) - 28}px;top:${yS + 9}px`, '12 题全部到时');
+put('tag solid', `left:${x(220)}px;top:${yS + 9}px`, '清理');
 
-// Scoring: after the last batch, not on the time axis.
-put('done', `left:${x(END) - 10}px;top:${y + 6}px`, '12 题全部到时，清理后开始评分');
-y += HEAD;
-put('vline', `left:${x(END) - 0.75}px;top:${b2.top}px;height:${y - b2.top}px`);
-const BOARD_LEFT = 290;
-const judge = n => `<div class="judge num">${n}</div>`;
-put('board', `left:${BOARD_LEFT}px;top:${y}px;width:${x(END) - BOARD_LEFT}px`,
-  `<div class="bt">评分<span>18 个会话，不限时；主体全部评完后，再评性能</span></div>
-   <div class="bgrid">
-     <div class="stage">主体<span>16 个会话同时评</span></div>
-     <div class="scope">设计题</div>
-     <div class="chips">${judge('Claude Opus 5.5')}${judge('GPT 6.1 Sol')}<span class="step">取平均</span></div><div></div>
-     <div class="scope">形式化、数学竞赛、极值构造、鲁班锁</div>
-     <div class="chips">${judge('GPT 6.1 Sol')}</div><div></div>
-     <div class="stage next">性能<span>2 个会话依次评，独占机器</span></div>
-     <div class="scope">Transformer、电路</div>
-     <div class="chips">${judge('GPT 6.1 Sol')}</div><div></div>
-   </div>
-   <div class="row">
-     <div class="step">合成每题得分</div>
-     <div class="link"></div>
-     <div class="total">按权重加权汇总</div>
-   </div>`);
+// Faint guides every 30 minutes behind the bars.
+for (const m of [30, 60, 90, 120, 150, 180, 210]) {
+  const g = put('guide', `left:${x(m)}px;top:${b1.top}px;height:${b2.bottom - b1.top}px`);
+  plot.insertBefore(g, plot.firstChild);
+}
 
-// Category key, in the empty corner left of the scoreboard.
-put('legend', `left:0;top:${y + 14}px;grid-template-columns:repeat(2, auto)`, '<b>条的颜色表示题目类别</b>' + Object.entries(CATS)
-  .map(([k, v]) => `<span style="${cv(k)}"><i></i>${v}</span>`).join(''));
+// Scoring: not on the time axis.
+put('hr ink', `top:${yS}px`);
+put('ghead', `left:0;top:${yS + 9}px`,
+    `<span class="eyebrow slash">Scoring</span><h3>评分</h3>${facts(['18 个会话', '不限时', '主体全部评完后，再评性能'])}`);
+const judge = n => `<span class="judge">${n}</span>`;
+const A = put('stage panel', `left:0;top:${yS + 48}px`,
+  `<div class="t"><h3>主体</h3><span class="field">16 个会话同时评</span></div>
+   <div class="r"><span class="scope">${shape('game')}设计题</span>
+     <span class="who">${judge('Claude Opus 5.5')}${judge('GPT 6.1 Sol')}<span class="then">取平均</span></span></div>
+   <div class="r"><span class="scope">${shape('reason')}形式化、数学竞赛、极值构造、鲁班锁</span>
+     <span class="who">${judge('GPT 6.1 Sol')}</span></div>`);
+const B = put('stage panel', `left:0;top:${yS + 48 + 116}px`,
+  `<div class="t"><h3>性能</h3><span class="field">2 个会话依次评，独占机器</span></div>
+   <div class="r"><span class="scope">${shape('algo')}Transformer、电路</span>
+     <span class="who">${judge('GPT 6.1 Sol')}</span></div>`);
+const T = put('total solid', `left:684px;top:0`, '<div class="s">合成每题得分</div><div class="t">按权重加权汇总</div>');
+plot.style.height = `${yS + 48 + 116 + 84}px`;
+
+// Leads: 1px ink, square elbows, a four-point star where they arrive. Measure after the fonts load.
+document.fonts.ready.then(() => {
+  const NS = 'http://www.w3.org/2000/svg', K = 0.72 / 11;
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'wires');
+  svg.setAttribute('width', 880);
+  svg.setAttribute('height', plot.offsetHeight);
+  plot.appendChild(svg);
+  const add = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); };
+  const path = d => add('path', { d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 });
+  const star = (cx, cy, r = 4.5) => add('path', { fill: 'var(--ink)', d:
+    `M${cx} ${cy - r}Q${cx + K * r} ${cy - K * r} ${cx + r} ${cy}Q${cx + K * r} ${cy + K * r} ${cx} ${cy + r}` +
+    `Q${cx - K * r} ${cy + K * r} ${cx - r} ${cy}Q${cx - K * r} ${cy - K * r} ${cx} ${cy - r}Z` });
+  const ya = A.offsetTop + A.offsetHeight / 2, yb = B.offsetTop + B.offsetHeight / 2, ym = (ya + yb) / 2;
+  T.style.top = `${ym - T.offsetHeight / 2}px`;
+  const xa = A.offsetLeft + A.offsetWidth, xm = xa + 40;
+  path(`M${xa} ${ya} H${xm} V${yb} H${xa}`);
+  path(`M${xm} ${ym} H${T.offsetLeft - 6}`);
+  star(T.offsetLeft, ym);
+});
 </script>
 </body>
 </html>

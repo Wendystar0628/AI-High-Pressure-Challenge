@@ -2,88 +2,100 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x1040">
+<meta name="size" content="960x1140">
 <title>题型计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; letter-spacing: .01em; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .desc { margin-top: 10px; }
 
-  /* Rows are separated by lane lines, not boxed into cards. */
-  .row { display: grid; column-gap: 32px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 16px; }
-  .row.three { grid-template-columns: repeat(3, 1fr); }
-  .row.two { grid-template-columns: repeat(2, 1fr); }
-  .panel { display: flex; flex-direction: column; }
-  .panel h3 { font-size: 16px; }
-  .panel .rule { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin-top: 4px; min-height: 40px; }
-  .panel svg { display: block; margin-top: 10px; overflow: visible; }
+  /* Three rows of two blocks under ink rules. Standard tasks: lime family in the category colour, square marks;
+     design tasks: violet four-point stars. */
+  .row { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-top: 1px solid var(--ink); margin-top: 22px; }
+  .row + .row { margin-top: 0; border-top-color: var(--rule); }
+  .blk { display: flex; flex-direction: column; padding: 12px 0 14px; }
+  .bh { display: flex; align-items: flex-end; justify-content: space-between; }
+  .bh .l { display: flex; flex-direction: column; row-gap: 2px; }
+  .bh h3 { font-size: 17px; }
+  .bh .icons { display: flex; column-gap: 6px; padding-bottom: 3px; }
+  .bh .kind { font-size: 12px; color: var(--ink-2); margin-right: 4px; line-height: 18px; }
+  .rule { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 6px; }
+  .rule .b { font-family: var(--font-ui); font-weight: 700; color: var(--cyan-800); }
+  svg { display: block; margin-top: 12px; overflow: visible; }
 
-  svg text { font-family: var(--font-cn); fill: var(--ink); }
-  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-  svg .tick { font-size: 12px; fill: var(--ink-3); }
-  svg .lab { font-size: 12px; fill: var(--ink-2); }
-  svg .cap { font-size: 13px; fill: var(--ink-2); }
-  svg .note { font-size: 13px; fill: var(--ink-2); }
-  svg .big { font-size: 17px; font-weight: 700; }
+  svg text { font-family: var(--font-ui); fill: var(--ink); }
+  svg .tk { font-size: 12px; fill: var(--ink-2); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .n { font-size: 13px; font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .nb { font-size: 13px; font-weight: 700; font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .lb { font-family: var(--font-text); font-size: 12.5px; fill: var(--ink-2); }
+  svg .cap { font-family: var(--font-text); font-size: 13px; fill: var(--ink-2); }
+  svg .cap .nb { fill: var(--ink); }
+  svg .ref { font-weight: 700; fill: var(--cyan-800); }
 
-  /* Special cases (zero scores, no deductions): the last line of every panel. */
-  .zero { margin-top: auto; padding-top: 12px; }
-  .zero p { font-size: 13px; line-height: 1.5; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; }
-  .zero b { color: var(--ink); font-weight: 500; }
+  /* The case that needs saying on its own: last line of every block. */
+  .sp { margin-top: auto; padding-top: 12px; }
+  .sp p { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 8px; }
+  .sp b { color: var(--ink); font-weight: 700; }
+  .row:last-child .sp p { min-height: 49px; }   /* keep the last row's bottom rules level */
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>六种题型怎样计分</h2>
-    <p>各题型先得出原始分，再折算成 0–100 分。每块最下一行是需要单独说明的情形。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Scoring by Task Type</span><h2 class="title">六种题型怎样计分</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">各题型先得出原始分，再折算成 0–100 分。每块最下一行是需要单独说明的情形。</p>
 
-  <div class="row two">
-    <section class="panel">
-      <h3>形式化证明题</h3>
+  <div class="row">
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Formal Proof</span><h3><i class="k std"></i>形式化证明题</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-reason.svg" alt=""></div></div>
       <p class="rule">8 题，每题只有 0 分或 12.5 分。单独编译没有错误和 sorry 警告、有主定理才得 12.5 分。</p>
-      <svg id="formal" width="432" height="96"></svg>
-      <div class="zero"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
+      <svg id="formal" width="416" height="96"></svg>
+      <div class="sp"><p><b>缺文件</b>：这一题 0 分，不影响其他题</p></div>
     </section>
-    <section class="panel">
-      <h3>数学竞赛原创试题</h3>
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Olympiad</span><h3><i class="k std"></i>数学竞赛原创试题</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-reason.svg" alt=""></div></div>
       <p class="rule">18 题，每题 0–7 的整数分，满分 126，再乘以 100/126 折算。</p>
-      <svg id="imo" width="432" height="124"></svg>
-      <div class="zero"><p><b>多种做法未注明</b>：按得分最低的一份评</p></div>
+      <svg id="imo" width="416" height="138"></svg>
+      <div class="sp"><p><b>多种做法未注明</b>：按得分最低的一份评</p></div>
     </section>
   </div>
 
-  <div class="row two">
-    <section class="panel">
-      <h3>极值构造题</h3>
+  <div class="row">
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Extremal Construction</span><h3><i class="k std"></i>极值构造题</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-algo.svg" alt=""></div></div>
       <p class="rule">以固定的参考值为满分基准查锚点表。低段到中高段斜率逐段加大，逼近参考值的最后一段不额外加权。</p>
-      <svg id="extremal" width="432" height="214"></svg>
-      <div class="zero"><p><b>记 0 分</b>：提交无效，如点数不对、点在正方形外</p></div>
+      <svg id="extremal" width="416" height="222"></svg>
+      <div class="sp"><p><b>记 0 分</b>：提交无效，如点数不对、点在正方形外</p></div>
     </section>
-    <section class="panel">
-      <h3>性能工程题</h3>
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Performance Engineering</span><h3><i class="k std"></i>性能工程题</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-algo.svg" alt=""></div></div>
       <p class="rule">性能输入各算加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点后取平均（Transformer 8 个，电路 24 个）；电路再乘以正确性输入的通过比例 k/7。</p>
-      <svg id="perf" width="432" height="214"></svg>
-      <div class="zero"><p><b>记 0 分</b>：编译失败或违反题面规则；单个输入失败只丢这个输入</p></div>
+      <svg id="perf" width="416" height="222"></svg>
+      <div class="sp"><p><b>记 0 分</b>：编译失败或违反题面规则；单个输入失败只丢这个输入</p></div>
     </section>
   </div>
 
-  <div class="row two">
-    <section class="panel">
-      <h3>鲁班锁拆解</h3>
-      <p class="rule">8 题分三档，每题分值 w 为 8、12 或 18，合计 100。完整合法的拆解按总步数 N 得 w × min(1, B/N)，B 是这一题固定的基准步数。</p>
-      <svg id="burr" width="432" height="100"></svg>
-      <div class="zero"><p><b>记 0 分</b>：没有完整拆开的题；自编程序搜索、模拟或用求解器的整份作答</p></div>
+  <div class="row">
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Burr Puzzle</span><h3><i class="k std"></i>鲁班锁拆解</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-spatial.svg" alt=""></div></div>
+      <p class="rule">8 题分三档，每题分值 w 为 8、12 或 18，合计 100。完整合法的拆解按总步数 N 得 w × min(1, <span class="b">B</span>/N)，<span class="b">B</span> 是这一题固定的基准步数。</p>
+      <svg id="burr" width="416" height="108"></svg>
+      <div class="sp"><p><b>记 0 分</b>：没有完整拆开的题；<br>自编程序搜索、模拟或用求解器的整份作答</p></div>
     </section>
-    <section class="panel">
-      <h3>设计题</h3>
+    <section class="blk">
+      <div class="bh"><div class="l"><span class="eyebrow slash">Design</span><h3><i class="k des star"></i>设计题</h3></div>
+        <div class="icons"><img class="icon" src="../../icon-interact.svg" alt=""><img class="icon" src="../../icon-game.svg" alt=""><img class="icon" src="../../icon-physics.svg" alt=""><img class="icon" src="../../icon-visual.svg" alt=""><img class="icon" src="../../icon-system.svg" alt=""></div></div>
       <p class="rule">每题 19–37 个分项，分值合计 100。评分员在每个分项的分值内直接打分，相加为总分。</p>
-      <svg id="design" width="432" height="100"></svg>
-      <div class="zero"><p><b>不分档、不扣分</b></p></div>
+      <svg id="design" width="416" height="108"></svg>
+      <div class="sp"><p><b>不分档、不扣分</b></p></div>
     </section>
   </div>
-
 </div>
 
 <script>
@@ -96,174 +108,188 @@ const el = (tag, attrs = {}, parent) => {
 };
 const txt = (parent, x, y, cls, s, anchor = 'start') => {
   const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
-  t.textContent = s;
+  t.innerHTML = s;
   return t;
 };
 const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
+// Standard-task marks: rectangles in the lime family with a 1px ink edge (half-pixel aligned).
+const box = (p, x, y, w, h, fill, edge = true) =>
+  el('rect', { x: x + .5, y: y + .5, width: w - 1, height: h - 1, fill, ...(edge ? { stroke: 'var(--ink)', 'stroke-width': 1 } : {}) }, p);
+const sq = (p, x, y, r, fill = 'var(--cat-algo)') =>
+  el('rect', { x: x - r, y: y - r, width: 2 * r, height: 2 * r, fill, stroke: 'var(--ink)', 'stroke-width': 1 }, p);
+const DASH = { 'stroke-dasharray': '4 3' };
 
-/* 形式化证明题: five cells, all or nothing on the compile result. Example: problems 1, 2, 4 compile cleanly. */
+/* 形式化证明题: eight cells, all or nothing on the compile result. Example: 4 of 8 compile cleanly. */
 {
   const g = document.getElementById('formal');
-  const res = ['通过', '通过', 'sorry', '通过', '报错', '通过', '报错', '报错'], C = 34, G = 10;
+  const res = ['通过', '通过', 'sorry', '通过', '报错', '通过', '报错', '报错'], C = 44, H = 34, G = 8.57;
   res.forEach((r, i) => {
-    const x = i * (C + G), full = r === '通过';
-    el('rect', { x: x + .75, y: .75, width: C - 1.5, height: C - 1.5, rx: 8,
-                 fill: full ? 'var(--ink)' : 'var(--paper)', stroke: full ? 'var(--ink)' : 'var(--ink-3)', 'stroke-width': 1.5 }, g);
-    const t = txt(g, x + C / 2, C / 2 + 4, 'n', full ? '12.5' : '0', 'middle');
-    t.setAttribute('style', `font-size: 11px; fill: ${full ? 'var(--paper)' : 'var(--ink-3)'}`);
-    txt(g, x + C / 2, C + 16, 'lab', r, 'middle');
+    const x = Math.round(i * (C + G)), full = r === '通过';
+    box(g, x, 0, C, H, full ? 'var(--cat-reason)' : 'var(--chip)', full);
+    const t = txt(g, x + C / 2, H / 2 + 4.5, full ? 'nb' : 'n', full ? '12.5' : '0', 'middle');
+    if (!full) t.style.fill = 'var(--ink-2)';
+    txt(g, x + C / 2, H + 18, 'lb', r, 'middle');
   });
-  const t = el('text', { x: 0, y: C + 40, class: 'cap' }, g);
-  t.innerHTML = '例：4 题编译通过，得 <tspan class="n" style="font-weight:700;fill:var(--ink)">50</tspan> 分；其余 0 分。';
+  txt(g, 0, H + 50, 'cap', '例：4 题编译通过，得 <tspan class="nb">50</tspan> 分；其余 0 分。');
 }
 
-/* 数学竞赛原创试题: eighteen columns of seven points, then the 126-point bar read against a 0–100 ruler. */
+/* 数学竞赛原创试题: eighteen bars out of 7, then the 126-point total read against a 0–100 ruler. */
 {
   const g = document.getElementById('imo');
-  const sc = [7, 7, 7, 7, 6, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0], W = 13, G = 4, PH = 6, PG = 2.5;
-  const SUM = sc.reduce((a, b) => a + b, 0), MAX = 7 * sc.length;
+  const sc = [7, 7, 7, 7, 6, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0], W = 14, G = 3, U = 7.5;
+  const SUM = sc.reduce((a, b) => a + b, 0), MAX = 7 * sc.length, top = 0, base = 7 * U;
   sc.forEach((s, i) => {
     const x = i * (W + G);
-    for (let j = 0; j < 7; j++) {
-      const y = (6 - j) * (PH + PG);
-      el('rect', { x, y, width: W, height: PH, rx: 1.5, fill: j < s ? 'var(--ink)' : 'var(--line-2)',
-                   stroke: j < s ? 'none' : 'var(--line)', 'stroke-width': 1 }, g);
-    }
-    txt(g, x + W / 2, 7 * (PH + PG) + 12, 'n', String(s), 'middle').setAttribute('style', 'font-size: 13px');
+    el('rect', { x, y: top, width: W, height: base, fill: 'var(--chip)' }, g);
+    if (s) box(g, x, base - s * U, W, s * U + 1, 'var(--cat-reason)');
+    txt(g, x + W / 2, base + 15, 'tk', String(s), 'middle');
   });
   const span = sc.length * W + (sc.length - 1) * G;
-  txt(g, span + 14, 22, 'cap', '例：合计');
-  txt(g, span + 14, 44, 'n', String(SUM)).setAttribute('style', 'font-size: 20px; font-weight: 700');
-  // Ruler: the same length read as 0–MAX above (a tick every MAX/7) and 0–100 below.
-  const y0 = 94, L = span, BH = 7, xs = L * SUM / MAX;
-  el('rect', { x: 0, y: y0, width: L, height: BH, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)' }, g);
-  el('rect', { x: 0, y: y0, width: xs, height: BH, rx: 2, fill: 'var(--ink)' }, g);
-  for (let k = 0; k <= 7; k++) line(g, L * k / 7, y0 - 4, L * k / 7, y0, 'var(--ink-3)');
-  for (let k = 0; k <= 4; k++) line(g, L * k / 4, y0 + BH, L * k / 4, y0 + BH + 4, 'var(--ink-3)');
-  txt(g, 0, y0 - 8, 'tick n', '0', 'middle');
-  txt(g, L, y0 - 8, 'tick n', String(MAX), 'middle');
-  txt(g, xs, y0 - 8, 'tick n', String(SUM), 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
-  txt(g, 0, y0 + BH + 17, 'tick n', '0', 'middle');
-  txt(g, L, y0 + BH + 17, 'tick n', '100', 'middle');
-  txt(g, xs, y0 + BH + 17, 'tick n', (SUM / MAX * 100).toFixed(1), 'middle').setAttribute('style', 'fill: var(--ink); font-weight: 700');
-  txt(g, L + 18, y0 - 8, 'lab', '原始分');
-  txt(g, L + 18, y0 + BH + 17, 'lab', '折算后');
-}
-
-/* 设计题: each item is a row of cells, one per point; the grader fills cells up to the score given, and the rows add up. */
-{
-  const g = document.getElementById('design');
-  const C = 12, G = 2, H = 14;
-  const rows = [[5, 3.5], [3, 3.0], [4, 2.6]];
-  const NX = 34;
-  rows.forEach(([v, sc], i) => {
-    const y = 4 + i * 24;
-    txt(g, NX, y + 11, 'n', sc.toFixed(1), 'end').setAttribute('style', 'font-size: 13px');
-    for (let k = 0; k < v; k++) {
-      const x = NX + 8 + k * (C + G);
-      el('rect', { x, y, width: C, height: H, rx: 2, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, g);
-      const part = Math.max(0, Math.min(1, sc - k));
-      if (part > 0) el('rect', { x, y, width: C * part, height: H, rx: part === 1 ? 2 : 0, fill: 'var(--ink)' }, g);
-    }
-  });
-  line(g, 0, 78, NX + 8 + 5 * (C + G) - G, 78, 'var(--ink)', 1.25);
-  txt(g, NX, 96, 'n', '9.1', 'end').setAttribute('style', 'font-size: 15px; font-weight: 700');
-  txt(g, NX + 8, 96, 'note', '相加');
-  const tx = 132;
-  txt(g, tx, 15, 'note', '格数 = 分值');
-  txt(g, tx, 39, 'note', '涂黑 = 给的分');
-  txt(g, tx, 63, 'note', '可给小数');
-  txt(g, tx, 96, 'note', '各项相加 = 总分');
-}
-
-/* 鲁班锁拆解: the 100 points as eight cells sized by their value w, each filled to min(1, B/N) of an example answer. */
-{
-  const g = document.getElementById('burr');
-  const w = [8, 8, 12, 12, 12, 16, 16, 16], f = [1, 1, .8, .75, 0, .5, 0, 0], P = 4, G = 3, y = 22, H = 20;
-  const xs = [];
-  w.reduce((x, v) => { xs.push(x); return x + v * P + G; }, 0);
-  for (const [name, a, b] of [['简单档', 0, 2], ['中档', 2, 5], ['困难档', 5, 8]]) {
-    const x0 = xs[a], x1 = xs[b - 1] + w[b - 1] * P, pts = w.slice(a, b).reduce((s, v) => s + v, 0);
-    el('polyline', { points: `${x0},${y - 4} ${x0},${y - 8} ${x1},${y - 8} ${x1},${y - 4}`, fill: 'none', stroke: 'var(--ink-3)', 'stroke-width': 1 }, g);
-    const t = el('text', { x: x0, y: y - 13, class: 'lab' }, g);
-    t.innerHTML = `${name} <tspan class="n">${pts}</tspan>`;
-  }
-  w.forEach((v, i) => {
-    el('rect', { x: xs[i], y, width: v * P, height: H, rx: 3, fill: 'var(--line-2)', stroke: 'var(--line)', 'stroke-width': 1 }, g);
-    if (f[i]) el('rect', { x: xs[i], y, width: v * P * f[i], height: H, rx: f[i] === 1 ? 3 : 0, fill: 'var(--ink)' }, g);
-    const s = v * f[i];
-    txt(g, xs[i] + v * P / 2, y + H + 16, 'n', String(+s.toFixed(1)), 'middle')
-      .setAttribute('style', `font-size: 13px; fill: ${s ? 'var(--ink)' : 'var(--ink-3)'}`);
-  });
-  const total = w.reduce((a, v, i) => a + v * f[i], 0);
-  const t = el('text', { x: 0, y: y + H + 42, class: 'cap' }, g);
-  t.innerHTML = `例：06 题步数是 B 的 2 倍，得 16 × ½ = 8 分；8 题合计 <tspan class="n" style="font-weight:700;fill:var(--ink)">${total.toFixed(1)}</tspan> 分。`;
+  txt(g, span + 18, 18, 'lb', '例：合计');
+  txt(g, span + 18, 44, 'nb', String(SUM)).style.fontSize = '22px';
+  // Ruler: the same length read as 0–126 above and 0–100 below.
+  const y0 = 102, BH = 9, xs = span * SUM / MAX;
+  el('rect', { x: 0, y: y0, width: span, height: BH, fill: 'var(--chip)' }, g);
+  box(g, 0, y0, xs, BH, 'var(--cat-reason)');
+  for (let k = 0; k <= 7; k++) line(g, span * k / 7, y0 - 4, span * k / 7, y0);
+  for (let k = 0; k <= 4; k++) line(g, span * k / 4, y0 + BH, span * k / 4, y0 + BH + 4);
+  txt(g, 0, y0 - 8, 'tk', '0', 'middle');
+  txt(g, span, y0 - 8, 'tk', String(MAX), 'middle');
+  txt(g, xs, y0 - 8, 'nb', String(SUM), 'middle').style.fontSize = '12px';
+  txt(g, 0, y0 + BH + 17, 'tk', '0', 'middle');
+  txt(g, span, y0 + BH + 17, 'tk', '100', 'middle');
+  txt(g, xs, y0 + BH + 17, 'nb', (SUM / MAX * 100).toFixed(1), 'middle').style.fontSize = '12px';
+  txt(g, span + 18, y0 - 8, 'lb', '原始分');
+  txt(g, span + 18, y0 + BH + 17, 'lb', '折算后');
 }
 
 /* A shared plot frame for the two anchor curves. */
-function plot(svgId, { xs, ys, xTicks, yTicks, xMinor = [] }) {
+function plot(svgId, { xs, xTicks, xMinor = [] }) {
   const g = document.getElementById(svgId);
-  const L = 34, R = 424, T = 10, B = 172;
-  const X = v => L + (v - xs[0]) / (xs[1] - xs[0]) * (R - L);
-  const Y = v => B - (v - ys[0]) / (ys[1] - ys[0]) * (B - T);
-  for (const v of yTicks) {
-    line(g, L, Y(v), R, Y(v), 'var(--line-2)', 1);
-    txt(g, L - 8, Y(v) + 4, 'tick n', String(v), 'end');
+  const L = 32.5, R = 410.5, T = 22.5, B = 172.5;
+  const X = v => L + (v - xs[0]) / (xs[1] - xs[0]) * (R - L), Y = v => B - v / 100 * (B - T);
+  for (const v of [0, 50, 100]) {
+    if (v) line(g, L, Y(v), R, Y(v), 'var(--rule)');
+    txt(g, L - 8, Y(v) + 4, 'tk', String(v), 'end');
   }
-  for (const v of xMinor) line(g, X(v), B, X(v), B + 3, 'var(--ink-3)', 1);
-  for (const [v, s] of xTicks) { line(g, X(v), B, X(v), B + 6, 'var(--ink-3)', 1); txt(g, X(v), B + 19, 'tick n', s, 'middle'); }
-  el('polyline', { points: `${L},${T - 4} ${L},${B} ${R},${B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.25 }, g);
-  txt(g, L - 8, T - 2, 'lab', '得分', 'end').setAttribute('dy', '-6');
+  for (const v of xMinor) line(g, X(v), B, X(v), B + 3);
+  for (const [v, s] of xTicks) { line(g, X(v), B, X(v), B + 5); txt(g, X(v), B + 19, 'tk', s, 'middle'); }
+  txt(g, L - 8, T - 12, 'lb', '得分', 'end');
   return { g, X, Y, L, R, T, B };
 }
+const axes = P => el('polyline', { points: `${P.L},${P.T - 6} ${P.L},${P.B} ${P.R},${P.B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 }, P.g);
 
-/* 极值构造题: the anchor table of the minimum-triangle-area problem, piecewise linear in r. */
+/* 极值构造题: the anchor table of the minimum-triangle-area problem, piecewise linear in r.
+   The score is a lime-100 area; the steepest segment 0.8–0.9 is in the category colour; r = 1, the reference value, is cyan. */
 {
   const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
   const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
-  const { g, X, Y, B, R, L } = plot('extremal', { xs: [0, 1], ys: [0, 100], yTicks: [0, 50, 100],
-    xTicks: [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], xMinor: minor });
-  // The steepest segment, 0.8-0.9, is drawn heavier.
-  el('polyline', { points: A.map(([r, p]) => `${X(r)},${Y(p)}`).join(' '), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-  line(g, X(.8), Y(60), X(.9), Y(81), 'var(--ink)', 4.5, { 'stroke-linecap': 'round' });
-  A.forEach(([r, p], i) => {
-    el('circle', { cx: X(r), cy: Y(p), r: i >= 7 ? 2.2 : 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    if (i >= 2 && i <= 6) txt(g, X(r) - 5, Y(p) - 8, 'tick n', String(p), 'end');
+  const P = plot('extremal', { xs: [0, 1], xTicks: [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], xMinor: minor });
+  const pts = [[0, 0], ...A], d = pts.map(([r, p]) => `${P.X(r)},${P.Y(p)}`).join(' ');
+  el('polygon', { points: `${P.L},${P.B} ${d} ${P.X(1)},${P.B}`, fill: 'var(--lime-100)' }, P.g);
+  el('polygon', { points: `${P.X(.8)},${P.B} ${P.X(.8)},${P.Y(60)} ${P.X(.9)},${P.Y(81)} ${P.X(.9)},${P.B}`,
+                  fill: 'var(--cat-algo)', stroke: 'var(--ink)', 'stroke-width': 1 }, P.g);
+  axes(P);
+  line(P.g, P.X(1), P.B, P.X(1), P.T - 6, 'var(--cyan-800)', 1, DASH);
+  el('polyline', { points: d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, P.g);
+  A.slice(0, -1).forEach(([r, p], i) => {
+    sq(P.g, P.X(r), P.Y(p), i >= 7 ? 2.5 : 3.5);
+    if (i >= 2 && i <= 6) txt(P.g, P.X(r) - 7, P.Y(p) - 7, 'tk', String(p), 'end');
   });
-  txt(g, X(.85) + 8, Y(70) + 14, 'lab', '0.8–0.9 最陡', 'start');
-  txt(g, X(1) - 2, Y(100) - 8, 'tick n', '100', 'end');
-  // Bottom row: what the axis is, and where the anchors come from.
-  txt(g, R, B + 38, 'lab', 'r = 构造值 ÷ 参考值', 'end');
-  txt(g, L - 34, B + 38, 'lab', '锚点取自最小三角形面积题');
+  sq(P.g, P.X(1), P.Y(100), 4.5, 'var(--cyan)');
+  txt(P.g, P.X(1) - 10, P.T - 8, 'tk ref', '参考值 100', 'end');
+  txt(P.g, P.X(.8) - 7, P.B - 9, 'tk', '0.8–0.9 最陡', 'end').style.fill = 'var(--ink)';
+  txt(P.g, P.R, P.B + 40, 'lb', 'r = 构造值 ÷ 参考值', 'end');
+  txt(P.g, 0, P.B + 40, 'lb', '锚点取自最小三角形面积题');
 }
 
-/* 性能工程题: per-input lookup on a log axis, in multiples of the reference solution; Transformer and circuit anchors. */
+/* 性能工程题: per-input lookup on a log axis; Transformer (solid, filled squares) and circuit (dashed, hollow squares).
+   s = 1, as fast as the baseline, is the cyan line. */
 {
   const TRANSFORMER = [[.2, 0], [.6, 5], [1.2, 15], [2, 25], [4, 45], [8, 70], [12, 86], [16, 100]];
   const CIRC = [[.1, 0], [.5, 5], [1, 15], [2, 35], [4, 65], [6, 85], [8, 100]];
   const lg = Math.log;
-  const { g, X, Y, B, R, L, T } = plot('perf', { xs: [lg(.1), lg(28)], ys: [0, 100], yTicks: [0, 50, 100],
+  const P = plot('perf', { xs: [lg(.1), lg(28)],
     xTicks: [[lg(.1), '0.1×'], [lg(.5), '0.5×'], [lg(1), '1×'], [lg(2), '2×'], [lg(4), '4×'], [lg(8), '8×'], [lg(16), '16×']],
     xMinor: [lg(.2), lg(6)] });
-  const curve = (A, attrs) => el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${X(lg(s))},${Y(p)}`).join(' '),
-                                               fill: 'none', 'stroke-linejoin': 'round', ...attrs }, g);
-  curve(CIRC, { stroke: 'var(--ink-3)', 'stroke-width': 1.75, 'stroke-dasharray': '5 3' });
-  CIRC.forEach(([s, p]) => el('circle', { cx: X(lg(s)), cy: Y(p), r: 2.6, fill: 'var(--paper)', stroke: 'var(--ink-3)', 'stroke-width': 1.4 }, g));
-  curve(TRANSFORMER, { stroke: 'var(--ink)', 'stroke-width': 2 });
+  axes(P);
+  line(P.g, P.X(0), P.B, P.X(0), P.Y(58), 'var(--cyan-800)', 1, DASH);
+  const curve = (A, attrs) => el('polyline', { points: [...A, [28, 100]].map(([s, p]) => `${P.X(lg(s))},${P.Y(p)}`).join(' '),
+                                               fill: 'none', stroke: 'var(--ink)', 'stroke-linejoin': 'round', ...attrs }, P.g);
+  curve(CIRC, { 'stroke-width': 1.25, 'stroke-dasharray': '5 3' });
+  curve(TRANSFORMER, { 'stroke-width': 1.5 });
+  CIRC.forEach(([s, p]) => sq(P.g, P.X(lg(s)), P.Y(p), 3, 'var(--paper)'));
   TRANSFORMER.forEach(([s, p]) => {
-    el('circle', { cx: X(lg(s)), cy: Y(p), r: 3, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.2 }, g);
-    if (s > 1 && s < 16) txt(g, X(lg(s)) + 6, Y(p) + 15, 'tick n', String(p), 'start');
+    sq(P.g, P.X(lg(s)), P.Y(p), 3.5);
+    if (s > 1 && s < 16) txt(P.g, P.X(lg(s)) + 7, P.Y(p) + 15, 'tk', String(p));
   });
   // Legend, top left where both curves are low.
-  const key = (y, dash, stroke, w, s) => {
-    line(g, L + 10, y - 4, L + 34, y - 4, stroke, w, dash ? { 'stroke-dasharray': '5 3' } : {});
-    txt(g, L + 42, y, 'lab', s);
+  const key = (y, dash, fill, s) => {
+    line(P.g, P.L + 10, y - 4, P.L + 34, y - 4, 'var(--ink)', dash ? 1.25 : 1.5, dash ? { 'stroke-dasharray': '5 3' } : {});
+    sq(P.g, P.L + 22, y - 4, dash ? 3 : 3.5, fill);
+    txt(P.g, P.L + 42, y, 'lb', s);
   };
-  key(T + 10, false, 'var(--ink)', 2, 'Transformer：16× 满分');
-  key(T + 30, true, 'var(--ink-3)', 1.75, '电路：8× 满分');
-  txt(g, R, B + 38, 'lab', '加速比 s（对数刻度）', 'end');
-  txt(g, L - 34, B + 38, 'lab', '两题锚点不同，越往右越陡');
+  key(P.T + 12, false, 'var(--cat-algo)', 'Transformer：16× 满分');
+  key(P.T + 32, true, 'var(--paper)', '电路：8× 满分');
+  txt(P.g, P.X(0), P.Y(58) - 7, 'tk ref', '基线', 'middle');
+  txt(P.g, P.R, P.B + 40, 'lb', '加速比 s（对数刻度）', 'end');
+  txt(P.g, 0, P.B + 40, 'lb', '两题锚点不同，越往右越陡');
+}
+
+/* 鲁班锁拆解: the 100 points as eight cells sized by w, each filled to min(1, B/N) of an example answer. */
+{
+  const g = document.getElementById('burr');
+  const w = [8, 8, 12, 12, 12, 12, 18, 18], f = [1, 1, .8, .75, 0, .5, 0, 0], G = 3, P = (416 - 7 * G) / 100, y = 24, H = 26;
+  const xs = [];
+  w.reduce((x, v) => { xs.push(x); return x + v * P + G; }, 0);
+  for (const [name, a, b] of [['简单档', 0, 2], ['中档', 2, 6], ['困难档', 6, 8]]) {
+    const x0 = xs[a] + .5, x1 = xs[b - 1] + w[b - 1] * P - .5, pts = w.slice(a, b).reduce((s, v) => s + v, 0);
+    el('polyline', { points: `${x0},${y - 5} ${x0},${y - 10} ${x1},${y - 10} ${x1},${y - 5}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 }, g);
+    txt(g, x0, y - 16, 'lb', `${name} <tspan class="nb" style="font-size:12.5px; fill: var(--ink)">${pts}</tspan>`);
+  }
+  w.forEach((v, i) => {
+    box(g, xs[i], y, v * P, H, 'var(--chip)');
+    if (f[i]) box(g, xs[i], y, v * P * f[i], H, 'var(--cat-spatial)');
+    const s = +(v * f[i]).toFixed(1);
+    const t = txt(g, xs[i] + v * P / 2, y + H + 17, s ? 'nb' : 'n', String(s), 'middle');
+    if (!s) t.style.fill = 'var(--ink-2)';
+  });
+  const total = w.reduce((a, v, i) => a + v * f[i], 0);
+  txt(g, 0, y + H + 46, 'cap', `例：06 题步数是 <tspan class="ref">B</tspan> 的 2 倍，得 12 × ½ = 6 分；8 题合计 <tspan class="nb">${total.toFixed(1)}</tspan> 分。`);
+}
+
+/* 设计题: each item is a row of four-point stars, one per point; the grader fills stars up to the score given. */
+{
+  const g = document.getElementById('design');
+  const K = 0.72 / 11, S = 15, GAP = 3;
+  const starD = (x, y, r) => `M${x} ${y - r}Q${x + K * r} ${y - K * r} ${x + r} ${y}Q${x + K * r} ${y + K * r} ${x} ${y + r}` +
+                             `Q${x - K * r} ${y + K * r} ${x - r} ${y}Q${x - K * r} ${y - K * r} ${x} ${y - r}Z`;
+  const defs = el('defs', {}, g);
+  const rows = [[5, 3.5], [3, 3.0], [4, 2.6]], NX = 34;
+  rows.forEach(([v, sc], i) => {
+    const y = 4 + i * 24, cy = y + 7.5;
+    txt(g, NX, y + 12, 'n', sc.toFixed(1), 'end');
+    for (let k = 0; k < v; k++) {
+      const cx = NX + 10 + S / 2 + k * (S + GAP), d = starD(cx, cy, S / 2 + 1);
+      el('path', { d, fill: 'var(--rule)' }, g);
+      const part = Math.max(0, Math.min(1, sc - k));
+      if (part > 0) {
+        const id = `c${i}${k}`, cp = el('clipPath', { id }, defs);
+        el('rect', { x: cx - S / 2 - 1, y: cy - S / 2 - 1, width: (S + 2) * part, height: S + 2 }, cp);
+        el('path', { d, fill: 'var(--violet)', 'clip-path': `url(#${id})` }, g);
+      }
+    }
+  });
+  const x1 = NX + 10 + 5 * (S + GAP) - GAP;
+  line(g, 0, 80.5, x1, 80.5, 'var(--ink)', 1);
+  txt(g, NX, 100, 'nb', '9.1', 'end').style.fontSize = '15px';
+  txt(g, NX + 10, 100, 'lb', '相加');
+  const tx = 150;
+  txt(g, tx, 16, 'lb', '星数 = 分值');
+  txt(g, tx, 40, 'lb', '填色 = 给的分');
+  txt(g, tx, 64, 'lb', '可给小数');
+  txt(g, tx, 100, 'lb', '各项相加 = 总分');
 }
 </script>
 </body>

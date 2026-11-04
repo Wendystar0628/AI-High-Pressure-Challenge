@@ -5,7 +5,8 @@
   refuse ES modules from file://. Fonts come from Google Fonts here for
   convenience; self-host them in production (references/tokens.md).
   Everything named "示例" is placeholder content, and so are the wordmark
-  and the orrery drawing: replace them with the product's own.
+  and the orrery drawing: replace them with the product's own. The framed
+  picture is this page's one violet block (.st-frame.orbit).
 -->
 <html lang="zh-CN">
   <head>
@@ -140,32 +141,25 @@
         </p>
       </div>
 
-      <figure class="st-frame">
+      <figure class="st-frame orbit">
         <div class="window">
-          <!-- placeholder art: a line drawing of an orrery. Use your own picture. -->
+          <!-- placeholder art: a line drawing of an orrery on the page's one violet
+               block; the sun is the one flare four-point star. Use your own picture. -->
           <svg viewBox="0 0 400 420" fill="none" stroke="currentColor" stroke-width="1.5" role="img" aria-label="示例线稿：一台行星仪">
-            <g fill="currentColor" stroke="none" opacity=".45">
-              <circle cx="46" cy="58" r="1.6" />
-              <circle cx="92" cy="30" r="1" />
-              <circle cx="318" cy="44" r="2" />
-              <circle cx="356" cy="96" r="1" />
-              <circle cx="268" cy="22" r="1" />
-              <circle cx="34" cy="148" r="1" />
-            </g>
-            <path d="M200 214 V344 M174 344 H226 M152 370 H248 M174 344 L152 370 M226 344 L248 370" />
+            <path fill="currentColor" stroke="none" opacity=".6" d="M46 53.8Q46.28 57.72 50.2 58Q46.28 58.28 46 62.2Q45.72 58.28 41.8 58Q45.72 57.72 46 53.8ZM92 27Q92.2 29.8 95 30Q92.2 30.2 92 33Q91.8 30.2 89 30Q91.8 29.8 92 27ZM318 39Q318.33 43.67 323 44Q318.33 44.33 318 49Q317.67 44.33 313 44Q317.67 43.67 318 39ZM356 93Q356.2 95.8 359 96Q356.2 96.2 356 99Q355.8 96.2 353 96Q355.8 95.8 356 93ZM268 19Q268.2 21.8 271 22Q268.2 22.2 268 25Q267.8 22.2 265 22Q267.8 21.8 268 19ZM34 145Q34.2 147.8 37 148Q34.2 148.2 34 151Q33.8 148.2 31 148Q33.8 147.8 34 145Z" />
+            <path d="M200 207 V344 M174 344 H226 M152 370 H248 M174 344 L152 370 M226 344 L248 370" />
             <g transform="translate(200 186) rotate(-14)">
               <ellipse rx="66" ry="22" />
               <ellipse rx="116" ry="40" />
               <ellipse rx="168" ry="60" stroke-dasharray="3 7" />
-              <circle cx="-47" cy="15.5" r="5" style="fill: var(--st-panel)" />
-              <circle cx="96" cy="-22.4" r="7.5" style="fill: var(--st-panel)" />
+              <circle cx="-47" cy="15.5" r="5" style="fill: var(--window)" />
+              <circle cx="96" cy="-22.4" r="7.5" style="fill: var(--window)" />
               <g transform="translate(-119 42.3)">
-                <circle r="6" style="fill: var(--st-panel)" />
+                <circle r="6" style="fill: var(--window)" />
                 <ellipse rx="14" ry="3.6" transform="rotate(-24)" />
               </g>
             </g>
-            <circle cx="200" cy="186" r="21" style="fill: var(--st-panel)" />
-            <circle cx="200" cy="186" r="11" />
+            <path stroke="none" style="fill: var(--st-flare)" d="M200 165Q201.38 184.62 221 186Q201.38 187.38 200 207Q198.62 187.38 179 186Q198.62 184.62 200 165Z" />
           </svg>
         </div>
         <figcaption class="st-plate">示例座右铭，一行就够。</figcaption>

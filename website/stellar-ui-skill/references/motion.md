@@ -7,7 +7,7 @@
 1. **短、硬、机械。** 出现的东西用 `snap`（迅速到位后稳住）；快门、擦入、灌满、页签伸开和**所有退出**用 `mech`（慢起、硬停，像闸门）。
 2. **时长分三档**：回应一次操作 100–400ms；打开页面时的单个入场 ≤ 650ms；一整段入场序列 ≤ 1000ms。
 3. **每个动效对应一次操作或状态变化**：指向、聚焦、点击、换页、打开页面、数据到了、出错了、保存好了。没有"为了好看一直在动"的东西。
-4. **不做持续循环的装饰动画。** 例外只有两个：承载内容的滚动条（指向或聚焦即停），和不知道进度的加载条（完成即停）。**背景星点永远不动**：不闪烁、不漂移、不随滚动视差。
+4. **不做持续循环的装饰动画。** 例外只有两个：承载内容的滚动条（指向或聚焦即停），和不知道进度的加载条（完成即停）。**背景星图永远不动**：不闪烁、不漂移、不随滚动视差。
 5. **系统要求减少动态效果时全部关闭**（`prefers-reduced-motion: reduce`），直接显示最终状态。表示数据的东西（阅读进度、加载进度）仍然更新。
 6. 只动 `transform`、`opacity`、`clip-path`、`background-size`、`stroke-dashoffset`，不动宽高、边距、`left/top` 这类布局属性。要"让出位置"时用 FLIP：先记下位置，改布局，再用 transform 从旧位置动回来（`fx.js` 的 `removeRow()` 就是这样）。
 7. 不要：弹跳、弹簧、果冻、文字逐个缩放弹出或描边再填实（文字要么直接出现，要么用擦入）、发光脉冲、星星闪烁、视差滚动背景、滚动触发的逐段淡入、抖动表示出错、涟漪（换成擦入）。
@@ -74,12 +74,12 @@
 | 通电 | 打开控制台 | 520，每行晚 100 | mech | clip-path, opacity | `.st-in-power` + `--i` | `power` |
 | 逐行亮起 | 切换列表内容 | 320，每行晚 38 | snap | clip-path, transform | `.st-in-come` + `--i` | `come` |
 | 星盘组装 | 打开控制台 | 360，每段晚 45 | snap | transform, opacity | `dial.js` 自带 | `assemble` |
-| 荧光绿擦入 | 指向、聚焦按钮 | 280 | mech | transform | `.st-btn` | `wipe` |
+| 荧光绿擦入 | 指向、聚焦按钮（主要按钮本来是荧光绿，擦入的是墨色） | 280 | mech | transform | `.st-btn` | `wipe` |
 | 亮边扫过 | 指向按钮 | 300 | mech | transform | `.st-btn::after` | `edge` |
 | 按下 | 点击按钮 | 100 | — | transform（下沉 1px、缩 1.5%） | `.st-btn:active` | `press` |
 | 紫色色条落下、整行右移 | 指向 / 聚焦列表行 | 200（右移 250） | snap | transform | `.st-record`、`.st-rows` | `row` |
 | 页签伸开 | 指向看板 | 400 | mech | transform | `.st-panel` | `tab` |
-| 墨色灌满 | 指向空心大编号 | 450 | mech | background-size | `.st-hollow-no` | `fill` |
+| 紫色灌满 | 指向空心大编号 | 450 | mech | background-size | `.st-hollow-no` | `fill` |
 | 荧光绿垫底灌满 | 指向看板里的大数字 | 220 | mech | background-size | `.st-figs` | `figFill` |
 | 锁定 | 指向星盘某段：紫色括弧画出、紫色光束连到中心 | 300 | mech | stroke-dashoffset | `dial.js` 自带 | `lock` |
 | 换页快门 | 同源页面跳转 | 360 | mech | clip-path | `@view-transition`，`stellar.css` 自带 | `shutter` |
@@ -109,7 +109,7 @@
 | 变化 | 怎么动 | 网页 |
 | --- | --- | --- |
 | 正在处理（保存、发送中） | 按钮铺斜线纹、暂停响应，不放转圈 | `.st-btn[aria-busy="true"]` |
-| 处理完成 | 荧光绿从左到右穿过按钮一次 600（mech），字可以短暂换成"已保存"；再弹一个提示条 | `fx.js` `flashDone()`、`toast()` |
+| 处理完成 | 荧光绿从左到右穿过按钮一次 600（mech；主要按钮里穿过的是墨色），字可以短暂换成"已保存"；再弹一个提示条 | `fx.js` `flashDone()`、`toast()` |
 | 出错 | 提示从左擦入 280，前面插荧光绿小旗；**不抖动、不变红** | `.st-notice.st-in-wipe` |
 | 加载中，知道进度 | 分段进度条按格跳（24 格，走到的格是紫色），读数补零 `063%` | `.st-progress` + `--p` |
 | 加载中，不知道进度 | 一段紫格从左往右走，完成即停 | `.st-progress.is-unknown` |

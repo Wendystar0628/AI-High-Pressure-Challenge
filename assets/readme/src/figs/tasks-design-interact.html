@@ -2,36 +2,30 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x262">
+<meta name="size" content="960x474">
 <title>AE 评分方向</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="tasks-design-strip.css">
 </head>
 <body>
-<div class="frame">
-  <div class="head"><h2></h2><p></p></div>
-  <div class="plot" id="plot"></div>
-  <div class="legend" id="legend"></div>
-</div>
+<div class="frame"></div>
 <script>
+// Directions, points and subitems as in README.md (复杂交互应用 › 分项与计分).
 window.FIG = {
-  cat: 'interact',
+  cat: 'interact', catName: '复杂交互应用', partner: 'violet',
   title: 'AE风味动效设计编辑器：100 分怎样分配',
-  sub: '<span class="num">8</span> 个评分方向、<span class="num">29</span> 个分项；条长按分值精确绘制。',
-  rows: [{ dirs: [
-    ['时间轴、曲线<br>与表达式', 14, [3, 5, 4, 2]],
-    ['矢量、文字<br>与程序图形', 14, [4, 5, 3, 2]],
-    ['网格变形<br>与空间场', 12, [5, 3, 4]],
-    ['三维场景<br>与渲染', 22, [6, 4, 4, 4, 4]],
-    ['粒子动力学<br>与时间合成', 14, [3, 5, 2, 4]],
-    ['编辑<br>与导出', 6, [3, 2, 1]],
-    ['界面<br>设计', 6, [2, 2, 2]],
-    ['示例动画', 12, [4, 4, 4]],
+  desc: '两位评分员分别打分，逐项取平均。条长按分值精确绘制，各方向从 0 依次排到 100。',
+  facts: ['8 个方向', '29 个分项', '合计 100 分'],
+  groups: [{ dirs: [
+    ['时间轴、曲线与表达式',   14, [3, 5, 4, 2]],
+    ['矢量、文字与程序化图形', 14, [4, 5, 3, 2]],
+    ['网格变形与空间场',       12, [5, 3, 4]],
+    ['三维场景与渲染',         22, [6, 4, 4, 4, 4]],
+    ['粒子动力学与时间合成',   14, [3, 5, 2, 4]],
+    ['编辑、工程与导出',        6, [3, 2, 1]],
+    ['界面设计',                6, [2, 2, 2]],
+    ['示例动画设计',           12, [4, 4, 4]],
   ] }],
-  legend: [
-    ['cell', '细条每格是一个分项'],
-    ['blk', '两位评分员分别打分，逐项取平均'],
-  ],
 };
 </script>
 <script src="tasks-design-strip.js"></script>

@@ -1,36 +1,43 @@
-/* Shared layout for the tasks-design-* figures (see tasks-design-strip.js). Same block language as weights.html. */
-.head h2 { font-size: 22px; line-height: 30px; }
-.head p { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
-.head p .num { color: var(--ink); }
+/* Shared layout for the tasks-design-* figures (drawn by tasks-design-strip.js).
+   One row per scoring direction on a 0-100 point scale: each bar starts where the one above ends, so the
+   rows step down to 100. One cell per subitem. */
+.desc { margin-top: 10px; }
 
-.plot { position: absolute; left: 32px; top: 104px; width: 896px; }
-.plot > * { position: absolute; }
+.plot { position: relative; margin-top: 20px; }
+.plot > * { position: absolute; white-space: nowrap; }
 
-/* Direction value above its block, in the category colour. */
-.pts { font-size: 26px; line-height: 28px; font-weight: 600; color: var(--c); white-space: nowrap; }
+/* Point scale: a tick every 5 points, labels every 25. */
+.colh { font-size: 12px; line-height: 16px; color: var(--ink-2); }
+.tl { font-size: 12px; line-height: 16px; color: var(--ink-2); }
+.tick { width: 1px; background: var(--ink-3); }
+.axis { height: 1px; background: var(--ink-3); }
+.guide { width: 0; border-left: 1px dashed var(--rule); }
+.hr { left: 0; right: 0; height: 1px; background: var(--rule); }
+.hr.ink { background: var(--ink); }
 
-/* Direction block: tint fill, category border, name inside. */
-.blk { border: 1.5px solid var(--c); background: var(--t); border-radius: var(--radius-block);
-       display: flex; align-items: center; padding: 0 7px; }
-.blk .lab { font-size: 13.5px; line-height: 17px; color: var(--ink); }
-.blk.narrow { padding: 0 4px; }
-.blk.narrow .lab { font-size: 12.5px; line-height: 16px; }
+/* Task head, used when a figure holds two tasks. */
+.ghead { display: flex; align-items: baseline; column-gap: 12px; }
+.ghead h3 { font-size: 17px; }
 
-/* Task name over its bar, used when a figure holds more than one task. */
-.rowhead { font-size: 16px; line-height: 22px; font-weight: 700; color: var(--ink); white-space: nowrap; }
-.rowhead .meta { font-weight: 400; font-size: 13.5px; color: var(--ink-2); margin-left: 12px; }
-.rowhead .meta .num { color: var(--ink); }
-.blk.perf { background: repeating-linear-gradient(135deg, var(--t) 0 6px, var(--paper) 6px 10px); }
+/* Direction row: number, name, subitem count, then the bar and its value. */
+.no { font-size: 13px; line-height: 20px; }
+.name { font-size: 14px; font-weight: 700; line-height: 20px; }
+.cnt { font-size: 13px; line-height: 20px; transform: translateX(-100%); }
+.cell { height: 14px; }
+.pts { font-size: 14px; font-weight: 700; line-height: 20px; }
 
-/* One cell per subitem. */
-.cell { background: var(--c); opacity: .42; border-radius: 2px; }
-.cell.perf { opacity: 1; background: repeating-linear-gradient(135deg, var(--c) 0 2px, transparent 2px 5px); }
+/* Directions alternate the category colour (--cat-*) and one partner step of the violet family;
+   cells sit on paper gaps. Colours are set inline by the script. */
 
-.legend { position: absolute; left: 32px; right: 32px; bottom: 20px; display: flex; flex-wrap: wrap; column-gap: 28px; row-gap: 6px;
-          font-size: 13px; line-height: 18px; color: var(--ink-2); }
-.legend .item { display: inline-flex; align-items: center; gap: 8px; }
-.legend .sw { display: inline-block; flex: none; }
-.legend .sw.blk { position: static; width: 26px; height: 14px; padding: 0; border-radius: 4px; }
-.legend .sw.cell { width: 26px; height: 6px; }
-.legend .sw.perf { width: 26px; height: 14px; border: 1.5px solid var(--c); border-radius: 4px;
-                   background: repeating-linear-gradient(135deg, var(--t) 0 4px, var(--paper) 4px 7px); }
+/* The largest direction's value: an ink tag with a lime star and lime figure; its bar keeps its colour. */
+.best { display: inline-flex; align-items: center; column-gap: 5px; height: 22px; padding: 0 7px 0 6px;
+        background: var(--ink); color: var(--lime); font-size: 14px; font-weight: 700; }
+.best .star { width: 10px; height: 10px; }
+
+/* Foot: the category on the left, the key on the right. */
+.foot { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.foot .cat { display: inline-flex; align-items: center; column-gap: 8px; font-size: 15px; font-weight: 700; line-height: 22px; }
+.foot .facts { margin-left: 8px; font-weight: 400; }
+.legend i.cells { width: 20px; height: 10px; background: linear-gradient(90deg, var(--c) 0 6px, transparent 6px 7px, var(--c) 7px 13px, transparent 13px 14px, var(--c) 14px); }
+.legend .best { height: 18px; padding: 0 5px; }
+.legend .best .star { width: 9px; height: 9px; }

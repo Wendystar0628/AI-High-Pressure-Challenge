@@ -119,13 +119,21 @@
         height: 7rem;
         overflow: hidden;
       }
-      .good-stars::before {
+      .good-stars::before,
+      .good-stars::after {
         content: '';
         position: absolute;
         inset: -4rem -2rem -4rem 30%;
-        background: color-mix(in srgb, var(--st-ink) 55%, transparent);
-        -webkit-mask: url('../assets/stars/stars-a.svg') center / cover no-repeat;
-        mask: url('../assets/stars/stars-a.svg') center / cover no-repeat;
+      }
+      .good-stars::before {
+        background: color-mix(in srgb, var(--st-orbit) 80%, transparent);
+        -webkit-mask: url('../assets/stars/stars-a-lines.svg') center / cover no-repeat;
+        mask: url('../assets/stars/stars-a-lines.svg') center / cover no-repeat;
+      }
+      .good-stars::after {
+        background: color-mix(in srgb, var(--st-star-c) 70%, transparent);
+        -webkit-mask: url('../assets/stars/stars-a-glints.svg') center / cover no-repeat;
+        mask: url('../assets/stars/stars-a-glints.svg') center / cover no-repeat;
       }
       .bad-fake {
         position: relative;
@@ -204,20 +212,56 @@
         position: absolute;
         top: 50%;
         width: 26px;
-        height: 7px;
-        margin-top: -3.5px;
+        height: 11px;
+        margin-top: -5.5px;
+        background:
+          linear-gradient(var(--st-star-c), var(--st-star-c)) var(--star-at, right) / 11px 100% no-repeat,
+          var(--st-ink);
+        -webkit-mask:
+          var(--st-star) var(--star-at, right) center / 11px 11px no-repeat,
+          linear-gradient(#000 0 0) var(--line-at, left) center / calc(100% - 9px) 1px no-repeat;
+        mask:
+          var(--st-star) var(--star-at, right) center / 11px 11px no-repeat,
+          linear-gradient(#000 0 0) var(--line-at, left) center / calc(100% - 9px) 1px no-repeat;
       }
       .good-orbit .l2::after {
         left: 100%;
-        background:
-          radial-gradient(circle at calc(100% - 3.5px) 50%, var(--st-ink) 3px, transparent 3.5px),
-          linear-gradient(var(--st-ink), var(--st-ink)) left center / calc(100% - 7px) 1px no-repeat;
       }
       .good-orbit .r2::after {
+        --star-at: left;
+        --line-at: right;
         right: 100%;
-        background:
-          radial-gradient(circle at 3.5px 50%, var(--st-ink) 3px, transparent 3.5px),
-          linear-gradient(var(--st-ink), var(--st-ink)) right center / calc(100% - 7px) 1px no-repeat;
+      }
+      .good-orbit .p::before {
+        background: var(--st-orbit);
+      }
+      .bad-duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        height: 5.5rem;
+      }
+      .bad-duo > i:first-child {
+        background: #9859ff;
+      }
+      .bad-duo > i:last-child {
+        background: #d1ff57;
+      }
+      .bad-lines {
+        display: block;
+        width: 100%;
+        height: 1.6rem;
+        background: repeating-linear-gradient(0deg, #9859ff 0 2px, #d1ff57 2px 4px);
+      }
+      .good-duo {
+        display: grid;
+        grid-template-columns: 5.5rem auto;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.8rem 1.2rem 0.8rem 0.9rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.15;
       }
       .bad-thin-flare {
         font-size: 1.1rem;
@@ -242,14 +286,14 @@
 
       <div class="pair">
         <section class="st-panel no">
-          <p class="verdict"><b>不要</b>深底配荧光绿大字、发光</p>
+          <p class="verdict"><b>不要</b>发光的霓虹字、整段荧光绿字</p>
           <div class="stage"><span class="bad-neon">SIGNAL 已连接</span></div>
-          <p class="why">霓虹终端的老套路，刺眼；荧光绿铺成了字和光，就不再表示"按这里、看这里"。</p>
+          <p class="why">霓虹终端的老套路，刺眼；荧光绿铺成一大片发光的字，就不再是点缀。</p>
         </section>
         <section class="st-panel yes">
-          <p class="verdict"><b>要</b>荧光绿只做小块，上面写墨字</p>
-          <div class="stage"><span class="st-marker">一句话说明这是什么</span><span class="st-state is-alert">待审 2</span><button class="st-btn go" type="button">保存</button></div>
-          <p class="why">荧光绿只出现在能按的东西被指向时、需要看一眼的数字和状态上。</p>
+          <p class="verdict"><b>要</b>荧光绿是次色：主要操作、高光、第二组数据</p>
+          <div class="stage"><span class="st-marker">一句话说明这是什么</span><span>最佳 <span class="st-hi">98.5</span></span><span class="st-state is-alert">待审 2</span><button class="st-btn go" type="button">保存</button></div>
+          <p class="why">一屏只有几小块荧光绿，上面写墨字；浅色里不做线和字。</p>
         </section>
       </div>
 
@@ -307,7 +351,7 @@
         <section class="st-panel yes">
           <p class="verdict"><b>要</b>两角极淡的一小片星图</p>
           <div class="stage"><div class="good-stars"></div></div>
-          <p class="why">（这里为了看清加深了；实际是墨色 16%，只在两角，并向边缘渐隐。）</p>
+          <p class="why">（这里为了看清加深了；实际线是紫 30%、四角星是墨 20%，只在两角，并向边缘渐隐。）</p>
         </section>
       </div>
 
@@ -338,7 +382,7 @@
           <div class="stage">
             <div class="good-orbit"><div class="ring"></div><i class="p l1"></i><i class="p l2"></i><i class="p l3"></i><i class="p r1"></i><i class="p r2"></i><i class="p r3"></i></div>
           </div>
-          <p class="why">上下两块靠向星盘并切掉朝它的角；中间一块退开，用以星点结尾的引线接到星盘。</p>
+          <p class="why">上下两块靠向星盘并切掉朝它的角；中间一块退开，用以四角星结尾的引线接到星盘。</p>
         </section>
       </div>
 
@@ -352,6 +396,21 @@
           <p class="verdict"><b>要</b>当前位置用紫条加淡紫底，字是墨色</p>
           <div class="stage"><span style="border-left: 3px solid var(--st-orbit); padding-left: 0.6rem; font-weight: 700">当前所在的分区</span><span class="st-tag is-current">No.024</span></div>
           <p class="why">紫色做线、色条和大字；小字永远写在淡紫底或纸面上。</p>
+        </section>
+      </div>
+
+      <div class="pair">
+        <section class="st-panel no">
+          <p class="verdict"><b>不要</b>紫绿等面积并排、两色细线相贴</p>
+          <div class="stage" style="display: grid; align-content: center"><div class="bad-duo"><i></i><i></i></div><span class="bad-lines"></span></div>
+          <p class="why">一对互补色等量并置会互相抢；细线贴在一起，边缘会闪。</p>
+        </section>
+        <section class="st-panel yes">
+          <p class="verdict"><b>要</b>两色只在焦点上同框，一主一次</p>
+          <div class="stage">
+            <figure class="st-block good-duo" style="margin: 0"><svg viewBox="0 0 120 120" aria-hidden="true"><path fill="var(--st-flare)" d="M60 14Q63 57 106 60Q63 63 60 106Q57 63 14 60Q57 57 60 14Z" /></svg><span>第 214 夜</span></figure>
+          </div>
+          <p class="why">紫色块上一颗荧光绿四角星；有色部分紫 6、荧光绿 3、星光青 1。</p>
         </section>
       </div>
     </main>

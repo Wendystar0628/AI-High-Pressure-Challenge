@@ -2,76 +2,72 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x748">
+<meta name="size" content="960x762">
 <title>作答环境的隔离</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 26px; line-height: 34px; }
-  .head p { margin-top: 4px; font-size: 14px; line-height: 22px; color: var(--ink-2); }
+  .desc { margin-top: 10px; }
 
-  /* who (columns) can reach what (rows) */
-  .grid { display: grid; grid-template-columns: 300px 1fr 1fr; margin-top: 22px; }
-  .grid > div { border-top: 1px solid var(--line-2); padding: 10px 0; }
-  .grid .ch { border-top: none; padding: 0 0 10px; min-height: 0; }
-  .ch b { display: block; font-size: 16px; line-height: 22px; }
-  .ch span { font-size: 12.5px; line-height: 18px; color: var(--ink-3); }
-  .grid .rh { padding-right: 20px; }
+  /* Access marks: violet for what can be reached (darker = more), ink for a system wall,
+     hatch for a rule, an empty dashed square for a fresh start. */
+  .mk { display: inline-block; width: 14px; height: 14px; flex: none; }
+  .mk.rw { background: var(--violet-600); }
+  .mk.ro { background: var(--violet-300); }
+  .mk.sys { background: var(--ink); }
+  .mk.rule { background: var(--hatch); outline: 1px solid var(--ink); outline-offset: -1px; }
+  .mk.fresh { border: 1px dashed var(--ink-2); }
+  .mk.na { height: 1.5px; width: 12px; margin: 0 1px; background: var(--ink-3); }
+  .legend { margin-top: 12px; }
+  .legend i.mk { width: 14px; height: 14px; }
+  .legend i.mk.fresh { border: 1px dashed var(--ink-2); }
+
+  /* Who (columns) can reach what (rows). */
+  .grid { display: grid; grid-template-columns: 300px 1fr 1fr; margin-top: 20px; }
+  .grid > div { border-top: 1px solid var(--rule); padding: 10px 24px 10px 0; }
+  .grid .ch { border-top: none; padding: 0 24px 10px 0; }
+  .ch h3 { font-size: 17px; }
+  .ch span { font-family: var(--font-text); font-size: 13px; line-height: 18px; color: var(--ink-2); }
+  .grid .first { border-top: 1px solid var(--ink); }
   .rh b { display: block; font-size: 14.5px; font-weight: 700; line-height: 20px; }
-  .rh span { font-size: 12.5px; line-height: 18px; color: var(--ink-3); }
-  .cell { display: flex; align-items: flex-start; gap: 10px; padding-left: 4px; padding-right: 18px; }
-  .cell svg { flex: none; width: 16px; height: 16px; margin-top: 2px; overflow: visible; }
-  .cell p { font-size: 13.5px; line-height: 20px; color: var(--ink); }
-  .cell.none p { color: var(--ink-3); }
-  .grid .first { border-top: 1.5px solid var(--ink); }
+  .rh span { display: block; font-family: var(--font-text); font-size: 12.5px; line-height: 18px; color: var(--ink-2); margin-top: 2px; }
+  .cell { display: flex; align-items: flex-start; column-gap: 10px; }
+  .cell .mk { margin-top: 3px; }
+  .cell .mk.na { margin-top: 10px; }
+  .cell p { font-family: var(--font-text); font-size: 13.5px; line-height: 20px; color: var(--ink); }
+  .cell.none p { color: var(--ink-2); }
 
-  .key { display: flex; gap: 26px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-2);
-         font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
-  .key span { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-  .key svg { width: 14px; height: 14px; overflow: visible; }
-
-  /* the shell around every tested session */
-  .shell { margin-top: 18px; border: 1.5px solid var(--ink); border-radius: var(--radius-block);
-           display: grid; grid-template-columns: 150px repeat(4, 1fr); }
-  .shell > div { padding: 12px 14px; }
-  .shell > div + div { border-left: 1px solid var(--line); }
-  .shell .t { font-size: 15px; font-weight: 700; line-height: 20px; display: flex; align-items: center; }
-  .shell b { display: block; font-size: 13.5px; line-height: 19px; }
-  .shell span { display: block; font-size: 12.5px; line-height: 18px; color: var(--ink-2); margin-top: 3px; }
+  /* The shell around every tested session: one lime-100 band marks the group. */
+  .shell { margin-top: 18px; background: var(--lime-100); padding: 16px 20px 16px;
+           display: grid; grid-template-columns: 128px repeat(4, 1fr); column-gap: 16px; }
+  .shell .t h3 { font-size: 16px; line-height: 22px; }
+  .shell > div + div { border-left: 1px solid var(--rule); padding-left: 14px; }
+  .shell b { display: block; font-size: 14px; line-height: 20px; }
+  .shell span { display: block; font-family: var(--font-text); font-size: 12.5px; line-height: 18px; color: var(--ink-2); margin-top: 4px; }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <symbol id="rw" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="var(--ink)"/></symbol>
-    <symbol id="ro" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M1.5 8.5 H14.5 V12 A2.5 2.5 0 0 1 12 14.5 H4 A2.5 2.5 0 0 1 1.5 12 Z" fill="var(--ink)"/></symbol>
-    <symbol id="sys" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M5.2 5.2 L10.8 10.8 M10.8 5.2 L5.2 10.8" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="rule" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="var(--ink-2)" stroke-width="1.4" stroke-dasharray="2.2 1.8"/><path d="M5.2 5.2 L10.8 10.8 M10.8 5.2 L5.2 10.8" stroke="var(--ink-2)" stroke-width="1.6" stroke-linecap="round"/></symbol>
-    <symbol id="fresh" viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5" fill="none" stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="2.2 1.8"/></symbol>
-    <symbol id="na" viewBox="0 0 16 16"><path d="M4 8 H12" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round"/></symbol>
-  </defs>
-</svg>
 <div class="frame">
-  <div class="head">
-    <h2>谁能看到什么</h2>
-    <p>受测会话和评分员在同一台机器上，分别用两个 Windows 账户运行。评分在全部作答结束后才开始。</p>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Who Sees What</span><h2 class="title">谁能看到什么</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">受测会话和评分员在同一台机器上，分别用两个 Windows 账户运行。评分在全部作答结束后才开始。</p>
+  <div class="legend">
+    <span><i class="mk rw"></i>读写</span>
+    <span><i class="mk ro"></i>只读</span>
+    <span><i class="mk sys"></i>系统拒绝：Windows 权限挡住</span>
+    <span><i class="mk rule"></i>规定禁止：题面或评分提示词禁止</span>
+    <span><i class="mk fresh"></i>从空白开始</span>
   </div>
 
   <div class="grid" id="grid">
     <div class="ch"></div>
-    <div class="ch"><b>受测会话</b><span>专用的普通账户，每个会话单独登录</span></div>
-    <div class="ch"><b>评分员</b><span>管理员账户，每个评分任务一个新会话</span></div>
-  </div>
-
-  <div class="key">
-    <span><svg><use href="#rw"/></svg>读写</span>
-    <span><svg><use href="#ro"/></svg>只读</span>
-    <span><svg><use href="#sys"/></svg>系统拒绝：Windows 权限挡住</span>
-    <span><svg><use href="#rule"/></svg>规定禁止：题面或评分提示词禁止</span>
-    <span><svg><use href="#fresh"/></svg>从空白开始</span>
+    <div class="ch"><h3>受测会话</h3><span>专用的普通账户，每个会话单独登录</span></div>
+    <div class="ch"><h3>评分员</h3><span>管理员账户，每个评分任务一个新会话</span></div>
   </div>
 
   <div class="shell">
-    <div class="t">每个受测会话<br>的外壳</div>
+    <div class="t"><span class="eyebrow slash">Shell</span><h3>每个受测会话<br>的外壳</h3></div>
     <div><b>单独登录</b><span>每个会话是受测账户的一次单独登录</span></div>
     <div><b>进程保护</b><span>其他会话结束不了这些进程，按进程名也不行</span></div>
     <div><b>作业对象</b><span>到时结束模型启动的程序；极值构造题在此绑核</span></div>
@@ -79,6 +75,7 @@
   </div>
 </div>
 <script>
+// Facts: README.md (隔离的作答环境) and the previous figure.
 const ROWS = [
   ['题库仓库', '题面原件、评分指南、参考答案、测评程序',
     ['sys', '整个仓库拒绝访问'], ['ro', '读题面、评分指南、答案和评测脚本']],
@@ -99,8 +96,8 @@ const grid = document.getElementById('grid');
 ROWS.forEach(([name, sub, a, b], i) => {
   const first = i === 0 ? ' first' : '';
   grid.insertAdjacentHTML('beforeend', `<div class="rh${first}"><b>${name}</b>${sub ? `<span>${sub}</span>` : ''}</div>`);
-  [a, b].forEach(([icon, text]) => grid.insertAdjacentHTML('beforeend',
-    `<div class="cell${icon === 'na' ? ' none' : ''}${first}"><svg><use href="#${icon}"/></svg><p>${text}</p></div>`));
+  [a, b].forEach(([mark, text]) => grid.insertAdjacentHTML('beforeend',
+    `<div class="cell${mark === 'na' ? ' none' : ''}${first}"><i class="mk ${mark}"></i><p>${text}</p></div>`));
 });
 </script>
 </body>

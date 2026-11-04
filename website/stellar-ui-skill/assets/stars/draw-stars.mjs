@@ -1,11 +1,17 @@
-// Draws two faint star-chart patches (stars-a.svg and stars-b.svg, written
-// next to this file): stars as dots sized by magnitude, one or two sparse
-// constellation lines, and a few arcs of a chart grid (circles of declination
-// and hour lines) running round a pole that lies outside the patch.
+// Draws two faint star-chart patches, a and b, written next to this file:
+// four-point stars sized by magnitude, one or two sparse constellation lines,
+// and a few arcs of a chart grid (circles of declination and hour lines)
+// running round a pole that lies outside the patch.
+// Every star is a four-point star, the faintest class too.
 // No labels, no coordinates, no crosshairs. The same seed always gives the
-// same file. They are used as a CSS mask, so they take whatever colour the
+// same files. They are used as CSS masks, so they take whatever colour the
 // page gives them; every patch thins out to nothing towards its edge.
-// Change the seeds, sizes or counts at the bottom for a different sky:
+// Each patch is written three times:
+//   stars-a.svg         lines and stars together (one colour)
+//   stars-a-lines.svg   the grid arcs and constellation lines only
+//   stars-a-glints.svg  the stars only
+// stellar.css paints the lines and the stars in two colours from the split
+// files. Change the seeds, sizes or counts at the bottom for a different sky:
 //   node draw-stars.mjs
 import { writeFileSync } from 'node:fs';
 
@@ -22,15 +28,32 @@ function rng(seed) {
 
 const n = (v) => String(Math.round(v * 10) / 10);
 
-// Magnitude classes, faint to bright: dot radius and how many of each per
-// 100 stars. Few bright ones, many faint ones, as on a printed star atlas.
+// Magnitude classes, faint to bright: how much room a star keeps (r), the
+// distance from its centre to a tip (tip) and how full its waist is (waist,
+// a share of tip measured on the diagonal). Faint stars get a fuller waist so
+// they keep their shape when small. Few bright ones, many faint ones (share
+// per 100 stars), as on a printed star atlas.
 const CLASSES = [
-  { r: 0.8, share: 44 },
-  { r: 1.1, share: 28 },
-  { r: 1.55, share: 16 },
-  { r: 2.1, share: 9 },
-  { r: 2.8, share: 3 },
+  { r: 0.8, tip: 2.1, waist: 0.44, share: 44 },
+  { r: 1.1, tip: 2.8, waist: 0.4, share: 28 },
+  { r: 1.55, tip: 3.7, waist: 0.36, share: 16 },
+  { r: 2.1, tip: 4.9, waist: 0.33, share: 9 },
+  { r: 2.8, tip: 6.4, waist: 0.3, share: 3 },
 ];
+
+/** A four-point star: tips on the axes, sides curving in to the waist. Drawn
+    with relative curves, so a whole sky is a single path. */
+function star(x, y, tip, waist) {
+  const k = (waist / Math.SQRT2 - 0.25) * 2 * tip; // the curves' control offset
+  const R = tip;
+  return (
+    `M${n(x)} ${n(y - R)}` +
+    `q${n(k)} ${n(R - k)} ${n(R)} ${n(R)}` +
+    `q${n(k - R)} ${n(k)} ${n(-R)} ${n(R)}` +
+    `q${n(-k)} ${n(k - R)} ${n(-R)} ${n(-R)}` +
+    `q${n(R - k)} ${n(-k)} ${n(R)} ${n(-R)}z`
+  );
+}
 
 /** Stars scattered with a soft band of higher density across the patch (like
     a stretch of the Milky Way), kept apart so they never clump into blobs. */
@@ -38,8 +61,8 @@ function scatter(r, w, h, count, band) {
   const stars = [];
   const pick = () => {
     let x = r() * 100;
-    for (const c of CLASSES) if ((x -= c.share) < 0) return c.r;
-    return CLASSES[0].r;
+    for (const c of CLASSES) if ((x -= c.share) < 0) return c;
+    return CLASSES[0];
   };
   let guard = 0;
   while (stars.length < count && guard++ < count * 80) {
@@ -48,10 +71,10 @@ function scatter(r, w, h, count, band) {
     // distance from the band's centre line, in units of the band's half width
     const d = Math.abs((x - band.x) * Math.sin(band.a) - (y - band.y) * Math.cos(band.a)) / band.width;
     if (r() > 0.28 + 0.72 * Math.exp(-d * d)) continue;
-    const size = pick();
-    const gap = 9 + size * 5;
+    const mag = pick();
+    const gap = 9 + mag.r * 5;
     if (stars.some((s) => Math.hypot(s.x - x, s.y - y) < gap)) continue;
-    stars.push({ x, y, size });
+    stars.push({ x, y, size: mag.r, tip: mag.tip, waist: mag.waist });
   }
   return stars;
 }
@@ -86,15 +109,15 @@ function chain(stars, from, length, w, h, used) {
   return line;
 }
 
-/** The segments between stars, stopped short of each dot as on a chart. */
+/** The segments between stars, stopped short of each star as on a chart. */
 function chainPath(line) {
   let d = '';
   for (let k = 0; k + 1 < line.length; k++) {
     const [a, b] = [line[k], line[k + 1]];
     const len = Math.hypot(b.x - a.x, b.y - a.y);
     const [ux, uy] = [(b.x - a.x) / len, (b.y - a.y) / len];
-    const ga = a.size + 4;
-    const gb = b.size + 4;
+    const ga = a.tip + 3;
+    const gb = b.tip + 3;
     d += `M${n(a.x + ux * ga)} ${n(a.y + uy * ga)}L${n(b.x - ux * gb)} ${n(b.y - uy * gb)}`;
   }
   return d;
@@ -132,32 +155,40 @@ function rayPath(pole, angle, r0, r1) {
   return `M${n(pole.x + r0 * c)} ${n(pole.y + r0 * s)}L${n(pole.x + r1 * c)} ${n(pole.y + r1 * s)}`;
 }
 
-function draw(file, { seed, w, h, count, band, pole, circles, rays, chains }) {
+function draw(name, { seed, w, h, count, band, pole, circles, rays, chains }) {
   const r = rng(seed);
   const stars = scatter(r, w, h, count, band);
-  const dots = stars
-    .sort((a, b) => a.size - b.size)
-    .map((s) => `<circle cx="${n(s.x)}" cy="${n(s.y)}" r="${s.size}"/>`)
-    .join('');
   const solid = circles.filter((_, i) => i % 2 === 0).map((radius) => arcPath(pole, radius, w, h)).join('');
   const dashed = circles.filter((_, i) => i % 2 === 1).map((radius) => arcPath(pole, radius, w, h)).join('');
   const hours = rays.map(({ angle, from, to }) => rayPath(pole, angle, from, to)).join('');
   const used = new Set();
   const figures = chains.map(({ from, length }) => chainPath(chain(stars, from, length, w, h, used))).join('');
-  const svg =
+  const glints = stars
+    .sort((a, b) => a.size - b.size)
+    .map((s) => star(s.x, s.y, s.tip, s.waist))
+    .join('');
+
+  const open =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}">` +
     `<defs><radialGradient id="f"><stop offset=".42" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>` +
     `<mask id="m"><rect width="${w}" height="${h}" fill="url(#f)"/></mask></defs>` +
-    `<g mask="url(#m)">` +
+    `<g mask="url(#m)">`;
+  const close = `</g></svg>\n`;
+  const lines =
     `<g fill="none" stroke="#000" stroke-width="1" stroke-opacity=".5"><path d="${solid}"/><path stroke-dasharray="2 6" d="${dashed}"/><path stroke-dasharray="1 5" d="${hours}"/></g>` +
-    `<path fill="none" stroke="#000" stroke-width="1" stroke-opacity=".8" d="${figures}"/>` +
-    `<g fill="#000">${dots}</g>` +
-    `</g></svg>\n`;
-  writeFileSync(new URL(`./${file}`, import.meta.url), svg);
-  console.log(file, `${stars.length} stars`, `${(svg.length / 1024).toFixed(1)} KB`);
+    `<path fill="none" stroke="#000" stroke-width="1" stroke-opacity=".8" d="${figures}"/>`;
+  const points = `<path d="${glints}"/>`;
+
+  const files = {
+    [`${name}.svg`]: open + lines + points + close,
+    [`${name}-lines.svg`]: open + lines + close,
+    [`${name}-glints.svg`]: open + points + close,
+  };
+  for (const [file, svg] of Object.entries(files)) writeFileSync(new URL(`./${file}`, import.meta.url), svg);
+  console.log(name, `${stars.length} stars`, Object.entries(files).map(([f, s]) => `${f} ${(s.length / 1024).toFixed(1)} KB`).join(', '));
 }
 
-draw('stars-a.svg', {
+draw('stars-a', {
   seed: 20261104,
   w: 960,
   h: 720,
@@ -174,7 +205,7 @@ draw('stars-a.svg', {
     { from: { x: 640, y: 480 }, length: 4 },
   ],
 });
-draw('stars-b.svg', {
+draw('stars-b', {
   seed: 1977,
   w: 800,
   h: 800,

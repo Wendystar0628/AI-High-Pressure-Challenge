@@ -2,91 +2,96 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x856">
+<meta name="size" content="960x980">
 <title>算法竞赛计分曲线</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-  .head h2 { font-size: 24px; letter-spacing: .01em; }
-  .head p { font-size: 14px; color: var(--ink-2); margin-top: 6px; }
+  .desc { margin-top: 10px; }
+  .title .icon { width: 26px; height: 26px; vertical-align: -4px; margin-right: 10px; }
 
-  /* One row per task type; the row label states the benchmark that the full score is measured against. */
-  .row { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; }
-  .rl { display: flex; align-items: baseline; gap: 12px; }
-  .rl b { font-size: 16px; font-weight: 700; color: var(--algo); }
-  .rl span { font-size: 13px; color: var(--ink-2); }
-  .two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; margin-top: 10px; }
-  .panel h3 { font-size: 15px; line-height: 1.4; }
-  .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .chip { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 6px; font-size: 12.5px; white-space: nowrap; }
-  .chip.key { background: var(--algo-tint); color: var(--algo); font-weight: 500; }
-  .chip.env { border: 1px solid var(--line); color: var(--ink-2); }
-  .panel svg { display: block; margin-top: 8px; overflow: visible; }
+  /* One band per task type under an ink rule; the band head states what the full score is measured against. */
+  .band { border-top: 1px solid var(--ink); margin-top: 22px; padding-top: 12px; }
+  .bh { display: flex; align-items: baseline; column-gap: 12px; }
+  .bh h3 { font-size: 17px; }
+  .bh p { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+  .task { margin-top: 12px; border-top: 1px solid var(--rule); padding-top: 10px; }
+  .task h4 { font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .task .facts { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+  .task .facts b { color: var(--ink); font-weight: 700; }
+  .task svg { display: block; margin-top: 6px; overflow: visible; }
 
-  svg text { font-family: var(--font-cn); fill: var(--ink); }
-  svg .n { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-  svg .tick { font-size: 12px; fill: var(--ink-3); }
-  svg .pt { font-size: 12px; fill: var(--ink-2); }
-  svg .lab { font-size: 12px; fill: var(--ink-2); }
-  svg .call { font-size: 12.5px; fill: var(--ink); }
+  svg text { font-family: var(--font-ui); fill: var(--ink); }
+  svg .tk { font-size: 12px; fill: var(--ink-2); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .pt { font-size: 12px; font-weight: 600; font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .lb { font-family: var(--font-text); font-size: 12.5px; fill: var(--ink-2); }
+  svg .cl { font-size: 13px; font-weight: 600; }
+  svg .ref { font-size: 13px; font-weight: 600; fill: var(--cyan-800); }
 
-  /* Footer: how a performance task turns 24 lookups and 7 checks into one score. */
-  .foot { display: grid; grid-template-columns: 100px auto 22px auto 22px 1fr; align-items: center; column-gap: 14px;
-          border-top: 1.5px solid var(--ink); margin-top: 18px; padding-top: 16px; }
-  .foot h3 { font-size: 15px; line-height: 1.35; }
-  .blk { display: flex; align-items: center; gap: 10px; }
-  .blk .cap { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
-  .grid24 { display: grid; grid-template-columns: repeat(8, 11px); grid-auto-rows: 11px; gap: 3px; }
-  .grid24 i { border-radius: 2px; background: var(--algo); }
-  .dots7 { display: flex; gap: 4px; }
-  .dots7 i { width: 11px; height: 11px; border-radius: 50%; background: var(--algo); }
-  .dots7 i.miss { background: var(--paper); border: 1.25px solid var(--ink-3); }
-  .op { font-family: var(--font-num); font-size: 20px; color: var(--ink-3); text-align: center; }
-  .res { font-size: 15px; font-weight: 700; }
-  .res small { display: block; font-size: 12.5px; font-weight: 400; color: var(--ink-2); margin-top: 2px; }
+  /* Footer: how the circuit task turns 24 lookups and 7 checks into one score. */
+  .eq { display: grid; grid-template-columns: auto 56px auto 56px auto; grid-template-rows: 40px auto; align-items: end;
+        row-gap: 10px; margin-top: 14px; justify-content: start; }
+  .eq > .bars { justify-self: start; }
+  .eq > .v { align-self: end; }
+  .cap { font-family: var(--font-text); font-size: 13px; line-height: 19px; color: var(--ink-2); white-space: nowrap; }
+  .op { align-self: center; font-size: 22px; font-weight: 600; color: var(--ink-2); text-align: center; }
+  .bars { display: flex; align-items: flex-end; height: 36px; border-bottom: 1px solid var(--ink); }
+  .bars i { display: block; width: 7px; background: var(--cat-algo); box-shadow: inset 0 0 0 1px var(--ink); }
+  .bars i + i { margin-left: 2px; }
+  .bars i.gap { margin-left: 6px; }
+  .checks { display: flex; column-gap: 4px; margin-bottom: 13px; }
+  .checks i { width: 14px; height: 14px; }
+  .checks i.c-hatch { box-shadow: inset 0 0 0 1px var(--ink); }
+  .g5 { background: var(--cat-algo); box-shadow: inset 0 0 0 1px var(--ink); }
+  .eq .solid { justify-self: start; height: 40px; padding: 0 16px; display: flex; align-items: center; font-size: 15px; font-weight: 700; white-space: nowrap; }
 </style>
 </head>
 <body>
 <div class="frame">
-  <div class="head">
-    <h2>算法竞赛：三道题各比什么</h2>
-    <p>极值构造以参考构造值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
-  </div>
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Algorithm Contests</span><h2 class="title"><img class="icon" src="../../icon-algo.svg" alt="">算法竞赛：三道题各比什么</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">极值构造以参考构造值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
 
-  <div class="row">
-    <div class="rl"><b>极值构造</b><span>比构造质量，查锚点表分段线性插值；提交无效记 0 分</span></div>
-    <div class="two">
-      <section class="panel" style="grid-column: 1 / -1">
-        <h3>单位正方形内最小三角形面积最大化</h3>
-        <div class="meta"><span class="chip key">最小面积 Δ 越大越好</span><span class="chip env">作答：14 个逻辑处理器</span></div>
-        <svg id="tri" width="896" height="200"></svg>
-      </section>
+  <section class="band">
+    <div class="bh"><span class="eyebrow slash">Extremal Construction</span><h3>极值构造</h3><p>比构造质量，查锚点表分段线性插值；提交无效记 0 分</p></div>
+    <div class="task">
+      <h4>单位正方形内最小三角形面积最大化</h4>
+      <div class="facts"><b>最小面积 Δ 越大越好</b><span>作答：14 个逻辑处理器</span></div>
+      <svg id="tri" width="880" height="206"></svg>
     </div>
-  </div>
+  </section>
 
-  <div class="row">
-    <div class="rl"><b>性能工程</b><span>加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；Transformer 的 8 个输入直接取平均</span></div>
+  <section class="band">
+    <div class="bh"><span class="eyebrow slash">Performance Engineering</span><h3>性能工程</h3><p>加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；Transformer 的 8 个输入直接取平均</p></div>
     <div class="two">
-      <section class="panel">
-        <h3>Transformer前向推理的GPU加速</h3>
-        <div class="meta"><span class="chip key">GPU：RTX 4080，CUDA</span><span class="chip env">作答：独占整机</span></div>
-        <svg id="transformer" width="428" height="200"></svg>
-      </section>
-      <section class="panel">
-        <h3>通用数字电路仿真器加速</h3>
-        <div class="meta"><span class="chip key">只用 CPU：评测限 16 个逻辑处理器</span><span class="chip env">作答：独占整机</span></div>
-        <svg id="circ" width="428" height="200"></svg>
-      </section>
+      <div class="task">
+        <h4>Transformer前向推理的GPU加速</h4>
+        <div class="facts"><b>GPU：RTX 4080，CUDA</b><span>作答：独占整机</span></div>
+        <svg id="transformer" width="416" height="206"></svg>
+      </div>
+      <div class="task">
+        <h4>通用数字电路仿真器加速</h4>
+        <div class="facts"><b>只用 CPU：评测限 16 个逻辑处理器</b><span>作答：独占整机</span></div>
+        <svg id="circ" width="416" height="206"></svg>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="foot">
-    <h3>电路题的<br>本题得分</h3>
-    <div class="blk"><div class="grid24" id="g24"></div><div class="cap">24 个性能输入各自查表<br>失败的输入记 0 分，取平均</div></div>
-    <div class="op">×</div>
-    <div class="blk"><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i class="miss"></i></div><div class="cap">7 个正确性输入<br>通过数 ÷ 7，图中为 6/7</div></div>
-    <div class="op">=</div>
-    <div class="res">本题得分<small>编译失败或违反规则<br>整题 0 分</small></div>
-  </div>
+  <section class="band">
+    <div class="bh"><span class="eyebrow slash">Circuit Score</span><h3>电路题的本题得分</h3></div>
+    <div class="eq">
+      <div class="v bars" id="bars"></div>
+      <div class="op">×</div>
+      <div class="v checks"><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="c-hatch"></i></div>
+      <div class="op">=</div>
+      <span class="v solid">本题得分</span>
+      <div class="cap">24 个性能输入各自查表<br>失败的输入记 0 分，取平均</div><div></div>
+      <div class="cap">7 个正确性输入<br>通过数 ÷ 7，图中为 6/7</div><div></div>
+      <div class="cap">编译失败或违反规则<br>整题 0 分</div>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -99,83 +104,84 @@ const el = (tag, attrs = {}, parent) => {
 };
 const txt = (parent, x, y, cls, s, anchor = 'start') => {
   const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
-  t.textContent = s;
+  t.innerHTML = s;
   return t;
 };
 const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1, extra = {}) =>
   el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w, ...extra }, p);
+// Anchors are small squares with an ink edge: the category colour for the score series, cyan for the baseline.
+const sq = (p, x, y, r, fill = 'var(--cat-algo)') =>
+  el('rect', { x: x - r, y: y - r, width: 2 * r, height: 2 * r, fill, stroke: 'var(--ink)', 'stroke-width': 1 }, p);
+const DASH = { 'stroke-dasharray': '4 3' };
 
-/* Shared plot frame: x is given as a mapping function u(v) -> [0, 1]. */
-function plot(id, u, xTicks, xMinor = [], R = 420) {
-  const g = document.getElementById(id);
-  const L = 30, T = 14, B = 158;
-  const X = v => L + u(v) * (R - L);
-  const Y = p => B - p / 100 * (B - T);
+/* Shared plot frame: x is a mapping u(v) -> [0, 1]; the score is a lime-100 area under an ink curve. */
+function plot(id, u, xTicks, xMinor = [], T = 16.5) {
+  const g = document.getElementById(id), Wd = +g.getAttribute('width');
+  const L = 34.5, R = Wd - 6.5, B = 160.5;
+  const X = v => L + u(v) * (R - L), Y = p => B - p / 100 * (B - T);
   for (const p of [0, 50, 100]) {
-    line(g, L, Y(p), R, Y(p), 'var(--line-2)', 1);
-    txt(g, L - 7, Y(p) + 4, 'tick n', String(p), 'end');
+    if (p) line(g, L, Y(p), R, Y(p), 'var(--rule)');
+    txt(g, L - 8, Y(p) + 4, 'tk', String(p), 'end');
   }
-  for (const v of xMinor) line(g, X(v), B, X(v), B + 3, 'var(--ink-3)', 1);
-  for (const [v, s] of xTicks) { line(g, X(v), B, X(v), B + 6, 'var(--ink-3)', 1); txt(g, X(v), B + 19, 'tick n', s, 'middle'); }
-  el('polyline', { points: `${L},${T - 6} ${L},${B} ${R},${B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.25 }, g);
+  for (const v of xMinor) line(g, X(v), B, X(v), B + 3);
+  for (const [v, s] of xTicks) { line(g, X(v), B, X(v), B + 5); txt(g, X(v), B + 19, 'tk', s, 'middle'); }
   return { g, X, Y, L, R, T, B };
 }
-function curve(P, pts, extendTo) {
-  const all = extendTo ? [...pts, ...extendTo] : pts;
-  el('polyline', { points: all.map(([v, p]) => `${P.X(v)},${P.Y(p)}`).join(' '), fill: 'none', stroke: 'var(--algo)',
-                   'stroke-width': 2.25, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, P.g);
-}
-function dot(P, v, p, r = 3.2) {
-  el('circle', { cx: P.X(v), cy: P.Y(p), r, fill: 'var(--algo)', stroke: 'var(--paper)', 'stroke-width': 1.3 }, P.g);
-}
-function star(P, v, p, label, dy = 4) {   // the full-score benchmark point
-  el('circle', { cx: P.X(v), cy: P.Y(p), r: 5.5, fill: 'var(--paper)', stroke: 'var(--ink)', 'stroke-width': 1.75 }, P.g);
-  el('circle', { cx: P.X(v), cy: P.Y(p), r: 2.2, fill: 'var(--ink)' }, P.g);
-  if (label) txt(P.g, P.X(v) - 10, P.Y(p) + dy, 'call', label, 'end');
+function series(P, pts, { closeRight = true } = {}) {
+  const d = pts.map(([v, p]) => `${P.X(v)},${P.Y(p)}`).join(' ');
+  const last = pts[pts.length - 1];
+  el('polygon', { points: `${P.X(pts[0][0])},${P.B} ${d} ${P.X(last[0])},${P.B}`, fill: 'var(--lime-100)' }, P.g);
+  el('polyline', { points: `${P.L},${P.T - 8} ${P.L},${P.B} ${P.R},${P.B}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 }, P.g);
+  if (closeRight) line(P.g, P.X(last[0]), P.Y(last[1]), P.X(last[0]), P.B, 'var(--ink)');
+  el('polyline', { points: d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, P.g);
 }
 
-/* Minimum triangle area: r = Δ / Δ*, anchors from the grading guide. */
+/* Minimum triangle area: r = Δ / Δ*, anchors from the grading guide. Steepest segment 0.8–0.9 in the category colour;
+   r = 1 is the reference construction, drawn cyan. */
 {
   const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
   const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
-  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor, 886);
-  curve(P, [[0, 0], ...A]);
-  line(P.g, P.X(.8), P.Y(60), P.X(.9), P.Y(81), 'var(--algo)', 5, { 'stroke-linecap': 'round' });
-  A.slice(0, -1).forEach(([r, p]) => dot(P, r, p, r >= .95 ? 2.4 : 3.2));
-  for (const [r, p] of [[.5, 20], [.65, 36], [.8, 60], [.9, 81]]) txt(P.g, P.X(r) - 6, P.Y(p) - 7, 'pt n', String(p), 'end');
-  txt(P.g, P.X(.9) + 10, P.Y(70) + 6, 'lab', '0.8–0.9 最陡');
-  star(P, 1, 100, '参考值 = 100 分');
-  txt(P.g, P.R, P.B + 38, 'lab', 'r = Δ ÷ 参考值', 'end');
+  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor, 34.5);
+  P.R = P.X(1);
+  series(P, [[0, 0], ...A], { closeRight: false });
+  el('polygon', { points: `${P.X(.8)},${P.B} ${P.X(.8)},${P.Y(60)} ${P.X(.9)},${P.Y(81)} ${P.X(.9)},${P.B}`,
+                  fill: 'var(--cat-algo)', stroke: 'var(--ink)', 'stroke-width': 1 }, P.g);
+  el('polyline', { points: A.slice(5, 7).map(([r, p]) => `${P.X(r)},${P.Y(p)}`).join(' '), stroke: 'var(--ink)', 'stroke-width': 1.5 }, P.g);
+  txt(P.g, P.X(.85), P.B - 12, 'cl', '0.8–0.9 最陡', 'middle');
+  // The reference value: r = 1 scores 100.
+  line(P.g, P.X(1), P.B, P.X(1), P.T - 22, 'var(--cyan-800)', 1, DASH);
+  A.slice(0, -1).forEach(([r, p]) => sq(P.g, P.X(r), P.Y(p), r >= .95 ? 2.5 : 3.5));
+  for (const [r, p] of [[.5, 20], [.65, 36], [.8, 60], [.9, 81]]) txt(P.g, P.X(r) - 8, P.Y(p) - 6, 'pt', String(p), 'end');
+  sq(P.g, P.X(1), P.Y(100), 5, 'var(--cyan)');
+  txt(P.g, P.X(1) - 8, P.T - 12, 'ref', '参考值 = 100 分', 'end');
+  txt(P.g, P.X(1), P.B + 38, 'lb', 'r = Δ ÷ 参考值', 'end');
 }
 
-/* Speed-up: both tasks on the same log axis 0.1x-25x. */
+/* Speed-up: both tasks on the same log axis 0.1x–25x. s = 1 is the baseline, drawn cyan. */
 const LO = Math.log(.1), HI = Math.log(25), us = s => (Math.log(s) - LO) / (HI - LO);
 const sTicks = [[.1, '0.1×'], [.2, '0.2×'], [.5, '0.5×'], [1, '1×'], [2, '2×'], [4, '4×'], [8, '8×'], [16, '16×']];
 function perf(id, A, atRef, fullAt) {
   const P = plot(id, us, sTicks);
-  // s = 1: as fast as the reference solution.
-  line(P.g, P.X(1), P.B, P.X(1), P.Y(atRef), 'var(--ink-3)', 1, { 'stroke-dasharray': '3 3' });
-  line(P.g, P.L, P.Y(atRef), P.X(1), P.Y(atRef), 'var(--ink-3)', 1, { 'stroke-dasharray': '3 3' });
-  curve(P, [[.1, 0], ...A, [25, 100]]);
-  A.forEach(([s, p]) => { if (s !== 1 && s !== fullAt) dot(P, s, p); });
-  el('circle', { cx: P.X(1), cy: P.Y(atRef), r: 4.2, fill: 'var(--ink)', stroke: 'var(--paper)', 'stroke-width': 1.5 }, P.g);
-  txt(P.g, P.X(1) - 8, P.Y(atRef) - 10, 'call', `与基线持平：${atRef} 分`, 'end');
-  star(P, fullAt, 100, `${fullAt}× 起满分`);
-  txt(P.g, P.R, P.B + 38, 'lab', '加速比 s（对数刻度）', 'end');
-  return P;
+  series(P, [[.1, 0], ...A, [25, 100]]);
+  line(P.g, P.X(1), P.B, P.X(1), P.Y(atRef), 'var(--cyan-800)', 1, DASH);
+  line(P.g, P.L, P.Y(atRef), P.X(1), P.Y(atRef), 'var(--cyan-800)', 1, DASH);
+  A.forEach(([s, p]) => { if (s !== 1 && s !== fullAt) sq(P.g, P.X(s), P.Y(p), 3.5); });
+  sq(P.g, P.X(1), P.Y(atRef), 4.5, 'var(--cyan)');
+  txt(P.g, P.X(1) - 10, P.Y(atRef) - 12, 'ref', `与基线持平：${atRef} 分`, 'end');
+  sq(P.g, P.X(fullAt), P.Y(100), 5);
+  txt(P.g, P.X(fullAt) - 12, P.Y(100) + 4.5, 'cl', `${fullAt}× 起满分`, 'end');
+  txt(P.g, P.R, P.B + 38, 'lb', '加速比 s（对数刻度）', 'end');
 }
 perf('transformer', [[.2, 0], [.6, 5], [1.2, 15], [2, 25], [4, 45], [8, 70], [12, 86], [16, 100]], 12.4, 16);
 perf('circ', [[.1, 0], [.5, 5], [1, 15], [2, 35], [4, 65], [6, 85], [8, 100]], 15, 8);
 
-/* Footer: 24 inputs, eight families of three, shaded by an illustrative score. */
+/* Footer: 24 inputs, eight families of three, bar height = an illustrative score. */
 {
-  const g = document.getElementById('g24');
   const shade = [.9, .75, .85, .55, .7, .6, .95, .8, .35, .5, .4, .65, .3, .45, .7, .2, .6, .8, .5, .9, .4, .25, .55, .15];
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 8; c++) {
-    const i = document.createElement('i');
-    i.style.opacity = String(.25 + .75 * shade[r * 8 + c]);
-    g.appendChild(i);
-  }
+  let html = '';
+  for (let c = 0; c < 8; c++) for (let r = 0; r < 3; r++)
+    html += `<i${c && !r ? ' class="gap"' : ''} style="height:${Math.round(8 + 28 * shade[r * 8 + c])}px"></i>`;
+  document.getElementById('bars').innerHTML = html;
 }
 </script>
 </body>

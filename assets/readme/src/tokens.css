@@ -1,66 +1,138 @@
-/* AI八项全能·定时挑战赛 README figures: one shared token set. Every figure links this file and uses only these tokens. */
+/* README figures for AI八项全能·定时挑战赛, in the star-atlas style of website/stellar-ui-skill.
+   Every figure links this file and takes colours, type and marks only from here. Rules: ../README.md (src/README.md). */
 
-/* Type: HarmonyOS Sans SC for Chinese, Bahnschrift (DIN-like, scoreboard feel) for numerals and Latin titles. */
-@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC"), local("HarmonyOS_Sans_SC_Regular"); font-weight: 400; }
-@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC Medium"), local("HarmonyOS_Sans_SC_Medium"); font-weight: 500; }
-@font-face { font-family: "HX Sans"; src: local("HarmonyOS Sans SC Bold"), local("HarmonyOS_Sans_SC_Bold"); font-weight: 700; }
+/* Saira: wide geometric Latin and figures (SIL OFL 1.1, licence in fonts/). Chinese comes from the system sans. */
+@font-face {
+  font-family: 'Saira';
+  src: url('fonts/Saira.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 50% 125%;
+}
 
 :root {
-  /* Surfaces: white paper on a cool near-white stage. */
-  --paper: #FFFFFF;
-  --stage: #F4F6F9;
-  --ink: #1B2333;          /* text, and the one structural colour: headings, axes, focus */
-  --ink-2: #4A5468;        /* secondary text */
-  --ink-3: #8A93A5;        /* tertiary text, tick labels */
-  --line: #DCE1E9;         /* hairlines, card borders */
-  --line-2: #EBEEF3;       /* lane lines, faint grid */
+  /* Neutrals carry the figure. */
+  --paper: #F2F1F6;        /* figure background */
+  --panel: #FFFFFF;        /* white boards inside a figure */
+  --ink: #1A1726;          /* text, every line that matters, solid results */
+  --ink-2: #5D5970;        /* secondary text, fields, tick labels */
+  --ink-3: #9A96AB;        /* ticks and faint marks only, never text */
+  --rule: #DCDAE4;         /* 1px hairlines */
+  --chip: #E7E5EE;         /* quiet fills: empty tracks, unlit segments */
 
-  /* The eight categories: unordered, similar lightness, separated hues. Each colour means its category everywhere. */
-  --reason: #6A44BE;   --reason-tint: #F0EBFA;    /* 数学推理 */
-  --algo: #0B7A87;     --algo-tint: #E3F2F4;      /* 算法竞赛 */
-  --spatial: #C2501E;  --spatial-tint: #FBEBE3;   /* 空间推理 */
-  --interact: #A8650A; --interact-tint: #F8EFE0;  /* 复杂交互应用 */
-  --game: #B23A5F;     --game-tint: #F8E7ED;      /* 游戏设计与开发 */
-  --physics: #2E7B33;  --physics-tint: #E7F2E7;   /* 物理模拟 */
-  --visual: #1E6BC0;   --visual-tint: #E5EFFA;    /* 视觉设计与渲染 */
-  --system: #B03AB5;   --system-tint: #F7E9F8;    /* 系统架构与实现 */
+  /* Colour split 6:3:1 over the coloured parts: violet (main) 6, lime (its complement) 3, star cyan 1.
+     Meanings and ramps: website/docs/visual.md. Design tasks = violet family, standard tasks = lime family. */
+  --violet: #9859FF;       /* 500: brand, structure, current, design-task data, default series */
+  --violet-soft: #D1B4FF;  /* older ordinary-bar tint; prefer --violet-300 */
+  --violet-100: #F1E8FF;
+  --violet-300: #C9AEFF;
+  --violet-400: #B083FF;
+  --violet-600: #7A3CF0;
+  --violet-800: #4A22B8;   /* violet small text on light ground */
+  --wash: #F1E8FF;         /* the block under "this one" (= violet-100) */
+  --lime: #D1FF57;         /* 500: main action, standard-task data, star glints. Fill only on light ground, ink text, ink edge */
+  --lime-100: #F6FFDB;
+  --lime-300: #E6FFA3;
+  --lime-600: #A9D932;
+  --lime-800: #4F6A00;     /* lime-family small text on light ground */
+  --cyan: #62D4F5;         /* 500: reference and baseline marks only (pass line, reference steps, average, best-so-far tick) */
+  --cyan-100: #E2F7FD;
+  --cyan-800: #0B7FA3;     /* cyan lines and text on light ground */
 
-  --radius-frame: 18px;   /* the outer card of a figure */
-  --radius-block: 8px;    /* bars, chips and inner blocks */
-  --shadow: 0 1px 2px rgba(27, 35, 51, .06), 0 4px 16px rgba(27, 35, 51, .05);
+  --hatch: repeating-linear-gradient(-45deg, transparent 0 5px, rgb(26 23 38 / .22) 5px 6.5px);
+  /* The four-point star, used as a mask. Same shape as the skill's --st-star. */
+  --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath d='M11 0Q11.72 10.28 22 11Q11.72 11.72 11 22Q10.28 11.72 0 11Q10.28 10.28 11 0Z'/%3E%3C/svg%3E");
 
-  --font-cn: "HX Sans", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
-  --font-num: "Bahnschrift", "DIN Alternate", "HX Sans", sans-serif;
+  --font-ui: 'Saira', 'Noto Sans SC', 'Source Han Sans CN', 'Microsoft YaHei', sans-serif;   /* labels, titles, figures */
+  --font-text: 'Noto Sans SC', 'Source Han Sans CN', 'Microsoft YaHei', sans-serif;           /* sentences */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: transparent; }
+html, body { background: var(--paper); }
 body {
-  font-family: var(--font-cn);
+  font-family: var(--font-ui);
   color: var(--ink);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-}
-.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; letter-spacing: 0; }
-
-/* A figure is one white card that fills the canvas; the canvas size comes from <meta name="size">. */
-.frame {
-  position: absolute;
-  inset: 0;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-frame);
-  overflow: hidden;
-  padding: 28px 32px;
+  font-synthesis: none;
 }
 
-/* Track-lane motif: faint horizontal lanes with lane numbers, kept to edges and empty space. */
-.lanes { position: absolute; inset: 0; pointer-events: none; }
-.lanes i { position: absolute; left: 0; right: 0; height: 1px; background: var(--line-2); }
+/* A figure fills its canvas (size from <meta name="size">): paper, square corners, no border or shadow. */
+.frame { position: absolute; inset: 0; overflow: hidden; background: var(--paper); padding: 32px 40px; }
 
-h1, h2, h3 { font-weight: 700; color: var(--ink); }
-h2 { font-size: 22px; line-height: 1.3; }
-h3 { font-size: 16px; line-height: 1.35; }
-.muted { color: var(--ink-2); }
-.faint { color: var(--ink-3); }
+/* Header: eyebrow over a bold Chinese title, then a hairline ending in a star. */
+.head { display: flex; align-items: flex-end; column-gap: 20px; }
+.pair { display: inline-flex; flex-direction: column; row-gap: 3px; }
+.eyebrow {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600; font-stretch: 125%;
+  letter-spacing: .14em; line-height: 1.4; text-transform: uppercase; color: var(--ink-2); white-space: nowrap;
+}
+.eyebrow.slash::before { content: '// '; letter-spacing: 0; font-weight: 800; color: var(--violet); }
+.title { font-size: 26px; font-weight: 700; line-height: 1.25; letter-spacing: .01em; white-space: nowrap; }
+.lead { flex: 1; position: relative; height: 11px; margin-bottom: 10px; }
+.lead::before { content: ''; position: absolute; left: 0; right: 14px; top: 5px; height: 1px; background: var(--ink); }
+.lead::after { content: ''; position: absolute; right: 0; top: 0; width: 11px; height: 11px; background: var(--ink);
+               -webkit-mask: var(--star) center / contain no-repeat; mask: var(--star) center / contain no-repeat; }
+.desc { font-family: var(--font-text); font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+h3, .h3 { font-size: 17px; font-weight: 700; line-height: 1.35; }
+
+/* Fields and figures: wide, tabular, real numbers only. */
+.num { font-family: var(--font-ui); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+.field { font-family: var(--font-ui); font-size: 13px; font-stretch: 112%; font-variant-numeric: tabular-nums;
+         letter-spacing: .02em; color: var(--ink-2); }
+.facts { display: inline-flex; align-items: center; flex-wrap: wrap; }
+.facts > * + *::before { content: ''; display: inline-block; width: 1px; height: .95em; margin: 0 .75em;
+                         background: var(--ink-2); opacity: .45; vertical-align: -.12em; }
+.fig { font-family: var(--font-ui); font-weight: 800; font-stretch: 112%; font-variant-numeric: tabular-nums; line-height: 1; }
+.fig .unit { font-size: .5em; font-weight: 600; color: var(--ink-2); margin-left: .12em; }
+.hollow { color: transparent; -webkit-text-stroke: 1.5px var(--violet); }
+
+/* Highlight: lime fill, ink bold text. One or two per figure. */
+.hi { background: var(--lime); color: var(--ink); font-weight: 700; padding: 0 .3em; }
+.marker { background: var(--lime); color: var(--ink); font-weight: 700; padding: .05em .4em; }
+
+/* Boards: white, no border; .tab adds the short violet tab on the top edge. A solid result is an ink block. */
+.panel { position: relative; background: var(--panel); }
+.panel.tab::before { content: ''; position: absolute; left: 0; top: 0; width: 56px; height: 4px; background: var(--violet); }
+.solid { background: var(--ink); color: var(--panel); }
+
+/* The four-point star as an element: size with width/height, colour with `color`. */
+.star { display: inline-block; width: 11px; height: 11px; background: currentColor; flex: none;
+        -webkit-mask: var(--star) center / contain no-repeat; mask: var(--star) center / contain no-repeat; }
+
+/* Chart fills. soft = ordinary, main = the series that matters, best = lime with an ink edge, ink = solid result. */
+.c-soft { background: var(--violet-soft); }
+.c-main { background: var(--violet); }
+.c-best { background: var(--lime); outline: 1px solid var(--ink); outline-offset: -1px; }
+.c-ink { background: var(--ink); }
+.c-track { background: var(--chip); }
+.c-hatch { background: var(--hatch); }
+
+/* Category colours, fixed across all figures: standard tasks in the lime family, design tasks in the violet family.
+   Lightness alternates so neighbours in category order differ clearly; nothing lighter than 300, so no bar looks empty.
+   Lime steps always take the ink edge (.edge). */
+:root {
+  --cat-reason: var(--lime-600);     --cat-algo: var(--lime-300);       --cat-spatial: var(--lime);
+  --cat-interact: var(--violet-800); --cat-game: var(--violet-400);     --cat-physics: var(--violet-600);
+  --cat-visual: var(--violet-300);   --cat-system: var(--violet);
+}
+.edge { outline: 1px solid var(--ink); outline-offset: -1px; }
+
+/* Kind marks before a label: a lime square for standard tasks, a violet four-point star (add .star) for design tasks. */
+.k { display: inline-block; vertical-align: 1px; margin-right: 8px; }
+.k.std { width: 11px; height: 11px; background: var(--lime); outline: 1px solid var(--ink); outline-offset: -1px; }
+.k.des { width: 14px; height: 14px; vertical-align: -1px; color: var(--violet); }
+
+/* Legend: a 14x10 swatch (one of the chart fills) and a label. */
+.legend { display: inline-flex; column-gap: 18px; font-size: 13px; color: var(--ink-2); }
+.legend > span { display: inline-flex; align-items: center; column-gap: 7px; white-space: nowrap; }
+.legend i { display: inline-block; width: 14px; height: 10px; }
+
+/* Category icon (violet, assets/readme/icon-<key>.svg). */
+.icon { display: inline-block; width: 18px; height: 18px; vertical-align: -3px; flex: none; }
+
+/* Spectrum strip: the first figure's top edge only. */
+.tri { position: absolute; left: 0; right: 0; top: 0; height: 3px; display: grid; grid-template-columns: repeat(3, 1fr); }
+.tri i:nth-child(1) { background: var(--violet); }
+.tri i:nth-child(2) { background: var(--cyan); }
+.tri i:nth-child(3) { background: var(--lime); }
