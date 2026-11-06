@@ -1,0 +1,138 @@
+// 环境特效进程：根据飞行轨迹和实际发生的事件生成烟尘、火焰、碎屑的发射记录。
+// 显示设备按记录和时刻把它们展开成粒子，所以同一时刻的画面只由该时刻之前的过程决定。
+const SAMPLE_DT = 1 / 15;
+const MAX_LIFE = 8;
+
+let TL = 0;
+let EMIT = [];      // 发射记录，按 t0 递增：每条 12 个数 [kind,t0,x,y,z,vx,vy,vz,n,seed,size,life]
+let SEED = 1;
+let LAST_T = -1;    // 已提交粒子列表对应的轨迹进度
+let TRACE_END = -1;
+let LATEST = null;
+let SCARS = [];
+let FIRE = null;
+let DIRTY = true;
+
+function emit(kind, t0, x, y, z, vx, vy, vz, n, size, life) {
+  // 种子由时刻和类别决定，跳转重算时得到同样的粒子
+  let seed = floor(t0 * 60) * 7 + kind * 131 + floor(n);
+  push(EMIT, [kind, t0, x, y, z, vx, vy, vz, n, seed, size, life]);
+}
+function on_sample(s) {
+  let t = s[0], x = s[1], y = s[2], z = s[3], vx = s[4], vy = s[5], vz = s[6], om = s[7], agl = s[8], surf = s[9], crashed = s[10], fire_t = s[11], smoke_t = s[12], gy = s[13];
+  LATEST = s;
+  TRACE_END = t;
+  // 下洗气流随旋翼高度和地面材质带起尘土
+  if (om > 0.22 && agl < 14 && crashed == 0) {
+    let k = om * om * (1 - agl / 14);
+    let n = floor(k * (surf == 0 ? 7 : 12)) + 1;
+    emit(0, t, x, gy, z, 0, 0, 0, n, 0.9 + k * 1.9, 1.6 + k * 0.9);
+  }
+  // 故障尾迹
+  if (smoke_t >= 0 && crashed == 0) emit(4, t, x - 1.2, y + 0.9, z, vx, vy, vz, 4, 0.55, 2.4);
+  // 坠毁后的火和烟：随时间减弱，烟逐渐上升并消散
+  if (fire_t >= 0) {
+    let a = t - fire_t;
+    let k = a < 3 ? 1 : (a < 12 ? 1 - (a - 3) / 12 : 0.25);
+    emit(2, t, x, y + 0.2, z, 0, 0, 0, floor(7 * k) + 1, 1.3 * (0.6 + 0.4 * k), 0.8);
+    emit(1, t, x, y + 0.6, z, 0, 0, 0, floor(4 * k) + 2, 1.5, 6.2);
+    FIRE = [x, y, z, fire_t];
+  } else if (smoke_t >= 0 && crashed == 1) {
+    emit(1, t, x, y + 0.3, z, 0, 0, 0, 3, 1.1, 5);
+  }
+}
+function on_event(e) {
+  let t = e[0], kind = e[1], x = e[2], y = e[3], z = e[4], a = e[5];
+  if (kind == "impact") {
+    emit(0, t, x, y, z, 0, 0, 0, clamp_n(floor(a * 3), 4, 26), 1.5 + a * 0.14, 2.6);
+    emit(3, t, x, y + 0.1, z, 0, 0, 0, clamp_n(floor(a * 2), 2, 22), 0.2, 0.8);
+  } else if (kind == "crash") {
+    emit(0, t, x, y, z, 0, 0, 0, 46, 3.4, 4.4);
+    emit(1, t, x, y + 0.4, z, 0, 0, 0, 16, 2.2, 5.5);
+    emit(3, t, x, y + 0.4, z, 0, 0, 0, 34, 0.2, 1.2);
+    push(SCARS, [x, y, z, 11]);
+  } else if (kind == "fire") {
+    emit(2, t, x, y + 0.2, z, 0, 0, 0, 30, 3.1, 1.1);
+  } else if (kind == "bounce") {
+    emit(0, t, x, y, z, 0, 0, 0, 4, 0.7, 1.3);
+  } else if (kind == "blade" || kind == "tail_strike" || kind == "tail_off" || kind == "skid") {
+    emit(3, t, x, y, z, 0, 0, 0, 12, 0.18, 0.7);
+    emit(0, t, x, y, z, 0, 0, 0, 8, 1.1, 1.8);
+  } else if (kind == "fault") {
+    emit(3, t, x - 3, y + 1, z, 0, 0, 0, 16, 0.18, 0.7);
+    emit(4, t, x - 3, y + 1, z, 0, 0, 0, 10, 0.8, 2.2);
+  }
+}
+function clamp_n(v, a, b) { return v < a ? a : (v > b ? b : v); }
+// 取出在时刻 t 还活着的记录（t0 ≤ t 且没超过寿命）
+function live_records(t) {
+  let out = [];
+  let n = len(EMIT);
+  let i = n - 1;
+  let tmin = t - MAX_LIFE;
+  while (i >= 0) {
+    let r = EMIT[i];
+    if (r[1] < tmin) break;
+    if (r[1] <= t && t - r[1] <= r[11] * 1.3) {
+      for (let k = 0; k < 12; k++) push(out, r[k]);
+    }
+    i = i - 1;
+  }
+  return out;
+}
+function on_truncate(t, ev) {
+  // 跳转回退：丢弃之后的记录，随后的轨迹样本会按同样的过程再生成
+  let i = len(EMIT);
+  while (i > 0 && EMIT[i - 1][1] > t) i = i - 1;
+  while (len(EMIT) > i) pop(EMIT);
+  let keep = [];
+  for (let s of SCARS) keep = keep;
+  if (t < 0.01) { SCARS = []; FIRE = null; }
+  TRACE_END = t;
+  if (FIRE != null && FIRE[3] > t) { FIRE = null; SCARS = []; }
+  DIRTY = true;
+}
+function on_frame(d) {
+  let t = d.t;
+  let cell = floor(t / SAMPLE_DT);
+  let fx = null;
+  if (DIRTY || cell != LAST_T) {
+    fx = live_records(t);
+    LAST_T = cell;
+    DIRTY = false;
+  }
+  let lights = [];
+  let scars = [];
+  if (FIRE != null && t >= FIRE[3]) {
+    let a = t - FIRE[3];
+    let k = a < 3 ? 1 : (a < 12 ? 1 - (a - 3) / 12 : 0.25);
+    let flick = 0.75 + 0.25 * sin(t * 31) * sin(t * 13.7);
+    let src = LATEST != null ? LATEST : null;
+    let lx = src != null ? src[1] : FIRE[0], ly = src != null ? src[2] : FIRE[1], lz = src != null ? src[3] : FIRE[2];
+    push(lights, [lx, ly + 2.4, lz, 1, 0.5, 0.16, 170 * k * flick, 46]);
+    scars = SCARS;
+  } else if (len(SCARS) > 0) {
+    scars = SCARS;
+  }
+  sys("send", TL, { type: "x", n: d.n, fx: fx, lights: lights, scars: scars });
+}
+function on_msg(m) {
+  let d = m.data;
+  if (d == null) return;
+  let t = d.type;
+  if (t == "trace") {
+    if (d.events != null) for (let e of d.events) on_event(e);
+    for (let s of d.samples) on_sample(s);
+    DIRTY = true;
+    return;
+  }
+  if (t == "frame") { on_frame(d); return; }
+  if (t == "truncate") { on_truncate(d.t, d.ev); return; }
+  if (t == "reset") { EMIT = []; SCARS = []; FIRE = null; LATEST = null; DIRTY = true; LAST_T = -1; return; }
+}
+function main(args) {
+  TL = args.timeline;
+  for (;;) {
+    on_msg(sys("recv"));
+  }
+}

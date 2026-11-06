@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>双晶一芯 — NVIDIA B200 网页艺术（概念设计作品）</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="以 NVIDIA B200 数据中心 GPU 为题材的可滚动、可交互网页艺术。本页为概念设计作品，非 NVIDIA 官方页面。">
+<link rel="stylesheet" href="dist/app.css">
+</head>
+<body>
+<div id="scroller" aria-hidden="true"></div>
+<main id="stage">
+  <canvas id="gl" tabindex="0" aria-label="B200 三维模型。拖动旋转，方向键旋转，加减号缩放，点击选择部件。"></canvas>
+  <div id="scrim"></div>
+  <svg id="ov" xmlns="http://www.w3.org/2000/svg" aria-hidden="false"></svg>
+  <div id="chapters"></div>
+  <svg id="hudsvg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <div id="hud"></div>
+  <div id="boot"><div class="boot-in"><div class="boot-t">双晶一芯</div><div class="boot-s" id="bootmsg">正在生成模型与光照…</div></div></div>
+</main>
+<noscript>本作品需要启用 JavaScript 与 WebGL2。</noscript>
+<script src="dist/app.js"></script>
+</body>
+</html>

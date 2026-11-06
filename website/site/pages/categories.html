@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- 页面模板：categories（控制台页）。路由插件按它生成该类型的每个路由，中文在根路径、英文在 /en/。
+     可用记号见 site/README.md「页面模板」；
+     head / top / bottom 三个 @ 标记由插件换成站点头部、命令栏和页脚，别删。
+     本页负责人只改 <main> 里面和 src/pages/categories/。 -->
+<html lang="{{htmlLang}}" data-st-paper="neutral" data-st-cut="standard" data-st-ground="stars" data-st-density="standard" data-st-motion="full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <!--@head-->
+  </head>
+  <body class="st site" data-page="categories" data-lang="{{lang}}" data-id="{{id}}">
+    <!--@top-->
+    <main id="main" class="page page-categories" tabindex="-1">
+      <header class="page-head cat-head">
+        <span class="cat-head-decor" aria-hidden="true"></span>
+        <p class="st-eyebrow slash">{{t:categories.head.eyebrow}}</p>
+        <div class="st-head"><h1>{{t:categories.head.title}}</h1></div>
+        <ul class="st-facts st-field cat-head-facts" data-slot="facts"></ul>
+      </header>
+      <div class="page-body" data-slot="page">
+        <!-- 加载中：几块看板骨架，数据到了整块换掉 -->
+        <div class="cat-skeleton" aria-hidden="true">
+          <section class="st-panel cat-skel">
+            <span class="st-skeleton cat-skel-title"></span>
+            <span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span>
+          </section>
+          <section class="st-panel cat-skel">
+            <span class="st-skeleton cat-skel-title"></span>
+            <span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!--@bottom-->
+    <script type="module" src="/src/pages/categories/main.js"></script>
+  </body>
+</html>

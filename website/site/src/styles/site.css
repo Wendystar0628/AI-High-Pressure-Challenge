@@ -1,0 +1,9 @@
+/* The site stylesheet: linked in every page's <head> by the route plugin.
+   The skill's kit first, then this site's additions (website/docs/visual.md).
+   Page owners put page styles in src/pages/<type>/ and import them from main.js. */
+@import '../vendor/stellar/stellar.css';
+@import './tokens.css';
+@import './base.css';
+@import './shell.css';
+@import './ui.css';
+@import './charts.css';

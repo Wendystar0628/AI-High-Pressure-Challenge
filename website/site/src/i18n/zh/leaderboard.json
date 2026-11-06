@@ -1,0 +1,111 @@
+{
+  "title": "排行总榜",
+  "eyebrow": "Leaderboard",
+  "loading": "正在读取成绩",
+  "facts": {
+    "tasks": "{n} 题",
+    "cats": "{n} 类",
+    "updated": "{date} 更新"
+  },
+  "figs": {
+    "models": "参赛模型",
+    "pass": "及格（总分 ≥ {n}）",
+    "passShort": "及格",
+    "gap": "前三相差（分）",
+    "gapN": "前 {n} 名相差（分）",
+    "testing": "另有 {n} 个评测中"
+  },
+  "views": {
+    "label": "视图",
+    "keyTitle": "{name}（{key}）",
+    "total": "总分",
+    "pass": "及格线",
+    "parts": "得分构成",
+    "kinds": "两类题",
+    "matrix": "类别矩阵",
+    "compare": "对比"
+  },
+  "viewsEn": {
+    "total": "Total",
+    "pass": "Pass line",
+    "parts": "Breakdown",
+    "kinds": "Two kinds",
+    "matrix": "Matrix",
+    "compare": "Compare"
+  },
+  "viewQ": {
+    "total": "谁总分最高",
+    "pass": "离 60 分差多少",
+    "parts": "总分由哪些类别贡献",
+    "kinds": "偏标准评判题还是主动设计题",
+    "matrix": "每个模型在各类别上的强弱",
+    "compare": "勾选的 2 到 4 个模型逐项差多少"
+  },
+  "sort": {
+    "label": "排序",
+    "compareOff": "对比视图按勾选顺序排列，不用排序"
+  },
+  "cols": {
+    "label": "粒度",
+    "category": "类别",
+    "task": "题目"
+  },
+  "head": {
+    "rank": "名次",
+    "model": "模型",
+    "item": "项目"
+  },
+  "axis": {
+    "pass": "及格线",
+    "passCount": "及格 {a} │ 未及格 {b}"
+  },
+  "row": {
+    "aria": "第 {rank} 名，{name}，{label} {score} 分",
+    "ariaSort": "{by}第 {rank} 名，{name}，{by} {value} 分，总分 {score} 分",
+    "ariaSortNone": "{by}未出分，{name}，总分 {score} 分"
+  },
+  "tip": {
+    "part": "{cat} {v} × {w} = {c}",
+    "pending": "评测中，已出 {done} / {all} 题"
+  },
+  "sandbox": {
+    "button": "调整权重",
+    "buttonTitle": "调整权重（W）",
+    "label": "权重沙盘",
+    "eyebrow": "Weights",
+    "title": "调整权重",
+    "help": "实际权重 = 滑块值 ÷ 各类滑块之和；总分、及格线、得分构成三个视图跟着重算。",
+    "presetsLabel": "预设",
+    "presets": {
+      "official": "官方权重",
+      "equal": "八类均等",
+      "standard": "只看标准评判题",
+      "design": "只看主动设计题"
+    },
+    "reset": "恢复官方权重",
+    "sum": "合计",
+    "sumNote": "按比例归一到 100%",
+    "slider": "{name} 的权重",
+    "norm": "实际 {v}"
+  },
+  "notice": {
+    "flag": "注意",
+    "text": "正在使用自定义权重，名次不是官方结果。"
+  },
+  "compare": {
+    "empty": "勾选 2 到 4 个模型，这里会逐项并排比较它们的分数。",
+    "back": "回到榜单勾选模型",
+    "diff": "差 {v}",
+    "diffHead": "差",
+    "caption": "对比：{names}"
+  },
+  "keys": {
+    "view": "切到「{name}」视图",
+    "weights": "打开或收起权重沙盘",
+    "compare": "切到对比"
+  },
+  "foot": "总分 = {n} 个类别按权重相加，类别分是该类各题的平均",
+  "empty": {
+    "noData": "成绩数据读到后，模型会按总分排在这里。"
+  }
+}

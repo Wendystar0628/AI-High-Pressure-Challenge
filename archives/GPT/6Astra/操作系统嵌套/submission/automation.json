@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": [
+      "start",
+      "--",
+      "--data-dir",
+      "{dataDir}",
+      "--width",
+      "{width}",
+      "--height",
+      "{height}",
+      "--remote-debugging-port={port}"
+    ],
+    "cwd": "."
+  },
+  "mainWindow": {
+    "title": "层界 NEST · Nested OS",
+    "urlPattern": "file://*/dist/index.html"
+  },
+  "connection": {
+    "type": "chrome-devtools-protocol",
+    "port": 19156,
+    "endpoint": "http://127.0.0.1:{port}",
+    "context": "主窗口的 file:// 渲染页面；外部网页位于 Electron webview 独立目标中"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "kernel": "/System/kernel.nx",
+      "childKernelPattern": "/System/{childId}.kernel.nx",
+      "compiler": "/System/compiler.nx",
+      "flightController": "/Programs/flight-control.nx",
+      "programs": "/Programs"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "kernelTemplate": "/System/kernel.nx",
+      "ownKernelInParent": "/System/{systemId}.kernel.nx",
+      "compiler": "/System/compiler.nx",
+      "flightController": "/Programs/flight-control.nx",
+      "desktop": "/System/desktop.nx",
+      "player": "/System/player.nx",
+      "chart": "/System/chart.nx",
+      "files": "/System/files.nx"
+    }
+  },
+  "interface": {
+    "ready": "await window.bench.ready()",
+    "reset": "await window.bench.reset()",
+    "inspect": "await window.bench.inspect()",
+    "version": "window.bench.version"
+  },
+  "notes": [
+    "使用窗口容器 data-system-id + data-window-id 限定选择器；同层可以打开多个同类应用。",
+    "桌面图标双击打开，开始菜单规范入口为单击。系统空间是递归管理入口。",
+    "投送窗口的 app-id 为 projection，来源由 data-source-system-id/window-id/app-id 标注。",
+    "播放器 player-open 是场景文件选择框；拖动 player-seek，或使用 aria-label=跳转到时间秒 的数值框精确跳转。",
+    "chart-source 选择已打开的根工作簿，chart-series 使用逗号分隔的列字母，例如 B,D。",
+    "无须本地 HTTP 服务；npm start 自动构建并启动 Electron。数据仅保存到传入的 data-dir。"
+  ]
+}

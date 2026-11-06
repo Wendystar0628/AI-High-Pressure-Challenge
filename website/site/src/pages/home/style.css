@@ -1,0 +1,1098 @@
+/* 首页 (website/docs/home.md). Layout and the page's own parts; colours are
+   --st-* and site variables only. Overrides of skill parts are prefixed with
+   .page-home so they win whatever order the stylesheets load in. */
+
+.page-home {
+  --ticker-h: 2.75rem;
+  --hero-pad: 1.5rem;
+  /* 首屏 = viewport − command bar − ticker; a floor keeps the dial from shrinking */
+  --hero-h: clamp(42rem, calc(100dvh - var(--shell-h) - 3px - var(--ticker-h) - 2px), 60rem);
+  --cap-h: 5.4rem; /* the dial's caption: legend + two small buttons */
+  display: block;
+}
+.page-home:focus {
+  outline: none;
+}
+
+.home-col {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.home-empty {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--st-rule);
+  background: var(--st-hatch), var(--st-paper);
+  color: var(--st-ink-2);
+  line-height: 1.7;
+}
+
+/* ============ 首屏 ============ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: var(--hero-h);
+  overflow: hidden;
+}
+/* decor/orbit/orbit-corner-br behind the dial: violet 300, 0.2, from the bottom right */
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  width: min(66vw, 62rem);
+  aspect-ratio: 640 / 480;
+  background: var(--v-300);
+  opacity: 0.2;
+  -webkit-mask: url('/decor/orbit/orbit-corner-br.svg') right bottom / 100% 100% no-repeat;
+  mask: url('/decor/orbit/orbit-corner-br.svg') right bottom / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.hero-in {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: clamp(2rem, 4vw, 4.5rem);
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: var(--hero-pad) var(--gutter);
+}
+
+/* ---- left column: fields, wordmark, marker, intro, then the top 5 ---- */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-width: 0;
+}
+.hero-fields {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* every item carries its slash in front; the one that starts a line is clipped away */
+  clip-path: inset(-6px -100vw -6px 0);
+}
+.hero-fields > li {
+  margin: 0 1.6em 0 -1.6em;
+}
+.hero-fields > li::before {
+  content: '/';
+  display: inline-block;
+  width: 1.6em;
+  text-align: center;
+  color: var(--st-rule);
+}
+.hero-fields b {
+  color: var(--st-ink);
+  font-weight: 700;
+}
+
+.hero-title {
+  margin: clamp(1.25rem, 3.5vh, 2.25rem) 0 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+}
+/* --wm (the wordmark size) is set by hero.js on this block; the marker and the gaps follow it */
+.hero-intro {
+  --hero-gap: calc(var(--wm, 2.4rem) * 0.36);
+}
+.page-home .hero-wm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+/* both lines share one size; JS sizes it so the longer line fills the column */
+.page-home .hero-wm > :is(.solid, .hollow) {
+  width: max-content;
+  margin: 0;
+  font-size: var(--wm, 2.4rem);
+}
+.page-home .hero-wm > .hollow {
+  margin-top: 0.1em;
+  -webkit-text-stroke-width: 1.5px;
+}
+/* 中文马克笔和上面两行英文同等分量：思源黑体字身约 0.88em，Saira 大写约 0.70em，
+   所以字号取英文的 0.8 倍，汉字和英文大写一样高（visual.md 五「字号」）；
+   荧光绿块和 1px 墨边（浅色主题）随字号放大 */
+.hero-marker {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-top: var(--hero-gap);
+  font-size: calc(var(--wm, 2.4rem) * 0.8 * var(--mk, 1));
+  line-height: 1.25;
+}
+.hero-marker .st-marker {
+  display: inline-block;
+  padding: 0.06em 0.32em 0.1em;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 max(1px, 0.03em) var(--lime-edge);
+}
+/* English: the marker is a Latin line, not the Chinese title; it keeps its old, smaller size */
+:root:lang(en) .hero-marker {
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1.45;
+}
+.hero-lede {
+  max-width: 34rem;
+  margin: var(--hero-gap) 0 0;
+  color: var(--st-ink-2);
+  font-family: var(--st-font-text);
+  line-height: 1.75;
+}
+
+/* ---- top 5 ---- */
+.t5-head .st-eyebrow {
+  margin: 0 0 0.3rem;
+}
+.page-home .t5 .st-bar-title {
+  margin-bottom: 0.7rem;
+  font-size: var(--st-t-h2); /* card title (visual.md 五「字号」) */
+}
+.t5 {
+  container-type: inline-size;
+}
+.t5-wrap {
+  position: relative;
+  border-top: 1px solid var(--st-rule);
+}
+.t5-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.t5-list > li {
+  border-bottom: 1px solid var(--st-rule);
+}
+/* the current-row marker: violet wash and a violet bar, slides between rows */
+.t5-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--st-wash);
+  pointer-events: none;
+}
+.t5-cursor::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform-origin: top;
+}
+.t5-row {
+  --no-w: 2.6rem;
+  --score-w: 4rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5rem var(--no-w) 1.15rem minmax(0, 1fr) var(--score-w);
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.28rem 0.6rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0.75rem 0.6rem 0.4rem;
+  color: var(--st-ink);
+  text-align: left;
+  transition: background-color 0.15s;
+}
+/* the row's button (sets the page model) covers the whole row; only the name link sits above it */
+.t5-pick {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.t5-pick:focus-visible {
+  outline-offset: -2px;
+}
+.t5-row > :not(.t5-pick, .t5-link) {
+  pointer-events: none;
+}
+.t5-link {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  min-width: 0;
+  max-width: 100%;
+  color: inherit;
+}
+.t5-link .t5-name {
+  max-width: 100%;
+}
+.t5-link:is(:hover, :focus-visible) .mname-text {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 4px;
+}
+.t5-row::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.t5-row:not(.is-current):is(:hover, :focus-within) {
+  background: var(--st-panel);
+}
+.t5-row:not(.is-current):is(:hover, :focus-within)::before {
+  transform: none;
+}
+.t5-badge {
+  grid-row: 1 / 3;
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.t5-badge img {
+  position: absolute;
+  inset: -0.75rem;
+  width: calc(100% + 1.5rem);
+  max-width: none;
+  height: auto;
+}
+.t5-badge .is-dark {
+  display: none;
+}
+:root[data-theme='dark'] .t5-badge .is-light {
+  display: none;
+}
+:root[data-theme='dark'] .t5-badge .is-dark {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .t5-badge .is-light {
+    display: none;
+  }
+  :root:not([data-theme]) .t5-badge .is-dark {
+    display: block;
+  }
+}
+.page-home .t5-no {
+  grid-row: 1 / 3;
+  justify-self: start;
+}
+.t5-row .icon-vendor {
+  font-size: 1.05rem;
+}
+.t5-name {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.t5-row.is-current .t5-name .mname-text {
+  font-weight: 800;
+}
+.t5-score {
+  justify-self: end;
+  font-size: 1.2rem;
+  font-weight: 800;
+  font-stretch: var(--st-wide);
+  line-height: 1.2;
+}
+.t5-score .st-hi {
+  display: inline-block;
+  padding: 0 0.35em;
+}
+/* the 0–100 score bar, under the name and score */
+.t5-bar {
+  grid-column: 3 / 6;
+  grid-row: 2;
+  display: block;
+  height: 5px;
+  background: var(--st-chip);
+}
+.t5-bar i {
+  display: block;
+  height: 100%;
+  background: var(--series);
+  transform: scaleX(var(--v));
+  transform-origin: left;
+  transition: background-color 0.16s;
+}
+.t5-row:is(:hover, :focus-within, .is-current) .t5-bar i {
+  background: var(--series-deep);
+}
+/* a narrow column (1024 wide windows): tighter columns, so full names fit */
+@container (max-width: 27rem) {
+  .t5-row {
+    --no-w: 2.35rem;
+    --score-w: 3.3rem;
+    column-gap: 0.45rem;
+    padding-right: 0.5rem;
+  }
+  .t5-name {
+    font-size: 0.94rem;
+  }
+  .t5-score {
+    font-size: 1.1rem;
+  }
+}
+.t5-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.t5-foot b {
+  color: var(--st-ink);
+}
+
+/* ---- right column: the star dial ---- */
+.hero-right {
+  display: grid;
+  min-width: 0;
+}
+.hero-dial {
+  container-type: size;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  margin: 0;
+}
+.hero-dial-stack {
+  width: min(100cqw, 100cqh - var(--cap-h));
+}
+.page-home .hero-dial-box > .stardial {
+  width: 100%;
+}
+.hero-dial-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+.hero-legend {
+  display: grid;
+  gap: 0.12rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+}
+.hero-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.hero-legend-icon {
+  flex: none;
+  overflow: visible;
+}
+.hero-legend-icon .li-disc {
+  fill: var(--st-orbit);
+}
+.hero-legend-icon .li-line {
+  stroke: var(--st-orbit);
+  stroke-width: 1;
+}
+.hero-legend-icon .li-star {
+  fill: var(--st-ink);
+}
+.hero-dial-acts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+/* ============ 题目滚动条 ============ */
+
+.page-home .home-ticker a {
+  height: var(--ticker-h);
+  padding-block: 0;
+  gap: 0.7rem;
+}
+.page-home .home-ticker b {
+  font-weight: 700;
+}
+.home-ticker .tk-min {
+  color: var(--st-bar-muted);
+}
+.home-ticker a:is(:hover, :focus-visible) .tk-min {
+  color: var(--st-on-flare);
+}
+
+/* ============ sections ============ */
+
+.home-sec {
+  padding-block: clamp(3rem, 5vw, 4.25rem);
+}
+.home-screen + .home-sec {
+  padding-top: clamp(3.5rem, 6vw, 5rem);
+}
+.home-divider {
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--content-max);
+  margin: 0 auto;
+  aspect-ratio: 960 / 56;
+  background: var(--st-ink-2);
+  -webkit-mask: var(--strip) center / 100% 100% no-repeat;
+  mask: var(--strip) center / 100% 100% no-repeat;
+}
+.home-head {
+  margin-bottom: 1.4rem;
+}
+.home-head .st-eyebrow {
+  margin: 0 0 0.35rem;
+}
+.home-head-line {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.page-home .home-head-line .st-bar-title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--st-t-title); /* block title (visual.md 五「字号」) */
+}
+.home-head-line > .st-btn {
+  flex: none;
+}
+.home-lede {
+  max-width: 46rem;
+  margin: -0.4rem 0 1.75rem;
+  color: var(--st-ink-2);
+  font-family: var(--st-font-text);
+  line-height: 1.75;
+}
+
+/* ============ 总分怎么合成 ============ */
+
+.cmp {
+  --cmp-name: minmax(12rem, 17rem);
+  --cmp-total: 4.5rem;
+  --cell-h: 1.35rem;
+  display: grid;
+  grid-template-columns: var(--cmp-name) minmax(0, 1fr) var(--cmp-total);
+}
+.cmp-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  min-height: var(--row-h);
+  border-bottom: 1px solid var(--st-rule);
+  transition: opacity 0.16s var(--st-ease);
+}
+.cmp-headrow {
+  align-items: end;
+  border-bottom-color: var(--st-ink);
+}
+.cmp-grouprow {
+  align-items: start;
+  border-bottom: 0;
+}
+.cmp-bar {
+  display: grid;
+  grid-template-columns: var(--cmp-cols);
+  column-gap: 2px;
+  min-width: 0;
+}
+.cmp-name {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-right: 1rem;
+}
+.cmp-headrow .cmp-name,
+.cmp-headrow .cmp-total {
+  align-self: end;
+  margin: 0;
+  padding-bottom: 0.55rem;
+}
+.cmp-total {
+  justify-self: end;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-stretch: var(--st-wide);
+}
+.cmp-total .st-hi {
+  padding: 0 0.35em;
+}
+
+/* header cells: icon, weight, name — links to the category board */
+.cmp-head {
+  container-type: inline-size;
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.5rem 0.25rem 0.55rem 0.35rem;
+  transition:
+    opacity 0.16s var(--st-ease),
+    background-color 0.15s;
+}
+.cmp-head-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cmp-head .icon {
+  font-size: 1.15rem;
+}
+.cmp-head-w {
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+  font-stretch: var(--st-wide);
+}
+.cmp-head-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.cmp-head-name {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.cmp-head-name .is-short {
+  display: none;
+}
+/* the narrowest cells: one line, cut with an ellipsis (the full name is in the title) */
+@container (max-width: 4.6rem) {
+  .cmp-head-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+@container (max-width: 6.5rem) {
+  .cmp-head-name .is-full {
+    display: none;
+  }
+  .cmp-head-name .is-short {
+    display: inline;
+  }
+}
+/* English names are longer: switch to the short name before they run to three lines */
+@container (max-width: 8rem) {
+  :lang(en) .cmp-head-name .is-full {
+    display: none;
+  }
+  :lang(en) .cmp-head-name .is-short {
+    display: inline;
+  }
+}
+.cmp-head:is(:hover, :focus-visible) {
+  background: var(--st-panel);
+}
+.cmp-head:is(:hover, :focus-visible) .cmp-head-name {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 3px;
+}
+.cmp-head:focus-visible {
+  outline-offset: -2px;
+}
+
+/* the name cell: a button over the whole cell sets the page model; the name is a link above it */
+.cmp-who {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.35rem 0.4rem 0.35rem 0.75rem;
+  color: var(--st-ink);
+}
+.cmp-pick {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.cmp-pick:focus-visible {
+  outline-offset: -2px;
+}
+.cmp-who > :not(.cmp-pick, .cmp-link) {
+  pointer-events: none;
+}
+.cmp-link {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  color: inherit;
+}
+.cmp-rank {
+  color: var(--st-ink-2);
+  font-size: 0.78rem;
+  font-stretch: var(--st-wide);
+}
+.cmp-link:is(:hover, :focus-visible) .mname-text {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 4px;
+}
+/* the page model's row: violet bar on the left, name in bold */
+.cmp-row:not(.cmp-headrow) > .cmp-name::before {
+  content: '';
+  position: absolute;
+  inset: 0.3rem auto 0.3rem 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.cmp-row.is-page > .cmp-name::before {
+  transform: none;
+}
+.cmp-row.is-page .mname-text {
+  font-weight: 800;
+}
+
+/* cells: the filled part in the category colour, the rest a quiet fill */
+.cmp-cell {
+  position: relative;
+  display: block;
+  height: var(--cell-h);
+  background: var(--st-chip);
+  transition: opacity 0.16s var(--st-ease);
+}
+.cmp-cell.is-none {
+  background: var(--st-hatch), var(--st-chip);
+}
+.cmp-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--v) * 100%);
+  background: var(--fill);
+}
+.cmp-cell.is-edged .cmp-fill {
+  box-shadow: inset 0 0 0 1px var(--lime-edge);
+}
+.cmp-cell:focus-visible {
+  outline-offset: 1px;
+}
+.cmp-star {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--v) * 100%);
+  translate: -50% -50%;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s var(--st-ease);
+}
+.cmp.has-col .cmp-cell.is-best.is-col .cmp-star {
+  opacity: 1;
+}
+/* linked highlight: a column, or a row */
+.cmp.has-col :is(.cmp-cell, .cmp-head):not(.is-col) {
+  opacity: var(--dim);
+}
+.cmp.has-row .cmp-row:not(.cmp-headrow, .cmp-grouprow, .is-row) {
+  opacity: var(--dim);
+}
+
+/* brackets for the two kinds of task */
+.cmp-group {
+  position: relative;
+  margin: 0;
+  padding: 0.95rem 0.2rem 0;
+  text-align: center;
+}
+.cmp-group::before {
+  content: '';
+  position: absolute;
+  top: 0.3rem;
+  left: 1px;
+  right: 1px;
+  height: 0.45rem;
+  border: 1px solid var(--st-ink-2);
+  border-top: 0;
+}
+.cmp-group b {
+  color: var(--st-ink);
+}
+
+/* 图表绘制: rows uncover cell by cell from the left */
+@media (prefers-reduced-motion: no-preference) {
+  .cmp.will-draw .cmp-fill {
+    clip-path: inset(0 100% 0 0);
+  }
+  .cmp.is-drawing .cmp-fill {
+    animation: home-uncover 420ms var(--st-mech) var(--delay, 0ms) both;
+  }
+}
+@keyframes home-uncover {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* ============ 一道题怎么测 ============ */
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  margin: 0.5rem 0 3rem;
+  padding: 0;
+  list-style: none;
+}
+.how-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.15rem;
+  padding-top: 1.6rem;
+}
+/* the hairline from one step's star to the next */
+.how-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: 1.4rem;
+  right: -1.5rem;
+  height: 1px;
+  background: var(--st-ink);
+}
+.how-node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 0;
+}
+.how-node .home-star {
+  fill: var(--st-ink);
+}
+.how-no {
+  font-size: 1.9rem;
+  font-weight: 800;
+  font-stretch: var(--st-wide);
+  line-height: 1.1;
+  color: var(--st-ink);
+}
+.how-name {
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+/* the time-limit ruler */
+.ruler {
+  --track: minmax(0, 7fr);
+  --tiers: minmax(0, 5fr);
+  --gap: 2rem;
+  display: grid;
+  grid-template-columns: var(--track) var(--tiers);
+  column-gap: var(--gap);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--st-rule);
+}
+.ruler-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: start;
+  padding-block: 0.85rem;
+  transition: opacity 0.16s var(--st-ease);
+}
+.ruler.has-tier .ruler-row:not(.is-tier) {
+  opacity: var(--dim);
+}
+.ruler-track {
+  position: relative;
+  height: 1.6rem;
+  cursor: default;
+}
+.ruler-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--to);
+  height: 0.7rem;
+  translate: 0 -50%;
+  background: var(--series);
+  transform-origin: left;
+}
+.ruler-track:hover .ruler-bar {
+  background: var(--series-deep);
+}
+.ruler-stop {
+  position: absolute;
+  left: var(--to);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  translate: -1px 0;
+  background: var(--st-ink);
+  transform-origin: top;
+}
+.ruler-lead {
+  position: absolute;
+  left: calc(var(--to) + 0.4rem);
+  right: calc(-1 * var(--gap) + 0.4rem);
+  top: 50%;
+  border-top: 1px dotted var(--st-ink-2);
+}
+.ruler-tier {
+  min-width: 0;
+}
+.ruler-tier-head {
+  display: flex;
+  align-items: center;
+  min-height: 1.6rem;
+  margin: 0;
+  color: var(--st-ink);
+  font-weight: 700;
+}
+.ruler-tasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ruler-task {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.1rem 0;
+  font-size: 0.88rem;
+}
+.ruler-star {
+  flex: none;
+  overflow: visible;
+  transition: fill 0.15s;
+}
+.ruler-task.is-standard .ruler-star {
+  fill: var(--st-flare);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.ruler-task.is-design .ruler-star {
+  fill: var(--st-orbit);
+}
+.ruler-task:is(:hover, :focus-visible) .ruler-star {
+  fill: var(--st-flare);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.ruler-task:is(:hover, :focus-visible) .ruler-task-name {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 3px;
+}
+.ruler-axis {
+  position: relative;
+  grid-column: 1;
+  padding-top: 0.6rem;
+}
+.ruler-ticks {
+  position: relative;
+  height: 1.6rem;
+  border-top: 1px solid var(--st-ink-2);
+}
+.ruler-tick {
+  position: absolute;
+  top: 0;
+  height: 0.35rem;
+  border-left: 1px solid var(--st-ink-2);
+}
+.ruler-tick.is-major {
+  height: 0.6rem;
+}
+.ruler-tick > span {
+  position: absolute;
+  top: 0.55rem;
+  left: 0;
+  translate: -50% 0;
+  color: var(--st-ink-2);
+  font-size: 0.72rem;
+  font-stretch: var(--st-wide);
+}
+.ruler-axis-label {
+  margin: 0.2rem 0 0;
+}
+
+/* 计时条走满: bars run for a time in proportion to their limit; then the stop
+   line drops and the tier's stars light one by one */
+@media (prefers-reduced-motion: no-preference) {
+  .ruler.will-draw :is(.ruler-bar, .ruler-stop, .ruler-lead, .ruler-task) {
+    opacity: 0;
+  }
+  .ruler.is-drawing .ruler-bar {
+    animation: home-run var(--d) var(--st-mech) both;
+  }
+  .ruler.is-drawing .ruler-stop {
+    animation: home-drop 200ms var(--st-snap) var(--d) both;
+  }
+  .ruler.is-drawing .ruler-lead {
+    animation: st-wipe-in 280ms var(--st-mech) var(--d) both;
+  }
+  .ruler.is-drawing .ruler-task {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(var(--d) + 200ms + var(--i) * 38ms);
+  }
+}
+@keyframes home-run {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes home-drop {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* ============ 去往各页 ============ */
+
+.idx {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--st-rule);
+}
+.idx > li + li {
+  border-left: 1px solid var(--st-rule);
+}
+.idx-item {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.3rem;
+  height: 100%;
+  padding: 1.5rem 1.5rem 1.6rem;
+  transition: background-color 0.15s;
+}
+.idx > li:first-child .idx-item {
+  padding-left: 0.25rem;
+}
+.idx-item:is(:hover, :focus-visible) {
+  background: var(--st-panel);
+}
+.idx-item:focus-visible {
+  outline-offset: -2px;
+}
+.page-home .idx-no {
+  margin-bottom: 0.65rem;
+  font-size: clamp(3.75rem, 6vw, 5.5rem);
+  -webkit-text-stroke-width: 1.5px;
+}
+.page-home .idx-eyebrow {
+  margin: 0;
+}
+.idx-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.idx-line {
+  min-height: 2.6em;
+}
+.page-home .idx-go {
+  margin-top: 0.6rem;
+}
+@media (max-width: 1180px) {
+  .idx {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .idx > li:nth-child(3) {
+    border-left: 0;
+  }
+  .idx > li:nth-child(n + 3) {
+    border-top: 1px solid var(--st-rule);
+  }
+  .idx > li:nth-child(3) .idx-item {
+    padding-left: 0.25rem;
+  }
+}
+
+/* ============ 入场 (home.md 入场顺序; the dial's own parts run inside the shared dial) ============ */
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-st-motion='calm']) .page-home.is-entering .hero-wm > .solid {
+    animation: st-drive 620ms var(--st-mech) 80ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .hero-wm > .hollow {
+    animation: st-drive 620ms var(--st-mech) 220ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .t5-row {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(300ms + var(--i) * 38ms);
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .t5-cursor {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(300ms + var(--i, 0) * 38ms);
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .t5-cursor::before {
+    animation: home-drop 200ms var(--st-snap) 620ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .t5-bar i {
+    animation: home-run 420ms var(--st-mech) 520ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .t5-score .st-hi {
+    animation: st-wipe-in 280ms var(--st-mech) 660ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .hero-marker .st-marker {
+    animation:
+      st-stroke 420ms var(--st-mech) 560ms both,
+      home-edge 1ms linear 980ms both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering :is(.hero-fields, .hero-lede, .t5-head, .t5-foot, .hero-dial-foot) {
+    animation: st-fade 320ms var(--st-ease) both;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .hero-lede {
+    animation-delay: 240ms;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering :is(.t5-head, .t5-foot) {
+    animation-delay: 300ms;
+  }
+  :root:not([data-st-motion='calm']) .page-home.is-entering .hero-dial-foot {
+    animation-delay: 560ms;
+  }
+}
+
+/* phone width: the first screen stacks (title and top 5 above the dial), so the
+   wordmark and the Chinese marker keep a readable size and stay inside the column */
+@media (max-width: 640px) {
+  .hero {
+    min-height: 0;
+  }
+  .hero-in {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.5rem;
+  }
+  .hero-dial {
+    height: calc(100vw - 2 * var(--gutter) + var(--cap-h) + 1rem);
+  }
+}
+
+/* the marker's ink edge shows once the flare stroke has swept across */
+@keyframes home-edge {
+  from {
+    box-shadow: none;
+  }
+}

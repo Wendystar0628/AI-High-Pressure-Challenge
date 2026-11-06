@@ -1,0 +1,15 @@
+// 消息接收：等待消息，按到达顺序输出，收到 "结束" 后退出。可以作为 msg_send 的接收方。
+function main(args) {
+  let me = sys("self");
+  sys("print", "接收进程 " + str(me.pid) + " 就绪，等待消息");
+  let n = 0;
+  for (;;) {
+    let m = sys("recv");
+    n = n + 1;
+    sys("print", "第 " + str(n) + " 条，来自进程 " + str(m.from) + "：" + str(m.data));
+    if (m.data == "结束") break;
+    if (type(m.data) == "map" && m.data.reply != null) sys("send", m.from, "已收到 " + str(m.data.seq));
+  }
+  sys("print", "接收结束，共 " + str(n) + " 条");
+  return n;
+}

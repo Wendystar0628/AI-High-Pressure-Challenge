@@ -1,0 +1,261 @@
+/* Shared chart styles: axes, best marker, the star dial. Colours are
+   variables only, so charts follow the theme (and export inlines them). */
+
+/* ---------- axes ---------- */
+.grid-line {
+  stroke: var(--st-rule);
+  stroke-width: 1;
+}
+.pass-line {
+  stroke: var(--ref-line);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+.tick-label {
+  fill: var(--st-ink-2);
+  font-family: var(--st-font-ui);
+  font-size: 11px;
+  font-stretch: 112%;
+  font-variant-numeric: tabular-nums;
+}
+.best-star {
+  fill: var(--st-flare);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+
+/* ---------- horizontal score bar (charts/bar.js) ----------
+   Colours come from --bar-fill / --bar-deep / --bar-edge on the row (ui.css .mrow.is-*). */
+.bar-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.bar-fill {
+  fill: var(--bar-fill, var(--series));
+  stroke: var(--bar-edge, none);
+  stroke-width: 1;
+  transition: fill 0.15s;
+}
+.bar-hatch-line {
+  fill: color-mix(in srgb, var(--st-ink) 22%, transparent);
+}
+/* 0 points: a zero-length bar is a short ink stroke on the 0 line */
+.bar-zero {
+  stroke: var(--st-ink);
+  stroke-width: 2;
+}
+
+/* ---------- star dial ---------- */
+.stardial {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--st-font-ui);
+}
+.stardial a {
+  cursor: pointer;
+}
+.stardial a:focus {
+  outline: none;
+}
+.sd-ring {
+  fill: none;
+  stroke: var(--st-ink-2);
+  stroke-width: 1;
+}
+.sd-tick {
+  fill: none;
+  stroke: var(--st-ink-2);
+  stroke-width: 1;
+}
+.sd-tick-mid {
+  stroke-opacity: 0.75;
+}
+.sd-tick-short {
+  stroke-opacity: 0.45;
+}
+.sd-scale {
+  fill: none;
+  stroke: var(--st-rule);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.sd-scale-label {
+  fill: var(--st-ink-2);
+  font-size: 9px;
+  font-stretch: 112%;
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--st-panel);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.sd-bracket {
+  fill: none;
+  stroke: var(--st-ink-2);
+  stroke-width: 1;
+}
+.sd-group-label {
+  fill: var(--st-ink-2);
+  font-size: 8.5px;
+  font-weight: 600;
+  font-stretch: 125%;
+  letter-spacing: 0.12em;
+  /* the bracket breaks around the label (stardial.js layoutText), so no halo */
+  stroke-linejoin: round;
+}
+.sd-plate {
+  fill: var(--group-standard);
+  stroke: var(--st-rule);
+  stroke-width: 1;
+  transition: fill 0.15s;
+}
+.sd-seg.is-design .sd-plate {
+  fill: var(--group-design);
+}
+.sd-plate-name {
+  fill: var(--st-ink);
+  font-size: 13.5px;
+  font-weight: 800;
+}
+.sd-plate-weight {
+  fill: var(--st-ink-2);
+  font-size: 10.5px;
+  font-weight: 500;
+  font-stretch: 112%;
+  font-variant-numeric: tabular-nums;
+}
+.sd-group-edge {
+  stroke: var(--st-ink);
+  stroke-width: 1.5;
+}
+.sd-lock,
+.sd-beam {
+  fill: none;
+  stroke: var(--st-orbit);
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.3s var(--st-mech);
+}
+.sd-lock {
+  stroke-width: 3;
+}
+.sd-beam {
+  stroke-width: 1.5;
+}
+.sd-seg:is(:hover, :focus-visible) .sd-plate {
+  fill: var(--g-500);
+}
+.sd-seg.is-design:is(:hover, :focus-visible) .sd-plate {
+  fill: var(--v-300);
+}
+.sd-seg:is(:hover, :focus-visible) :is(.sd-plate-name, .sd-plate-weight) {
+  fill: var(--st-on-flare);
+}
+.sd-seg:is(:hover, :focus-visible) :is(.sd-lock, .sd-beam) {
+  stroke-dashoffset: 0;
+}
+
+.sd-line {
+  stroke: var(--st-orbit);
+  stroke-width: 1;
+  transition: opacity 0.16s var(--st-ease);
+}
+.sd-star-hit {
+  fill: transparent;
+}
+.sd-star-shape {
+  fill: var(--st-ink);
+  transition: fill 0.15s;
+}
+.sd-star.is-best .sd-star-shape {
+  fill: var(--st-flare);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.sd-star:is(:hover, :focus-visible) .sd-star-shape {
+  fill: var(--st-flare);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.sd-star:focus-visible .sd-star-hit {
+  stroke: var(--st-ink);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+.sd-star,
+.sd-missing {
+  transition: opacity 0.16s var(--st-ease);
+}
+.sd-star.is-dim .sd-star-shape,
+.sd-line.is-dim,
+.sd-missing.is-dim {
+  opacity: var(--dim);
+}
+.sd-missing {
+  fill: var(--st-ink-2);
+  font-size: 9px;
+}
+
+.sd-disc-fill {
+  fill: var(--st-orbit);
+}
+/* the disc tag links to the model scores page: underline the name on hover / focus */
+.sd-tag-link[href] {
+  cursor: pointer;
+}
+.sd-tag-link[href]:is(:hover, :focus-visible) .sd-tag-text {
+  text-decoration: underline;
+}
+.sd-tag-link:focus-visible {
+  outline: 2px solid var(--st-on-orbit);
+  outline-offset: 2px;
+}
+.sd-tag-bg {
+  fill: var(--st-flare);
+}
+.sd-tag-text {
+  fill: var(--st-on-flare);
+  font-size: 11px;
+  font-weight: 700;
+}
+.sd-tag-effort {
+  font-size: 9.5px;
+  font-weight: 500;
+}
+.sd-tag-icon {
+  color: var(--st-on-flare);
+}
+.sd-big {
+  fill: var(--st-on-orbit);
+  font-size: 60px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.sd-sub {
+  fill: var(--st-on-orbit);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-st-motion='calm']) .stardial.is-entering .sd-disc {
+    animation: st-assemble 360ms var(--st-snap) backwards;
+    transform-box: view-box;
+    transform-origin: 320px 320px;
+  }
+  :root:not([data-st-motion='calm']) .stardial.is-entering .sd-seg {
+    animation: st-assemble 360ms var(--st-snap) backwards;
+    animation-delay: calc(var(--i) * 45ms + 80ms);
+    transform-box: view-box;
+    transform-origin: 320px 320px;
+  }
+  .sd-tag.is-wiping {
+    animation: st-wipe-in 280ms var(--st-mech) both;
+  }
+}

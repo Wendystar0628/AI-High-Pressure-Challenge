@@ -1,0 +1,111 @@
+{
+  "title": "Leaderboard",
+  "eyebrow": "Overall ranking",
+  "loading": "Loading the scores",
+  "facts": {
+    "tasks": { "one": "{n} task", "other": "{n} tasks" },
+    "cats": { "one": "{n} category", "other": "{n} categories" },
+    "updated": "Updated {date}"
+  },
+  "figs": {
+    "models": "Models ranked",
+    "pass": "Passed (total ≥ {n})",
+    "passShort": "Passed",
+    "gap": "Top-3 spread (pts)",
+    "gapN": "Top-{n} spread (pts)",
+    "testing": "{n} more in testing"
+  },
+  "views": {
+    "label": "View",
+    "keyTitle": "{name} ({key})",
+    "total": "Total",
+    "pass": "Pass line",
+    "parts": "Breakdown",
+    "kinds": "Two kinds",
+    "matrix": "Matrix",
+    "compare": "Compare"
+  },
+  "viewsEn": {
+    "total": "Total",
+    "pass": "Pass line",
+    "parts": "Breakdown",
+    "kinds": "Two kinds",
+    "matrix": "Matrix",
+    "compare": "Compare"
+  },
+  "viewQ": {
+    "total": "Who scores highest overall",
+    "pass": "How far each model is from 60",
+    "parts": "Which categories make up the total",
+    "kinds": "Leaning to standard or design tasks",
+    "matrix": "Strengths across the categories",
+    "compare": "2 to 4 ticked models, measure by measure"
+  },
+  "sort": {
+    "label": "Sort",
+    "compareOff": "Compare keeps the ticking order; sorting does not apply"
+  },
+  "cols": {
+    "label": "Columns",
+    "category": "Categories",
+    "task": "Tasks"
+  },
+  "head": {
+    "rank": "Rank",
+    "model": "Model",
+    "item": "Measure"
+  },
+  "axis": {
+    "pass": "Pass line",
+    "passCount": "Passed {a} │ Below {b}"
+  },
+  "row": {
+    "aria": "Rank {rank}, {name}, {label} {score}",
+    "ariaSort": "Rank {rank} in {by}, {name}, {by} {value}, total {score}",
+    "ariaSortNone": "No {by} score yet, {name}, total {score}"
+  },
+  "tip": {
+    "part": "{cat} {v} × {w} = {c}",
+    "pending": "In testing, {done} / {all} tasks scored"
+  },
+  "sandbox": {
+    "button": "Weights",
+    "buttonTitle": "Adjust weights (W)",
+    "label": "Weight sandbox",
+    "eyebrow": "Weights",
+    "title": "Adjust weights",
+    "help": "Weight used = slider ÷ the sum of all sliders. Total, Pass line and Breakdown are recomputed.",
+    "presetsLabel": "Presets",
+    "presets": {
+      "official": "Official",
+      "equal": "All equal",
+      "standard": "Standard tasks only",
+      "design": "Design tasks only"
+    },
+    "reset": "Restore official weights",
+    "sum": "Sum",
+    "sumNote": "scaled to 100%",
+    "slider": "Weight of {name}",
+    "norm": "used {v}"
+  },
+  "notice": {
+    "flag": "Note",
+    "text": "Custom weights are in use; this ranking is not the official result."
+  },
+  "compare": {
+    "empty": "Tick 2 to 4 models and their scores will be compared here side by side, measure by measure.",
+    "back": "Back to the ranking to tick models",
+    "diff": "Δ {v}",
+    "diffHead": "Spread",
+    "caption": "Compare: {names}"
+  },
+  "keys": {
+    "view": "Switch to the {name} view",
+    "weights": "Open or close the weight sandbox",
+    "compare": "Switch to Compare"
+  },
+  "foot": "Total = the {n} category scores added by weight; a category score is the mean of its tasks",
+  "empty": {
+    "noData": "Once the score data loads, the models will be ranked here by total."
+  }
+}

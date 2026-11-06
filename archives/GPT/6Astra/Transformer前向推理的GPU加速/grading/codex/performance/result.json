@@ -1,0 +1,96 @@
+{
+    "task":  "Transformer前向推理的GPU加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "score":  73.8,
+                      "name":  "总分",
+                      "reason":  "按规定命令编译成功，未发现第九节第1—5条违规。8个输入各3次全部通过容差；各输入得分54.8、73.6、88.5、97.1、85.9、67.6、56.3、66.4，官方脚本给出总分73.8。",
+                      "max":  100
+                  }
+              ],
+    "metrics":  {
+                    "score":  73.8,
+                    "G":  8.639465658938068,
+                    "performance_passed":  8,
+                    "report_path":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\Transformer前向推理的GPU加速\\codex\\performance\\work\\evaluation_report.json",
+                    "input_results":  [
+                                          {
+                                              "case":  "input_01",
+                                              "family":  "大批量短序列",
+                                              "R_i_ms":  251.918,
+                                              "C_i_ms":  48.023,
+                                              "s_i":  5.245778064677342,
+                                              "points_i":  54.8,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_02",
+                                              "family":  "高维",
+                                              "R_i_ms":  103.935,
+                                              "C_i_ms":  11.857,
+                                              "s_i":  8.765708020578561,
+                                              "points_i":  73.6,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_03",
+                                              "family":  "长序列",
+                                              "R_i_ms":  214.992,
+                                              "C_i_ms":  17.035,
+                                              "s_i":  12.620604637511006,
+                                              "points_i":  88.5,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_04",
+                                              "family":  "超长序列",
+                                              "R_i_ms":  8698.997,
+                                              "C_i_ms":  577.381,
+                                              "s_i":  15.066302839892549,
+                                              "points_i":  97.1,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_05",
+                                              "family":  "窄头",
+                                              "R_i_ms":  509.809,
+                                              "C_i_ms":  42.597,
+                                              "s_i":  11.96819024813954,
+                                              "points_i":  85.9,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_06",
+                                              "family":  "少头宽头",
+                                              "R_i_ms":  166.29,
+                                              "C_i_ms":  22.196,
+                                              "s_i":  7.491890430708235,
+                                              "points_i":  67.6,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_07",
+                                              "family":  "深层",
+                                              "R_i_ms":  257.472,
+                                              "C_i_ms":  47.069,
+                                              "s_i":  5.470097091503962,
+                                              "points_i":  56.3,
+                                              "status":  "PASS"
+                                          },
+                                          {
+                                              "case":  "input_08",
+                                              "family":  "常见配比",
+                                              "R_i_ms":  121.404,
+                                              "C_i_ms":  16.774,
+                                              "s_i":  7.237629664957672,
+                                              "points_i":  66.4,
+                                              "status":  "PASS"
+                                          }
+                                      ],
+                    "candidate_runs":  24,
+                    "max_candidate_tolerance_ratio":  0.8183
+                },
+    "notes":  "评分版本：提交工作目录；solution.cu 与最新提交 f6f44626cc4d6eea2ba3b2ae28bb32101999a0bb 的内容仅换行符不同。所有编译和运行均在评分工作目录副本中完成；原提交除指定评分表外未改动。官方 evaluate.py 仅运行一次，48次运行全部通过，基线无失败。已确认本次启动的编译、评测进程退出。"
+}

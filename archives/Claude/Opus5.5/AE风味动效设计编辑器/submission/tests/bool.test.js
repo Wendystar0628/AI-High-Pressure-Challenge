@@ -1,0 +1,10 @@
+global.window = globalThis;
+for (const f of ['core/util','geom/path','geom/poly']) require('../js/' + f + '.js');
+const {Path: P, Poly} = AE;
+const sq = {c:true,p:[0,0,100,0,100,100,0,100]};
+console.log(P.winding([sq],50,50), P.winding([{c:true,p:sq.p}],50,50));
+console.log(P.bounds([sq]));
+const sq2={c:true,p:[50,50,150,50,150,150,50,150]};
+const orig = P.simplify;
+P.simplify = (p,t,c) => { const r = orig(p,t,c); console.log('simplify in', p.length, 'out', r.length); return r; };
+console.log(Poly.boolean([sq],[sq2],'union'));

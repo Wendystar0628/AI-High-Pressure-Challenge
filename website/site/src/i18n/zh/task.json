@@ -1,0 +1,79 @@
+{
+  "title": "题目拆解",
+  "category": "类别",
+  "fields": {
+    "limit": "限时 {n} 分钟",
+    "weight": "权重 {w}",
+    "deliverable": "交付物",
+    "scoring": "评分方式"
+  },
+  "blocks": {
+    "brief": {
+      "eyebrow": "Brief",
+      "num": "01",
+      "title": "题面要点",
+      "empty": "这道题的题面要点还在整理，整理好后写在这里。"
+    },
+    "points": {
+      "eyebrow": "Key points",
+      "num": "02",
+      "title": "考点",
+      "empty": "这道题的考点还在整理，整理好后按重要程度列在这里。"
+    },
+    "scores": {
+      "eyebrow": "Scores",
+      "num": "03",
+      "title": "各模型得分",
+      "facts": ["已评 {n} 个模型", "更新 {date}"],
+      "empty": "这道题还没有评分结果，评完后各模型的分数从高到低排在这里。",
+      "more": "展开全部 {n} 个",
+      "less": "收起到前 10",
+      "pending": "评测中",
+      "head": { "rank": "名次", "name": "模型", "score": "得分" }
+    },
+    "scoring": {
+      "eyebrow": "Scoring",
+      "num": "04",
+      "title": "评分要点",
+      "empty": "这道题的评分要点还在整理，整理好后写在这里。",
+      "more": "完整评分方向"
+    },
+    "stem": {
+      "eyebrow": "Statement",
+      "num": "05",
+      "title": "题干",
+      "note": "从题面原件摘录题干；作答格式、运行环境、规定和评分标准等章节不在其中，见完整题面。",
+      "source": "完整题面",
+      "materials": "题目材料",
+      "omitted": "未收录的章节",
+      "expandAll": "全部展开",
+      "collapseAll": "全部收起",
+      "empty": "这道题的题干没能载入，可以在 GitHub 上看完整题面。"
+    }
+  },
+  "nav": {
+    "label": "上一题 / 下一题",
+    "prev": "上一题",
+    "next": "下一题"
+  },
+  "aside": {
+    "label": "本页目录与本题统计",
+    "toc": "本页目录",
+    "tocEn": "Contents",
+    "ledger": "本题统计",
+    "ledgerEn": "Figures",
+    "same": "同类别的题",
+    "sameEn": "Same category"
+  },
+  "ledger": {
+    "category": "类别",
+    "kind": "类型",
+    "limit": "限时",
+    "weight": "权重",
+    "best": "本题最高分",
+    "bestBy": "得分模型",
+    "graded": "已评模型",
+    "gradedN": "{n} 个",
+    "none": "未出分"
+  }
+}

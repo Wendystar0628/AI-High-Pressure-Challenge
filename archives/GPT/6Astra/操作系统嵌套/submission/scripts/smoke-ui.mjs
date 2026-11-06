@@ -1,0 +1,24 @@
+import{chromium}from'playwright-core';import os from'node:os';import path from'node:path';import assert from'node:assert/strict';
+const browser=await chromium.connectOverCDP('http://127.0.0.1:19156');const page=browser.contexts().flatMap(c=>c.pages()).find(p=>p.url().includes('index.html'));const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.evaluate(()=>window.bench.reset());
+const root=page.locator('[data-testid="os-desktop"][data-system-id="outer"]');
+await root.locator(':scope > .desktop-icons [data-app-id="spreadsheet"]').dblclick();
+const sheet=page.locator('[data-testid="app-window"][data-app-id="spreadsheet"]').first();
+await sheet.locator('[data-cell-address="B2"]').dblclick();await sheet.locator('[data-cell-address="B2"] input').fill('30');await sheet.locator('[data-cell-address="B2"] input').press('Enter');
+assert.equal(await sheet.locator('[data-cell-address="D2"]').textContent(),'180');
+await sheet.locator('[data-testid="window-minimize"]').click();
+await root.locator(':scope > .desktop-intro [data-testid="system-new"]').click();
+const inner=page.locator('[data-testid="os-desktop"][data-system-id="inner-1"]');
+
+const player=page.locator('[data-testid="app-window"][data-app-id="player"]').first();
+await player.locator('[data-testid="player-play"]').click();
+await page.waitForFunction(()=>window.nest.inspect().players[0]?.frameTime>2);
+await player.locator('[data-testid="player-pause"]').click();
+await player.locator('[data-testid="window-project"]').click();await player.locator('[data-testid="project-target"][data-target-system-id="outer"]').click();
+await page.waitForTimeout(500);await page.screenshot({path:path.join(os.tmpdir(),'nest-flight.png')});
+const projection=page.locator('[data-testid="app-window"][data-app-id="projection"]').first();await projection.locator('[data-testid="window-minimize"]').click();await player.locator('[data-testid="window-minimize"]').click();
+await inner.locator(':scope > .desktop-icons [data-app-id="charts"]').dblclick();const chart=page.locator('[data-testid="app-window"][data-app-id="charts"]').first();
+const book=(await page.evaluate(()=>window.bench.inspect())).windows.find(w=>w.appId==='spreadsheet');await chart.locator('[data-testid="chart-source"]').selectOption(book.id);await chart.locator('[data-testid="chart-connect"]').click();await page.waitForFunction(()=>window.nest.getWindow(window.nest.inspect().charts[0].windowId).data.version>0);
+await chart.locator('[data-testid="window-project"]').click();await chart.locator('[data-testid="project-target"][data-target-system-id="outer"]').click();
+await page.waitForTimeout(500);await page.screenshot({path:path.join(os.tmpdir(),'nest-chart.png')});
+console.log(JSON.stringify({inspect:await page.evaluate(()=>window.bench.inspect()),errors},null,2));await browser.close();

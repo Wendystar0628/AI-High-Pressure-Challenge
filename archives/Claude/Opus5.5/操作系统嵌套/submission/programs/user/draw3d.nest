@@ -1,0 +1,11 @@
+// 三维图形：提交一个最小场景（一个物体、一盏灯、一台相机），再逐次提交物体姿态。
+const SCENE = "{\"format\":\"nest-scene\",\"version\":1,\"name\":\"程序场景\",\"environment\":{\"sky\":{\"zenith\":\"#27457f\",\"horizon\":\"#e7b98a\"},\"sun\":{\"dir\":[0.5,0.8,0.3],\"color\":\"#fff2d8\",\"intensity\":3}},\"materials\":{\"m\":{\"color\":\"#8f6bff\",\"roughness\":0.35,\"metalness\":0.2},\"g\":{\"color\":\"#5f7f52\",\"roughness\":0.95}},\"parts\":[{\"name\":\"地面\",\"primitive\":{\"box\":[30,0.2,30]},\"material\":\"g\",\"pos\":[0,-1.2,0]},{\"name\":\"方块\",\"primitive\":{\"box\":[1.6,1.6,1.6]},\"material\":\"m\",\"pos\":[0,0,0]}],\"cameras\":{\"default\":{\"pos\":[4,3,5],\"target\":[0,0,0],\"fov\":45}}}";
+function main(args) {
+  sys("scene", SCENE, null);
+  for (;;) {
+    let t = sys("time");
+    let a = t * 0.8;
+    sys("scene_frame", { t: t, parts: [[1, 0, sin(t) * 0.4, 0, 0, sin(a / 2), 0, cos(a / 2), 1, 0, 1]] });
+    sys("sleep", 1 / 30);
+  }
+}

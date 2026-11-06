@@ -1,0 +1,136 @@
+/* Site tokens on top of the skill's stellar.css (website/docs/visual.md).
+   Colour scales, category colours, colour meanings, layout sizes.
+   Everything that draws data reads these variables, so both themes follow. */
+
+@font-face {
+  font-family: 'Saira';
+  src: url('/fonts/Saira.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 50% 125%;
+  font-display: swap;
+}
+
+:root {
+  /* Chinese falls back to the system sans (Noto Sans SC is not bundled). */
+  --st-font-ui: 'Saira', 'Noto Sans SC', 'Microsoft YaHei UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  --st-font-text: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+
+  /* ---- colour scales (visual.md 二、色阶) ---- */
+  --v-100: #f1e8ff;
+  --v-300: #c9aeff;
+  --v-400: #b083ff;
+  --v-500: #9859ff;
+  --v-600: #7a3cf0;
+  --v-800: #4a22b8;
+  --g-100: #f6ffdb;
+  --g-300: #e6ffa3;
+  --g-500: #d1ff57;
+  --g-600: #a9d932;
+  --g-800: #4f6a00;
+  --c-100: #e2f7fd;
+  --c-500: #62d4f5;
+  --c-800: #0b7fa3;
+
+  /* text in a theme colour on the page (small text in violet/lime/cyan) */
+  --text-violet: var(--v-800);
+  --text-lime: var(--g-800);
+  --text-cyan: var(--c-800);
+
+  /* ---- category colours (visual.md 三; fixed site-wide) ---- */
+  --cat-reason: var(--g-600);
+  --cat-algo: var(--g-300);
+  --cat-spatial: var(--g-500);
+  --cat-interact: var(--v-800);
+  --cat-game: var(--v-400);
+  --cat-physics: var(--v-600);
+  --cat-visual: var(--v-300);
+  --cat-system: var(--v-500);
+  /* lime fills carry a 1px ink edge; in dark the edge disappears into the panel */
+  --lime-edge: #1a1726;
+
+  /* ---- colour meanings ---- */
+  --kind-standard: var(--g-500); /* 标准评判题 data */
+  --kind-standard-deep: var(--g-600); /* pointed at / ticked */
+  --kind-standard-soft: var(--g-300); /* sub rows */
+  --kind-design: var(--v-300); /* 主动设计题 data */
+  --kind-design-deep: var(--v-600);
+  --kind-design-soft: var(--v-100);
+  --series: var(--v-300); /* a single-measure chart: pale violet bars */
+  --series-deep: var(--v-600);
+  --ref-line: var(--c-800); /* 参考、基准: pass line, mean, field best */
+  --ref-band: var(--c-100);
+  --pending-fill: var(--st-chip); /* 未出分、评测中: neutral, or hatch */
+  --compare-1: var(--v-500);
+  --compare-2: var(--g-500);
+  --compare-3: var(--c-500);
+  --compare-4: var(--st-ink);
+  --group-standard: var(--g-100); /* group bands (dial plates, legends) */
+  --group-design: var(--v-100);
+  /* matrix steps (charts/colors.js stepFill): 0–20 … 80–100, lime 100→500 / violet 100→300+; ink on each step */
+  --step-standard-0: var(--g-100);
+  --step-standard-1: color-mix(in srgb, var(--g-100) 50%, var(--g-300));
+  --step-standard-2: var(--g-300);
+  --step-standard-3: color-mix(in srgb, var(--g-300) 50%, var(--g-500));
+  --step-standard-4: var(--g-500);
+  --step-design-0: var(--v-100);
+  --step-design-1: color-mix(in srgb, var(--v-100) 66%, var(--v-300));
+  --step-design-2: color-mix(in srgb, var(--v-100) 33%, var(--v-300));
+  --step-design-3: var(--v-300);
+  --step-design-4: color-mix(in srgb, var(--v-300) 70%, var(--v-400));
+  --step-ink-low: var(--st-on-flare); /* numbers on steps 0–2 */
+  --step-ink-high: var(--st-on-flare); /* numbers on steps 3–4 */
+  --dim: 0.28; /* linked highlight: everything else fades to this */
+
+  /* ---- layout ---- */
+  --content-max: 88rem;
+  --gutter: clamp(1.5rem, 3vw, 2.5rem);
+  --shell-h: 3.4rem; /* height of the sticky command bar: sticky toolbars use top: var(--shell-h) */
+  --row-h: 2.75rem; /* model row */
+  --hatch: var(--st-hatch);
+}
+
+:root[data-theme='dark'] {
+  --text-violet: var(--v-300);
+  --text-lime: var(--g-500);
+  --text-cyan: var(--c-500);
+  --ref-line: var(--c-500);
+  --ref-band: color-mix(in srgb, var(--c-500) 16%, var(--st-panel));
+  --kind-design-soft: color-mix(in srgb, var(--v-500) 26%, var(--st-panel));
+  --group-standard: color-mix(in srgb, var(--g-500) 14%, var(--st-panel));
+  --group-design: color-mix(in srgb, var(--v-500) 22%, var(--st-panel));
+  /* dark: the steps rise out of the panel, so low stays dim and high glows */
+  --step-standard-0: color-mix(in srgb, var(--g-500) 12%, var(--st-panel));
+  --step-standard-1: color-mix(in srgb, var(--g-500) 26%, var(--st-panel));
+  --step-standard-2: color-mix(in srgb, var(--g-500) 44%, var(--st-panel));
+  --step-standard-3: color-mix(in srgb, var(--g-500) 68%, var(--st-panel));
+  --step-standard-4: var(--g-500);
+  --step-design-0: color-mix(in srgb, var(--v-400) 16%, var(--st-panel));
+  --step-design-1: color-mix(in srgb, var(--v-400) 30%, var(--st-panel));
+  --step-design-2: color-mix(in srgb, var(--v-400) 48%, var(--st-panel));
+  --step-design-3: color-mix(in srgb, var(--v-300) 78%, var(--st-panel));
+  --step-design-4: var(--v-300);
+  --step-ink-low: var(--st-ink);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-violet: var(--v-300);
+    --text-lime: var(--g-500);
+    --text-cyan: var(--c-500);
+    --ref-line: var(--c-500);
+    --ref-band: color-mix(in srgb, var(--c-500) 16%, var(--st-panel));
+    --kind-design-soft: color-mix(in srgb, var(--v-500) 26%, var(--st-panel));
+    --group-standard: color-mix(in srgb, var(--g-500) 14%, var(--st-panel));
+    --group-design: color-mix(in srgb, var(--v-500) 22%, var(--st-panel));
+    --step-standard-0: color-mix(in srgb, var(--g-500) 12%, var(--st-panel));
+    --step-standard-1: color-mix(in srgb, var(--g-500) 26%, var(--st-panel));
+    --step-standard-2: color-mix(in srgb, var(--g-500) 44%, var(--st-panel));
+    --step-standard-3: color-mix(in srgb, var(--g-500) 68%, var(--st-panel));
+    --step-standard-4: var(--g-500);
+    --step-design-0: color-mix(in srgb, var(--v-400) 16%, var(--st-panel));
+    --step-design-1: color-mix(in srgb, var(--v-400) 30%, var(--st-panel));
+    --step-design-2: color-mix(in srgb, var(--v-400) 48%, var(--st-panel));
+    --step-design-3: color-mix(in srgb, var(--v-300) 78%, var(--st-panel));
+    --step-design-4: var(--v-300);
+    --step-ink-low: var(--st-ink);
+  }
+}

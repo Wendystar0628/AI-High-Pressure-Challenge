@@ -1,0 +1,2230 @@
+{
+  "schema": 1,
+  "model": "Claude/Opus5.5",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\AE风味动效设计编辑器\\claude\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7403,
+      "sha256": "b57f82ec8ab01586c7644ccb73b220c51febf643b4982c3fd3556aea642bbe96"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 9990,
+      "sha256": "40e5504223dce6311e56d74e2b2019a0cfa3cb5d04f07a8c64ec3e8d4168bcff"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7872,
+      "sha256": "8504a0b011f554e951e405e66fd2b7cc89949b1a4f85c2b987b747f3ef17b7fd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 8007,
+      "sha256": "e2ed8fd138a77549f96fa614abf669fd40033dc2b2c3d6aa88633c04637d40dd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\README.md",
+      "path": "AE风味动效设计编辑器/submission/README.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3341,
+      "sha256": "8de6581c77cf6b54444c53a3a8ef1ba0114fcc02ea3c4121755a29433eb76bee"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\css\\style.css",
+      "path": "AE风味动效设计编辑器/submission/css/style.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 13201,
+      "sha256": "1dc86bc16f0d090b8f6be59bf057a6ffb749a23f34addbc88bc648aa7db57220"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3537,
+      "sha256": "bf9ba99b5109f510a98d0ff75282d43eedaf8be759dd358074f7a7d23f1f5504"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\core\\anim.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/anim.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 8258,
+      "sha256": "bbf3af283be504844cac9998cd54037b7cc38ba90a5622cd296ecf4b79cbd678"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\core\\eval.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/eval.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 23436,
+      "sha256": "0a7839334b7c36b84a62b97469d343ba7c76973aaf070de54b028ec833c5064b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\core\\expr.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/expr.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 15641,
+      "sha256": "a75d86aeeb1f9d049572d0eeedcaff2f6d20035f8002047b8494943fb4c55126"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\core\\model.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/model.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 19856,
+      "sha256": "1f8324a7b53a2dc36c94400b782882ec7cf4b425f4fd7b06f821b27b7f84faa0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\core\\util.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/util.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 13316,
+      "sha256": "e3bf7925fe0fd00757e8e630e1e46b48c02bda190b39b95ed7efcba680dd0aaa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\demo\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/js/demo/demo.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 42160,
+      "sha256": "44b9baa2e2b202a7901d9976e9b230a7e2213489d7a8e179a9d3151b2701544e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\content.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/content.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17279,
+      "sha256": "adf64f0da5a9dd3b51c2742ad50949cddbaa91075a0c8c2e4673ea352ab87ca5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\font.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/font.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 9968,
+      "sha256": "b40eea01e5d878fded6b943b15cd79d20f03ed8e56f2d3cf7aecdf9ebb059771"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\mesh.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/mesh.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 18809,
+      "sha256": "46ed31a2647c3937f0b949e77c929987dbb6c1f3e6179a90158c0507b882aac3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\path.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/path.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17598,
+      "sha256": "cf73a82e152f84d65e19b220b5323ea5f01663e6a7e4d98c37e67cb7194dcd18"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\poly.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/poly.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 15579,
+      "sha256": "e8a2f0400973ac08f291e67cdb186ef2240579de5539946461f359ec429c1763"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\geom\\puppet.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom/puppet.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 20970,
+      "sha256": "8639b142fa269c78a5e54986daa92950fd1b1a38401507f2971e5b43f301de82"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\io\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/js/io/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 16081,
+      "sha256": "fadd6793ec5c88f6ccd6aa41302b2a1b7d2503ed707d88e88915d242ada377bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\io\\export.js",
+      "path": "AE风味动效设计编辑器/submission/js/io/export.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 16852,
+      "sha256": "41a689611532bac2b2969200c6b5b33c75732763117557cb9b8c535ee1992252"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\main.js",
+      "path": "AE风味动效设计编辑器/submission/js/main.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1129,
+      "sha256": "f994a8773e9d53f87f36e3dfc522db82c9a6751f5402d6559642b1c2e414f2ab"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\render\\gl.js",
+      "path": "AE风味动效设计编辑器/submission/js/render/gl.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11777,
+      "sha256": "40e7102f736b3a12e78ead8635582cda47ed7cc24e880977d747fe46f3344390"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\render\\render2d.js",
+      "path": "AE风味动效设计编辑器/submission/js/render/render2d.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 31125,
+      "sha256": "455390ca46fae301434378f8cec02e615c7fb087b983905dd9b65fecf79b7e9a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\render\\render3d.js",
+      "path": "AE风味动效设计编辑器/submission/js/render/render3d.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 48046,
+      "sha256": "0bec6674c21bccfc12418e3d1111260ce0796b82c9805b5d1d22f957add3a4b4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\sim\\nodes.js",
+      "path": "AE风味动效设计编辑器/submission/js/sim/nodes.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 31484,
+      "sha256": "c23e0400cfc6b5b63086d99c16e88bf1784594e0e5526b312b27b31dfbde5f0e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\sim\\particles.js",
+      "path": "AE风味动效设计编辑器/submission/js/sim/particles.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 26370,
+      "sha256": "1d60b540bf27b734cf4eb17ac656da7623ef3e5b66f7308e0111f674f644bc70"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\app.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 30709,
+      "sha256": "20ec8ca573fec2d0d7a6f918d248ff30cb887fae403a2f2f5b317426f690306c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\graph.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/graph.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 21017,
+      "sha256": "d89a5c91be01d89bf8cb3326fc4cb2ddb4dc0d773302071249ccc71d20617e2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\nodeui.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/nodeui.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 22228,
+      "sha256": "9d7a0bb195b6e29bd7994a3de9b658f98d8487505680ccb67d9e637d4cc09c02"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\project.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/project.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 22243,
+      "sha256": "ef79c072fce36b2a6fd8db4f21097142ffc04176352637d8453d472b270e65f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\props.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/props.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 59197,
+      "sha256": "7600dc405ac149324ebb67edacb5d181c057fa331a38336ed8902871419e3524"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\timeline.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/timeline.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 44398,
+      "sha256": "350345cccf297c15c5c8f6c11a62f4f7105a953b3c4e8cfcb3a04f9ed9e95ad8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\viewer.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/viewer.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 53254,
+      "sha256": "30a145ad2cd8154ff0e74ae34dd608147702040403920bde47348b0c890c402f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\js\\ui\\widgets.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/widgets.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 12685,
+      "sha256": "394263b239340dd896b7d674f0fb64c3627778db46d18bd6d673a0bff1023a23"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\tests\\bool.test.js",
+      "path": "AE风味动效设计编辑器/submission/tests/bool.test.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 533,
+      "sha256": "267bc97c40e33142a126347535ebf9fe30a208f0dda13d43cb7cfcf6fc0adb92"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\tests\\core.test.js",
+      "path": "AE风味动效设计编辑器/submission/tests/core.test.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3843,
+      "sha256": "5e451fe7136f8d06c7903d4f3d5141d0acc3b65ab61b258cfeb696ce131b172e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\tests\\mesh.test.js",
+      "path": "AE风味动效设计编辑器/submission/tests/mesh.test.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 797,
+      "sha256": "3006ca7720769305d25c15d319e6c3922f8751cafba9103780a76237af09d036"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6403,
+      "sha256": "602b7d7b0a794b66e8fc97ae3308923890eb194e345d85fe369e1f1ebb79a5c1"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7923,
+      "sha256": "aa5ea14d44a3ae5f2384f2e144d7731d559b5d00731f78ade140f2d137ab0246"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6463,
+      "sha256": "32676236b2d8fc1896a6faf7d8489962b35cb11470cf01e8642dc1b3b1e35f81"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6597,
+      "sha256": "44815c94ef370f1b2496b49335460756b96f1964ee09d33bc46e24e9c7637295"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\.gitignore",
+      "path": "NVIDIA_B200网页艺术/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 20,
+      "sha256": "295aa1f18923880afebb2e08aa70a8c4f285cc52baea238b8d2864d10e45d825"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\README.md",
+      "path": "NVIDIA_B200网页艺术/submission/README.md",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 2655,
+      "sha256": "c920cccc1d64e655c437c128a9fa01af4c1719a752c3d24ab24f822f53e7d35c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\build.mjs",
+      "path": "NVIDIA_B200网页艺术/submission/build.mjs",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 349,
+      "sha256": "5a1ccaa39aecadba88f137385c830b8291b23e9e0867c35005c2d03d22324512"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\index.html",
+      "path": "NVIDIA_B200网页艺术/submission/index.html",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 1202,
+      "sha256": "1249f646ea8bde68e026c2d65909d28cf271b632a6c3e1218f84a0f86326d87d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\package-lock.json",
+      "path": "NVIDIA_B200网页艺术/submission/package-lock.json",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 14796,
+      "sha256": "09faff869686e07076233ae50581a065b9658a7190cbea14a39533a2dbfda087"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\package.json",
+      "path": "NVIDIA_B200网页艺术/submission/package.json",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 330,
+      "sha256": "ab0c7165ada24d121a3b8543ef6c9961908ffcdca875b17e60e7af7859a74797"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch01.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch01.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 11637,
+      "sha256": "06ada0b376e9a8b03de10faf37c87dd80057ccff69adc866b53cc766ee37b71b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch02.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch02.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 36644,
+      "sha256": "88ff8050783499101c101c94144cfff5ad99fe74f5d72029f4c2415c8ec1853e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch03.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch03.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 19521,
+      "sha256": "7407ec7743dd7135dd22eae7b848a4c1844862dbdf492360a9df911aed487e83"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch04.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch04.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 31873,
+      "sha256": "517f9a0597ecc66aa021b43b384896b36590c0c36c8e97c2656b21a1d7ead4ad"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch05.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch05.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 48802,
+      "sha256": "2e2f19a2daeb16512e5496f6fcbac5ce5b74d199e3d60df5b2dad7f9fa34fe09"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch06.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch06.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 32460,
+      "sha256": "bcd624dda12419aeeb132a5f48e2e78743d6537ac661435f64a12d620575d459"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch07.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch07.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 20166,
+      "sha256": "75b36938b83f7e4c4040ca93f565ca70751bb72f810fca3fa15e486fbdb59e88"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\chapters\\ch08.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/chapters/ch08.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 20713,
+      "sha256": "2ac19814d9b879d772a15baa25056b3a2fad4633ab3778da29e37c1b3107ca07"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\choreo.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/choreo.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9065,
+      "sha256": "2f4fefffc381a31d756279824083851dc01a98d0ca28148009099c0171d65e23"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\director.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/director.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6402,
+      "sha256": "e5cd10862d552d4fa1f401fe1747661325f7c6bc4f3eba1d614229c8e1914ec6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\flows.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/flows.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 2002,
+      "sha256": "e4a36168c21438b83a71472a341308bf31be920b3dcc45044629aabe836c4698"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\input.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/input.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 4080,
+      "sha256": "5c4aa10b96c00c545047a85440e635252eb00c532600c9324c590428ae715d8b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\numerics.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/numerics.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 11019,
+      "sha256": "b37c9d8122bd099c9cf0f23b1a48aff5c5facbec55c88078abc50036aad59ff4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\partition.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/partition.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 1501,
+      "sha256": "945f9b595545c7a77fd4dd3c636456a7778d7b29d55602247d3aa0b23c09523b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\seam.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/seam.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 3641,
+      "sha256": "9377a6aa75804d7d0d66908b9e4f0ff8ab9547b0c349da81bf3ff3bed1ac3554"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\state.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/state.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 3313,
+      "sha256": "bf3d5363bbbc24c86d5175a988175d10bf0e7c4daf14dea3e800cc772f622e6f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\systems-choreo.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/systems-choreo.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7419,
+      "sha256": "bf6c8cdcdfe21afff2ade8cf5c7d280b1beaefb32abd5f6dc5b52ceb9c151101"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\theme.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/theme.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6116,
+      "sha256": "398f8c65cfd331899e26cf72f790690c91ac2a1d48c4e134f494b945678ace26"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\timeline.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/timeline.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 2758,
+      "sha256": "6d51f72b189405db76cec31895927bb6c5f997cfa663833d10c5ae5b18c82218"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\core\\util.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/core/util.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 3795,
+      "sha256": "673d72e6a9be1b1beeb339d4d54756f82ab393e4153ba7771ae07af56af049bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\data\\specs.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/data/specs.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6986,
+      "sha256": "42ca53cdec07b10d21a4cdc76ab9870d58b1538e4ba9aeef750ccf72d93e5255"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\gfx\\engine.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/gfx/engine.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 22329,
+      "sha256": "79c9c47029914e4ce70c851c48c7e10bba5a777e862fb527379e511f81882342"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\gfx\\kit.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/gfx/kit.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 17902,
+      "sha256": "de8e5664244dd620613f90ed6704ed5741c06d6ab8586c7b1ec578f9081dd2d0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\gfx\\world.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/gfx/world.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 4364,
+      "sha256": "6e5ec52089ba1ae1d3c7ff3d1ba0f58f1a0c45db168e86a2d64369d5ee37628d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\main.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/main.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 12840,
+      "sha256": "b17d9709b917db77d6c5013bfd6053b18d068670dd8a6c692c4cb2bc8643c6ac"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\models\\package.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/models/package.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 49780,
+      "sha256": "12d72ee478dbf98b84f3bf4f7ad688c83f734304f3c2ebab9c36c564b95c7d96"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\models\\systems.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/models/systems.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 25427,
+      "sha256": "48771408de54c933576cf66e231d314662615ca1f40d10e0e41e01299418469f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\style.css",
+      "path": "NVIDIA_B200网页艺术/submission/src/style.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 28872,
+      "sha256": "680ed3b2348abd1d3dd3486cbaf2c5e5a5f4596ee91160b3fb8d2555ba535f1d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\style2.css",
+      "path": "NVIDIA_B200网页艺术/submission/src/style2.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 10968,
+      "sha256": "42921a114a9b20b345d3d297687df94725a282376e951cd1e134b771f6a67f4e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\ui\\hud.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/ui/hud.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 5876,
+      "sha256": "a968ed2a231369f859817b36a19d255af2e803fb54ad4498fdec2dc9c071088b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\ui\\locator.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/ui/locator.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 1920,
+      "sha256": "f5539377b509237a39806dd69546abbcd9f101df88786d0db0bca8144741a84d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\src\\ui\\svg.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/ui/svg.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9312,
+      "sha256": "3c85a0dbfe5de503d021dfe456e7bff6a1770dace16078b453b3cd392b570723"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
+      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 3434,
+      "sha256": "7b354ba545c2070fd2cbb801cb50d8c46aff8261b83b65494383bb7f615bd50b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
+      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1487,
+      "sha256": "cfe37a5594526aba02d52c176da860fd11ef7e7270b6f763a634ef1d4a9a5034"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\solution.cu",
+      "path": "Transformer前向推理的GPU加速/submission/solution.cu",
+      "role": "submission",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 50675,
+      "sha256": "58ee1ea45f6c1369c27c571ec4bdf460e26d1ded67c5c7c9e2cf9198f50e0738"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\动态路由塔防\\claude\\main\\result.json",
+      "path": "动态路由塔防/grading/claude/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 5187,
+      "sha256": "0ea94560f4eb2d04c394251a649dba7e6b44df552ba0c166741a69d7334d7351"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 5609,
+      "sha256": "6f6b7aae526086f1babdffeb677fadc85f615b6676b6fa0e5777d115578562b5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4046,
+      "sha256": "463da009472e2bbdc6a692b2b01f921ff3674eb2fd9739f13fdd5125856a83ea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\评分表_Opus5.5.md",
+      "path": "动态路由塔防/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4027,
+      "sha256": "0e75926c0792c07044850d9a8526c000ce8284efa268d0ee5b7d63ac33e2f3fb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\.gitignore",
+      "path": "动态路由塔防/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 24,
+      "sha256": "aef9721ca343e816d065f3a8d8385a0b0cd831eab490d01d559d3d84edfbd86c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\README.md",
+      "path": "动态路由塔防/submission/README.md",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 995,
+      "sha256": "89edc07be70b70b085da864092ed1daaa24cafbde144f4a9479905160ed587da"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\css\\style.css",
+      "path": "动态路由塔防/submission/css/style.css",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 33557,
+      "sha256": "945f372487dc3a102532228e9a8c7792e59b4cbe65941e759ab8fa439470ebd8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1006,
+      "sha256": "40492fd818eed9d278899a55d6fb41bde9db0178530a46eb2b115077bd318a1b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\audio.js",
+      "path": "动态路由塔防/submission/js/audio.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 25985,
+      "sha256": "9bbdd849d45604a5cd8fa7c93a3d86e3db085ce1e7236dcd275eb59f548691dd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\data.js",
+      "path": "动态路由塔防/submission/js/data.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 17387,
+      "sha256": "770aaa90e124c89a76ffd38aa4d4b5d03bf81037d34c8d7c9712b3994354e9cc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\demo.js",
+      "path": "动态路由塔防/submission/js/demo.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 27795,
+      "sha256": "8373a7fe8565d7fe6a73e872de4a77e3d7d174dfa141b041a70e7f5a6d547a6d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\facilities.js",
+      "path": "动态路由塔防/submission/js/facilities.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 53580,
+      "sha256": "70d433e626c427d13ea8bc63d4b77ee40cccebfa797513c077c18012056f441f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\fx.js",
+      "path": "动态路由塔防/submission/js/fx.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 10357,
+      "sha256": "b66a7451b60552eeb0c14350dd193525459a99371f93465b0f6ff2c5ae86bfc8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\gfx.js",
+      "path": "动态路由塔防/submission/js/gfx.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 23539,
+      "sha256": "05add971cfb3db68521c0fe4a35d8a9f643b1b414e286d980eecf20bed08b20f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\main.js",
+      "path": "动态路由塔防/submission/js/main.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5748,
+      "sha256": "96a1215918eb70682bfea0b3eba0735e4ea78e92c53b399969d61e3eb1705b4c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\maps.js",
+      "path": "动态路由塔防/submission/js/maps.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 18028,
+      "sha256": "265e86654ff543519f5c8f687ff758c1318a652c992095d4eafd113474529cce"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\models.js",
+      "path": "动态路由塔防/submission/js/models.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 60245,
+      "sha256": "0eae7cde45a0e6951f956cf1ac9fb6d53bea666b3397b418806892153de05cfc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\sim.js",
+      "path": "动态路由塔防/submission/js/sim.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 68196,
+      "sha256": "8107d80c2a15beafe8fd38146f1009cac0e2878892dfe2c26212a258abb7c036"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\ui.js",
+      "path": "动态路由塔防/submission/js/ui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 108527,
+      "sha256": "f18eff01dc54e34f43167941a54762995ce75812da3c4aa58d63606bcec35c94"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\unit_motion.js",
+      "path": "动态路由塔防/submission/js/unit_motion.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 12406,
+      "sha256": "06eac403af26e0122d6850282e58e084a583830844d76987a3e56dddf478e026"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\video_export.js",
+      "path": "动态路由塔防/submission/js/video_export.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 10241,
+      "sha256": "f886bb92996f71eb2ff6def5e4b597d3a6003f1d02bed23c0dadbed936ee0e99"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\view.js",
+      "path": "动态路由塔防/submission/js/view.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 98688,
+      "sha256": "cda94fa4bad5dfccea9b216055bfdaa6ef276ed1e48b486df752d2ff22f2e307"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\js\\world.js",
+      "path": "动态路由塔防/submission/js/world.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 46829,
+      "sha256": "92b987f953161c00b31bfe81e4ea7b04fc6a4a374e2a4f208105bf5bc4d259c0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\package-lock.json",
+      "path": "动态路由塔防/submission/tools/package-lock.json",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 14271,
+      "sha256": "4150847ba9f5bc8b43e20790c4bb549ab7875ab6b8f2d618f3409036eaf30bf7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\package.json",
+      "path": "动态路由塔防/submission/tools/package.json",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 316,
+      "sha256": "cbc8154d4a624f96cf622a15f61edffcf2959093265e123d8f6480438e6fd983"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\sim_bot.js",
+      "path": "动态路由塔防/submission/tools/sim_bot.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5144,
+      "sha256": "f649c2414927b6a8fb8ea88dc90fb290cc5367184a58a172c7c71e5f20d1357e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\sim_greedy.js",
+      "path": "动态路由塔防/submission/tools/sim_greedy.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5632,
+      "sha256": "a137b7c6c9ce6b1a2be8f9c430eb832467fb940f93ae4ae8dd0834fb0ab3b28f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\test_boss.js",
+      "path": "动态路由塔防/submission/tools/test_boss.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4237,
+      "sha256": "deeaf334062aa639736221b34630b42899cd1481dcb11500ad97bd0676ac873d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\test_invariants.js",
+      "path": "动态路由塔防/submission/tools/test_invariants.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 6642,
+      "sha256": "fce1aa4d84bbec8ca2cb91e3f79ceb468a582d978447990d5357de6ca266d8a8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\test_mechanics.js",
+      "path": "动态路由塔防/submission/tools/test_mechanics.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 7884,
+      "sha256": "4f46da4588351a2cc3d4079fa504b8d13d33680cff69779c7c5071e262b21ac5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\test_routes.js",
+      "path": "动态路由塔防/submission/tools/test_routes.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2242,
+      "sha256": "b3ca48bd742ad14ad500fe63de3d62fb9d948c4eb8d5d98e27492d26ca17ffd9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\tools\\vendor_entry.js",
+      "path": "动态路由塔防/submission/tools/vendor_entry.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 952,
+      "sha256": "852d7be7a5ad7f5c251d82c40c75b3589a88e15dad2d38297ae40ec97846e572"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
+      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
+      "role": "result",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1780,
+      "sha256": "3552ddb96944f58d9f791929c2851b3d93ac50245ccd04fd3952bae243b4836f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
+      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1257,
+      "sha256": "e7ae10d9939deefae91ecf2db1ea3bcb8d777b9fe9f91aee5d8f46c0cab64a21"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\单位正方形内最小三角形面积最大化\\answer.md",
+      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
+      "role": "submission",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1015,
+      "sha256": "cf8cc1812b29a5b4c4865427d57063dbbee0cc328edf19adae3f3768eee0217c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\claude\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/claude/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4474,
+      "sha256": "f7fd8b7b8c37154ef87b0fdf39818758f41b3a62f35b4bf0850b8db2d02db6cd"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6143,
+      "sha256": "4ca8822f6ba6e1ea820b9d7e9cfd9d20c57fb06a071e02ef5ca5923fbb8f53fb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4036,
+      "sha256": "7158a1c763ccd6c4e032405cbe720d15870ed232f3ec0efcc455c0a2508ac75e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\评分表_Opus5.5.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4089,
+      "sha256": "10abffc5b5691958fea4d5589a6a1304548d4bf16cecac9fddf67c9cb7d180c8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\.gitignore",
+      "path": "太阳雨渔港3D渲染/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 14,
+      "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\README.md",
+      "path": "太阳雨渔港3D渲染/submission/README.md",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 1055,
+      "sha256": "e0d89d98e65b7dc5e54153aca20f62b1de8689acfaf7b5b639540b9fec9629ab"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 504,
+      "sha256": "0072169a2b3c064f3925d929b6b4c8108d41c0ad8ee617d3e4acadde211e8d76"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\package-lock.json",
+      "path": "太阳雨渔港3D渲染/submission/package-lock.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 14804,
+      "sha256": "7c1a6cf7261af20ff44c630723c8afe5623902ca27d42a48f72a4890eea48b3c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\package.json",
+      "path": "太阳雨渔港3D渲染/submission/package.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 338,
+      "sha256": "9f3fe1a485bfecfa33183d3964af1cd35a9349af874ea44c4609459dd442af1a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\G.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/G.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 3503,
+      "sha256": "8f81cbb0fa7a1bd273bae97ff2dbf6f18682e3abec01e1c3b14ef9d3df5c6868"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\builder.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/builder.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 9161,
+      "sha256": "4df96290f5dfc22dbdf3be65a890c1f352ef1b1718bc574c27aa269d296c7c73"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\glsl.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/glsl.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 17050,
+      "sha256": "bf093ae9587924a8212e36c0a7f2ff66bb54ea6e9bde7fa9072ccabd1bb60f97"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\materials.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/materials.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4640,
+      "sha256": "7cd795ba3f5b4ec960a89dc2505007050d926ef5f48ca257c106b049ac94322b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\pipeline.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/pipeline.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12050,
+      "sha256": "7073e01138f0d5005c76d427f2e7f04216a6d7d9ba72efbf18fa3b0d9003cc40"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\special.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/special.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 8479,
+      "sha256": "b6b97b70861e119f93a55c10c2aef9429b2713de7205c395fbb69139b6be82a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\core\\textures.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core/textures.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 18221,
+      "sha256": "d4009bdca481d7241a8d469d8b52895e030bb582c19c2aa81c6ea8c3edf7cfdc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\director.js",
+      "path": "太阳雨渔港3D渲染/submission/src/director.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5724,
+      "sha256": "959793de0840fddfe183590e61a3fd960326160fd09fd63cc8991476366bda9b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/src/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 8343,
+      "sha256": "b3e8668bf9a84e250a10ce00b54d45bbedc03c4f90646ff3ddfec78f80545327"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\base.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/base.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 16246,
+      "sha256": "79023dc00cef69c4f7a9d0071bf98ed0d024325fd1c24ee1a29630d035cc4f43"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 24352,
+      "sha256": "3dfa655a6667cfb5198f4bd9cf4ab675a1178d421b7c7783302f795ff146b64a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 24380,
+      "sha256": "05475ce5e0a4650afa547c9cf780352f1cbd46ff95260a6634924e5fe387eee1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\ctx.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/ctx.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 2427,
+      "sha256": "b3e3e227875e56f8c4368406467faab8294b9733ec03a8e8c04e0f3792d50b0d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\env.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/env.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 7247,
+      "sha256": "336bebe3072f47a5c845fa18436860d4457943e2242cca07e788a799d6d82476"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\fx.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/fx.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 15576,
+      "sha256": "17b6fc5f6da30f9b000f89de8f092cf32d2314d6385b9c17c13959576dc83961"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\harbor.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/harbor.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 16362,
+      "sha256": "133dac6725f257e3b9b33c66f1a1b17aa168c465be2a6a1597df72f28315d47e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\helpers.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/helpers.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5930,
+      "sha256": "4d5137e5c253423c3af4a894749559bc751c684a4cd9eb2bf3302b71bc3907e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\hull.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/hull.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 3953,
+      "sha256": "f3bcb81f76fb67b967f8cffd11269144bd22f17caa818f2bf9fd94821a49d70c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\layout.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/layout.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 2629,
+      "sha256": "4b70e06c58ddcc58c6955d54c7865ca2dbd89c15710dba66097e6d8e67603c26"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\life.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/life.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 24934,
+      "sha256": "e7377176a3b3bf327d731cccb2bfd1ee4dd745f92acb482faf8b03a5733f612a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\nature.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/nature.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 22715,
+      "sha256": "8ce027769dab312ea2ace5dad6b18ae5bdb8b32c6a55ed1df782602f2d49bd1b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\props.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/props.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 50707,
+      "sha256": "3ed4ad7bebc360d9aec6b30bc86bfad627de824fcd989d1dedab9ed094bd0857"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\src\\world\\water.js",
+      "path": "太阳雨渔港3D渲染/submission/src/world/water.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12467,
+      "sha256": "28e401dd1a4f941690c592f803cb4286dac1b3441ed82601dabd4005ec47c935"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\video_export.js",
+      "path": "太阳雨渔港3D渲染/submission/video_export.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12817,
+      "sha256": "444f104c82f9be09ec6909625f11493d146fce78d3b3fc332746091482357513"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 2345,
+      "sha256": "2ce9261fda565cfa0eba1fea1efed6d239ac30e95e9439e2707e16074016f44f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1112,
+      "sha256": "35b8a4990ecd149c106a6182e5477b2791086667bcf9ca503d3b2c76da6fc818"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\Problem1.lean",
+      "path": "形式化证明题/submission/Problem1.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 8219,
+      "sha256": "af833333da5dc4ce7e9586e9045e3f97037a5bd6103433bddfa32ab54766a418"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\Problem2.lean",
+      "path": "形式化证明题/submission/Problem2.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 8617,
+      "sha256": "56683d8066738643e7a1a7e0b1f2a4993636f30c5eb53ce2e86e949af8eaae88"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\Problem3.lean",
+      "path": "形式化证明题/submission/Problem3.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 21914,
+      "sha256": "e7b01e535f39919f3ba7a67dc8bab71c11aaea94d48342f691ade31f7ce183ef"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\Problem6.lean",
+      "path": "形式化证明题/submission/Problem6.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 7013,
+      "sha256": "c07c29f66771d84032a29633894499e4aed5e25d29797835a80ad2713040f0d8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\Problem7.lean",
+      "path": "形式化证明题/submission/Problem7.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 11757,
+      "sha256": "5d0bd603306ce71bb949ed23c72ec1605396482021a12409325337317eed0ee0"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\操作系统嵌套\\claude\\main\\result.json",
+      "path": "操作系统嵌套/grading/claude/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 10787,
+      "sha256": "ab5fb597db12b2eb648d5d8ac3d920893ca5cabf6992b028e8c3bc9c83d89a84"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 11254,
+      "sha256": "646dd9e7cf3c83d7cff42736e86f9fb8c464a30af07bd928d5e1bc4103cacf7d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12428,
+      "sha256": "f558f49e3eec8095fe2c88c70a4fa783622a67b5f76c2c49428acb5cb25eaf0d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\评分表_Opus5.5.md",
+      "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12397,
+      "sha256": "fc2cb7295e70e6c9307d263d338e5072b53cfc7054d8da068439f29db3142c52"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\.gitattributes",
+      "path": "操作系统嵌套/submission/.gitattributes.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\.gitignore",
+      "path": "操作系统嵌套/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20,
+      "sha256": "295aa1f18923880afebb2e08aa70a8c4f285cc52baea238b8d2864d10e45d825"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2664,
+      "sha256": "af52116599cfaf02ddb5b648ba0a2faa6ae711aeedcaaac7b5a48687bdd9bf50"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3652,
+      "sha256": "a418b9894cd9c5669bb4d571cc5e15fc92f4a4d9af9c44553e843f1686e65dec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\docs\\操作说明.md",
+      "path": "操作系统嵌套/submission/docs/操作说明.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 18963,
+      "sha256": "60691c02aa575d23742ba3daf52c710014ab2fc5ba8ecdb21756e689c15bf584"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\docs\\最小场景.scene",
+      "path": "操作系统嵌套/submission/docs/最小场景.scene",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1009,
+      "sha256": "a11055265d8d08e1227e88b447d7a24b4d41ebe239aac5630b9c55c7c3350744"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\main.cjs",
+      "path": "操作系统嵌套/submission/main.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7489,
+      "sha256": "15caa46f542b99aabf859c1061e6f3101add129fdc9b27e0d54976ea579bcbcc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6115,
+      "sha256": "c5adaa456b4691f2bb061a6f69e8592d9299802a3372590766d4289b2ca7c7bf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 394,
+      "sha256": "b806ca33aa222aa78f76d58128b882a78507292efe23b4e05345b5162ef2366a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\preload.cjs",
+      "path": "操作系统嵌套/submission/preload.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 908,
+      "sha256": "f1410a5eaaa751eee1c48ca88c7eda299e2b8dd16cde4dabeb56ba31bf9c0f1e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\chart_recv.nest",
+      "path": "操作系统嵌套/submission/programs/apps/chart_recv.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2103,
+      "sha256": "4fde82508811c4bfc4a7fed02f1cb0989df85671e0eb3750edbd75bf9f35de35"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\charts.nest",
+      "path": "操作系统嵌套/submission/programs/apps/charts.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16668,
+      "sha256": "511fcaf2cae3443cb70d96fe704b554c5047adc9820715b5973f113aa6898ddd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\console.nest",
+      "path": "操作系统嵌套/submission/programs/apps/console.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3263,
+      "sha256": "736d94b18029709a32ff5a12477ad998baca8484e3d6506f6562b4a02ddccb61"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\editor.nest",
+      "path": "操作系统嵌套/submission/programs/apps/editor.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5600,
+      "sha256": "786a949c2a613480db2f015e0fd2d60b9d5098ed7e6ea6d5f9d10d69d619d83d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\files.nest",
+      "path": "操作系统嵌套/submission/programs/apps/files.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 12114,
+      "sha256": "01b166d47aefc9687387f9e6eeb23e435d5544820a32da774fc50db760aee730"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\player.nest",
+      "path": "操作系统嵌套/submission/programs/apps/player.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20438,
+      "sha256": "b1f8095994171f31cbdd7fafc7e3b9e4f89b6830835a13549b7cd3bab9e2126a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\player_flight.nest",
+      "path": "操作系统嵌套/submission/programs/apps/player_flight.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11015,
+      "sha256": "6c5e812dcd213582493487c8552eb2de808085d15f1c9e1f0bbbecec64029d18"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\player_fx.nest",
+      "path": "操作系统嵌套/submission/programs/apps/player_fx.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5170,
+      "sha256": "a6088c405bc294fbba9333b87be03632b55b4e5c786538e5baafdcf6baf412a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\player_timeline.nest",
+      "path": "操作系统嵌套/submission/programs/apps/player_timeline.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6693,
+      "sha256": "92b29e46a5784f04b6e5ed60e3df7dd162cb9ee5d08781440c1618d4cfd886a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\systems.nest",
+      "path": "操作系统嵌套/submission/programs/apps/systems.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6769,
+      "sha256": "8418aa06301b1acaff8eef967aec5092bcb17687d07f884195cbfa22cf124baa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\apps\\tasks.nest",
+      "path": "操作系统嵌套/submission/programs/apps/tasks.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7935,
+      "sha256": "ed7860cb3037de70586bfb764b751df384885812383a303bd4a25f5b4399bfe3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\flight\\flightctl.nest",
+      "path": "操作系统嵌套/submission/programs/flight/flightctl.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3487,
+      "sha256": "05309983456d66e64a541394eb671375fe4ad104392df05dde03e266749e9f6d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\lib\\flightsim.nest",
+      "path": "操作系统嵌套/submission/programs/lib/flightsim.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 27082,
+      "sha256": "5e9eef0d896c697e65ff6ee78de8f1c0a081152598f0f798f9ace18ecc07288f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\lib\\sys.nest",
+      "path": "操作系统嵌套/submission/programs/lib/sys.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1114,
+      "sha256": "0710aabb398ec1bdf72428f4eef46ce6119cb9f6b4784a4499d0dc7ea61ad53e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\lib\\ui.nest",
+      "path": "操作系统嵌套/submission/programs/lib/ui.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6703,
+      "sha256": "ddcddbb20276db0591b1efe4edf4f16c871c5230ed120dfa9f72e0e41b9a6a2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\system\\compiler.nest",
+      "path": "操作系统嵌套/submission/programs/system/compiler.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 29505,
+      "sha256": "b9c5692cc72af6471f0981aa71e6712cabe1c42998d69bb1ea1bf4b61cf49d8b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\system\\kernel.nest",
+      "path": "操作系统嵌套/submission/programs/system/kernel.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 58224,
+      "sha256": "a3fb19891ae2a6c3e68377eba10f904d5b6578fa8bc7e9c89c6e25dd3416f112"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\system\\wm.nest",
+      "path": "操作系统嵌套/submission/programs/system/wm.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 38769,
+      "sha256": "73539144adbb96117a7c43383bb6fa324b163d8baae89be8ef46ceeb61e95584"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\draw2d.nest",
+      "path": "操作系统嵌套/submission/programs/user/draw2d.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 749,
+      "sha256": "694590a80c020305eec06f2a42fec63e230d3d66e7d9c74933eae16e0d10234a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\draw3d.nest",
+      "path": "操作系统嵌套/submission/programs/user/draw3d.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1009,
+      "sha256": "2c76e4aab33641d699ed5c8cb08b42bd8a6679294bcad47dcd63b21ff70f9cf7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\hello.nest",
+      "path": "操作系统嵌套/submission/programs/user/hello.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 394,
+      "sha256": "b462f6567618ff453ea7b6cbe4bdf845cfad1140d3143d81fcc7e355cfd2a7f3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\msg_recv.nest",
+      "path": "操作系统嵌套/submission/programs/user/msg_recv.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 623,
+      "sha256": "703f998de611b51cc24546fc1ca19e7d10a84f9101a2d42e781537edff6b5de8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\msg_send.nest",
+      "path": "操作系统嵌套/submission/programs/user/msg_send.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1118,
+      "sha256": "e4daafe4549cce24c7b96c9935aee25f0689518a7b770f896323ea4da4a2010d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\spin.nest",
+      "path": "操作系统嵌套/submission/programs/user/spin.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 333,
+      "sha256": "49d3a23da31fc98d1e58956ceeac9ae4d9086b959c82b618aabcc182a27938bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\programs\\user\\sum.nest",
+      "path": "操作系统嵌套/submission/programs/user/sum.nest",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 579,
+      "sha256": "295bffe2a4f42d2a605598145f359ff92121603ff65cf8049303ef6306a9fc40"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\device.js",
+      "path": "操作系统嵌套/submission/src/host/device.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 24885,
+      "sha256": "183f848ae8b83d45ac2bfc5a1b02cf44d6af58aed6087f26e451cf8a7285a64b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\gfx.js",
+      "path": "操作系统嵌套/submission/src/host/gfx.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 43324,
+      "sha256": "08a4287e968b200baae89888cbb5b8a91bfb94ed236b933db95b8428ccfe60bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\icons.js",
+      "path": "操作系统嵌套/submission/src/host/icons.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6333,
+      "sha256": "8ff7f1603dc7e80ab3a8bcfe0e9b831bfc22a993aa17b8357fda8c7170c7c3bb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\main.js",
+      "path": "操作系统嵌套/submission/src/host/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11832,
+      "sha256": "389423eedc9306a7e3fff035e674c30158e8cb33a550ccfd82025450e92d79b7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\rootkernel.js",
+      "path": "操作系统嵌套/submission/src/host/rootkernel.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 50513,
+      "sha256": "b45fa224539f89fe56d4c3320393cac9124aeb709456eb53f0a966bacf96301f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\host\\vm.js",
+      "path": "操作系统嵌套/submission/src/host/vm.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 38886,
+      "sha256": "789b5eb6dee31beeb655d51ec50960ba21a2209dd61a51b0181d7857d68660cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\index.html",
+      "path": "操作系统嵌套/submission/src/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 306,
+      "sha256": "eda86ec5ad90bc9edc1fc08beaf83d1830e38dc5b7214458db704ef4550f524f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\apps.js",
+      "path": "操作系统嵌套/submission/src/root/apps.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 36818,
+      "sha256": "7295e9d23ee3879b73d9a413bf31020019dd549e7337fe567cd8af6166b3923e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\browser.js",
+      "path": "操作系统嵌套/submission/src/root/browser.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10295,
+      "sha256": "56e867ba8cad13e4a10921d9ac819cc2bd08c7611d35498dfa146e8b03460041"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\desktop.js",
+      "path": "操作系统嵌套/submission/src/root/desktop.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 39569,
+      "sha256": "399c0e5f2d99788b6a0be82877a3565eb989e00dc61dcaf9f9aac4c43b050f35"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\markdown.js",
+      "path": "操作系统嵌套/submission/src/root/markdown.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1823,
+      "sha256": "4e282814b2448156a519ce7dc59940a0772c26a8a790486b159667673d250c04"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\sheet.js",
+      "path": "操作系统嵌套/submission/src/root/sheet.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 31433,
+      "sha256": "e6a5b2a072e443e3aa0ef527c159d888d433ce43bce25077097154fc2b799a67"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\root\\widgets.js",
+      "path": "操作系统嵌套/submission/src/root/widgets.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13018,
+      "sha256": "9d9138f16ecc641af7080bb20eac6f8cd310bb82a0e7e6c9faf0e7577f91555c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\styles.css",
+      "path": "操作系统嵌套/submission/src/styles.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 30370,
+      "sha256": "c9dcc19cfb1d9a3322965ca2d6c30cfcdf15e07b320768cbb84b7ac7ed43bb09"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\bootstrap.mjs",
+      "path": "操作系统嵌套/submission/tools/bootstrap.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4403,
+      "sha256": "574c1b93bf9afd4134bd3fad61d9c08c551f035e5dd374971c5bda9f3e4aa664"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\build-fixtures.mjs",
+      "path": "操作系统嵌套/submission/tools/build-fixtures.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4199,
+      "sha256": "ad897591d100935ebbe4240c99683859976031cad85c7d5bf42fb9891c59d3f1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\cdp.mjs",
+      "path": "操作系统嵌套/submission/tools/cdp.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4148,
+      "sha256": "f175e3bbe83a622b8331a54c4520077888c95da66073cdc84c4351af7681142e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\gen-record.mjs",
+      "path": "操作系统嵌套/submission/tools/gen-record.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6809,
+      "sha256": "5c9d1dccf4afefc61e4e675ebf4c94314ed3b5f7d1cc1404d38a2a9c53c1e5f7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\scene-gen\\main.cjs",
+      "path": "操作系统嵌套/submission/tools/scene-gen/main.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1595,
+      "sha256": "38d82ce1e523a29609913dfed9d03082bf595ac3d412a575bb0ad655103e66be"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\scene-gen\\scene.html",
+      "path": "操作系统嵌套/submission/tools/scene-gen/scene.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 97,
+      "sha256": "9ee31264a9e4775be5c30ab6682c2f3ad6a05346057a1a9240808af5991aa126"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\scene-gen\\scene.js",
+      "path": "操作系统嵌套/submission/tools/scene-gen/scene.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 61157,
+      "sha256": "e795a84dc12827f0b2dffec813bc65b7388f68d7a25aaf13cdb42b9906ea66f5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\scene-gen\\wallpapers.html",
+      "path": "操作系统嵌套/submission/tools/scene-gen/wallpapers.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 102,
+      "sha256": "1df164923e13178ee0a10de89f82b5b9011355167dae4c60a41394884de2bffe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\tools\\scene-gen\\wallpapers.js",
+      "path": "操作系统嵌套/submission/tools/scene-gen/wallpapers.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11439,
+      "sha256": "f2304a604214f0e968c8a6b1b3b495ce8d6b97317be739f6a99579290e0c7f2a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 3539,
+      "sha256": "450bf47483cbd202bc2b0fa182ecc142f71329225adcc16964359c2ce913eccc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 2419,
+      "sha256": "df25dd867de5e6d666d658c9f83abf5c098be3e5c9714f1072f3b8ca20a3bd02"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第01题.md",
+      "path": "数学竞赛原创试题/submission/答案/第01题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 6620,
+      "sha256": "32763c6d8ea4e7f4425f1f37b627d97816bbf2a0dc0b88ca7ef70f83aa7a8ee5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第02题.md",
+      "path": "数学竞赛原创试题/submission/答案/第02题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4552,
+      "sha256": "d8edcd8423a28259ddb3508ffc4b4a0e5eb17f35c66efbd7461f6acceb23a123"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第03题.md",
+      "path": "数学竞赛原创试题/submission/答案/第03题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4663,
+      "sha256": "a39881bafad9abd646fb9f1172d5181d2ff83a705cb29e5fbcea793ad5bc2cbb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第04题.md",
+      "path": "数学竞赛原创试题/submission/答案/第04题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5365,
+      "sha256": "e568fa03bd31ce24d53124b4ed0e7a0963598a5a810ae207578ea9ebc7c4e378"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第05题.md",
+      "path": "数学竞赛原创试题/submission/答案/第05题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4574,
+      "sha256": "9fe3431e27cfedfe18518f2c9dab7fef76918abfa2b40d0e6321a98e8103f5db"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第06题.md",
+      "path": "数学竞赛原创试题/submission/答案/第06题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3713,
+      "sha256": "cee7a4953c2ea9a52303f3397e9f3d64f5ae1edf34fe6fa498f424ecdea2d247"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第07题.md",
+      "path": "数学竞赛原创试题/submission/答案/第07题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 8915,
+      "sha256": "a6595ca09573dfc2d9c1b3f7d731a611e2ca94e1521c0ff57568bdf30bdba290"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第08题.md",
+      "path": "数学竞赛原创试题/submission/答案/第08题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4810,
+      "sha256": "5b9d12efdffc81978d18c537034ace2ddeac8d7e8c62f9a9c7fac9c374f79ac0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第09题.md",
+      "path": "数学竞赛原创试题/submission/答案/第09题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 6683,
+      "sha256": "e24c9312c8d887bff4b3e9df2580048880862987b162e426c9cd43d07dfb50c7"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\claude\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5503,
+      "sha256": "bfcef0dfd30aae6f0a4ac12209fb768a1b10ed3da580e9c65af54e9e6d93c778"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6364,
+      "sha256": "f19e1cfc70a834d2a70095364e9588eaf2bd050730935f5e1d0abbb66932d687"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4671,
+      "sha256": "7deda68170041830b692f43985a68cc12cfd190b3bef285146a53fd21e449442"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4514,
+      "sha256": "b4138a4651c4db1b63ecc8247cfa6d3ba537ee84b0f5193a299b202a10fa6f87"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\README.md",
+      "path": "果冻冲击与造浪水槽/submission/README.md",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 2810,
+      "sha256": "98bd21936223559f163c86cc38431278768127c42f03b9f50da28f549b2663d3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\css\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/css/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 7864,
+      "sha256": "553d8aebc3ebb01b8c4a05adad7a2c9aff89369b16aa62d21b9b3760ede52844"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 1537,
+      "sha256": "42004083a6d181e4abeb4e17d6c0ea44b6a8c28212d635f5cb158279d12ab3cf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\app.js",
+      "path": "果冻冲击与造浪水槽/submission/js/app.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 13499,
+      "sha256": "8ad30e0de74f1f85a01daf60678f58034b6200fb49b4fd5745ba1fbfc925e246"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\audio.js",
+      "path": "果冻冲击与造浪水槽/submission/js/audio.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 29606,
+      "sha256": "6d6c821adb6ff198b3468d0aa08d1978601e211641bb8e1367fc799814b37a3f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\core.js",
+      "path": "果冻冲击与造浪水槽/submission/js/core.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 7180,
+      "sha256": "e91bc34d57e3d7abc0b9385274e1049d1077620ee6b5722cb8e463df7b18074e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\jelly-sim.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly-sim.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 33239,
+      "sha256": "9608f4ccee75368e942709adb310ba1a7e980c9403497d4ea2a0b939d7e4802f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\jelly-view.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly-view.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 42098,
+      "sha256": "c1d7aeba51785a084b6a95460322d3947c4c3e25bfea9610dd83c658c14fa5ba"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\post.js",
+      "path": "果冻冲击与造浪水槽/submission/js/post.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 10088,
+      "sha256": "aae17f2f153afaa72cf1d15f1b52ca3ad4128d6ae67d5fb083f64a051fb602cd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\shaders-common.js",
+      "path": "果冻冲击与造浪水槽/submission/js/shaders-common.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6360,
+      "sha256": "6eef2c6c61311c7b2866e31c0d8763497cb0f7f76a85d61fec2d9f3bd994f456"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\tank-sim.js",
+      "path": "果冻冲击与造浪水槽/submission/js/tank-sim.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 53483,
+      "sha256": "7443e51364e1fdc9303415118e9b1429ec3d544d088051ce1b2b1d4cabbf6c6b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\tank-view.js",
+      "path": "果冻冲击与造浪水槽/submission/js/tank-view.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 33930,
+      "sha256": "8be5cf338d68a16138c4ad9083dd3fff55f76148daa17d20bddf1fe0def40db4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\js\\ui.js",
+      "path": "果冻冲击与造浪水槽/submission/js/ui.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 21415,
+      "sha256": "c680c62346130c4625419bf362bd927f9cf76f73957956b605313eb52fa73ecc"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\通用数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1374,
+      "sha256": "57234196c4198ccf651b04ca5810c51e169f898651f6c4d5cd1c20f77c692564"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1420,
+      "sha256": "e28996685091a99c7b909d17aba3646667d1e57a4f7a447e105aa579890157cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\solution.cpp",
+      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 52309,
+      "sha256": "682e39c34610742e54756e8443d990ccaaeb97b6a0f81a5b6274ca4f5b08ca83"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 2652,
+      "sha256": "137fbaa389e253cf07203ccb2a8e8e01a7f113a24e7f1a67002b64d45447cd24"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1344,
+      "sha256": "862c29ab62afbc5b0a8ef89e1ed3aca85a524c72d24e268d033ff5ad2eccfd03"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 624,
+      "sha256": "5eecef5c54e8411f3eb992d5443d23c3ed952b946f3167f4c7381b8b457692dc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\答案\\第02题.json",
+      "path": "鲁班锁拆解/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 722,
+      "sha256": "0f5f83146de47019949c087356e790e4041d3653099c59fcf55dfb424ae292da"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\答案\\第03题.json",
+      "path": "鲁班锁拆解/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 936,
+      "sha256": "e476209e793739144359ab8a5a97ff212c99adf795e7157f903ba6e36522c6a8"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\dist",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\NVIDIA_B200网页艺术\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\dev",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\Transformer前向推理的GPU加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\app.js",
+      "reason": "构建输出；生成入口 package.json"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\assets\\wallpapers",
+      "reason": "可由 tools/scene-gen/wallpapers.js 再生成"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\fixtures\\base-scene.json",
+      "reason": "可由 tools/scene-gen/scene.js 再生成"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\fixtures\\rootfs",
+      "reason": "可由 tools/build-fixtures.mjs 再生成"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\src\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\tools",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\笔记",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": [],
+  "created": "2026-11-06T05:50:24"
+}

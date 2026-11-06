@@ -1,0 +1,21 @@
+const {app,BrowserWindow,ipcMain,dialog,session}=require('electron');
+const fs=require('node:fs');const path=require('node:path');
+const args=process.argv;const arg=(key,fallback)=>{const a=args.find(x=>x.startsWith(key+'='));if(a)return a.slice(key.length+1);const i=args.indexOf(key);return i<0?fallback:args[i+1]};
+const dataDir=path.resolve(arg('--data-dir',path.join(app.getPath('userData'),'NestWorkspace')));
+fs.mkdirSync(dataDir,{recursive:true});app.setPath('userData',dataDir);
+app.commandLine.appendSwitch('remote-debugging-port',arg('--remote-debugging-port','19156'));
+app.commandLine.appendSwitch('disable-renderer-backgrounding');app.commandLine.appendSwitch('disable-background-timer-throttling');app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');app.commandLine.appendSwitch('disable-features','CalculateNativeWinOcclusion');
+let win;
+app.whenReady().then(()=>{
+ win=new BrowserWindow({title:'层界 NEST · Nested OS',width:+arg('--width',1600),height:+arg('--height',1000),useContentSize:true,minWidth:1000,minHeight:680,backgroundColor:'#e6eae5',autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,webviewTag:true,backgroundThrottling:false}});
+ win.setMenuBarVisibility(false);win.loadFile(path.join(__dirname,'dist/index.html'));
+ win.webContents.on('will-attach-webview',(event,prefs,params)=>{delete prefs.preload;prefs.nodeIntegration=false;prefs.contextIsolation=true;prefs.sandbox=true;prefs.backgroundThrottling=false;if(!/^https?:\/\//.test(params.src))event.preventDefault()});
+ win.webContents.on('did-attach-webview',(_,contents)=>{contents.setBackgroundThrottling(false);contents.setWindowOpenHandler(({url})=>{win.webContents.send('browser-open',{url,guestId:contents.id});return{action:'deny'}});contents.on('will-navigate',(event,url)=>{if(!/^https?:\/\//.test(url))event.preventDefault()})});
+ session.defaultSession.setPermissionRequestHandler((_,permission,callback)=>callback(['fullscreen','mediaKeySystem'].includes(permission)));
+});
+app.on('window-all-closed',()=>app.quit());
+ipcMain.handle('load-state',()=>{try{return JSON.parse(fs.readFileSync(path.join(dataDir,'workspace.json'),'utf8'))}catch{return null}});
+ipcMain.handle('save-state',(_,state)=>{const tmp=path.join(dataDir,'workspace.tmp');fs.writeFileSync(tmp,JSON.stringify(state));fs.renameSync(tmp,path.join(dataDir,'workspace.json'));return true});
+ipcMain.handle('export-file',async(_,file)=>{const r=await dialog.showSaveDialog(win,{defaultPath:path.join(dataDir,path.basename(file.name))});if(r.canceled)return false;fs.writeFileSync(r.filePath,file.content,'utf8');return true});
+ipcMain.handle('import-file',async()=>{const r=await dialog.showOpenDialog(win,{defaultPath:dataDir,properties:['openFile','multiSelections']});if(r.canceled)return[];return r.filePaths.map(p=>({name:path.basename(p),content:fs.readFileSync(p,'utf8')}))});
+ipcMain.on('window-control',(_,op)=>{if(op==='minimize')win.minimize();if(op==='maximize')win.isMaximized()?win.unmaximize():win.maximize();if(op==='close')win.close()});

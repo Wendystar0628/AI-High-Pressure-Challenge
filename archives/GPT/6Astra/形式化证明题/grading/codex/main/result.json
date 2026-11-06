@@ -1,0 +1,57 @@
+{
+  "task": "形式化证明题",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "第 1 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem1.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem1。"
+    },
+    {
+      "name": "第 2 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem2.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem2。"
+    },
+    {
+      "name": "第 3 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem3.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem3。"
+    },
+    {
+      "name": "第 4 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "选定提交中缺少 Problem4.lean，未提交主定理 problem4，记 0 分。"
+    },
+    {
+      "name": "第 5 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "选定提交中缺少 Problem5.lean，未提交主定理 problem5，记 0 分。"
+    },
+    {
+      "name": "第 6 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem6.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem6。"
+    },
+    {
+      "name": "第 7 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem7.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem7。"
+    },
+    {
+      "name": "第 8 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem8.lean 单独编译退出码为 0，无错误、无 sorry 警告，且含主定理 problem8。"
+    }
+  ],
+  "metrics": {},
+  "notes": "评分版本为最近一次 git 提交 d446107fbc05d2323a8fc871a58cc18c9affb99e（Prove Problem 3 by rising families and disjoint intervals），已 clone 到工作目录并检出。原工作目录的 Problem4.lean 仅有辅助引理、缺少 problem4，属于未完成状态，故按规则回退；选定提交缺第 4、5 题。只核验主定理是否存在及单独编译结果，未另查公理、未逐字核对命题，未运行性能基准。当前已判定 8/8 题，总分 75/100。"
+}

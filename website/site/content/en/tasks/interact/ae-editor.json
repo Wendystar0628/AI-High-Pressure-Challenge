@@ -1,0 +1,25 @@
+{
+  "brief": [
+    "The editor covers projects and layers, keyframes and curves, expressions, vectors and procedural nodes, mesh deformation and spatial fields, 3D solids and materials, camera and depth of field, particles and collisions, time effects and motion blur, sound and export. Art style, layout, the piece's theme and its camera work are the model's own.",
+    {
+      "ul": [
+        "Geometry, deformation, lighting, particles and time sampling share matching data; change a source object and everything downstream updates.",
+        "The piece must actually use the 12 required technique groups and show two complete pipelines: source path or text → procedural geometry and solid → mesh or field deformation → material, lighting and shadow; deformed geometry → particle emission and collision → events and trails → instancing or time effects.",
+        "Every effect in the piece can be found and edited in the editor, using the same editing and rendering as an empty project.",
+        "Canvas preview and final export render with WebGL 2; graphics, models, materials and content are self-made, and music and sound effects come from synth layers."
+      ]
+    }
+  ],
+  "points": [
+    "**Coupling**: dozens of features pull on one another, and any change must flow down the dependency chain in real time.",
+    "**Procedural geometry**: output from paths, text, operators and node groups feeds on into solids, deformation, emission and collision.",
+    "**3D and particles**: real extrusion, holes, bevels and deformation with materials, shadows and depth of field; deformed geometry drives particles, collision events and trails.",
+    "**The 15-second piece**: an opening, development, build-up and close, with the main elements carried through rather than a reel of unrelated feature clips."
+  ],
+  "scoring": [
+    "**Features dominate**: six of the eight directions test editor features, 82 points in all, with 3D scenes and rendering heaviest at 22; showcase animation is worth 12 and interface design 6.",
+    "**Real effect**: geometry, evaluation, simulation and time effects are judged by actual results, and whether features work is judged by operating them in an empty project.",
+    "**No substitutes**: a beautiful piece does not make up for missing features, nor many features for a weak piece; each flaw counts once, in its own direction.",
+    "**Speed not scored**: render frame rate and speed on large projects are not scored; continuity of motion, camera and state still is."
+  ]
+}

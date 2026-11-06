@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- 页面模板：about（阅读页）。路由插件按它生成该类型的每个路由，中文在根路径、英文在 /en/。
+     可用记号见 site/README.md「页面模板」；
+     head / top / bottom 三个 @ 标记由插件换成站点头部、命令栏和页脚，别删。
+     本页负责人只改 <main> 里面和 src/pages/about/。 -->
+<html lang="{{htmlLang}}" data-st-paper="neutral" data-st-cut="standard" data-st-ground="stars" data-st-density="standard" data-st-motion="full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <!--@head-->
+  </head>
+  <body class="st site" data-page="about" data-lang="{{lang}}" data-id="{{id}}">
+    <!--@top-->
+    <main id="main" class="page rd-page page-about" tabindex="-1">
+      <div class="rd-spread">
+        <aside class="rd-aside" data-slot="aside" aria-label="{{t:about.aside.label}}"></aside>
+        <article class="rd-paper" data-slot="page">
+          <header class="rd-head">
+            <p class="st-eyebrow slash">{{t:common.pages.about.en}}</p>
+            <h1 class="rd-title">{{t:common.pages.about.title}}</h1>
+            <div class="st-tri rd-tri" aria-hidden="true"><i></i><i></i><i></i></div>
+          </header>
+        </article>
+      </div>
+    </main>
+    <!--@bottom-->
+    <script type="module" src="/src/pages/about/main.js"></script>
+  </body>
+</html>

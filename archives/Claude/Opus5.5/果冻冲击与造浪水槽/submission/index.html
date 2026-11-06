@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>果冻冲击与造浪水槽</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <main id="stage">
+    <canvas id="view"></canvas>
+    <div id="hud" class="ui">
+      <div id="title"><b id="sceneTitle">重球冲击果冻台</b><span id="sceneSub"></span></div>
+      <div id="readout"></div>
+    </div>
+    <div id="loading">
+      <div class="ld-title">果冻冲击与造浪水槽</div>
+      <div class="ld-sub" id="loadingMsg">正在初始化 WebGPU…</div>
+    </div>
+    <div id="fatal"></div>
+  </main>
+  <footer id="transport" class="ui">
+    <div class="phases" id="phases"></div>
+    <div class="ctrl" id="ctrl"></div>
+  </footer>
+  <aside id="panel" class="ui">
+    <nav id="sceneTabs">
+      <button data-scene="jelly" class="tab"><i>场景一</i>重球冲击果冻台</button>
+      <button data-scene="tank" class="tab"><i>场景二</i>多密度球与造浪水槽</button>
+    </nav>
+    <div id="params"></div>
+    <div id="keys"></div>
+  </aside>
+</div>
+<script src="js/core.js"></script>
+<script src="js/shaders-common.js"></script>
+<script src="js/post.js"></script>
+<script src="js/jelly-sim.js"></script>
+<script src="js/jelly-view.js"></script>
+<script src="js/tank-sim.js"></script>
+<script src="js/tank-view.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

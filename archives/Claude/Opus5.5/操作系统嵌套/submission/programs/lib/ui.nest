@@ -1,0 +1,206 @@
+// 应用界面库：应用把界面描述成可复制的节点树，经 sys("ui") 提交给显示接口；
+// 输入以消息形式从窗口管理器（或投送目标）到达，这里按本应用自己的命中表分发。
+include "/System/lib/sys.nest";
+
+let APP = null;          // 应用的回调表
+let VIEWS_UI = {};       // sid -> 视图（源窗口一个；投送时再加一个）
+let UI_MAIN = null;
+let UI_DIRTY = true;
+let UI_PRESS = null;
+let UI_CUR = null;
+let UI_DONE = false;
+
+// —— 节点 ——
+function N(k, x, y, w, h, cls, c) { return { k: k, x: x, y: y, w: w, h: h, cls: cls, c: c }; }
+function T(k, x, y, w, h, cls, text) { return { k: k, x: x, y: y, w: w, h: h, cls: cls, text: text }; }
+function hit(x, y, w, h, act, data) { push(UI_CUR.hits, { x: x, y: y, w: w, h: h, act: act, data: data }); }
+
+// 带命中的按钮。opts: tid, label, a(属性), on(选中), dis(禁用), cls, icon
+function B(k, x, y, w, h, text, act, data, opts) {
+  let cls = "btn";
+  let n = { k: k, x: x, y: y, w: w, h: h, text: text };
+  if (opts != null) {
+    if (opts.cls != null) cls = cls + " " + opts.cls;
+    if (opts.on) cls = cls + " on";
+    if (opts.tid != null) n.tid = opts.tid;
+    if (opts.a != null) n.a = opts.a;
+    if (opts.icon != null) n.icon = opts.icon;
+    if (opts.dis) { n.dis = true; cls = cls + " disabled"; }
+  }
+  n.label = opts != null && opts.label != null ? opts.label : text;
+  n.cls = cls;
+  n.role = "button";
+  if (opts == null || !opts.dis) hit(x, y, w, h, act, data);
+  return n;
+}
+function INPUT(k, x, y, w, h, val, opts) {
+  let n = { k: k, t: "input", x: x, y: y, w: w, h: h, val: val, cls: "field" };
+  if (opts != null) {
+    if (opts.tid != null) n.tid = opts.tid;
+    if (opts.ph != null) n.ph = opts.ph;
+    if (opts.label != null) n.label = opts.label;
+    if (opts.a != null) n.a = opts.a;
+    if (opts.type != null) n.itype = opts.type;
+    if (opts.dis) n.dis = true;
+  }
+  return n;
+}
+function SELECT(k, x, y, w, h, val, options, opts) {
+  let n = { k: k, t: "select", x: x, y: y, w: w, h: h, val: val, opts: options, cls: "field" };
+  if (opts != null) {
+    if (opts.tid != null) n.tid = opts.tid;
+    if (opts.label != null) n.label = opts.label;
+    if (opts.dis) n.dis = true;
+  }
+  return n;
+}
+function RANGE(k, x, y, w, h, val, min_v, max_v, step, opts) {
+  let n = { k: k, t: "input", itype: "range", x: x, y: y, w: w, h: h, val: val, min: min_v, max: max_v, step: step, cls: "range" };
+  if (opts != null) {
+    if (opts.tid != null) n.tid = opts.tid;
+    if (opts.label != null) n.label = opts.label;
+    if (opts.dis) n.dis = true;
+  }
+  return n;
+}
+
+// —— 视图 ——
+function view_new(sid, w, h, kind) {
+  let v = { sid: sid, w: w, h: h, kind: kind, hits: [] };
+  VIEWS_UI[sid] = v;
+  return v;
+}
+function ui_invalidate() { UI_DIRTY = true; }
+
+function ui_render_view(v) {
+  UI_CUR = v;
+  v.hits = [];
+  let children = APP.render(v);
+  sys("ui", v.sid, { k: "app", x: 0, y: 0, w: v.w, h: v.h, cls: "app-root", c: children });
+}
+function ui_refresh() {
+  UI_DIRTY = false;
+  let ids = keys(VIEWS_UI);
+  for (let s of ids) ui_render_view(VIEWS_UI[s]);
+}
+function ui_find(v, x, y) {
+  let h = v.hits;
+  let i = len(h) - 1;
+  while (i >= 0) {
+    let r = h[i];
+    if (x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h) return r;
+    i = i - 1;
+  }
+  return null;
+}
+
+function ui_pointer(v, ev) {
+  let k = ev.k;
+  if (k == "down") {
+    let r = ui_find(v, ev.x, ev.y);
+    UI_PRESS = { sid: v.sid, r: r };
+    if (APP.down != null) APP.down(v, r, ev);
+  } else if (k == "up") {
+    let p = UI_PRESS;
+    UI_PRESS = null;
+    if (APP.up != null) APP.up(v, ev);
+    if (p != null && p.sid == v.sid && p.r != null) {
+      let r = ui_find(v, ev.x, ev.y);
+      if (r != null && r.act == p.r.act && APP.act != null) APP.act(v, r.act, r.data, ev);
+    }
+  } else if (k == "move") {
+    if (APP.move != null) APP.move(v, ev);
+  } else if (k == "dbl") {
+    let r = ui_find(v, ev.x, ev.y);
+    if (r != null && APP.dbl != null) APP.dbl(v, r.act, r.data, ev);
+  } else if (k == "ctx") {
+    let r = ui_find(v, ev.x, ev.y);
+    if (APP.ctx != null) APP.ctx(v, r, ev);
+  } else if (k == "wheel") {
+    let r = ui_find(v, ev.x, ev.y);
+    if (APP.wheel != null) APP.wheel(v, r, ev);
+  } else if (k == "keydown" || k == "keyup") {
+    if (APP.key != null) APP.key(v, ev);
+  }
+}
+
+function ui_handle(m) {
+  let d = m.data;
+  if (d == null) return;
+  let ty = d.type;
+  if (ty == "ptr") { ui_pointer(UI_MAIN, d.ev); return; }
+  if (ty == "proj_input") {
+    let v = VIEWS_UI[d.sid];
+    if (v != null) {
+      if (d.ev.k == "value") { if (APP.value != null) APP.value(v, d.ev.key, d.ev.value); }
+      else ui_pointer(v, d.ev);
+    }
+    return;
+  }
+  if (ty == "value") {
+    let v = VIEWS_UI[d.sid];
+    if (v != null && APP.value != null) APP.value(v, d.key, d.value);
+    return;
+  }
+  if (ty == "resize") {
+    UI_MAIN.w = d.w; UI_MAIN.h = d.h; UI_DIRTY = true;
+    if (APP.resized != null) APP.resized(UI_MAIN);
+    return;
+  }
+  if (ty == "proj_resize") {
+    let v = VIEWS_UI[d.sid];
+    if (v != null) { v.w = d.w; v.h = d.h; UI_DIRTY = true; if (APP.resized != null) APP.resized(v); }
+    return;
+  }
+  if (ty == "focus") { if (APP.focus != null) APP.focus(d.on); return; }
+  if (ty == "close") {
+    if (APP.close != null) { if (APP.close()) UI_DONE = true; }
+    else UI_DONE = true;
+    return;
+  }
+  if (APP.msg != null) APP.msg(m);
+}
+
+// 应用主循环：interval 为定时回调周期（虚拟秒），null 表示只等消息
+function app_run(handlers, interval) {
+  APP = handlers;
+  ui_refresh();
+  while (!UI_DONE) {
+    let m = sys("recv", interval);
+    if (m == null) {
+      if (APP.tick != null) APP.tick();
+    } else {
+      ui_handle(m);
+      let n = 0;
+      while (n < 16 && !UI_DONE) {
+        let m2 = sys("recv", 0);
+        if (m2 == null) break;
+        ui_handle(m2);
+        n = n + 1;
+      }
+    }
+    if (UI_DIRTY && !UI_DONE) ui_refresh();
+  }
+}
+
+// 打开应用窗口
+function app_window(title, app, w, h, icon, opts) {
+  let o = { title: title, app: app, w: w, h: h, icon: icon };
+  if (opts != null) { o.x = opts.x; o.y = opts.y; o.max = opts.max; }
+  let r = sys("win_open", o);
+  UI_MAIN = view_new(r.sid, w, h, "main");
+  UI_MAIN.wid = r.wid;
+  return r;
+}
+function fmt_bytes(n) {
+  if (n < 1024) return str(floor(n)) + " B";
+  if (n < 1048576) return fmt(n / 1024, 1) + " KB";
+  if (n < 1073741824) return fmt(n / 1048576, 1) + " MB";
+  return fmt(n / 1073741824, 2) + " GB";
+}
+function fmt_units(n) {
+  if (n < 1000) return str(floor(n));
+  if (n < 1000000) return fmt(n / 1000, 1) + " K";
+  if (n < 1000000000) return fmt(n / 1000000, 2) + " M";
+  return fmt(n / 1000000000, 2) + " G";
+}

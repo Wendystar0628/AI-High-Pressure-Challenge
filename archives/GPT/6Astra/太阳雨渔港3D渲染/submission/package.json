@@ -1,0 +1,15 @@
+{
+  "name": "shirasame-sunshower-harbor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An offline, procedural Three.js harbor diorama",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

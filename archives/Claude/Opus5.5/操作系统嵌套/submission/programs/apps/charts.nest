@@ -1,0 +1,417 @@
+// 图表工作台（图表进程）：坐标计算、过渡和绘图提交都在这里，数据接收在 chart_recv 进程。
+// 过渡用系统虚拟时间推进；源窗口和投送窗口显示同一结果，各按自己的尺寸计算坐标。
+include "/System/lib/ui.nest";
+
+let ME = null;
+let RECV = 0;
+let SOURCES = [];
+let SOURCE_ID = "";
+let RANGE_TEXT = "A1:D4", LABEL_TEXT = "A", SERIES_TEXT = "B,C,D", YMAX_TEXT = "";
+let TYPE = "bar";
+let CONN = "未连接";
+let CONN_CLS = "";
+let NOTE = "选择工作簿和区域后点“连接”";
+let SOURCE_TITLE = "";
+let CONN_RANGE = "";
+let VERSION = -1;
+let DATA = null;          // { labels, series:[{name, values}], rng }
+let SHOWN = null;         // 当前显示值（过渡中间值）
+let ANIM = null;
+let HOVER = null;
+let PICKED = null;
+let PROJ = {};
+let POPUP = null;
+let RECV_COUNT = 0;
+let PROCESSED = 0;
+let LAST_META = "";
+const COLORS = ["#a78bff", "#ffd24a", "#4fe3c9", "#ff8f77", "#7cc4ff", "#ff9fd6", "#b6e36a", "#f0a35e"];
+const TOP_H = 76;
+const ANIM_DUR = 0.55;
+
+function col_index(s) {
+  let c = char_code(upper(trim(s)), 0);
+  return c - 65;
+}
+function parse_range(t) {
+  let parts = split(upper(trim(t)), ":");
+  let a = parts[0], b = len(parts) > 1 ? parts[1] : parts[0];
+  let c0 = char_code(a, 0) - 65, r0 = num(substr(a, 1));
+  let c1 = char_code(b, 0) - 65, r1 = num(substr(b, 1));
+  if (r0 == null || r1 == null || c0 < 0 || c1 < 0) return null;
+  return { c0: min(c0, c1), c1: max(c0, c1), r0: min(r0, r1), r1: max(r0, r1) };
+}
+function connect_now() {
+  let rng = parse_range(RANGE_TEXT);
+  if (rng == null) { CONN = "区域无效"; NOTE = "区域应写成 A1:D4"; publish_meta(); ui_invalidate(); return; }
+  if (SOURCE_ID == "") { NOTE = "没有已打开的工作簿，请先在根系统打开电子表格"; ui_invalidate(); return; }
+  VERSION = -1;
+  CONN = "连接中";
+  CONN_RANGE = RANGE_TEXT;
+  NOTE = "正在取得所选区域的完整数据";
+  send(RECV, { type: "connect", doc: SOURCE_ID, range: RANGE_TEXT });
+  publish_meta();
+  ui_invalidate();
+}
+// 把接收进程交来的完整选区变成图表数据（计算量随规模增长）
+function process_data(d) {
+  let rng = parse_range(d.range);
+  if (rng == null) return;
+  let rows = d.rows;
+  let nc = rng.c1 - rng.c0 + 1;
+  let lc = col_index(LABEL_TEXT) - rng.c0;
+  if (lc < 0 || lc >= nc) lc = 0;
+  let sc = [];
+  let parts = split(SERIES_TEXT, ",");
+  for (let p of parts) {
+    let t = trim(p);
+    if (t == "") continue;
+    let i = col_index(t) - rng.c0;
+    if (i >= 0 && i < nc && i != lc) push(sc, i);
+  }
+  if (len(sc) == 0) { for (let i = 0; i < nc; i++) if (i != lc) push(sc, i); }
+  // 第一行含非数字时当作表头
+  let header = false;
+  if (len(rows) > 0) {
+    for (let i of sc) { let v = rows[0][i]; if (type(v) == "string" && num(v) == null) header = true; }
+  }
+  let start = header ? 1 : 0;
+  let labels = [];
+  let series = [];
+  for (let i of sc) push(series, { name: header ? str(rows[0][i]) : "列 " + char_from(65 + rng.c0 + i), values: [] });
+  for (let r = start; r < len(rows); r++) {
+    let row = rows[r];
+    push(labels, row[lc] == null ? "" : str(row[lc]));
+    for (let k = 0; k < len(sc); k++) {
+      let v = row[sc[k]];
+      let n = type(v) == "number" ? v : (type(v) == "string" ? num(v) : null);
+      push(series[k].values, n == null ? 0 : n);
+    }
+  }
+  sys("work", 0);
+  let from = SHOWN;
+  DATA = { labels: labels, series: series };
+  let to = [];
+  for (let s of series) push(to, s.values);
+  let start_vals = [];
+  for (let k = 0; k < len(to); k++) {
+    let a = [];
+    for (let i = 0; i < len(to[k]); i++) {
+      let old = from != null && k < len(from) && i < len(from[k]) ? from[k][i] : 0;
+      push(a, old);
+    }
+    push(start_vals, a);
+  }
+  ANIM = { from: start_vals, to: to, t0: time(), dur: ANIM_DUR };
+  SHOWN = start_vals;
+  VERSION = d.version;
+  SOURCE_TITLE = d.title;
+  PROCESSED = PROCESSED + 1;
+  ui_invalidate();
+}
+function nice_ceil(v) {
+  if (v <= 0) return 1;
+  let e = pow(10, floor(log(v) / 2.302585));
+  let f = v / e;
+  let n = f <= 1 ? 1 : (f <= 2 ? 2 : (f <= 5 ? 5 : 10));
+  return n * e;
+}
+function fmt_val(v) {
+  if (abs(v) >= 1000) return str(floor(v));
+  if (v == floor(v)) return str(v);
+  return fmt(v, 2);
+}
+// 绘图：返回指令列表，同时登记数据点的命中区域
+function plot_ops(v, x0, y0, W, H) {
+  let ops = [];
+  push(ops, ["rrect", 0, 0, W, H, "#10132a", 10]);
+  if (DATA == null || SHOWN == null || len(DATA.labels) == 0 || len(SHOWN) == 0) {
+    push(ops, ["text", W / 2, H / 2, DATA == null ? "等待数据：选择工作簿和区域后点“连接”" : "所选区域没有数据行", "#7c82a8", 14, "", "center"]);
+    return ops;
+  }
+  let ml = 56, mr = 18, mt = 46, mb = 42;
+  let pw = W - ml - mr, ph = H - mt - mb;
+  if (pw < 40 || ph < 30) return ops;
+  let vmax = 0, vmin = 0;
+  for (let s of SHOWN) for (let n of s) { if (n > vmax) vmax = n; if (n < vmin) vmin = n; }
+  if (ANIM != null) for (let s of ANIM.to) for (let n of s) { if (n > vmax) vmax = n; if (n < vmin) vmin = n; }
+  let ym = YMAX_TEXT != "" ? num(YMAX_TEXT) : null;
+  let top = ym != null && ym > 0 ? ym : nice_ceil(vmax * 1.08);
+  let bot = vmin < 0 ? -nice_ceil(-vmin) : 0;
+  let range = top - bot;
+  // 标题
+  push(ops, ["text", 14, 22, (SOURCE_TITLE != "" ? SOURCE_TITLE : "数据") + " · " + CONN_RANGE + " · 版本 " + str(VERSION), "#eceffd", 14, "600"]);
+  // 图例
+  let lx = W - 14;
+  let si = len(DATA.series) - 1;
+  while (si >= 0) {
+    let name = DATA.series[si].name;
+    let w = len(name) * 13 + 22;
+    lx = lx - w;
+    if (lx > W / 2) {
+      push(ops, ["rrect", lx, 30, 11, 11, COLORS[si % 8], 3]);
+      push(ops, ["text", lx + 15, 40, name, "#aab0d0", 12]);
+    }
+    si = si - 1;
+  }
+  // 坐标轴与网格
+  let ticks = 5;
+  for (let i = 0; i <= ticks; i++) {
+    let val = bot + range * i / ticks;
+    let y = mt + ph - ph * i / ticks;
+    push(ops, ["line", ml, y, ml + pw, y, i == 0 ? "#6c7198" : "rgba(170,176,208,.16)", 1]);
+    push(ops, ["text", ml - 8, y + 4, fmt_val(val), "#aab0d0", 11, "", "right"]);
+  }
+  let nl = len(DATA.labels);
+  let group = pw / nl;
+  let zero = mt + ph - (0 - bot) / range * ph;
+  for (let i = 0; i < nl; i++) {
+    let cx = ml + group * (i + 0.5);
+    let lab = DATA.labels[i];
+    if (group > 34 || i % 2 == 0) push(ops, ["text", cx, mt + ph + 18, lab, "#cdd3f5", 12, "", "center"]);
+  }
+  let ns = len(SHOWN);
+  if (TYPE == "bar") {
+    let bw = group * 0.76 / ns;
+    if (bw > 56) bw = 56;
+    let gw = bw * ns;
+    for (let s = 0; s < ns; s++) {
+      for (let i = 0; i < nl && i < len(SHOWN[s]); i++) {
+        let val = SHOWN[s][i];
+        let h = abs(val) / range * ph;
+        let x = ml + group * (i + 0.5) - gw / 2 + s * bw;
+        let y = val >= 0 ? zero - h : zero;
+        let sel = PICKED != null && PICKED.s == s && PICKED.i == i;
+        let hov = HOVER != null && HOVER.s == s && HOVER.i == i;
+        push(ops, ["rrect", x + 1, y, bw - 2, h < 1 ? 1 : h, COLORS[s % 8], 3]);
+        if (sel || hov) push(ops, ["stroke", x, y - 1, bw, (h < 1 ? 1 : h) + 2, "#ffffff", 2]);
+        if (bw > 26) push(ops, ["text", x + bw / 2, y - 5, fmt_val(val), "#eceffd", 11, "", "center"]);
+        hit(x0 + x, y0 + (y < mt ? mt : y) - 6, bw, (h < 8 ? 8 : h) + 12, "point", { s: s, i: i });
+      }
+    }
+  } else {
+    for (let s = 0; s < ns; s++) {
+      let pts = [];
+      for (let i = 0; i < nl && i < len(SHOWN[s]); i++) {
+        let x = ml + group * (i + 0.5);
+        let y = zero - SHOWN[s][i] / range * ph;
+        push(pts, x);
+        push(pts, y);
+      }
+      push(ops, ["polyline", pts, COLORS[s % 8], 2.5]);
+      for (let i = 0; i < nl && i < len(SHOWN[s]); i++) {
+        let x = ml + group * (i + 0.5);
+        let y = zero - SHOWN[s][i] / range * ph;
+        let sel = PICKED != null && PICKED.s == s && PICKED.i == i;
+        let hov = HOVER != null && HOVER.s == s && HOVER.i == i;
+        push(ops, ["circle", x, y, sel || hov ? 6.5 : 4.5, COLORS[s % 8], "#10132a", 2]);
+        if (group > 44) push(ops, ["text", x, y - 10, fmt_val(SHOWN[s][i]), "#eceffd", 11, "", "center"]);
+        hit(x0 + x - 10, y0 + y - 10, 20, 20, "point", { s: s, i: i });
+      }
+    }
+  }
+  // 悬停提示
+  let tip = HOVER != null ? HOVER : PICKED;
+  if (tip != null && tip.s < len(DATA.series) && tip.i < len(DATA.labels) && tip.i < len(DATA.series[tip.s].values)) {
+    let text = DATA.labels[tip.i] + " · " + DATA.series[tip.s].name + "：" + fmt_val(DATA.series[tip.s].values[tip.i]);
+    let w = len(text) * 13 + 20;
+    if (w > W - 20) w = W - 20;
+    push(ops, ["rrect", W - w - 12, H - 30, w, 24, "rgba(30,34,70,.95)", 6]);
+    push(ops, ["text", W - w - 2, H - 13, text, "#ffffff", 12]);
+  }
+  return ops;
+}
+function render(v) {
+  let W = v.w, H = v.h;
+  let out = [];
+  let opts = [];
+  for (let s of SOURCES) push(opts, [s.id, s.title]);
+  if (len(opts) == 0) push(opts, ["", "（没有已打开的工作簿）"]);
+  let x = 8;
+  let sw = W > 700 ? 190 : 120;
+  push(out, SELECT("source", x, 6, sw, 28, SOURCE_ID, opts, { tid: "chart-source", label: "工作簿" }));
+  x = x + sw + 4;
+  push(out, INPUT("range", x, 6, 84, 28, RANGE_TEXT, { tid: "chart-range", label: "数据区域", ph: "A1:D4" }));
+  x = x + 88;
+  push(out, INPUT("label", x, 6, 44, 28, LABEL_TEXT, { tid: "chart-label-column", label: "标签列", ph: "标签" }));
+  x = x + 48;
+  push(out, INPUT("series", x, 6, 84, 28, SERIES_TEXT, { tid: "chart-series", label: "数值列（逗号分隔）", ph: "B,C,D" }));
+  x = x + 88;
+  push(out, B("conn", x, 6, 54, 28, "连接", "connect", null, { tid: "chart-connect", cls: "small primary" }));
+  x = x + 57;
+  push(out, B("disc", x, 6, 54, 28, "断开", "disconnect", null, { tid: "chart-disconnect", cls: "small" }));
+  x = x + 57;
+  if (v.kind == "main" && x + 54 < W) push(out, B("proj", W - 62, 6, 54, 28, "投送", "project", null, { tid: "window-project", cls: "small", label: "投送到祖先桌面" }));
+  // 第二行
+  push(out, { k: "type", x: 8, y: 40, w: 94, h: 28, cls: "btn small", tid: "chart-type", role: "button", label: "切换图表类型", text: TYPE == "bar" ? "柱状图 ⇄" : "折线图 ⇄", a: { "data-value": TYPE } });
+  hit(8, 40, 94, 28, "type", null);
+  push(out, T("ly", 106, 40, 48, 28, "field-label", "Y上限"));
+  push(out, INPUT("ymax", 156, 40, 70, 28, YMAX_TEXT, { tid: "chart-ymax", label: "Y 轴上限（留空自动）", ph: "自动", type: "number" }));
+  let note = CONN + (VERSION >= 0 ? " · 已处理版本 " + str(VERSION) : "") + " · " + NOTE;
+  push(out, { k: "note", x: 234, y: 43, w: W - 242, h: 22, cls: "chart-note" + CONN_CLS, text: note, tid: "chart-status" });
+  let ph = H - TOP_H - 6;
+  if (ph < 60) ph = 60;
+  let ops = plot_ops(v, 8, TOP_H, W - 16, ph);
+  push(out, { k: "plot", t: "draw", x: 8, y: TOP_H, w: W - 16, h: ph, ops: ops, cls: "draw-area", tid: "chart-plot", label: "图表" });
+  if (POPUP != null && POPUP.sid == v.sid) render_popup(v, out);
+  return out;
+}
+function render_popup(v, out) {
+  let list = POPUP.list;
+  let pw = 240;
+  let ph = 12 + len(list) * 34;
+  let px = v.w - pw - 8, py = 38;
+  hit(px, py, pw, ph, "noop", null);
+  let k = [];
+  let y = 6, i = 0;
+  for (let a of list) {
+    push(k, { k: "t" + str(i), x: 6, y: y, w: pw - 12, h: 32, cls: "popup-item", text: a.id + " · 第 " + str(a.level) + " 层桌面", tid: "project-target", role: "button", label: "投送到 " + a.id, a: { "data-target-system-id": a.id } });
+    hit(px + 6, py + y, pw - 12, 32, "project_to", a.path);
+    y = y + 34;
+    i = i + 1;
+  }
+  push(out, N("popup", px, py, pw, ph, "popup-list", k));
+}
+function publish_meta() {
+  let m = { windowId: UI_MAIN.wid, systemId: ME.system, sourceTitle: SOURCE_TITLE, range: CONN_RANGE != "" ? CONN_RANGE : RANGE_TEXT, chartType: TYPE, connectionState: CONN, version: VERSION };
+  let s = json_str(m);
+  if (s != LAST_META) { LAST_META = s; sys("meta", "chart:" + UI_MAIN.wid, m); }
+}
+function on_act(v, act, data, ev) {
+  if (POPUP != null && act != "project_to") { POPUP = null; ui_invalidate(); }
+  if (act == "connect") { connect_now(); return; }
+  if (act == "disconnect") {
+    send(RECV, { type: "disconnect" });
+    CONN = "已断开";
+    CONN_CLS = " warn";
+    NOTE = "保留最后的图表与数据，可以重新连接";
+    publish_meta();
+    ui_invalidate();
+    return;
+  }
+  if (act == "type") { TYPE = TYPE == "bar" ? "line" : "bar"; publish_meta(); ui_invalidate(); return; }
+  if (act == "point") { PICKED = data; ui_invalidate(); return; }
+  if (act == "project") {
+    let list = sys("ancestors");
+    POPUP = { sid: v.sid, list: reverse(list) };
+    ui_invalidate();
+    return;
+  }
+  if (act == "project_to") { project_to(data); return; }
+}
+function project_to(target) {
+  POPUP = null;
+  ui_invalidate();
+  let ks = keys(PROJ);
+  if (len(ks) > 0) { let r = PROJ[ks[0]]; sys("proj_focus", r.id, r.target); return; }
+  let sid = sys("surface_new");
+  let view = view_new(sid, 760, 460, "proj");
+  ui_render_view(view);
+  let id = sys("proj_open", { target: target, sid: sid, wid: UI_MAIN.wid, app: "charts", title: "图表工作台", w: 760, h: 460 });
+  PROJ[sid] = { id: id, sid: sid, target: target };
+  NOTE = "已投送到 " + target;
+}
+function on_move(v, ev) {
+  let r = ui_find(v, ev.x, ev.y);
+  let h = r != null && r.act == "point" ? r.data : null;
+  let same = (h == null && HOVER == null) || (h != null && HOVER != null && h.s == HOVER.s && h.i == HOVER.i);
+  if (!same) { HOVER = h; ui_invalidate(); }
+}
+function on_value(v, key, value) {
+  if (key == "source") SOURCE_ID = value;
+  else if (key == "range") RANGE_TEXT = value;
+  else if (key == "label") LABEL_TEXT = value;
+  else if (key == "series") SERIES_TEXT = value;
+  else if (key == "ymax") { YMAX_TEXT = value; ui_invalidate(); }
+}
+function on_key(v, ev) {
+  if (ev.k == "keydown" && ev.key == "Enter") connect_now();
+}
+function on_msg(m) {
+  let d = m.data;
+  let t = d.type;
+  if (t == "chart_data") {
+    process_data(d);
+    CONN = "已连接";
+    CONN_CLS = "";
+    NOTE = "接收 " + str(d.recv_count) + " 次 · 处理 " + str(PROCESSED) + " 次";
+    publish_meta();
+    return;
+  }
+  if (t == "sources") {
+    SOURCES = d.list;
+    let found = false;
+    for (let s of SOURCES) if (s.id == SOURCE_ID) found = true;
+    if (!found) SOURCE_ID = len(SOURCES) > 0 ? SOURCES[0].id : "";
+    ui_invalidate();
+    return;
+  }
+  if (t == "conn_state") {
+    CONN = d.state;
+    CONN_CLS = d.cls != null ? d.cls : "";
+    if (d.note != null) NOTE = d.note;
+    publish_meta();
+    ui_invalidate();
+    return;
+  }
+  if (t == "proj_closed") {
+    del(VIEWS_UI, d.sid);
+    del(PROJ, d.sid);
+    NOTE = "投送已取消，图表继续运行";
+    ui_invalidate();
+    return;
+  }
+  if (t == "sys_restored") {
+    let ids = keys(PROJ);
+    for (let sid of ids) {
+      let r = PROJ[sid];
+      let inside = r.target == d.scope || starts_with(r.target, d.scope + "/");
+      if (inside) continue;
+      let keep = false;
+      if (d.mode != "fork") for (let e of d.ext) if (e.sid == sid) keep = true;
+      if (!keep) { del(VIEWS_UI, sid); del(PROJ, sid); }
+    }
+    if (d.mode != "fork" && d.ext != null) {
+      for (let e of d.ext) {
+        if (e.src_win == UI_MAIN.wid && VIEWS_UI[e.sid] == null) {
+          view_new(e.sid, e.w != null ? e.w : 760, e.h != null ? e.h : 460, "proj");
+          PROJ[e.sid] = { id: e.id, sid: e.sid, target: e.target };
+        }
+      }
+    }
+    ui_invalidate();
+    return;
+  }
+}
+// 过渡：只按虚拟时间取值，暂停时不前进
+function on_tick() {
+  if (ANIM == null) return;
+  let k = (time() - ANIM.t0) / ANIM.dur;
+  if (k >= 1) {
+    SHOWN = ANIM.to;
+    ANIM = null;
+  } else {
+    let e = k * k * (3 - 2 * k);
+    let cur = [];
+    for (let s = 0; s < len(ANIM.to); s++) {
+      let a = [];
+      for (let i = 0; i < len(ANIM.to[s]); i++) push(a, ANIM.from[s][i] + (ANIM.to[s][i] - ANIM.from[s][i]) * e);
+      push(cur, a);
+    }
+    SHOWN = cur;
+  }
+  ui_invalidate();
+}
+function on_close() {
+  let ks = keys(PROJ);
+  for (let s of ks) sys("proj_close", PROJ[s].id, "源窗口已关闭");
+  return true;
+}
+function main(args) {
+  ME = self();
+  app_window("图表工作台", "charts", 860, 540, "charts");
+  RECV = spawn("/System/apps/chart_recv.nest", { chart: ME.pid }, { join_group: true, name: "数据接收进程", app: "charts" });
+  if (is_err(RECV)) { sys("notify", "数据接收进程启动失败", "error"); return 1; }
+  publish_meta();
+  app_run({ render: render, act: on_act, move: on_move, value: on_value, key: on_key, msg: on_msg, tick: on_tick, close: on_close, resized: on_resized }, 1 / 30);
+}
+function on_resized(v) { ui_invalidate(); }

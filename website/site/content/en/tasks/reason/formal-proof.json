@@ -1,0 +1,24 @@
+{
+  "brief": [
+    "Each of the eight problems comes with a Chinese statement and the matching Lean proposition; where they differ, the Lean proposition rules. The problems span analysis, algebra, number theory and combinatorics.",
+    {
+      "ul": [
+        "Theorem names and propositions are copied exactly and only `sorry` is replaced by a proof; helper definitions and lemmas may come before the theorem.",
+        "Only modules from Mathlib and its dependencies may be imported; Lean and Mathlib v4.35.0 are installed and prebuilt.",
+        "Each file must compile on its own with no errors and no `sorry` warning; other warnings do not matter.",
+        "The main theorem may depend only on Lean's three standard axioms: no added `axiom`, no `native_decide`, and no tricks that skip the check or change what the statement means.",
+        "Offline throughout, with no other AI; the Lean compiler can be run at any time, and the Mathlib source can be read and searched."
+      ]
+    }
+  ],
+  "points": [
+    "**Formalization**: break a paper proof into a chain of lemmas Lean accepts, finding the matching definitions, theorems and names in Mathlib.",
+    "**Zero tolerance**: the Lean kernel checks every step; one `sorry` or one compile error and the problem scores nothing.",
+    "**Choosing and focusing**: the eight problems differ in field and difficulty; take the sure ones first and finish one before starting the next."
+  ],
+  "scoring": [
+    "**Pass for full marks**: 12.5 points per problem, earned when the file compiles alone with no errors and no `sorry` warning, and the main theorem matches the statement and depends only on the standard axioms; otherwise 0.",
+    "**Only passing counts**: proof length and style do not affect the score, and there is no partial credit.",
+    "**Problems are independent**: a missing file or a failed compile costs only that problem."
+  ]
+}

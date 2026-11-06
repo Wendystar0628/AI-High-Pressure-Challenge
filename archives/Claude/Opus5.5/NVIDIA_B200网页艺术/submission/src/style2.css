@@ -1,0 +1,150 @@
+/* ---------- 第六章 ---------- */
+.c6-cap { left: auto; right: 2.2rem; top: 3.9rem; width: 52rem; }
+.c6-cap h2 { font-size: 2.1rem; margin: .1rem 0 .3rem; }
+.c6-cap p { font-size: .9rem; line-height: 1.55; max-width: 50rem; }
+.p06 { left: auto; right: 1.6rem; bottom: 2.7rem; width: 54rem; padding: .7rem 1rem; display: grid; grid-template-columns: 1fr 1.35fr; gap: 1.2rem; }
+.p6-read { font-size: .74rem; line-height: 1.55; color: var(--ink2); font-family: var(--mono); margin-top: .25rem; }
+.p6-big { font-family: var(--serif); font-weight: 900; font-size: 1.15rem; color: var(--nvl); }
+.p6-l { font-size: .72rem; color: var(--ink2); margin-right: .25rem; align-self: center; }
+.p6-node { font-size: .72rem; color: var(--ink2); margin-top: .3rem; }
+.p6-cap table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: .68rem; margin-top: .3rem; }
+.p6-cap th { font-family: var(--sans); font-weight: 500; color: var(--ink2); text-align: left; padding: 0 .4rem .1rem 0; }
+.p6-cap td { padding: .04rem .4rem .04rem 0; white-space: nowrap; }
+.p6-cap tr.on td { color: var(--sm); font-weight: 700; }
+.p6-bar { display: inline-block; width: 5.4rem; height: .4rem; background: rgba(127,127,127,.2); vertical-align: middle; }
+.p6-bar i { display: block; height: 100%; background: var(--sm); }
+.p6-bar i.over { background: var(--ras); }
+.p6-note { font-size: .62rem; line-height: 1.35; margin-top: .3rem; color: var(--ink3); }
+.c6-link { fill: none; stroke: var(--nvl); stroke-width: 1; pointer-events: stroke; cursor: pointer; opacity: .5; }
+.c6-link.act { stroke-width: 2.2; }
+.c6-link.sel { stroke: #fff; stroke-width: 3; }
+.c6-link:focus-visible { outline: none; stroke: var(--hbm); stroke-width: 4; }
+.c6-pc { stroke: rgba(0,0,0,.5); stroke-width: .5; }
+.c6-node { cursor: pointer; pointer-events: auto; }
+.c6-nb { fill: rgba(12,10,20,.92); stroke: var(--nvl); stroke-width: 1; }
+.c6-node:hover .c6-nb { stroke-width: 2; }
+.c6-node.sel .c6-nb { stroke: #fff; stroke-width: 2.4; }
+.c6-node.root .c6-nb { stroke: var(--sm); stroke-width: 2; }
+.c6-node.done .c6-nb { fill: rgba(30,40,14,.94); }
+.c6-node:focus-visible .c6-nb { stroke: var(--hbm); stroke-width: 3; }
+.c6-nt { font-family: var(--disp); font-weight: 700; font-size: 13px; fill: var(--ink); }
+.c6-ntag { font-size: 11px; fill: var(--sm); text-anchor: end; font-family: var(--sans); }
+.c6-nv { font-family: var(--mono); font-weight: 700; font-size: 17px; fill: var(--ink); text-anchor: end; }
+.c6-ns { font-family: var(--sans); font-size: 11px; fill: var(--ink2); text-anchor: end; }
+.c6-memb { fill: none; stroke: var(--ink3); }
+.c6-ring { fill: none; stroke: var(--nvl); stroke-width: 1.2; }
+.c6-ring.sw { stroke-width: 2; }
+.c6-sw { cursor: pointer; pointer-events: auto; }
+.c6-swb { fill: rgba(40,20,60,.94); stroke: var(--nvl); stroke-width: 1.4; }
+.c6-sw.sel .c6-swb { stroke: #fff; stroke-width: 2.4; }
+.c6-sw:focus-visible .c6-swb { stroke: var(--hbm); stroke-width: 3; }
+.c6-swt { font-family: var(--disp); font-weight: 700; font-size: 14px; text-anchor: middle; fill: var(--ink); }
+.c6-sws { font-family: var(--mono); font-size: 10.5px; text-anchor: middle; fill: var(--ink2); }
+.c6-resl { font-family: var(--sans); font-size: 12px; fill: var(--ink2); }
+.c6-nvll { fill: none; stroke: var(--nvl); stroke-width: .3; }
+.c6-nvlh { fill: none; stroke: #fff; stroke-width: 1.2; }
+.c6-tray { cursor: pointer; pointer-events: auto; }
+.c6-trb { fill: rgba(16,14,26,.88); stroke: var(--ink3); stroke-width: .6; }
+.c6-tray.swt .c6-trb { stroke: var(--nvl); }
+.c6-tray.sel .c6-trb { stroke: #fff; stroke-width: 2; }
+.c6-tray:focus-visible .c6-trb { stroke: var(--hbm); stroke-width: 2.4; }
+.c6-trd { fill: var(--sm); }
+.c6-trd.sw { fill: var(--nvl); }
+.c6-trc { fill: var(--sec); }
+.c6-trl { font-family: var(--mono); font-size: 11px; fill: var(--ink2); }
+.c6-tb { fill: var(--panel); stroke: var(--line); }
+.c6-tt { font-family: var(--disp); font-weight: 700; font-size: 12px; fill: var(--ink2); }
+.c6-ts { font-family: var(--sans); font-size: 9.5px; fill: var(--ink3); }
+.c6-tl { fill: none; stroke: var(--line); }
+.c6-tn.on .c6-tb { stroke: var(--sm); stroke-width: 1.6; }
+.c6-tn.on .c6-tt { fill: var(--sm); }
+
+/* ---------- 第七章 ---------- */
+.c7-head { position: absolute; left: 7.25rem; top: 3.7rem; }
+.c7-head h2 { font-family: var(--serif); font-weight: 900; font-size: 2.1rem; margin: .1rem 0 0; line-height: 1.2; }
+.c7-table { position: absolute; left: 7.25rem; right: 1.6rem; top: 23.8rem; }
+.c7-row { display: grid; grid-template-columns: 17rem repeat(5, 1fr); border-top: 1px solid var(--line); align-items: stretch; }
+.c7-hdr { border-top: 0; }
+.c7-mh { display: flex; align-items: center; }
+.c7-ph { text-align: left; padding: .2rem .55rem; border-left: 1px solid var(--line); }
+.c7-ph b { display: block; font-family: var(--disp); font-size: 1rem; }
+.c7-ph span { font-size: .7rem; color: var(--ink2); }
+.c7-ph:hover { background: rgba(127,127,127,.12); }
+.c7-ph.on { background: rgba(184,242,58,.14); box-shadow: inset 0 3px 0 var(--sm); }
+.c7-ml { text-align: left; padding: .18rem .4rem; font-size: .82rem; }
+.c7-ml b { font-weight: 500; }
+.c7-ml:hover { background: rgba(127,127,127,.12); }
+.c7-ml.on b { font-weight: 700; color: var(--c); }
+.c7-row.sel, .c7-row.auto { background: rgba(127,127,127,.1); box-shadow: inset 3px 0 0 var(--c); }
+.c7-cell { padding: .26rem .55rem; border-left: 1px solid var(--line); cursor: pointer; pointer-events: auto; min-width: 0; }
+.c7-cell:hover { background: rgba(127,127,127,.12); }
+.c7-cell.pcol { background: rgba(184,242,58,.09); }
+.c7-val b { font-family: var(--disp); font-size: 1.06rem; font-weight: 700; line-height: 1.1; display: block; }
+.c7-val.gpu b { color: var(--sm); }
+.c7-bar { display: block; height: 3px; background: rgba(127,127,127,.2); margin: .12rem 0 .1rem; }
+.c7-bar u { display: block; height: 100%; background: var(--c, var(--ink)); text-decoration: none; transform-origin: 0 0; transform: scaleX(var(--grow, 1)); }
+.c7-val span { display: block; font-size: .64rem; line-height: 1.2; color: var(--ink2); font-family: var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c7-comp { display: flex; flex-wrap: wrap; gap: 0 .4rem; font-size: .7rem; line-height: 1.36; color: var(--ink); }
+.c7-foot { position: absolute; left: 7.25rem; right: 1.6rem; bottom: 3.3rem; font-size: .6rem; line-height: 1.32; color: var(--ink3); }
+.ci { fill: none; stroke: var(--ink2); stroke-width: .8; transition: fill .2s, stroke .2s; }
+.ci-l { fill: none; stroke: var(--ink3); stroke-width: 1; }
+.ci.on { fill: var(--mc); stroke: var(--mc); }
+.ci-l.on { stroke: var(--mc); stroke-width: 2; }
+.ci-frame { fill: none; stroke: var(--ink3); stroke-dasharray: 3 3; }
+.ci-t { font-size: 10px; text-anchor: middle; font-family: var(--mono); fill: var(--ink2); }
+.c7-icon.dim { opacity: .35; }
+.c7-ml2 { fill: none; stroke: var(--ink3); stroke-dasharray: 2 3; }
+
+/* ---------- 第八章 ---------- */
+.c8-head { position: absolute; left: 7.25rem; top: 3.7rem; }
+.c8-head h2 { font-family: var(--serif); font-weight: 900; font-size: 3rem; margin: .1rem 0 0; }
+.c8-tabs { position: absolute; left: 50%; bottom: 3.3rem; transform: translateX(-50%); display: flex; gap: .4rem; }
+.c8-tab { font-size: .9rem; padding: .44rem 1.2rem; border: 1px solid var(--line); background: var(--panel); color: var(--ink2); transition: background .18s, color .18s, border-color .18s; }
+.c8-tab:hover { color: var(--ink); border-color: var(--c); }
+.c8-tab.on { background: var(--c); border-color: var(--c); color: #0a0d05; font-weight: 700; }
+.c8-load { position: absolute; right: 1.6rem; top: 6.2rem; width: 33rem; padding: .8rem 1rem; background: var(--panel); border: 1px solid var(--panel-b); }
+.c8-load h3 { font-family: var(--serif); font-weight: 900; font-size: 1.8rem; margin: 0; }
+.c8-load p { font-size: .84rem; line-height: 1.5; margin: .2rem 0 .5rem; color: var(--ink2); }
+.c8-reads { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: .7rem; }
+.c8-reads label { display: block; font-size: .62rem; color: var(--ink2); }
+.c8-reads b { display: block; font-family: var(--disp); font-size: 1rem; }
+.c8-reads span { display: block; font-size: .58rem; line-height: 1.25; color: var(--ink2); font-family: var(--mono); }
+.c8-final { position: absolute; left: 7.25rem; top: 22.3rem; width: 40rem; }
+.c8-final h1 { font-family: var(--serif); font-weight: 900; font-size: 5.4rem; line-height: 1.05; margin: 0; letter-spacing: .08em; }
+.c8-final p { font-size: 1.14rem; margin: .6rem 0 0; color: var(--ink2); }
+.c8-state { font-size: .84rem; margin-top: .4rem; color: var(--ink2); }
+.c8-state b { font-family: var(--mono); color: var(--sm); }
+.c8-credit { position: absolute; right: 1.6rem; bottom: 3.2rem; width: 42rem; font-size: .66rem; line-height: 1.5; color: var(--ink2); text-align: right; }
+.c8-credit a { color: var(--ink2); }
+.c8-credit a:hover { color: var(--ink); }
+.c8-credit b { color: var(--ink); }
+.c8-an { font-family: var(--sans); font-weight: 700; font-size: 16px; fill: var(--c); paint-order: stroke; stroke: rgba(6,6,5,.6); stroke-width: 3px; }
+.c8-as { font-family: var(--sans); font-size: 12px; fill: var(--ink2); paint-order: stroke; stroke: rgba(6,6,5,.6); stroke-width: 3px; }
+.c8-halo { fill: none; stroke: var(--c); }
+.c8-lab { font-size: 12px; font-family: var(--sans); fill: var(--ink2); }
+.c8-tr { fill: var(--sm); }
+.c8-loss { fill: none; stroke: var(--ink); stroke-width: 1.8; }
+.c8-if { fill: var(--hbm); }
+.c8-gd { fill: var(--ras); }
+
+.c7-fd { stroke: rgba(0,0,0,.4); stroke-width: .5; }
+.c7-frame { fill: none; stroke: var(--ink3); stroke-width: 1; stroke-dasharray: 5 4; }
+.c7-numt { font-family: var(--disp); font-weight: 700; font-size: 18px; paint-order: stroke; stroke: rgba(6,6,5,.7); stroke-width: 3px; }
+.c7-numl { stroke-width: 1; fill: none; }
+
+.c5-fth { font-size: 11.5px; font-family: var(--sans); fill: var(--ink3); }
+.c5-ftn { font-family: var(--disp); font-weight: 700; font-size: 15px; fill: var(--ink2); }
+.c5-fts, .c5-ftv { font-family: var(--mono); font-size: 13px; fill: var(--ink2); }
+.c5-ftv.e { fill: var(--s); }
+.c5-ftu { font-family: var(--sans); font-size: 13px; fill: var(--ink3); }
+.c5-ftr.on .c5-ftn, .c5-ftr.on .c5-fts, .c5-ftr.on .c5-ftv, .c5-ftr.on .c5-ftu { fill: var(--ink); font-weight: 700; }
+.c5-ftr.on .c5-ftv.e { fill: var(--s); }
+
+.c7-scope { font-size: 12.5px; font-family: var(--sans); font-weight: 700; fill: var(--hbi); }
+
+.c7-frame.on { stroke: var(--sm); stroke-width: 1.6; stroke-dasharray: none; }
+
+.c5-rule { position: absolute; left: 7.25rem; bottom: 2.9rem; width: 49rem; font-size: .68rem; line-height: 1.5; color: var(--ink2); }
+.c5-rule b { color: var(--ink); margin-right: .5rem; font-family: var(--serif); font-weight: 900; }
+
+.c4-bwback { fill: rgba(4,9,13,.78); }

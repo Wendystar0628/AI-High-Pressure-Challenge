@@ -1,0 +1,12 @@
+import{chromium}from'playwright-core';import path from'node:path';import os from'node:os';import assert from'node:assert/strict';
+const browser=await chromium.connectOverCDP('http://127.0.0.1:19156');const page=browser.contexts().flatMap(c=>c.pages()).find(p=>p.url().includes('index.html'));const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.reload();await page.waitForFunction(()=>window.bench?.version===1);await page.evaluate(()=>window.bench.reset());
+await page.locator('[data-testid="system-new"]').click();
+const source=page.locator('[data-testid="app-window"][data-app-id="player"]');await source.locator('[data-testid="player-play"]').click();
+await new Promise(r=>setTimeout(r,4500));
+console.log('after play',await page.evaluate(()=>{const e=window.nest;return{players:e.inspect().players,kernel:e.system('inner-1').kernel.error,processes:e.system('inner-1').processes.map(p=>({id:p.id,role:p.role,state:p.state,error:p.error,pc:p.pc,work:p.work,queue:p.queue.length,vars:p.role==='timeline'?p.vars:null}))}}));
+await source.locator('[data-testid="player-pause"]').click();await source.locator('[data-testid="window-project"]').click();await source.locator('[data-testid="project-target"][data-target-system-id="outer"]').click();await new Promise(r=>setTimeout(r,300));await page.screenshot({path:path.join(os.tmpdir(),'nest-flight-refined.png')});
+const projection=page.locator('[data-testid="app-window"][data-app-id="projection"]');
+await projection.locator('[aria-label="跳转到时间秒"]').fill('11.8');await new Promise(r=>setTimeout(r,500));await page.screenshot({path:path.join(os.tmpdir(),'nest-crash.png')});
+await page.evaluate(()=>{const e=window.nest;e.open('outer','browser')});const bw=page.locator('[data-testid="app-window"][data-app-id="browser"]');await bw.locator('[data-testid="browser-address"]').fill('https://example.com');await bw.locator('[data-testid="browser-go"]').click();await new Promise(r=>setTimeout(r,2000));console.log('browsers',await page.evaluate(()=>window.nest.inspect().browsers));
+console.log('errors',errors);await browser.close();

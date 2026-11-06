@@ -1,0 +1,26 @@
+{
+  "puzzle": "01",
+  "plan": {
+    "moves": [
+      {"pieces": ["A"], "delta": [1, 0, 0]},
+      {"pieces": ["A"], "delta": [0, -1, 0]},
+      {"pieces": ["C"], "delta": [-1, 0, 0]},
+      {"pieces": ["B", "D"], "delta": [1, 0, 0]},
+      {"pieces": ["C"], "delta": [0, 0, 1]},
+      {"pieces": ["A"], "out": [1, 0, 0]}
+    ],
+    "removed": null,
+    "remaining": {
+      "moves": [
+        {"pieces": ["B"], "delta": [0, 0, -1]},
+        {"pieces": ["D"], "out": [1, 0, 0]}
+      ],
+      "removed": null,
+      "remaining": {
+        "moves": [{"pieces": ["B"], "out": [0, 1, 0]}],
+        "removed": null,
+        "remaining": null
+      }
+    }
+  }
+}

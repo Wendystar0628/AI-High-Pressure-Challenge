@@ -1,0 +1,26 @@
+{
+  "title": "题目拆解",
+  "count": "{n} 题",
+  "fields": ["{nCats} 个类别", "标准评判题 {nStd}", "主动设计题 {nDes}"],
+  "lede": "每道题一页，讲题面要点、考点、各模型得分和评分要点。",
+  "aside": {
+    "label": "类别目录与统计",
+    "toc": "类别",
+    "tocEn": "Categories",
+    "ledger": "统计",
+    "ledgerEn": "Figures"
+  },
+  "ledger": {
+    "kindN": "{n} 题 {w}",
+    "models": "受测模型",
+    "modelsN": "{n} 个",
+    "updated": "更新日期"
+  },
+  "group": {
+    "weight": "权重 {w}",
+    "board": "题目类别榜"
+  },
+  "rec": {
+    "aria": "{no} {name}，{kind}，限时 {n} 分钟，权重 {w}"
+  }
+}

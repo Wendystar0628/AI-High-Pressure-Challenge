@@ -1,0 +1,1730 @@
+{
+  "schema": 1,
+  "model": "GPT/6Astra",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\AE风味动效设计编辑器\\claude\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7489,
+      "sha256": "26d9c4359dab0064cd907ddfcbeb5e8e7c58001913ce8228ce0a3aebabe0db50"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 10281,
+      "sha256": "5c917282098eda2ab0fdcca6a216af68c07107e90f8aa187f0dcc3162b0684e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7842,
+      "sha256": "7ceb5417f4c271c0378e9c7cd807f86bf133882e834d4549300aeb00da94ea18"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7965,
+      "sha256": "fc878eedb743df60000ad7de94e2d47915e4e64c7795452eb8b67716abc0c0f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\.gitignore",
+      "path": "AE风味动效设计编辑器/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 20,
+      "sha256": "295aa1f18923880afebb2e08aa70a8c4f285cc52baea238b8d2864d10e45d825"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\README.md",
+      "path": "AE风味动效设计编辑器/submission/README.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5937,
+      "sha256": "1378dfc177c97cdbcfb2b20fa2f811eae6aa4b139256896e67baa99414f9a01f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\build.mjs",
+      "path": "AE风味动效设计编辑器/submission/build.mjs",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 754,
+      "sha256": "57e5d424a560319287e4b33ed3956d551d185cc7ef8abd204e6644b93165174d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 397,
+      "sha256": "a688041fea8bdec3ace02368d69935a4759686fbf2fe2d4df19cdb33c38a803f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\README.md",
+      "path": "AE风味动效设计编辑器/submission/licenses/README.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 927,
+      "sha256": "9e1b271fcf39dff4477a2c9e2c7bb7e27a027170ab4789267183776ba2b98b36"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\helvetiker.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/helvetiker.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 2006,
+      "sha256": "35e8279356d7890871c4fce804d157e3f21456a7311ef2caab5cb4705c71b6bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\polygon-clipping.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/polygon-clipping.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1327,
+      "sha256": "864ae9e4ed75e1571a3bcf5dc9070264213445b32e7e2af5bf60eba46fb656d0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\robust-predicates.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/robust-predicates.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1210,
+      "sha256": "88d9b4eb60579c191ec391ca04c16130572d7eedc4a86daa58bf28c6e14c9bcd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\splaytree.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/splaytree.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1070,
+      "sha256": "eab2d38ea183314a160650ecdd0b360592854717140a9d8c1036d3a60ac5fe36"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\three-mesh-bvh.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/three-mesh-bvh.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1072,
+      "sha256": "b106ef6198a9862ed2b5b873e944ecf3583c631a84a7462d400ecc1910ce7fee"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\three.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/three.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1081,
+      "sha256": "4c40a1ef62450b857c3b2aaf294936304cd552d965fbcd9d32d4c5bcf4ba4454"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\licenses\\webm-muxer.txt",
+      "path": "AE风味动效设计编辑器/submission/licenses/webm-muxer.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1065,
+      "sha256": "1619f937fa43f768d38d2bfb35d228258e0dffe1f71c4202b338df20e68ff680"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\package-lock.json",
+      "path": "AE风味动效设计编辑器/submission/package-lock.json",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17396,
+      "sha256": "c3aa45114c54e752e145556f3c5b8673e64ce4e1c931e220031f7ab831b344c1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\package.json",
+      "path": "AE风味动效设计编辑器/submission/package.json",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 387,
+      "sha256": "553e0ea31724b053d00945d8c03fee3e9e2844a28c9e1e4cbe889373576ed80e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\app.js",
+      "path": "AE风味动效设计编辑器/submission/src/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 102426,
+      "sha256": "ee338c29ab49bb668278cce81f184491f56aa2c188301a5c1405f63322789b8c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/src/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5018,
+      "sha256": "ffaeaa9081f9c2f5e1c35cf59cc86618570242e49fad17c94078ce7398d55987"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/src/demo.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11265,
+      "sha256": "cfff819ea729c2d423f3bf3753a04cd6b567370ba1ee48fae058071db7318d0a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\effects.js",
+      "path": "AE风味动效设计编辑器/submission/src/effects.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 4354,
+      "sha256": "b3371371f1c82c0b1076070304d4b76b6ed13cd9e45c11a9e41e6a14dc7261cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\engine.js",
+      "path": "AE风味动效设计编辑器/submission/src/engine.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17605,
+      "sha256": "3a8662a7d1dfde54d876790a74a57f2557d7af7c18d80f0c53ec3747c530b0f5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\export.js",
+      "path": "AE风味动效设计编辑器/submission/src/export.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5968,
+      "sha256": "a4fe57a59309e27196edede088c8e798cc2a5020516e82fa20e003bc90049da6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\icons.js",
+      "path": "AE风味动效设计编辑器/submission/src/icons.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3132,
+      "sha256": "f4990ca1369bfded8acb2e489fb2669f077842698565549ff6a248e2fb781319"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\masks.js",
+      "path": "AE风味动效设计编辑器/submission/src/masks.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 2251,
+      "sha256": "834ccd559e40ab1cd94ed1c00133aa84dbab0b5b6afaff210818c0df68051394"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\material.js",
+      "path": "AE风味动效设计编辑器/submission/src/material.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5030,
+      "sha256": "e83c3a1c640831f93966a7070a08943df661dd657c0f1b4402cb973977fcef35"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\paths.js",
+      "path": "AE风味动效设计编辑器/submission/src/paths.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1777,
+      "sha256": "69bb13f4c8b339a87da09554a6dadcf2133068d4e76b33baf0708970d67039d4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\render.js",
+      "path": "AE风味动效设计编辑器/submission/src/render.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 39168,
+      "sha256": "3ef63061c68f4cb187ad5453ac2ee16ff194217dcae638c16cfe8321208bd22c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\spatial.js",
+      "path": "AE风味动效设计编辑器/submission/src/spatial.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 2610,
+      "sha256": "ae0c5484c077ddc8ba19e30604d774997e51679253bc92c50e38e735187134ec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\src\\temporal.js",
+      "path": "AE风味动效设计编辑器/submission/src/temporal.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3849,
+      "sha256": "59184b6b9d28bf215b4dc31d0a730206403beeaba9730b54295410ff0b02f931"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\style.css",
+      "path": "AE风味动效设计编辑器/submission/style.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 24092,
+      "sha256": "e4c3196b9c94d198ca485109b26102935e8ad28d66d800d1ed3a6bee1d2fecfb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\tests\\audit-checks.js",
+      "path": "AE风味动效设计编辑器/submission/tests/audit-checks.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 4894,
+      "sha256": "40dbf2e5f34c0eee17083518364a0820cdca5f2710d58d83292f8573fa847da2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\tests\\browser-checks.js",
+      "path": "AE风味动效设计编辑器/submission/tests/browser-checks.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 4959,
+      "sha256": "68d4cc9a365eb7ed8d5397ecea16aadb706988f731a6006c7b1c985c097bd92b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\tests\\设计核对.md",
+      "path": "AE风味动效设计编辑器/submission/tests/设计核对.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5761,
+      "sha256": "ab36a74414193fec9cfe958860cae6a894e9473fe6a1fcf09aa6f91cc2694101"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\tests\\验证记录.md",
+      "path": "AE风味动效设计编辑器/submission/tests/验证记录.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3965,
+      "sha256": "915e547d067b95afbbec5e72f8d8c6038f3e9a989b196a77e84cfd9d301b7121"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7792,
+      "sha256": "4c3b5c929ac5bb91b3375d4bf89ac87de47ef65deaf504ecf2aeac16059aae3e"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 8563,
+      "sha256": "6223b37e71e205aed49321febaa244b38bb47f56d0052a10ddfc1f5dfbbbe02a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6399,
+      "sha256": "96d0ea27b79782781e3704ab1bc06382114149904ddb1ec3db5193f7093366a3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6591,
+      "sha256": "bdbaf08db0e05ef8abbdc7bd10c3e25402a8ab9a69c73f80257758712a8774c2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\README.md",
+      "path": "NVIDIA_B200网页艺术/submission/README.md",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 1215,
+      "sha256": "97b104a76cea352bc7ac36919e9f1547a7c0c737661261ebb57d5c91e03d6749"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\VERIFICATION.md",
+      "path": "NVIDIA_B200网页艺术/submission/VERIFICATION.md",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 4687,
+      "sha256": "a8b09d36cfe0284f090623655a3f232fb6e79cd6e5f63e4e14510498adb20119"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\app.js",
+      "path": "NVIDIA_B200网页艺术/submission/app.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 61189,
+      "sha256": "7153105ea4cb0e3404cd9db6d0bd410d4733f53ea3aaa791164ca4f245d2a144"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\compute.js",
+      "path": "NVIDIA_B200网页艺术/submission/compute.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 4352,
+      "sha256": "2c04dba2a5f04892353d356a9d71f1571eb058c6546efb7203d9a5ea2170e25e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\index.html",
+      "path": "NVIDIA_B200网页艺术/submission/index.html",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 19853,
+      "sha256": "ac47caa98f62985b5240073504583aec6feac0f65c8e9ed9d878d9b3e29ea240"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\scene.js",
+      "path": "NVIDIA_B200网页艺术/submission/scene.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 33911,
+      "sha256": "4a343eed6f2f6543d2129af78f6f152f7cc53386df5d85b80d2e54b5bceff9f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\style.css",
+      "path": "NVIDIA_B200网页艺术/submission/style.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 28366,
+      "sha256": "737f488d3c0d1b737ecf88a5b1bc7e7da3b6d938400837d61bb7204f0cc5d718"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\verify.cjs",
+      "path": "NVIDIA_B200网页艺术/submission/verify.cjs",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 2875,
+      "sha256": "f8473b3a8c12e62bdfdede32b1f22cbdba053076ef247db782aabd34dccd0bca"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
+      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 6052,
+      "sha256": "d50fcf8e6b23190079b97ea6e6061345eb1eac7daa8286383d542921f0edbb26"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
+      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1405,
+      "sha256": "7bb1d420168e8f5bfd0b0c3ed944ef0ad7907b94a694008ec4062823c48dcd02"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\solution.cu",
+      "path": "Transformer前向推理的GPU加速/submission/solution.cu",
+      "role": "submission",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 40399,
+      "sha256": "5173d077109715fd6656262b0d40ae86548b543e11b76ab98867452b177ee734"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\动态路由塔防\\claude\\main\\result.json",
+      "path": "动态路由塔防/grading/claude/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 4664,
+      "sha256": "e526963b354716b4a621bfa11a3ba7e070fe8de84b598bc2ccabc8ec239340f1"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 7206,
+      "sha256": "6313b85d07d3498adcef862c9f6490fb01112338ad72ab0076304464085f586d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4055,
+      "sha256": "0d562f0841cb058fc5c09720876e2fd6ad6648eac4b67d0a40c80c4ca6b87ae4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\评分表_Opus5.5.md",
+      "path": "动态路由塔防/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4058,
+      "sha256": "629a54f451ba7d5e15d2f45ae743feb9d91294e03e5b64463c4e1bc1e54eb8ec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\AUDIT.md",
+      "path": "动态路由塔防/submission/AUDIT.md",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5911,
+      "sha256": "ea50a1365cd674644773faa677af7ca83bd906a0c3b829a3ce934cc8f453bf5d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\DESIGN.md",
+      "path": "动态路由塔防/submission/DESIGN.md",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2959,
+      "sha256": "e1ad7a50797cd3f12b857d1f02c8b66d05a0121146dee9dc5c3f7adc64b771fb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\README.md",
+      "path": "动态路由塔防/submission/README.md",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1914,
+      "sha256": "d896a7b23100285908651fbff6a0cd1f57af4fa1424536edd9d4e71c859d6b2b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\app.js",
+      "path": "动态路由塔防/submission/app.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 64979,
+      "sha256": "bbd6cfd74412dd9e03bbb465af26e341d40f6f14c87010cd88bbe2afc260bf05"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\data.js",
+      "path": "动态路由塔防/submission/data.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 17542,
+      "sha256": "61d1130102333699d9c5658eed37ee815eee48cfc68036c848fff300998ee4d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\engine.js",
+      "path": "动态路由塔防/submission/engine.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 32399,
+      "sha256": "90580e0bbbb4d9199f878ef6b11ba7e63704baea92b5132df642802e85029c20"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 6799,
+      "sha256": "56af046f0d7c3115a35fb5d4ee9da2848b91082985037619b7de447fad688c5e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\scene.js",
+      "path": "动态路由塔防/submission/scene.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 76849,
+      "sha256": "3aaf32d97af9032bca1e84cb493f90212200ee33c9dcda97c2c9650d6825507f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\style.css",
+      "path": "动态路由塔防/submission/style.css",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 26621,
+      "sha256": "d2bc24b50f011b27aa7b861d17b3e0e5949dbf14b04aa62c0344c6885f97d0ad"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\tests\\campaign.cjs",
+      "path": "动态路由塔防/submission/tests/campaign.cjs",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1231,
+      "sha256": "c6bea88e9c49c897c4c766d608b0e5dd0f1e9ed8618f9ba80b6223d323c152ce"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\tests\\normal-play.cjs",
+      "path": "动态路由塔防/submission/tests/normal-play.cjs",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2911,
+      "sha256": "8413f02a49a9e6c5033990800d0b603ac0c4b1e47501d23472825bc3013cd52b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\tests\\verify.cjs",
+      "path": "动态路由塔防/submission/tests/verify.cjs",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 8417,
+      "sha256": "8fefb7ac37059c9065723ef90a92ed06a147bf7eb9f5eb9023f454516d34a9b0"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
+      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
+      "role": "result",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1082,
+      "sha256": "eb2d05b35b8815437d9b5ef1417ba40b3a0e21bc4fbb6e5fb2c9fb4cd5d95372"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
+      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1024,
+      "sha256": "d8eade077346e5e25789c34b288933216a2d617c95d4db7a3037b3a3481e62d6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\answer.md",
+      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
+      "role": "submission",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1290,
+      "sha256": "d03e6637b01f8faf76185f45b1ac6402a28715aad79735d71ea800df98039d03"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\太阳雨渔港3D渲染\\claude\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/claude/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4818,
+      "sha256": "0be3df147cbaf19761054a6470da88defea4ab463572a940e3660d90cf50ad5e"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5090,
+      "sha256": "f1c77f804390c2f7cdf276380bf10e256253b060dbbce9dfaa5d6f8c4c42a199"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4057,
+      "sha256": "f1e2b555401cb36b4d6d59463d69cbef26e9de24ca062c445a9f3151f251dcd9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\评分表_Opus5.5.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4016,
+      "sha256": "2c52ff41ba8fdc48b6c35779f0e3ffd23d0a42073c14d5097a0d1c4a34c773b9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\.gitignore",
+      "path": "太阳雨渔港3D渲染/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 20,
+      "sha256": "295aa1f18923880afebb2e08aa70a8c4f285cc52baea238b8d2864d10e45d825"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\DESIGN_CHECK.md",
+      "path": "太阳雨渔港3D渲染/submission/DESIGN_CHECK.md",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 7962,
+      "sha256": "a1d2f4ee879917959d6e92e525933ba88966387afcb76932867189d6cd9d763a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\README.md",
+      "path": "太阳雨渔港3D渲染/submission/README.md",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4301,
+      "sha256": "8d21e68d88f123d21de7d6a1cb6c019c16f7d90595dabd5c9f06719d4d25a573"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\THIRD_PARTY_LICENSES.txt",
+      "path": "太阳雨渔港3D渲染/submission/THIRD_PARTY_LICENSES.txt",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 1081,
+      "sha256": "4c40a1ef62450b857c3b2aaf294936304cd552d965fbcd9d32d4c5bcf4ba4454"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\build.mjs",
+      "path": "太阳雨渔港3D渲染/submission/build.mjs",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 174,
+      "sha256": "3a1ad117f3bc799c7172250a3e47ba4ed4d95a886452a30ca9963ca884d841d3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 496,
+      "sha256": "840c6e833a14ec261a695fb7157531d63cf5b62cb28f11a7e6a768d0c85886e5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\package-lock.json",
+      "path": "太阳雨渔港3D渲染/submission/package-lock.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 13746,
+      "sha256": "aba85143b1501f1e9aa330413a09fe8845e14b55035eda3a4a3245f683819844"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\package.json",
+      "path": "太阳雨渔港3D渲染/submission/package.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 301,
+      "sha256": "4045423132ca302784e13bd7f87563d08be48411a65515436ba90d44e64fd893"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/src/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 8578,
+      "sha256": "c0bc625ce81c568f929bb82f588cad2ec449283108e93a0b6ca67e77247b56c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/src/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 8413,
+      "sha256": "990c306401b5573902cc9b94bbeeaded99686bb974c167f898922ee9f17a9c8b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\core.js",
+      "path": "太阳雨渔港3D渲染/submission/src/core.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 9092,
+      "sha256": "ba4b4a87ab66d9804e16cab1a032a50d14acd183bd6884ce71cdb02276e83d16"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\craftsmanship.js",
+      "path": "太阳雨渔港3D渲染/submission/src/craftsmanship.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4252,
+      "sha256": "aa98dc7c225c85a1c367771dd5dad48fe9412e1462ff369222db5252ef173e33"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\details.js",
+      "path": "太阳雨渔港3D渲染/submission/src/details.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6751,
+      "sha256": "5b99803c6b9f816e495f91c449c28e79877034efbdef61259d6570a05ff1381c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\environment.js",
+      "path": "太阳雨渔港3D渲染/submission/src/environment.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 10134,
+      "sha256": "f7639a46a33632c507c039e303b12cd5b14bd2b982b939a3e7c105e19dc35c51"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\instruments.js",
+      "path": "太阳雨渔港3D渲染/submission/src/instruments.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 3801,
+      "sha256": "075589adda9a3ccdb9bcef686187a7c031f962d0b2d0bb4731190c8db67b69fb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\life.js",
+      "path": "太阳雨渔港3D渲染/submission/src/life.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 7050,
+      "sha256": "c3563e3b188b7422f260570b704397e609282c07df59cf64d5ee36cb78b6f375"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/src/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 14818,
+      "sha256": "cdcd4c1c0ffaa691708c838c6cdbd7fb638b0ad9edaa1b46219f5bce20e61a12"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\objects.js",
+      "path": "太阳雨渔港3D渲染/submission/src/objects.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 7311,
+      "sha256": "5fc96173ac9e21cef4dd8876a81545edc28665cd25f9e8886b683329ef3199a8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\props.js",
+      "path": "太阳雨渔港3D渲染/submission/src/props.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 10420,
+      "sha256": "faf5e854eac2c6213aa9e030e8755990b095dc2c29598de1e664bdc6f0fb8b02"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\terrain.js",
+      "path": "太阳雨渔港3D渲染/submission/src/terrain.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 8459,
+      "sha256": "3d9362456825b00b594a9cdbb2ef64e3cc88178308aad7c91ae5464e77cce948"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\weather.js",
+      "path": "太阳雨渔港3D渲染/submission/src/weather.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 910,
+      "sha256": "0a7bb963cc4d74676642438acddb6ca380fcf46d3a2f80c89ab2d50712ff42b0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\src\\wet-surfaces.js",
+      "path": "太阳雨渔港3D渲染/submission/src/wet-surfaces.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 2984,
+      "sha256": "7bdf275d5d612d53f2c3ee3267ddc4153340e6bc7bf0c59effb9e5a27a80c285"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 2232,
+      "sha256": "e46920be872c5d2dfdcad345d8525710144fa88a5a82b34eac03fd1ea119a4e5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1130,
+      "sha256": "e68742a7d4cf05804d70fac99a8f86d2f45266713b10f8b5e237a8a5dd25df83"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem1.lean",
+      "path": "形式化证明题/submission/Problem1.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 7169,
+      "sha256": "18d6673e8913eae03f715582e727a18ddc224248ced89672243179173e664031"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem2.lean",
+      "path": "形式化证明题/submission/Problem2.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 8588,
+      "sha256": "d20c6cd910c57761751c4e8b8a25b3be002a2a84e63fd09099ea54c3e780992f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem3.lean",
+      "path": "形式化证明题/submission/Problem3.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 14843,
+      "sha256": "26ea7f3c79cfe52291266291e9b1ae4ae5131cc3d5bb042ba0683631a6fc5f37"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem4.lean",
+      "path": "形式化证明题/submission/Problem4.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 4262,
+      "sha256": "4fe77e90262e39fa45b05a9ed9acd02861f84d512a1669868b9e6d398eab8953"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem6.lean",
+      "path": "形式化证明题/submission/Problem6.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 6691,
+      "sha256": "48f26c9640400501d3fef89199c6eb126f674fa545b9cc700b6dfc890b7cf7fd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem7.lean",
+      "path": "形式化证明题/submission/Problem7.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 12908,
+      "sha256": "35449ca2376aaadd2ab8e69e77164883af8733ce503e3d02d72ef5f204ebbb87"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\Problem8.lean",
+      "path": "形式化证明题/submission/Problem8.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 30628,
+      "sha256": "70469face752235422ae28542bbe4d99567eecde1b4d0a222c9c2fcd4de1a53b"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\操作系统嵌套\\claude\\main\\result.json",
+      "path": "操作系统嵌套/grading/claude/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 11582,
+      "sha256": "87d2ad12c6015bfe85359764821dcfceceb29a251c3bd6d8facb4cfd67a04ba4"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 12633,
+      "sha256": "79b70788b5d1e3662129b5ba02ae065e44ecad0c03be8e25e416e5cdfc296f7f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12368,
+      "sha256": "6adbd8013a123f6890974e577f19bea82bb1c0fb3b9452da223b404253071472"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\评分表_Opus5.5.md",
+      "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12361,
+      "sha256": "5486bb28f324b6e6b6bad28c7ee18449e73cbb7b4961fe767a65bcbd41af0553"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\.gitignore",
+      "path": "操作系统嵌套/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 40,
+      "sha256": "55b42d07f23a904bdd90448b90141655aa173860fcb7ec77ce321e8a04d029e2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 14737,
+      "sha256": "2119dc3d411099784ffd2455f3b4e54c87756bfae93954f2ce2c6879f620f349"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2481,
+      "sha256": "aea1e831dcafec25bafbe9acda24a83cf5263e8c03c9535752b2418c48e5b992"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\electron.cjs",
+      "path": "操作系统嵌套/submission/electron.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3113,
+      "sha256": "0af1dd8e1abd842ad070a7813c70210e321ec51c2dc1c1af2a88dcd4ae359bbb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\index.html",
+      "path": "操作系统嵌套/submission/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 272,
+      "sha256": "29eb071a35ed831506b25c617d4d4a1ef110783772863b8df1d430f259364606"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 63767,
+      "sha256": "b7cae914bba84f350bd14a0d0c91776b1ac4cfd337bc48bfb6170f8700f6b855"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 532,
+      "sha256": "23adc0f87a62f5f76e5becb29f15eeaf504becc81fa15b31198a552297c44375"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\preload.cjs",
+      "path": "操作系统嵌套/submission/preload.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 491,
+      "sha256": "e82bd0de9d826bf8b1d11b5033a59c467a7ae297f4dbb70cec202f3b2aa5db05"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\public\\assets\\alpine-dawn.png",
+      "path": "操作系统嵌套/submission/public/assets/alpine-dawn.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2246682,
+      "sha256": "14c896d955d0983a9854ffff1a2dd6d40d1d58b7631cea5ef73032c69b837780"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\check-flight.mjs",
+      "path": "操作系统嵌套/submission/scripts/check-flight.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1185,
+      "sha256": "1e43fbbc6eacba07ebfaa64845297e6794904b6d70f589328e6b5423bf9be3a1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\check-ui.mjs",
+      "path": "操作系统嵌套/submission/scripts/check-ui.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 593,
+      "sha256": "ed26094efc9f806f6da7f29f52e608214b82f3043ce43c8dc9d8375c66e9da96"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\deep-check.mjs",
+      "path": "操作系统嵌套/submission/scripts/deep-check.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2116,
+      "sha256": "d3d500d459d42a75140bdad58f7a54c5e60d40b95ba4fca93b990239f9f64841"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\desktop-check.mjs",
+      "path": "操作系统嵌套/submission/scripts/desktop-check.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2398,
+      "sha256": "bf60680736d8769b7f0b15f1ce6a549029fd049ff22761c0cbffc9c812800750"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\dev-launch.cjs",
+      "path": "操作系统嵌套/submission/scripts/dev-launch.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 494,
+      "sha256": "0d9dd26bf403a639715065485afef52bbe16fda3bfe4904e13519180f5302859"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\files-check.mjs",
+      "path": "操作系统嵌套/submission/scripts/files-check.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2473,
+      "sha256": "87d34de70e5f93f4b4088b2502fa645a0fd97e5cda12d674b9c843e44716c90a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\final-ui.mjs",
+      "path": "操作系统嵌套/submission/scripts/final-ui.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2838,
+      "sha256": "4501c0140f21b0024e754530ad2d174e1beabc2bde76f8f7fe677ffcd4711b55"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\make-scene.mjs",
+      "path": "操作系统嵌套/submission/scripts/make-scene.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9895,
+      "sha256": "649a1fc0caa3877a1e056fe2dd4280c555fd5f1a3699812b5b8f77a4f0080d51"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\nesting-ui.mjs",
+      "path": "操作系统嵌套/submission/scripts/nesting-ui.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2600,
+      "sha256": "fdfe3e54fd70125e30f1d1a27aeebfbdf7867de3d11515581acaf0e3a8d9b2c5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\reconnect-ui.mjs",
+      "path": "操作系统嵌套/submission/scripts/reconnect-ui.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2142,
+      "sha256": "ec77a116ee6ffae9e238a902e8464062d39922cfb9f21f71d1ece43530a5bb32"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\smoke-ui.mjs",
+      "path": "操作系统嵌套/submission/scripts/smoke-ui.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2840,
+      "sha256": "71412198e8eaffe85d7a7ae625ab8827ec1ce610c5682e373bf032ca88ed2b40"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\scripts\\start.cjs",
+      "path": "操作系统嵌套/submission/scripts/start.cjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 508,
+      "sha256": "028e6f83a3f50ba2d8fe29d3ddfc7dd23dc55fb9663e5d7147b4cbf2b107ee08"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\apps.jsx",
+      "path": "操作系统嵌套/submission/src/apps.jsx",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 57841,
+      "sha256": "963ac285e73fbb5172fd1caa17b6e22ef1f7c5ca1d343f8943a4bb4cb1e2b529"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\engine.mjs",
+      "path": "操作系统嵌套/submission/src/engine.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 46079,
+      "sha256": "2a973f8b500e8a4cbc07d6597b78414e8ca795beb41eebd37a5f53c63584f7a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\main.jsx",
+      "path": "操作系统嵌套/submission/src/main.jsx",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 18350,
+      "sha256": "77dbb6e430ab1a051406aa3cdb797723b8b69204f31ff6b4029281d9705890a8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\programs.mjs",
+      "path": "操作系统嵌套/submission/src/programs.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9143,
+      "sha256": "c09a9567930f1fb3e8851e0316c991284972f9712a868903ea3ec9e4aac92ef7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\scene.jsx",
+      "path": "操作系统嵌套/submission/src/scene.jsx",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8868,
+      "sha256": "b34203319a15f336e116aee47366c2c1e539f4b80ff93a26699b10a4bebd772a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\sheet.mjs",
+      "path": "操作系统嵌套/submission/src/sheet.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2410,
+      "sha256": "d80717315ae54d8486ea03bc411c304b7e5d956001a5df364f1b96f848ce123b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\style.css",
+      "path": "操作系统嵌套/submission/src/style.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 50068,
+      "sha256": "cd41e28a9b6fe0886f268ee3b02b678d422d336b245d87f19ecd94eaf1c42bf2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\src\\vm.mjs",
+      "path": "操作系统嵌套/submission/src/vm.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6284,
+      "sha256": "0be7f42b3954386c64c63fb2f14928ac523e4314f89ea087ce2baacebee025ac"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\tests\\runtime.test.mjs",
+      "path": "操作系统嵌套/submission/tests/runtime.test.mjs",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11805,
+      "sha256": "e27cbbed3932325ebe4bc9c36b7fa0d940f94d0656b801ec09137dd28fb12535"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\vite.config.js",
+      "path": "操作系统嵌套/submission/vite.config.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 206,
+      "sha256": "bfc7a235f34d0efdc3eef9fecc2f55be805c04f66ad474238e5485a4abe412ae"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 5252,
+      "sha256": "8d39ae4e7b1084bff5cfaa191386a46ac0111f178605c82a412edc0a0f5cda2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 2426,
+      "sha256": "efadb248940b85936f2f8eca4d6a4ed247d370c9a4cbc409a2a49ee0b566290a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第01题.md",
+      "path": "数学竞赛原创试题/submission/答案/第01题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3152,
+      "sha256": "8c8242db96626e65159fec2c08ac07a19a6e59c4ea8ea2257408537c394c1020"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第02题.md",
+      "path": "数学竞赛原创试题/submission/答案/第02题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2982,
+      "sha256": "38b33e424930d26dcd856c2571ba9cdd9f5361ccdfaff307d6526ae265b8a4ab"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第03题.md",
+      "path": "数学竞赛原创试题/submission/答案/第03题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3070,
+      "sha256": "03d3b1329045bfeeafae4d64d8dd6638e39d93c10449e8d9ed5c1ceea2afcb09"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第04题.md",
+      "path": "数学竞赛原创试题/submission/答案/第04题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3157,
+      "sha256": "c762048ca82553242fcc71a9ab5431ec8124c8dd3f3cf7174ef2b8abdbef3d4c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第05题.md",
+      "path": "数学竞赛原创试题/submission/答案/第05题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3931,
+      "sha256": "78eef05bb4773ec724fbe959fdb3ec35dabdf76f01b6594d496ace284639563e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第06题.md",
+      "path": "数学竞赛原创试题/submission/答案/第06题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2818,
+      "sha256": "05b6a7b983270eb35795210777438a6649151cd27ae85f43d404fc403828e68d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第07题.md",
+      "path": "数学竞赛原创试题/submission/答案/第07题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5213,
+      "sha256": "cf3ed58f23af21f77be185f65f2edf00396f31b7b58373d4a854b36d8d1ae8a6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第08题.md",
+      "path": "数学竞赛原创试题/submission/答案/第08题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3624,
+      "sha256": "a9682b09eb77e9b93474581dfb7780bed48d19aef442fd32bd64a59441fb972c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第09题.md",
+      "path": "数学竞赛原创试题/submission/答案/第09题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5432,
+      "sha256": "ee4af0d61e2c29c8225d6f7e4e3f16cb42319b91bf3d4c47ad9f749eb1685bd3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第10题.md",
+      "path": "数学竞赛原创试题/submission/答案/第10题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2812,
+      "sha256": "22e6fb330035e9b8b78f93209e196fbea511dfafb228de9e2edd20657ad59591"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第11题.md",
+      "path": "数学竞赛原创试题/submission/答案/第11题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3442,
+      "sha256": "8112cebf2147c4f6f6cd9454520d39c8be4c5f8ba92e04d71a1767d401532aba"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第12题.md",
+      "path": "数学竞赛原创试题/submission/答案/第12题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4366,
+      "sha256": "844c1e63a7f78e07df5d7074ab5fe67ae121775991888b40feb776eb10eb8242"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第13题.md",
+      "path": "数学竞赛原创试题/submission/答案/第13题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3550,
+      "sha256": "9912726c79e3edc8f20b8e619e1616973959ea8e0d58f0b4aa070932cbcfff90"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第14题.md",
+      "path": "数学竞赛原创试题/submission/答案/第14题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 1211,
+      "sha256": "0552aba495ffe326e97b69e8e53d2651b2be11b5bc41d0d6c4090e9234ba8b74"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第15题.md",
+      "path": "数学竞赛原创试题/submission/答案/第15题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 1226,
+      "sha256": "7b865e9b98d291d31c603759208b0370c16ccbcd77521696a71c6a60b58ff3a0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第16题.md",
+      "path": "数学竞赛原创试题/submission/答案/第16题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 7568,
+      "sha256": "1025b61dd5492629843a160b740b1133b83b86d9cc170058228e2afdd7041a3e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第17题.md",
+      "path": "数学竞赛原创试题/submission/答案/第17题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 1236,
+      "sha256": "a5656966ac1b75eb1b453c9f7cfd8e6b4e2c809d5a2ab24c63d1fb1ce168e83d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第18题.md",
+      "path": "数学竞赛原创试题/submission/答案/第18题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 916,
+      "sha256": "1e2960fbeb9c1d90c3d9508aa8a37a7cbcf3e0d2197d42bf36effb020f855740"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\果冻冲击与造浪水槽\\claude\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6270,
+      "sha256": "6566bfe0a44cb504860c67c3742616f987cda7e26aa0ad13df224381f265e2c3"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6527,
+      "sha256": "35ced798fbaee7e6ee07ce3cb1624419c61abed915c9a534017718ddc300e1d6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4653,
+      "sha256": "d9618622457fcfb5764d0c2c0282b5d27ce3533b505841cfb0b5cb45c718a837"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4681,
+      "sha256": "44316397ff0b8610a58afbc4a0df1f7c7fd4fc11b7566bc5d913b164dda2123b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\README.md",
+      "path": "果冻冲击与造浪水槽/submission/README.md",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4078,
+      "sha256": "a80eb0bf99cc86b512727b2eae1a7d9ec39b8e150810c68851dfc1be339fec13"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\app.js",
+      "path": "果冻冲击与造浪水槽/submission/app.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 21771,
+      "sha256": "b34ad309a91c3a63c8c2fb63bedefe611426f9b33f43eb78a2bd28ccaee2d819"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4697,
+      "sha256": "5bc63e1adca25b26b7e089c2a3e466716907dd6f63e7a1f2f02d60473c5910c9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\physics.js",
+      "path": "果冻冲击与造浪水槽/submission/physics.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 21532,
+      "sha256": "ae1a33b3c2568fe68caef72c0c167c7edba6f2a52219d92ef332e9e72bed92c4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 12429,
+      "sha256": "9cd3a1a854de2e139ba209194effedd5daf81c95f8ea9fb8b1c6ec8f6eff33f1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\verify.cjs",
+      "path": "果冻冲击与造浪水槽/submission/verify.cjs",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5634,
+      "sha256": "9d08f32836aade4d2e3226abe4aaf9285d597ef2204c90f05679d11f571876fd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\visuals.js",
+      "path": "果冻冲击与造浪水槽/submission/visuals.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 22516,
+      "sha256": "7f45c2b97fe58766fb6bb19b5e917a61ac772837c4415edd62f0de1c99c9831c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\通用数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1472,
+      "sha256": "acf1d6e7ee6a9c8212d0eb4189c54f2b8f4abf1c50b07279207249446a6f331d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1464,
+      "sha256": "77b0eae7f54f9f5ee6f50881daebb162418fe5980feed9247550a942ae0ee63a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\solution.cpp",
+      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 29969,
+      "sha256": "c3e74374177ad7b8f9dff569a0af5104aa98b194fe69dfe4c24582ae1d569545"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 2459,
+      "sha256": "d9fc6ae4df998e0ad9d4cd23d829e76db9ead26af811de16edb3e60f751ba639"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1341,
+      "sha256": "eba3b0966af97b53ae6248a11a9d3efc72756157b9f5947a51294de5397f54f2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 657,
+      "sha256": "9fc24bd1b6a5ae9d68ef76288c5db3530718477038ae335b8101a1a81c903f21"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第02题.json",
+      "path": "鲁班锁拆解/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 769,
+      "sha256": "d0cde0f4bc050b8cf4dccd0d4a38d31622f20b9de1d6797d90edef4f13886862"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第03题.json",
+      "path": "鲁班锁拆解/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 956,
+      "sha256": "59b139edcf42eded0d07a0760a35d22d057052eb9bf046459efdcfc3109a4eeb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第04题.json",
+      "path": "鲁班锁拆解/submission/答案/第04题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 725,
+      "sha256": "6b938e2e126d495be1753a920c14b75eb5ea69ec42267cab6a7b54b226f92d32"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第05题.json",
+      "path": "鲁班锁拆解/submission/答案/第05题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 1442,
+      "sha256": "4571b4a7347e6d9b8e0741666fe050587bce298159821a36b0311cfbcabf6cf2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第06题.json",
+      "path": "鲁班锁拆解/submission/答案/第06题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 1184,
+      "sha256": "45c9e969656cb85e8246081555ea9b1d5bf664681ecf491bcb53848dac38510a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\答案\\第08题.json",
+      "path": "鲁班锁拆解/submission/答案/第08题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 2060,
+      "sha256": "9f5f1d5b9da6c186be3499c02264e585b40908a226c3298d57de174494dab1b2"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\app.js",
+      "reason": "构建输出；生成入口 build.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\assets\\fonts",
+      "reason": "构建脚本复制的字体；生成入口 build.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\AE风味动效设计编辑器\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\NVIDIA_B200网页艺术\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\VALIDATION.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\build.cmd",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\test_sample.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\Transformer前向推理的GPU加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\anneal_walk.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\flip_sweep.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\insert_search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\insertion.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\insertion_walk.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\island_walk.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\optimize.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\pair_search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\penalty.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\rebuild_search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\soft_search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\swap_search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\verify.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\harbor.js",
+      "reason": "构建输出；生成入口 build.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\dist",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\public\\assets\\helicopter-24.scene",
+      "reason": "生成脚本输出；生成入口 scripts/make-scene.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\public\\assets\\minimal.scene",
+      "reason": "生成脚本输出；生成入口 scripts/make-scene.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\tests",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\笔记",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": [],
+  "created": "2026-11-06T05:50:30"
+}

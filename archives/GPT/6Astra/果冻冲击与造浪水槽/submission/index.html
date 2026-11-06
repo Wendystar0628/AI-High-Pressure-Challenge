@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111a1e">
+  <title>物态实验室 · 果冻冲击与造浪水槽</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar ui">
+    <a class="brand" href="#" aria-label="物态实验室首页"><span class="brand-mark"><i></i><i></i><i></i></span><span>物态实验室<small>MATTER / MOTION</small></span></a>
+    <nav class="scene-tabs" aria-label="实验场景"><button class="active" data-scene="jelly"><span>01</span> 果冻冲击</button><button data-scene="tank"><span>02</span> 造浪水槽</button></nav>
+    <div class="live-badge"><span></span> 实时物理实验 <b>↗</b></div>
+  </header>
+  <main>
+    <section id="stage" aria-label="三维物理实验场景">
+      <canvas id="world"></canvas>
+      <div class="stage-heading ui"><div class="eyebrow" id="eyebrow">实验 01 <span>/</span> 软体与刚体</div><h1 id="scene-title">柔软，也有力量。</h1><p id="scene-description">让重力落下，看一次冲击如何传遍整个果冻。</p><div id="mode-tabs" class="mode-tabs"><button data-mode="center" class="active">正中冲击</button><button data-mode="offset">偏心冲击</button><button data-mode="multi">连续冲击</button></div></div>
+      <div class="view-tools ui"><button id="view-cycle" title="切换观察视角"><span>◇</span> <span id="view-name">透视</span></button><button id="view-reset" title="恢复默认镜头" aria-label="恢复默认镜头">⌖</button><button id="focus" title="专注观察（F）" aria-label="专注观察">⛶</button></div>
+      <div class="stage-tag ui"><span class="tag-line"></span><span id="material-tag">半透明弹性体 <b>×</b> 金属重球</span></div>
+      <div class="density-legend ui" id="density-legend" hidden></div>
+      <div class="stage-metrics ui"><div><span id="metric-label-a">最大形变</span><strong id="metric-a">0.00 <small>m</small></strong></div><div><span id="metric-label-b">重球速度</span><strong id="metric-b">0.00 <small>m/s</small></strong></div><div><span id="metric-label-c">接触次数</span><strong id="metric-c">00</strong></div></div>
+      <div class="camera-hint ui">拖动旋转 <span>·</span> 滚轮缩放</div>
+      <div class="playback ui">
+        <div class="timeline-head"><div class="phase"><span id="phase-dot"></span><strong id="phase-title">准备就绪</strong><span id="phase-detail">释放重球，观察形变传播</span></div><div class="time"><b id="sim-time">00.00</b><span> s</span></div></div>
+        <div class="timeline"><div id="timeline-fill"></div><i></i><i></i><i></i><i></i></div>
+        <div class="control-row"><button id="play" class="primary"><span id="play-icon">▶</span><span id="play-label">释放重球</span></button><button id="reset" class="icon-button" title="重置实验（R）" aria-label="重置实验">↺</button><div class="control-divider"></div><div class="speed-control"><span>播放速度</span><button data-speed="0.25">¼×</button><button data-speed="0.5">½×</button><button data-speed="1" class="active">1×</button></div><div class="tank-actions" id="tank-actions" hidden><button id="release-more">＋ 再次投球</button><button id="wave-toggle">≈ 手动造浪</button></div><div class="control-spacer"></div><button id="sound" class="sound-button" title="开启或关闭声音（M）"><span id="sound-icon">♪</span><span id="sound-label">声音关闭</span></button></div>
+      </div>
+      <div id="toast" class="toast ui" role="status"></div>
+    </section>
+    <aside class="sidebar ui">
+      <div class="panel-head"><div><span class="eyebrow">CONTROL ROOM</span><h2>实验参数</h2></div><button id="defaults" title="恢复默认参数" aria-label="恢复默认参数">↺</button></div>
+      <div class="parameter-scroll" id="parameters"></div>
+      <div class="monitor"><div class="monitor-head"><span><i></i><b id="chart-title">形变响应</b></span><small>实时观测</small></div><canvas id="chart" width="520" height="110"></canvas><div class="monitor-foot"><span id="chart-caption">局部受压 → 弹性传播 → 阻尼衰减</span><span id="chart-unit">m</span></div></div>
+      <div class="panel-foot"><span>鼠标探索 · 空格暂停 · R 重置</span><span>LAB / 2026</span></div>
+    </aside>
+  </main>
+  <div class="focus-hint ui">专注观察 <span>按 F 返回实验台</span></div>
+  <script src="vendor/three.min.js"></script>
+  <script src="physics.js"></script>
+  <script src="visuals.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

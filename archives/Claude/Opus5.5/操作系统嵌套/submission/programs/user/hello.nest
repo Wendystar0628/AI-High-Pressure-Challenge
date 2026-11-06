@@ -1,0 +1,9 @@
+// 最小程序：读时间、写文件、输出结果。
+function main(args) {
+  let me = sys("self");
+  sys("print", "你好，这里是 " + me.system + " 的进程 " + str(me.pid));
+  sys("sleep", 0.5);
+  sys("fs_write", "/Documents/hello.txt", "写入时虚拟时间 " + fmt(sys("time"), 3));
+  sys("print", "读回文件：" + sys("fs_read", "/Documents/hello.txt"));
+  return "完成";
+}

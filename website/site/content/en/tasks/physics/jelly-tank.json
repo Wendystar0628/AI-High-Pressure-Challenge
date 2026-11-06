@@ -1,0 +1,25 @@
+{
+  "brief": [
+    "Engineering- or research-grade accuracy is not required; the focus is convincing physical behaviour and clean, refined images. The main motion must come from real simulation or sound physical driving, not canned animation.",
+    {
+      "ul": [
+        "The jelly dents at the contact point first, deformation spreads through it and parts rebound in sequence, never a uniform squash; centred, off-centre and multi-ball impacts are all required.",
+        "The tank has 3–5 density groups: low density floats, neutral hovers, high density sinks; waves start 1 second after the last ball enters the water and stop 5 seconds later.",
+        "Ready-made physics and rendering libraries are allowed, and the model decides whether and which; libraries ship with the work and run offline, and the simulation runs in the browser.",
+        "Both scenes share one style, can be paused, slowed, reset and tuned, and have sound for impacts, water entry and waves."
+      ]
+    }
+  ],
+  "points": [
+    "**Soft-body deformation**: local denting, overall bulging and staggered rebound, with the jelly's reaction changing the heavy ball's motion.",
+    "**Fluid and buoyancy**: density decides where balls settle, and waves set the surface, the water and the bottom moving differently at once.",
+    "**Three-way coupling**: soft bodies, rigid bodies and fluid act on one another, with deformation and waves clearly layered.",
+    "**Choosing and joining libraries**: whether and where to use a physics library is the model's call, and the parts must add up to one believable motion."
+  ],
+  "scoring": [
+    "**Visual expression first**: phenomena and layers of motion 44 points plus materials and lighting 24, 68 in all, judged on how deformation, waves, layered motion and materials look.",
+    "**Interactions, 22 points**: ball contact, buoyancy, wave and flow push and rigid collisions must fit the contact and water state at the time.",
+    "**Demo and delivery, 10 points**: stage transitions, demo controls, parameter effects, video export and sound, 2 each; sound is checked for implementation, not for how it sounds.",
+    "**Frame rate not scored**: smoothness and frame rate do not count."
+  ]
+}

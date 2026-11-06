@@ -1,0 +1,1028 @@
+// 窗口管理器 —— 子系统桌面的全部窗口逻辑：窗口次序、焦点、命中判断、输入分发、
+// 任务栏、开始菜单、托盘、通知、右键菜单、系统窗口与投送外框。它是内核启动的普通进程，
+// 修改本文件并重启所属系统后，桌面按新逻辑运行。
+include "/System/lib/sys.nest";
+
+const TASKBAR_H = 46;
+const TITLE_H = 34;
+const SYSBAR_H = 36;
+const EDGE = 6;
+const ICON_W = 92;
+const ICON_H = 92;
+
+let ME = null;            // self()
+let W = 1000, H = 640;
+let WINS = {};            // wid -> 窗口
+let ORDER = [];           // 从下到上
+let FOCUS = null;         // 焦点窗口 wid；null 表示桌面
+let NEXT_LOCAL = 1;
+let HITS = [];            // 本帧命中表（后加入的在上面）
+let CFG = null;           // /System/desktop.json
+let DIRTY = true;
+let START_OPEN = false;
+let START_QUERY = "";
+let MENU = null;          // 右键菜单 { x, y, items }
+let NOTIF_OPEN = false;
+let NOTIFS = [];
+let TOASTS = [];
+let DIALOG = null;        // 模态对话框 { title, text, buttons:[{label, act, data}], input? }
+let DRAG = null;          // 窗口拖动 / 缩放
+let CAPTURE = null;       // 按下时命中的内容窗口，后续指针事件都发给它
+let ICON_SEL = -1;
+let ICON_LIST = [];
+let CHILDREN = {};        // 直属子系统信息
+let CLOCK_TEXT = "";
+let LAST_META = "";
+let NEXT_POS = 0;
+let PRESS = null;
+
+const APPS = [
+  { id: "player", name: "三维播放器", path: "/System/apps/player.nest", tid: "launch-player" },
+  { id: "charts", name: "图表工作台", path: "/System/apps/charts.nest", tid: "launch-charts" },
+  { id: "files", name: "文件管理器", path: "/System/apps/files.nest", tid: "launch-files" },
+  { id: "editor", name: "程序编辑器", path: "/System/apps/editor.nest", tid: "launch-editor" },
+  { id: "tasks", name: "进程管理器", path: "/System/apps/tasks.nest", tid: "launch-tasks" },
+  { id: "systems", name: "子系统管理", path: "/System/apps/systems.nest", tid: "launch-systems" }
+];
+
+// —— 工具 ——
+function app_info(id) {
+  for (let a of APPS) if (a.id == id) return a;
+  return null;
+}
+function hit(x, y, w, h, act, data) { push(HITS, { x: x, y: y, w: w, h: h, act: act, data: data }); }
+function find_hit(x, y) {
+  let i = len(HITS) - 1;
+  while (i >= 0) {
+    let r = HITS[i];
+    if (x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h) return r;
+    i = i - 1;
+  }
+  return null;
+}
+function invalidate() { DIRTY = true; }
+function same_data(a, b) {
+  if (type(a) == "map" && type(b) == "map") return json_str(a) == json_str(b);
+  return a == b;
+}
+function desk_h() { return H - TASKBAR_H; }
+function top_visible() {
+  let i = len(ORDER) - 1;
+  while (i >= 0) {
+    let w = WINS[ORDER[i]];
+    if (w != null && w.state != "min") return w.wid;
+    i = i - 1;
+  }
+  return null;
+}
+function raise(wid) {
+  let out = [];
+  for (let x of ORDER) if (x != wid) push(out, x);
+  push(out, wid);
+  ORDER = out;
+}
+function set_focus(wid) {
+  if (FOCUS == wid) return;
+  let old = FOCUS != null ? WINS[FOCUS] : null;
+  if (old != null && old.pid != 0) send(old.pid, { type: "focus", on: false });
+  FOCUS = wid;
+  let w = wid != null ? WINS[wid] : null;
+  if (w != null && w.pid != 0) send(w.pid, { type: "focus", on: true });
+  invalidate();
+}
+function focus_top() { set_focus(top_visible()); }
+function win_rect(w) {
+  if (w.state == "max") return [0, 0, W, desk_h()];
+  return [w.x, w.y, w.w, w.h];
+}
+function content_rect(w) {
+  let r = win_rect(w);
+  let top = TITLE_H + (w.kind == "system" ? SYSBAR_H : 0);
+  return [r[0], r[1] + top, r[2], r[3] - top];
+}
+// 把窗口当前内容尺寸告诉使用者
+function notify_size(w) {
+  let c = content_rect(w);
+  if (w.cw == c[2] && w.ch == c[3]) return;
+  w.cw = c[2];
+  w.ch = c[3];
+  if (w.kind == "app") send(w.pid, { type: "resize", w: c[2], h: c[3] });
+  else if (w.kind == "system") sys("sysctl", "resize", w.child, c[2], c[3]);
+  else if (w.kind == "proj") sys("proj_resize", w.proj.src_path, w.proj.sid, c[2], c[3]);
+}
+function new_win_pos(w, h) {
+  let n = NEXT_POS;
+  NEXT_POS = (NEXT_POS + 1) % 6;
+  let x = 40 + n * 34;
+  let y = 24 + n * 30;
+  if (x + w > W) x = W - w > 0 ? floor((W - w) / 2) : 0;
+  if (y + h > desk_h()) y = desk_h() - h > 0 ? floor((desk_h() - h) / 2) : 0;
+  return [x, y];
+}
+function fit_size(w, h) {
+  let aw = W - 16, ah = desk_h() - 12;
+  return [w > aw ? aw : w, h > ah ? ah : h];
+}
+function add_window(w) {
+  WINS[w.wid] = w;
+  push(ORDER, w.wid);
+  set_focus(w.wid);
+  notify_size(w);
+  invalidate();
+}
+function close_window(wid) {
+  let w = WINS[wid];
+  if (w == null) return;
+  del(WINS, wid);
+  let out = [];
+  for (let x of ORDER) if (x != wid) push(out, x);
+  ORDER = out;
+  if (FOCUS == wid) { FOCUS = null; focus_top(); }
+  invalidate();
+}
+function notify(level, text) {
+  let n = { level: level, text: text, t: time(), read: false };
+  push(NOTIFS, n);
+  if (len(NOTIFS) > 60) shift(NOTIFS);
+  push(TOASTS, { text: text, level: level, until: time() + 5 });
+  if (len(TOASTS) > 3) shift(TOASTS);
+  invalidate();
+}
+function spawn_app(path, args) {
+  let r = spawn(path, args, { kind: "app" });
+  if (is_err(r)) notify("error", "启动失败：" + r.error);
+}
+function launch(id, args) {
+  let a = app_info(id);
+  if (a != null) spawn_app(a.path, args);
+}
+function open_path(path) {
+  let e = ext_of(path);
+  if (e == "scene" || e == "flight") launch("player", { file: path });
+  else launch("editor", { file: path });
+}
+
+// —— 输入 ——
+function on_input(ev) {
+  let k = ev.k;
+  if (k == "keydown" || k == "keyup") { on_key(ev); return; }
+  if (k == "down" || k == "move" || k == "up" || k == "wheel" || k == "dbl" || k == "ctx") on_pointer(ev);
+}
+function on_key(ev) {
+  if (DIALOG != null) {
+    if (ev.k == "keydown" && ev.key == "Escape") { DIALOG = null; invalidate(); }
+    return;
+  }
+  if (MENU != null || START_OPEN) {
+    if (ev.k == "keydown" && ev.key == "Escape") { MENU = null; START_OPEN = false; invalidate(); return; }
+    if (START_OPEN) return;
+  }
+  if (FOCUS == null) return;
+  let w = WINS[FOCUS];
+  if (w == null) return;
+  if (w.kind == "app") send(w.pid, { type: "ptr", ev: ev });
+  else if (w.kind == "system") {
+    let c = CHILDREN[w.child];
+    if (c != null && c.state == "running") sys("sysctl", "input", w.child, ev);
+  }
+  else if (w.kind == "proj") sys("proj_input", w.proj.src_path, w.proj.sid, ev);
+}
+function forward(w, ev) {
+  let c = content_rect(w);
+  let e = copy(ev);
+  e.x = ev.x - c[0];
+  e.y = ev.y - c[1];
+  if (w.kind == "app") send(w.pid, { type: "ptr", ev: e });
+  else if (w.kind == "system") {
+    let info = CHILDREN[w.child];
+    if (info != null && info.state == "running") sys("sysctl", "input", w.child, e);
+  }
+  else if (w.kind == "proj") sys("proj_input", w.proj.src_path, w.proj.sid, e);
+}
+function on_pointer(ev) {
+  let k = ev.k, x = ev.x, y = ev.y;
+  // 拖动和内容捕获优先：拖动总能正常结束
+  if (DRAG != null) {
+    if (k == "move") { drag_move(x, y); return; }
+    if (k == "up") { drag_end(x, y); return; }
+  }
+  if (CAPTURE != null) {
+    let w = WINS[CAPTURE];
+    if (w != null) forward(w, ev);
+    if (k == "up") CAPTURE = null;
+    return;
+  }
+  let r = find_hit(x, y);
+  if (k == "move") {
+    if (r != null && r.act == "content") { forward(WINS[r.data], ev); }
+    return;
+  }
+  if (k == "wheel") {
+    if (r != null && r.act == "content") forward(WINS[r.data], ev);
+    return;
+  }
+  if (k == "ctx") {
+    if (r != null && r.act == "content") { forward(WINS[r.data], ev); return; }
+    if (r != null && r.act == "icon") { icon_menu(r.data, x, y); return; }
+    if (r == null || r.act == "desktop") { desktop_menu(x, y); return; }
+    return;
+  }
+  if (k == "dbl") {
+    if (r == null) return;
+    if (r.act == "title") { toggle_max(r.data); return; }
+    if (r.act == "icon") { icon_open(r.data); return; }
+    if (r.act == "content") forward(WINS[r.data], ev);
+    return;
+  }
+  if (k == "down") {
+    PRESS = r;
+    if (r == null) { close_popups(); return; }
+    let act = r.act;
+    // 菜单外按下关闭弹出层
+    if (act != "menu" && act != "start_item" && act != "notif_item" && act != "start_query" && act != "popup_block") close_popups_soft(act);
+    if (act == "content") {
+      let w = WINS[r.data];
+      activate(w);
+      CAPTURE = r.data;
+      forward(w, ev);
+      return;
+    }
+    if (act == "title") activate(WINS[r.data]);
+    if (act == "wbtn" || act == "sysbar") activate(WINS[r.data.wid]);
+    if (act == "title") {
+      let w = WINS[r.data];
+      let rr = win_rect(w);
+      DRAG = { mode: "move", wid: r.data, dx: x - rr[0], dy: y - rr[1], moved: false };
+      return;
+    }
+    if (act == "resize") {
+      let w = WINS[r.data.wid];
+      activate(w);
+      if (w.state == "max") return;
+      DRAG = { mode: "resize", wid: r.data.wid, edge: r.data.edge, sx: x, sy: y, ox: w.x, oy: w.y, ow: w.w, oh: w.h };
+      return;
+    }
+    if (act == "desktop") { ICON_SEL = -1; set_focus(null); invalidate(); return; }
+    if (act == "icon") { ICON_SEL = r.data; set_focus(null); invalidate(); return; }
+    return;
+  }
+  if (k == "up") {
+    let p = PRESS;
+    PRESS = null;
+    if (p == null || r == null) return;
+    if (p.act != r.act || !same_data(p.data, r.data)) return;
+    on_click(r, x, y);
+  }
+}
+function close_popups() {
+  if (START_OPEN || MENU != null || NOTIF_OPEN) { START_OPEN = false; MENU = null; NOTIF_OPEN = false; invalidate(); }
+}
+function close_popups_soft(act) {
+  if (act == "start" || act == "tray_notif") { MENU = null; return; }
+  close_popups();
+}
+function activate(w) {
+  if (w == null) return;
+  raise(w.wid);
+  set_focus(w.wid);
+  invalidate();
+}
+function toggle_max(wid) {
+  let w = WINS[wid];
+  if (w == null) return;
+  if (w.state == "max") { w.state = "normal"; }
+  else { w.state = "max"; }
+  notify_size(w);
+  invalidate();
+}
+function snap(w, side) {
+  let dh = desk_h();
+  w.state = "normal";
+  w.y = 0;
+  w.h = dh;
+  w.w = floor(W / 2);
+  w.x = side == "left" ? 0 : W - w.w;
+}
+function drag_move(x, y) {
+  let d = DRAG;
+  let w = WINS[d.wid];
+  if (w == null) { DRAG = null; return; }
+  if (d.mode == "move") {
+    if (w.state == "max") {
+      // 从最大化拖动时先恢复
+      w.state = "normal";
+      d.dx = floor(w.w * (d.dx / W));
+    }
+    let nx = x - d.dx, ny = y - d.dy;
+    // 源窗口的拖动范围限于所属桌面
+    if (ny < 0) ny = 0;
+    if (ny > desk_h() - TITLE_H) ny = desk_h() - TITLE_H;
+    if (nx < 60 - w.w) nx = 60 - w.w;
+    if (nx > W - 60) nx = W - 60;
+    w.x = nx;
+    w.y = ny;
+    d.moved = true;
+    invalidate();
+    return;
+  }
+  let dx = x - d.sx, dy = y - d.sy;
+  let e = d.edge;
+  let nx = d.ox, ny = d.oy, nw = d.ow, nh = d.oh;
+  if (index_of(e, "e", 0) >= 0) nw = d.ow + dx;
+  if (index_of(e, "s", 0) >= 0) nh = d.oh + dy;
+  if (index_of(e, "w", 0) >= 0) { nw = d.ow - dx; nx = d.ox + dx; }
+  if (index_of(e, "n", 0) >= 0) { nh = d.oh - dy; ny = d.oy + dy; }
+  if (nw < 240) { if (index_of(e, "w", 0) >= 0) nx = d.ox + d.ow - 240; nw = 240; }
+  if (nh < 140) { if (index_of(e, "n", 0) >= 0) ny = d.oy + d.oh - 140; nh = 140; }
+  if (ny < 0) { nh = nh + ny; ny = 0; }
+  w.x = nx; w.y = ny; w.w = nw; w.h = nh;
+  notify_size(w);
+  invalidate();
+}
+function drag_end(x, y) {
+  let d = DRAG;
+  DRAG = null;
+  let w = WINS[d.wid];
+  if (w == null) return;
+  if (d.mode == "move" && d.moved) {
+    if (x <= 2) snap(w, "left");
+    else if (x >= W - 3) snap(w, "right");
+    else if (y <= 1) w.state = "max";
+  }
+  notify_size(w);
+  invalidate();
+}
+
+// —— 单击动作 ——
+function on_click(r, x, y) {
+  let a = r.act, d = r.data;
+  if (a == "start") { START_OPEN = !START_OPEN; NOTIF_OPEN = false; invalidate(); return; }
+  if (a == "start_item") { START_OPEN = false; launch(d, null); invalidate(); return; }
+  if (a == "pinned") { launch(d, null); return; }
+  if (a == "task") { task_click(d); return; }
+  if (a == "tray_notif") { NOTIF_OPEN = !NOTIF_OPEN; START_OPEN = false; for (let n of NOTIFS) n.read = true; invalidate(); return; }
+  if (a == "notif_clear") { NOTIFS = []; invalidate(); return; }
+  if (a == "system_new") { new_child(); return; }
+  if (a == "back_parent") { sys("focus_parent"); return; }
+  if (a == "wbtn") { window_button(d.wid, d.b); return; }
+  if (a == "sysbar") { system_button(d.wid, d.b); return; }
+  if (a == "menu") { let m = MENU; MENU = null; menu_action(d, m); invalidate(); return; }
+  if (a == "dialog") { dialog_action(d); return; }
+  if (a == "kernel_open") { open_kernel(d); return; }
+  if (a == "toast") { TOASTS = []; invalidate(); return; }
+  if (a == "open_help") { launch("editor", { file: "/Docs/操作说明.md" }); return; }
+}
+function task_click(wid) {
+  let w = WINS[wid];
+  if (w == null) return;
+  if (w.state == "min") {
+    w.state = w.prev_state != null ? w.prev_state : "normal";
+    activate(w);
+    return;
+  }
+  if (FOCUS == wid) {
+    w.prev_state = w.state;
+    w.state = "min";
+    FOCUS = null;
+    focus_top();
+    invalidate();
+    return;
+  }
+  activate(w);
+}
+function window_button(wid, b) {
+  let w = WINS[wid];
+  if (w == null) return;
+  if (b == "min") {
+    w.prev_state = w.state;
+    w.state = "min";
+    if (FOCUS == wid) { FOCUS = null; focus_top(); }
+    invalidate();
+    return;
+  }
+  if (b == "max") { toggle_max(wid); return; }
+  if (b == "close") {
+    if (w.kind == "app") { send(w.pid, { type: "close" }); return; }
+    if (w.kind == "system") {
+      DIALOG = {
+        title: "关闭系统窗口",
+        text: "关闭 " + w.child + " 会停止它和全部后代系统中的程序。已保存的快照仍可重新打开。确定吗？",
+        buttons: [{ label: "取消", act: "cancel" }, { label: "停止并关闭", act: "close_system", data: wid, primary: true }]
+      };
+      invalidate();
+      return;
+    }
+    if (w.kind == "proj") {
+      // 关闭投送只取消视图，源应用继续运行
+      sys("proj_closed", w.proj.src_path, w.proj.sid, w.proj.id);
+      close_window(wid);
+      return;
+    }
+  }
+}
+function new_child() {
+  let r = sys("sysctl", "new", {});
+  if (is_err(r)) notify("error", str(r.error));
+}
+function open_kernel(id) {
+  let p = sys("sysctl", "kernel_path", id);
+  if (!is_err(p)) launch("editor", { file: p });
+}
+function system_button(wid, b) {
+  let w = WINS[wid];
+  if (w == null) return;
+  let id = w.child;
+  let r = true;
+  if (b == "pause") r = sys("sysctl", "pause", id);
+  else if (b == "resume") r = sys("sysctl", "resume", id);
+  else if (b == "step") r = sys("sysctl", "step", id);
+  else if (b == "restart") r = sys("sysctl", "restart", id);
+  else if (b == "start") r = sys("sysctl", "start", id);
+  else if (b == "stop") r = sys("sysctl", "stop", id);
+  else if (b == "snapshot") r = sys("sysctl", "snapshot", id);
+  else if (b == "kernel") { open_kernel(id); return; }
+  else if (b == "rate") {
+    let c = CHILDREN[id];
+    let v = c != null ? c.rate : 1;
+    let nv = v >= 8 ? 0.25 : v * 2;
+    r = sys("sysctl", "rate", id, nv);
+  } else if (b == "manage") { launch("systems", { target: id }); return; }
+  if (is_err(r)) notify("error", str(r.error));
+  invalidate();
+}
+function dialog_action(d) {
+  let a = d.act;
+  let dlg = DIALOG;
+  DIALOG = null;
+  invalidate();
+  if (a == "close_system") {
+    let w = WINS[d.data];
+    if (w != null) sys("sysctl", "close", w.child);
+  } else if (a == "xfer_yes") {
+    sys("xfer_decide", d.data, true);
+  } else if (a == "xfer_no") {
+    sys("xfer_decide", d.data, false);
+  }
+}
+function desktop_menu(x, y) {
+  MENU = { x: x, y: y, items: [
+    { label: "新建子系统", act: "new_child" },
+    { label: "文件管理器", act: "app", data: "files" },
+    { label: "三维播放器", act: "app", data: "player" },
+    { label: "图表工作台", act: "app", data: "charts" },
+    { label: "操作说明", act: "help" },
+    { label: "刷新桌面", act: "refresh" }
+  ] };
+  invalidate();
+}
+function icon_menu(i, x, y) {
+  ICON_SEL = i;
+  MENU = { x: x, y: y, items: [{ label: "打开", act: "icon_open", data: i }] };
+  invalidate();
+}
+function icon_open(i) {
+  let it = ICON_LIST[i];
+  if (it == null) return;
+  if (it.act == "app") launch(it.id, null);
+  else if (it.act == "new_child") new_child();
+  else if (it.act == "file") open_path(it.path);
+}
+function menu_action(d, m) {
+  let a = d.act;
+  if (a == "new_child") new_child();
+  else if (a == "app") launch(d.data, null);
+  else if (a == "help") launch("editor", { file: "/Docs/操作说明.md" });
+  else if (a == "icon_open") icon_open(d.data);
+}
+
+// —— 系统消息 ——
+function on_msg(m) {
+  let d = m.data;
+  if (d == null) return;
+  let t = d.type;
+  if (t == "input") { on_input(d.ev); return; }
+  if (t == "win_open") {
+    let fs = fit_size(d.w != null ? d.w : 640, (d.h != null ? d.h : 420) + TITLE_H);
+    let pos = d.x != null ? [d.x, d.y] : new_win_pos(fs[0], fs[1]);
+    add_window({ wid: d.wid, sid: d.sid, pid: d.pid, kind: "app", app: d.app, title: d.title, icon: d.icon != null ? d.icon : d.app, x: pos[0], y: pos[1], w: fs[0], h: fs[1], state: d.max ? "max" : "normal" });
+    return;
+  }
+  if (t == "win_set") {
+    let w = WINS[d.wid];
+    if (w != null) {
+      if (d.props.title != null) w.title = d.props.title;
+      if (d.props.state != null) { w.state = d.props.state; notify_size(w); }
+      invalidate();
+    }
+    return;
+  }
+  if (t == "win_close") { close_window(d.wid); return; }
+  if (t == "value_in") { value_in(d); return; }
+  if (t == "proc_exit") {
+    let ids = keys(WINS);
+    for (let k of ids) {
+      if (WINS[k].kind == "app" && WINS[k].pid == d.pid) close_window(k);
+    }
+    return;
+  }
+  if (t == "notify") { notify(d.level, d.text); return; }
+  if (t == "desk_resize") {
+    W = d.w;
+    H = d.h;
+    let ids = keys(WINS);
+    for (let k of ids) { let w = WINS[k]; clamp_window(w); notify_size(w); }
+    invalidate();
+    return;
+  }
+  if (t == "child_new") { child_window(d.info); return; }
+  if (t == "child_state") {
+    CHILDREN[d.info.id] = d.info;
+    invalidate();
+    return;
+  }
+  if (t == "child_closed") {
+    del(CHILDREN, d.id);
+    let ids = keys(WINS);
+    for (let k of ids) if (WINS[k].kind == "system" && WINS[k].child == d.id) close_window(k);
+    return;
+  }
+  if (t == "proj_open") { proj_open(d.proj); return; }
+  if (t == "proj_focus") {
+    let w = proj_window(d.id);
+    if (w != null) { if (w.state == "min") w.state = "normal"; activate(w); }
+    return;
+  }
+  if (t == "proj_close") {
+    let w = proj_window(d.id);
+    if (w != null) {
+      close_window(w.wid);
+      notify("info", "投送已结束：" + str(d.reason));
+    }
+    return;
+  }
+  if (t == "xfer_conflict") {
+    DIALOG = {
+      title: "文件已存在",
+      text: d.dir + " 中已有 " + d.name + "（来自 " + d.from + " 的文件）。要覆盖吗？",
+      buttons: [{ label: "取消", act: "xfer_no", data: d.id }, { label: "覆盖", act: "xfer_yes", data: d.id, primary: true }]
+    };
+    invalidate();
+    return;
+  }
+  if (t == "focus_self") {
+    set_focus(null);
+    invalidate();
+    return;
+  }
+  if (t == "fs_changed") { reload_icons(); return; }
+  if (t == "sys_restored") { on_restored(d); return; }
+}
+function value_in(d) {
+  // 显示设备已确定值属于哪个显示面，这里转交其所有者
+  let ids = keys(WINS);
+  for (let k of ids) {
+    let w = WINS[k];
+    if (w.sid == d.sid && w.kind == "app") { send(w.pid, { type: "value", sid: d.sid, key: d.key, value: d.value }); return; }
+  }
+  // 投送视图的显示面归应用所有，由内核直接路由到所有者
+  sys("proj_input", ME.path, d.sid, { k: "value", key: d.key, value: d.value });
+}
+function clamp_window(w) {
+  let dh = desk_h();
+  if (w.w > W) w.w = W;
+  if (w.h > dh) w.h = dh;
+  if (w.x + 60 > W) w.x = W - w.w > 0 ? W - w.w : 0;
+  if (w.y + TITLE_H > dh) w.y = dh - w.h > 0 ? dh - w.h : 0;
+}
+function child_window(info) {
+  CHILDREN[info.id] = info;
+  // 默认布局：父桌面与子桌面都可见，子桌面尽量大
+  let n = len(keys(CHILDREN)) - 1;
+  let mw = floor(W * 0.8), mh = floor(desk_h() * 0.92);
+  if (mw < 360) mw = 360;
+  if (mh < 280) mh = 280;
+  let x = 28 + n * 32 + 60, y = 8 + n * 26;
+  if (x + mw > W) x = W - mw > 0 ? W - mw : 0;
+  if (y + mh > desk_h()) y = desk_h() - mh > 0 ? desk_h() - mh : 0;
+  let wid = ME.system + ":w" + "y" + str(NEXT_LOCAL);
+  NEXT_LOCAL = NEXT_LOCAL + 1;
+  add_window({ wid: wid, sid: "", pid: 0, kind: "system", child: info.id, app: "system", title: info.name, icon: "system", x: x, y: y, w: mw, h: mh, state: "normal" });
+}
+function proj_window(id) {
+  let ids = keys(WINS);
+  for (let k of ids) if (WINS[k].kind == "proj" && WINS[k].proj.id == id) return WINS[k];
+  return null;
+}
+function proj_open(p) {
+  let existing = proj_window(p.id);
+  if (existing != null) { if (existing.state == "min") existing.state = "normal"; activate(existing); return; }
+  let wid = ME.system + ":wx" + str(NEXT_LOCAL);
+  NEXT_LOCAL = NEXT_LOCAL + 1;
+  let fs = fit_size(p.w != null ? p.w + 8 : 640, (p.h != null ? p.h : 420) + TITLE_H);
+  let pos = new_win_pos(fs[0], fs[1]);
+  add_window({ wid: wid, sid: p.sid, pid: 0, kind: "proj", proj: p, app: "projection", title: p.title, icon: p.src_app, x: pos[0], y: pos[1], w: fs[0], h: fs[1], state: "normal" });
+  notify("info", "收到投送：" + p.src_sys + " · " + p.title);
+}
+function on_restored(d) {
+  // 恢复后：子系统信息重新取一次，范围外的投送由源应用自行对应
+  let l = sys("sysctl", "list");
+  if (type(l) == "array") { for (let c of l) CHILDREN[c.id] = c; }
+  invalidate();
+}
+
+// —— 绘制 ——
+function icon_node(k, x, y, s, name) { return { k: k, t: "icon", x: x, y: y, w: s, h: s, icon: name }; }
+
+function window_node(w) {
+  let r = win_rect(w);
+  let x = r[0], y = r[1], ww = r[2], hh = r[3];
+  let wid = w.wid;
+  let focused = FOCUS == wid;
+  let state_cls = w.state == "max" ? " maximized" : "";
+  let kids = [];
+  let title_text = w.title;
+  let tb = {
+    k: "tb", x: 0, y: 0, w: ww, h: TITLE_H, cls: "win-title", tid: "window-titlebar", c: [
+      icon_node("ic", 9, 8, 18, w.icon),
+      { k: "t", x: 33, y: 0, w: ww - 170, h: TITLE_H, cls: "win-title-text", text: title_text },
+      { k: "min", x: ww - 126, y: 0, w: 42, h: TITLE_H, cls: "win-btn", tid: "window-minimize", label: "最小化", role: "button", icon: "min" },
+      { k: "max", x: ww - 84, y: 0, w: 42, h: TITLE_H, cls: "win-btn", tid: "window-maximize", label: w.state == "max" ? "还原" : "最大化", role: "button", icon: w.state == "max" ? "restore" : "max" },
+      { k: "cls", x: ww - 42, y: 0, w: 42, h: TITLE_H, cls: "win-btn close", tid: "window-close", label: "关闭", role: "button", icon: "close" }
+    ]
+  };
+  if (w.kind == "proj") {
+    push(tb.c, { k: "src", x: ww - 126 - 170, y: 7, w: 164, h: 20, cls: "proj-source", text: "来自 " + w.proj.src_sys + " · 第 " + str(w.proj.depth) + " 层" });
+  }
+  push(kids, tb);
+  let n = { k: wid, x: x, y: y, w: ww, h: hh, z: index_of(ORDER, wid, 0) + 10, cls: "app-window" + state_cls + (focused ? " focused" : ""), tid: "app-window", win: wid, a: { "data-app-id": w.app }, hide: w.state == "min", c: kids };
+  if (w.kind == "proj") {
+    n.a = { "data-app-id": "projection", "data-source-system-id": w.proj.src_sys, "data-source-window-id": w.proj.src_win, "data-source-app-id": w.proj.src_app };
+  }
+  // 命中：先放整窗（吞掉穿透），再放边缘、标题栏、按钮、内容
+  if (w.state != "min") {
+    hit(x, y, ww, hh, "win_block", wid);
+    let c = content_rect(w);
+    hit(c[0], c[1], c[2], c[3], "content", wid);
+    hit(x, y, ww, TITLE_H, "title", wid);
+    hit(x + ww - 126, y, 42, TITLE_H, "wbtn", { wid: wid, b: "min" });
+    hit(x + ww - 84, y, 42, TITLE_H, "wbtn", { wid: wid, b: "max" });
+    hit(x + ww - 42, y, 42, TITLE_H, "wbtn", { wid: wid, b: "close" });
+    if (w.state != "max") {
+      hit(x, y + hh - EDGE, ww, EDGE, "resize", { wid: wid, edge: "s" });
+      hit(x, y, EDGE, hh, "resize", { wid: wid, edge: "w" });
+      hit(x + ww - EDGE, y, EDGE, hh, "resize", { wid: wid, edge: "e" });
+      hit(x, y, ww, 4, "resize", { wid: wid, edge: "n" });
+      hit(x + ww - 16, y + hh - 16, 16, 16, "resize", { wid: wid, edge: "se" });
+    }
+  }
+  if (w.kind == "app") {
+    push(kids, { k: "body", t: "surface", sid: w.sid, x: 0, y: TITLE_H, w: ww, h: hh - TITLE_H, cls: "win-body" });
+  } else if (w.kind == "proj") {
+    push(kids, { k: "body", t: "projslot", src: w.proj.src_sys, src_path: w.proj.src_path, sid: w.sid, x: 0, y: TITLE_H, w: ww, h: hh - TITLE_H, cls: "win-body proj-body" });
+  } else if (w.kind == "system") {
+    system_chrome(w, kids, x, y, ww, hh);
+  }
+  if (w.state != "max") push(kids, { k: "rz", x: ww - 16, y: hh - 16, w: 16, h: 16, cls: "win-resize", tid: "window-resize", label: "调整窗口大小" });
+  return n;
+}
+function state_label(s) {
+  if (s == "running") return "运行中";
+  if (s == "paused") return "已暂停";
+  if (s == "booting") return "启动中";
+  if (s == "stopped") return "已停止";
+  if (s == "error") return "内核错误";
+  return s;
+}
+function system_chrome(w, kids, x, y, ww, hh) {
+  let id = w.child;
+  let c = CHILDREN[id];
+  let st = c != null ? c.state : "booting";
+  let rate = c != null ? c.rate : 1;
+  let bar = [];
+  let bx = 8;
+  let by = y + TITLE_H;
+  let wid = w.wid;
+  push(bar, { k: "state", x: bx, y: 6, w: 76, h: 24, cls: "state-chip s-" + st, text: state_label(st) });
+  bx = bx + 82;
+  let specs = [];
+  if (st == "paused") { specs = [["继续", "resume", "system-resume"], ["单步", "step", "system-step"]]; }
+  else if (st == "running") { specs = [["暂停", "pause", "system-pause"]]; }
+  else if (st == "stopped") { specs = [["启动", "start", "system-start"]]; }
+  push(specs, [fmt(rate, rate == floor(rate) ? 0 : 2) + "×", "rate", "system-rate"]);
+  push(specs, ["快照", "snapshot", "system-snapshot"]);
+  push(specs, ["重启", "restart", "system-restart"]);
+  push(specs, ["内核", "kernel", "kernel-open"]);
+  push(specs, ["管理", "manage", "system-manage"]);
+  for (let s of specs) {
+    let bw = 46;
+    if (bx + bw + 6 > ww) break;
+    push(bar, { k: s[1], x: bx, y: 5, w: bw, h: 26, cls: "btn small", text: s[0], tid: s[2], label: s[0] + " " + id, role: "button", a: { "data-target-system-id": id } });
+    hit(x + bx, by + 5, bw, 26, "sysbar", { wid: wid, b: s[1] });
+    bx = bx + bw + 4;
+  }
+  if (ww - bx > 110) push(bar, { k: "lab", x: ww - 152, y: 8, w: 144, h: 20, cls: "sysbar-id", text: id + " · 第 " + str(ME.depth + 1) + " 层" });
+  push(kids, { k: "sysbar", x: 0, y: TITLE_H, w: ww, h: SYSBAR_H, cls: "sysbar", c: bar });
+  let top = TITLE_H + SYSBAR_H;
+  let vp = { k: "body", t: "child", sys: id, x: 0, y: top, w: ww, h: hh - top, cls: "win-body sys-viewport" };
+  push(kids, vp);
+  if (st == "error") {
+    let err = c != null && c.err != null ? c.err : "内核错误";
+    push(kids, { k: "err", x: 0, y: top, w: ww, h: hh - top, cls: "kernel-error-panel", c: [
+      { k: "h", x: 24, y: 24, w: ww - 48, h: 30, cls: "err-title", text: "内核错误 · " + id },
+      { k: "m", x: 24, y: 60, w: ww - 48, h: hh - top - 130, cls: "err-text", tid: "kernel-error", text: err },
+      { k: "hint", x: 24, y: hh - top - 60, w: ww - 48, h: 40, cls: "err-hint", text: "在系统工具条点“内核”打开源文件，修改保存后点“重启”。父系统和兄弟系统不受影响。" }
+    ] });
+  } else if (st == "stopped") {
+    push(kids, { k: "stopped", x: 0, y: top, w: ww, h: hh - top, cls: "stopped-panel", text: "实例已停止。点“启动”或“重启”重新运行。" });
+  }
+}
+
+function desktop_icons(out) {
+  let dh = desk_h();
+  let i = 0, col = 0, row = 0;
+  let rows = floor((dh - 12) / ICON_H);
+  if (rows < 1) rows = 1;
+  for (let it of ICON_LIST) {
+    let x = 10 + col * ICON_W, y = 10 + row * ICON_H;
+    let a = {};
+    if (it.act == "app") a["data-app-id"] = it.id;
+    if (it.act == "file") a["data-file-path"] = it.path;
+    let n = {
+      k: "ic" + str(i), x: x, y: y, w: ICON_W - 6, h: ICON_H - 6, cls: "desk-icon" + (ICON_SEL == i ? " selected" : ""),
+      tid: "desktop-icon", label: it.name, a: a, c: [
+        icon_node("g", floor((ICON_W - 6 - 44) / 2), 6, 44, it.icon),
+        { k: "n", x: 2, y: 52, w: ICON_W - 10, h: 34, cls: "desk-icon-name", text: it.name }
+      ]
+    };
+    if (it.act == "file") n.drag = [it.path];
+    push(out, n);
+    hit(x, y, ICON_W - 6, ICON_H - 6, "icon", i);
+    i = i + 1;
+    row = row + 1;
+    if (row >= rows) { row = 0; col = col + 1; }
+  }
+}
+function taskbar_node() {
+  let y = H - TASKBAR_H;
+  let kids = [];
+  let x = 6;
+  kids = [
+    { k: "start", x: x, y: 5, w: 40, h: 36, cls: "tb-start" + (START_OPEN ? " on" : ""), tid: "start-toggle", label: "开始", role: "button", icon: "start" }
+  ];
+  hit(x, y + 5, 40, 36, "start", null);
+  x = x + 44;
+  let pinned = ["player", "charts", "files"];
+  for (let id of pinned) {
+    let a = app_info(id);
+    push(kids, { k: "pin" + id, x: x, y: 5, w: 38, h: 36, cls: "tb-pin", label: a.name, role: "button", icon: id, tid: "pinned-" + id });
+    hit(x, y + 5, 38, 36, "pinned", id);
+    x = x + 40;
+  }
+  push(kids, { k: "sysnew", x: x, y: 8, w: 92, h: 30, cls: "tb-sysnew", tid: "system-new", label: "新建子系统", role: "button", text: "＋ 子系统" });
+  hit(x, y + 8, 92, 30, "system_new", null);
+  x = x + 98;
+  let tray_w = W > 760 ? 214 : 124;
+  let room = W - x - tray_w - 4;
+  let n = 0;
+  for (let wid of ORDER) { if (WINS[wid] != null) n = n + 1; }
+  let item_w = n > 0 ? floor(room / n) : 150;
+  if (item_w > 170) item_w = 170;
+  if (item_w < 42) item_w = 42;
+  let ids = keys(WINS);
+  sort_str(ids);
+  for (let wid of ids) {
+    let w = WINS[wid];
+    if (x + item_w > W - tray_w) break;
+    let cls = "tb-item" + (FOCUS == wid ? " active" : "") + (w.state == "min" ? " minimized" : "");
+    push(kids, { k: "t" + wid, x: x, y: 5, w: item_w - 3, h: 36, cls: cls, tid: "taskbar-item", label: w.title, role: "button", a: { "data-window-id": wid }, c: [
+      icon_node("i", 8, 9, 18, w.icon),
+      { k: "l", x: 31, y: 0, w: item_w - 38, h: 36, cls: "tb-item-text", text: w.title }
+    ] });
+    hit(x, y + 5, item_w - 3, 36, "task", wid);
+    x = x + item_w;
+  }
+  // 托盘
+  let tx = W - tray_w;
+  if (W > 760) {
+    push(kids, { k: "path", x: tx, y: 8, w: 92, h: 30, cls: "tray-path", text: ME.system + " · L" + str(ME.depth), label: "所属系统 " + ME.path });
+    tx = tx + 94;
+  }
+  push(kids, { k: "back", x: tx, y: 8, w: 30, h: 30, cls: "tray-btn", tid: "back-to-parent", label: "返回父桌面", role: "button", icon: "up" });
+  hit(tx, y + 8, 30, 30, "back_parent", null);
+  tx = tx + 30;
+  let unread = 0;
+  for (let nn of NOTIFS) if (!nn.read) unread = unread + 1;
+  push(kids, { k: "notif", x: tx, y: 8, w: 30, h: 30, cls: "tray-btn" + (unread > 0 ? " unread" : ""), tid: "notifications-toggle", label: "通知", role: "button", icon: "bell" });
+  hit(tx, y + 8, 30, 30, "tray_notif", null);
+  tx = tx + 32;
+  push(kids, { k: "clock", x: tx, y: 4, w: W - tx - 4, h: 38, cls: "tray-clock", text: CLOCK_TEXT, label: "虚拟时钟" });
+  hit(x, y, 0, 0, "none", null);
+  return { k: "taskbar", x: 0, y: y, w: W, h: TASKBAR_H, z: 5000, cls: "taskbar", c: kids };
+}
+function start_menu_node(out) {
+  let mw = 340 < W - 12 ? 340 : W - 12;
+  let rows = len(APPS) + 1;
+  let mh = 88 + rows * 44;
+  if (mh > desk_h() - 8) mh = desk_h() - 8;
+  let x = 6, y = desk_h() - mh - 4;
+  let kids = [
+    { k: "h", x: 18, y: 12, w: mw - 36, h: 24, cls: "start-head", text: ME.name + " · 第 " + str(ME.depth) + " 层" },
+    { k: "s", x: 18, y: 38, w: mw - 36, h: 20, cls: "start-sub", text: ME.path }
+  ];
+  let yy = 66;
+  for (let a of APPS) {
+    if (yy + 42 > mh) break;
+    push(kids, { k: "i" + a.id, x: 10, y: yy, w: mw - 20, h: 40, cls: "start-item", tid: a.tid, label: a.name, role: "button", c: [
+      icon_node("g", 10, 8, 24, a.id),
+      { k: "t", x: 44, y: 0, w: mw - 70, h: 40, cls: "start-item-text", text: a.name }
+    ] });
+    yy = yy + 42;
+  }
+  push(out, { k: "startmenu", x: x, y: y, w: mw, h: mh, z: 6000, cls: "start-menu", tid: "start-menu", c: kids });
+  hit(x, y, mw, mh, "popup_block", null);
+  yy = 66;
+  for (let a of APPS) {
+    if (yy + 42 > mh) break;
+    hit(x + 10, y + yy, mw - 20, 40, "start_item", a.id);
+    yy = yy + 42;
+  }
+}
+function notif_panel_node(out) {
+  let mw = 340 < W - 12 ? 340 : W - 12;
+  let mh = desk_h() - 40 > 420 ? 420 : desk_h() - 40;
+  if (mh < 120) mh = 120;
+  let x = W - mw - 6, y = desk_h() - mh - 4;
+  let kids = [{ k: "h", x: 16, y: 10, w: mw - 110, h: 26, cls: "panel-title", text: "通知中心" },
+    { k: "clr", x: mw - 76, y: 10, w: 64, h: 26, cls: "btn small", text: "清除", label: "清除通知", role: "button" }];
+  let yy = 44;
+  let i = len(NOTIFS) - 1;
+  if (i < 0) push(kids, { k: "e", x: 16, y: yy, w: mw - 32, h: 26, cls: "panel-empty", text: "没有通知" });
+  while (i >= 0 && yy + 54 < mh) {
+    let n = NOTIFS[i];
+    push(kids, { k: "n" + str(i), x: 10, y: yy, w: mw - 20, h: 50, cls: "notif-row lv-" + n.level, text: n.text });
+    yy = yy + 54;
+    i = i - 1;
+  }
+  push(out, { k: "notifpanel", x: x, y: y, w: mw, h: mh, z: 6000, cls: "panel-pop", c: kids });
+  hit(x, y, mw, mh, "popup_block", null);
+  hit(x + mw - 76, y + 10, 64, 26, "notif_clear", null);
+}
+function menu_node(out) {
+  let m = MENU;
+  let mw = 180;
+  let mh = 8 + len(m.items) * 34;
+  let x = m.x, y = m.y;
+  if (x + mw > W) x = W - mw;
+  if (y + mh > H) y = H - mh;
+  let kids = [];
+  let yy = 4;
+  let i = 0;
+  hit(x, y, mw, mh, "popup_block", null);
+  for (let it of m.items) {
+    push(kids, { k: "m" + str(i), x: 4, y: yy, w: mw - 8, h: 32, cls: "menu-item", text: it.label, label: it.label, role: "menuitem", tid: "desktop-menu-item" });
+    hit(x + 4, y + yy, mw - 8, 32, "menu", it);
+    yy = yy + 34;
+    i = i + 1;
+  }
+  push(out, { k: "menu", x: x, y: y, w: mw, h: mh, z: 6500, cls: "ctx-menu", c: kids });
+}
+function dialog_node(out) {
+  let d = DIALOG;
+  let mw = 440 < W - 24 ? 440 : W - 24;
+  let mh = 190;
+  let x = floor((W - mw) / 2), y = floor((H - mh) / 2);
+  hit(0, 0, W, H, "popup_block", null);
+  let kids = [
+    { k: "t", x: 20, y: 14, w: mw - 40, h: 28, cls: "dialog-title", text: d.title },
+    { k: "m", x: 20, y: 48, w: mw - 40, h: 86, cls: "dialog-text", text: d.text }
+  ];
+  let bx = mw - 16;
+  let i = len(d.buttons) - 1;
+  while (i >= 0) {
+    let b = d.buttons[i];
+    bx = bx - 110;
+    push(kids, { k: "b" + str(i), x: bx, y: mh - 46, w: 102, h: 32, cls: "btn" + (b.primary ? " primary" : ""), text: b.label, label: b.label, role: "button", tid: "dialog-" + b.act });
+    hit(x + bx, y + mh - 46, 102, 32, "dialog", b);
+    i = i - 1;
+  }
+  push(out, { k: "shade", x: 0, y: 0, w: W, h: H, z: 7000, cls: "dialog-shade", c: [{ k: "dlg", x: x, y: y, w: mw, h: mh, cls: "dialog", c: kids }] });
+}
+function toasts_node(out) {
+  let now = time();
+  let keep = [];
+  for (let t of TOASTS) if (t.until > now) push(keep, t);
+  TOASTS = keep;
+  let yy = desk_h() - 8;
+  let i = 0;
+  for (let t of TOASTS) {
+    yy = yy - 60;
+    let mw = 320 < W - 24 ? 320 : W - 24;
+    push(out, { k: "toast" + str(i), x: W - mw - 10, y: yy, w: mw, h: 54, z: 5500, cls: "toast lv-" + t.level, text: t.text });
+    hit(W - mw - 10, yy, mw, 54, "toast", null);
+    i = i + 1;
+  }
+}
+function render() {
+  DIRTY = false;
+  HITS = [];
+  let kids = [{ k: "wall", x: 0, y: 0, w: W, h: H, cls: "wallpaper", wp: CFG.wallpaper }];
+  hit(0, 0, W, desk_h(), "desktop", null);
+  desktop_icons(kids);
+  // 窗口按次序放命中表，DOM 里用 z 表达遮挡（不搬动节点）
+  let nodes = {};
+  for (let wid of ORDER) {
+    let w = WINS[wid];
+    if (w != null) nodes[wid] = window_node(w);
+  }
+  let ids = keys(nodes);
+  sort_str(ids);
+  for (let wid of ids) push(kids, nodes[wid]);
+  hit(0, desk_h(), W, TASKBAR_H, "taskbar_block", null);
+  push(kids, taskbar_node());
+  toasts_node(kids);
+  if (START_OPEN) start_menu_node(kids);
+  if (NOTIF_OPEN) notif_panel_node(kids);
+  if (MENU != null) menu_node(kids);
+  if (DIALOG != null) dialog_node(kids);
+  sys("ui", "root", { k: "desk", x: 0, y: 0, w: W, h: H, cls: "desktop level-" + str(ME.depth), tid: "os-desktop", drop: "/Documents", label: ME.system + " 桌面", c: kids });
+  publish_meta();
+}
+function publish_meta() {
+  let list = [];
+  let ids = keys(WINS);
+  sort_str(ids);
+  for (let k of ids) {
+    let w = WINS[k];
+    let row = { id: w.wid, systemId: ME.system, appId: w.kind == "proj" ? "projection" : w.app, title: w.title, state: w.state == "min" ? "minimized" : (w.state == "max" ? "maximized" : "normal"), focused: FOCUS == k };
+    if (w.kind == "proj") {
+      row.sourceSystemId = w.proj.src_sys;
+      row.sourceWindowId = w.proj.src_win;
+      row.sourceAppId = w.proj.src_app;
+    }
+    if (w.kind == "system") row.childSystem = w.child;
+    push(list, row);
+  }
+  let s = json_str(list);
+  if (s != LAST_META) {
+    LAST_META = s;
+    sys("meta", "windows", list);
+  }
+}
+function fmt_clock(t) {
+  let total = floor(t);
+  let h = floor(total / 3600) % 24;
+  let m = floor(total / 60) % 60;
+  let s = total % 60;
+  return pad_left(str(h), 2, "0") + ":" + pad_left(str(m), 2, "0") + ":" + pad_left(str(s), 2, "0");
+}
+function reload_icons() {
+  let l = [];
+  push(l, { name: "三维播放器", icon: "player", act: "app", id: "player" });
+  push(l, { name: "图表工作台", icon: "charts", act: "app", id: "charts" });
+  push(l, { name: "文件管理器", icon: "files", act: "app", id: "files" });
+  push(l, { name: "程序编辑器", icon: "editor", act: "app", id: "editor" });
+  push(l, { name: "进程管理器", icon: "tasks", act: "app", id: "tasks" });
+  push(l, { name: "子系统管理", icon: "systems", act: "app", id: "systems" });
+  push(l, { name: "操作说明", icon: "help", act: "file", path: "/Docs/操作说明.md" });
+  let s = json_str(l);
+  ICON_LIST = l;
+  invalidate();
+}
+
+function main(args) {
+  ME = sys("self");
+  W = args.w;
+  H = args.h;
+  sys("service_set", "wm");
+  let t = read_file("/System/desktop.json");
+  CFG = t != null ? json_parse(t) : { wallpaper: "wall-2" };
+  sys("fs_watch");
+  reload_icons();
+  CLOCK_TEXT = fmt_clock(time());
+  render();
+  // 启动项：默认打开播放器，子桌面一启动就有内容
+  if (CFG.startup != null) {
+    for (let s of CFG.startup) spawn_app(s.path, s.args);
+  }
+  for (;;) {
+    let m = sys("recv", 0.25);
+    if (m != null) {
+      on_msg(m);
+      let n = 0;
+      while (n < 32) {
+        let m2 = sys("recv", 0);
+        if (m2 == null) break;
+        on_msg(m2);
+        n = n + 1;
+      }
+    }
+    let c = fmt_clock(time());
+    if (c != CLOCK_TEXT) {
+      CLOCK_TEXT = c;
+      if (!DIRTY) sys("ui_patch", "root", "clock", { text: c });
+    }
+    let now = time();
+    if (len(TOASTS) > 0 && TOASTS[0].until <= now) invalidate();
+    if (DIRTY) render();
+  }
+}

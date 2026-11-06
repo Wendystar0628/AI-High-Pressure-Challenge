@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": ["start", "--", "--data-dir", "{dataDir}", "--width", "{width}", "--height", "{height}", "--remote-debugging-port={port}"],
+    "cwd": "."
+  },
+  "connection": {
+    "type": "chrome-devtools-protocol",
+    "note": "用 --remote-debugging-port 指定端口；连接 http://127.0.0.1:{port}/json/list 中地址以 nestos://app/ 开头的页面。window.bench 在这个页面的主世界。浏览器标签是独立的 webview 目标，外部网站内部不要求标识。"
+  },
+  "mainWindow": { "title": "Nested OS", "pageUrlPrefix": "nestos://app/src/index.html" },
+  "bench": {
+    "global": "window.bench",
+    "version": 1,
+    "methods": ["ready()", "reset()", "inspect()"],
+    "note": "所有子系统界面都渲染在同一页面的 DOM 中，控件用 data-testid、data-system-id、data-window-id 定位，没有 iframe。子系统输入经各层窗口管理器进程分发，操作后界面在 1 到几个逻辑步内更新，请按需等待。"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "chartLabelColumn": "A",
+      "chartSeries": "B,C,D",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "downloads": "/Downloads",
+      "recycle": "/Recycle",
+      "programs": { "sum": "/Programs/sum.nest", "msgSend": "/Programs/msg_send.nest", "msgRecv": "/Programs/msg_recv.nest", "spin": "/Programs/spin.nest", "hello": "/Programs/hello.nest", "draw2d": "/Programs/draw2d.nest", "draw3d": "/Programs/draw3d.nest" },
+      "kernelTemplate": "/System/kernel.nest",
+      "kernelOfChild": "/Systems/{childId}/kernel.nest",
+      "compiler": "/System/compiler.nest",
+      "compilerBinary": "/System/bin/compiler.nbc",
+      "flightController": "/Flight/flightctl.nest",
+      "help": "/Docs/操作说明.md"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "programs": { "sum": "/Programs/sum.nest", "msgSend": "/Programs/msg_send.nest", "msgRecv": "/Programs/msg_recv.nest", "spin": "/Programs/spin.nest" },
+      "kernelTemplate": "/System/kernel.nest",
+      "kernelOfChild": "/Systems/{childId}/kernel.nest",
+      "windowManager": "/System/wm.nest",
+      "filesApp": "/System/apps/files.nest",
+      "playerApp": "/System/apps/player.nest",
+      "chartsApp": "/System/apps/charts.nest",
+      "compiler": "/System/compiler.nest",
+      "flightController": "/Flight/flightctl.nest",
+      "help": "/Docs/操作说明.md"
+    }
+  },
+  "testIdExtras": {
+    "player": ["player-path", "player-replay", "rehearsal-toggle", "rehearsal-save", "rehearsal-land", "rehearsal-wind-dir", "rehearsal-fault-kind"],
+    "system": ["system-step", "system-rate", "system-snapshot", "system-restore", "system-fork", "system-start", "system-stop", "system-close", "system-manage", "system-state"],
+    "desktop": ["back-to-parent", "tray-clock"],
+    "launch": ["launch-systems", "launch-help"]
+  },
+  "notes": [
+    "新建子系统：每个桌面任务栏的 system-new（带 data-system-id）。新实例按全局创建顺序命名 inner-1、inner-2…",
+    "新建的子系统默认打开播放器并载入 /Demo/helicopter-24.scene，处于停止状态，不自动播放。",
+    "文件拖放：从 files-item 按住拖到目标系统的 files-list 或 files-nav，拖动时指针旁显示目标系统与目录。",
+    "投送：先点源窗口内的 window-project，再点 project-target（带 data-target-system-id）。"
+  ]
+}

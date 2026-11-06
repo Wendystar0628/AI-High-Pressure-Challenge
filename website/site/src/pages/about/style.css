@@ -1,0 +1,169 @@
+/* /about/ — page parts on top of the shared reading frame (src/reading/reading.css, imported first in main.js). */
+
+/* hero figure sits in the head, under the fields */
+.rd-head .rd-fig {
+  margin-bottom: 0;
+}
+
+/* 02 overview table */
+.rd-catcell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+.rd-catcell .icon {
+  width: 1rem;
+  height: 1rem;
+}
+.rd-overview td {
+  vertical-align: middle;
+}
+.rd-overview .rd-deliv {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.rd-overview .rd-total td {
+  border-bottom: 0;
+  border-top: 1px solid var(--st-ink);
+}
+.rd-overview tbody tr.rd-total:hover {
+  background: none;
+  box-shadow: none;
+}
+
+/* 03 a category */
+.rd-cat {
+  margin-top: 3rem;
+}
+.rd-cathead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--st-ink);
+}
+.rd-catpair {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: var(--st-t-h2);
+}
+.rd-catpair > .icon {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+.rd-catpair-in {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.rd-catmeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.rd-catlink {
+  font-size: 0.78rem;
+}
+.rd-tasks {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--st-rule);
+}
+.rd-task {
+  padding: 1.5rem 0 0.5rem;
+  border-bottom: 1px solid var(--st-rule);
+}
+.rd-task .rd-h4 {
+  margin-bottom: 0.75rem;
+}
+.rd-task .rd-h4 a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  background:
+    linear-gradient(var(--st-flare), var(--st-flare)) left 100% / 100% 0% no-repeat,
+    linear-gradient(var(--st-orbit), var(--st-orbit)) left 100% / 100% 2px no-repeat;
+  transition: background-size 0.2s var(--st-mech);
+}
+.rd-task .rd-h4 a:is(:hover, :focus-visible) {
+  background-size:
+    100% 100%,
+    100% 2px;
+  color: var(--st-on-flare);
+}
+.rd-taskno {
+  color: var(--st-ink-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.rd-task .rd-h4 a:is(:hover, :focus-visible) .rd-taskno {
+  color: var(--st-on-flare);
+}
+.rd-taskfacts {
+  margin: 0 0 1rem;
+}
+.rd-taskfacts .rd-k {
+  margin-right: 0.45em;
+  color: var(--st-ink-2);
+}
+.rd-taskfacts > li {
+  color: var(--st-ink);
+}
+.rd-taskfacts code {
+  font-size: 0.82rem;
+}
+.rd-minihead {
+  margin: 0 0 0.35rem;
+  font-family: var(--st-font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.rd-points {
+  margin-bottom: 1.25rem;
+}
+.rd-dirs td:last-child {
+  color: var(--st-ink-2);
+  font-size: 0.88rem;
+}
+
+/* 04 / 05 subsections */
+.rd-subsec:first-of-type .rd-h3 {
+  margin-top: 0.5rem;
+}
+
+/* 06 principles: wide numbers on the left, numbered straight through */
+.rd-pgroup + .rd-pgroup {
+  margin-top: 2rem;
+}
+.rd-pgroup h3.rd-pair {
+  margin-bottom: 0.75rem;
+}
+.rd-principles {
+  max-width: calc(var(--st-measure) + 3.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.rd-principles > li {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--st-rule);
+}
+.rd-pno {
+  color: var(--st-ink-2);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.rd-principles p {
+  margin: 0;
+  font-size: var(--st-t-body);
+  line-height: 1.8;
+}

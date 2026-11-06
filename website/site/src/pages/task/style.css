@@ -1,0 +1,301 @@
+/* Task pages: head from data, five blocks, prev / next. */
+
+.rd-banner.tk-banner {
+  aspect-ratio: 640 / 200;
+  width: min(22rem, 45%);
+  top: -2.25rem;
+}
+
+.tk-head .st-crumb {
+  margin-bottom: 1rem;
+}
+.tk-ids {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0 0 0.75rem;
+}
+.tk-kind {
+  color: var(--st-ink);
+}
+.tk-facts {
+  margin: 0;
+}
+.tk-facts .tk-k {
+  margin-right: 0.45em;
+}
+.tk-facts code {
+  font-size: 0.82rem;
+}
+.tk-title {
+  min-height: 1.2em;
+  margin-top: 1.25rem;
+}
+
+/* the five blocks: pair title, a hairline between blocks */
+.tk-block {
+  padding-top: 2.25rem;
+  margin-top: 2.25rem;
+  border-top: 1px solid var(--st-rule);
+}
+.tk-block:first-of-type {
+  border-top: 1px solid var(--st-ink);
+}
+h2.tk-h2 {
+  margin-bottom: 1.25rem;
+  font-size: var(--st-t-title); /* block title (visual.md 五「字号」) */
+}
+.tk-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.75rem;
+  margin: 0;
+}
+.tk-src {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.9rem;
+  min-width: 0;
+}
+.tk-path {
+  overflow-wrap: anywhere;
+}
+.tk-more {
+  margin: 1.25rem 0 0;
+}
+
+/* 考点: wide numbers on the left */
+.tk-points {
+  max-width: calc(var(--st-measure) + 3.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.tk-points > li {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--st-rule);
+}
+.tk-no {
+  color: var(--st-ink-2);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.tk-points p {
+  margin: 0;
+  font-size: var(--st-t-body);
+  line-height: 1.8;
+}
+
+/* 各模型得分 */
+.tk-scorefacts {
+  margin: -0.5rem 0 1rem;
+}
+.tk-scores {
+  --mrow-name: 17rem;
+}
+.tk-scores .mrow {
+  --mrow-name: 17rem;
+}
+.tk-scores .mrow-head .mrow-plot {
+  position: relative;
+  height: 100%;
+}
+.tk-axis {
+  position: absolute;
+  inset: 0;
+}
+.tk-axis > span {
+  position: absolute;
+  top: 50%;
+  translate: -50% -50%;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.tk-axis > span:first-child {
+  translate: 0 -50%;
+}
+.tk-axis > span:last-child {
+  translate: -100% -50%;
+}
+.tk-scores .mrow.is-pending .mrow-score {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--st-ink-2);
+}
+.tk-scores .mrow.is-pending .mrow-rank {
+  visibility: hidden;
+}
+.mrow-best.is-waiting {
+  opacity: 0;
+}
+.tk-morewrap {
+  margin: 1rem 0 0;
+}
+
+/* 题干: a note and the GitHub links, then the statement as quoted */
+.tk-stem-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.85rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--st-rule);
+}
+.tk-stem-note {
+  max-width: var(--st-measure);
+  margin: 0;
+  color: var(--st-ink-2);
+  font-size: var(--st-t-ui);
+  line-height: 1.7;
+}
+.tk-stem-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+.tk-omit {
+  margin: 0;
+}
+.tk-stem-all {
+  margin-left: auto;
+}
+.tk-stem-sec {
+  margin-top: 2.25rem;
+}
+.tk-stem > .tk-stem-sec:first-child {
+  margin-top: 0;
+}
+h3.tk-stem-h {
+  margin: 0 0 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--st-ink);
+  font-family: var(--st-font-ui);
+  font-size: var(--st-t-h2);
+  font-weight: 700;
+  line-height: 1.35;
+}
+h4.tk-stem-h4 {
+  margin: 1.25rem 0 0.5rem;
+  font-family: var(--st-font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+}
+/* subsections: one ruled accordion */
+.tk-stem-folds {
+  margin-top: 0.25rem;
+}
+.tk-stem-folds > .rd-fold {
+  margin: 0;
+}
+.tk-stem-folds > .rd-fold + .rd-fold {
+  border-top: 0;
+}
+.tk-stem-folds .rd-fold-title {
+  font-weight: 600;
+}
+.tk-stem .rd-list .rd-list {
+  margin: 0.35rem 0 0;
+}
+.tk-stem .rd-list > li > :is(.rd-math, .rd-code, .rd-wide) {
+  margin-top: 0.75rem;
+}
+/* formulas of the statements need a font with a MATH table (matrices, radicals, big operators) */
+.tk-stem math {
+  font-family: 'Cambria Math', 'STIX Two Math', 'Latin Modern Math', math;
+}
+.tk-stem .rd-math {
+  margin: 1.25rem 0;
+}
+.tk-stem .rd-math .rd-bigop {
+  font-size: 1em;
+}
+.tk-stem .rd-code {
+  max-width: calc(var(--st-measure) + 12rem);
+}
+
+/* phone width: narrower name column, key/value links shorten their value instead of widening the page */
+@media (max-width: 759px) {
+  /* as the category boards do: name and bar share what is left */
+  .tk-scores .mrow.no-check {
+    grid-template-columns: 1.6rem 1rem minmax(5rem, 1.3fr) minmax(3rem, 1fr) 2.75rem;
+    gap: 0 0.4rem;
+    padding: 0 0.35rem 0 0;
+  }
+  .tk-axis > span:not(:first-child, :last-child) {
+    display: none;
+  }
+  .rd-paper .st-kv {
+    max-width: 100%;
+  }
+  .rd-paper .st-kv > span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* prev / next */
+.tk-nav {
+  margin-top: 3rem;
+  border-top: 1px solid var(--st-ink);
+}
+.tk-nav .st-records {
+  border-top: 0;
+}
+.tk-navrec.st-record {
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+}
+.tk-navlab {
+  white-space: nowrap;
+}
+
+/* left column extras */
+.tk-bestby {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.tk-bestby-link {
+  min-width: 0;
+}
+.tk-bestby-link:is(:hover, :focus-visible) .mname-text {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 3px;
+}
+.tk-same-h {
+  margin-top: 2rem;
+}
+.tk-same {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.tk-same a {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--st-rule);
+  color: var(--st-ink-2);
+  font-size: 0.85rem;
+}
+.tk-same a:is(:hover, :focus-visible) {
+  color: var(--st-ink);
+}
+.tk-same .num {
+  flex: none;
+  font-weight: 600;
+}

@@ -1,0 +1,25 @@
+{
+    "task":  "通用数字电路仿真器加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "总分",
+                      "max":  100,
+                      "score":  68.8,
+                      "reason":  "按规定命令编译成功，源码核查未发现第十节第1–7条违规；7/7正确性输入及24/24性能输入全部通过。官方evaluate.py给出性能均分68.8，正确性系数7/7，最终68.8分。"
+                  }
+              ],
+    "metrics":  {
+                    "correctness_passed":  7,
+                    "correctness_total":  7,
+                    "performance_passed":  24,
+                    "performance_total":  24,
+                    "performance_score":  68.8,
+                    "correctness_factor":  "7/7",
+                    "G":  4.370594185511215,
+                    "score":  68.8,
+                    "report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluation_report.json"
+                },
+    "notes":  "评工作目录版本：solution.cpp完整、可编译运行，SHA256=C3E74374177AD7B8F9DFF569A0AF5104AA98B194FE69DFE4C24582AE1D569545；原仓库最近提交e8335ac，未回退到提交版本。仅使用官方evaluate.py完成一次评测，基线与提交每输入各3次取中位数；无会话错误。"
+}

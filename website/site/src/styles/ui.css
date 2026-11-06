@@ -1,0 +1,386 @@
+/* Shared UI parts: model rows, toolbar, download menu, tooltips. */
+
+/* ---------- model rows ---------- */
+.mrows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.mrow {
+  --mrow-name: 15rem;
+  --bar-fill: var(--series);
+  --bar-deep: var(--series-deep);
+  --bar-edge: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem;
+  /* one track as tall as the row, so the plot cell (height: 100%) and its bar SVG get a definite height */
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  gap: 0 0.75rem;
+  height: var(--row-h);
+  padding: 0 0.75rem 0 0.25rem;
+  border-bottom: 1px solid var(--st-rule);
+  transition: background-color 0.15s;
+}
+.mrow.no-check {
+  grid-template-columns: 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem;
+  padding-left: 0.6rem;
+}
+.mrow.is-standard {
+  --bar-fill: var(--kind-standard);
+  --bar-deep: var(--kind-standard-deep);
+  --bar-edge: var(--lime-edge);
+}
+.mrow.is-design {
+  --bar-fill: var(--kind-design);
+  --bar-deep: var(--kind-design-deep);
+}
+.mrow::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.mrow:not(.mrow-head):is(:hover, :focus-within) {
+  background: var(--st-paper);
+}
+.mrow:not(.mrow-head):is(:hover, :focus-within, .is-checked)::before {
+  transform: none;
+}
+.mrow-head {
+  height: 2.25rem;
+  border-bottom: 1px solid var(--st-ink);
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-stretch: var(--st-wider);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.mrow-head :is(.mrow-rank, .mrow-score) {
+  font-size: inherit;
+  font-weight: inherit;
+  font-stretch: inherit;
+}
+.mrow-check {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.mrow.no-check .mrow-check {
+  display: none;
+}
+.mrow-tick {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--st-orbit);
+  cursor: pointer;
+}
+.mrow-tick:disabled {
+  cursor: not-allowed;
+}
+.mrow-rank {
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-stretch: var(--st-wide);
+}
+.mrow-rank .st-state {
+  font-size: 0.62rem;
+  letter-spacing: 0;
+}
+.mrow-icon {
+  display: grid;
+  place-items: center;
+}
+.mrow-name {
+  min-width: 0;
+}
+/* the row opens the side panel; the name inside it is a link to the model scores page */
+.mrow[data-model-panel] {
+  cursor: pointer;
+}
+.mrow-open {
+  display: flex;
+  max-width: 100%;
+  width: fit-content;
+  min-height: 2rem;
+  align-items: center;
+  padding: 0;
+  color: var(--st-ink);
+  font: 600 0.95rem var(--st-font-ui);
+  text-align: left;
+  text-decoration: none;
+}
+.mrow-open:is(:hover, :focus-visible) .mname-text {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 4px;
+}
+.mrow.is-checked .mrow-open,
+.mrow.is-current .mrow-open {
+  font-weight: 800;
+}
+.mrow-plot {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+}
+.mrow-head .mrow-plot {
+  display: flex;
+  align-items: center;
+}
+/* the bar itself is charts/bar.js (.bar-* in charts.css); a row deepens only its own bar, not its sub rows' */
+.mrow:is(:hover, :focus-within, .is-checked) > .mrow-plot > .bar-svg .bar-fill {
+  fill: var(--bar-deep);
+}
+.mrow-best {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 5px;
+  background: var(--lime-edge);
+  -webkit-mask: var(--st-star) center / contain no-repeat;
+  mask: var(--st-star) center / contain no-repeat;
+}
+.mrow-best::after {
+  content: '';
+  position: absolute;
+  inset: 1.6px;
+  background: var(--st-flare);
+  -webkit-mask: var(--st-star) center / contain no-repeat;
+  mask: var(--st-star) center / contain no-repeat;
+}
+.mrow-note {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  translate: 0 -50%;
+  padding: 0 0.4rem;
+  background: var(--st-paper);
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.mrow-note:empty {
+  display: none;
+}
+/* a note on a scored row sits after the end of its bar */
+.mrow-note.is-after {
+  left: var(--at);
+  padding: 0;
+  background: none;
+}
+.mrow-score {
+  justify-self: end;
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-stretch: var(--st-wide);
+  text-align: right;
+}
+.mrow-score .st-hi {
+  padding: 0 0.3em;
+}
+.mrow.is-pending .mrow-score {
+  color: var(--st-ink-2);
+}
+.mrows-empty {
+  margin: 1.5rem 0;
+  color: var(--st-ink-2);
+}
+
+/* ---------- toolbar ---------- */
+.site-toolbar {
+  position: sticky;
+  top: var(--shell-h);
+  z-index: 20;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  background: var(--st-paper);
+  border-bottom: 1px solid var(--st-rule);
+}
+.tb-top,
+.tb-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+.tb-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.tb-right,
+.tb-end {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tb-end:empty {
+  display: none;
+}
+/* rows never widen the toolbar: what is too wide shrinks or wraps inside its own row */
+.site-toolbar > * {
+  min-width: 0;
+}
+/* the bottom slot: a row under a hairline that sticks with the toolbar (it brings its own padding) */
+.tb-bottom {
+  margin-bottom: -0.6rem;
+  border-top: 1px solid var(--st-rule);
+}
+/* one line per row unless the page asks for wrapping: the search narrows first */
+.site-toolbar:not(.is-wrap) :is(.tb-top, .tb-main, .tb-left) {
+  flex-wrap: nowrap;
+}
+.site-toolbar:not(.is-wrap) .tb-search {
+  flex: 0 1 14rem;
+  width: auto;
+  min-width: 8rem;
+}
+.site-toolbar:not(.is-wrap) :is(.tb-right, .tb-end) {
+  flex: none;
+}
+/* many vendors: the chips wrap inside their own group rather than widen the toolbar */
+.site-toolbar:not(.is-wrap) .tb-vendors {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.site-toolbar.is-wrap .tb-right {
+  flex-wrap: wrap;
+}
+.tb-vendors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.tb-vendors .st-chip {
+  min-height: 2rem;
+}
+.tb-vendors .icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+.tb-more {
+  position: relative;
+}
+.tb-more > summary {
+  list-style: none;
+  min-height: 2rem;
+}
+.tb-more > summary::-webkit-details-marker {
+  display: none;
+}
+.tb-more-list {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 4px);
+  left: 0;
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.5rem;
+  background: var(--st-panel);
+  border: 1px solid var(--st-rule);
+}
+.tb-search {
+  width: 14rem;
+}
+.tb-search input {
+  min-height: 2rem;
+}
+.tb-tray {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.tb-slot b {
+  color: var(--st-ink-2);
+  font-weight: 700;
+}
+.tb-hint {
+  white-space: nowrap;
+}
+.tb-dl-menu {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  min-width: 15rem;
+  padding: 0;
+  border: 1px solid var(--st-ink);
+  background: var(--st-panel);
+  color: var(--st-ink);
+}
+.tb-dl-menu .st-act {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+}
+.tb-dl-menu .st-act:first-child {
+  border-top: 0;
+}
+
+/* ---------- tooltip (浮签): ink square block, field size ---------- */
+.site-tip {
+  position: fixed;
+  z-index: 50;
+  max-width: 22rem;
+  padding: 0.3rem 0.55rem;
+  background: var(--st-bar);
+  color: var(--st-bar-text);
+  font: 500 0.78rem/1.45 var(--st-font-ui);
+  font-stretch: var(--st-wide);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  opacity: 0;
+  translate: 0 4px;
+  transition:
+    opacity 0.12s var(--st-mech),
+    translate 0.12s var(--st-mech);
+}
+.site-tip.is-on {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 0.16s var(--st-snap),
+    translate 0.16s var(--st-snap);
+}
+
+/* the save-as-image button sits at the right end of a panel head */
+.site-export {
+  margin-left: auto;
+}
+
+/* ---------- narrow windows: the toolbar wraps inside the window; at phone width it scrolls away with the page ---------- */
+@media (max-width: 1023px) {
+  .site-toolbar:is(.is-wrap, :not(.is-wrap)) :is(.tb-top, .tb-main, .tb-left, .tb-right) {
+    flex-wrap: wrap;
+  }
+  .site-toolbar:is(.is-wrap, :not(.is-wrap)) :is(.tb-vendors, .tb-right) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+@media (max-width: 599px) {
+  .site-toolbar {
+    position: static;
+  }
+  .site-toolbar:is(.is-wrap, :not(.is-wrap)) .tb-search {
+    flex: 1 1 100%;
+    width: auto;
+  }
+  .site-toolbar .tb-hint {
+    display: none;
+  }
+}

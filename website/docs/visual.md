@@ -53,6 +53,7 @@
   | | | 系统架构与实现 | 紫 500 |
 
 - 同一张图里一种颜色只表示一件事。
+- 厂商图标：`website/logos/mark/` 里有彩色版 `<名>-color.svg` 的用彩色版，深色主题也不反色；没有的（OpenAI 等）用单色版，跟随文字颜色。都不染紫、不染荧光绿。
 - 两类题同时出现时，除颜色外再用形状区分：标准评判题用方块，主动设计题用四角星。
 
 ## 四、配色禁忌
@@ -66,6 +67,8 @@
 
 - **网格**：12 栏，内容最宽 88rem；栏间、页边、内边距都取 8px 基准上的值，宽窗口时页边放宽。
 - **字号**：用技能的字号阶。一屏最多四级字号，标题和正文至少差 1.6 倍。
+  - 中文标题和英文同等分量：中文和并排的英文同处一处时，中文字号约为英文的 0.8 倍（思源黑体字身约占 0.88em，Saira 大写约 0.70em），让汉字和英文大写一样高。
+  - 卡片标题（看板、面板，眉标下的中文）用 22px（`--st-t-h2`），区块标题（一页里分段的标题）用 30px（`--st-t-title`），侧栏小标题用 17px；页面大标题不变。
 - **焦点**：每屏只有一个视觉焦点，尺寸最大、颜色最强的那个；其余降一级。首页首屏的焦点是星盘，字标让位。
 - **阅读路径**：展示页按 Z 形排：左上字标 → 右上星盘 → 左下内容 → 右下按钮。榜单按 F 形排：名次和名字左对齐成一条竖线，数字右对齐。
 - **格式塔**：
@@ -85,9 +88,9 @@
 |---|---|---|
 | 每页背景两角 | `starfield/starfield-corner-tr` + `starfield-corner-bl`（代替技能自带的星图底纹） | 0.2 |
 | 首页首屏 | `orbit/orbit-corner-br` 从右下伸出，衬在星盘后面；星盘外圈刻度照 `dial/dial-ring` 的画法 | 0.2 |
-| 第一名徽记 | `rays/rays-burst-light`（深色用 `-dark`），首页前五名和模型详情页的第一名 | 1 |
+| 第一名徽记 | `rays/rays-burst-light`（深色用 `-dark`），首页前五名和模型得分页的第一名 | 1 |
 | 段落分隔 | `constellation/constellation-strip`（首页）、`orbit/orbit-divider`（说明页）、`rays/rays-divider`（榜单页的两组之间）；同一页只用一种 | 1 |
-| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目拆解 `constellation/constellation-pair`；模型详情 `rays/rays-fan-up` | 0.5 |
+| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；题目类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目拆解 `constellation/constellation-pair`；模型得分 `rays/rays-fan-up` | 0.5 |
 | 看板角 | `starfield/starfield-panel`，每页只给最重要的一块看板 | 0.5 |
 | 空状态 | 没有数据 `orbit/orbit-nested`；未出分 `star/star-outline`；评测中 `trails/trails-center` | 1 |
 | 页脚 | `sphere/sphere-horizon` 从页脚下沿升起 | 0.5 |

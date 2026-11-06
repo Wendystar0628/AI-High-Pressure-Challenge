@@ -1,0 +1,233 @@
+{
+  "site": {
+    "name": "AI Octathlon · Timed Challenge",
+    "short": "AI Octathlon",
+    "wordmark": "AI OCTATHLON",
+    "sub": "TIMED CHALLENGE"
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "en": "Home"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "en": "Leaderboard"
+    },
+    "categories": {
+      "title": "Categories",
+      "en": "Categories"
+    },
+    "about": {
+      "title": "About the challenge",
+      "en": "About"
+    },
+    "tasks": {
+      "title": "Tasks",
+      "en": "Tasks"
+    },
+    "task": {
+      "title": "Tasks",
+      "en": "Task"
+    },
+    "model": {
+      "title": "Model scores",
+      "en": "Model scores"
+    }
+  },
+  "nav": {
+    "label": "Site",
+    "home": "Home",
+    "homeEn": "Home",
+    "leaderboard": "Leaderboard",
+    "leaderboardEn": "Leaderboard",
+    "categories": "Categories",
+    "categoriesEn": "Categories",
+    "models": "Models",
+    "modelsEn": "Models",
+    "tasks": "Tasks",
+    "tasksEn": "Tasks",
+    "about": "About",
+    "aboutEn": "About"
+  },
+  "shell": {
+    "skip": "Skip to content",
+    "homeTitle": "Back to the home page",
+    "loadError": "The score data did not load. Refresh the page to try again.",
+    "placeholder": "This page is being built; its content will appear here.",
+    "close": "Close",
+    "errorFlag": "Error"
+  },
+  "theme": {
+    "label": "Switch light / dark",
+    "title": "Switch light / dark (T)",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "lang": {
+    "label": "Language",
+    "title": "中文 │ English (L)",
+    "zh": "中文",
+    "en": "English"
+  },
+  "search": {
+    "title": "Search (/ or Ctrl K)",
+    "placeholder": "Search models, tasks, categories",
+    "short": "Search",
+    "dialogLabel": "Search the site",
+    "inputLabel": "Search models, tasks, categories or sections",
+    "hint": "↑ ↓ choose │ Enter open │ Esc close",
+    "groups": {
+      "model": "Models",
+      "task": "Tasks",
+      "category": "Categories",
+      "section": "About"
+    },
+    "groupsEn": {
+      "model": "Models",
+      "task": "Tasks",
+      "category": "Categories",
+      "section": "About"
+    },
+    "showAll": "Show all {n}",
+    "recent": "Recent searches",
+    "recentEn": "Recent",
+    "pages": "Pages",
+    "pagesEn": "Pages",
+    "clearRecent": "Clear",
+    "empty": "Nothing found for “{q}”. Try a model name, a task, a category or pinyin initials.",
+    "noRecent": "No searches yet. Searches you open will be listed here, up to 5.",
+    "modelLine": "Total {score} │ Rank {rank}",
+    "modelLinePending": "Being tested │ {done} / {all} tasks scored",
+    "taskLine": "{category} │ {minutes} min │ weight {weight}",
+    "categoryLine": { "one": "Weight {weight} │ {n} task", "other": "Weight {weight} │ {n} tasks" },
+    "sectionLine": "About the challenge",
+    "count": { "one": "{n} result", "other": "{n} results" }
+  },
+  "keys": {
+    "title": "Keyboard shortcuts (?)",
+    "heading": "Keyboard shortcuts",
+    "eyebrow": "Shortcuts",
+    "global": "Everywhere",
+    "page": "This page",
+    "search": "Search",
+    "theme": "Switch light / dark",
+    "lang": "Switch 中文 / English",
+    "help": "Show this list",
+    "close": "Close dialogs and the side panel",
+    "note": "Shortcuts do nothing while you type in a field."
+  },
+  "panel": {
+    "label": "Model score panel",
+    "eyebrow": "No.{rank} / {vendor}",
+    "eyebrowPending": "Being tested / {vendor}",
+    "tested": "tested {date}",
+    "total": "Total",
+    "standard": "Standard tasks",
+    "design": "Design tasks",
+    "categories": "8 categories",
+    "categoriesEyebrow": "Categories",
+    "tasks": "12 tasks",
+    "tasksEyebrow": "Tasks",
+    "rankOf": "{rank} / {n}",
+    "noScore": "Not scored",
+    "addCompare": "Add to compare",
+    "removeCompare": "Remove from compare",
+    "compareFull": "Compare up to 4",
+    "prev": "Previous",
+    "next": "Next",
+    "allScores": "All scores",
+    "allScoresTitle": "Open the model scores page of {name}",
+    "close": "Close",
+    "rankLabel": "Rank {rank}"
+  },
+  "score": {
+    "points": "{v}",
+    "rank": "Rank {n}",
+    "rankShort": "{n} / {of}",
+    "pending": "Being tested",
+    "none": "Not scored",
+    "dash": "—",
+    "progress": "{done} / {all} tasks scored",
+    "total": "Total",
+    "custom": "Custom total"
+  },
+  "kind": {
+    "standard": "Standard tasks",
+    "design": "Design tasks",
+    "standardShort": "Standard",
+    "designShort": "Design",
+    "standardScoring": "Scored by a checking program",
+    "designScoring": "Mean of two graders"
+  },
+  "unit": {
+    "minutes": "{n} min",
+    "models": { "one": "{n} model", "other": "{n} models" },
+    "tasks": { "one": "{n} task", "other": "{n} tasks" },
+    "tasksShort": { "one": "{n} task", "other": "{n} tasks" },
+    "categories": { "one": "{n} category", "other": "{n} categories" },
+    "categoriesShort": { "one": "{n} category", "other": "{n} categories" }
+  },
+  "toolbar": {
+    "label": "Leaderboard tools",
+    "vendors": "Filter by vendor",
+    "all": "All",
+    "moreVendors": "More vendors",
+    "search": "Search models",
+    "searchLabel": "Search this page's models by name, short name or vendor",
+    "compare": "Compare",
+    "compareTitle": "Compare the ticked models (C)",
+    "compareHint": "Tick 2 to 4 models to compare",
+    "compareRemove": "Remove from compare: {name}",
+    "compareFull": "Compare up to 4",
+    "compareAdd": "Add to compare: {name}",
+    "download": "Download data",
+    "csv": "CSV table (this view)",
+    "json": "JSON, all data",
+    "saved": "Downloaded",
+    "noMatch": "No model matches. Pick another vendor or clear the search; models will be listed here by total score."
+  },
+  "row": {
+    "aria": "Rank {rank}, {name}, {score} points",
+    "ariaPending": "Being tested, {name}, {done} / {all} tasks scored",
+    "openPanel": "Open the score panel of {name}",
+    "openPage": "All scores of {name}"
+  },
+  "csv": {
+    "rank": "Rank",
+    "model": "Model",
+    "vendor": "Vendor",
+    "effort": "Reasoning effort",
+    "total": "Total",
+    "custom": "Custom total",
+    "standard": "Standard tasks",
+    "design": "Design tasks",
+    "weights": "Custom weights",
+    "pending": "Being tested"
+  },
+  "export": {
+    "button": "Save as image",
+    "saved": "Saved",
+    "data": "Data {date}",
+    "failed": "The image was not saved. Try again."
+  },
+  "footer": {
+    "updated": "Data updated {date}",
+    "models": { "one": "{n} model", "other": "{n} models" },
+    "tasks": { "one": "{n} task", "other": "{n} tasks" },
+    "logos": "Vendor icons from LobeHub Icons; trademarks belong to their owners",
+    "icp": "蜀ICP备2025171371号-1",
+    "icpUrl": "https://beian.miit.gov.cn/"
+  },
+  "dial": {
+    "label": "Octathlon star dial: {name}",
+    "standardGroup": "Standard {w}",
+    "designGroup": "Design {w}",
+    "sectorAria": "{name}, weight {weight}, score {score}, {rank}",
+    "starAria": "{no} {name}, {category}, weight {weight}, score {score}, {rank}",
+    "title": "Octathlon star dial",
+    "noScore": "Not scored",
+    "rank": "Rank {n}",
+    "pending": "Being tested"
+  }
+}

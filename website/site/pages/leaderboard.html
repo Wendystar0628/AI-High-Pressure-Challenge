@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- 页面模板：leaderboard（控制台页）。路由插件按它生成该类型的每个路由，中文在根路径、英文在 /en/。
+     可用记号见 site/README.md「页面模板」；
+     head / top / bottom 三个 @ 标记由插件换成站点头部、命令栏和页脚，别删。
+     本页负责人只改 <main> 里面和 src/pages/leaderboard/。 -->
+<html lang="{{htmlLang}}" data-st-paper="neutral" data-st-cut="standard" data-st-ground="stars" data-st-density="standard" data-st-motion="full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <!--@head-->
+  </head>
+  <body class="st site" data-page="leaderboard" data-lang="{{lang}}" data-id="{{id}}">
+    <!--@top-->
+    <main id="main" class="page page-leaderboard" tabindex="-1">
+      <header class="page-head lb-head">
+        <span class="lb-banner" aria-hidden="true"></span>
+        <div class="lb-head-main">
+          <p class="st-eyebrow slash">{{t:leaderboard.eyebrow}}</p>
+          <div class="st-head"><h1>{{t:leaderboard.title}}</h1></div>
+          <ul class="st-facts st-field lb-facts" data-slot="facts"><li>&nbsp;</li></ul>
+        </div>
+        <div class="st-figs lb-figs" data-slot="figs" aria-live="off">
+          <div><b class="num">—</b><span>{{t:leaderboard.figs.models}}</span></div>
+          <div><b class="num">—</b><span>{{t:leaderboard.figs.passShort}}</span></div>
+          <div><b class="num">—</b><span>{{t:leaderboard.figs.gap}}</span></div>
+        </div>
+      </header>
+      <div class="lb-notice-slot" data-slot="notice"></div>
+      <div class="page-body" data-slot="page">
+        <div class="lb-loading" role="status">
+          <span class="sr-only">{{t:leaderboard.loading}}</span>
+          <span class="st-skeleton line lb-sk-bar"></span>
+          <div class="st-panel lb-sk-panel" aria-hidden="true">
+            <span class="st-skeleton line"></span>
+            <span class="st-skeleton line"></span>
+            <span class="st-skeleton line"></span>
+            <span class="st-skeleton line"></span>
+            <span class="st-skeleton line"></span>
+            <span class="st-skeleton line"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--@bottom-->
+    <script type="module" src="/src/pages/leaderboard/main.js"></script>
+  </body>
+</html>

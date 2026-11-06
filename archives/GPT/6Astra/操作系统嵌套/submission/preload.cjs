@@ -1,0 +1,2 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('host',{load:()=>ipcRenderer.invoke('load-state'),save:s=>ipcRenderer.invoke('save-state',s),exportFile:f=>ipcRenderer.invoke('export-file',f),importFile:()=>ipcRenderer.invoke('import-file'),onBrowserOpen:fn=>{const handler=(_,payload)=>fn(payload);ipcRenderer.on('browser-open',handler);return()=>ipcRenderer.removeListener('browser-open',handler)},control:op=>ipcRenderer.send('window-control',op)});

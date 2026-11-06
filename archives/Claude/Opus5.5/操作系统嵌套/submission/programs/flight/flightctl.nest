@@ -1,0 +1,72 @@
+// 飞控程序：排演时由播放器启动，是一个普通进程，和其他进程一样竞争执行预算。
+// args.bus 是飞行总线通道：
+//   sys("bus_read",  通道 + "/sensors") 取得带时间戳的传感器值（见 fc_compute 的 s）
+//   sys("bus_write", 通道 + "/control", { collective, pitch, roll, yaw, throttle }) 写入总距与舵面
+// 控制量保持到下一次写入，错过周期的控制不补发。修改本文件后重新开始排演即按新逻辑飞行。
+
+const PERIOD = 0.008;                // 控制周期（虚拟秒）；实际周期还取决于调度
+const KP_ATT = 11.0, KD_ATT = 3.4;    // 姿态回路
+const KP_YAW = 2.6, KD_YAW = 1.5;    // 航向回路
+const KP_ALT = 0.85, KD_ALT = 0.42;  // 高度回路
+const KP_VEL = 0.11;                 // 速度回路
+const MAX_TILT = 0.34;               // 最大倾角（弧度）
+
+function fc_wrap(a) {
+  while (a > 3.14159265) a = a - 6.2831853;
+  while (a < -3.14159265) a = a + 6.2831853;
+  return a;
+}
+function fc_clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+// s：t 时间戳；x,y,z 位置；vx,vy,vz 速度；yaw 航向（atan2(z,x)）；pitch 抬头为正；roll 右滚为正；
+//    wp,wr,wy 三轴角速度；omega 旋翼转速（0~1）；agl 离地高度；hover_collective 悬停总距；
+//    goal { mode: "cruise"|"point"|"land", heading, y, speed, x, z } 目标
+function fc_compute(s) {
+  let goal = s.goal;
+  let want_vx = 0, want_vz = 0, want_yaw = goal.heading, target_y = goal.y;
+  if (goal.mode == "cruise") {
+    want_vx = cos(goal.heading) * goal.speed;
+    want_vz = sin(goal.heading) * goal.speed;
+  } else {
+    let dx = goal.x - s.x, dz = goal.z - s.z;
+    let dist = sqrt(dx * dx + dz * dz);
+    let want = dist * 0.32;
+    if (want > goal.speed) want = goal.speed;
+    if (dist > 0.05) { want_vx = dx / dist * want; want_vz = dz / dist * want; }
+    if (dist > 10) want_yaw = atan2(dz, dx);
+    if (goal.mode == "land") {
+      // 水平对准后才下降，贴地时收总距
+      if (dist < 1.6 && abs(s.vx) + abs(s.vz) < 1.2) target_y = s.y - 1.6 - (s.agl > 3 ? 1.5 : 0);
+    }
+  }
+  let ch = cos(s.yaw), sh = sin(s.yaw);
+  let evx = want_vx - s.vx, evz = want_vz - s.vz;
+  let ef = evx * ch + evz * sh;        // 机头方向的速度误差
+  let er = -evx * sh + evz * ch;       // 右侧方向的速度误差
+  let want_pitch = fc_clamp(-ef * KP_VEL, -MAX_TILT, MAX_TILT);
+  let want_roll = fc_clamp(er * KP_VEL, -MAX_TILT, MAX_TILT);
+  let c_pitch = fc_clamp((want_pitch - s.pitch) * KP_ATT - s.wp * KD_ATT, -1, 1);
+  let c_roll = fc_clamp((want_roll - s.roll) * KP_ATT - s.wr * KD_ATT, -1, 1);
+  let c_yaw = fc_clamp(fc_wrap(want_yaw - s.yaw) * KP_YAW - s.wy * KD_YAW, -1, 1);
+  let vy_want = fc_clamp((target_y - s.y) * KP_ALT, -3.2, 5);
+  // 倾斜时补偿总距，转速没起来时不拉
+  let tilt_k = s.up > 0.5 ? 1 / s.up : 2;
+  let coll = s.hover_collective * tilt_k + (vy_want - s.vy) * KD_ALT * s.hover_collective;
+  if (s.omega < 0.82) coll = 0.12;
+  if (goal.mode == "land" && s.agl < 0.12 && abs(s.vy) < 0.6) coll = 0.1;
+  coll = fc_clamp(coll, 0, 1);
+  return { collective: coll, pitch: c_pitch, roll: c_roll, yaw: c_yaw, throttle: 1, t: s.t };
+}
+
+function main(args) {
+  let bus = args.bus;
+  let last_t = -1;
+  for (;;) {
+    let s = sys("bus_read", bus + "/sensors");
+    if (s != null && s.t != last_t) {
+      last_t = s.t;
+      sys("bus_write", bus + "/control", fc_compute(s));
+    }
+    sys("sleep", PERIOD);
+  }
+}

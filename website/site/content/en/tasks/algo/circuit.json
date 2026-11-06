@@ -1,0 +1,25 @@
+{
+  "brief": [
+    "Implement `simulate()`: given a synchronous sequential circuit of logic gates and flip-flops, simulate every random stimulus cycle by cycle from an all-zero state and fold the primary outputs into a 64-bit digest. Performance inputs have 500,000 gates, 8,192 flip-flops, 4,096 stimuli and 512 cycles each.",
+    {
+      "ul": [
+        "The 24 performance inputs cover 8 circuit classes, 3 each; inputs, expected outputs, baseline times and a checker come with the task, and the baseline code is not public.",
+        "Digests must match the expected output bit for bit, with no tolerance; 7 more correctness inputs stay hidden, and even tiny circuits must come out right.",
+        "CPU only: the C++ standard library, OpenMP, the Windows API, compiler built-ins and instruction intrinsics; no GPU and no other third-party libraries.",
+        "Digests must be computed by `simulate()` from the circuit passed in, never built in; the graded process is limited to the 8 performance cores."
+      ]
+    }
+  ],
+  "points": [
+    "**Bit-level parallelism**: pack many independent stimuli into 64-bit words and AVX2 vectors and compute them together.",
+    "**Circuit preprocessing**: gates are not given in dependency order; sorting, simplification and layout decide how fast evaluation is.",
+    "**Threads and caches**: with many stimuli and large circuits, batching, layout and division of work set the ceiling.",
+    "**Tuning per class**: the 8 classes, from deep chains and wide grids to multipliers, cipher rounds and register files, differ in topology, and strategy can be chosen per class."
+  ],
+  "scoring": [
+    "**Scored per input**: each of the 24 performance inputs gets a speedup s = baseline time ÷ solution time, looked up on a log-scale anchor table, 0 at 0.1× or less and full marks from 8×; an input that fails to run scores 0.",
+    "**Correctness factor**: the average over the 24 inputs is multiplied by the share of the 7 correctness inputs passed.",
+    "**Timed side by side**: the baseline is a general optimized solution written by the task setter; it and the solution each run 3 times in the same evaluation under the same conditions, taking the median.",
+    "**Rules come first**: a compile failure or a broken rule, such as using the GPU or writing precomputed digests into the code, scores 0 for the whole task."
+  ]
+}

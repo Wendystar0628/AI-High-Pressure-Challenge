@@ -1,0 +1,80 @@
+{
+  "title": "Model scores",
+  "head": {
+    "eyebrow": "Model scores / {vendor}",
+    "tested": "tested {date}",
+    "rankOf": "rank {rank} / {of}",
+    "pending": "Being tested",
+    "progress": "{done} / {all} tasks scored"
+  },
+  "picker": {
+    "label": "Choose a model (grouped by vendor)",
+    "eyebrow": "Models",
+    "title": "All models",
+    "choose": "Switch model",
+    "pending": "Testing"
+  },
+  "keys": {
+    "prev": "Previous model",
+    "next": "Next model"
+  },
+  "figs": {
+    "total": "Total",
+    "standard": "Standard tasks",
+    "design": "Design tasks",
+    "rank": "Rank {n}",
+    "pending": "Being tested",
+    "none": "Not scored"
+  },
+  "actions": {
+    "add": "Add to compare",
+    "addTitle": "Add to compare and open the leaderboard's compare view",
+    "remove": "Remove from compare",
+    "full": "Compare up to 4",
+    "download": "Download data",
+    "csv": "CSV table (this model's 8 categories and 12 tasks)",
+    "json": "JSON (this model's scores)",
+    "saved": "Downloaded"
+  },
+  "dial": {
+    "eyebrow": "Star dial",
+    "title": "Octathlon Star Dial",
+    "note": "A star's distance from the centre is the task score and its size follows the task weight; flare stars are tasks this model leads."
+  },
+  "cats": {
+    "eyebrow": "By category",
+    "exportTitle": "{name} │ category scores"
+  },
+  "tasks": {
+    "eyebrow": "By task",
+    "exportTitle": "{name} │ task scores"
+  },
+  "chart": {
+    "tip": "This model {v} │ best {best} ({who}) │ mean {mean}",
+    "whoSep": ", ",
+    "noScore": "Not scored",
+    "rank": "Rank",
+    "rowAria": "{name}, weight {weight}, score {score}, {rank}",
+    "rankAria": "rank {rank} of {of}"
+  },
+  "sw": {
+    "strengthsEyebrow": "Best ranks",
+    "strengths": "Strengths",
+    "weaknessesEyebrow": "Lowest ranks",
+    "weaknesses": "Weaknesses",
+    "note": "By rank on each task; equal ranks by score",
+    "empty": "This model has no scored task yet. Once it does, its best and lowest ranked tasks are listed here."
+  },
+  "csv": {
+    "type": "Item",
+    "category": "Category",
+    "task": "Task",
+    "no": "No.",
+    "name": "Name",
+    "weight": "Weight",
+    "score": "Score",
+    "rank": "Rank",
+    "of": "Ranked models"
+  },
+  "missing": "This model was not found. The leaderboard lists every registered model."
+}

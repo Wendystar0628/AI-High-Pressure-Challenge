@@ -1,0 +1,25 @@
+{
+  "brief": [
+    "This is the Heilbronn triangle problem for n = 30 as an extremal construction: place 30 points in the unit square so that the smallest triangle among all triples is as large as possible. Only the coordinates are judged, not the program or method.",
+    {
+      "ul": [
+        "Areas and whether points lie inside are computed exactly from the written decimals; each number is `0`, `1`, or `0.` or `1.` followed by 1–20 digits.",
+        "Points may coincide or be collinear; the smallest area is then 0 and the answer is still valid.",
+        "Any program may be written, compiled and run with the software and libraries already installed; no network and no new libraries.",
+        "Processes may run only on the 14 assigned logical processors, and one RTX 4080 is available."
+      ]
+    }
+  ],
+  "points": [
+    "**Search strategy**: maximizing a minimum is not smooth and has many local optima; standard methods soon hit a plateau.",
+    "**Exactness**: if rounding puts even one point outside, the whole answer is invalid, so results must be rechecked from the written values.",
+    "**Using the compute**: organize a parallel search across the 14 logical processors and one GPU.",
+    "**Knowing when to turn**: when one direction stalls, judge when to switch ideas."
+  ],
+  "scoring": [
+    "**Validity first**: a missing file, a point count other than 30, a point outside the square or unreadable coordinates score 0; small format differences are allowed.",
+    "**Against a reference**: the smallest area Δ is divided by a fixed reference Δ*, the best known n = 30 record as of September 2026; later records do not change it.",
+    "**Anchor interpolation**: the ratio r is interpolated piecewise linearly on an anchor table; r ≤ 0.05 scores 0 and r ≥ 1 scores 100.",
+    "**The top end is worth more**: the slope grows from the low range to the upper-middle range and is steepest between 0.8 and 0.9; the last stretches toward the reference carry no extra weight."
+  ]
+}

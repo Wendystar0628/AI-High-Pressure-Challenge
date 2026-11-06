@@ -1,0 +1,140 @@
+// 文本与程序编辑器：编辑本系统文件，能保存、编译并启动程序，打开直属子系统的内核源文件。
+include "/System/lib/ui.nest";
+
+let PATH = "";
+let NAME_TEXT = "/Documents/未命名.nest";
+let TEXT = "";
+let SAVED_TEXT = "";
+let DIRTY = false;
+let STATUS = "就绪";
+let STATUS_ERR = false;
+let CONFIRM = null;
+let LOAD_REV = 0;
+let RUNNING = [];
+
+function set_status(t, e) { STATUS = t; STATUS_ERR = e == true; ui_invalidate(); }
+function refresh_title() {
+  let n = PATH != "" ? base_of(PATH) : "未命名";
+  sys("win_set", UI_MAIN.wid, { title: (DIRTY ? "● " : "") + n + " — 程序编辑器" });
+}
+function set_dirty(d) {
+  if (d != DIRTY) { DIRTY = d; refresh_title(); ui_invalidate(); }
+}
+function load_file(path) {
+  let t = read_file(path);
+  if (t == null) { set_status("打开失败：文件不存在 " + path, true); return false; }
+  PATH = path;
+  NAME_TEXT = path;
+  TEXT = t;
+  SAVED_TEXT = t;
+  LOAD_REV = LOAD_REV + 1;
+  set_dirty(false);
+  refresh_title();
+  set_status("已打开 " + path + "（" + fmt_bytes(len(t)) + "）", false);
+  return true;
+}
+function save_file() {
+  let target = trim(NAME_TEXT);
+  if (target == "") { set_status("请输入文件路径", true); return false; }
+  let r = sys("fs_write", target, TEXT);
+  if (is_err(r)) { set_status("保存失败：" + r.error, true); return false; }
+  PATH = target;
+  SAVED_TEXT = TEXT;
+  set_dirty(false);
+  refresh_title();
+  set_status("已保存 " + target, false);
+  return true;
+}
+function run_file() {
+  if (DIRTY && !save_file()) return;
+  if (PATH == "") { set_status("请先保存文件", true); return; }
+  let r = spawn("/System/apps/console.nest", { program: PATH }, { kind: "app" });
+  if (is_err(r)) set_status("启动失败：" + r.error, true);
+  else set_status("已启动 " + PATH, false);
+}
+function compile_file() {
+  if (DIRTY && !save_file()) return;
+  if (PATH == "") { set_status("请先保存文件", true); return; }
+  set_status("编译中…", false);
+  ui_refresh();
+  let r = sys("compile", PATH);
+  if (is_err(r)) set_status("编译失败：" + r.error, true);
+  else set_status("编译成功：" + PATH, false);
+}
+function new_file() {
+  PATH = "";
+  NAME_TEXT = "/Documents/未命名.nest";
+  TEXT = "";
+  SAVED_TEXT = "";
+  LOAD_REV = LOAD_REV + 1;
+  set_dirty(false);
+  refresh_title();
+  set_status("新文件", false);
+}
+
+function render(v) {
+  let W = v.w, H = v.h;
+  let out = [];
+  let x = 8;
+  let tools = [["新建", "new", "editor-new"], ["打开", "open", "editor-open"], ["保存", "save", "editor-save"], ["编译", "compile", "editor-compile"], ["启动", "run", "editor-run"]];
+  for (let t of tools) {
+    push(out, B("b" + t[1], x, 6, 50, 28, t[0], t[1], null, { tid: t[2], cls: t[1] == "save" && DIRTY ? "small primary" : "small" }));
+    x = x + 53;
+  }
+  push(out, INPUT("name", x + 4, 6, W - x - 12, 28, NAME_TEXT, { tid: "editor-filename", label: "文件路径", ph: "/Documents/程序.nest" }));
+  push(out, { k: "text" + str(LOAD_REV), t: "textarea", x: 8, y: 40, w: W - 16, h: H - 68, val: TEXT, cls: "code-area", tid: "editor-text", label: "编辑区", spell: false });
+  hit(8, 40, W - 16, H - 68, "text", null);
+  push(out, T("st", 10, H - 24, W - 20, 22, STATUS_ERR ? "status err" : "status", (DIRTY ? "未保存 · " : "") + STATUS));
+  if (CONFIRM != null) {
+    let px = floor((W - 380) / 2);
+    hit(px, 80, 380, 150, "noop", null);
+    push(out, N("cf", px, 80, 380, 150, "dialog", [
+      T("t", 16, 12, 340, 26, "dialog-title small", "有未保存的修改"),
+      T("m", 16, 44, 340, 40, "dialog-text", "“" + (PATH != "" ? base_of(PATH) : "未命名") + "” 还没有保存。")
+    ]));
+    push(out, B("cs", px + 110, 188, 84, 30, "保存", "cf_save", null, { cls: "primary small", tid: "editor-confirm-save" }));
+    push(out, B("cd", px + 200, 188, 84, 30, "放弃", "cf_drop", null, { cls: "small", tid: "editor-confirm-discard" }));
+    push(out, B("cc", px + 290, 188, 76, 30, "取消", "cf_cancel", null, { cls: "small", tid: "editor-confirm-cancel" }));
+  }
+  return out;
+}
+function after_confirm() {
+  let c = CONFIRM;
+  CONFIRM = null;
+  ui_invalidate();
+  if (c == "close") UI_DONE = true;
+  else if (c == "new") new_file();
+  else if (c == "open") load_file(trim(NAME_TEXT));
+}
+function on_act(v, act, data, ev) {
+  if (act == "save") { save_file(); return; }
+  if (act == "run") { run_file(); return; }
+  if (act == "compile") { compile_file(); return; }
+  if (act == "new") { if (DIRTY) { CONFIRM = "new"; ui_invalidate(); } else new_file(); return; }
+  if (act == "open") { if (DIRTY) { CONFIRM = "open"; ui_invalidate(); } else load_file(trim(NAME_TEXT)); return; }
+  if (act == "cf_save") { if (save_file()) after_confirm(); return; }
+  if (act == "cf_drop") { after_confirm(); return; }
+  if (act == "cf_cancel") { CONFIRM = null; ui_invalidate(); return; }
+}
+function on_value(v, key, value) {
+  if (key == "name") { NAME_TEXT = value; return; }
+  if (key == "text" + str(LOAD_REV)) {
+    TEXT = value;
+    set_dirty(TEXT != SAVED_TEXT);
+  }
+}
+function on_key(v, ev) {
+  if (ev.k != "keydown") return;
+  if (ev.ctrl && lower(ev.key) == "s") save_file();
+  else if (ev.key == "Enter" && ev.name_field) load_file(trim(NAME_TEXT));
+}
+function on_close() {
+  if (DIRTY) { CONFIRM = "close"; ui_invalidate(); return false; }
+  return true;
+}
+
+function main(args) {
+  app_window("程序编辑器", "editor", 780, 520, "editor");
+  if (args != null && args.file != null) load_file(args.file);
+  app_run({ render: render, act: on_act, value: on_value, key: on_key, close: on_close }, null);
+}

@@ -1,0 +1,170 @@
+/* Page frame shared by every page: body, background corners, content width,
+   model names, icons, helpers. */
+
+html {
+  scroll-padding-top: calc(var(--shell-h) + 1rem);
+  scrollbar-color: var(--st-rule) transparent;
+}
+
+body.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  isolation: isolate;
+}
+body.site > main {
+  flex: 1 0 auto;
+}
+
+/* Background: two faint corners of a star chart (decor/starfield), fixed, under everything.
+   Replaces the skill's own star textures (visual.md 六). Strength 0.2. */
+body.site::before,
+body.site::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--st-ink-2);
+  opacity: 0.2;
+}
+body.site::before {
+  top: var(--shell-h);
+  right: 0;
+  width: min(45rem, 60vw);
+  aspect-ratio: 720 / 540;
+  -webkit-mask: url('/decor/starfield/starfield-corner-tr.svg') right top / 100% auto no-repeat;
+  mask: url('/decor/starfield/starfield-corner-tr.svg') right top / 100% auto no-repeat;
+}
+body.site::after {
+  bottom: 0;
+  left: 0;
+  width: min(35rem, 45vw);
+  aspect-ratio: 560 / 420;
+  -webkit-mask: url('/decor/starfield/starfield-corner-bl.svg') left bottom / 100% auto no-repeat;
+  mask: url('/decor/starfield/starfield-corner-bl.svg') left bottom / 100% auto no-repeat;
+}
+
+/* The content column: 12 columns, at most 88rem wide (visual.md 五). */
+.page {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 2rem var(--gutter) 4rem;
+}
+.page:focus {
+  outline: none;
+}
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* The spectrum strip sweeps in on the first page of a visit only. */
+@media (prefers-reduced-motion: no-preference) {
+  :root.is-first-page:not([data-st-motion='calm']) .site-tri {
+    transform-origin: left;
+    animation: st-sweep 600ms var(--st-ease) both;
+  }
+}
+
+/* helpers */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.num {
+  font-family: var(--st-font-ui);
+  font-variant-numeric: tabular-nums;
+  font-stretch: var(--st-wide);
+}
+.hatch {
+  background: var(--st-hatch);
+}
+[hidden] {
+  display: none !important;
+}
+
+/* Model name with its reasoning effort: the name may be cut, the bracket stays. */
+.mname {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: baseline;
+}
+.mname-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mname-effort {
+  flex: none;
+  font-family: 'Saira', var(--st-font-ui);
+  font-size: 0.82em;
+  font-weight: 500;
+  font-stretch: var(--st-wide);
+  color: var(--st-ink-2);
+  white-space: nowrap;
+}
+
+/* Single-colour icons drawn as masks: they follow the text colour. */
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  background: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+/* 中文里的间隔号「·」用中文字体：Saira 的 U+00B7 是一小横，看着像连字符；中文字体按全宽排，两侧收紧一点 */
+.cjk {
+  margin-inline: -0.14em;
+  font-family: var(--st-font-text);
+}
+
+/* 有彩色版的厂商标识画原图：不跟随文字颜色，深色主题也不反色（core/names.js vendorIcon） */
+.icon.is-color {
+  background: var(--icon) center / contain no-repeat;
+  -webkit-mask: none;
+  mask: none;
+}
+
+/* A page title for console pages: eyebrow over the pair, line to a star. */
+.page-head {
+  margin-bottom: 1.5rem;
+}
+.page-head .st-eyebrow {
+  margin: 0 0 0.35rem;
+}
+
+/* Empty / placeholder states */
+.site-empty {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--st-rule);
+  background: var(--st-hatch), var(--st-paper);
+}
+.site-empty > p {
+  display: inline-block;
+  max-width: 36rem;
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  background: var(--st-paper);
+  color: var(--st-ink-2);
+  line-height: 1.75;
+}
+.site-load-error {
+  margin: 1.5rem 0;
+}

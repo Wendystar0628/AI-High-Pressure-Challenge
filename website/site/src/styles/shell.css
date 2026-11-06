@@ -1,0 +1,667 @@
+/* The shell: command bar, footer, search dialog, shortcut sheet, model side panel. */
+
+/* ---------- command bar ---------- */
+.site-skip {
+  position: absolute;
+  left: var(--gutter);
+  top: 0.5rem;
+  z-index: 60;
+  padding: 0.4rem 0.8rem;
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+.site-skip:focus {
+  transform: none;
+}
+
+.site-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-wrap: nowrap;
+  gap: 0 1.25rem;
+  min-height: var(--shell-h);
+}
+.site-bar .brand {
+  flex: none;
+  gap: 0.65rem;
+  letter-spacing: 0.04em;
+}
+.site-bar .brand-name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.site-bar .brand-name b {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.site-bar .brand-name small {
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--st-bar-muted);
+}
+.site-bar .brand:is(:hover, :focus-visible) .brand-name b {
+  text-decoration: underline 2px var(--st-flare);
+  text-underline-offset: 4px;
+}
+.site-bar nav {
+  flex-wrap: nowrap;
+}
+.site-bar nav a {
+  white-space: nowrap;
+}
+/* the current block slides between pages (view transition) */
+.site-bar nav a[aria-current] {
+  view-transition-name: site-nav-current;
+}
+.site-bar .util {
+  flex: none;
+  gap: 0.6rem;
+}
+
+/* search block: looks like a field, opens the dialog */
+.site-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.25rem;
+  padding: 0 calc(0.6rem + var(--st-cut)) 0 0.7rem;
+  border: 0;
+  background: linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--st-bar-hover) var(--st-cut));
+  color: var(--st-bar-muted);
+  font: 500 0.8rem var(--st-font-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.site-search::before {
+  content: '//';
+  font-weight: 800;
+  color: var(--st-bar-muted);
+}
+.site-search kbd {
+  padding: 0 0.4em;
+  border: 1px solid color-mix(in srgb, var(--st-bar-muted) 45%, transparent);
+  font: 600 0.7rem var(--st-font-ui);
+  color: inherit;
+}
+.site-search:is(:hover, :focus-visible) {
+  background: linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--st-flare) var(--st-cut));
+  color: var(--st-on-flare);
+}
+.site-search:is(:hover, :focus-visible)::before {
+  color: var(--st-on-flare);
+}
+.site-search:is(:hover, :focus-visible) kbd {
+  border-color: color-mix(in srgb, var(--st-on-flare) 40%, transparent);
+}
+.site-search-short {
+  display: none;
+}
+@media (max-width: 1279px) {
+  .site-search-ph {
+    max-width: 5.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* square tools on the bar: theme, shortcuts */
+.site-tool {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 calc(var(--st-cut) * 0.5) calc(var(--st-cut) * 0.5) 0;
+  border: 0;
+  background: linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--st-bar-hover) var(--st-cut));
+  color: var(--st-bar-text);
+  font: 700 0.9rem var(--st-font-ui);
+  cursor: pointer;
+}
+.site-tool:is(:hover, :focus-visible) {
+  background: linear-gradient(-45deg, transparent calc(var(--st-cut) - 0.5px), var(--st-flare) var(--st-cut));
+  color: var(--st-on-flare);
+}
+.site-theme-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.site-theme[aria-pressed='true'] .site-theme-icon {
+  transform: scaleX(-1);
+}
+
+/* 中 │ EN */
+.site-lang {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  font-size: 0.8rem;
+  color: var(--st-bar-muted);
+}
+.site-lang > span {
+  opacity: 0.6;
+}
+.site-lang a {
+  position: relative;
+  padding: 0.35rem 0.4rem;
+  color: var(--st-bar-muted);
+  font-weight: 600;
+}
+.site-lang a::after {
+  content: '';
+  position: absolute;
+  inset: auto 0.4rem 0.1rem;
+  height: 2px;
+  background: var(--st-flare);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s var(--st-mech);
+}
+.site-lang a:is(:hover, :focus-visible) {
+  color: var(--st-bar-text);
+}
+.site-lang a:not([aria-current]):is(:hover, :focus-visible)::after {
+  transform: none;
+}
+.site-lang a[aria-current] {
+  color: var(--st-bar-text);
+  font-weight: 800;
+}
+.site-lang a[aria-current]::after {
+  background: var(--st-orbit);
+  transform: none;
+}
+
+@media (max-width: 1199px) {
+  .site-bar {
+    gap: 0 0.75rem;
+  }
+  .site-bar nav a {
+    padding-inline: 0.6rem 0.85rem;
+  }
+  .site-bar .brand-name small {
+    display: none;
+  }
+}
+/* six nav entries still fit on one line at 1024 wide */
+@media (max-width: 1099px) {
+  .site-bar nav a {
+    padding-inline: 0.45rem 0.65rem;
+  }
+  .site-search-ph {
+    max-width: 4rem;
+  }
+}
+/* narrow windows (the model page and the category boards are read on phones too): the bar never widens the
+   page; the nav scrolls inside the bar, the brand keeps its seal, the search block keeps its key */
+@media (max-width: 1023px) {
+  .site-bar {
+    gap: 0 0.5rem;
+    padding-inline: 0.75rem;
+  }
+  .site-bar nav {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .site-bar nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-bar .brand-name,
+  .site-search-ph,
+  .site-search kbd,
+  .site-keys {
+    display: none;
+  }
+  .site-search-short {
+    display: inline;
+  }
+  .site-bar .util {
+    gap: 0.35rem;
+  }
+}
+:root:lang(en) .site-bar .brand-name b {
+  font-size: 0.85rem;
+  font-stretch: var(--st-wider);
+}
+
+/* ---------- footer ---------- */
+.site-foot {
+  position: relative;
+  isolation: isolate;
+  margin-top: 4rem;
+  padding: 2.5rem var(--gutter) 3.5rem;
+  border-top: 1px solid var(--st-rule);
+  overflow: hidden;
+}
+.site-foot::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: 0;
+  width: min(75rem, 100%);
+  aspect-ratio: 1200 / 280;
+  translate: -50% 0;
+  background: var(--st-ink-2);
+  opacity: 0.5;
+  -webkit-mask: url('/decor/sphere/sphere-horizon.svg') center bottom / 100% auto no-repeat;
+  mask: url('/decor/sphere/sphere-horizon.svg') center bottom / 100% auto no-repeat;
+  pointer-events: none;
+}
+.site-foot-in {
+  display: grid;
+  gap: 0.4rem;
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+.site-foot-name {
+  margin: 0;
+  font-weight: 800;
+}
+.site-foot-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--st-ink-2);
+}
+
+/* ---------- dialogs (search, shortcuts) ---------- */
+.site-dialog {
+  width: min(42rem, calc(100% - 2 * var(--gutter)));
+  margin: 11vh auto auto;
+  max-height: 78vh;
+}
+.site-dialog > .st-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 78vh;
+  padding: 1rem 1.15rem 0.9rem;
+}
+.site-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+/* search */
+.site-sd .st-search {
+  flex: none;
+}
+.site-sd .st-search input {
+  font-size: 1rem;
+  min-height: 2.75rem;
+}
+.site-sd .st-search input::-webkit-search-cancel-button {
+  display: none;
+}
+.site-sd-results {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0.75rem -1.15rem 0;
+  padding: 0 0 0.25rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.site-sd-cursor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0;
+  background:
+    linear-gradient(var(--st-orbit), var(--st-orbit)) left / var(--st-bar-w) 100% no-repeat,
+    var(--st-wash);
+  pointer-events: none;
+  transition:
+    transform 0.2s var(--st-mech),
+    height 0.2s var(--st-mech);
+}
+.site-sd-results[data-empty] .site-sd-cursor {
+  display: none;
+}
+.site-sd-group {
+  margin: 0;
+  padding: 0.25rem 0 0.35rem;
+}
+.site-sd-group + .site-sd-group {
+  border-top: 1px solid var(--st-rule);
+}
+.site-sd-group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.55rem 1.15rem 0.25rem;
+}
+.site-sd-group-head button {
+  border: 0;
+  background: none;
+  color: var(--st-ink-2);
+  font: 600 0.75rem var(--st-font-ui);
+  cursor: pointer;
+  border-bottom: 1px solid var(--st-rule);
+}
+.site-sd-group-head button:is(:hover, :focus-visible) {
+  color: var(--st-ink);
+  border-color: var(--st-ink);
+}
+.site-sd-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 0.7rem;
+  min-height: 2.75rem;
+  padding: 0.3rem 1.15rem;
+  color: var(--st-ink);
+  cursor: pointer;
+}
+.site-sd-item .icon {
+  justify-self: center;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.site-sd-item .site-sd-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+  font-weight: 500;
+}
+.site-sd-item .site-sd-name mark {
+  background: none;
+  color: inherit;
+  font-weight: 800;
+}
+.site-sd-item .site-sd-sub {
+  color: var(--st-ink-2);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.site-sd-item .site-sd-text {
+  display: grid;
+  min-width: 0;
+}
+.site-sd-item .st-field {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.site-sd-item[aria-selected='true'] .site-sd-name {
+  font-weight: 700;
+}
+.site-sd-recent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 1.15rem 0.5rem;
+}
+.site-sd-empty {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  color: var(--st-ink-2);
+  line-height: 1.75;
+}
+.site-sd-hint {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 -1.15rem -0.9rem;
+  padding: 0.5rem 1.15rem;
+  border-top: 1px solid var(--st-rule);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-sd-item.is-new {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(var(--i, 0) * 18ms);
+  }
+}
+
+/* shortcut sheet */
+.site-keys-dialog {
+  width: min(34rem, calc(100% - 2 * var(--gutter)));
+}
+.site-keys-dialog h2 {
+  margin: 0.2rem 0 0;
+}
+.site-keys-group {
+  margin: 0.75rem 0 0;
+}
+.site-keys-group > .st-eyebrow {
+  margin: 0 0 0.25rem;
+}
+.site-keys-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-rule);
+}
+.site-keys-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 2.25rem;
+  border-bottom: 1px solid var(--st-rule);
+}
+.site-keys-list kbd,
+kbd.key {
+  display: inline-block;
+  min-width: 1.6em;
+  margin-left: 0.25em;
+  padding: 0 0.4em;
+  border: 1px solid var(--st-ink);
+  background: var(--st-panel);
+  color: var(--st-ink);
+  font: 700 0.75rem/1.6 var(--st-font-ui);
+  text-align: center;
+}
+.site-keys-note {
+  margin: 0.75rem 0 0;
+  color: var(--st-ink-2);
+  font-size: 0.8rem;
+}
+
+/* ---------- model side panel ---------- */
+.site-panel {
+  width: min(31rem, calc(100% - 4rem));
+}
+.site-panel .body {
+  overscroll-behavior: contain;
+}
+.site-panel header {
+  align-items: flex-start;
+}
+.site-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.site-panel-title .icon {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.site-panel-title .mname {
+  min-width: 0;
+}
+.site-panel header .st-pair {
+  min-width: 0;
+  flex: 1;
+}
+.site-panel-facts {
+  padding: 0 var(--st-pad) 0.75rem;
+}
+.site-panel-sec {
+  padding: 1rem var(--st-pad) 0.5rem;
+}
+.site-panel .st-figs {
+  margin: 0 var(--st-pad);
+}
+.site-panel .st-figs b {
+  font-size: 2rem;
+}
+.site-panel .st-figs small {
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+}
+.site-panel-sec > h3 {
+  margin: 0 0 0.4rem;
+}
+.site-panel-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--st-ink);
+}
+.site-panel-rows li {
+  display: grid;
+  grid-template-columns: minmax(0, 8.5rem) 2.6rem minmax(3rem, 1fr) 2.8rem 2.6rem;
+  align-items: center;
+  gap: 0 0.55rem;
+  min-height: 2rem;
+  border-bottom: 1px solid var(--st-rule);
+  font-size: 0.85rem;
+}
+.site-panel-rows.tasks li {
+  grid-template-columns: 1.6rem minmax(0, 1fr) 2.8rem 2.6rem;
+}
+.site-panel-rows li.group {
+  display: block;
+  min-height: 0;
+  padding: 0.45rem 0 0.15rem;
+  border-bottom: 0;
+  color: var(--st-ink-2);
+}
+.site-panel-rows a {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 1px solid transparent;
+}
+.site-panel-rows a:is(:hover, :focus-visible) {
+  border-bottom-color: var(--st-ink);
+}
+.site-panel-rows .num {
+  text-align: right;
+}
+.site-panel-rows .val {
+  font-weight: 700;
+}
+.site-panel-rows .of {
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+}
+.site-panel-bar {
+  position: relative;
+  height: 6px;
+  background: var(--st-chip);
+}
+.site-panel-bar > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  background: var(--bar, var(--series));
+  box-shadow: var(--bar-edge, none);
+  transform: scaleX(var(--v, 0));
+  transform-origin: left;
+  transition: transform 0.36s var(--st-mech);
+}
+.site-panel-bar.is-standard > i {
+  --bar: var(--kind-standard);
+  --bar-edge: inset 0 0 0 1px var(--lime-edge);
+}
+.site-panel-bar.is-design > i {
+  --bar: var(--kind-design);
+}
+.site-panel-none {
+  grid-column: span 2;
+  padding: 0 0.4rem;
+  background: var(--st-hatch);
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+  text-align: center;
+}
+.site-panel .st-actions {
+  align-items: center;
+}
+/* 「查看全部得分」是本区唯一的主要按钮，排在最前；上一个 / 下一个成组靠右 */
+.site-panel-step {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-panel.is-swapping .site-panel-title {
+    animation: st-wipe-in 280ms var(--st-mech) both;
+  }
+  .site-panel[open] .site-panel-in {
+    animation: st-come 320ms var(--st-snap) both;
+    animation-delay: calc(180ms + var(--i, 0) * 20ms);
+  }
+}
+
+/* the search field draws its own focus line (2px violet underline) */
+.st .st-search input:focus-visible {
+  outline: none;
+}
+.site-dialog {
+  overflow: hidden;
+}
+.site-foot-icp a {
+  color: inherit;
+  border-bottom: 1px solid transparent;
+}
+.site-foot-icp a:is(:hover, :focus-visible) {
+  color: var(--st-ink);
+  border-bottom-color: var(--st-ink);
+}
+/* the theme reveal is one circle over the whole page: no separate group for the nav marker then */
+:root.st-theming .site-bar nav a[aria-current] {
+  view-transition-name: none;
+}
+
+/* ---------- 名字接力 (motion.js RELAY) ----------
+   The clicked name and the new page's title share view-transition-name: name-relay
+   (set on click, and by the head script on pagereveal); the group slides and
+   scales at the shutter's tier and curve while the rest of the page shutters. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(name-relay),
+  ::view-transition-old(name-relay),
+  ::view-transition-new(name-relay) {
+    animation-duration: 360ms;
+    animation-timing-function: var(--st-mech);
+  }
+}
+/* the HTML stand-in for a name inside an SVG (motion.js relayGhost) */
+.site-relay {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: var(--st-font-ui);
+  font-weight: 700;
+  line-height: 1;
+}
+.site-relay.is-tag {
+  background: var(--st-flare);
+  color: var(--st-on-flare);
+}

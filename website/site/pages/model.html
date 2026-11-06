@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- 页面模板：model（控制台页，「模型得分」）。路由插件按它生成 /models/（总分第 1 名）和每个 /models/<id>/，中文在根路径、英文在 /en/。
+     可用记号见 site/README.md「页面模板」；
+     head / top / bottom 三个 @ 标记由插件换成站点头部、命令栏和页脚，别删。
+     本页负责人只改 <main> 里面和 src/pages/model/。 -->
+<html lang="{{htmlLang}}" data-st-paper="neutral" data-st-cut="standard" data-st-ground="stars" data-st-density="standard" data-st-motion="full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <!--@head-->
+  </head>
+  <body class="st site" data-page="model" data-lang="{{lang}}" data-id="{{id}}">
+    <!--@top-->
+    <main id="main" class="page page-model" tabindex="-1">
+      <div class="md-spread">
+        <!-- 左侧栏：按厂商分组列出全部模型（picker.js）；窄屏收成可展开的选择器 -->
+        <nav class="md-side" aria-label="{{t:model.picker.label}}"></nav>
+        <div class="md-main">
+          <header class="page-head md-head">
+            <span class="md-head-decor" aria-hidden="true"></span>
+            <div class="md-id">
+              <p class="st-eyebrow slash md-eyebrow">{{t:common.pages.model.en}}</p>
+              <div class="st-head"><h1 class="md-title"><span class="md-name" data-relay-target>{{nameHTML}}</span></h1></div>
+              <ul class="st-facts st-field md-facts"></ul>
+              <p class="st-actions md-actions"></p>
+            </div>
+            <div class="st-figs md-figs"></div>
+          </header>
+          <div class="page-body" data-slot="page">
+            <!-- 加载中：骨架，数据到了整块换掉 -->
+            <div class="md-skeleton" aria-hidden="true">
+              <section class="st-panel"><span class="st-skeleton md-skel-dial"></span></section>
+              <section class="st-panel">
+                <span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span>
+                <span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span><span class="st-skeleton line"></span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--@bottom-->
+    <script type="module" src="/src/pages/model/main.js"></script>
+  </body>
+</html>

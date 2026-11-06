@@ -1,0 +1,9 @@
+node_modules/
+dist/
+# copied by scripts/sync-assets.mjs from website/ (npm run sync)
+public/fonts/
+public/decor/
+public/logos/
+public/icons/
+src/vendor/
+

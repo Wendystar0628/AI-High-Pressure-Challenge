@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#091416" />
+    <title>汐域 · 网络安全攻防战</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app" class="menu-mode">
+      <div id="viewport">
+        <canvas id="world"></canvas>
+        <div id="world-labels"></div>
+        <div class="vignette"></div>
+      </div>
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">◈</span>
+          <div>汐域<span class="brand-en">SENTINEL / OS</span></div>
+          <span class="version">守护进程 v.04</span>
+        </div>
+        <div id="resources" class="resources"></div>
+        <div class="top-controls">
+          <button id="sound-btn" title="静音 / 开启声音">♫</button
+          ><button id="help-btn">操作手册 <span>?</span></button
+          ><button id="menu-btn">☰ <span>系统菜单</span></button>
+        </div>
+      </header>
+      <main id="home">
+        <div class="eyebrow">
+          <i class="live-dot"></i> AUTONOMOUS DOMAIN / 07
+        </div>
+        <h1>
+          网络安全<br /><em>攻防战<span>®</span></em>
+        </h1>
+        <p class="intro">
+          每一次改道，都是一次取舍。<br />接管交换节点，守住最后的数据中枢。
+        </p>
+        <div class="section-label">
+          <span>选择接管区域</span><small>03 NETWORKS AVAILABLE</small>
+        </div>
+        <div id="missions"></div>
+        <button id="launch" class="primary large">
+          接管网络 <span>建立防线 ↗</span>
+        </button>
+        <div class="home-footer">
+          <button id="demos-btn">▷ 实战演示 <small>3 段实时推演</small></button
+          ><button id="archive-btn">▤ 设备与威胁档案 ↗</button>
+        </div>
+      </main>
+      <div id="home-scene-caption">
+        <span class="eyebrow">LIVE TOPOLOGY / 实时拓扑</span>
+        <h2 id="preview-title"></h2>
+        <div id="preview-desc"></div>
+        <div class="caption-tags">
+          <span>实时三维战场</span><span>动态路由收敛</span
+          ><span>节点攻防</span>
+        </div>
+      </div>
+      <div id="game-ui" hidden>
+        <button id="boss-status" hidden></button>
+        <div class="battle-heading">
+          <div class="eyebrow" id="map-code"></div>
+          <h2 id="map-title"></h2>
+          <span id="phase-tag" class="pill">部署阶段</span>
+        </div>
+        <div class="view-tools">
+          <button id="reset-view" title="回到默认视角 [Home]">⌖ 默认视角</button
+          ><button id="routes-btn">◉ 路由可视</button>
+        </div>
+        <div class="map-legend">
+          <span><i style="background: #55e4c5"></i>入口 A</span
+          ><span><i style="background: #ffbe73"></i>入口 B</span
+          ><span id="legend-c"><i style="background: #b8a0ff"></i>入口 C</span
+          ><span>◇ 交换节点</span><span>▣ 设备平台</span>
+        </div>
+        <aside id="sidebar">
+          <div id="sidebar-scroll">
+            <section class="panel forecast-panel">
+              <div class="panel-title">
+                <h3>流量预报</h3>
+                <span id="forecast-wave"></span>
+              </div>
+              <div id="forecast"></div>
+              <button id="next-wave" class="primary">
+                放行下一波 <span>↗</span>
+              </button>
+            </section>
+            <section class="panel inspector">
+              <div class="panel-title">
+                <h3 id="inspect-heading">网络监测</h3>
+                <span class="live-dot"></span>
+              </div>
+              <div id="inspect"></div>
+            </section>
+            <section class="event-panel">
+              <div class="panel-title">
+                <h3>系统日志</h3>
+                <span id="clock">00:00</span>
+              </div>
+              <div id="event-log"></div>
+            </section>
+          </div>
+          <section class="panel item-panel">
+            <div class="panel-title">
+              <h3>应急响应</h3>
+              <span>随时可用</span>
+            </div>
+            <div id="items"></div>
+          </section>
+        </aside>
+        <div class="bottom-deck">
+          <div class="deck-head">
+            <div>
+              <span class="eyebrow">DEPLOYMENT</span><b>部署设备</b
+              ><span class="muted">拖动卡片至战场 · 或点击后选择位置</span>
+            </div>
+            <div class="transport">
+              <button id="pause-btn">Ⅱ 暂停</button
+              ><button id="speed-btn">1×</button>
+            </div>
+          </div>
+          <div id="tower-cards"></div>
+          <div class="deck-foot">
+            <span
+              ><kbd>MMB</kbd> 环绕　<kbd>Shift + MMB</kbd> 平移　<kbd>滚轮</kbd>
+              缩放</span
+            ><span
+              ><kbd>R</kbd> 转向　<kbd>Esc</kbd> 取消　<kbd>空格</kbd>
+              暂停</span
+            ><span class="secure-status"
+              ><i class="live-dot"></i> 业务链路连通</span
+            >
+          </div>
+        </div>
+      </div>
+      <div id="placement" hidden></div>
+      <div id="toast" role="status"></div>
+      <div id="boss-alert" hidden></div>
+      <div id="demo-ui" hidden>
+        <div class="demo-top">
+          <span class="live-dot"></span><b id="demo-name"></b
+          ><span>实时实战演示</span><button id="exit-demo">退出演示 ×</button>
+        </div>
+        <div id="demo-subtitle"></div>
+        <div class="demo-progress"><div id="demo-progress-bar"></div></div>
+        <div id="demo-cursor">
+          <svg viewBox="0 0 28 36">
+            <path
+              d="M3 2L24 23L14 23L10 33Z"
+              fill="#fff"
+              stroke="#071719"
+              stroke-width="2"
+            /></svg
+          ><span></span>
+        </div>
+      </div>
+      <div id="modal" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-card">
+          <button id="close-modal" class="close">×</button>
+          <div id="modal-content"></div>
+        </div>
+      </div>
+      <footer id="home-bottom">
+        <span><i class="live-dot"></i> 系统在线 / ALL SYSTEMS NOMINAL</span
+        ><span>汐域安全响应中心　·　SECURITY OPERATIONS CENTER</span
+        ><span>本地运行 · 数据不离域</span>
+      </footer>
+    </div>
+    <script src="vendor/three.min.js"></script>
+    <script src="data.js"></script>
+    <script src="engine.js"></script>
+    <script src="scene.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

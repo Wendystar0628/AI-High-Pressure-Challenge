@@ -1,0 +1,344 @@
+/* Figures of the reading pages: inline SVG, square corners, 1px lines,
+   colours from variables only so both themes follow (about.md 图示). */
+
+.rd-fig {
+  margin: 2.25rem 0 2.5rem;
+}
+.rd-fig-cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--st-ink);
+}
+.rd-fig-no {
+  flex: none;
+}
+.rd-fig-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+body[data-lang='en'] .rd-fig-title {
+  font-stretch: 100%;
+}
+.rd-fig-sketch {
+  align-self: center;
+}
+.rd-readout {
+  min-height: 1.6rem;
+  margin-top: 0.9rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--st-rule);
+}
+.rd-readout.is-hot > li {
+  color: var(--st-ink);
+}
+.rd-readout.is-hot > li:first-child {
+  font-weight: 700;
+}
+
+.rd-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--st-font-ui);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.rd-svg text {
+  fill: var(--st-ink);
+  font-size: 13px;
+}
+.rd-svg .t2 {
+  fill: var(--st-ink-2);
+}
+.rd-svg .t2b {
+  fill: var(--st-ink-2);
+  font-size: 12.5px;
+}
+.rd-svg .tm {
+  font-weight: 500;
+}
+.rd-svg .tb {
+  font-weight: 700;
+}
+.rd-svg .tx {
+  font-size: 15px;
+  font-weight: 800;
+}
+.rd-svg .tl {
+  font-size: 15px;
+}
+.rd-svg .tn {
+  font-variant-numeric: tabular-nums;
+  font-stretch: 112%;
+}
+.rd-svg .tmid {
+  font-size: 16px;
+  font-weight: 800;
+}
+.rd-svg .tw {
+  font-size: 22px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+.rd-svg .tbig {
+  font-size: 30px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+}
+.rd-svg .thuge {
+  font-size: 44px;
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.03em;
+  fill: var(--st-orbit);
+}
+.rd-svg .tsym {
+  font-size: 46px;
+  font-weight: 800;
+  fill: var(--st-orbit);
+}
+.rd-svg .tsub {
+  font-size: 0.6em;
+}
+.rd-svg .teb {
+  font-size: 13px;
+  font-weight: 600;
+  font-stretch: 125%;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: var(--st-ink-2);
+}
+.rd-svg .tsl {
+  fill: var(--st-orbit);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.rd-svg .tcy {
+  fill: var(--text-cyan);
+}
+.rd-svg .ton {
+  fill: var(--st-panel);
+}
+.rd-svg .tof {
+  fill: var(--st-on-flare);
+}
+.rd-svg .tsoft {
+  opacity: 0.65;
+}
+
+/* lines */
+.rd-svg .l-ink,
+.rd-svg .l-ink2,
+.rd-svg .l-rule,
+.rd-svg .l-orbit,
+.rd-svg .l-ref {
+  fill: none;
+  stroke-width: 1;
+}
+.rd-svg .l-ink {
+  stroke: var(--st-ink);
+}
+.rd-svg .l-ink2 {
+  stroke: var(--st-ink-2);
+}
+.rd-svg .l-rule {
+  stroke: var(--st-rule);
+}
+.rd-svg .l-orbit {
+  stroke: var(--st-orbit);
+  stroke-width: 1.5;
+}
+.rd-svg .l-ref {
+  stroke: var(--ref-line);
+  stroke-dasharray: 4 3;
+}
+.rd-svg .l-thick {
+  stroke-width: 2;
+}
+.rd-svg .l-thick3 {
+  stroke-width: 3.5;
+}
+.rd-svg .l-dash {
+  stroke-dasharray: 5 4;
+}
+.rd-svg .l-stop {
+  stroke: var(--st-ink);
+  stroke-width: 3;
+}
+
+/* fills */
+.rd-svg .f-std {
+  fill: var(--kind-standard);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.rd-svg .f-std-soft {
+  fill: var(--g-300);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.rd-svg .f-std-soft2 {
+  fill: color-mix(in srgb, var(--g-300) 70%, transparent);
+}
+.rd-svg .f-std-band {
+  fill: var(--group-standard);
+}
+.rd-svg .f-des {
+  fill: var(--kind-design);
+}
+.rd-svg .f-des-mid {
+  fill: var(--v-500);
+}
+.rd-svg .f-ink,
+.rd-svg .f-node {
+  fill: var(--st-ink);
+}
+.rd-svg .f-orbit {
+  fill: var(--st-orbit);
+}
+.rd-svg .f-flare {
+  fill: var(--st-flare);
+}
+.rd-svg .f-chip {
+  fill: var(--st-chip);
+}
+.rd-svg .f-zero {
+  fill: var(--st-panel);
+  stroke: var(--st-ink-2);
+  stroke-width: 1;
+}
+.rd-svg .f-zero-ink {
+  stroke: var(--st-ink);
+}
+.rd-svg .f-blank {
+  fill: none;
+  stroke: var(--st-ink);
+  stroke-width: 1;
+  stroke-dasharray: 3 2.5;
+}
+.rd-svg .f-ban {
+  stroke: none;
+}
+.rd-svg .f-ban-box {
+  stroke: var(--st-ink);
+  stroke-width: 1;
+}
+.rd-svg .tsm {
+  font-size: 12.5px;
+}
+.rd-svg .f-ref {
+  fill: var(--c-500);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.rd-svg .f-ref-band {
+  fill: var(--ref-band);
+}
+.rd-svg .f-hatch-line {
+  fill: color-mix(in srgb, var(--st-ink) 34%, transparent);
+}
+.rd-svg .f-panel-box {
+  fill: var(--st-panel);
+  stroke: var(--st-rule);
+  stroke-width: 1;
+}
+.rd-svg .f-band-paper {
+  fill: var(--st-paper);
+}
+.rd-svg .f-frame {
+  fill: none;
+  stroke: var(--st-rule);
+  stroke-width: 1;
+}
+.rd-svg .f-icon {
+  color: var(--st-ink);
+}
+.rd-svg .f-hit {
+  fill: transparent;
+}
+.rd-svg .f-coltint {
+  fill: var(--st-wash);
+  opacity: 0;
+  transition: opacity 0.16s var(--st-ease);
+}
+.rd-svg .f-coltint.is-on {
+  opacity: 1;
+}
+.rd-svg .f-seg-item {
+  opacity: 0.5;
+}
+
+/* pointing and focus: the element turns one step deeper */
+.rd-svg .f-mark {
+  cursor: default;
+  outline: none;
+}
+.rd-svg a.f-mark,
+.rd-svg a {
+  cursor: pointer;
+}
+.rd-svg .f-mark:focus-visible {
+  outline: 2px solid var(--st-ink);
+  outline-offset: 2px;
+}
+.rd-svg rect.f-mark:focus-visible {
+  outline-offset: 1px;
+}
+.rd-svg .f-cell.is-standard.is-hot rect,
+.rd-svg .f-pt.f-std.is-hot,
+.rd-svg g.is-hot > rect.f-std {
+  fill: var(--kind-standard-deep);
+}
+.rd-svg .f-cell.is-design.is-hot rect,
+.rd-svg g.is-hot > rect.f-des {
+  fill: var(--kind-design-deep);
+}
+.rd-svg .f-cell rect.is-linked {
+  fill: var(--st-orbit);
+}
+.rd-svg .f-pt.is-hot {
+  stroke-width: 2;
+}
+.rd-svg .f-pt.f-zero.is-hot {
+  fill: var(--st-ink);
+}
+.rd-svg .f-seg.is-hot .f-seg-bar {
+  stroke: var(--st-ink);
+  stroke-width: 2;
+}
+.rd-svg .f-seg.is-hot .f-seg-item {
+  opacity: 1;
+}
+.rd-svg .f-tmark.is-hot path,
+.rd-svg .f-tmark.is-hot rect:not(.f-hit) {
+  fill: var(--st-orbit);
+}
+.rd-svg .f-tmark.is-hot text {
+  font-weight: 700;
+}
+.rd-svg .f-drow.is-hot .f-hit {
+  fill: var(--st-wash);
+}
+.rd-svg .f-drow .f-hit {
+  transition: fill 0.15s;
+}
+.rd-svg a.f-catlink:is(:hover, :focus-visible) text,
+.rd-svg a.f-tname:is(:hover, :focus-visible) text {
+  text-decoration: underline 2px;
+  text-decoration-color: var(--st-orbit);
+  text-underline-offset: 3px;
+}
+
+/* waiting to be drawn: nothing that will animate shows before its turn */
+@media (prefers-reduced-motion: no-preference) {
+  .rd-svg.is-waiting [data-fx] {
+    opacity: 0;
+  }
+}

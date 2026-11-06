@@ -1,0 +1,28 @@
+{
+  "task": "通用数字电路仿真器加速",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "总分",
+      "max": 100,
+      "score": 79.8,
+      "reason": "按新锚点（8 倍满分）由 evaluate 报告重算：正确性 7/7、性能 24/24，24 项均分 79.8，总分 79.8。"
+    }
+  ],
+  "metrics": {
+    "correctness_passed": 7,
+    "correctness_total": 7,
+    "performance_passed": 24,
+    "performance_inputs": 24,
+    "performance_score": 79.8,
+    "score": 100,
+    "G": 5.555943823681024,
+    "minimum_speedup": 3.9404584514517795,
+    "maximum_speedup": 16.85107546481954,
+    "report_path": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluate_report.json",
+    "solution_sha256": "682E39C34610742E54756E8443D990CCAAEB97B6A0F81A5B6274CA4F5B08CA83",
+    "full_score_inputs": 1
+  },
+  "notes": "评分版本：评原提交工作目录中的 solution.cpp，未回退 git 提交；副本路径为 work\\submission\\solution.cpp。提交与基线均按 -O2 -std=c++20 -march=native -fopenmp 编译，使用官方 evaluate.py 运行一次。第6个性能输入为99.0分，其余23例100.0分，均值99.9583按规定保留一位小数为100.0。评测进程PID 56824已自然退出，无遗留评分程序。"
+}
