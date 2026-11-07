@@ -1,0 +1,3 @@
+﻿const fs=require('fs');let p='js/demo.js';let s=fs.readFileSync(p,'utf8');
+s=s.replace("        api.action(3.95, () => addA('worm', 4, 3, { speed: 0.55 }));\n        api.action(4.25, () => addA('worm', 5, 3, { speed: 0.5 }));\n        api.action(4.6, () => addA('worm', 5, 4, { speed: 0.5 }));\n        api.action(5.0, () => addA('trojan', 3, 3, { speed: 0.5, revealed: false }));", "        api.action(3.9, () => addA('worm', 3, 3, { speed: 0.5 }));\n        api.action(4.15, () => addA('worm', 4, 3, { speed: 0.5 }));\n        api.action(4.4, () => addA('worm', 3, 2, { speed: 0.5 }));\n        api.action(4.7, () => addA('trojan', 2, 3, { speed: 0.5, revealed: false }));");
+fs.writeFileSync(p,s);

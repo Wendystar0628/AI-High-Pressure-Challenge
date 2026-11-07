@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRISM 棱镜 · AE 风味动效设计编辑器</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<svg id="svg-defs" width="0" height="0" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19 5v14L9 12z"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM5 5v14l10-7z"/></symbol>
+    <symbol id="i-first" viewBox="0 0 24 24"><path d="M5 5h2v14H5zM9 12l10-7v14z"/></symbol>
+    <symbol id="i-last" viewBox="0 0 24 24"><path d="M17 5h2v14h-2zM15 12L5 19V5z"/></symbol>
+    <symbol id="i-kf-prev" viewBox="0 0 24 24"><path d="M12 5l7 7-7 7-7-7zM4 5h2v14H4z"/></symbol>
+    <symbol id="i-kf-next" viewBox="0 0 24 24"><path d="M12 5l7 7-7 7-7-7zM18 5h2v14h-2z"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="M7 7h8a5 5 0 015 5v1h-2v-1a3 3 0 00-3-3H7V6l-4 3 4 3V7zm10 10H9a5 5 0 01-5-5v-1h2v1a3 3 0 003 3h8v3l4-3-4-3v3z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M12 5c5 0 9 4.2 10 7-1 2.8-5 7-10 7S3 14.8 2 12c1-2.8 5-7 10-7zm0 2c-3.6 0-6.8 3-7.9 5 1.1 2 4.3 5 7.9 5s6.8-3 7.9-5c-1.1-2-4.3-5-7.9-5zm0 2a3 3 0 110 6 3 3 0 010-6z"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 4.3L4.3 3 21 19.7 19.7 21l-3.2-3.2A11 11 0 0112 19C7 19 3 14.8 2 12a13 13 0 014.2-5.3L3 4.3zM12 7c3.6 0 6.8 3 7.9 5a12 12 0 01-2.7 3.3l-2.1-2.1A3 3 0 009.8 10L8 8.2A8 8 0 0112 7z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0110 0v2h2v10H5V10h2zm2 0h6V8a3 3 0 00-6 0v2zm2 3v4h2v-4h-2z"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 019.6-2l-1.9.7A3 3 0 009 8v2h10v10H5V10h2zm2 2v6h8v-6H9z"/></symbol>
+    <symbol id="i-caret" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6z"/></symbol>
+    <symbol id="i-caret-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6z"/></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z"/></symbol>
+    <symbol id="i-stopwatch" viewBox="0 0 24 24"><path d="M9 2h6v2h-2v2.1A8 8 0 1111 6.1V4H9V2zm3 6a6 6 0 106 6 6 6 0 00-6-6zm-1 2h2v5l3 2-1 1.7-4-2.6V10z"/></symbol>
+    <symbol id="i-curve" viewBox="0 0 24 24"><path d="M3 20c5 0 5-14 9-14s4 9 9 9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="3" cy="20" r="2"/><circle cx="21" cy="15" r="2"/></symbol>
+    <symbol id="i-nodes" viewBox="0 0 24 24"><path d="M4 5a2 2 0 114 0 2 2 0 01-4 0zm12 0a2 2 0 114 0 2 2 0 01-4 0zM4 19a2 2 0 114 0 2 2 0 01-4 0zm7-7a2 2 0 114 0 2 2 0 01-4 0z"/><path d="M8 5h6M8 17h4a4 4 0 004-4V7M12 12H8a4 4 0 00-4 4v1" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-layer" viewBox="0 0 24 24"><path d="M12 3l10 5.5L12 14 2 8.5zM2 12.5L12 18l10-5.5 2 1.1L12 20 0 13.6z"/></symbol>
+    <symbol id="i-shape" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM14 6a5 5 0 110 10 5 5 0 010-10zm-9 8h5v6H5z"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 4h16v4h-2V6h-5v14h3v2H8v-2h3V6H6v2H4z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h11v10H3zM15 10l6-3v10l-6-3z"/></symbol>
+    <symbol id="i-light" viewBox="0 0 24 24"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M19 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7zm0 2.3L5.5 7.9 12 11.5l6.5-3.6zM4 9.6v6.8l7 3.9v-6.8zm9 10.7l7-3.9V9.6l-7 3.9z"/></symbol>
+    <symbol id="i-particles" viewBox="0 0 24 24"><circle cx="7" cy="6" r="2"/><circle cx="17" cy="8" r="1.4"/><circle cx="12" cy="12" r="1"/><circle cx="5" cy="16" r="1.3"/><circle cx="18" cy="17" r="2"/><circle cx="10" cy="19" r="1"/><path d="M7 8v5m10-4v7M6 17l3-3m8 2l-4-3" stroke="currentColor" fill="none" stroke-width="1"/></symbol>
+    <symbol id="i-adjust" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 6v12M4 12h16" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></symbol>
+    <symbol id="i-precomp" viewBox="0 0 24 24"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 8h5v8H7zM14 8h3v3h-3zM14 13h3v3h-3z" fill="currentColor"/></symbol>
+    <symbol id="i-field" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.6"/><path d="M12 4a8 8 0 018 8M12 7a5 5 0 015 5M12 20a8 8 0 01-8-8M12 17a5 5 0 01-5-5M4 12h2M18 12h2M12 4v2M12 18v2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-audio" viewBox="0 0 24 24"><path d="M3 10h3l4-4v12l-4-4H3zm11-1a5 5 0 010 6m2-9a9 9 0 010 12" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-null" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="8" y="8" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M5 3l14 9-6 1.6L10 20z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l2-6 10-10 4 4-10 10-6 2zm3-5l-1 3 3-1 8-8-2-2-8 8z"/></symbol>
+    <symbol id="i-rect" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="7" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 11V5a1.5 1.5 0 013 0v5V4a1.5 1.5 0 013 0v6-4a1.5 1.5 0 013 0v7-2a1.5 1.5 0 013 0v4c0 4-3 7-7 7h-1c-2.5 0-4-1.5-5-3l-2.5-4A1.6 1.6 0 017 10z"/></symbol>
+    <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14.5 14.5L21 21M7 10h6M10 7v6" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="3"/><circle cx="20" cy="10" r="1.6"/></symbol>
+    <symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v16h16M2 6h16v16" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a5 5 0 00-2 9.6V15h-3v2h10v-2h-3v-3.4A5 5 0 0012 2zm0 3a2 2 0 110 4 2 2 0 010-4z"/><path d="M8 20h8v2H8z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M10.8 2h2.4l.5 3a7 7 0 011.7.9l2.8-1.2 1.7 1.7-1.2 2.8c.4.5.7 1.1.9 1.7l3 .5v2.4l-3 .5a7 7 0 01-.9 1.7l1.2 2.8-1.7 1.7-2.8-1.2a7 7 0 01-1.7.9l-.5 3h-2.4l-.5-3a7 7 0 01-1.7-.9l-2.8 1.2-1.7-1.7 1.2-2.8a7 7 0 01-.9-1.7l-3-.5v-2.4l3-.5c.2-.6.5-1.2.9-1.7L4.3 6.4l1.7-1.7 2.8 1.2a7 7 0 011.7-.9zM12 8a4 4 0 100 8 4 4 0 000-8z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M8 3h8l1 3h4v2H3V6h4zM5 9h14l-1 12H6zM9 12v6h2v-6zm4 0v6h2v-6z"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 4L3 9l6 5V9.5c4-2 8 .5 9 4.5 0-5-3.5-8.5-9-7.5z"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="M15 4l6 5-6 5V9.5c-4-2-8 .5-9 4.5 0-5 3.5-8.5 9-7.5z"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 2l5 5h-3v7h-4V7H7zM4 15h3v4h10v-4h3v7H4z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.5 9a2.5 2.5 0 114 2c-1 .8-1.5 1.3-1.5 3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="18" r="1.2"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M3 3h18v18H3zm2 2v4h14V5zm0 6v4h14v-4zm0 6v2h14v-2z" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6l-1.5-1.5L9 14l-3.5-3.5z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 3.6L12 10.6l7-7L20.4 5l-7 7 7 7-1.4 1.4-7-7-7 7L3.6 19l7-7-7-7z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M2 5h8l2 2h10v12H2z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6zM13 3v5h4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M12 2l5 8H7zM12 22l-5-8h10zM12 11v2" stroke="currentColor" fill="none" stroke-width="1.4"/><path d="M12 2l5 8H7z"/></symbol>
+    <symbol id="i-magnet" viewBox="0 0 24 24"><path d="M4 4h5v8a3 3 0 006 0V4h5v8a8 8 0 01-16 0zM4 4h5M15 4h5M4 8h5M15 8h5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.4"/></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+  <header id="titlebar">
+    <div class="brand">
+      <div class="brand-mark"><span></span><span></span><span></span></div>
+      <div class="brand-text"><b>PRISM</b><i>棱镜动效</i></div>
+    </div>
+    <nav id="menubar">
+      <button data-menu="file">文件</button>
+      <button data-menu="edit">编辑</button>
+      <button data-menu="comp">合成</button>
+      <button data-menu="layer">图层</button>
+      <button data-menu="effect">效果</button>
+      <button data-menu="view">视图</button>
+      <button data-menu="help">帮助</button>
+    </nav>
+    <div class="title-center">
+      <span class="doc-dot"></span>
+      <span id="projectName" contenteditable="false">星核 · NOVA CORE</span>
+      <span class="doc-badge">已保存</span>
+    </div>
+    <div class="title-actions">
+      <div class="autosave" id="autosaveState"><svg><use href="#i-check"/></svg> 自动保存</div>
+      <button class="icon-btn" id="undoBtn" title="撤销 Ctrl+Z"><svg><use href="#i-undo"/></svg></button>
+      <button class="icon-btn" id="redoBtn" title="重做 Ctrl+Shift+Z"><svg><use href="#i-redo"/></svg></button>
+      <button class="btn-ghost" id="exportBtn"><svg><use href="#i-export"/></svg>导出</button>
+      <button class="icon-btn" id="helpBtn" title="快捷键与帮助"><svg><use href="#i-help"/></svg></button>
+    </div>
+  </header>
+
+  <div id="main">
+    <aside id="projectPanel" class="panel left-panel">
+      <div class="panel-head">
+        <span>项目</span>
+        <div class="head-actions">
+          <button class="mini-btn" id="newCompBtn" title="新建合成"><svg><use href="#i-plus"/></svg></button>
+          <button class="mini-btn" id="projectMenuBtn" title="项目选项"><svg><use href="#i-dots"/></svg></button>
+        </div>
+      </div>
+      <div class="project-search">
+        <span class="search-ic">⌕</span>
+        <input id="projectSearch" placeholder="搜索合成、图层或节点" spellcheck="false">
+      </div>
+      <div class="proj-scroll">
+        <div class="proj-section">
+          <div class="proj-section-head"><svg><use href="#i-folder"/></svg>工程 <span id="projStats"></span></div>
+          <div id="compList" class="comp-list"></div>
+        </div>
+        <div class="proj-section">
+          <div class="proj-section-head"><svg><use href="#i-nodes"/></svg>节点组 <span id="nodeGroupStats"></span></div>
+          <div id="nodeGroupList" class="node-group-list"></div>
+        </div>
+        <div class="proj-section">
+          <div class="proj-section-head"><svg><use href="#i-audio"/></svg>素材</div>
+          <div id="assetList" class="asset-list"></div>
+        </div>
+      </div>
+      <div class="proj-foot">
+        <button class="btn-soft" id="newProjectBtn"><svg><use href="#i-plus"/></svg>空工程</button>
+        <button class="btn-soft" id="demoBtn"><svg><use href="#i-play"/></svg>载入示例</button>
+      </div>
+    </aside>
+
+    <section id="centerPanel">
+      <div id="workspaceBar">
+        <div class="ws-tabs" id="wsTabs">
+          <button class="ws-tab active" data-ws="stage"><svg><use href="#i-camera"/></svg>合成<span class="ws-key">1</span></button>
+          <button class="ws-tab" data-ws="curves"><svg><use href="#i-curve"/></svg>曲线<span class="ws-key">2</span></button>
+          <button class="ws-tab" data-ws="nodes"><svg><use href="#i-nodes"/></svg>节点<span class="ws-key">3</span></button>
+          <button class="ws-tab" data-ws="scene"><svg><use href="#i-cube"/></svg>三维<span class="ws-key">4</span></button>
+        </div>
+        <div class="breadcrumb" id="compBreadcrumb"></div>
+        <div class="ws-actions">
+          <button class="mini-btn" id="togglePanelsBtn" title="折叠侧栏"><svg><use href="#i-grid"/></svg></button>
+          <button class="mini-btn" id="layoutBtn" title="重置布局"><svg><use href="#i-settings"/></svg></button>
+        </div>
+      </div>
+
+      <div id="stageWrap" class="stage-wrap">
+        <div id="stageView" class="view-surface active">
+          <canvas id="glCanvas"></canvas>
+          <canvas id="overlayCanvas"></canvas>
+          <div id="canvasBackground" class="canvas-bg"></div>
+          <div id="viewportToolbar" class="vp-toolbar">
+            <div class="tool-group" id="toolGroup">
+              <button class="tool active" data-tool="select" title="选择 V"><svg><use href="#i-pointer"/></svg></button>
+              <button class="tool" data-tool="hand" title="抓手 H"><svg><use href="#i-hand"/></svg></button>
+              <button class="tool" data-tool="zoom" title="缩放 Z"><svg><use href="#i-zoom"/></svg></button>
+              <span class="tool-sep"></span>
+              <button class="tool" data-tool="rect" title="矩形工具"><svg><use href="#i-rect"/></svg></button>
+              <button class="tool" data-tool="ellipse" title="椭圆工具"><svg><use href="#i-ellipse"/></svg></button>
+              <button class="tool" data-tool="pen" title="钢笔 / 路径 G"><svg><use href="#i-pen"/></svg></button>
+              <button class="tool" data-tool="text" title="文字 T"><svg><use href="#i-text"/></svg></button>
+              <button class="tool" data-tool="mask" title="蒙版 M"><svg><use href="#i-crop"/></svg></button>
+              <button class="tool" data-tool="anchor" title="锚点 Y"><svg><use href="#i-target"/></svg></button>
+              <button class="tool" data-tool="pin" title="图钉变形 P"><svg><use href="#i-pin"/></svg></button>
+            </div>
+            <span class="tool-sep"></span>
+            <button class="pill" id="viewModeBtn" title="辅助视图">主动相机 <svg><use href="#i-caret-down"/></svg></button>
+            <button class="pill" id="resBtn" title="预览分辨率">完整</button>
+            <button class="pill" id="mbBtn" title="运动模糊">MB 开</button>
+            <button class="pill" id="dofBtn" title="景深">DOF 开</button>
+            <span class="vp-spacer"></span>
+            <button class="mini-btn" id="fitBtn" title="适配窗口"><svg><use href="#i-crop"/></svg></button>
+            <span class="zoom-label" id="zoomLabel">100%</span>
+          </div>
+          <div id="viewportHud" class="vp-hud">
+            <div class="hud-left"><span id="hudComp">主合成</span><i>/</i><span id="hudTime">00:00:00:00</span></div>
+            <div class="hud-right">
+              <span id="hudCam">CAM · 35mm</span>
+              <span class="hud-dot"></span>
+              <span id="hudSel">未选择对象</span>
+            </div>
+          </div>
+          <div id="axisGizmo" class="axis-gizmo"></div>
+          <div id="emptyStage" class="empty-stage">
+            <div class="empty-mark">◇</div>
+            <h3>从一束光开始</h3>
+            <p>在项目面板新建合成，或载入示例工程</p>
+            <button class="btn-primary" id="emptyDemoBtn">打开示例工程</button>
+          </div>
+        </div>
+
+        <div id="curveView" class="view-surface">
+          <div class="cv-toolbar">
+            <div class="seg" id="curveModeSeg"><button class="active" data-mode="value">值曲线</button><button data-mode="speed">速度曲线</button><button data-mode="path">空间路径</button></div>
+            <span class="cv-divider"></span>
+            <button class="chip" id="curveFitBtn">适配</button>
+            <button class="chip" id="curveSnapBtn">吸附</button>
+            <button class="chip active" id="curveExprBtn">表达式曲线</button>
+            <span class="cv-spacer"></span>
+            <div class="ease-presets" id="easePresets">
+              <button data-preset="ease">缓入缓出</button>
+              <button data-preset="easeIn">缓入</button>
+              <button data-preset="easeOut">缓出</button>
+              <button data-preset="linear">线性</button>
+              <button data-preset="hold">定格</button>
+            </div>
+          </div>
+          <div class="cv-body">
+            <div class="cv-legend" id="curveLegend"></div>
+            <canvas id="curveCanvas"></canvas>
+            <div class="cv-side" id="curveSide">
+              <div class="side-title">关键帧</div>
+              <div id="curveKeyInfo" class="side-empty">选择曲线上的关键帧</div>
+              <div class="side-title">缓动预览</div>
+              <canvas id="easePreview" width="240" height="96"></canvas>
+              <div class="side-note">入 / 出分别设置 · 可拖动手柄</div>
+            </div>
+            <div class="cv-hint" id="curveHint">在时间轴上展开带关键帧的属性，然后在此编辑</div>
+          </div>
+        </div>
+
+        <div id="nodeView" class="view-surface">
+          <div class="node-toolbar">
+            <button class="chip" id="nodeAddBtn"><svg><use href="#i-plus"/></svg>添加节点</button>
+            <button class="chip" id="nodeGroupBtn">封装节点组</button>
+            <span class="node-divider"></span>
+            <span class="node-graph-name" id="nodeGraphName">未选择节点图层</span>
+            <span class="cv-spacer"></span>
+            <button class="chip" id="nodeFitBtn">适配</button>
+            <span class="node-note">拖拽端口连线 · 双击画布添加</span>
+          </div>
+          <div id="nodeCanvasWrap" class="node-canvas-wrap">
+            <svg id="nodeLinks"></svg>
+            <div id="nodeLayer"></div>
+            <div id="nodeEmpty" class="node-empty">
+              <svg><use href="#i-nodes"/></svg>
+              <h4>程序化节点</h4>
+              <p>选择一个节点图层，或新建节点图，来构建几何、实例与场。</p>
+              <button class="btn-primary" id="nodeCreateBtn">新建节点图</button>
+            </div>
+            <div id="nodeMinimap" class="node-minimap"></div>
+            <div id="nodeZoomLabel" class="node-zoom">100%</div>
+          </div>
+        </div>
+
+        <div id="sceneView" class="view-surface">
+          <div class="scene-toolbar">
+            <div class="seg" id="sceneViewSeg"><button class="active" data-view="persp">透视</button><button data-view="front">前</button><button data-view="top">顶</button><button data-view="side">侧</button></div>
+            <span class="chip active" id="sceneWireBtn">可见网格</span>
+            <span class="chip active" id="sceneGridBtn">地面网格</span>
+            <span class="cv-spacer"></span>
+            <span class="scene-info" id="sceneInfo">世界空间 · 主动相机</span>
+          </div>
+          <div class="scene-body">
+            <canvas id="sceneCanvas"></canvas>
+            <div class="scene-panel" id="sceneInspector"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="propsPanel" class="panel right-panel">
+      <div class="panel-head">
+        <span id="propsTitle">属性</span>
+        <div class="head-actions">
+          <button class="mini-btn" id="propsMenuBtn" title="面板选项"><svg><use href="#i-dots"/></svg></button>
+        </div>
+      </div>
+      <div id="propsScroll" class="props-scroll">
+        <div id="propsEmpty" class="props-empty">
+          <div class="pe-mark"><svg><use href="#i-layer"/></svg></div>
+          <h4>未选择图层</h4>
+          <p>在时间轴或画布中选择一个对象，查看并编辑它的属性、蒙版、效果与材质。</p>
+          <div class="empty-tips">
+            <span><kbd>空格</kbd> 播放 / 暂停</span>
+            <span><kbd>Ctrl</kbd>+<kbd>D</kbd> 复制图层</span>
+            <span><kbd>F9</kbd> 缓入缓出</span>
+          </div>
+        </div>
+        <div id="propsContent"></div>
+      </div>
+      <div class="props-foot">
+        <div class="pf-left"><span class="status-led"></span><span id="renderStatus">WebGL 2 就绪</span></div>
+        <div class="pf-right"><span id="gpuBadge">GPU</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <section id="timeline">
+    <div id="tlToolbar">
+      <div class="tl-left-tools">
+        <button class="icon-btn tl-icon" id="tlZoomOut" title="缩小时间轴">−</button>
+        <button class="icon-btn tl-icon" id="tlZoomIn" title="放大时间轴">+</button>
+        <span class="tl-sep"></span>
+        <button class="chip active" id="onlyAnimatedBtn">只显示动画</button>
+        <button class="chip" id="tlSnapBtn"><svg><use href="#i-magnet"/></svg>吸附</button>
+        <span class="snap-hint" id="snapHint"></span>
+      </div>
+      <div class="transport">
+        <button class="icon-btn" id="goStartBtn" title="跳到开头 Home"><svg><use href="#i-first"/></svg></button>
+        <button class="icon-btn" id="prevKeyBtn" title="上一个关键帧 J"><svg><use href="#i-kf-prev"/></svg></button>
+        <button class="icon-btn" id="prevFrameBtn" title="上一帧 ←"><svg><use href="#i-prev"/></svg></button>
+        <button class="play-btn" id="playBtn" title="播放 / 暂停 空格"><svg><use href="#i-play"/></svg></button>
+        <button class="icon-btn" id="nextFrameBtn" title="下一帧 →"><svg><use href="#i-next"/></svg></button>
+        <button class="icon-btn" id="nextKeyBtn" title="下一个关键帧 K"><svg><use href="#i-kf-next"/></svg></button>
+        <button class="icon-btn" id="goEndBtn" title="跳到结尾 End"><svg><use href="#i-last"/></svg></button>
+        <button class="icon-btn" id="loopBtn" title="循环工作区"><svg><use href="#i-loop"/></svg></button>
+      </div>
+      <div class="timecode-wrap">
+        <div class="tc-label">时间</div>
+        <input id="timecodeInput" value="00:00:00:00" spellcheck="false" title="输入时间码或秒">
+        <div class="tc-frame" id="frameLabel">F 0</div>
+        <div class="fps-label" id="fpsLabel">60 fps</div>
+      </div>
+      <div class="tl-right-tools">
+        <span class="work-label" id="workLabel">工作区 0 – 15s</span>
+        <button class="mini-btn" id="addMarkerBtn" title="添加标记"><svg><use href="#i-plus"/></svg></button>
+        <button class="mini-btn" id="tlMenuBtn" title="时间轴选项"><svg><use href="#i-dots"/></svg></button>
+      </div>
+    </div>
+    <div id="tlScroll">
+      <div id="tlContent">
+        <div id="tlRulerRow">
+          <div id="tlRulerCorner">
+            <div class="corner-top"><span id="layerCount">0 图层</span><span class="tl-sep"></span><button class="mini-link" id="collapseAllBtn">收起全部</button></div>
+            <div class="corner-cols"><span>名称</span><span>父级</span><span>混合</span><span>入 / 出</span></div>
+          </div>
+          <div id="tlRuler"></div>
+        </div>
+        <div id="tlRows"></div>
+        <div id="playheadLine" class="playhead-line"></div>
+        <div id="playheadHead" class="playhead-head"></div>
+        <div id="tlWorkArea" class="tl-workarea"></div>
+      </div>
+    </div>
+    <div id="tlFooter">
+      <div class="tl-foot-left"><span id="tlHint">双击属性名可单独查看 · Alt 拖动关键帧可拉伸</span></div>
+      <div class="tl-foot-right" id="keySummary">0 个关键帧</div>
+    </div>
+  </section>
+
+  <footer id="statusbar">
+    <div class="sb-group"><span class="sb-led"></span><span id="sbEngine">WebGL 2</span><span id="sbRender">实时预览</span><span id="sbSamples">60 fps</span></div>
+    <div class="sb-group"><span id="sbComp">主合成</span><span class="sb-div">/</span><span id="sbPath">主合成</span></div>
+    <div class="sb-group sb-center"><span id="sbSelection">未选择图层</span></div>
+    <div class="sb-group"><span class="audio-mini"><span id="audioMeterBar"></span></span><span id="sbAudio">音色音频</span><span class="sb-div">/</span><span id="sbZoom">100%</span></div>
+    <div class="sb-group"><span id="sbCam">CAM · 35mm</span><span class="sb-div">/</span><span id="sbColor">Rec.709</span></div>
+  </footer>
+</div>
+
+<div id="modalRoot"></div>
+<div id="menuRoot"></div>
+<div id="toastRoot"></div>
+<div id="tooltip" class="tooltip"></div>
+<div id="dragGhost" class="drag-ghost"></div>
+
+<script src="js/util.js"></script>
+<script src="js/geometry.js"></script>
+<script src="js/text.js"></script>
+<script src="js/mesh.js"></script>
+<script src="js/data.js"></script>
+<script src="js/eval.js"></script>
+<script src="js/nodes.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/projectpanel.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/properties.js"></script>
+<script src="js/curves.js"></script>
+<script src="js/nodesui.js"></script>
+<script src="js/canvasview.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

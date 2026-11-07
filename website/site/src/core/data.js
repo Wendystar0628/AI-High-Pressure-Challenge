@@ -32,6 +32,7 @@ let dataPromise = null;
  *   scores: { id: score },           // scores.json scores
  *   vendors: [{ vendor, logo, count }],  // by model count, then name
  *   kinds: { standard: { weight, categories:[key], tasks:[key] }, design: {...} },
+ *   costSource: scores.cost_source { name, url, fetched, usd_cny } or null   // 测试开销的换算依据；各模型的 cost 在 scores[id].cost
  *   model(id), category(key), task(key), score(id), categoryOf(taskKey)
  * }
  */
@@ -89,6 +90,7 @@ function derive(models, cats, sc) {
     scores,
     vendors,
     kinds,
+    costSource: sc?.cost_source ?? null,
     model: (id) => byModel.get(id),
     category: (key) => byCat.get(key),
     task: (key) => byTask.get(key),
@@ -100,5 +102,7 @@ function derive(models, cats, sc) {
 /** The three source files merged into one object (for "download JSON"). */
 export async function bundle() {
   const [models, tasks, scores] = await Promise.all([fetchJSON('models'), fetchJSON('tasks'), fetchJSON('scores')]);
-  return { updated: scores.updated, models, tasks, scores: scores.scores, order: scores.order };
+  const out = { updated: scores.updated, models, tasks, scores: scores.scores, order: scores.order };
+  if (scores.cost_source) out.cost_source = scores.cost_source; // 测试开销的换算依据（各模型的 cost 在 scores 里）
+  return out;
 }

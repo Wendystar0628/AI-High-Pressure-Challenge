@@ -1,0 +1,19 @@
+{
+    "task":  "Transformer前向推理的GPU加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "总分",
+                      "max":  100,
+                      "score":  0,
+                      "reason":  "提交目录缺少 solution.cu，递归核查也未发现其他解法源文件。按指定命令在工作目录编译，报 fatal error C1083：无法打开源文件 solution.cu，依据评分指南编译失败整题记0分。"
+                  }
+              ],
+    "metrics":  {
+                    "build_exit_code":  2,
+                    "G":  null,
+                    "evaluate_report":  null
+                },
+    "notes":  "评分版本：工作目录。仓库仅有初始题面提交 35eb2edc54e6341f90f88082613b982c247914ed（2026-11-06 17:26:40 +0800），没有模型提交可回退。原始目录除指定评分表外未修改；题面与配套文本已复制至 work/submission_snapshot，文件清单见 work/submission_inventory.json，提交历史见 work/git_log.txt，编译证据见 work/compile_submission.log。未提供实现，故不运行 evaluate.py；0分来自整题编译失败判定，并非实测8个输入均失败。G和评测报告不适用。编译进程已自然退出，未启动浏览器、服务器或性能评测进程。"
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网络安全攻防战 · 动态路由塔防</title>
+<style>
+:root{
+  --bg:#070b14; --panel:#0d1526ee; --panel2:#121d33ee; --line:#2a4a7a;
+  --cy:#37d8ff; --cy2:#7fe9ff; --or:#ffa63c; --rd:#ff5566; --gr:#4dff9a;
+  --pu:#b06cff; --yl:#ffe066; --tx:#cfe6ff; --dim:#7fa0c8;
+  --font:"Microsoft YaHei","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0; user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--font);}
+#app{width:100%;height:100%;position:relative;}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.hidden{display:none !important;}
+
+/* ===== 通用面板 ===== */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px #0009, inset 0 1px 0 #ffffff12;backdrop-filter:blur(10px);}
+.btn{cursor:pointer;border:1px solid var(--line);background:linear-gradient(180deg,#1b2c4d,#122038);color:var(--cy2);
+  padding:8px 14px;border-radius:8px;font-size:14px;font-family:var(--font);transition:all .15s;letter-spacing:.5px;}
+.btn:hover{background:linear-gradient(180deg,#274070,#1a2c50);border-color:var(--cy);box-shadow:0 0 12px #37d8ff44;}
+.btn:active{transform:scale(.97);}
+.btn.primary{background:linear-gradient(180deg,#1d6cb0,#144a84);border-color:#4db8ff;}
+.btn.warn{background:linear-gradient(180deg,#b05222,#7c3414);border-color:#ff9944;color:#ffd9b0;}
+.btn.danger{background:linear-gradient(180deg,#a02838,#6e1824);border-color:#ff5566;color:#ffc0c8;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.icon-btn{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:17px;border-radius:9px;}
+
+/* ===== 顶栏 HUD ===== */
+#topbar{position:absolute;top:0;left:0;right:0;height:58px;display:flex;align-items:center;gap:10px;padding:0 14px;z-index:20;
+  background:linear-gradient(180deg,#0a1226f2,#0a122600);pointer-events:none;}
+#topbar > *{pointer-events:auto;}
+.res{display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:9px;background:#0e1c34cc;border:1px solid var(--line);min-width:110px;}
+.res .ic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+.res .val{font-size:18px;font-weight:700;letter-spacing:.5px;font-variant-numeric:tabular-nums;}
+.res .lab{font-size:11px;color:var(--dim);}
+.res.comp .ic{background:#1d6cb0;color:#bfe8ff;}
+.res.intel .ic{background:#7a4ac0;color:#e8d4ff;}
+.res.hp .ic{background:#b02838;color:#ffd0d8;}
+.wave-box{padding:6px 14px;border-radius:9px;background:#0e1c34cc;border:1px solid var(--line);}
+.wave-box .lab{font-size:11px;color:var(--dim);}
+.wave-box .val{font-size:18px;font-weight:700;}
+#topbar .spacer{flex:1;}
+.speed-group{display:flex;gap:4px;}
+.speed-group .btn{padding:6px 10px;font-size:13px;min-width:38px;}
+.speed-group .btn.on{background:linear-gradient(180deg,#2a72c0,#1a4f90);border-color:var(--cy);color:#fff;}
+
+/* ===== 待部署栏 ===== */
+#deploy-bar{position:absolute;left:0;right:0;bottom:0;height:120px;z-index:20;
+  display:flex;align-items:stretch;gap:10px;padding:10px 14px;
+  background:linear-gradient(0deg,#0a1226f8 60%,#0a122600);}
+#deploy-cards{display:flex;gap:10px;flex:1;overflow-x:auto;overflow-y:hidden;}
+.tower-card{width:132px;flex:0 0 132px;cursor:grab;position:relative;padding:8px 8px 6px;border-radius:10px;
+  background:linear-gradient(180deg,#152744,#0e1b32);border:1px solid var(--line);transition:all .15s;}
+.tower-card:hover{border-color:var(--cy);transform:translateY(-3px);box-shadow:0 8px 20px #37d8ff22;}
+.tower-card.disabled{opacity:.45;cursor:not-allowed;}
+.tower-card .top{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.tower-card .ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;}
+.tower-card .nm{font-size:13px;font-weight:700;}
+.tower-card .role{font-size:10px;color:var(--dim);}
+.tower-card .cost{font-size:12px;display:flex;gap:8px;margin-top:2px;}
+.tower-card .cost b{color:var(--cy);}
+.tower-card .desc{font-size:10px;color:var(--dim);line-height:1.35;height:28px;overflow:hidden;margin-top:3px;}
+
+/* ===== 流量预报 ===== */
+#forecast{position:absolute;left:14px;top:70px;width:230px;z-index:18;max-height:42vh;overflow:auto;}
+#forecast h3{font-size:13px;color:var(--cy2);padding:10px 12px 6px;letter-spacing:1px;}
+.fc-row{display:flex;align-items:center;gap:8px;padding:6px 12px;border-top:1px solid #ffffff10;font-size:12px;}
+.fc-row .tag{width:22px;height:22px;border-radius:5px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.fc-row .info{flex:1;}
+.fc-row .info .nm{font-size:12px;font-weight:600;}
+.fc-row .info .sub{font-size:10px;color:var(--dim);}
+.fc-row .cnt{font-size:13px;font-weight:700;color:var(--yl);}
+
+/* ===== 选中面板 ===== */
+#select-panel{position:absolute;right:14px;top:70px;width:290px;z-index:18;max-height:calc(100vh - 210px);overflow:auto;}
+#select-panel .hd{padding:12px 14px 8px;}
+#select-panel .hd .nm{font-size:16px;font-weight:700;}
+#select-panel .hd .sub{font-size:11px;color:var(--dim);}
+#select-panel .body{padding:4px 14px 12px;}
+.stat-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid #ffffff08;}
+.stat-row .k{color:var(--dim);}
+.stat-row .v{font-weight:600;}
+.hp-bar{height:8px;background:#0a1424;border-radius:4px;overflow:hidden;margin:6px 0;}
+.hp-bar > i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#4dff9a);border-radius:4px;}
+.hp-bar.shield > i{background:linear-gradient(90deg,#4db8ff,#7fe9ff);}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.btn-row .btn{flex:1;min-width:82px;font-size:12px;padding:7px 6px;}
+.status-tags{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0;}
+.stag{font-size:10px;padding:2px 7px;border-radius:20px;border:1px solid;}
+.stag.dmg{color:#ffb0b8;border-color:#ff556666;background:#ff556622;}
+.stag.buff{color:#b8ffd0;border-color:#4dff9a66;background:#4dff9a22;}
+.stag.debuff{color:#ffd0a0;border-color:#ffa63c66;background:#ffa63c22;}
+
+/* ===== 道具栏 ===== */
+#item-bar{position:absolute;right:14px;bottom:134px;z-index:18;display:flex;flex-direction:column;gap:8px;}
+.item-card{width:196px;padding:9px 11px;border-radius:10px;cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#1a2440,#121c34);border:1px solid var(--line);transition:all .15s;}
+.item-card:hover{border-color:var(--or);box-shadow:0 0 16px #ffa63c33;}
+.item-card.disabled{opacity:.45;cursor:not-allowed;}
+.item-card .top{display:flex;align-items:center;gap:8px;}
+.item-card .ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;background:#3a2810;color:var(--or);}
+.item-card .nm{font-size:13px;font-weight:700;}
+.item-card .cost{font-size:10px;color:var(--dim);}
+.item-card .cd{position:absolute;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--yl);}
+
+/* ===== 全屏遮罩 / 菜单 ===== */
+.overlay{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,#0a1428cc,#050810ee);}
+.menu-box{width:min(920px,92vw);max-height:88vh;overflow:auto;padding:26px 30px;}
+.menu-box h1{font-size:28px;letter-spacing:3px;margin-bottom:4px;
+  background:linear-gradient(90deg,var(--cy),var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.menu-box .sub{color:var(--dim);font-size:13px;margin-bottom:22px;letter-spacing:1px;}
+.map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.map-card{cursor:pointer;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0e1b32;
+  transition:all .18s;position:relative;}
+.map-card:hover{transform:translateY(-4px);border-color:var(--cy);box-shadow:0 12px 30px #37d8ff22;}
+.map-card .thumb{height:130px;position:relative;overflow:hidden;}
+.map-card .info{padding:12px 14px;}
+.map-card .info .nm{font-size:16px;font-weight:700;margin-bottom:3px;}
+.map-card .info .ds{font-size:11px;color:var(--dim);line-height:1.5;}
+.map-card .info .meta{margin-top:8px;font-size:11px;color:var(--cy2);display:flex;gap:10px;}
+.menu-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.menu-actions .btn{min-width:130px;}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tabs .btn.on{background:linear-gradient(180deg,#2a72c0,#1a4f90);border-color:var(--cy);color:#fff;}
+.entry-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.entry{padding:12px 14px;border-radius:10px;background:#0e1b32;border:1px solid var(--line);cursor:pointer;transition:all .15s;}
+.entry:hover{border-color:var(--cy);}
+.entry .nm{font-weight:700;font-size:14px;margin-bottom:4px;}
+.entry .ds{font-size:11px;color:var(--dim);line-height:1.55;}
+
+/* ===== 结算 ===== */
+.report-box{width:min(720px,92vw);}
+.report-title{font-size:22px;font-weight:700;letter-spacing:2px;margin-bottom:2px;}
+.report-sub{color:var(--dim);font-size:12px;margin-bottom:18px;}
+.report-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-bottom:18px;}
+.rs{display:flex;justify-content:space-between;padding:7px 10px;background:#0e1b32;border-radius:8px;font-size:13px;}
+.rs .v{font-weight:700;color:var(--cy2);}
+
+/* ===== 字幕 / 提示 ===== */
+#subtitle{position:absolute;left:50%;bottom:150px;transform:translateX(-50%);z-index:40;
+  max-width:70vw;padding:12px 26px;font-size:19px;text-align:center;letter-spacing:1px;
+  background:#0a1428e8;border:1px solid #37d8ff55;border-radius:12px;box-shadow:0 8px 30px #000a;}
+#toast-wrap{position:absolute;left:50%;top:78px;transform:translateX(-50%);z-index:45;display:flex;flex-direction:column;gap:8px;align-items:center;}
+.toast{padding:9px 18px;border-radius:9px;font-size:13px;background:#142748ee;border:1px solid var(--line);
+  animation:toastIn .25s ease;box-shadow:0 6px 20px #0008;}
+.toast.warn{border-color:#ffa63c88;color:#ffd9b0;}
+.toast.err{border-color:#ff556688;color:#ffc0c8;}
+.toast.ok{border-color:#4dff9a66;color:#b8ffd0;}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== 说明 / 图鉴 ===== */
+.codex-body{display:grid;grid-template-columns:190px 1fr;gap:16px;min-height:380px;}
+.codex-list{display:flex;flex-direction:column;gap:6px;}
+.codex-list .it{padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;border:1px solid transparent;background:#0e1b32;}
+.codex-list .it:hover{border-color:var(--line);}
+.codex-list .it.on{border-color:var(--cy);background:#16294a;color:var(--cy2);}
+.codex-detail{padding:16px 18px;background:#0e1b32;border-radius:10px;border:1px solid var(--line);}
+.codex-detail h3{font-size:18px;margin-bottom:4px;}
+.codex-detail .role{color:var(--cy2);font-size:12px;margin-bottom:12px;}
+.codex-detail p{font-size:13px;line-height:1.75;color:#cfe0f8;margin-bottom:10px;}
+.codex-detail .stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:10px 0;}
+.codex-detail .stats div{font-size:12px;display:flex;justify-content:space-between;padding:5px 8px;background:#0a1424;border-radius:6px;}
+
+/* ===== 拖放预览 ===== */
+#drag-hint{position:absolute;pointer-events:none;z-index:35;padding:5px 10px;font-size:12px;border-radius:8px;
+  background:#142748ee;border:1px solid var(--cy);}
+
+/* ===== 暂停 ===== */
+#pause-badge{position:absolute;left:50%;top:70px;transform:translateX(-50%);z-index:25;
+  padding:6px 18px;font-size:14px;letter-spacing:2px;border-radius:20px;
+  background:#ffa63c22;border:1px solid #ffa63c88;color:#ffd9b0;}
+
+/* ===== 演示模式 ===== */
+#demo-badge{position:absolute;left:14px;bottom:140px;z-index:30;padding:8px 14px;border-radius:10px;
+  background:#b0283822;border:1px solid #ff556688;color:#ffc0c8;font-size:12px;}
+#demo-badge .btn{margin-top:6px;font-size:11px;padding:4px 10px;}
+
+/* 滚动条 */
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:#2a4a7a;border-radius:4px;}
+::-webkit-scrollbar-track{background:#0a1424;}
+
+/* 加载 */
+#loading{position:absolute;inset:0;z-index:100;background:#070b14;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;}
+#loading .title{font-size:26px;letter-spacing:6px;color:var(--cy2);}
+#loading .bar{width:280px;height:6px;background:#12203c;border-radius:3px;overflow:hidden;}
+#loading .bar > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--cy),var(--pu));transition:width .2s;}
+#loading .msg{font-size:12px;color:var(--dim);letter-spacing:2px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="gl"></canvas>
+
+  <div id="loading">
+    <div class="title">网络安全攻防战</div>
+    <div class="bar"><i id="load-fill"></i></div>
+    <div class="msg" id="load-msg">初始化守护进程…</div>
+  </div>
+
+  <div id="topbar" class="hidden">
+    <div class="res comp"><div class="ic">算</div><div><div class="lab">算力</div><div class="val" id="val-comp">0</div></div></div>
+    <div class="res intel"><div class="ic">情</div><div><div class="lab">情报</div><div class="val" id="val-intel">0</div></div></div>
+    <div class="res hp"><div class="ic">核</div><div><div class="lab">中枢完整度</div><div class="val" id="val-hp">100</div></div></div>
+    <div class="wave-box"><div class="lab">波次</div><div class="val" id="val-wave">0 / 0</div></div>
+    <div class="wave-box"><div class="lab">游戏时间</div><div class="val" id="val-time">00:00</div></div>
+    <div class="spacer"></div>
+    <button class="btn primary" id="btn-next-wave" style="margin-right:8px">下一波 ▶</button>
+    <div class="speed-group">
+      <button class="btn icon-btn" id="btn-pause" title="暂停/继续 (空格)">⏸</button>
+      <button class="btn" id="btn-sp05">0.5×</button>
+      <button class="btn on" id="btn-sp1">1×</button>
+      <button class="btn" id="btn-sp2">2×</button>
+      <button class="btn" id="btn-sp3">3×</button>
+    </div>
+    <button class="btn icon-btn" id="btn-home" title="回到默认视角">⌖</button>
+    <button class="btn icon-btn" id="btn-codex" title="图鉴">书</button>
+    <button class="btn icon-btn" id="btn-menu" title="菜单">≡</button>
+  </div>
+
+  <div id="pause-badge" class="hidden">⏸ 已暂停</div>
+
+  <div id="forecast" class="panel hidden">
+    <h3>流量预报</h3>
+    <div id="forecast-list"></div>
+  </div>
+
+  <div id="select-panel" class="panel hidden"></div>
+
+  <div id="item-bar" class="hidden"></div>
+
+  <div id="deploy-bar" class="hidden">
+    <div id="deploy-cards"></div>
+  </div>
+
+  <div id="subtitle" class="hidden"></div>
+  <div id="toast-wrap"></div>
+  <div id="drag-hint" class="hidden"></div>
+
+  <div id="demo-badge" class="hidden">
+    <div>实战演示 · <span id="demo-name"></span></div>
+    <button class="btn" id="btn-exit-demo">退出演示</button>
+  </div>
+
+  <!-- 主菜单 -->
+  <div id="menu-main" class="overlay hidden">
+    <div class="panel menu-box">
+      <h1>网络安全攻防战</h1>
+      <div class="sub">自治域「汐域」守护进程 · 动态路由塔防</div>
+      <div class="map-grid" id="map-grid"></div>
+      <div class="menu-actions">
+        <button class="btn primary" id="btn-codex-main">设备手册 / 威胁档案</button>
+        <button class="btn" id="btn-demos">实战演示</button>
+        <button class="btn" id="btn-settings">设置</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图鉴 -->
+  <div id="menu-codex" class="overlay hidden">
+    <div class="panel menu-box">
+      <h1 style="font-size:22px">图鉴数据库</h1>
+      <div class="sub">设备手册 · 威胁档案 · 道具与状态 · 地形说明</div>
+      <div class="tabs" id="codex-tabs"></div>
+      <div class="codex-body">
+        <div class="codex-list" id="codex-list"></div>
+        <div class="codex-detail" id="codex-detail"></div>
+      </div>
+      <div class="menu-actions">
+        <button class="btn" id="btn-codex-back">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设置 -->
+  <div id="menu-settings" class="overlay hidden">
+    <div class="panel menu-box" style="width:min(560px,92vw)">
+      <h1 style="font-size:22px">系统设置</h1>
+      <div class="sub">声音与显示</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:90px;font-size:13px;">主音量</div>
+          <input type="range" id="vol-master" min="0" max="100" value="70" style="flex:1">
+          <div id="vol-master-v" style="width:40px;text-align:right;font-size:12px;">70</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:90px;font-size:13px;">音乐</div>
+          <input type="range" id="vol-music" min="0" max="100" value="50" style="flex:1">
+          <div id="vol-music-v" style="width:40px;text-align:right;font-size:12px;">50</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:90px;font-size:13px;">音效</div>
+          <input type="range" id="vol-sfx" min="0" max="100" value="80" style="flex:1">
+          <div id="vol-sfx-v" style="width:40px;text-align:right;font-size:12px;">80</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:90px;font-size:13px;">静音</div>
+          <button class="btn" id="btn-mute" style="min-width:100px;">关闭</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:90px;font-size:13px;">画质</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn" data-q="0">低</button>
+            <button class="btn on" data-q="1">中</button>
+            <button class="btn" data-q="2">高</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-actions">
+        <button class="btn primary" id="btn-settings-back">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 演示选择 -->
+  <div id="menu-demos" class="overlay hidden">
+    <div class="panel menu-box" style="width:min(760px,92vw)">
+      <h1 style="font-size:22px">实战演示</h1>
+      <div class="sub">编排战况 · 实时演出 · 共约 60 秒</div>
+      <div class="entry-list" id="demo-list"></div>
+      <div class="menu-actions">
+        <button class="btn" id="btn-demos-back">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 暂停菜单 -->
+  <div id="menu-pause" class="overlay hidden">
+    <div class="panel menu-box" style="width:min(480px,92vw)">
+      <h1 style="font-size:22px">战斗暂停</h1>
+      <div class="sub">守护进程待命</div>
+      <div class="menu-actions" style="flex-direction:column;">
+        <button class="btn primary" id="btn-resume">继续战斗</button>
+        <button class="btn" id="btn-restart">重开本图</button>
+        <button class="btn" id="btn-to-codex">图鉴</button>
+        <button class="btn" id="btn-to-settings">设置</button>
+        <button class="btn danger" id="btn-quit">返回关卡选择</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结算 -->
+  <div id="menu-report" class="overlay hidden">
+    <div class="panel menu-box report-box">
+      <div class="report-title" id="rep-title">事件报告</div>
+      <div class="report-sub" id="rep-sub"></div>
+      <div class="report-stats" id="rep-stats"></div>
+      <div class="menu-actions">
+        <button class="btn primary" id="btn-rep-restart">重开本图</button>
+        <button class="btn" id="btn-rep-codex">图鉴</button>
+        <button class="btn" id="btn-rep-quit">返回关卡选择</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="lib/three.min.js"></script>
+<script src="js/util.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/pathfind.js"></script>
+<script src="js/models.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/environment.js"></script>
+<script src="js/towers.js"></script>
+<script src="js/enemies.js"></script>
+<script src="js/bosses.js"></script>
+<script src="js/items.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/waves.js"></script>
+<script src="js/game.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/hud.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/videoexport.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

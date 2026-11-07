@@ -1,0 +1,15 @@
+{
+  "name": "nested-os",
+  "version": "1.0.0",
+  "description": "操作系统嵌套 - 递归图形操作系统",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "three": "0.160.0"
+  },
+  "devDependencies": {
+    "electron": "45.2.1"
+  }
+}

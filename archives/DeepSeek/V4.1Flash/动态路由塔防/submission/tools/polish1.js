@@ -1,0 +1,10 @@
+﻿const fs=require('fs');
+let uf='js/ui.js';let u=fs.readFileSync(uf,'utf8');
+u=u.replace("      this.dom.buildHint.classList.toggle('hidden', !!(this.demoMode || this.exportMode));", "      this.dom.buildHint.classList.add('hidden');");
+uf=uf;fs.writeFileSync('js/ui.js',u);
+let h=fs.readFileSync('index.html','utf8');
+h=h.replace(".key-help { margin-top: 1.2rem; border-top: 1px solid rgba(90,220,230,.12); padding-top: .9rem; display: grid; grid-template-columns: auto 1fr;", ".key-help { margin-top: 1.2rem; border-top: 1px solid rgba(90,220,230,.12); padding-top: .9rem; display: grid; grid-template-columns: 6.4rem 1fr;");
+fs.writeFileSync('index.html',h);
+let a=fs.readFileSync('js/audio.js','utf8');
+a=a.replace("        case 'alert':", "        case 'defeat': [220, 165, 123, 82].forEach((f, i) => this.tone(f, 0.9, { type: 'sawtooth', gain: 0.09, delay: i * 0.18, filter: 'lowpass', freq: 500 })); this.noise(1.2, { freq: 300, freqEnd: 50, gain: 0.16, filter: 'lowpass' }); break;\n        case 'alert':");
+fs.writeFileSync('js/audio.js',a);

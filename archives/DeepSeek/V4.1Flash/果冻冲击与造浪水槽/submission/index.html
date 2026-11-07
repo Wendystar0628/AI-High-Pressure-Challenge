@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>软物质实验室 · 果冻冲击与造浪水槽</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><i></i><i></i><i></i><i></i></div>
+    <div class="brand-text">
+      <strong>SOFT MATTER LAB</strong>
+      <span>软物质 · 交互实验室</span>
+    </div>
+  </div>
+
+  <nav class="scene-tabs" aria-label="场景选择">
+    <button class="scene-tab active" data-scene="jelly">
+      <em>01</em>
+      <span class="tab-copy"><b>果冻冲击</b><small>HEAVY BALL IMPACT</small></span>
+    </button>
+    <button class="scene-tab" data-scene="tank">
+      <em>02</em>
+      <span class="tab-copy"><b>造浪水槽</b><small>DENSITY WAVE TANK</small></span>
+    </button>
+  </nav>
+
+  <div class="top-actions">
+    <div class="top-meta"><span class="live-dot"></span>WEBGL · 实时模拟</div>
+    <button id="soundBtn" class="chip-btn off" title="开启或关闭声音">
+      <span class="speaker" aria-hidden="true">
+        <i class="sp-cone"></i><i class="sp-arc a1"></i><i class="sp-arc a2"></i>
+      </span>
+      <span>声音</span><b id="soundState">关</b>
+    </button>
+    <button id="panelBtn" class="chip-btn" title="展开或收起参数面板">
+      <span class="sliders-ico" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>参数</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hud" id="hud">
+    <div class="hud-head">
+      <div class="eyebrow"><span class="dot"></span><span id="sceneEyebrow">SCENE 01 / SOFT BODY</span></div>
+      <h1 id="sceneTitle">重球冲击果冻台</h1>
+      <p id="sceneSub">一颗重球落下，局部的凹陷如何扩散成整个果冻的呼吸。</p>
+    </div>
+
+    <div class="mode-switch" id="jellyModes">
+      <button data-mode="center" class="active">正中撞击</button>
+      <button data-mode="offset">偏心撞击</button>
+      <button data-mode="multi">多球连击</button>
+    </div>
+
+    <div class="status-grid">
+      <div class="stat"><label>实验状态</label><b id="phaseText">准备</b></div>
+      <div class="stat"><label>仿真时间</label><b id="timeText">0.00<small>s</small></b></div>
+      <div class="stat"><label>当前模式</label><b id="modeText">单球 · 正中</b></div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-bar"><i id="timelineFill"></i></div>
+      <div class="timeline-labels"><span>准备</span><span>冲击</span><span>余波</span><span>稳定</span></div>
+    </div>
+
+    <div class="tank-only" id="tankOnly">
+      <div class="wave-panel">
+        <div class="wave-dial">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="18" class="dial-bg"></circle>
+            <circle cx="22" cy="22" r="18" class="dial-fg" id="waveDial"></circle>
+          </svg>
+          <b id="waveCount">--</b>
+        </div>
+        <div class="wave-copy">
+          <label>造浪时序</label>
+          <p id="waveStatus">等待最后一颗小球入水</p>
+          <span id="waveSmall">t_last 未触发 · 启动 +1.0s · 持续 5.0s</span>
+        </div>
+      </div>
+      <div class="density-legend" id="densityLegend"></div>
+    </div>
+
+    <div class="hud-actions">
+      <button id="primaryBtn" class="btn btn-primary"><span class="btn-glow"></span><b>释放重球</b></button>
+      <button id="pauseBtn" class="btn btn-ghost" title="暂停/继续（空格）">暂停</button>
+      <button id="resetBtn" class="btn btn-ghost" title="重置（R）">重置</button>
+      <div class="speed-switch" id="speedSwitch">
+        <button data-speed="1" class="active">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button>
+      </div>
+    </div>
+    <div class="tank-manual" id="tankManual">
+      <button id="waveStartBtn" class="mini-btn">手动开始造浪</button>
+      <button id="waveStopBtn" class="mini-btn">停止造浪</button>
+      <button id="releaseBtn" class="mini-btn">重新释放小球</button>
+    </div>
+  </section>
+
+  <aside class="panel" id="panel">
+    <div class="panel-head">
+      <div>
+        <span class="eyebrow-mini">PARAMETERS</span>
+        <h2>实验参数</h2>
+      </div>
+      <button id="panelClose" class="panel-close" title="收起">×</button>
+    </div>
+    <div id="jellyParams" class="param-groups"></div>
+    <div id="tankParams" class="param-groups hidden"></div>
+    <div class="panel-foot">
+      <span class="foot-dot"></span>
+      <p>参数改变后自动从初始状态重建实验。结构参数在重置时生效。</p>
+    </div>
+  </aside>
+</main>
+
+<div class="bottom-hint">
+  <span>拖动旋转视角</span><i></i><span>滚轮缩放</span><i></i><span>空格暂停</span><i></i><span>R 重置</span>
+</div>
+
+<div class="audio-hint" id="audioHint"><span class="pulse"></span>点击画面任意处，开启声音</div>
+
+<div class="loading" id="loading">
+  <div class="loading-inner">
+    <div class="loading-mark"><i></i><i></i><i></i><i></i></div>
+    <div class="loading-title">SOFT MATTER LAB</div>
+    <div class="loading-sub">正在准备软体与流体求解器</div>
+    <div class="loading-bar"><i></i></div>
+  </div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="js/util.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/jelly.js"></script>
+<script src="js/tank.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

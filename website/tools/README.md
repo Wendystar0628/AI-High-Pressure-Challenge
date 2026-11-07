@@ -51,6 +51,8 @@ python website/tools/publish.py --no-upload  只导出和构建，在本机检�
   - `models.json`：`key`、`aliases`（登记表里出片用的 `released`、`tier`、`series`、`portrait` 不导出到网站）；
   - `tasks.json`：类别加 `short`、`short_en`、`icon`、`kind`、`brief`、`brief_en`；题目加 `path`、`no`、`category`、`statement`（题面在仓库里的路径）；
   - `scores.json`：顶层 `order`（总榜顺序，评测中的排在最后）；每个模型加 `status`、`done`（已出分题数）、`rank`、`category_ranks`、`task_ranks`（同分同名次）。
+  - 测试开销：`scores.json` 顶层 `cost_source` 为 `{name, url, fetched, usd_cny}`；`scores.<模型 id>.cost` 为 `{cny, basis, plan, tokens, fitted, method, api_usd}`。cny 是一位小数的人民币金额，缺数据为 null；basis 为 subscription / api，无映射为 null；plan 含 name、price、currency、period（积分档另有 credits；API 只有 name），无映射为 null；tokens 是含拟合的 12 题输入+输出总量（整数，全无记录为 null）；fitted 列出发生 Token、积分或 API 等值拟合的中文题名。method 为 quota / api_price / credits / billed 或 null，api_usd 仅在 api_price 时为一位小数的 API 等值美元，其余 null。由 `orchestrator/costs.py` 只读计算，换算、当前最后一次作答及续做的选择、拟合和用量来源以 `orchestrator/docs/测试开销.md` 为准。
+- 自动发布前由 site_publish.py 更新 orchestrator/usage.json；单独运行 export_data.py 只读台账和未采集运行，不写台账。
 - `updated` 是用到的评分结果文件（`result.json`）里最晚的修改日期。
 - `search.json`：`{ items: [{ type, id, name, en, short, terms, py, pyi, href, … }] }`，`type` 为 model、task、category、section；`py`、`pyi` 是名称、短名和中文别名的拼音全拼和首字母（数组）。
 - `stems/<类别>/<题目>.json`：题目页的题干，每次导出整个文件夹重写。摘录规则只写在 `export_data.py` 的 `STEM_RULE` 注释和 `NOT_STEM` 词表（按标题排除作答、规定、评分、环境、录制接口等章节，题面旁材料文件夹里的 `第NN题.md` 接在后面），`website/docs/tasks.md`「题干的摘录规则」照录并写明理由。改题面后重新发布，题干自动跟上。

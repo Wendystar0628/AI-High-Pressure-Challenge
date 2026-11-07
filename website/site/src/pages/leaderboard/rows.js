@@ -280,7 +280,8 @@ export function createRows({ data, state, computed, list }) {
       cg.dataset.kind = col.kind;
       tx.setAttribute('x', col.x + col.w / 2);
       tx.setAttribute('y', y + hh / 2);
-      tx.textContent = v == null ? '' : fmtScore(v);
+      // a cell too narrow for its number (phone width, task columns) keeps only its colour step
+      tx.textContent = v == null || col.w < 24 ? '' : fmtScore(v);
       star.setAttribute('d', top ? starPath(col.x + col.w - 7, y + 7, 5.5, 0.36) : '');
     });
     return { cols, rebuilt };

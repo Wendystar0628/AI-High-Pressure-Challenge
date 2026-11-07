@@ -5,13 +5,14 @@
 //   downloadCSV({ columns, rows, preface, filename })
 //   downloadJSON(obj, filename)
 //   downloadBundle()                          // the merged JSON
-//   scoreTable(data, entries, { weights })    // the standard table (rank, model, vendor, total, kinds, 8 categories, 12 tasks)
+//   scoreTable(data, entries, { weights })    // the standard table (rank, model, vendor, total, kinds, 8 categories, 12 tasks, test cost)
 import { bundle } from '../core/data.js';
 import { t, pick } from '../core/i18n.js';
 import { modelLabel } from '../core/names.js';
 import { fmtPct, round1 } from '../core/format.js';
 import { customTotal, modelStatus } from '../core/rank.js';
 import { h } from '../core/dom.js';
+import { hasCosts, costOf, costTag } from './cost.js';
 
 /** ai-octathlon-scores-2026-11-04.csv */
 export const dataFilename = (updated, ext) => `ai-octathlon-scores-${updated || 'data'}.${ext}`;
@@ -68,11 +69,13 @@ export async function downloadBundle(filename) {
 /**
  * The standard score table for a list of entries (from rankBy, already sorted
  * and filtered the way the page shows them):
- * 名次, 模型, 厂商, 总分 (+ 自定义总分), 标准评判题, 主动设计题, 8 categories, 12 tasks.
+ * 名次, 模型, 厂商, 总分 (+ 自定义总分), 标准评判题, 主动设计题, 8 categories, 12 tasks,
+ * and, when the data carries costs, 测试开销（元）, 开销依据, Token 合计.
  * With weights { reason: 15, … } adds the custom total column and a preface
  * line naming the weights.
  */
 export function scoreTable(data, entries, { weights } = {}) {
+  const withCost = hasCosts(data);
   const columns = [
     { key: 'rank', label: t('common.csv.rank') },
     { key: 'model', label: t('common.csv.model') },
@@ -83,6 +86,13 @@ export function scoreTable(data, entries, { weights } = {}) {
     { key: 'design', label: t('common.csv.design') },
     ...data.categories.map((c) => ({ key: `c:${c.key}`, label: pick(c, 'name') })),
     ...data.tasks.map((k) => ({ key: `t:${k.key}`, label: `${String(k.no).padStart(2, '0')} ${pick(k, 'name')}` })),
+    ...(withCost
+      ? [
+          { key: 'cost', label: t('common.cost.csv.cny') },
+          { key: 'costBasis', label: t('common.cost.csv.basis') },
+          { key: 'tokens', label: t('common.cost.csv.tokens') },
+        ]
+      : []),
   ];
   const rows = entries.map((e) => {
     const s = data.score(e.id);
@@ -97,6 +107,13 @@ export function scoreTable(data, entries, { weights } = {}) {
     if (weights) r.custom = customTotal(data, e.id, weights);
     for (const c of data.categories) r[`c:${c.key}`] = s.categories?.[c.key];
     for (const k of data.tasks) r[`t:${k.key}`] = s.tasks?.[k.key];
+    if (withCost) {
+      // amount as in the data (null: empty cell), its tag (按订阅折算 / API 实付 / 数据暂缺), the 12-task token total
+      const cost = costOf(data, e.id);
+      r.cost = cost?.cny;
+      r.costBasis = costTag(cost);
+      r.tokens = cost?.tokens;
+    }
     return r;
   });
   const preface = weights ? `${t('common.csv.weights')}: ${data.categories.map((c) => `${pick(c, 'name')} ${fmtPct(weights[c.key] ?? c.weight)}`).join(' / ')}` : null;

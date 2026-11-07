@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B200 — 一颗 GPU 的解剖 / AN ATLAS OF A GPU</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ 3D canvas ============ -->
+<canvas id="gl"></canvas>
+
+<!-- ============ SVG vector overlay ============ -->
+<svg id="overlay" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+
+<!-- ============ HTML UI layer ============ -->
+<div id="ui">
+
+  <!-- top HUD -->
+  <header id="hud">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">B<span>200</span></div>
+      <div class="brand-txt">
+        <div class="brand-t1">一颗 GPU 的解剖</div>
+        <div class="brand-t2">AN ATLAS OF A GPU &nbsp;·&nbsp; CONCEPT DESIGN</div>
+      </div>
+    </div>
+    <div class="hud-right">
+      <div class="precision-chip" id="precisionChip" title="当前全页精度（点击循环切换）">
+        <span class="pc-label">GLOBAL PRECISION</span>
+        <span class="pc-value" id="pcValue">FP4</span>
+        <span class="pc-sub" id="pcSub">E2M1 · NVFP4</span>
+      </div>
+      <div class="concept-note">本页为概念设计作品，非 NVIDIA 官方页面<br><span>品牌名称仅以文字呈现 · 数据口径见第 07 章</span></div>
+    </div>
+  </header>
+
+  <!-- left chapter rail -->
+  <nav id="rail" aria-label="章节导航">
+    <div class="rail-cap">CHAPTERS<span>／全页</span></div>
+    <ol id="railList"></ol>
+    <div class="rail-keys">
+      <span><kbd>1</kbd>–<kbd>8</kbd> 跳章</span>
+      <span><kbd>↑</kbd><kbd>↓</kbd> 滚动</span>
+      <span><kbd>←</kbd><kbd>→</kbd> 横向段</span>
+      <span><kbd>P</kbd> 精度</span>
+    </div>
+  </nav>
+
+  <!-- chapter panels -->
+  <main id="panels">
+
+    <!-- 01 -->
+    <section class="panel" data-ch="0" id="panel-0">
+      <div class="p-index">01 <span class="p-rule"></span> THE PACKAGE</div>
+      <h1 class="p-title">完整封装</h1>
+      <div class="p-kicker">两颗晶粒，组成一颗 GPU</div>
+      <div class="bigstat" id="c1Transistors">
+        <span class="bs-num" id="c1Num">208,000,000,000</span>
+        <span class="bs-unit">个晶体管 · TRANSISTORS</span>
+      </div>
+      <div class="p-body">
+        <p>以 4NP 制程制造的两颗 reticle-limit 晶粒，通过 <b>10 TB/s</b> 片间互连整合为单一统一 GPU。周围八组 HBM3e 堆栈与中介层、基板共同承载数据与供电。</p>
+      </div>
+      <div class="p-chips">
+        <div class="mini-chip"><span>2</span><label>计算晶粒</label></div>
+        <div class="mini-chip"><span>8</span><label>HBM3e 堆栈</label></div>
+        <div class="mini-chip"><span>10 TB/s</span><label>片间互连</label></div>
+        <div class="mini-chip"><span>1.8 TB/s</span><label>NVLink 5 / GPU</label></div>
+      </div>
+      <div class="p-hint">滚动开始拆解 &nbsp;↓&nbsp; 拖动可旋转封装</div>
+    </section>
+
+    <!-- 02 -->
+    <section class="panel" data-ch="1" id="panel-1">
+      <div class="p-index">02 <span class="p-rule"></span> EXPLODED VIEW</div>
+      <h1 class="p-title">封装拆解</h1>
+      <div class="p-kicker">逐层展开 · 选择部件 · 移动剖切</div>
+
+      <div class="ctl-block">
+        <div class="ctl-head"><span>部件 PARTS</span><span class="ctl-hint">点击选中 / 再点进入细看</span></div>
+        <div class="parts-list" id="partsList"></div>
+      </div>
+
+      <div class="ctl-block sliders">
+        <label class="slider-row"><span>展开 EXPLODE</span><input type="range" id="sExplode" min="0" max="100" value="0"><output id="oExplode">0%</output></label>
+        <label class="slider-row"><span>晶粒接缝 SEAM</span><input type="range" id="sSeam" min="0" max="100" value="0"><output id="oSeam">0%</output></label>
+        <label class="slider-row"><span>剖切位置 SECTION</span><input type="range" id="sSection" min="0" max="100" value="50"><output id="oSection">50%</output></label>
+      </div>
+
+      <div class="ctl-block detail-card" id="detailCard">
+        <div class="dc-head"><span id="dcName">整体 ASSEMBLY</span><button id="dcBack" type="button">← 返回整体</button></div>
+        <div class="dc-body" id="dcBody">拖动旋转 · 滚轮推近拉远 · 点击部件深入一级</div>
+        <div class="dc-meta" id="dcMeta"></div>
+      </div>
+
+      <div class="p-hint" id="c2Hint">展开中途可停住 · 剖切时右侧二维剖面同步更新</div>
+    </section>
+
+    <!-- 03 -->
+    <section class="panel" data-ch="2" id="panel-2">
+      <div class="p-index">03 <span class="p-rule"></span> TWO DIES · ONE GPU</div>
+      <h1 class="p-title">双晶粒通信</h1>
+      <div class="p-kicker">跨缝传输 · 区域激活 · 10 TB/s</div>
+      <div class="bigstat small">
+        <span class="bs-num">10<span class="bs-suffix"> TB/s</span></span>
+        <span class="bs-unit">片间互连 NV-HBI · 双向口径</span>
+      </div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>激活区域 ACTIVATION MAP</span><span class="ctl-hint">选择二维缩略图区域</span></div>
+        <div class="region-list" id="regionList"></div>
+      </div>
+      <div class="ctl-block">
+        <div class="link-legend">
+          <div><i class="sw sw-inner"></i>晶粒内部连接</div>
+          <div><i class="sw sw-d2d"></i>两晶粒互连 (NV-HBI)</div>
+          <div><i class="sw sw-nvl"></i>GPU 间 NVLink（第 06 章）</div>
+        </div>
+        <button class="btn" id="btnReplay3" type="button">↻ 重放跨缝通信</button>
+      </div>
+      <div class="p-hint">接缝可拉开：跨缝脉冲在断开处停止，恢复连接后重新传输</div>
+    </section>
+
+    <!-- 04 -->
+    <section class="panel" data-ch="3" id="panel-3">
+      <div class="p-index">04 <span class="p-rule"></span> MEMORY / BANDWIDTH</div>
+      <h1 class="p-title">HBM3e 与带宽</h1>
+      <div class="p-kicker">横向段 · 八路数据流 · 局部观察窗</div>
+      <div class="h-badge" id="hBadge">HORIZONTAL SEGMENT <span>← 横向观看 →</span></div>
+      <div class="ctl-block metrics-2">
+        <div class="metric"><span class="m-cap">显存容量 CAPACITY</span><span class="m-val" id="c4Cap">192 GB</span><span class="m-sub">8 × HBM3e · 数据可放多少</span></div>
+        <div class="metric"><span class="m-cap">显存带宽 BANDWIDTH</span><span class="m-val" id="c4Bw">8 TB/s</span><span class="m-sub">每秒可搬多少 · 与容量含义不同</span></div>
+      </div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>数据批次 / 当前精度</span><span class="ctl-hint" id="c4Prec">FP4 · 4 bit</span></div>
+        <div class="readout" id="c4Readout"></div>
+      </div>
+      <div class="ctl-block">
+        <button class="btn" id="btnReplay4" type="button">↻ 重放一批数据的完整路径</button>
+        <div class="ctl-hint" style="margin-top:8px">移动观察窗（在画面中拖动）查看层结构与流动数据</div>
+      </div>
+      <div class="p-hint">← → 键沿横向段推进 · 进入/离开纵向段保持连续方向</div>
+    </section>
+
+    <!-- 05 -->
+    <section class="panel" data-ch="4" id="panel-4">
+      <div class="p-index">05 <span class="p-rule"></span> PRECISION LAB</div>
+      <h1 class="p-title">数值精度实验</h1>
+      <div class="p-kicker">位宽 → 量化与误差 → 矩阵乘加 → 张量核心 → GPU</div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>全页精度 GLOBAL FORMAT</span><span class="ctl-hint">点击切换 · 全页联动</span></div>
+        <div class="fmt-row" id="fmtRow"></div>
+        <div class="fmt-note" id="fmtNote"></div>
+      </div>
+      <div class="ctl-block lab" id="labBlock">
+        <div class="ctl-head"><span>矩阵乘加实验 MATRIX LAB</span><span class="ctl-hint" id="labFmt">FP4 / NVFP4</span></div>
+        <div class="lab-grid" id="labGrid"></div>
+        <div class="lab-ctl">
+          <button class="btn small" id="btnSparse" type="button">稠密 DENSE</button>
+          <button class="btn small" id="btnRandom" type="button">↻ 随机输入</button>
+          <button class="btn small" id="btnRun" type="button">▶ 持续运行 <span id="runState">OFF</span></button>
+        </div>
+        <div class="lab-readout" id="labReadout"></div>
+      </div>
+      <div class="p-hint" id="c5Hint">滚动中的格式讲解不会覆盖你选定的全页精度</div>
+    </section>
+
+    <!-- 06 -->
+    <section class="panel" data-ch="5" id="panel-5">
+      <div class="p-index">06 <span class="p-rule"></span> SCALE OUT</div>
+      <h1 class="p-title">NVLink 与多卡系统</h1>
+      <div class="p-kicker">HGX B200 → DGX B200 → GB200 → NVL72</div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>产品族 PRODUCTS</span><span class="ctl-hint">选择切换三维视图</span></div>
+        <div class="prod-row" id="prodRow"></div>
+      </div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>八 GPU 分片与归约 ALL-REDUCE</span><span class="ctl-hint" id="c6Status">默认任务</span></div>
+        <div class="shard-grid" id="shardGrid"></div>
+        <div class="lab-ctl">
+          <button class="btn small" id="btnReplay6" type="button">↻ 重放默认任务</button>
+          <label class="slider-row compact"><span>负载规模</span><input type="range" id="sWorkload" min="0" max="100" value="22"><output id="oWorkload">—</output></label>
+        </div>
+        <div class="readout" id="c6Readout"></div>
+      </div>
+      <div class="p-hint">负载规模随当前精度换算显存占用与所需 GPU / 平台数</div>
+    </section>
+
+    <!-- 07 -->
+    <section class="panel" data-ch="6" id="panel-6">
+      <div class="p-index">07 <span class="p-rule"></span> SPECIFICATIONS</div>
+      <h1 class="p-title">规格对照</h1>
+      <div class="p-kicker">五种产品 · 单颗 GPU 与整套系统总量分开</div>
+      <div class="spec-wrap" id="specWrap"></div>
+      <div class="spec-note" id="specNote"></div>
+      <div class="p-hint">选择指标时，产品图形中的对应部位同步反馈</div>
+    </section>
+
+    <!-- 08 -->
+    <section class="panel" data-ch="7" id="panel-7">
+      <div class="p-index">08 <span class="p-rule"></span> ONE GPU, AGAIN</div>
+      <h1 class="p-title">回到整颗 GPU</h1>
+      <div class="p-kicker">七组能力标注 · 三类负载 · 与开场呼应</div>
+      <div class="ctl-block">
+        <div class="ctl-head"><span>负载 WORKLOADS</span><span class="ctl-hint">选择查看不同动态</span></div>
+        <div class="work-row" id="workRow"></div>
+      </div>
+      <div class="ctl-block readout-big" id="c8Readout"></div>
+      <div class="p-body p-body-wide">
+        <p>从焊球、基板、中介层，到两颗晶粒、八组 HBM3e，再到板级、整机与机柜——所有局部重新汇入同一颗封装。你选定的精度与输入，仍在这一整颗 GPU 上生效。</p>
+      </div>
+      <div class="p-hint end-hint">B200 &nbsp;·&nbsp; AN ATLAS OF A GPU &nbsp;·&nbsp; CONCEPT DESIGN — 可停留观看</div>
+    </section>
+
+  </main>
+
+  <!-- bottom progress -->
+  <footer id="foot">
+    <div class="foot-left">
+      <span class="fl-ch" id="footCh">01</span>
+      <span class="fl-name" id="footName">完整封装</span>
+      <span class="fl-sep">/</span>
+      <span class="fl-prog" id="footProg">0.0%</span>
+    </div>
+    <div class="progress-track" id="progressTrack" title="点击或拖动跳转">
+      <div class="pt-segs" id="ptSegs"></div>
+      <div class="pt-fill" id="ptFill"></div>
+      <div class="pt-head" id="ptHead"></div>
+    </div>
+    <div class="foot-right" id="footHint">SCROLL / 滚动浏览</div>
+  </footer>
+
+  <!-- floating tooltip -->
+  <div id="tooltip"></div>
+  <!-- lens label -->
+  <div id="lensTag">OBSERVATION WINDOW<br><span>×4 局部放大</span></div>
+</div>
+
+<!-- native document scroll height -->
+<div id="spacer" aria-hidden="true"></div>
+
+<script src="lib/three.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/world.js"></script>
+<script src="js/svg.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/director.js"></script>
+<script>window.addEventListener('load', function () { APP.boot(); });</script>
+</body>
+</html>

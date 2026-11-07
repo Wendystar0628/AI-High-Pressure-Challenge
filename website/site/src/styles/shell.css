@@ -519,6 +519,48 @@ kbd.key {
   color: var(--st-ink-2);
   font-size: 0.75rem;
 }
+/* test cost: one line under the figures (amount and tag), plan and token total, then the notes */
+.site-panel-cost {
+  margin: 0.9rem var(--st-pad) 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--st-rule);
+}
+.site-panel-cost-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+.site-panel-cost-head > h3 {
+  margin: 0;
+}
+.site-panel-cost-v {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0;
+}
+.site-panel-cost-v b {
+  font-size: 1.45rem;
+  font-weight: 800;
+  font-stretch: var(--st-wide);
+  font-variant-numeric: tabular-nums;
+}
+.site-panel-cost-v span {
+  color: var(--st-ink-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.site-panel-cost-facts {
+  margin-top: 0.35rem;
+}
+.site-panel-cost-note {
+  margin: 0.25rem 0 0;
+  color: var(--st-ink-2);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
 .site-panel-sec > h3 {
   margin: 0 0 0.4rem;
 }

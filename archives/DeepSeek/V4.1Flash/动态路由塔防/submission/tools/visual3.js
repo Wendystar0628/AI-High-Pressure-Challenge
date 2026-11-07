@@ -1,0 +1,8 @@
+﻿const fs=require('fs');
+let p='js/engine.js'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("        const angle = Math.atan2(e.dir[0], e.dir[1]);\n        g.rotation.y = angle;", "        const angle = Math.atan2(e.dir[0], e.dir[1]);\n        g.rotation.y = angle;\n        g.scale.setScalar(1.3);");
+s=s.replace("        const p = this.cellPos(x.cell, 0.25); g.position.copy(p);\n        const col = new THREE.Color(x.color);", "        const p = this.cellPos(x.cell, 0.25); g.position.copy(p);\n        g.scale.setScalar(1.35);\n        const col = new THREE.Color(x.color);");
+s=s.replace("const label = M.labelSprite(s.name, { fontSize: 30, color: '#a9f7e8', scale: 0.52, bg: 'rgba(3,16,18,.62)' });", "const label = M.labelSprite(s.name, { fontSize: 34, color: '#b8fff0', scale: 0.62, bg: 'rgba(3,16,18,.72)' });");
+// animations
+s=s.replace("      if (this.farGroup) this.farGroup.rotation.y = t * 0.002;", "      if (this.farGroup) this.farGroup.rotation.y = t * 0.002;\n      if (this.scanRing) { this.scanRing.rotation.z = t * 0.22; const ss = 1 + Math.sin(t * 0.6) * 0.06; this.scanRing.scale.set(ss, ss, 1); this.scanRing.material.opacity = 0.06 + (Math.sin(t * 0.9) + 1) * 0.035; }\n      if (this.citySpires) this.citySpires.forEach((sp, i) => { sp.group.userData.ring.rotation.z = t * (0.18 + i * 0.02); sp.group.userData.beacon.rotation.y = t * 0.6; sp.group.userData.beacon.position.y += Math.sin(t * 1.4 + i) * 0.002; });\n      if (this.floatCubes) this.floatCubes.forEach((c, i) => { c.rotation.x += dt * 0.3 * c.userData.spin; c.rotation.y += dt * 0.45 * c.userData.spin; c.position.y = c.userData.baseY + Math.sin(t * 0.5 + i) * 0.6; });");
+fs.writeFileSync(p,s);

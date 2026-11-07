@@ -1,7 +1,7 @@
 // Model rows (leaderboard.md「共用部件 / 模型行」), used by the leaderboard,
 // the category boards and the task pages.
 //
-// Columns: tick │ rank │ vendor icon │ full name │ plot │ score.
+// Columns: tick │ rank │ vendor icon │ full name │ plot │ score (│ test cost, with cost: true).
 // The name is a link to the model scores page /models/<id>/ (with 名字接力);
 // a click anywhere else in the row opens the side panel (data-model-panel on
 // the row; for the keyboard a visually hidden button after the name does it).
@@ -26,6 +26,11 @@
 //
 // 名次格的定制钩子 rank(cell, entry, ctx)：替代默认的「01」/「评测中」，自己往格里写；
 // 它在本行的读屏句（ctx.sr）写好之后跑，需要时可以改写那一句。
+//
+// 测试开销列（cost: true，排行总榜用）：分数后面多两格，同一行、竖直居中——.mrow-cost 金额 ¥23.4 后跟依据小记号
+// （○ 按订阅折算、◆ API 实付，形状区分；金额为 null 写「数据暂缺」），.mrow-tok 12 题合计 Token（有拟合的题时后跟 *）；
+// 记号的意思由页面写一次图例（ui/cost.js costLegend）；
+// 取 scores.<id>.cost（ui/cost.js），读屏句末尾接一句开销。表头 createRowHead({ cost: '测试开销', tokens: 'Token' }) 同列。
 import { h } from '../core/dom.js';
 import { t } from '../core/i18n.js';
 import { modelName, vendorIcon, modelLabel } from '../core/names.js';
@@ -37,6 +42,7 @@ import { dur, flip, stagger, isInView } from '../motion.js';
 import { createBar, setBar } from '../charts/bar.js';
 import { GRID } from '../charts/axis.js';
 import { rowsToSVG } from '../charts/export.js';
+import { costOf, fillCost, fillTokens, costSr } from './cost.js';
 
 /**
  * Default plot: a bar from 0 to the value on the fixed 0–100 scale, faint grid
@@ -72,18 +78,20 @@ export function barPlot(cell, entry, ctx) {
  * one sentence); with hidden: false its labels stay readable and only the
  * decorative cells (tick and icon placeholders, a plot without links) are hidden.
  */
-export function createRowHead({ rank = t('common.csv.rank'), name = t('common.csv.model'), score = t('common.score.total'), plot = null, checkable = true, hidden = true } = {}) {
+export function createRowHead({ rank = t('common.csv.rank'), name = t('common.csv.model'), score = t('common.score.total'), plot = null, cost = null, tokens = null, checkable = true, hidden = true } = {}) {
   const deco = { 'aria-hidden': 'true' };
   const plotLive = plot instanceof Element && plot.querySelector('a, button, input, select');
   return h(
     'div.mrow.mrow-head',
-    { class: checkable ? null : 'no-check', 'aria-hidden': hidden ? 'true' : null },
+    { class: [checkable ? null : 'no-check', cost != null ? 'has-cost' : null].filter(Boolean).join(' ') || null, 'aria-hidden': hidden ? 'true' : null },
     h('span.mrow-check', deco),
     h('span.mrow-rank', rank),
     h('span.mrow-icon', deco),
     h('span.mrow-name', name),
     h('span.mrow-plot', plotLive ? null : deco, plot),
     h('span.mrow-score', score),
+    cost != null ? h('span.mrow-cost', cost) : null,
+    cost != null ? h('span.mrow-tok', tokens ?? '') : null,
   );
 }
 
@@ -97,12 +105,12 @@ function noteOf(entry, opts) {
 
 /**
  * One row element. entry: { id, model, value, rank, ranked, best?, note? } (from rankBy).
- * opts: { data, kind: 'series'|'standard'|'design', plot = barPlot, checkable = true,
+ * opts: { data, kind: 'series'|'standard'|'design', plot = barPlot, checkable = true, cost = false,
  *         best, note, grid, pass, scoreText(entry), rankText(entry), rank(cell, entry, ctx) }
  */
 export function createModelRow(entry, opts) {
   const { checkable = true } = opts;
-  const li = h('li.mrow', { dataset: { id: entry.id, modelPanel: entry.id }, class: [`is-${opts.kind ?? 'series'}`, checkable ? null : 'no-check'].filter(Boolean).join(' ') });
+  const li = h('li.mrow', { dataset: { id: entry.id, modelPanel: entry.id }, class: [`is-${opts.kind ?? 'series'}`, checkable ? null : 'no-check', opts.cost ? 'has-cost' : null].filter(Boolean).join(' ') });
   const check = checkable
     ? h('input', {
         type: 'checkbox',
@@ -113,7 +121,8 @@ export function createModelRow(entry, opts) {
   check?.addEventListener('change', () => {
     if (!toggleCompare(entry.id, check.checked)) check.checked = false;
   });
-  li.append(
+  // 原生 append 会把 null 写成文字「null」，没有开销列的页面（题目类别榜）要先滤掉空格位
+  li.append(...[
     h('label.mrow-check', check),
     h('span.mrow-rank.num', { 'aria-hidden': 'true' }),
     h('span.mrow-icon', vendorIcon(entry.model)),
@@ -124,8 +133,10 @@ export function createModelRow(entry, opts) {
     ),
     h('span.mrow-plot', { 'aria-hidden': 'true' }),
     h('span.mrow-score.num', { 'aria-hidden': 'true' }),
+    opts.cost ? h('span.mrow-cost', { 'aria-hidden': 'true' }) : null,
+    opts.cost ? h('span.mrow-tok', { 'aria-hidden': 'true' }) : null,
     h('span.sr-only.mrow-sr'),
-  );
+  ].filter(Boolean));
   fillRow(li, entry, opts, { first: true, animate: false });
   return li;
 }
@@ -159,6 +170,15 @@ function fillRow(li, entry, opts, { first, animate, delay = 0 }) {
   else rankCell.replaceChildren(h('span.st-state.is-draft', t('common.score.pending')));
   const plot = opts.plot === undefined ? barPlot : opts.plot;
   if (plot) plot(li.querySelector('.mrow-plot'), entry, ctx);
+  // test cost: the cell, and one more clause for screen readers (after the rank hook, which may rewrite the sentence)
+  const costCell = li.querySelector(':scope > .mrow-cost');
+  if (costCell && opts.data) {
+    const cost = costOf(opts.data, entry.id);
+    fillCost(costCell, cost);
+    const tokCell = li.querySelector(':scope > .mrow-tok');
+    if (tokCell) fillTokens(tokCell, cost);
+    sr.textContent = t('common.cost.srAppend', { text: sr.textContent, cost: costSr(cost) });
+  }
 }
 
 function syncTicks(rows) {

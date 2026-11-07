@@ -1,0 +1,24 @@
+﻿const fs=require('fs');
+let p='js/demo.js'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("        api.tower('sandbox', 13, 9, { level: 1 });\n        api.tower('firewall', 5, 11, { level: 2, hpRatio: 0.6 });", "        api.tower('sandbox', 13, 9, { level: 1 });\n        api.tower('interceptor', 10, 12, { level: 2, branch: 'suppress', facing: 0.9, hpRatio: 0.9 });\n        api.tower('firewall', 10, 11, { level: 2, hpRatio: 0.7 });\n        api.tower('firewall', 5, 11, { level: 2, hpRatio: 0.6 });");
+s=s.replace("        api.enemy('worm', 8, 2, { hpRatio: 1 });\n        api.enemy('worm', 8, 3, { hpRatio: 0.8 });\n        api.enemy('ransomware', 7, 11, { hpRatio: 0.8 });\n        api.enemy('trojan', 13, 6, { revealed: false });", "        api.enemy('worm', 8, 2, { hpRatio: 0.9 });\n        api.enemy('trojan', 13, 6, { revealed: false });");
+s=s.replace("        api.action(7.2, () => api.enemy('worm', 8, 2, {}));\n        api.action(8.4, () => api.enemy('ransomware', 7, 11, {}));", "        api.action(7.2, () => api.enemy('worm', 8, 2, {}));\n        api.action(8.4, () => api.enemy('trojan', 13, 5, { revealed: false }));");
+s=s.replace("        api.action(14.0, () => api.enemy('worm', 8, 1, {}));\n        api.action(15.0, () => api.enemy('flood', 7, 11, { hpRatio: 0.8 }));", "        api.action(14.0, () => api.enemy('worm', 8, 1, {}));");
+s=s.replace("note: '蛰影正在气隙中潜伏', integrity: 82, compute: 320, intel: 70, seed: 41003,", "note: '蛰影正在气隙中潜伏', integrity: 88, compute: 320, intel: 70, seed: 41003,");
+// safeguard demo integrity
+s=s.replace("  global.DEMO = DEMO;", "  global.DEMO = DEMO;");
+fs.writeFileSync(p,s);
+let q='js/game.js'; let g=fs.readFileSync(q,'utf8');
+g=g.replace("      const dmg = e.def.integrity || 10;\n      this.integrity = Math.max(0, this.integrity - dmg);\n      this.stats.leaks++;", "      const dmg = e.def.integrity || 10;\n      this.integrity = Math.max(this.scripted ? 20 : 0, this.integrity - dmg);\n      this.stats.leaks++;");
+g=g.replace("    finishDefeat() {\n      if (this.over) return;", "    finishDefeat() {\n      if (this.over || this.scripted) return;");
+fs.writeFileSync(q,g);
+let e='js/engine.js'; let en=fs.readFileSync(e,'utf8');
+en=en.replace("        color: color, transparent: true, opacity: opts.opacity == null ? 0.85 : opts.opacity,", "        color: color, transparent: true, opacity: opts.opacity == null ? 0.5 : opts.opacity,");
+en=en.replace("      const geo = new THREE.CylinderGeometry(opts.width || 0.055, opts.width || 0.055, len, 5, 1, true);", "      const geo = new THREE.CylinderGeometry(opts.width || 0.035, opts.width || 0.035, len, 5, 1, true);");
+en=en.replace("const gl = M.glowSprite(color, (opts.size || 0.16) * 10, 0.9); g.add(gl);", "const gl = M.glowSprite(color, (opts.size || 0.16) * 6, 0.55); g.add(gl);");
+en=en.replace("      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending }));", "      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending }));");
+fs.writeFileSync(e,en);
+let h=fs.readFileSync('index.html','utf8');
+h=h.replace(".skill-btn .cd { position: absolute; inset: 0; background: rgba(4,8,12,.7);", ".skill-btn .cd { position: absolute; inset: 0; background: rgba(4,8,12,.95);");
+h=h.replace(".selection-panel { position: absolute; right: 1.3rem; top: 8.9rem; width: 20.5rem;", ".selection-panel { position: absolute; right: 1.3rem; top: 8.9rem; width: 20.5rem; max-height: calc(100vh - 14rem); overflow: auto;");
+fs.writeFileSync('index.html',h);

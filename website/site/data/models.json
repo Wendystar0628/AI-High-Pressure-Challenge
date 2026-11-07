@@ -105,6 +105,21 @@
     "tested": "2026-11-04"
   },
   {
+    "id": "gpt-5-6-sol",
+    "key": "GPT/5.6Sol",
+    "name": "GPT 5.6 Sol",
+    "short": "5.6Sol",
+    "aliases": [
+      "5.6 Sol",
+      "GPT-5.6 Sol"
+    ],
+    "vendor": "OpenAI",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-07"
+  },
+  {
     "id": "deepseek-v4-1-flash",
     "key": "DeepSeek/V4.1Flash",
     "name": "DeepSeek V4.1 Flash",
@@ -153,5 +168,20 @@
     "agent": "CodeBuddy Code",
     "effort": "high",
     "tested": "2026-11-06"
+  },
+  {
+    "id": "gpt-6-2-sol",
+    "key": "GPT/6.2Sol",
+    "name": "GPT 6.2 Sol",
+    "short": "6.2Sol",
+    "aliases": [
+      "6.2 Sol",
+      "GPT-6.2 Sol"
+    ],
+    "vendor": "OpenAI",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": null
   }
 ]

@@ -1,0 +1,10 @@
+﻿const fs=require('fs');
+let h=fs.readFileSync('index.html','utf8');
+h=h.replace(".demo-badge { position: absolute; top: 9rem; left: 50%; transform: translateX(-50%);", ".demo-badge { position: absolute; top: 6.15rem; left: 50%; transform: translateX(-50%); z-index: 2;");
+h=h.replace("#screen-battle { pointer-events: none; }", "#screen-battle { pointer-events: none; }\n  #app.demo-active .boss-banner { top: 8.7rem; }");
+fs.writeFileSync('index.html',h);
+let p='js/models.js'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("add(root, glowSprite(0xe6e6ff, 7, 0.4), 0, 3.2, 0);", "add(root, glowSprite(0xe6e6ff, 4.2, 0.22), 0, 3.2, 0);");
+s=s.replace("add(root, glowSprite(0xb88cff, 8, 0.45), 0, 3.0, 0);", "add(root, glowSprite(0xb88cff, 5.2, 0.26), 0, 3.0, 0);");
+s=s.replace("add(root, glowSprite(0xff3b51, 7.5, 0.5), 0, 2.6, 0);", "add(root, glowSprite(0xff3b51, 5.0, 0.28), 0, 2.6, 0);");
+fs.writeFileSync(p,s);

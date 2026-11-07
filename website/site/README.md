@@ -126,12 +126,14 @@ boot(async ({ route, data, t, lang }) => {
   scores: { id: score },    // { total, kinds:{standard,design}, categories, tasks, status:'ranked'|'testing', done, rank, category_ranks, task_ranks }
   vendors: [{ vendor, logo, count }],   // 按模型数排
   kinds: { standard: { weight, categories:[key], tasks:[key] }, design: {…} },
+  costSource,               // scores.cost_source：{ name, url, fetched, usd_cny } 或 null（测试开销的换算依据）
   model(id), category(key), task(key), score(id), categoryOf(taskKey),
 }
 ```
 
 - 权重是百分数（类别 15、题 7.5）；分数 0–100 一位小数，没出分是 `null`。
-- `loadSearch()` → search.json 的 `items`。`fetchJSON(name)` 取任一数据文件（带缓存），子文件夹照写，如题目页的 `fetchJSON('stems/reason/formal-proof')`。`bundle()` → `{ updated, models, tasks, scores, order }`（下载 JSON 用）。
+- 测试开销在 `score(id).cost`：`{ cny, basis, plan, tokens, fitted, method, api_usd }`（格式见 `orchestrator/docs/测试开销.md` 第五节），页面经 `ui/cost.js` 读写。
+- `loadSearch()` → search.json 的 `items`。`fetchJSON(name)` 取任一数据文件（带缓存），子文件夹照写，如题目页的 `fetchJSON('stems/reason/formal-proof')`。`bundle()` → `{ updated, models, tasks, scores, order, cost_source? }`（下载 JSON 用）。
 
 ### 名次 `core/rank.js`
 
@@ -260,6 +262,7 @@ const list = createModelList(ol, {
   kind: 'series',          // 柱色：'series'（紫 300）| 'standard'（荧光绿加墨边）| 'design'（紫 300）
   plot: barPlot,           // 默认；或 (cell, entry, ctx) => {}，ctx: { data, kind, best, note, first, animate, delay, pass, grid, row, sr }
   checkable: true,         // 勾选框（对比）
+  cost: false,             // 分数右边的测试开销列（ui/cost.js；排行总榜在数据有开销时开），表头 createRowHead({ cost: '测试开销' })
   pass: true,              // barPlot 画 60 分线
   grid: [25, 50, 75],      // barPlot 的淡网格（默认 20/40/80）
   // 可选：best、note（常量或 (entry) => 值）、rank(cell, entry, ctx)、rankText(entry)、scoreText(entry)、empty（无行时的句子）
@@ -274,6 +277,11 @@ list.rows;  // Map<id, li>
 - `createRowHead({ …, hidden: true })`：默认整行对读屏隐藏；`hidden: false` 时标签可读，只隐藏装饰格（勾选位、图标位、没有链接的图区）。表头的名次、分数和其他表头字同一字号。
 - `barPlot`：共用的横向分数柱（`charts/bar.js`），固定 0–100，柱尾荧光绿四角星（HTML 叠加层）。自己画图区时同样只往 `cell` 里画。
 - `listToSVG(ol, { head })` → Promise `{ svg, width, height }`：表头和每个可见的模型行，连同行里的子行（`.mrow-sub`），拼成一张 SVG（`charts/export.js` 的 `rowsToSVG`），给 `exportButton({ build })`。
+- 测试开销列（`cost: true`）：行多两格 `.mrow-cost`（金额加依据记号）、`.mrow-tok`（Token 加 `*`），类 `has-cost`，列宽 `--mrow-cost-w`、`--mrow-tok-w`，各一行、竖直居中；读屏句末尾接一句开销。记号的图例由页面写一次（`costLegend`）。
+
+### 测试开销 `ui/cost.js`
+
+`hasCosts(data)`（数据里有没有开销）、`costOf(data, id)`、`costKey(cost)`（`subscription` | `api` | `none`）、`costTag(cost)`（按订阅折算 / API 实付 / 数据暂缺）、`fmtCNY(v)`（`¥45.1`）、`fmtUSD(v)`、`fmtTokens(n)`（`17.1 亿 Token` / `1.71B tokens`）、`fmtTokenValue(n)`（只要数字）、`isEstimated(cost)`（`fitted` 非空）、`planText(plan)`、`fillCost(cell, cost)` / `fillTokens(cell, cost)`（行里的两格：金额加依据记号、Token 加 `*`）、`costMark(key)` / `estMark()`（○ 按订阅折算、◆ API 实付、* 含估算）、`costLegend(data, tag)`（记号图例，只写一次）、`costTip(data, id)`（浮签内容）、`costFacts` / `costNotes`（侧面板的字段和说明：套餐、Token、`method` 的来历、拟合的题）、`costSr(cost)`（读屏）、`costSourceNote(data, tag)`（页脚的说明三行：换算依据；完整写出的额度来源网址 `cost_source.url`，新窗口链接；复测说明和 GitHub 仓库链接）。文案在 `common.cost`。
 
 ### 工具条 `ui/toolbar.js`
 
@@ -302,7 +310,7 @@ tb.setQuery(q); tb.clear(); tb.state;   // { vendors: Set, query }
 ### 数据下载 `ui/download.js`
 
 - `downloadCSV({ columns, rows, preface, filename, updated })`：UTF-8 带 BOM，Excel 直接开；`columns` 是 `[{ key, label }]`（行是对象）或 `[label]`（行是数组）；`preface` 是第一行（用了自定义权重时写权重）。默认文件名 `ai-octathlon-scores-<更新日期>.csv`。
-- `scoreTable(data, entries, { weights })` → `{ columns, rows, preface }`：名次、模型（带推理强度）、厂商、总分（+自定义总分）、标准评判题、主动设计题、8 类、12 题。`entries` 按页面当前的排序和筛选传入。
+- `scoreTable(data, entries, { weights })` → `{ columns, rows, preface }`：名次、模型（带推理强度）、厂商、总分（+自定义总分）、标准评判题、主动设计题、8 类、12 题；数据有测试开销时再加测试开销（元）、开销依据、Token 合计。`entries` 按页面当前的排序和筛选传入。
 - 数字照数据原样写：整数写整数（`78`，不写 `78.0`），小数保留数据里的位数；只有算出来的长小数（自定义总分）留一位。
 - `downloadJSON(obj, filename)`、`downloadBundle()`（models + tasks + scores 合成一份）、`dataFilename(updated, ext)`、`toCSV(...)`。
 

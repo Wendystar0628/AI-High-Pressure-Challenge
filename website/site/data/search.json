@@ -107,6 +107,22 @@
     },
     {
       "type": "model",
+      "id": "gpt-5-6-sol",
+      "name": "GPT 5.6 Sol",
+      "en": "GPT 5.6 Sol",
+      "short": "5.6Sol",
+      "terms": [
+        "GPT-5.6 Sol",
+        "OpenAI",
+        "Codex",
+        "GPT/5.6Sol"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-5-6-sol/"
+    },
+    {
+      "type": "model",
       "id": "deepseek-v4-1-flash",
       "name": "DeepSeek V4.1 Flash",
       "en": "DeepSeek V4.1 Flash",
@@ -158,6 +174,22 @@
         "hy"
       ],
       "href": "/models/hy4/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-6-2-sol",
+      "name": "GPT 6.2 Sol",
+      "en": "GPT 6.2 Sol",
+      "short": "6.2Sol",
+      "terms": [
+        "GPT-6.2 Sol",
+        "OpenAI",
+        "Codex",
+        "GPT/6.2Sol"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-6-2-sol/"
     },
     {
       "type": "task",

@@ -1,0 +1,11 @@
+﻿const fs=require('fs');
+let p='index.html'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("position: relative; width: 6.5rem; height: 8.1rem; background: linear-gradient(170deg, rgba(12,32,41,.94), rgba(4,13,19,.94));", "position: relative; width: 6.5rem; height: 8.1rem; background-color: #081821; background-image: none;");
+s=s.replace(".card.item { width: 5.6rem; height: 7.3rem; background: linear-gradient(170deg, rgba(28,24,18,.94), rgba(8,11,16,.94)); }", ".card.item { width: 5.6rem; height: 7.3rem; background-color: #11120f; background-image: none; }");
+s=s.replace(".card:hover { border-color: rgba(110,255,240,.7); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.4), 0 0 18px rgba(60,230,220,.12); }", ".card:hover { border-color: rgba(110,255,240,.7); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.4), 0 0 18px rgba(60,230,220,.12); background-color: #0c2430; }");
+fs.writeFileSync(p,s);
+let q='js/ui.js'; let u=fs.readFileSync(q,'utf8');
+u=u.replace("    backup: `<svg viewBox=\"0 0 48 48\"", "    skill: `<svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M24 4 36 12v12L24 44 12 24V12Z\"/><path d=\"M24 14v16M18 22h12\" stroke-width=\"1.5\"/></svg>`,\n    backup: `<svg viewBox=\"0 0 48 48\"");
+u=u.replace("  const ENEMY_DOT = {", "  ICONS.shield = ICONS.firewall; ICONS.honey = ICONS.honeypot;\n  const ENEMY_DOT = {");
+u=u.replace("        buildHint: $('#build-hint'), toasts: $('#toasts'), tooltip: $('#tooltip'),", "        buildHint: $('#build-hint'), toasts: $('#toasts'), tooltip: $('#tooltip'), report: $('#report'),");
+fs.writeFileSync(q,u);

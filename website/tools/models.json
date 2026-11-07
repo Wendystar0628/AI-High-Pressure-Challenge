@@ -92,6 +92,22 @@
     "tested": "2026-11-04"
   },
   {
+    "id": "gpt-5-6-sol",
+    "key": "GPT/5.6Sol",
+    "name": "GPT 5.6 Sol",
+    "short": "5.6Sol",
+    "aliases": ["5.6 Sol", "GPT-5.6 Sol"],
+    "vendor": "OpenAI",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "",
+    "released": "2026-07-09",
+    "tier": "中高端性能主力",
+    "series": "SOL",
+    "portrait": "gpt.png"
+  },
+  {
     "id": "deepseek-v4-1-flash",
     "key": "DeepSeek/V4.1Flash",
     "name": "DeepSeek V4.1 Flash",
@@ -103,7 +119,7 @@
     "effort": "max",
     "tested": "",
     "released": "2026-09-10",
-    "tier": "甜点快速型",
+    "tier": "均衡性价比型",
     "series": "FLASH",
     "portrait": "deepseek.png"
   },
@@ -119,7 +135,7 @@
     "effort": "high",
     "tested": "",
     "released": "2026-09-22",
-    "tier": "顶级旗舰",
+    "tier": "均衡性价比型",
     "series": "MIMO",
     "portrait": "mimo.png"
   },
@@ -134,10 +150,21 @@
     "agent": "CodeBuddy Code",
     "effort": "high",
     "tested": "",
-    "audit": true,
     "released": "2026-08-28",
-    "tier": "顶级旗舰",
+    "tier": "均衡性价比型",
     "series": "HUNYUAN",
     "portrait": "腾讯混元.png"
+  },
+  {
+    "id": "gpt-6-2-sol",
+    "key": "GPT/6.2Sol",
+    "name": "GPT 6.2 Sol",
+    "short": "6.2Sol",
+    "aliases": ["6.2 Sol", "GPT-6.2 Sol"],
+    "vendor": "OpenAI",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": ""
   }
 ]

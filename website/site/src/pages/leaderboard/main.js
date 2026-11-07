@@ -3,15 +3,17 @@
 // view switch, sort, weights, download) → one panel: the weight sandbox and
 // the axis bar (sticky) over one row per model. Six views; rows keep their
 // order across views (only the sort moves them). View, sort, ticks, custom
-// weights, grain and the open side panel live in the address.
+// weights, grain and the open side panel live in the address. When the data
+// carries test costs, every row also shows its cost right of the score
+// (ui/cost.js), with the conversion rule as a second foot line.
 import './style.css';
 import { boot, registerShortcut, setPanelOrder } from '../../shell/index.js';
-import { h, t, pick, links, getParam, setParams, fmtDate, fmtScore, fmtRank, modelLabel, iconURL } from '../../core/index.js';
-import { createToolbar, createModelList, scoreTable, getCompare, onCompareChange, showTip, hideTip } from '../../ui/index.js';
+import { h, t, pick, links, getParam, setParams, fmtDate, fmtScore, fmtRank, modelLabel, iconURL, DASH } from '../../core/index.js';
+import { createToolbar, createModelList, scoreTable, getCompare, onCompareChange, showTip, hideTip, hasCosts, costTip, costSourceNote, costLegend, fmtCNY } from '../../ui/index.js';
 import { exportButton, rowsToSVG } from '../../charts/index.js';
 import { dur, css, reduced, stagger, isInView, play } from '../../motion.js';
 import { scramble } from '../../vendor/stellar/fx.js';
-import { VIEWS, PASS, compute, officialWeights, isOfficial, parseWeights, formatWeights, sortKeys, headFigures } from './model.js';
+import { VIEWS, PASS, compute, officialWeights, isOfficial, parseWeights, formatWeights, sortKeys, headFigures, isCostSort } from './model.js';
 import { createRows, axisChanges } from './rows.js';
 import { createAxis } from './axis.js';
 import { createCompare } from './compare.js';
@@ -48,7 +50,9 @@ boot(async ({ data }) => {
   let frozen = null; // ranks shown while a slider is being dragged
   const computed = () => C;
 
-  const sortName = (k) => (k === 'total' ? t('common.score.total') : k === 'standard' || k === 'design' ? t(`common.kind.${k}`) : pick(data.category(k), 'name'));
+  const withCost = hasCosts(data);
+  const sortName = (k) =>
+    k === 'total' ? t('common.score.total') : k === 'standard' || k === 'design' ? t(`common.kind.${k}`) : isCostSort(k) ? t(`leaderboard.sort.${k === 'cost' ? 'cost' : 'costDesc'}`) : pick(data.category(k), 'name');
   const viewName = (v) => t(`leaderboard.views.${v}`);
 
   // ---------------- page head ----------------
@@ -126,13 +130,19 @@ boot(async ({ data }) => {
     title: () => [t('leaderboard.title'), viewName(state.view), state.custom ? t('common.score.custom') : ''].filter(Boolean).join(' │ '),
     filename: () => `ai-octathlon-leaderboard-${state.view}${state.custom ? '-custom' : ''}`,
   });
-  const boardHead = h('div.lb-board-head', h('h2.lb-board-title#lb-board-title', h('span.st-pair', eyebrow, vTitle), question), h('div.lb-board-tools', colsSeg, exportBtn));
+  // the cost marks explained once, above the board's columns (ui/cost.js costLegend)
+  const legend = withCost ? costLegend(data, 'p.cost-legend.lb-cost-legend') : null;
+  const boardHead = h('div.lb-board-head', h('h2.lb-board-title#lb-board-title', h('span.st-pair', eyebrow, vTitle), question), h('div.lb-board-tools', legend, colsSeg, exportBtn));
 
   const axis = createAxis({ data, state, computed, onFocus: (k) => state.view === 'parts' && rows.setFocus(k) });
   const hRank = h('span.mrow-rank.lb-h-rank');
   const hName = h('span.mrow-name.lb-h-name');
   const hScore = h('span.mrow-score.lb-h-score');
-  const headRow = h('div.mrow.mrow-head.lb-axisrow', h('span.mrow-check'), hRank, h('span.mrow-icon'), hName, h('span.mrow-plot.lb-h-plot', axis.svg), hScore);
+  // the cost column head sorts by cost: cheapest first, a second click dearest first (linked with the sort select)
+  const hCostBtn = withCost ? h('button.lb-h-sort', { type: 'button', onclick: () => setSort(state.sort === 'cost' ? 'cost-desc' : 'cost') }) : null;
+  const hCost = withCost ? h('span.mrow-cost.lb-h-cost', hCostBtn) : null;
+  const hTok = withCost ? h('span.mrow-tok.lb-h-cost', t('common.cost.tokensHead')) : null;
+  const headRow = h('div.mrow.mrow-head.lb-axisrow', { class: withCost ? 'has-cost' : null }, h('span.mrow-check'), hRank, h('span.mrow-icon'), hName, h('span.mrow-plot.lb-h-plot', axis.svg), hScore, hCost, hTok);
 
   const sandbox = createSandbox({
     data,
@@ -146,14 +156,17 @@ boot(async ({ data }) => {
   const compare = createCompare({ data, state, width: () => rows.width, onBack: () => switchView(state.lastRowView || 'total') });
   // the matrix for screen readers: a real table (the cells on screen are drawn, aria-hidden)
   const srMatrix = h('div.sr-only.lb-sr-matrix');
-  const board = h('section.st-panel.lb-board', { 'aria-labelledby': 'lb-board-title', dataset: { view: state.view } }, boardHead, sticky, ol, srMatrix, compare.el);
+  const board = h('section.st-panel.lb-board', { class: withCost ? 'has-cost' : null, 'aria-labelledby': 'lb-board-title', dataset: { view: state.view } }, boardHead, sticky, ol, srMatrix, compare.el);
   const foot = h('p.lb-foot.st-field', h('a', { href: links.about('scoring-1') }, t('leaderboard.foot', { n: data.categories.length })));
-  slot.replaceChildren(tb.el, board, foot);
+  // how the test costs are converted (ModelDial weekly quotas, the dollar rate, the date of the quota data)
+  const costFoot = withCost ? costSourceNote(data, 'div.lb-foot.cost-note.st-field') : null;
+  slot.replaceChildren(tb.el, board, foot, ...(costFoot ? [costFoot] : []));
 
   // ---------------- rows ----------------
   const list = createModelList(ol, {
     data,
     kind: 'series',
+    cost: withCost,
     rank: (cell, entry, ctx) => paintRow(ctx.row, entry, ctx),
     plot: (cell, entry, ctx) => rows.plot(cell, entry, ctx),
     empty: t('common.toolbar.noMatch'),
@@ -189,9 +202,14 @@ boot(async ({ data }) => {
       }
     } else {
       rank = it.sortRank;
-      if (rank != null) sub = fmtScore(it.sortValue);
+      if (rank != null) sub = isCostSort(state.sort) ? fmtCNY(it.sortValue) : fmtScore(it.sortValue);
     }
-    if (rank != null) {
+    const costSort = isCostSort(state.sort);
+    if (rank == null && costSort && it.status === 'ranked') {
+      // by cost, a model without an amount (数据暂缺) has no rank: a dash, after the priced ones
+      rankCell.replaceChildren(h('b.lb-rank-n', DASH));
+      li.dataset.sub = '';
+    } else if (rank != null) {
       const before = li.dataset.sub ?? '';
       const small = sub ? h('small.lb-rank-sub', { class: cls || null }, sub) : null;
       rankCell.replaceChildren(...[h('b.lb-rank-n', fmtRank(rank)), small].filter(Boolean));
@@ -205,6 +223,8 @@ boot(async ({ data }) => {
     const score = fmtScore(now.total);
     if (now.total == null && state.sort === 'total') return;
     if (state.sort === 'total') sr.textContent = t('leaderboard.row.aria', { rank: it.totalRank, name, label: state.custom ? t('common.score.custom') : t('common.score.total'), score });
+    else if (costSort)
+      sr.textContent = rank == null ? t('leaderboard.row.ariaCostNone', { name, score }) : t('leaderboard.row.ariaCost', { by: sortName(state.sort), rank, name, value: fmtCNY(it.sortValue), score });
     else
       sr.textContent =
         rank == null
@@ -213,7 +233,8 @@ boot(async ({ data }) => {
   }
 
   // ---------------- measuring ----------------
-  const probe = h('li.mrow', h('span.mrow-check'), h('span.mrow-rank'), h('span.mrow-icon'), h('span.mrow-name'), h('span.mrow-plot'), h('span.mrow-score'));
+  // the probe has a name line and a cost cell like a real row: at phone width they sit above and below the plot and take its height
+  const probe = h('li.mrow', { class: withCost ? 'has-cost' : null }, h('span.mrow-check'), h('span.mrow-rank'), h('span.mrow-icon'), h('span.mrow-name', h('a.mrow-open', '\u00a0')), h('span.mrow-plot'), h('span.mrow-score'), withCost ? h('span.mrow-cost', h('b.mrow-cost-v', '\u00a0')) : null, withCost ? h('span.mrow-tok') : null);
   function measure() {
     ol.append(probe);
     const hh = probe.querySelector('.mrow-plot').clientHeight;
@@ -237,22 +258,34 @@ boot(async ({ data }) => {
       hName.textContent = t('leaderboard.head.item');
       hScore.textContent = t('leaderboard.compare.diffHead');
     } else {
-      hRank.replaceChildren(...[h('span', t('leaderboard.head.rank')), state.sort !== 'total' ? h('small.lb-h-by', pick(data.category(state.sort) ?? {}, 'short') || sortName(state.sort)) : null].filter(Boolean));
+      const by = isCostSort(state.sort) ? t(`leaderboard.sort.${state.sort === 'cost' ? 'costBy' : 'costByDesc'}`) : pick(data.category(state.sort) ?? {}, 'short') || sortName(state.sort);
+      hRank.replaceChildren(...[h('span', t('leaderboard.head.rank')), state.sort !== 'total' ? h('small.lb-h-by', by) : null].filter(Boolean));
       hName.textContent = t('leaderboard.head.model');
       hScore.textContent = state.custom ? t('common.score.custom') : t('common.score.total');
     }
     board.dataset.view = v;
+    if (hCostBtn) {
+      const on = isCostSort(state.sort);
+      hCostBtn.textContent = on ? t(`leaderboard.sort.${state.sort === 'cost' ? 'costBy' : 'costByDesc'}`) : t('common.cost.label');
+      hCostBtn.classList.toggle('is-on', on);
+      hCostBtn.title = t(state.sort === 'cost' ? 'leaderboard.sort.costHeadDesc' : 'leaderboard.sort.costHeadAsc');
+      hCostBtn.setAttribute('aria-pressed', String(on));
+    }
   }
 
   function syncSeg({ animate = true } = {}) {
     for (const inp of seg.querySelectorAll('input')) inp.checked = inp.value === state.view;
     const lab = seg.querySelector(`label[data-view="${state.view}"]`);
     if (!lab) return;
+    // at phone width the six blocks wrap into rows, so the ink follows the block's top and height too
     const x = lab.offsetLeft;
+    const y = lab.offsetTop;
     const w = lab.offsetWidth;
-    segInk.style.transition = animate && !reduced() ? `transform ${dur('morph')}ms ${css.mech}, width ${dur('morph')}ms ${css.mech}` : 'none';
-    segInk.style.transform = `translateX(${x}px)`;
+    const hh = lab.offsetHeight;
+    segInk.style.transition = animate && !reduced() ? `transform ${dur('morph')}ms ${css.mech}, width ${dur('morph')}ms ${css.mech}, height ${dur('morph')}ms ${css.mech}` : 'none';
+    segInk.style.transform = `translate(${x}px, ${y}px)`;
     segInk.style.width = `${w}px`;
+    segInk.style.height = `${hh}px`;
   }
 
   let customShown = null;
@@ -484,6 +517,12 @@ boot(async ({ data }) => {
   // tooltip for the graphics; the breakdown focuses the category under the pointer
   ol.addEventListener('pointermove', (e) => {
     const li = e.target.closest('li.mrow');
+    // the cost and token cells: plan, token total, estimated tasks (ui/cost.js)
+    if (li && e.target.closest('.mrow-cost, .mrow-tok')) {
+      if (state.view === 'parts') rows.setFocus(null);
+      showTip(costTip(data, li.dataset.id), { x: e.clientX, y: e.clientY - 8 });
+      return;
+    }
     if (!li || !e.target.closest('.mrow-plot')) {
       hideTip();
       if (state.view === 'parts') rows.setFocus(null);
@@ -550,5 +589,7 @@ boot(async ({ data }) => {
     const vis = [...list.rows.values()].filter((li) => isInView(li));
     const step = stagger('row', vis.length, 180);
     vis.forEach((li, i) => setTimeout(() => scramble(li.querySelector('.mrow-score'), dur('scrambleLoad')), 380 + i * step));
+    // the cost amounts settle with the scores, one step later
+    if (withCost) vis.forEach((li, i) => setTimeout(() => li.querySelector('.mrow-cost-v') && scramble(li.querySelector('.mrow-cost-v'), dur('scrambleLoad')), 380 + (i + 1) * step));
   }
 });

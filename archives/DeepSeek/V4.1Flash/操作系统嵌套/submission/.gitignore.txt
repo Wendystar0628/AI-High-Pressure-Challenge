@@ -1,0 +1,7 @@
+﻿
+tools/.eval.js
+tools/.eval*.js
+*.log
+data/
+shots/
+

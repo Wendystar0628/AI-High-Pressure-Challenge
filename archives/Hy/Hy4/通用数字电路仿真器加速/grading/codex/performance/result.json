@@ -1,0 +1,23 @@
+{
+    "task":  "通用数字电路仿真器加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "总分",
+                      "max":  100,
+                      "score":  16.1,
+                      "reason":  "指定参数编译通过，源码未发现题面第十节第1–7条违规；7个正确性输入和24个性能输入全部通过。官方 evaluate.py 的性能输入平均分为16.1，乘以7/7后总分16.1；深链和寄存器堆显著慢于基线。"
+                  }
+              ],
+    "metrics":  {
+                    "correctness_passed":  7,
+                    "correctness_total":  7,
+                    "performance_inputs":  24,
+                    "performance_passed":  24,
+                    "performance_score":  16.1,
+                    "G":  0.9135874399830131,
+                    "report_path":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluation_report.json"
+                },
+    "notes":  "评分版本为原始提交工作目录中的 solution.cpp，完整可编译运行，未回退 git 提交；SHA256 B686E4BE5CE0125DA3BBAE45D5FEC84EDDA4593A8FC5CDED1F02062AE044B24C。在评分工作目录副本中使用官方 grader.cpp、官方基线和指定 g++ 参数编译，串行运行一次 evaluate.py；全部144次性能运行通过，基线无失败。评测PID 55780已自然退出，无遗留启动程序。"
+}

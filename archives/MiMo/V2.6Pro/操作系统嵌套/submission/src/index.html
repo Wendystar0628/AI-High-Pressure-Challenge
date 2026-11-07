@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' app-assets:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' app-assets: data: blob:; media-src 'self' app-assets: blob:; frame-src 'self' https: http:; connect-src 'self' https: http: ws: wss: app-assets:; webview-src 'self' https: http:;" />
+  <title>Nested OS</title>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/apps.css" />
+</head>
+<body>
+  <div id="os-desktop" data-testid="os-desktop">
+    <div id="wallpaper"></div>
+    <div id="wallpaper-tint"></div>
+    <div id="desktop-icons"></div>
+
+    <div id="start-menu" data-testid="start-menu">
+      <input id="start-search" type="search" placeholder="搜索应用…" data-testid="start-search" />
+      <div id="start-apps"></div>
+      <div id="start-footer">
+        <div id="start-user">
+          <div class="avatar">N</div>
+          <div>
+            <div style="font-weight:600;">Nested OS</div>
+            <div class="faint" style="font-size:11px;">嵌套图形操作系统</div>
+          </div>
+        </div>
+        <div class="row">
+          <button data-testid="start-help" onclick="window.__bus && window.__bus.emit('open-help')">操作说明</button>
+          <button data-testid="start-power" onclick="window.__bus && window.__bus.emit('power-menu')">电源</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-layer"></div>
+
+    <div id="taskbar">
+      <button id="start-toggle" data-testid="start-toggle">
+        <div class="logo">N</div>
+        <span>开始</span>
+      </button>
+      <div id="taskbar-apps"></div>
+      <div id="taskbar-tray">
+        <button class="tray-btn" id="widgets-toggle" data-testid="widgets-toggle" title="小组件">🧩</button>
+        <button class="tray-btn" id="notifications-toggle" data-testid="notifications-toggle" title="通知中心">🔔</button>
+        <div id="tray-clock" data-testid="tray-clock"></div>
+      </div>
+    </div>
+
+    <div id="splash">
+      <div class="logo-big">N</div>
+      <div class="name">NESTED OS</div>
+      <div class="sub">嵌套图形操作系统 · 正在启动…</div>
+    </div>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

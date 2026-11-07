@@ -1,0 +1,1780 @@
+{
+  "schema": 1,
+  "model": "MiMo/V2.6Pro",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\claude\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7395,
+      "sha256": "dc206e6d3d176ddf67470117c38fd9c9855555e5fae74b981977f9e4c93ca7cc"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11334,
+      "sha256": "09f49d98ef2a2a5431173caf79eb6ae924d45eb393a1344ed3c7b9ea154f2c5b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7898,
+      "sha256": "0ac8462257e0820e7dca081d70bfec682cbd9fb9e3d2c1de033497994c40ab72"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7935,
+      "sha256": "8ab00769f19eb5f1b2db8e2489f641124dbfc8b5c54008a8a06a52709c0ef5f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.gitignore",
+      "path": "AE风味动效设计编辑器/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 35,
+      "sha256": "b4d1001b84d401e4de7c164ada900067258d2234ff65c0a634fc992274e9ce2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.mimocode\\.cron-lock",
+      "path": "AE风味动效设计编辑器/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 39,
+      "sha256": "bd3aba5d93f074ed50a81fca1512ce71ce2f0a3e29570ef95b5468b46e049a2a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.mimocode\\.gitignore",
+      "path": "AE风味动效设计编辑器/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\build.js",
+      "path": "AE风味动效设计编辑器/submission/build.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 913,
+      "sha256": "2a0124192188ddc6765498fee32c608e83cdb3e937bc20bc3cf6f7f275c67aaa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\fix-imports.js",
+      "path": "AE风味动效设计编辑器/submission/fix-imports.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 226,
+      "sha256": "c761f56ba217964ed9d57b7b6db5ffc01896d32e094e03c38e6dceb13c219377"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 963,
+      "sha256": "5a44b9b48e8ffb52223c93222d1c82e89c02ff2dfefe26c1b18fe51f97acf659"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\package-lock.json",
+      "path": "AE风味动效设计编辑器/submission/package-lock.json",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 13731,
+      "sha256": "823c9c1d0546a3a0ec9f9a10998134486c930de877afa6659211ee7d7cd36576"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\package.json",
+      "path": "AE风味动效设计编辑器/submission/package.json",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 200,
+      "sha256": "4dc230d8f36d9dda6f7b9942612011e8ad39c8caabbc7ee792ad91e17b5d072d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\app.js",
+      "path": "AE风味动效设计编辑器/submission/src/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 34919,
+      "sha256": "038006a8fc291b5980fe74974c156980f5ffeb41fe8d911804a9efbe8eaf5fd6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\anim.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/anim.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7937,
+      "sha256": "98a68c161d5c05c70ed993691e29f145b3b8fe8655ba08f5f38b144e65eb6b67"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7107,
+      "sha256": "3f0b2ebe5a3120e5c5a03a1d385473aff9efde1463136558408b18419713c2cf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\compositor.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/compositor.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 23916,
+      "sha256": "d98ed9afb3aa0a2787e29eff745ce18bf88611298c83115fb6d8675db1bd7b23"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\expression.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/expression.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 20605,
+      "sha256": "14a823e53f4ced4439731f42350d7e8d22e11252e903be6ebd388d458c4db6e7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\fields.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/fields.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5051,
+      "sha256": "4428ae6f97ce4d158178c5af6a20411abafd90ed70d0eda53d11625ac428fad3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\geometry.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/geometry.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 18116,
+      "sha256": "1cde258f72220e14db762427a57da576d2b7a6a1a00ad74e94f080ebfe80d46f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\math.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/math.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7961,
+      "sha256": "cc0f6251e1d04ecd81ead44547d751cf079ef7d92f376d5a375cc45aac57f7db"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\model.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/model.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 19533,
+      "sha256": "c8988887cc6dceb0dd9f3c96532522401cd2d66da1d7719144dcc988b4a7ba1e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\particles.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/particles.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 10698,
+      "sha256": "e022202546e509f5bce5a5fe0544b9b14c60bf0018c66e0e20a84cf40b6bfbe2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\path.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/path.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 16790,
+      "sha256": "eda6edca2db81e98a43342f72adecf3725680b56eca0819093c66ec5970e6390"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\textlayout.js",
+      "path": "AE风味动效设计编辑器/submission/src/core/textlayout.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 10813,
+      "sha256": "ac1bb39f7b6c3b095782778bad49c2b6543cae5dc85e587dd590365b97e8da25"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\demo\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/src/demo/demo.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 33530,
+      "sha256": "815bc5e120cbd9f532a8618f8fca2559c33be50ddc11cb99c8a6a4a7bc5733cc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\export\\videoExport.js",
+      "path": "AE风味动效设计编辑器/submission/src/export/videoExport.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 1494,
+      "sha256": "d3dd6eedfcf2b523e5f8283b2a4cb2a7f16996f5cd5854d517c29bce34cfaa60"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\main.js",
+      "path": "AE风味动效设计编辑器/submission/src/main.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 658,
+      "sha256": "dac23c60d62cd2c73acacf9d269913ca7bfad3758b16cd35d6538240ca97eb0e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\render\\engine.js",
+      "path": "AE风味动效设计编辑器/submission/src/render/engine.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 23497,
+      "sha256": "ffdbe66c41e2e9416a8c7526da6a2b858c6d15928c0f097cb23b1eb30b24aace"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\app.js",
+      "path": "AE风味动效设计编辑器/submission/src/ui/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 55648,
+      "sha256": "c430933714ff3370224bdfbd8b1ba13f456f4efa464bb94c8d24d7a4111eeb6a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\graph.js",
+      "path": "AE风味动效设计编辑器/submission/src/ui/graph.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 8475,
+      "sha256": "306154832ee498bd0ab7bf3ce06c3e1afb6b65f5d543516f067f2383901e8b25"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\nodes.js",
+      "path": "AE风味动效设计编辑器/submission/src/ui/nodes.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 18356,
+      "sha256": "779f4244002c5a3f9e6e38849673b3d4852edc8cea029db46db1c3157ac20604"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\style.css",
+      "path": "AE风味动效设计编辑器/submission/src/ui/style.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 27258,
+      "sha256": "48d435206d115bfc9f981e2d9d7c5deffd67c1bedc33909da36e0f77f963ff2c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6382,
+      "sha256": "8ef984aa742110ae4ae51e9f99dfbb66ade0fb995b8a189c358d917d135eee2a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9418,
+      "sha256": "807b4121341897c3524ae38baf24b2cf379b08610f2b3a4826654c18ba0f2528"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6412,
+      "sha256": "9e67eff9d3192fd0b132b4255e377fbaffcc3ebdad983b6000ac02d0467356c4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6601,
+      "sha256": "ff4c58dd55d4961186c0f85493a00be3b305dcd669bf31f3cf71649996da5051"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.gitignore",
+      "path": "NVIDIA_B200网页艺术/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 42,
+      "sha256": "18b2fdb37774adecee70698f2b46115f2e4b4c521db4fc5e6c0cbcdecd0c0d66"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\.cron-lock",
+      "path": "NVIDIA_B200网页艺术/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 39,
+      "sha256": "813711ddce02555a03f4a7f8e6ec6ef58881c42c2232404e06ece0b42cd55009"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\.gitignore",
+      "path": "NVIDIA_B200网页艺术/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\shot_p0.png",
+      "path": "NVIDIA_B200网页艺术/submission/.mimocode/shot_p0.png",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 489973,
+      "sha256": "d77b9a9e9b7066af3c5f6af755c43fe2f633f3a6c891e29f493b72a27c061e13"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\app\\bundle.js",
+      "path": "NVIDIA_B200网页艺术/submission/app/bundle.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 667846,
+      "sha256": "677148ec03d660b95914e0a5559e006d1269a7f2b21c5c2c000a8648e6171478"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\build.mjs",
+      "path": "NVIDIA_B200网页艺术/submission/build.mjs",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 620,
+      "sha256": "8ef4b45a8b89e491d2f0272161926e06b8c759d7ad94ce4b7a730f4557c9afb0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\index.html",
+      "path": "NVIDIA_B200网页艺术/submission/index.html",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 2977,
+      "sha256": "0332ce26e3d6cb47d890c7cf491b6b78f269eb5facd0600cc8007ac698768bb0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\package-lock.json",
+      "path": "NVIDIA_B200网页艺术/submission/package-lock.json",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 51481,
+      "sha256": "11674663cc06d356710d17654d19c588fd2b6ebae0713bcc0dbbd5772165bb11"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\package.json",
+      "path": "NVIDIA_B200网页艺术/submission/package.json",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 355,
+      "sha256": "11b6218e0e3034ae338f1e0dde3ee00283f112ceb80d6c7ba51c598921507da4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\export.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/export.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 1984,
+      "sha256": "986ed0a0a1aed8af9768c4e728dc614d454ef40895dc92d74dce47eec5bd48b0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\main.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/main.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 11486,
+      "sha256": "d41e652cb5f01ad3b14c79d66317ea50bdfc87141c77f00e5de45d7ad0681947"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\numerics.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/numerics.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 10867,
+      "sha256": "fd9af7622a6ec68f257ff3772f2c0a831bb52e400282286b1b24f7f97e77d28b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\state.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/state.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6187,
+      "sha256": "c95540f2e6b9b2108ebe5308a731ff3ce5396db631d3b28751886e2bb9bd882a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\runtime.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/svg/runtime.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7863,
+      "sha256": "a4101f0049f68ba066b458283162adaffec039dc748f59eb2da4af101f537c58"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\scenes-a.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/svg/scenes-a.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 25901,
+      "sha256": "7d19127e658f0b66dca22aa07c72a362b0bd7928da3a2132018778835c49e72c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\scenes-b.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/svg/scenes-b.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 36535,
+      "sha256": "2c4d75a4f85aa3eb6a3aaa49c3076a67717048b07a5e12f52f4877aa3bb4b669"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\transitions.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/svg/transitions.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 12138,
+      "sha256": "12195ac2d3dccb351bb2ea04335fb1324293da77d44e0e9cd72efbba9daba16d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\materials.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/three/materials.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 12904,
+      "sha256": "8a91e9ed7dc7825507045f896721f3996e1ee72ccb72a3a2c94630420afb408f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\models.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/three/models.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 22203,
+      "sha256": "5c40e2b7f883cdbcc102aa88508475213353e5cf5a251fd59e87c7d40ee5e305"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\pipeline.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/three/pipeline.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7681,
+      "sha256": "f53ce970bfed3252904d77afb1ec7b00540ca0203d94b7e26c421c1273b44167"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\scene-ctrl.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/three/scene-ctrl.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 18297,
+      "sha256": "d0df0052c6e2dc81ff4f50bce273bc9aeeacb237895d0befc7ae83f4639245cf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\timeline.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/timeline.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9472,
+      "sha256": "59381b605bbd9efb2fa21559b656ee92f1824f7a50a9148c8431ee046a34933e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\ui\\beats.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/ui/beats.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 11273,
+      "sha256": "2904793863c419ea454d0c7e16ac5fb05ae652af8af2942c14bec23f269ce2fb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\ui\\labs.js",
+      "path": "NVIDIA_B200网页艺术/submission/src/ui/labs.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 32577,
+      "sha256": "9252127b7b2512c9971ac90dae5d61ca41cff1e9123d9c49aab3d48685fcedab"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\styles\\main.css",
+      "path": "NVIDIA_B200网页艺术/submission/styles/main.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 22196,
+      "sha256": "e725bf02f87bc15025f3bfd019b908d5f1f6933de7bb9a0248988169bff7ffd7"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
+      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 5634,
+      "sha256": "20581abb6b7cf1666a4b920d7e80970f9b490698dfa3cb1a011cfe79198ad3b2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
+      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1451,
+      "sha256": "0f4a6eb2ae52516fffafd94538b06cedcf2a355dcce25b8535b4dd3f79cfcc32"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\solution.cu",
+      "path": "Transformer前向推理的GPU加速/submission/solution.cu",
+      "role": "submission",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 16950,
+      "sha256": "f19b22da5e0b987e633625895ca62f2897a27d03f0f6ea7a34ca0e309a951db8"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\动态路由塔防\\claude\\main\\result.json",
+      "path": "动态路由塔防/grading/claude/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 5280,
+      "sha256": "279fe81c89ae6c448f5e6e05e5e8660da4b69883502a9cf9fd6c0c182ce8ddaa"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 7002,
+      "sha256": "1e2a659d7fe3c278a017af025183f5b42463f14c02d299e658bf3140ee46db99"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4090,
+      "sha256": "9bcb299dc0b445a057d963b7f5f35b0f7286b8fb66dddabbd13d7825544a3579"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\评分表_Opus5.5.md",
+      "path": "动态路由塔防/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4187,
+      "sha256": "15a189669b8a17004a784f8f801bdce56011b8f008e25d41578ad2dbb7ebdb48"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\.mimocode\\.cron-lock",
+      "path": "动态路由塔防/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 39,
+      "sha256": "27caa142c99b6919dc455e6528fa99397a4ba731dc88ad1b145b0985b3fe88ad"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\.mimocode\\.gitignore",
+      "path": "动态路由塔防/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 20811,
+      "sha256": "ad6d8807065c04422936c433cdd7d9477d73dd6807f351b82b95868176bedfb1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\audio.js",
+      "path": "动态路由塔防/submission/js/audio.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 9123,
+      "sha256": "6183cea132676a2dd8017a4f80836174e08e215896bac4d658e161835c2b5a69"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\demo.js",
+      "path": "动态路由塔防/submission/js/demo.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 7828,
+      "sha256": "5745a92ffc72a396de2331e8e1154735496c1399ee078a4bb71c6bad6d3dbc61"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\effects.js",
+      "path": "动态路由塔防/submission/js/effects.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 10095,
+      "sha256": "ff41f4c8314e47979c2f9bf3832d4f165e906e2c1f36af14ef12266d7e2a1365"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\enemies.js",
+      "path": "动态路由塔防/submission/js/enemies.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 16778,
+      "sha256": "ccbba7e6880ded00d39da743be13d008a8a20ec99472416e448e4d8707eff5af"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\environment.js",
+      "path": "动态路由塔防/submission/js/environment.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 7169,
+      "sha256": "97c542ffb8f6a6c9227857bf0036e5fefc25d257177e07b261cde04d9299643d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\game.js",
+      "path": "动态路由塔防/submission/js/game.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 13957,
+      "sha256": "fc50e262f07ad3e60a92bf469fd293519c1d157cece00766823bf33f32c4bd22"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\grid.js",
+      "path": "动态路由塔防/submission/js/grid.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4052,
+      "sha256": "c789b3418ac1477c13ed7ae709fd44cce4682b8e887a0bf24db39d0fd9da6e3f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\hud.js",
+      "path": "动态路由塔防/submission/js/hud.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5502,
+      "sha256": "d5fefe1c75e25d3e22433132a172f2fd067264511baee95c8903a912b994716e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\items.js",
+      "path": "动态路由塔防/submission/js/items.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4299,
+      "sha256": "bdd5e96cdd50afaa6bb6961f382e84045f3cad7d7cdd37158d5c10b7a9d60aca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\main.js",
+      "path": "动态路由塔防/submission/js/main.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4152,
+      "sha256": "a7b2bb4413297e026072c5a1e078b3516cf2a21df948fd80fa0084184bb4075b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\maps.js",
+      "path": "动态路由塔防/submission/js/maps.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 12380,
+      "sha256": "af817d4dab99d6d7c50fabf472ab191de02d7e8fa13b3c7900067873d682b4a1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\models.js",
+      "path": "动态路由塔防/submission/js/models.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 30125,
+      "sha256": "fb33fa9a80c0285765d0acee2de875b456c556f7b204c9a22e6ccb0f8a21657e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\pathfind.js",
+      "path": "动态路由塔防/submission/js/pathfind.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4723,
+      "sha256": "83d4339443b674ca6ab6179fc3859015b69ee570a2351a2c504d6c8f14748ea0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\scene.js",
+      "path": "动态路由塔防/submission/js/scene.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 23464,
+      "sha256": "0748b72725625030ceb5c9d04c74905cc354d8a6a370b41bf082f601754761fa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\towers.js",
+      "path": "动态路由塔防/submission/js/towers.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 13201,
+      "sha256": "31e7446c1a298d4fd7ad1066f5503da7a529ce8ff9a8343a4457f8599a98a3df"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\ui.js",
+      "path": "动态路由塔防/submission/js/ui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 26143,
+      "sha256": "87dd55e498255aefebca8bb9a0af2e0cd8e6e3b69b8ad89fc8235c659562d08f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\util.js",
+      "path": "动态路由塔防/submission/js/util.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 11923,
+      "sha256": "38aeef1ff9fe4e4ac6201452a7df3c5e2212c26b8e6e38d3aa3c289a7aac0cb8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\videoexport.js",
+      "path": "动态路由塔防/submission/js/videoexport.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3603,
+      "sha256": "2a0c1e1c666758fece8eb8c301d0a8c25025499bd2dbe1705912c246a4204fd7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\js\\waves.js",
+      "path": "动态路由塔防/submission/js/waves.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4834,
+      "sha256": "6f00590b15b194542110071e1cc7dc253d222442169089db5c77bac37b607151"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\lib\\three.min.js",
+      "path": "动态路由塔防/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 669884,
+      "sha256": "170c6789f43217c96b3170f4b42fafe135de7f7cd48497a4218f9757ee1d49fa"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
+      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
+      "role": "result",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1304,
+      "sha256": "f89b0b3ac8d06afa65a3a2469346190a2279cb7d78e6109d79f30ef91c461666"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
+      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1090,
+      "sha256": "7eaf6df04c83821f7cd23ee375be3b66439b9f215287bd63851cf5c3527a8b8d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\answer.md",
+      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
+      "role": "submission",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1080,
+      "sha256": "1c5ced73bb137936a2c607ab6018948ffc4e284bd30f4c1664ac2ee0646eb98a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\claude\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/claude/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5469,
+      "sha256": "03bc7e4441ce7259cff58f0870352436d195b6f8e8f74a7b7afe79ae8cf26014"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6174,
+      "sha256": "66e83f2e19bc424a9760e4bcfdb6ec42b6762afff121d7c9718b0375ffa32fe8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4067,
+      "sha256": "0661fc4cf5825af435a19ac4e7b5768e7237b526e2745ff01b7a936a48a13aeb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\评分表_Opus5.5.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4086,
+      "sha256": "9ab06744200f861282273f9919d5d6a829ba992c42560196f6ba26ef81c28743"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\.mimocode\\.cron-lock",
+      "path": "太阳雨渔港3D渲染/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 39,
+      "sha256": "988e5b91aa9690e1253a09e1671c1b4f206e4f0d5a5be54e626fbc0af84098e0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\.mimocode\\.gitignore",
+      "path": "太阳雨渔港3D渲染/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\.mimocode\\shot1.png",
+      "path": "太阳雨渔港3D渲染/submission/.mimocode/shot1.png",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 498934,
+      "sha256": "62658905d496d1eb2389d7c462552e6b82d17c7e82e6912f65b91cc82c5b6411"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 975,
+      "sha256": "ef5fb74843f5a34aaa64cbdbfde9cd4c4c4f75e91a751a39b279f2b468e4e439"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\anim.js",
+      "path": "太阳雨渔港3D渲染/submission/js/anim.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 18440,
+      "sha256": "cd13b977a03344204deefd456875a6ba257c0ef62f11d311ebd5397c4606259f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/js/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 22161,
+      "sha256": "d6c7e890f8128366f89abc23faf2aa7b83a1ade1dc7a3c80fd0b3ba23e2ca0f2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/js/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 17104,
+      "sha256": "ed5c9124f3d7ae823d49c5b5aa792db801f3ebeb899f3aa0ccd228947ef27b88"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\camera.js",
+      "path": "太阳雨渔港3D渲染/submission/js/camera.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4037,
+      "sha256": "31f78941dc3407adf6036e6eb190d9e584088346bfe12b7bd877b0c735f89265"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\creatures.js",
+      "path": "太阳雨渔港3D渲染/submission/js/creatures.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5648,
+      "sha256": "c61f8ec4be1e4ce344cd4a27b722099849b5796cf15b54a74b967a537dea5151"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/js/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4056,
+      "sha256": "2c56be3ca6e8507e23ddd6e9943612e9aa0e56e8402984b8f7958b6526cf1397"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\props.js",
+      "path": "太阳雨渔港3D渲染/submission/js/props.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 21722,
+      "sha256": "cf00208200412e80fdb18548842b8d281f0affe94824180d57ec8bb5cf6821a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\sky.js",
+      "path": "太阳雨渔港3D渲染/submission/js/sky.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4123,
+      "sha256": "239e5b3a6188f254a27b2997fe95297f421dc30eb4ab5488b545953579da1cd8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\tour.js",
+      "path": "太阳雨渔港3D渲染/submission/js/tour.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5101,
+      "sha256": "3e5eceb48ef718e46ee9d1e29d8bef71194661710c773f00bb2a92bc7b24828c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\util.js",
+      "path": "太阳雨渔港3D渲染/submission/js/util.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12098,
+      "sha256": "c03e95c7555a0a0c1fbeafc6ec1102834ea41cf2eec42e952efeccf16f2571a6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\water.js",
+      "path": "太阳雨渔港3D渲染/submission/js/water.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 13168,
+      "sha256": "1d390ab1839a171a9b3284428e5d6fbd498c89c42f8be358564a773f78839be5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\weather.js",
+      "path": "太阳雨渔港3D渲染/submission/js/weather.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5290,
+      "sha256": "3c99275e18a6794c239f8579aa6efe950cfa4eb15f378b975d7cee39d75941b8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\js\\world.js",
+      "path": "太阳雨渔港3D渲染/submission/js/world.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 20716,
+      "sha256": "441e69a2fb7e34dc2a5efd8925d3466d1c0c34a9cffb608de916132a795d2952"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\lib\\three.min.js",
+      "path": "太阳雨渔港3D渲染/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 603445,
+      "sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 2135,
+      "sha256": "6cef712712e83add89cec3a8268ddf8ecd87fbfc48f15c9aee6c1681cb78e817"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1105,
+      "sha256": "3afb853eb57f669bdf128e08d7998b1fe748d8e858fde409edea70d87a0af04b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem1.lean",
+      "path": "形式化证明题/submission/Problem1.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 327,
+      "sha256": "dd2768055dc83c00ff82bc8616bdabf98af5c01dfe398b9805acced0e1532637"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem2.lean",
+      "path": "形式化证明题/submission/Problem2.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 257,
+      "sha256": "b99e8ca8a4169bf63cf517972c10e87788c82564c8d8448a7bbafd0aa1a2d022"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem3.lean",
+      "path": "形式化证明题/submission/Problem3.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 219,
+      "sha256": "48303d53ec1a903a37b63c43e31a13ed4c44a32207e1e7452f263bb3e27f2686"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem4.lean",
+      "path": "形式化证明题/submission/Problem4.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 492,
+      "sha256": "11e9f5dbd25cb7e1736a0eed89a16b7ccd01e64c1518ebf0c5c4a631caa41eca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem5.lean",
+      "path": "形式化证明题/submission/Problem5.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 361,
+      "sha256": "7b1b17d8724665dcae2ccd7aa90f3b7bc166412ffca9bd982edcac594525e48b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem6.lean",
+      "path": "形式化证明题/submission/Problem6.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 162,
+      "sha256": "84a8f5817039b7c3dcc29fed27cbc3ac54090be5a5bfe1c88cc51df42fbbcecd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem7.lean",
+      "path": "形式化证明题/submission/Problem7.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 327,
+      "sha256": "c10e64d6e8e2f8d683050d1d4afd9acb74187b62ec1d09045a32cfcf6b372bdd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\Problem8.lean",
+      "path": "形式化证明题/submission/Problem8.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 185,
+      "sha256": "981c10e4ad96d79fc63379c730e7153a9a8e5ed1d704b8d08797d8f421f7d6cb"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\操作系统嵌套\\claude\\main\\result.json",
+      "path": "操作系统嵌套/grading/claude/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 11667,
+      "sha256": "d1c54bd3f5e8f2d11db92545b575dc91099ac30b42f22ab6718c17692689a185"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 11051,
+      "sha256": "f6e81cc56b3d1ff9cfc8aa7643d362563daeec78afa3849a3ecd3071412ed037"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12314,
+      "sha256": "59a93970a9d602ef84f345d05e1bc8c362e2127170d7d51fe47d0fd00b161cfa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\评分表_Opus5.5.md",
+      "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12536,
+      "sha256": "4681742a47c50bb72731892247c224918e635947ceff8b16a3e1785fa1aaedfa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.mimocode\\.cron-lock",
+      "path": "操作系统嵌套/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 39,
+      "sha256": "0ca900f5403f57cfe4e33267d7e4eb10e4cd7d2a9db730e8c454170cf3ad19f5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.mimocode\\.gitignore",
+      "path": "操作系统嵌套/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpaper.png",
+      "path": "操作系统嵌套/submission/assets/wallpaper.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 714424,
+      "sha256": "f32d4e1d1893f54e00dafb41eed72d60444bc4b243194cc495f7331bf45f5c3a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\dusk-lake.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/dusk-lake.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 467187,
+      "sha256": "796f3b947c10f769dff01958d3160ab4ac47cb07e52d0b41a9eeb986c9ebf4ec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\green-valley.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/green-valley.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 260999,
+      "sha256": "c68f4b7cdafbfc6a0d1e721ac692953cbc2d4fca0a3f0be5cf4597796b7e8a0e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\star-night.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/star-night.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 161586,
+      "sha256": "2047fe95de32f2e8baf55576cddff0608036b9139805dbd509cd6e20f4a6c9e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\main.js",
+      "path": "操作系统嵌套/submission/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5187,
+      "sha256": "4a1f48611cd73ff8d556c02c6693095af44f126e06653b51972d7485f0b184e6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6084,
+      "sha256": "2a21cb04ee05f85c74b152a84dcfc7f7d27a0dde51f395fc3acdc749c2795500"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 281,
+      "sha256": "428ee239157bfdc80aae58fc590d5994cd041f2c7f0894b6f902bf17d88b25f3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\preload.js",
+      "path": "操作系统嵌套/submission/preload.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 632,
+      "sha256": "6404887c8176c270686d225723f9180ef495cc35489efeebf4966095f77dded5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\scripts\\cdp.js",
+      "path": "操作系统嵌套/submission/scripts/cdp.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2864,
+      "sha256": "0efaacd1961ea24399942a6eaf32b6ff35965098cf16b5bb262bea7b1d1538f7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\scripts\\gen-wallpaper.js",
+      "path": "操作系统嵌套/submission/scripts/gen-wallpaper.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11425,
+      "sha256": "51e3f9e94d55b1da291eeaaa3810822b81f1c8ccb3ff20be63366d41d0b9485e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\app.js",
+      "path": "操作系统嵌套/submission/src/app.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5313,
+      "sha256": "d207f8e44839891415f9e95ed7bd02e8556ab2056095d7558a60642e85940b69"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\browser.js",
+      "path": "操作系统嵌套/submission/src/apps/browser.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11024,
+      "sha256": "5e78c585b38e1e34ddc732c6c05d21b292976de126a38e10f3f7a26fc359b1d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\editor.js",
+      "path": "操作系统嵌套/submission/src/apps/editor.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4972,
+      "sha256": "aeb7580ed6c298e2b002e4d5ba99d9a47513ae00f534898daaa2216b885eb72e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\files.js",
+      "path": "操作系统嵌套/submission/src/apps/files.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10833,
+      "sha256": "77ddd2e5db8647e1457d33321bcd4c8ea8d001ae6ca67bbe9cbef4dd276018f5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\help.js",
+      "path": "操作系统嵌套/submission/src/apps/help.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13952,
+      "sha256": "b4332bba6165149d720d7e5e20223e1744a87a4c3c15be5110c8226519f228c8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\settings.js",
+      "path": "操作系统嵌套/submission/src/apps/settings.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10944,
+      "sha256": "d800e54d1c8ef6b4bf1fb0c3d2f4a7c2ac46f8a255065fb40697ebc4d353af18"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\spreadsheet.js",
+      "path": "操作系统嵌套/submission/src/apps/spreadsheet.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 25381,
+      "sha256": "bf95d35ed4aaf4e1329ef130988f5a928fcdefbc86c4df1928186a7d2aaefcaf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\tasks.js",
+      "path": "操作系统嵌套/submission/src/apps/tasks.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8758,
+      "sha256": "92965eb2d4b76ab0e3a13202d718fb93fce21ad52bd0bee2c218335adb0e8e71"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\widgets.js",
+      "path": "操作系统嵌套/submission/src/apps/widgets.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20859,
+      "sha256": "928f1876370e77f75f8f8ea94da7b0459e8a097a618dd99a3cd9b6818c5ec50a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\core\\fs.js",
+      "path": "操作系统嵌套/submission/src/core/fs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9019,
+      "sha256": "e86924daa3e0cf8f35304e0d3c7e169c1d4dee7e2eff84841451a9fe6fcb87ed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\core\\util.js",
+      "path": "操作系统嵌套/submission/src/core/util.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2563,
+      "sha256": "e9232cda07339017329af065c15bb112d19272ade07597961b938360ba10f9e1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\desktop\\desktop.js",
+      "path": "操作系统嵌套/submission/src/desktop/desktop.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9422,
+      "sha256": "b7d2299682985facf7e689c5f1bb0f92f385807eedcd3796e1a39b68e13c4b93"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\desktop\\window-manager.js",
+      "path": "操作系统嵌套/submission/src/desktop/window-manager.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 15723,
+      "sha256": "e03afe3833a7429af44db18e5cb59a81765d2b59c3070f6b7e3b4cb926a4d0cc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\host\\bench.js",
+      "path": "操作系统嵌套/submission/src/host/bench.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3993,
+      "sha256": "babf7af190a00b283bed018b4927ac65c4f37e780b5d79fde17867f7a0a8d91e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\host\\system-manager.js",
+      "path": "操作系统嵌套/submission/src/host/system-manager.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 27802,
+      "sha256": "cf92e69327fbc49883e1537b048c34964297330024940dbd02ff968da21426c4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\index.html",
+      "path": "操作系统嵌套/submission/src/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2341,
+      "sha256": "397ca9adfa0a1b88ad8ad25288e56fa57e30d45186d64723b2502e81b90336a6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\kernel\\kernel-source.js",
+      "path": "操作系统嵌套/submission/src/kernel/kernel-source.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 19489,
+      "sha256": "9f885fef8b7b7b27118cca83d4aeab3c92a3f2875c32db6e2da8a810fb05195c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\scenes\\scene-data.js",
+      "path": "操作系统嵌套/submission/src/scenes/scene-data.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10266,
+      "sha256": "ea3e656f60f0fbf93b21a90be03dd851f147de226f8d71f03ebe1778f5342239"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\styles\\apps.css",
+      "path": "操作系统嵌套/submission/src/styles/apps.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16512,
+      "sha256": "d717c6a64a6b28cef3367aa0efc939b270739c8be0e595318a339d0ce32141be"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\styles\\base.css",
+      "path": "操作系统嵌套/submission/src/styles/base.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13862,
+      "sha256": "0146c6d7748695877d8ad93360d1ef1bcbfada0f2e20798b5c135a6e2938e3cd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\vm\\vm.js",
+      "path": "操作系统嵌套/submission/src/vm/vm.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 30494,
+      "sha256": "263a7cca7b4ddf0e5e098983b06415bf936e2ce71e1750a23f8cdfe271373ef0"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 5785,
+      "sha256": "151a85501083060d8ff3c229d228889e4c6525b900fb0bc53e61eb37a5ca6168"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 2469,
+      "sha256": "2c81f43e1917b3724d136d694254790565098c3369c0c33aa070e11c1767637e"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\claude\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5200,
+      "sha256": "b771ac5debf50f62246d18f519da7cd25d71e797f3e8b9e1991dbd6aba6ff79c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6436,
+      "sha256": "7db5089111ccb5606cb266a6e8203ae8400fb59982c32440c0b5a793bfd96667"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4657,
+      "sha256": "1ba4460b93612979b1daef9b38eae7f60bd2230e9a56fdb5a60c08e1e27b0c95"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4709,
+      "sha256": "6eb70976f1f4990a824ae331d59847554d5f51e4d13190571646ff2bc4a4f01e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.gitignore",
+      "path": "果冻冲击与造浪水槽/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 30,
+      "sha256": "2f9aebd7a15d0a9e62d69bff1c888bb93ec5eab506a9db272de622defda4735c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.mimocode\\.cron-lock",
+      "path": "果冻冲击与造浪水槽/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 39,
+      "sha256": "201277f670a12d273d687eabb827acff77da2049c872e0517b4fa42b284c74bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.mimocode\\.gitignore",
+      "path": "果冻冲击与造浪水槽/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\build.mjs",
+      "path": "果冻冲击与造浪水槽/submission/build.mjs",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 298,
+      "sha256": "8452eb67072b4627346faa56659ad4465029f323936e9c3a0c1dbc648cdb7152"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\css\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/css/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5426,
+      "sha256": "b43f1814a25827e0e5b0bf8c0ab62af4d7668cdcc821ded7bef0c0a46c8ffeb3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 8736,
+      "sha256": "d7837cfbfd93b4fc79d227891ff8d2b20a440b087ede876a0f02ec6486a46855"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\package-lock.json",
+      "path": "果冻冲击与造浪水槽/submission/package-lock.json",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 13147,
+      "sha256": "dba8c52dd55f5a5a35f9a88d35e544fd923c01e3d0b8a046c61e4be9357e87a0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\package.json",
+      "path": "果冻冲击与造浪水槽/submission/package.json",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 285,
+      "sha256": "ea82ff0faf61adabc63c6d3e042abe0adbc4da0c6f31eb6636dbd8a5cf803f5a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\audio.js",
+      "path": "果冻冲击与造浪水槽/submission/src/audio.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5503,
+      "sha256": "939a1c8a1010027e6c94e75187c168ce48a7fe243eb411f291a0f691ca239822"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\env.js",
+      "path": "果冻冲击与造浪水槽/submission/src/env.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 3993,
+      "sha256": "7685fe2dfce702f1826ca721a110ea87d957ae306b6fab1a8e2b261bb9f141ec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\jellySim.js",
+      "path": "果冻冲击与造浪水槽/submission/src/jellySim.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 13043,
+      "sha256": "d4193748f775dfae424e1fa2be16f3f1698e7e8f7f4eddb6702849c2a00482bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\main.js",
+      "path": "果冻冲击与造浪水槽/submission/src/main.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 11116,
+      "sha256": "b6923fca330a360b130d01164b1ee83c424b328dced8d817a2ce4cec1f3c5525"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\scene1.js",
+      "path": "果冻冲击与造浪水槽/submission/src/scene1.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 12554,
+      "sha256": "746fc413ee5f481f6386db83b9c5133ba579a5e7fb3b260a59131929b12fa2c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\scene2.js",
+      "path": "果冻冲击与造浪水槽/submission/src/scene2.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 16668,
+      "sha256": "8157f55cbf374e0f3fb18787c9a29881853d0b94318f1f93ff2f9550bbeb4bdd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\videoExport.js",
+      "path": "果冻冲击与造浪水槽/submission/src/videoExport.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 2563,
+      "sha256": "a7f973f244fd29a1c6ce7d4ef0bc01f39b1d640934e08bcea429f01a8335db74"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\waterSim.js",
+      "path": "果冻冲击与造浪水槽/submission/src/waterSim.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 9114,
+      "sha256": "2c7cd191f85985e1a69973d6875d5f6aa3c24121c6fb1b459601d1f3ab3e7932"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1570,
+      "sha256": "fa1eed6bcded658f0e867b1a62c7b8bfcd27940007994889c1c8c45996060323"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1457,
+      "sha256": "37fc1b535082a82b7e6e223a28945f10159d0e94df6106e5ed61a351cd0f47a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\solution.cpp",
+      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 12895,
+      "sha256": "54728be31f3557e8377be3e43cba30bfa15739018c59da7998aaab8c62f7a8ac"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 2812,
+      "sha256": "9056e2e00e5a7a0e019498a0e761d138a755fd4db1633d572b2c075e4ecfdcea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1318,
+      "sha256": "6fcba7132e28de0c594ff58b29ecf9603c8ba62a0f543c9b61e6aa40508d9666"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 672,
+      "sha256": "f28439878ed8718cbcbff8fe4d852065b45ed88c313016f00a517774d0d63328"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\答案\\第02题.json",
+      "path": "鲁班锁拆解/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 742,
+      "sha256": "a7ec2e6e6ffcb5b18b8fbc211cba0658c405591726743f199abaf895ac703f7f"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\dist",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\dev",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\__pycache__",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\best.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\best_lp.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\lp_polish.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\mkanswer.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search_log.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\verify.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\bundle.js",
+      "reason": "构建输出；生成入口 build.mjs"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\analyze.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\analyze.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\test_transpose.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\test_transpose.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": [
+    "数学竞赛原创试题"
+  ],
+  "created": "2026-11-07T01:22:19"
+}

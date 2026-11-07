@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "name": "Nested OS",
+  "launch": {
+    "command": "npm",
+    "args": [
+      "start",
+      "--",
+      "--data-dir",
+      "{dataDir}",
+      "--width",
+      "{width}",
+      "--height",
+      "{height}",
+      "--remote-debugging-port={port}"
+    ],
+    "cwd": ".",
+    "notes": "npm start 启动 Electron 45.2.1；主窗口标题 Nested OS。数据目录由 --data-dir 指定。默认静态服务端口 18106，桌面调试端口由 --remote-debugging-port 传入（建议 19106）。"
+  },
+  "mainWindow": {
+    "title": "Nested OS",
+    "automation": "Electron CDP",
+    "remoteDebugging": "通过启动参数 --remote-debugging-port={port} 提供 websocket 调试端点；主页面为 /src/index.html"
+  },
+  "bench": {
+    "api": "window.bench",
+    "version": 1,
+    "methods": ["ready()", "reset()", "inspect()"],
+    "notes": "根系统桌面渲染上下文中的 window.bench。ready 等待桌面可交互；reset 在当前 dataDir 内清空状态与实例编号；inspect 返回 systems/windows/browsers/players/charts/projections。"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "chartLabelColumn": "A",
+      "chartSeries": "D",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "downloads": "/Downloads",
+      "snapshots": "/Snapshots",
+      "recycleBin": "/Recycle Bin",
+      "compiler": "/System/compiler.nest",
+      "samplePrograms": "/System/programs",
+      "kernelHost": "根系统内核由宿主实现；子系统内核路径见 inner.kernelInParent",
+      "guide": "/Documents/操作说明.md"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "workbook": "/Demo/sample.sheet",
+      "compiler": "/System/compiler.nest",
+      "controller": "/System/programs/controller.nest",
+      "programs": "/System/programs",
+      "kernelInParent": "/System/subsystems/{instanceId}/kernel.nest",
+      "snapshots": "/Snapshots",
+      "notes": "内核源文件存放在父系统文件系统中；实例 id 为 inner-1、inner-2……。fixtures 中的路径指新建实例内部路径，kernelInParent 指父系统路径。"
+    }
+  },
+  "selectors": {
+    "desktop": "[data-testid=os-desktop][data-system-id]",
+    "window": "[data-testid=app-window][data-window-id]",
+    "appWindowByApp": "[data-testid=app-window][data-app-id=\"{appId}\"]",
+    "taskbarItem": "[data-testid=taskbar-item]",
+    "player": "[data-testid=player-view]",
+    "chart": "[data-testid=chart-source]",
+    "projectionTarget": "[data-testid=project-target][data-target-system-id]",
+    "systemControls": "[data-testid=system-new], [data-testid=system-pause], [data-testid=system-resume], [data-testid=system-restart], [data-testid=kernel-open]"
+  },
+  "notes": [
+    "启动后先显示根系统桌面，不自动播放演示。",
+    "浏览器 webview 为真实 Chromium 内核，外部网页不计入自定义逻辑预算与完整快照。",
+    "示例工作簿与场景文件在根系统 /Demo；每个子系统有独立的场景副本。",
+    "reset() 会关闭全部窗口与子系统、删除当前 dataDir 中的运行文件，并恢复预置素材与默认设置。"
+  ]
+}

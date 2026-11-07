@@ -1,0 +1,95 @@
+{
+    "task":  "Transformer前向推理的GPU加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "总分",
+                      "max":  100,
+                      "score":  2.1,
+                      "reason":  "官方 evaluate.py 得分为2.1，8个输入得分依次为3.8、6.7、0、0、0、2.7、0、3.4。输入4整个进程超过120秒，输入5第二次和输入7第三次运行超容差；其余5个输入通过全部正确性检查但加速比均小于1。"
+                  }
+              ],
+    "metrics":  {
+                    "score":  2.1,
+                    "G":  null,
+                    "performance_passed":  5,
+                    "performance_inputs":  8,
+                    "evaluate_report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\codex\\performance\\work\\evaluate-report.json",
+                    "summary":  [
+                                    {
+                                        "case":  "input_01",
+                                        "family":  "大批量短序列",
+                                        "R_i_ms":  251.372,
+                                        "C_i_ms":  550.215,
+                                        "s_i":  0.456861408722045,
+                                        "points_i":  3.8,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_02",
+                                        "family":  "高维",
+                                        "R_i_ms":  99.025,
+                                        "C_i_ms":  146.885,
+                                        "s_i":  0.6741668652347075,
+                                        "points_i":  6.7,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_03",
+                                        "family":  "长序列",
+                                        "R_i_ms":  213.807,
+                                        "C_i_ms":  1802.403,
+                                        "s_i":  0.11862330455508562,
+                                        "points_i":  0.0,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_04",
+                                        "family":  "超长序列",
+                                        "R_i_ms":  8670.56,
+                                        "C_i_ms":  null,
+                                        "s_i":  null,
+                                        "points_i":  0.0,
+                                        "status":  "PROCESS_TIMEOUT"
+                                    },
+                                    {
+                                        "case":  "input_05",
+                                        "family":  "窄头",
+                                        "R_i_ms":  508.853,
+                                        "C_i_ms":  null,
+                                        "s_i":  null,
+                                        "points_i":  0.0,
+                                        "status":  "WRONG_ANSWER"
+                                    },
+                                    {
+                                        "case":  "input_06",
+                                        "family":  "少头宽头",
+                                        "R_i_ms":  165.435,
+                                        "C_i_ms":  458.984,
+                                        "s_i":  0.36043740086800413,
+                                        "points_i":  2.7,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_07",
+                                        "family":  "深层",
+                                        "R_i_ms":  257.254,
+                                        "C_i_ms":  null,
+                                        "s_i":  null,
+                                        "points_i":  0.0,
+                                        "status":  "WRONG_ANSWER"
+                                    },
+                                    {
+                                        "case":  "input_08",
+                                        "family":  "常见配比",
+                                        "R_i_ms":  120.682,
+                                        "C_i_ms":  285.86,
+                                        "s_i":  0.4221716924368572,
+                                        "points_i":  3.4,
+                                        "status":  "PASS"
+                                    }
+                                ]
+                },
+    "notes":  "评的是提交目录工作目录中的 solution.cu（SHA256: F19B22DA5E0B987E633625895CA62F2897A27D03F0F6EA7A34CA0E309A951DB8）；git log 仅有初始题面提交 c82ce69，按规则不回退。提交和基线均在工作副本中按指定命令编译，未发现第九节1—5条的整题零分违规。仅运行一次官方 evaluate.py；基线24次运行全部通过，session_errors为空。G因存在失败输入由官方报告记为null。"
+}

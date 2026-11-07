@@ -1,0 +1,10 @@
+﻿const fs=require('fs');let p='js/models.js';let s=fs.readFileSync(p,'utf8');
+s=s.replace("      const scan = add(root, mesh(new THREE.ConeGeometry(2.2, 1.8, 32, 1, true), new THREE.MeshBasicMaterial({\n        color: accent, transparent: true, opacity: 0.08, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false\n      })), 0, 0.9, 0);\n      parts.scan = scan;", "      const scanRing = add(root, mesh(new THREE.RingGeometry(1.4, 2.0, 40), new THREE.MeshBasicMaterial({\n        color: accent, transparent: true, opacity: 0.12, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false\n      })), 0, 0.08, 0);\n      scanRing.rotation.x = -Math.PI / 2; parts.scan = scanRing;");
+s=s.replace("root.scale.setScalar(1.18);", "root.scale.setScalar(1.22);\n    // friendly ground ring (helps silhouette at a distance)\n    const groundRing = new THREE.Mesh(new THREE.RingGeometry(1.5, 1.7, 36), new THREE.MeshBasicMaterial({\n      color: accent, transparent: true, opacity: 0.28, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false\n    }));\n    groundRing.rotation.x = -Math.PI / 2; groundRing.position.y = 0.03; root.add(groundRing); parts.groundRing = groundRing;");
+s=s.replace("root.scale.setScalar(1.32);", "root.scale.setScalar(1.55);");
+s=s.replace("root.scale.setScalar(1.28);", "root.scale.setScalar(1.45);");
+s=s.replace("root.scale.setScalar(1.2);", "root.scale.setScalar(1.4);");
+s=s.replace("root.scale.setScalar(1.22);", "root.scale.setScalar(1.45);");
+s=s.replace("root.scale.setScalar(1.25);", "root.scale.setScalar(1.45);");
+s=s.replace("if (p.scan) p.scan.rotation.y += dt * 0.6;", "if (p.scan) { p.scan.scale.setScalar(1 + Math.sin(time * 2.2) * 0.08); p.scan.material.opacity = 0.08 + (Math.sin(time * 1.7) + 1) * 0.04; }");
+fs.writeFileSync(p,s);

@@ -42,6 +42,12 @@
     "compare": "勾选的 2 到 4 个模型逐项差多少"
   },
   "sort": {
+    "cost": "测试开销",
+    "costDesc": "测试开销（高→低）",
+    "costBy": "测试开销 ↑",
+    "costByDesc": "测试开销 ↓",
+    "costHeadAsc": "按测试开销从低到高排序",
+    "costHeadDesc": "按测试开销从高到低排序",
     "label": "排序",
     "compareOff": "对比视图按勾选顺序排列，不用排序"
   },
@@ -60,6 +66,8 @@
     "passCount": "及格 {a} │ 未及格 {b}"
   },
   "row": {
+    "ariaCost": "按{by}第 {rank} 名，{name}，测试开销 {value}，总分 {score} 分",
+    "ariaCostNone": "测试开销数据暂缺，{name}，总分 {score} 分",
     "aria": "第 {rank} 名，{name}，{label} {score} 分",
     "ariaSort": "{by}第 {rank} 名，{name}，{by} {value} 分，总分 {score} 分",
     "ariaSortNone": "{by}未出分，{name}，总分 {score} 分"

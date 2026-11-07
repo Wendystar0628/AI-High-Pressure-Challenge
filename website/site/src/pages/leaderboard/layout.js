@@ -10,12 +10,15 @@ export const BAR_H = 20;
 /** Height of the axis bar (px), the same in every view so nothing jumps. */
 export const AXIS_H = 54;
 
+/** Room right of 100 for a plot W px wide: PAD_R, less in a narrow (phone width) plot. */
+export const padR = (W) => (W < 240 ? Math.max(14, Math.round(W * 0.14)) : PAD_R);
+
 /** The fixed scale: 0–100 onto the plot cell (never rescaled to the data). */
 export const scaleX = (W) =>
   d3
     .scaleLinear()
     .domain([0, 100])
-    .range([0, Math.max(10, W - PAD_R)])
+    .range([0, Math.max(10, W - padR(W))])
     .clamp(true);
 
 /**

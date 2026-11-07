@@ -42,6 +42,12 @@
     "compare": "2 to 4 ticked models, measure by measure"
   },
   "sort": {
+    "cost": "Test cost",
+    "costDesc": "Test cost (high→low)",
+    "costBy": "Cost ↑",
+    "costByDesc": "Cost ↓",
+    "costHeadAsc": "Sort by test cost, low to high",
+    "costHeadDesc": "Sort by test cost, high to low",
     "label": "Sort",
     "compareOff": "Compare keeps the ticking order; sorting does not apply"
   },
@@ -60,6 +66,8 @@
     "passCount": "Passed {a} │ Below {b}"
   },
   "row": {
+    "ariaCost": "Rank {rank} by {by}, {name}, test cost {value}, total {score}",
+    "ariaCostNone": "No test cost data, {name}, total {score}",
     "aria": "Rank {rank}, {name}, {label} {score}",
     "ariaSort": "Rank {rank} in {by}, {name}, {by} {value}, total {score}",
     "ariaSortNone": "No {by} score yet, {name}, total {score}"

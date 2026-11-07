@@ -1,4 +1,5 @@
 // The model side panel (leaderboard.md「模型侧面板」): total, two kinds,
+// the test cost (when the data has costs: amount, tag, plan, token total, notes),
 // 8 category scores and 12 task scores of one model, with the primary button
 // 「查看全部得分」(→ the model scores page), compare and previous / next.
 // Pushed in from the right; the address gets ?model=<id> while it is open.
@@ -20,6 +21,7 @@ import { rankOf, modelStatus, progress } from '../core/rank.js';
 import { fmtScore, fmtPct, fmtRank, fmtDate, fmtRankOf } from '../core/format.js';
 import { closeDialog, scramble, flashDone } from '../vendor/stellar/fx.js';
 import { toggleCompare, isCompared, isCompareFull, onCompareChange } from '../ui/compare.js';
+import { hasCosts, costOf, costKey, costTag, fmtCNY, costFacts, costNotes } from '../ui/cost.js';
 import { dur, relayName } from '../motion.js';
 
 let dlg = null;
@@ -111,6 +113,9 @@ function render(id, { fresh }) {
     fig(t('common.panel.design'), s.kinds?.design, des, des.rank === 1),
   );
 
+  // test cost: amount and tag on one line, then plan and token total, then what qualifies the amount
+  const costSec = hasCosts(data) ? costBlock(id) : null;
+
   const catRows = data.categories.map((c) => {
     const v = s.categories?.[c.key];
     const r = rankOf(data, id, c.key);
@@ -147,6 +152,7 @@ function render(id, { fresh }) {
     head,
     facts,
     figs,
+    costSec,
     h('section.site-panel-sec', h('h3.st-pair', h('span.st-eyebrow.slash', t('common.panel.categoriesEyebrow')), h('span', t('common.panel.categories'))), h('ul.site-panel-rows', catRows)),
     h('section.site-panel-sec', h('h3.st-pair', h('span.st-eyebrow.slash', t('common.panel.tasksEyebrow')), h('span', t('common.panel.tasks'))), h('ul.site-panel-rows.tasks', taskRows)),
     h('p.st-actions.site-panel-actions'),
@@ -158,7 +164,23 @@ function render(id, { fresh }) {
   const grow = () => body.querySelectorAll('.site-panel-bar > i').forEach((el) => el.style.setProperty('--v', el.dataset.v));
   if (fresh) setTimeout(grow, dur('drawerIn'));
   else grow();
-  body.querySelectorAll('.st-figs b').forEach((b) => scramble(b, dur('scramble') || 1));
+  body.querySelectorAll('.st-figs b, .site-panel-cost-v b').forEach((b) => scramble(b, dur('scramble') || 1));
+}
+
+function costBlock(id) {
+  const cost = costOf(data, id);
+  const key = costKey(cost);
+  return h(
+    'section.site-panel-cost',
+    { class: `is-${key}` },
+    h(
+      'div.site-panel-cost-head',
+      h('h3.st-pair', h('span.st-eyebrow.slash', t('common.cost.eyebrow')), h('span', t('common.cost.label'))),
+      h('p.site-panel-cost-v', key === 'none' ? null : h('b.num', { 'data-fx': '' }, fmtCNY(cost.cny)), h('span', costTag(cost))),
+    ),
+    h('ul.st-facts.st-field.site-panel-cost-facts', costFacts(data, id).map((s) => h('li', s))),
+    costNotes(data, id).map((s) => h('p.site-panel-cost-note', s)),
+  );
 }
 
 function renderActions() {

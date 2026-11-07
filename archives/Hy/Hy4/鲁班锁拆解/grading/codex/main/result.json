@@ -1,0 +1,63 @@
+{
+    "task":  "鲁班锁拆解",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "第01题",
+                      "max":  8,
+                      "score":  0,
+                      "reason":  "评分端检查为完整合法拆解，N=8、B=8；但会话实际运行自编BFS搜索脚本生成答案，且批量调用检查器筛选移动，依工具限制整题记0分。"
+                  },
+                  {
+                      "name":  "第02题",
+                      "max":  8,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第03题",
+                      "max":  12,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第04题",
+                      "max":  12,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第05题",
+                      "max":  12,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第06题",
+                      "max":  12,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第07题",
+                      "max":  18,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  },
+                  {
+                      "name":  "第08题",
+                      "max":  18,
+                      "score":  0,
+                      "reason":  "未提交本题答案；同时会话存在自编程序搜索路线及批量试探移动，按指南整题记0分。"
+                  }
+              ],
+    "metrics":  {
+                    "submitted_answers":  1,
+                    "geometrically_valid_answers":  1,
+                    "puzzle01_moves":  8,
+                    "tool_violation":  true,
+                    "total_score":  0
+                },
+    "notes":  "评分版本：当前工作目录（git仅有368a3f1“题面”初始提交，按规则直接评工作目录），已复制到工作目录下submission。工具违规依据：归档 E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Hy\\Hy4\\鲁班锁拆解\\20261106-184503\\session.log 第58060–58090行记录遍历零件子集和六方向、批量运行check.py并筛除碰撞；第85397–85497行创建_solve.py，其中find_out_branches执行BFS、newpos自动更新状态、check.sweep筛选候选；第85546–85556行实际执行timeout 300 python _solve.py 01 3 4000 6，退出码0并输出已生成8步答案；第85584–85595行再次执行python _solve.py 01 5 12000 12并成功。该脚本借用允许的检查器实现自动搜索，仍违反题面限制。按指南全部0分。几何复核仅第01题有提交且完整合法8步，其余7题缺失。工具调用摘要与几何报告保存在work/session_tools.json和work/geometry.json。未执行受测搜索脚本。"
+}

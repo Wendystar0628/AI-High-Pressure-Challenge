@@ -205,6 +205,56 @@
     "weights": "自定义权重",
     "pending": "评测中"
   },
+  "cost": {
+    "label": "测试开销",
+    "eyebrow": "Test cost",
+    "basis": {
+      "subscription": "按订阅折算",
+      "api": "API 实付",
+      "none": "数据暂缺"
+    },
+    "per": {
+      "month": "{price}/月",
+      "week": "{price}/周",
+      "year": "{price}/年"
+    },
+    "credits": "{n} 积分",
+    "planTerms": "{name}（{terms}）",
+    "sep": "，",
+    "listSep": "、",
+    "plan": {
+      "subscription": "套餐 {plan}",
+      "api": "按 {plan} 账单"
+    },
+    "tokensUnit": "{v} Token",
+    "tokens": "{n} 题合计 {v}",
+    "tokensNone": "Token 用量没有记录",
+    "tokensNoneShort": "Token 数据暂缺",
+    "est": "含估算",
+    "legendEst": "含估算（部分题没有用量记录）",
+    "tokensHead": "Token",
+    "estSuffix": "（含估算）",
+    "noteQuota": "按 ModelDial 每周额度，把用掉的额度折算成订阅费",
+    "noteApiPrice": "ModelDial 无额度数据，按官方 API 价格估算",
+    "noteApiPriceUsd": "ModelDial 无额度数据，按官方 API 价格估算（API 等值 {usd}）",
+    "noteCredits": "按会话消耗的积分折算",
+    "noteNone": "没有可用的额度或价格数据",
+    "fitted": "含估算：{list} 没有用量记录，按估算",
+    "fittedAll": "{n} 题都没有用量记录，全部按估算",
+    "sr": "测试开销 {cost} 元，{basis}",
+    "srNone": "测试开销数据暂缺",
+    "srAppend": "{text}，{cost}",
+    "srTokens": "{money}，{tokens}{est}",
+    "srEst": "，含估算",
+    "source": "测试开销：订阅模型按每周额度（数据来自 {src}）把用掉的额度折算成订阅费，没有额度数据的按官方 API 价格估算；API 模型取实付金额。1 美元 = {rate} 元，额度数据 {date}。",
+    "sourceUrl": "订阅额度数据来源：{url}",
+    "retest": "如对模型实测消耗量有疑惑，可自行从 GitHub 下载试题及其隔离环境，自行测试后对比：{repo}",
+    "csv": {
+      "cny": "测试开销（元）",
+      "basis": "开销依据",
+      "tokens": "Token 合计"
+    }
+  },
   "export": {
     "button": "存为图片",
     "saved": "已保存",

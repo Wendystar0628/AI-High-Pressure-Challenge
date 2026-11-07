@@ -1,0 +1,2598 @@
+{
+  "schema": 1,
+  "model": "DeepSeek/V4.1Flash",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\claude\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7739,
+      "sha256": "a5d870bccb827786470cd76527559a0153d0147533285e4dc171ead4dfd15197"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 9818,
+      "sha256": "c672c59d56c8b45bd169d803d8efa2d4e1f3ed357c61b848c8dec9ad9a63f20f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7899,
+      "sha256": "b9507f93415c0e692d9e011ab57025c61828754d6c5d88821cde614ac72b63e6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7930,
+      "sha256": "1d41a7ece63fd2608d57d131ff0c4a6eb5f112ead2cf8ba6c3f19dbf9fa0b264"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\README.md",
+      "path": "AE风味动效设计编辑器/submission/README.md",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 2746,
+      "sha256": "c9a4bfb832deac6600666efe4bc34ab0c47a5c4c5f98b2d65b49c04c580fc76e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\css\\app.css",
+      "path": "AE风味动效设计编辑器/submission/css/app.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 51488,
+      "sha256": "f52ef7c936559b6c837349c45b1481a98a1d307b954f0ba0ef01c3fef59d722f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 26369,
+      "sha256": "4c1047332333046f860c4fa6030355053d352e2e258d8f01c13f47e62415d29d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\app.js",
+      "path": "AE风味动效设计编辑器/submission/js/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 92085,
+      "sha256": "bfcba323ac33119a9b32d980e9a673999965530595699886a5e32868acb3fc06"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/js/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11340,
+      "sha256": "629dacb1f4d9af45f7a8ccd97c17d5547ef7068e1f1a19c5d1ba710c6890c948"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\canvasview.js",
+      "path": "AE风味动效设计编辑器/submission/js/canvasview.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 54816,
+      "sha256": "902d613dca3a0a37dc3671ba63e19e2b9476fc3c4e53989d1f3543512173e6ed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\curves.js",
+      "path": "AE风味动效设计编辑器/submission/js/curves.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 31597,
+      "sha256": "35a525bfabb9a1a9900c4f8179d5374686e747a9327fba9b913b0803f494965c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\data.js",
+      "path": "AE风味动效设计编辑器/submission/js/data.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 37137,
+      "sha256": "1bd3d213a68f382eff58db43c574831b0b7777af3e083a341719109ba1179a3f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/js/demo.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 58239,
+      "sha256": "72930907a5258550c4fa35421669ef2683d01a50467e16a2621a9081af1b5fdd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\eval.js",
+      "path": "AE风味动效设计编辑器/submission/js/eval.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 41419,
+      "sha256": "883ce6c4cff2fe5edefe0f6bc679ffe2c8f39b1a0896334588d6b1249f19b4fc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\geometry.js",
+      "path": "AE风味动效设计编辑器/submission/js/geometry.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 39595,
+      "sha256": "e4051711e0ffabf78d2586e0d2c82aa2a289b9aa8b635dbbdf374fcc42faaaff"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\mesh.js",
+      "path": "AE风味动效设计编辑器/submission/js/mesh.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 23114,
+      "sha256": "21f63e30dd09c101c122efd1475d42eba4e66255ac7d36e6a18dfe538a758bed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\nodes.js",
+      "path": "AE风味动效设计编辑器/submission/js/nodes.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17165,
+      "sha256": "99e7f211e72e6b7554a6ef3bb96aaa47dad902714da0f37178991a3a33852006"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\nodesui.js",
+      "path": "AE风味动效设计编辑器/submission/js/nodesui.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 28082,
+      "sha256": "311b005552e4197f01cbd5e23dbe57e7f4985fefad3bbdc927c4b6c54c9b58ac"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\particles.js",
+      "path": "AE风味动效设计编辑器/submission/js/particles.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11407,
+      "sha256": "86228b40b5cf63582a58afda544dd4015ac9b62304d64b4d7905a128e1f431cd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\projectpanel.js",
+      "path": "AE风味动效设计编辑器/submission/js/projectpanel.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 5147,
+      "sha256": "074e2c2b8a0fb305215e74bbf730a35d7710151afb9e522d134acf314e53a89d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\properties.js",
+      "path": "AE风味动效设计编辑器/submission/js/properties.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 44974,
+      "sha256": "9fd0cf59a8abb162805c5ffad75ca32ff292c1e5cb7295477cf18d6bf6c1dd03"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\render.js",
+      "path": "AE风味动效设计编辑器/submission/js/render.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 84941,
+      "sha256": "bbbaa3ef4469d8fa6cc3db0877202d2d9072bbce7e9724b9075a597fb5901a90"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\scene.js",
+      "path": "AE风味动效设计编辑器/submission/js/scene.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 17093,
+      "sha256": "230f6542d27417042d3fdbd85b0af024453e619baa564a224ea3c4ddb9420ce1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\text.js",
+      "path": "AE风味动效设计编辑器/submission/js/text.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 19503,
+      "sha256": "5952b0f9bc2cae2f0ff41945afcf3b18c3b12623974a04f5a24d61a7a7fce371"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\timeline.js",
+      "path": "AE风味动效设计编辑器/submission/js/timeline.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 29217,
+      "sha256": "f7d932bfbc6327e9bc9dcb4dacbd2b07a7c23d0ab4a937c3954d8c73293d049c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\js\\util.js",
+      "path": "AE风味动效设计编辑器/submission/js/util.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 16271,
+      "sha256": "b902606903043288443099a16539da3defc240e0c674ae22fcdef2195c0d81bf"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 7788,
+      "sha256": "212fedce36a7a283063428a5ed70962c5496ebc5779f9f34c9fac573c663462d"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 8180,
+      "sha256": "b1f7cba7488767eb7b9c4a3707d8fe24c6687d7597dd4c1a14e9a0735f3c79f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6448,
+      "sha256": "793d135734819ad5fcfc3bd4f8f792698a8c556e80e0a64293953e9dad7224d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6574,
+      "sha256": "b3b00877c773962abd2348a68a553aa8c9c1b4024af771ef0a48fc611352fc4c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\css\\style.css",
+      "path": "NVIDIA_B200网页艺术/submission/css/style.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 100308,
+      "sha256": "1f7c109685a5e0b51a31ad8511c72c5b4e15803112ccf265c2ef935013083be0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\index.html",
+      "path": "NVIDIA_B200网页艺术/submission/index.html",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 40426,
+      "sha256": "45dd2cc73475250096bc8f1edb5e95a5ed0d288ef148a542764a74e743429137"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\data.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/data.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 12974,
+      "sha256": "54a89dbbbf2b4347d429228a6036bb9fef765f9b46ec9ecd3fa5ec4848d3a1a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\main.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/main.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 20056,
+      "sha256": "edead0ce3da170042dcff2a0ba2c896e8359746ee655bb1914cf1a0ef84fd86e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\quant.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/quant.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9849,
+      "sha256": "785a428de615553ebe74e804ba7e528ad753a23f8313eacdaa6874a5090981fe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\scene.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/scene.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 135163,
+      "sha256": "993aac47ee3716137e5a8c28a0edea7887b4eb3ff1bd655b5e4a70e402226c3f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\ui.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/ui.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 49393,
+      "sha256": "d33616c5a30192b420ab6fc56f51c247bd13ab1c9186280f866abeba22e7ff70"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\ui2.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/ui2.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 25906,
+      "sha256": "62053421b2f9c522c57d4f5b1e05ede083dd0217609208269afb13d830140009"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\ui3.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/ui3.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 35937,
+      "sha256": "4a6f0da24e62860b59f1ee34fcda656559239684ea426cdfb4030bf90ef9a759"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\ui4.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/ui4.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 43273,
+      "sha256": "d1e76d59ba0320c5ad8c51de74d1a806bd57dd1c8494d3220dfcb5fdc36e4edd"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
+      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 2695,
+      "sha256": "f4e83f5953a15d6a96129ffa2f8794010120e99821388902781208580ac7871a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
+      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1428,
+      "sha256": "b4f1e815d82acc59a9949c1edc1db35171efc6ca3bdb4446f187a039f81672c3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\solution.cu",
+      "path": "Transformer前向推理的GPU加速/submission/solution.cu",
+      "role": "submission",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 49196,
+      "sha256": "8d879d8c1088d6ad6b65eecac0fbfa7d56001899fe6bbc1b4cdb0d05c0aa1f68"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\动态路由塔防\\claude\\main\\result.json",
+      "path": "动态路由塔防/grading/claude/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 5308,
+      "sha256": "73f7ad4a68f41679fa4e7581defffd8b7bc2e0a56a4a9f13a4c038937b3a1947"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 6733,
+      "sha256": "0fb7201c4156391f1f26ef2304ecb1431835e1b16fc6ac16407220cecd7dc898"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4074,
+      "sha256": "f0b00f78f54252d48b67e8afa41552923797b31542f7935bad24ef3b30a08699"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\评分表_Opus5.5.md",
+      "path": "动态路由塔防/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4157,
+      "sha256": "f9cbf4202667f08a55ddd428bcc6ef22d39c76d536a57365a8a71b177fc9f7c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\README.md",
+      "path": "动态路由塔防/submission/README.md",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1812,
+      "sha256": "e107303c82e7823148a736ed7eb5c106051ef577c89e41e6222ba18a03b32b9c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 56732,
+      "sha256": "96b4c7e8eba563fed9c01c657b583e39959a1269dd33e76fce71e9e756900a09"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\audio.js",
+      "path": "动态路由塔防/submission/js/audio.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 13051,
+      "sha256": "956fffd6aa7f3f55218ca034be30d420d884965d587485532392d9bb3a3f3246"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\data.js",
+      "path": "动态路由塔防/submission/js/data.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 32435,
+      "sha256": "a00435bc79f085534da7ca19671622e68b70c90d35624e77bca209db9469cb7e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\demo.js",
+      "path": "动态路由塔防/submission/js/demo.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 27776,
+      "sha256": "78432cbe683b8a4d181693d7ae3e6fd9859f218183fbf0988f0db75516416f18"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\engine.js",
+      "path": "动态路由塔防/submission/js/engine.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 97567,
+      "sha256": "70104fb7bde2ea6ad2730d0a436eb1b324639c2ecb5c580f8d08d409f9f5faed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\game.js",
+      "path": "动态路由塔防/submission/js/game.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 82105,
+      "sha256": "4db07c3e234df93300dd31f8408e86fc00582e4e4164f60e0ff83b6769371719"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\main.js",
+      "path": "动态路由塔防/submission/js/main.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1859,
+      "sha256": "8cce270fd8d284f838835ae27393ff1df655096ab9f40e9158b973910a0b810b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\models.js",
+      "path": "动态路由塔防/submission/js/models.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 35954,
+      "sha256": "ebcfe448c6a06f8b3f916818a6e653c666dbf3dda5203659ef336b83f70cfe07"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\js\\ui.js",
+      "path": "动态路由塔防/submission/js/ui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 84731,
+      "sha256": "08d5f099082bd37febc25bd217d903be6a2badf92c1da929184f6e389cd67253"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\ascii.txt",
+      "path": "动态路由塔防/submission/tools/ascii.txt",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1874,
+      "sha256": "83b7d1cb37ee6d6e3e9f12c9d1ff115f568ccb14421866043c500829519be386"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance1.js",
+      "path": "动态路由塔防/submission/tools/balance1.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3670,
+      "sha256": "1d36b033308bcfee26610fb001a2d059983aafdfb10d0a38fc41cba4c6cff97b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance2.js",
+      "path": "动态路由塔防/submission/tools/balance2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5453,
+      "sha256": "fc8a09c7db042722ce6b79c95c2eb5587972ca1b11183a8f4b8c0c5aa27a0189"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance3.js",
+      "path": "动态路由塔防/submission/tools/balance3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 299,
+      "sha256": "25915288d02deef6990bca26f946a8e05eb5924edf840641c39d2623d82f2534"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance4.js",
+      "path": "动态路由塔防/submission/tools/balance4.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3279,
+      "sha256": "35e267b01e6c2f420ebfeb87eeebc7cb91ec5af44cb795ab959c722fc608c598"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance5.js",
+      "path": "动态路由塔防/submission/tools/balance5.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 578,
+      "sha256": "0f8d8c9a5185736e925080df00c042d06706761223dec6ecdb82498e9a085c85"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\balance6.js",
+      "path": "动态路由塔防/submission/tools/balance6.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2716,
+      "sha256": "fa468f8a26213ecaad7e534f7018efbfb3aef81327c72269d2a516347a920cae"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\boss2.js",
+      "path": "动态路由塔防/submission/tools/boss2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 724,
+      "sha256": "24835d6d452bf90c3c4ac83da1ef51e189bd7fb8a4022db6da7d4e161bcbbaf5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\boss3.js",
+      "path": "动态路由塔防/submission/tools/boss3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 326,
+      "sha256": "1e5ab7ed281ca940348b6833e51721079ed392d237d216c944e03804132ed65c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\boss4.js",
+      "path": "动态路由塔防/submission/tools/boss4.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 326,
+      "sha256": "d22976614cefdc78123209d431fee41829a485b65afe4773c1c9aaa240ae2f0b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\bossbalance.js",
+      "path": "动态路由塔防/submission/tools/bossbalance.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1646,
+      "sha256": "0b1ac7d8031f57c159d0e705394a8230d7d230486d4d04fe216d5140df15a275"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\chosen.js",
+      "path": "动态路由塔防/submission/tools/chosen.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2241,
+      "sha256": "53f624a51462e665814bcb81f987e9778ec0b245a3b4e0e615edf5a4420a67aa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\confirmcss.js",
+      "path": "动态路由塔防/submission/tools/confirmcss.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 568,
+      "sha256": "ee5f9ea5157493bfb752408bf7de95deb896f1e05ed0a8980d7c79bbfeae8657"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\css2.js",
+      "path": "动态路由塔防/submission/tools/css2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 987,
+      "sha256": "cced0ca6fd0468755edf6075d1f172867095c021023ab0aaf6ae1907b6e35b08"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\css3.js",
+      "path": "动态路由塔防/submission/tools/css3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 920,
+      "sha256": "20fd3590996c961aa52914a5cf76ada8bca37f75f5747717ae6c935799a3340d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demo1.js",
+      "path": "动态路由塔防/submission/tools/demo1.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1511,
+      "sha256": "2cdee97cb068751dd1d0ae40cec23d9ea9ca688865810ba8ddd50fa9b5f05b74"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demo1a.js",
+      "path": "动态路由塔防/submission/tools/demo1a.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 705,
+      "sha256": "967e88996c1c4a50a58ce90d44f6ac062473008359e59c7c43de12fc90299396"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demo2fix.js",
+      "path": "动态路由塔防/submission/tools/demo2fix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1944,
+      "sha256": "762ce20dd867e3b2b6f077b1a63f05c778774ab43e775c0259eac99d41f922ca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demo3fw.js",
+      "path": "动态路由塔防/submission/tools/demo3fw.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 253,
+      "sha256": "866cce9f68c90773aabc3d898f5d38a64095ad428b8af8dc0f19abcbb31ea715"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demo3swap.js",
+      "path": "动态路由塔防/submission/tools/demo3swap.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 624,
+      "sha256": "2f125b456c45ecfcaad994f3fd27a887a1957c27d0bc5a629f845ac1b00ad11c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\democam.js",
+      "path": "动态路由塔防/submission/tools/democam.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 868,
+      "sha256": "61070b8e1d0c081123e20eaa1e5e19b9b349058250696fd230fa23c5bfa63cb2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\democoords.js",
+      "path": "动态路由塔防/submission/tools/democoords.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3702,
+      "sha256": "5adadb5dd4e069ee9339382c459aba72c9644d6f3ec1d3c4f21733cffb8f7bca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demoplat.js",
+      "path": "动态路由塔防/submission/tools/demoplat.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 393,
+      "sha256": "1cc9741c938db970e2bfa52f7b62ba808d5ee01850f699759bcfb3b0a524abbe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demoplat2.js",
+      "path": "动态路由塔防/submission/tools/demoplat2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1324,
+      "sha256": "4a4b928b2c0531ad7cb247d1966441562add2d4cd25f71bf1f7962114d863755"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\demotweak.js",
+      "path": "动态路由塔防/submission/tools/demotweak.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 655,
+      "sha256": "be3937c2d861c9a20f085982ab18c4f31cc3c3042e16e7ea875e36b110f18c48"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\design.js",
+      "path": "动态路由塔防/submission/tools/design.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5583,
+      "sha256": "e206599d57842d5dcb20e50a6ddf6459ca6bf1967ebb0f32476ee0acde49a5a3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\extra.js",
+      "path": "动态路由塔防/submission/tools/extra.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2193,
+      "sha256": "3b6a15ba8c4eb6314fbfa77940a9d4259bf06946f2c17391d436b513d75a4d9a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\fix1.js",
+      "path": "动态路由塔防/submission/tools/fix1.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 458,
+      "sha256": "0aba282d4aaa17601a86b639e7db18f837e37d00bf4ebf617f53d900ddc174b3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\fix2.js",
+      "path": "动态路由塔防/submission/tools/fix2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 359,
+      "sha256": "6c275d37a14d99cc1047a18124d0a3b8527498d0b391eda94c07cfb67173773b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\fix3.js",
+      "path": "动态路由塔防/submission/tools/fix3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1260,
+      "sha256": "6bed2d0c636aed6f4c1466b0edb4dfb5d9660e491eb23e210f8348aa7cb9172d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\fixui.js",
+      "path": "动态路由塔防/submission/tools/fixui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1648,
+      "sha256": "d5ab71613f79f67b092a698040b7fe77345e3bfe5a6a4b8a70f69b5cf3fea81b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\hpbar.js",
+      "path": "动态路由塔防/submission/tools/hpbar.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3719,
+      "sha256": "16dda139fdbc49c3b5d45383baac98488005bb9ba94b30ed5f356a5ba7956015"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\hpbarsize.js",
+      "path": "动态路由塔防/submission/tools/hpbarsize.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 674,
+      "sha256": "01890fdb5aed5f49db75ea03d50d3140543b359064d163ba6810f301f997fa0f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\layouts.json",
+      "path": "动态路由塔防/submission/tools/layouts.json",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1118,
+      "sha256": "a96eb861c9095f2586aebbf7f3a94b33bb9b8f921d18e9ed37cb4a06453d5843"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\leakdmg.js",
+      "path": "动态路由塔防/submission/tools/leakdmg.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1486,
+      "sha256": "7c8cb0bfcd5bcbd280182ba7150627d3b5ebea9181655cc084e0692bde0e5b0b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\lock2.js",
+      "path": "动态路由塔防/submission/tools/lock2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3737,
+      "sha256": "b5d8b0898d7156163b773b72c414e3b1fd2982d835339e407f6fc9a7fe4a94eb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\lockfix.js",
+      "path": "动态路由塔防/submission/tools/lockfix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 876,
+      "sha256": "b9d1c09f6be7a238352fe78369383da006e4216c6aab20c3e95844bb9e83c40b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\map3plat.js",
+      "path": "动态路由塔防/submission/tools/map3plat.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 951,
+      "sha256": "605edad69ee21e7cb880ce5b16151cbef9d853785bc459194273a22bdf021196"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\mapcheck.js",
+      "path": "动态路由塔防/submission/tools/mapcheck.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4783,
+      "sha256": "0a8a00e4f3ba4b4a0b48e2e018f9bfc267926af1c13c62e98cc0c90dfc4eec71"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\models2.js",
+      "path": "动态路由塔防/submission/tools/models2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1837,
+      "sha256": "3b335d2a0020ddf4284ad8a2efa1a48cadf70e95525b5457aac657acfda11621"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\patch.js",
+      "path": "动态路由塔防/submission/tools/patch.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 483,
+      "sha256": "0a75ef8bf4beed2ead0742f881f728b03734cdaa259b8aed1a390141302dad1d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\patch2.js",
+      "path": "动态路由塔防/submission/tools/patch2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 632,
+      "sha256": "246c4d68e603e7eb2626661d0f9eb333526f914ac9453a4ab5b2d94540dbb6ff"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\patch3.js",
+      "path": "动态路由塔防/submission/tools/patch3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 494,
+      "sha256": "18cfc7ffdf34869904d2c0b1212c72859d094f69aee12c4f54502e7607c63edc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\patch4.js",
+      "path": "动态路由塔防/submission/tools/patch4.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 458,
+      "sha256": "8d1607fcfd52e6be59bcb61f1eab8dc5b28b121f5f64884dc03fefd3b8307d15"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\pick.js",
+      "path": "动态路由塔防/submission/tools/pick.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2501,
+      "sha256": "a8b57c579688b84e8746255c3df33be7f12b72a89a0a75a8671001223abf400f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\pick2.js",
+      "path": "动态路由塔防/submission/tools/pick2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2645,
+      "sha256": "6e82adf34c787e5602193c47472e28cee8c4a1ed86deced45574da2552449af3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\pointerfix.js",
+      "path": "动态路由塔防/submission/tools/pointerfix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 307,
+      "sha256": "34dd765219c68f1d209f6af77f9a8e239f0118146cdef9c3f37691c88ab288f4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\polish1.js",
+      "path": "动态路由塔防/submission/tools/polish1.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1054,
+      "sha256": "f7cf1769f3e3591fcddfe1eb0ee26469e9041c1a0dcfe82b3ba18134d089206b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\previewstrong.js",
+      "path": "动态路由塔防/submission/tools/previewstrong.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1689,
+      "sha256": "af4724c509b851f5039f872c646373d1edd5e623fcb1a728541e9ba88dc599c1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\responsive1660.js",
+      "path": "动态路由塔防/submission/tools/responsive1660.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 179,
+      "sha256": "eefc38a8da8a9b2aa9a499ee86cb7f40705499f7ba0c8465bd0e1ffb147a5210"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\roads.js",
+      "path": "动态路由塔防/submission/tools/roads.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1965,
+      "sha256": "6620eac16aae8007497ecc640b80dc8edb52c04ec25d719f6895dce612cb84cf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\routes.js",
+      "path": "动态路由塔防/submission/tools/routes.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4682,
+      "sha256": "b6d8c34b14e1e723033aaca8b722999743af64295b522472dbb07030dc3f1788"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\routesig.js",
+      "path": "动态路由塔防/submission/tools/routesig.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 698,
+      "sha256": "c447deba1e00fd3399e84c128c6320b5bcd96673e2473bf01d76160c6fb2e059"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\rows.js",
+      "path": "动态路由塔防/submission/tools/rows.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 452,
+      "sha256": "9adbbfd0fd4591c3aba353db6b72d2a4487473e9933fd7c861ab6bf7ece8240b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\rules.js",
+      "path": "动态路由塔防/submission/tools/rules.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2680,
+      "sha256": "26f1dcef4c25ae5582dfc6ce64a6043a17613a4ef8e0ec1c4a4cdbb94b8472e3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\scripted.js",
+      "path": "动态路由塔防/submission/tools/scripted.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 277,
+      "sha256": "2f896c69a2974f7b9f2aa3676b4ad5e9304841503680b54502ceab2b48ba419e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\scriptguard.js",
+      "path": "动态路由塔防/submission/tools/scriptguard.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 242,
+      "sha256": "dda4151c0c1287bbe008c9f78bcd0df82f3f3132301dcd7b02049ed50ea1f009"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\sharedfix.js",
+      "path": "动态路由塔防/submission/tools/sharedfix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1030,
+      "sha256": "63d976b35fcdeb39afe06112627d52d1fb76c1740b1693afb32f8681ad3dcd77"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\skillcss.js",
+      "path": "动态路由塔防/submission/tools/skillcss.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 370,
+      "sha256": "960d2996bd645b7e5c0d5cb5d66fb90eb35147a4c1bf96dae249d55bbbe2b437"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\skillui.js",
+      "path": "动态路由塔防/submission/tools/skillui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1123,
+      "sha256": "434ee23c312cae5080fd2e310b39975d604054564bf77968c6097425fc7df922"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\subfix.js",
+      "path": "动态路由塔防/submission/tools/subfix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 255,
+      "sha256": "36519b21cc32210178b4a2d4dc4d32e7625196c14bc3870ef09d56f3e0aaa939"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\syntax.js",
+      "path": "动态路由塔防/submission/tools/syntax.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1114,
+      "sha256": "7112c837bd5b992048a824dabe62a2421ab608b00f86458c10987aa226d965bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\toastfix.js",
+      "path": "动态路由塔防/submission/tools/toastfix.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1231,
+      "sha256": "608b28b3fb5a4af2f2bd912732c60ff3b8ca907929a03a9215bf864a5f768579"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\ui2.js",
+      "path": "动态路由塔防/submission/tools/ui2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 4424,
+      "sha256": "0d82dbcdb0c469910c1bb4bd3b8ca6c73c69e88eafc0d0c45288e888288a499d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\visual1.js",
+      "path": "动态路由塔防/submission/tools/visual1.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2756,
+      "sha256": "656527c32274079ff7ca4cb59117dc9d6abbab8a535e60e1cfb35d87f390a4a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\visual2.js",
+      "path": "动态路由塔防/submission/tools/visual2.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1777,
+      "sha256": "0b9846080189bd231bd552cdb4637b2dca6a95d86a9db8096c6490e62f5aaf1f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\visual3.js",
+      "path": "动态路由塔防/submission/tools/visual3.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 1689,
+      "sha256": "0dfd18892e72236662d9f87f801b49e3ed868e12da6a4fcb24618e473f502ae2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\tools\\visual4.js",
+      "path": "动态路由塔防/submission/tools/visual4.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3253,
+      "sha256": "3cf38a6c31d352d8ed795114a2e660b84546affc9cb640eb6cdb15fcb5537edb"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
+      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
+      "role": "result",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1112,
+      "sha256": "c08683bc2a2fd5c98cce1bcfcb1ebc88ab8802ad4960528ba338d24094080aa5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
+      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1123,
+      "sha256": "91b446dd5c1cadf2036b87a7c7c1ea8ab23b40a8fba4c1609e973058371a3e1e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\answer.md",
+      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
+      "role": "submission",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1203,
+      "sha256": "f5c3e9d6d46b8708face6899799d30762656ca88c995324c5341004d656d02dd"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\claude\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/claude/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4854,
+      "sha256": "18a824e32c33a7612ac5c5292175deaaecf482f763305c0e30fffd06d3b7ba70"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5966,
+      "sha256": "ca2e85e77b644908206ca7cbac775de30562b907e9487f5cf43c90f0e6950041"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4058,
+      "sha256": "392809e3f3c4218b89fb07750c24f08c6eea33f2377b911f202573527427c2da"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\评分表_Opus5.5.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4137,
+      "sha256": "7eaec23cb5fb286055a1d5e3b058a2ceceadd4ac0a55978fd1415e1c628f83ad"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\README.md",
+      "path": "太阳雨渔港3D渲染/submission/README.md",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 1080,
+      "sha256": "b8ed9c0723a9ca4875cece768190fad0fda71fc1fa9c6ea3d3e9e14f34bfe872"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 926,
+      "sha256": "774aa42fef9fbe2c494ea402462dd5874d5970224d25a598ed7bfbe715c274e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/js/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 32597,
+      "sha256": "227b0a65e6092aad78fb9389e38e868d01d583a6e880a615b4194412f844c00f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/js/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 28018,
+      "sha256": "e886c695d72ef7d6a5d7ed3297044342b3eb1f845248a1d1fec36a49eace6fbc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\life.js",
+      "path": "太阳雨渔港3D渲染/submission/js/life.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 41660,
+      "sha256": "2a2e4499489a4288e633166cdfdfcdcc009967fea6e672fb655301e4dbb4f069"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/js/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 19980,
+      "sha256": "5c78f5af4872e45550aed8f7584f09330c3ff456a7f0a1879f1e67396ba8a79a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\props.js",
+      "path": "太阳雨渔港3D渲染/submission/js/props.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 48326,
+      "sha256": "b9f53305b4878db1b7dcd5df94518c8d149c16444c45415f520ee455b53c860d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\textures.js",
+      "path": "太阳雨渔港3D渲染/submission/js/textures.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 35610,
+      "sha256": "89dd57d73d4677dd13b257e941899732bd2fc37600ba43249f25e7e2e7d4113f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\tour.js",
+      "path": "太阳雨渔港3D渲染/submission/js/tour.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5366,
+      "sha256": "45165c5878df32d1f344e9ec4989e11f583e49e295400bd39a928a0c45235862"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\util.js",
+      "path": "太阳雨渔港3D渲染/submission/js/util.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12314,
+      "sha256": "a8ad81942c3a6c71a2ec6bf1de4826956c4b89d173511ed090a727ad93b3aff0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\js\\world.js",
+      "path": "太阳雨渔港3D渲染/submission/js/world.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 48697,
+      "sha256": "3565fa206655acf8b73c57a7260b349c72924768beaa9edf7db5484e14914b3a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\lib\\three.min.js",
+      "path": "太阳雨渔港3D渲染/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 603445,
+      "sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 1864,
+      "sha256": "f062c9f428ac34910214bdeb896d9a113ce60ee4844b20e5d21f27c6eecd0a55"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1130,
+      "sha256": "6aa93395bdca898e9028028162d75691f1150d0850db8b25488e8a19171c5af3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\Problem6.lean",
+      "path": "形式化证明题/submission/Problem6.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 19601,
+      "sha256": "9c3e6b3d3b52b98694df10116545b77b63c86ffad62490868ba7cbe01067092a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\操作系统嵌套\\claude\\main\\result.json",
+      "path": "操作系统嵌套/grading/claude/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 9128,
+      "sha256": "a73e2f943265be2ddf0de79f32b2eff24355fa6139766935440d0b34d27fc808"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 13716,
+      "sha256": "2885802eb4d1f518daa38326ed615ea4c62c3120e4ee752c810097ccdbd9753f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12476,
+      "sha256": "c7cc1e15ae7a7155533719f869e339cefaed8648e418308fd3160a438fc81f9d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\评分表_Opus5.5.md",
+      "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12582,
+      "sha256": "499c1d878f12f47a2b3cfc0c57e6c0f33243b03030e7cf79030f057bceb16965"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\.gitignore",
+      "path": "操作系统嵌套/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 56,
+      "sha256": "e37d622c496969c4a47c7c711b54353f7aad305120ef620cd10d1fbb559148fd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4869,
+      "sha256": "df371ec4b3bf9b00cb70e06d42771a76ed34ffef04256f8c4fcabc49c8e4b272"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3264,
+      "sha256": "85d4b17aa1bd0e0cc67afa8c795465a089fa3bd15b7619eb3150b272f13c41ca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\docs\\操作说明.md",
+      "path": "操作系统嵌套/submission/docs/操作说明.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 14122,
+      "sha256": "9ae6a784e9ca15aeac1a7220c65d9554ffe946484c8fc04ba5cbfea02f5f31e2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\main.js",
+      "path": "操作系统嵌套/submission/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7207,
+      "sha256": "443a84a3da520820ee9d4b6a43bf8378d0525d68c04ef701bfb80e0ffb84ce9f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6108,
+      "sha256": "a252bd4222e6c48ebf3e8ed23c7b5a7a87222d34f04aea96a137166e3af0f51d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 359,
+      "sha256": "f90aa4ca3d58e5a93d2947eab5ddefd52ddd02a6dcd97621833e0357131f262d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\preload.js",
+      "path": "操作系统嵌套/submission/preload.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 583,
+      "sha256": "d27c89ade5461d4803eef2a839816811b159c507644b6521f0cfdbc05dd815d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\css\\apps.css",
+      "path": "操作系统嵌套/submission/src/css/apps.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 34514,
+      "sha256": "04bae879a85dac9e8ff3884e57c85553fb2e95412061259b5eda9cfdea4bbc33"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\css\\base.css",
+      "path": "操作系统嵌套/submission/src/css/base.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 25501,
+      "sha256": "30d08775236c9fb9d9c29069030762f3b3d6631af0bd04c5673497bc5202e7ef"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\index.html",
+      "path": "操作系统嵌套/submission/src/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1518,
+      "sha256": "ded647e2fbb5a3558001a49f93c0976419add471e91013771a2b698625fc1bb3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\databus.js",
+      "path": "操作系统嵌套/submission/src/js/databus.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6052,
+      "sha256": "02c21ca33a678e7b70a18e5764650b736e3a77f58fc27500b6df80edaf08c1e2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\icons.js",
+      "path": "操作系统嵌套/submission/src/js/icons.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 12079,
+      "sha256": "b296b3f708484b5d3ead1d32d06fc9c3d49049d990a336d46744bb72f788c9c8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\kernel.js",
+      "path": "操作系统嵌套/submission/src/js/kernel.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 25893,
+      "sha256": "4ede177fe83d8f3357199d00f7a9684a2c6701a2c18f77fcef56f309c4eb1bfe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\lang.js",
+      "path": "操作系统嵌套/submission/src/js/lang.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 26638,
+      "sha256": "755f84f6efc3dd8086841e291b88b802c24a817309d5fa317be9aab2b9eb3cbd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\main.js",
+      "path": "操作系统嵌套/submission/src/js/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9640,
+      "sha256": "1d4467df8a190f9795cb2b9eece54f867931b57f5028ddfa4eef4bec7ad0ebe7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\model.js",
+      "path": "操作系统嵌套/submission/src/js/model.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 39030,
+      "sha256": "7e15b16669aa4db986aee5c3bd933bdbbb734fe0e77bd32fdbfc7721faf75e59"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\program-runner.js",
+      "path": "操作系统嵌套/submission/src/js/program-runner.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7425,
+      "sha256": "a13faa27018b0ce4d680bd406fe5c1582e31830b0ed2f7de3e8a695d051a51d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\scene-data.js",
+      "path": "操作系统嵌套/submission/src/js/scene-data.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13236,
+      "sha256": "b39731a95ca39e44ad3fa8ec7f457415649bcd802d1eca176c97aedfaaf6187c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\scene3d.js",
+      "path": "操作系统嵌套/submission/src/js/scene3d.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 35645,
+      "sha256": "e067c9e301bacaad5ca7aef9c912534fc03cf19d45610f8013c0686e67c46924"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\scheduler.js",
+      "path": "操作系统嵌套/submission/src/js/scheduler.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10141,
+      "sha256": "a63721b79f0d795816db709d539bd2e2399944410c1964fb808f8f0455be41a9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\seed.js",
+      "path": "操作系统嵌套/submission/src/js/seed.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 27115,
+      "sha256": "91f4e6603b5d1de84aece263c38eee32a2c9df3b460213c5ce388b2308d7e883"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\services.js",
+      "path": "操作系统嵌套/submission/src/js/services.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 34274,
+      "sha256": "70ca922f85b2b3e819348a93e2738d0e38f6f3e86d7208c5fb2b45424784ad6e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\store.js",
+      "path": "操作系统嵌套/submission/src/js/store.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1382,
+      "sha256": "c2a57bddcfd7b807155c4fdaeb47c33bd4abc60ee53b30343c7b6e85af5e80a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\terrain.js",
+      "path": "操作系统嵌套/submission/src/js/terrain.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1523,
+      "sha256": "0bd6fbe5c9d690dbee3cc42fe710ad62d2c39a840fc5549677545c12b62004f1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\browser.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/browser.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 14915,
+      "sha256": "33f3623ffc2043f7de11c6125fd2a37e0625b2cddef5e7f18904a8f3c3386d05"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\charts.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/charts.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 19174,
+      "sha256": "723c70b1a90e5bacc27980f8f44dd1d8c0a98be30bec252c720c8f0c0cac5489"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\editor.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/editor.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9582,
+      "sha256": "9f3c4def43bda66e153f281cb5b3e0d4fa426821e29d36eaaff4430d1838eec9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\files.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/files.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 21644,
+      "sha256": "8b84ca94d794c9fc4aba6c957808220479d2ce7976c9111037a8bd99b262e639"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\guide.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/guide.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2633,
+      "sha256": "baee3955264394f9b58379a5be0111e1bcd4ed551757a47e0b5bf9d48b5184d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\index.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/index.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 597,
+      "sha256": "8f2e2fc4e60c64f84307e958df953617de75c5bdd85c1448e7cb89665d9f4fcc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\player.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/player.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 23246,
+      "sha256": "efe7963d22ef933e9d29737126c8ead197b36a64fa36f4e83de243eb00f38799"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\projection.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/projection.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2271,
+      "sha256": "c60314f92630d675e1da0a10b452de531b8e6f14d19f3293ce6e26c0213790c2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\settings.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/settings.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7105,
+      "sha256": "db9a0dc3f7cc6f15d5a97a161d92e0f3a1c5663153bbc53c658bc25b690190a4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\spreadsheet.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/spreadsheet.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20329,
+      "sha256": "765767d3e03c0434af5c583c828fb1c554b7779d5ff3fdd14d9d246a3e566347"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\systems.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/systems.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13035,
+      "sha256": "952cfe7ce0ca887113b3576eb47b9000808124802cd5eb8396e9e513cb1f817f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\tasks.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/tasks.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 18862,
+      "sha256": "024940c5082b8c5175c7a3100c94207e89869fc22f4d5a2b47c807dd15b29f74"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\apps\\widgets.js",
+      "path": "操作系统嵌套/submission/src/js/ui/apps/widgets.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 18545,
+      "sha256": "c84047e7b9679a02aa67593521588dfcce4832c48db3365d958f4ccf0d19de01"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\common.js",
+      "path": "操作系统嵌套/submission/src/js/ui/common.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9123,
+      "sha256": "a2c89771fdb2bff7a5070169eebdea846c0b3adc33243d592fdab8b355cbf3c5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\shell.js",
+      "path": "操作系统嵌套/submission/src/js/ui/shell.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 53189,
+      "sha256": "e5df087a5a8b355ff8f5815024d32443d8a82729630a8eb4e5c43dc84f9c29a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\ui\\system-ops.js",
+      "path": "操作系统嵌套/submission/src/js/ui/system-ops.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8365,
+      "sha256": "8522d894647f509034645301120d2a782ad140175364fe11f3691112f18e8b7e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\util.js",
+      "path": "操作系统嵌套/submission/src/js/util.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6518,
+      "sha256": "534493b430410324fe8cf44ab9e269ee11f1e553135e24879a6303d90a0f8efe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\wallpapers.js",
+      "path": "操作系统嵌套/submission/src/js/wallpapers.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16035,
+      "sha256": "649f047c2ad0388120c781093254867098e1c513377d252b8e1970defb1d75e3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\src\\js\\workbook.js",
+      "path": "操作系统嵌套/submission/src/js/workbook.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 15279,
+      "sha256": "50e212f19ef4b01dc5d62e43451b4bd6c2b5fcb1a93695636bdc6dd45cff9593"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\tools\\cdp.js",
+      "path": "操作系统嵌套/submission/tools/cdp.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2225,
+      "sha256": "ecada1266291a341b8b8a7bcd07d34c67015412377d231591227b69587046705"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\tools\\export-docs.js",
+      "path": "操作系统嵌套/submission/tools/export-docs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 630,
+      "sha256": "0390b0c7c521d62bd8e006eda78c9685721f2c1def73ebf4f179de4ab178040e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\tools\\serve.js",
+      "path": "操作系统嵌套/submission/tools/serve.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1301,
+      "sha256": "87301c0296e5e0c6903c713fd0bf02c95c03db266d968f8585c6b281cbbdb3e7"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 7119,
+      "sha256": "56f4ecf232d7b5bad623eb2d09c4f89de6a2002b2449122797cb3afff31a7294"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 2451,
+      "sha256": "eaa3cf6d6093a0d209f2a92008afac0b25fd09776239fa4f596069de814909b8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第01题.md",
+      "path": "数学竞赛原创试题/submission/答案/第01题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4317,
+      "sha256": "e156d1ffc3c70785c39736ca415b07b3c8e357a5756740394ba4294607dcffea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第02题.md",
+      "path": "数学竞赛原创试题/submission/答案/第02题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2735,
+      "sha256": "92310cb5b60020fc755a8dc2651cb6ebd70a1419f127f98f5d5c3109ad126d30"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第03题.md",
+      "path": "数学竞赛原创试题/submission/答案/第03题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3532,
+      "sha256": "6ca804effd161d3cf317181e57cd8b42e03ae188258ac4857fddb9448ff9261e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第04题.md",
+      "path": "数学竞赛原创试题/submission/答案/第04题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 6892,
+      "sha256": "8ebb19629366a3f400c8c793fbda7f199857c58c5663dff8f7bb30069f0ae13d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第05题.md",
+      "path": "数学竞赛原创试题/submission/答案/第05题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4062,
+      "sha256": "8d1de6cae35bc96d37e218aae689a28387f4122ddce1ad525902fdbf873bcaea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第06题.md",
+      "path": "数学竞赛原创试题/submission/答案/第06题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5132,
+      "sha256": "b500b888121050fc0dad5a8f920b09fa728bcddadc5c0d8fde3441eb2e932cb8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第07题.md",
+      "path": "数学竞赛原创试题/submission/答案/第07题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3973,
+      "sha256": "dee6b5a466d9a30ad7752488d6732900e040e89181928396503f9907b7fe00e4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第08题.md",
+      "path": "数学竞赛原创试题/submission/答案/第08题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2128,
+      "sha256": "56e00c2ae3aa76d35675b475f039287ef6b2f40804a05b0a9bc816d08e292aa9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第09题.md",
+      "path": "数学竞赛原创试题/submission/答案/第09题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5225,
+      "sha256": "8b3b6260d95f70aa19d744d7c86d3a7dbe8336ea3ce7456f4c522d6efb391e8e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第10题.md",
+      "path": "数学竞赛原创试题/submission/答案/第10题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2584,
+      "sha256": "2f5eac0f7535d9563767e3d2ef8e0a988211aa216f0eff0fcec4ff88403540d4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第11题.md",
+      "path": "数学竞赛原创试题/submission/答案/第11题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5362,
+      "sha256": "98ccf88d0fb6f16e26daf4bd3d94b69462fafd92e91ba5bac7eb051773a51e95"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第12题.md",
+      "path": "数学竞赛原创试题/submission/答案/第12题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4582,
+      "sha256": "fd48dd70c895b9aed9353adac994fbc231932043261ecef63931fa46fa37f7e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第13题.md",
+      "path": "数学竞赛原创试题/submission/答案/第13题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2793,
+      "sha256": "6808fee9122388748db129876b6cbc5362882a135b47f7c3c332671ff63408af"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第14题.md",
+      "path": "数学竞赛原创试题/submission/答案/第14题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4297,
+      "sha256": "a9cabbe540098039361d3edb1302c47850bce47d1a2439c8237726265d13f07f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第15题.md",
+      "path": "数学竞赛原创试题/submission/答案/第15题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3805,
+      "sha256": "86a0da101f5ca9e594b44e4c03406e5a38991c66d47870cc7ffdd527d7ae411a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第16题.md",
+      "path": "数学竞赛原创试题/submission/答案/第16题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4764,
+      "sha256": "e3fe720477633b9c290457d7cd4926a7f8ba431ccc2ec8f6a4808ffa141f6dc0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第17题.md",
+      "path": "数学竞赛原创试题/submission/答案/第17题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4459,
+      "sha256": "3958524fdded789eb5d06197f00cd08eb4fb8122d05792903f6f936d57eeec38"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\答案\\第18题.md",
+      "path": "数学竞赛原创试题/submission/答案/第18题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5758,
+      "sha256": "8da490c648265e4d1ae6867a59cf3c49a21e59c11b15f8bca60e19d497d290a6"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\claude\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6416,
+      "sha256": "cff3838534a12bab8d6d64e814686c8c5b3c09010f1aafde936e1384c991ab2c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6372,
+      "sha256": "cb2e73716ff52b1d4049ca3757f57d8e31309a855868b5aa20f7d590249241f9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4685,
+      "sha256": "251d082908f13053c6e909955d44dbce4b081d2fa9e328cb9d9c646d425e6391"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4774,
+      "sha256": "6da2b08bce6d4ca3cc9dca2876bf9fed5a36f9ce3de98df2d98eb0394ab3c85f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\README.md",
+      "path": "果冻冲击与造浪水槽/submission/README.md",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 3547,
+      "sha256": "594ab2375700aa07f4ff4f6cbae05be8eddbbbdec1d0d61a2921242be160a242"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\css\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/css/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 24382,
+      "sha256": "908c5a7ad26dd131280848dc3e96ba18baf72b40e9d4df3d780adf00491e0e51"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5676,
+      "sha256": "228191bab1da0944d11dd70c802f03fc68892ab37da0adf75ab208a493b1cc15"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\js\\audio.js",
+      "path": "果冻冲击与造浪水槽/submission/js/audio.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6723,
+      "sha256": "8bdbe379371dfce79730e2052f6d39f3d5f29d4fb57ef29aec22a86a83334d2f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\js\\jelly.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 61355,
+      "sha256": "590efa89f32855d47755f176b1dec3cd359e9bae778cb1f592d57195b7285f04"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\js\\main.js",
+      "path": "果冻冲击与造浪水槽/submission/js/main.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 34830,
+      "sha256": "3c65456d1816563559ef6e71bb88907bd87d33a6f4231657ff4ca8669d903b65"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\js\\tank.js",
+      "path": "果冻冲击与造浪水槽/submission/js/tank.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 78336,
+      "sha256": "99fccdf1e2be6e126d1217451b4c80279e7128c6edb8ab5aedc235a82d0a80a5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\js\\util.js",
+      "path": "果冻冲击与造浪水槽/submission/js/util.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 12219,
+      "sha256": "c3c26bb06174896af1e9a6cb10666b84c1f740fab5369752ee7e005b8c612ea2"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1408,
+      "sha256": "077175bb5285d9f537d52cba8f6d6a1f1ffd741992b4ab0cf19661405e61aebd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1444,
+      "sha256": "b5bd5a252e5602f3436800dfb01db7be9a303c65ed9ee250aa2c519bfa510697"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\solution.cpp",
+      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 25630,
+      "sha256": "456cb076e0badb5ee131a81e42a4b757a18b64826b5ffb1c32ae3c6b04e098db"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 4185,
+      "sha256": "bf3240175dadb0db04fe434af986b15d9ff7117e8ce77400cd437d4e9ee559ac"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1403,
+      "sha256": "239532d2f0bf51f78fc7b430d74931cb953cf844e6d40cd9f8d17699e34459c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 630,
+      "sha256": "af06929b0b7196f1a743517ded802c324e246ed5aff9c2078966703b4b0e4e72"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\NVIDIA_B200网页艺术\\js\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_abl.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_attn.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_attn2.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_attn3.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_attn4.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_bench.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_bench32.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_dbg.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_dbg32.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_fwd.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_g32.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_g32b.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_ln.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_mini.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_occ.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_unit.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\build_v.bat",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_abl.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_abl.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn2.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn3.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn4.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_attn4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_bench.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_bench.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_bench32.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_bench32.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_bits.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_check.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_chk32.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_chk32b.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_chk32c.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_cmp.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_cmp2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_dbg.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_dbg.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_dbg32.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_dbg32.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_fwd.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_fwd.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_g32.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_g32.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_g32b.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_g32b.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_gen.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_genL.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_i7.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_inf.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_ln.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_ln.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_ln2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_lnchk.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_mini.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_mini.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_nan.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_occ.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_occ.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch3.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch4.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch5.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch6.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch7.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_patch8.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_prec.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_prec2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_quick.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_ref.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_sample.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_sens.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_sim.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_simA.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_simB.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_simC.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_simD.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_simL.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_unit.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_unit.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\dev_w32.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\nul.obj",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\sample_check.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\solution_bak.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\solution_prec.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\Transformer前向推理的GPU加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_004150.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_004589.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_after_hop.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_greedy.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_hop.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\best_kick.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\dbg.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\dbg.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\kick_long.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\kick_long2.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\kick_long3.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\make_answer.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\opt.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\opt.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\opt2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\opt2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN15.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN20.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN5.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN7.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\optN8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\plot.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\plot2.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\plot3.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\render.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\run_greedy.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\slp.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\slp_out.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\status_note.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\Work1.lean",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\Work1probe.lean",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\Work6.lean",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\vendor",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\apply8.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\edgetest.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\fuzz.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\g15.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\gen.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\gnr8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\mknr2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\solution_nr2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\推演笔记.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\DeepSeek\\V4.1Flash\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": [],
+  "created": "2026-11-07T01:32:46"
+}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": ["start", "--", "--data-dir", "{dataDir}", "--width", "{width}", "--height", "{height}", "--remote-debugging-port={port}"],
+    "cwd": ".",
+    "note": "Electron 45.2.1；npm install electron@45.2.1 three@0.160.0 已在项目内完成，离线可运行（node_modules 随项目交付）。"
+  },
+  "mainWindow": { "title": "Nested OS", "remoteDebuggingPort": 19106 },
+  "renderContext": {
+    "type": "renderer-main-frame",
+    "note": "window.bench.version / ready() / reset() / inspect() 定义在主桌面渲染上下文（index.html 的主 frame）。浏览器网页视图是 <webview> guest，独立 frame，可通过 CDP /json/list 定位，外部站点内部控件无 data-testid 要求。",
+    "testid": "全部自制控件使用稳定的 data-testid，并标注 data-system-id；窗口容器标注 data-window-id 与 data-app-id。"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "recycle": "/Recycle Bin",
+      "snapshots": "/Snapshots",
+      "programs": "/Programs",
+      "kernel": "/System/kernel.prog",
+      "compiler": "/System/compiler.prog",
+      "controller": "/System/controller.prog",
+      "help": "/说明/操作说明.md"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "programs": "/Programs",
+      "kernel": "/System/kernel.prog",
+      "compiler": "/System/compiler.prog",
+      "controller": "/System/controller.prog",
+      "app_programs": "/System/programs",
+      "snapshots": "/Snapshots"
+    }
+  },
+  "fixturesNote": "fixtures 路径为各系统虚拟文件系统内的逻辑路径；根系统内核源模板在 /System/kernel.prog，某个直属子系统的实际内核源文件在父系统 /Systems/<实例id>/kernel.prog（可从父系统编辑器 kernel-open 打开）。所有非根实例按全局创建顺序命名为 inner-1、inner-2……根系统标识 outer。",
+  "logicalStep": { "virtualSeconds": 0.1, "realMs": 100, "rootBudget": 1800 },
+  "controls": {
+    "desktop": "os-desktop, desktop-icon, start-toggle, start-menu, notifications-toggle, widgets-toggle",
+    "startMenu": "launch-files / launch-spreadsheet / launch-widgets / launch-editor / launch-browser / launch-tasks / launch-settings / launch-player / launch-charts（只标注该层实际提供的应用）",
+    "windows": "app-window, window-titlebar, window-resize, window-minimize, window-maximize, window-close, taskbar-item",
+    "systems": "system-new, system-pause, system-resume, system-restart, kernel-open, kernel-error, tasks-grant, tasks-budget, tasks-memory, tasks-storage",
+    "projection": "window-project, project-target（data-target-system-id）, 投送窗口 data-app-id=projection",
+    "player": "player-open/play/pause/stop/seek/time/rate/step/loop/view/camera/selection, rehearsal-start/wind/heading/fault/controller",
+    "charts": "chart-source/range/label-column/series/connect/disconnect/type"
+  }
+}

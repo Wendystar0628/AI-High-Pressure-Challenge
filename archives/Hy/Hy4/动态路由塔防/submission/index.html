@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>动态路由塔防 · 网络安全攻防战</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<!-- 3D 投影覆盖层：血条 / 名称 / 预警文字 -->
+<div id="overlay"></div>
+
+<!-- 战斗 HUD -->
+<div id="hud" class="hidden">
+  <div id="topbar">
+    <div class="brand"><span class="brand-mark">◈</span> 守护进程 · <b>SEK / CORE</b></div>
+    <div class="res res-cpu"><span class="res-ico">◱</span><span class="res-label">算力</span><span id="vCpu" class="res-val">0</span></div>
+    <div class="res res-intel"><span class="res-ico">◇</span><span class="res-label">情报</span><span id="vIntel" class="res-val">0</span></div>
+    <div class="res res-core"><span class="res-ico">◉</span><span class="res-label">中枢完整度</span>
+      <div class="corebar"><div id="coreFill"></div></div><span id="vCore" class="res-val">100%</span></div>
+    <div class="res res-wave"><span class="res-label">波次</span><span id="vWave" class="res-val">1 / 14</span></div>
+    <div class="topbtns">
+      <button id="btnSpeed" class="btn" title="调速 (1/2/3)">1×</button>
+      <button id="btnPause" class="btn" title="暂停 (空格)">⏸ 暂停</button>
+      <button id="btnRestart" class="btn" title="重开本图 (R)">⟳ 重开</button>
+      <button id="btnMenu" class="btn" title="返回关卡选择">☰ 菜单</button>
+      <button id="btnMute" class="btn" title="静音">♪</button>
+      <input id="volSlider" type="range" min="0" max="100" value="55" title="音量">
+    </div>
+  </div>
+
+  <div id="leftpanel">
+    <div class="panel-title">流量预报 <span class="sub">THREAT FORECAST</span></div>
+    <div id="forecast"></div>
+    <div class="panel-title" style="margin-top:10px">系统日志 <span class="sub">SYSLOG</span></div>
+    <div id="syslog"></div>
+  </div>
+
+  <div id="rightpanel">
+    <div class="panel-title">对象信息 <span class="sub">INSPECTOR</span></div>
+    <div id="inspector"><div class="empty-info">左键点选设备、敌人或地块<br>查看详细信息与可执行操作</div></div>
+    <div id="inspectorActions"></div>
+  </div>
+
+  <div id="bottombar">
+    <div class="dock-label">待部署栏 <span class="sub">DEPLOY / 拖动卡片到战场</span></div>
+    <div id="towerCards" class="cards"></div>
+    <div class="dock-divider"></div>
+    <div class="dock-label">道具 <span class="sub">SUPPORT</span></div>
+    <div id="itemCards" class="cards"></div>
+  </div>
+</div>
+
+<!-- 主菜单 / 关卡选择 -->
+<div id="menu" class="screen">
+  <div class="menu-inner">
+    <div class="menu-head">
+      <div class="game-title">网络安全攻防战 <span class="en">/ DYNAMIC ROUTING DEFENSE</span></div>
+      <div class="game-sub">自治域「汐域」遭遇「蛰影」入侵 · 以守护进程维持链路连通并抵御恶意程序</div>
+    </div>
+    <div class="section-label">选择战区 <span class="sub">SELECT SECTOR</span></div>
+    <div id="mapCards" class="map-cards"></div>
+    <div class="section-label">实战演示 <span class="sub">COMBAT DEMOS</span></div>
+    <div id="demoCards" class="demo-cards"></div>
+    <div class="menu-footer">
+      <button id="btnCodex" class="btn big">设备手册 / 威胁档案</button>
+      <button id="btnHelp" class="btn big">操作说明</button>
+      <span class="ver">SEK DEFENSE OS · v1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- 图鉴 / 说明 -->
+<div id="codex" class="screen hidden">
+  <div class="codex-inner">
+    <div class="codex-head"><div class="codex-title">资料库 <span class="sub">CODEX</span></div><button id="codexClose" class="btn">返回 ✕</button></div>
+    <div id="codexTabs" class="tabs"></div>
+    <div id="codexBody" class="codex-body"></div>
+  </div>
+</div>
+
+<!-- 操作说明 -->
+<div id="help" class="screen hidden">
+  <div class="codex-inner narrow">
+    <div class="codex-head"><div class="codex-title">操作说明 <span class="sub">MANUAL</span></div><button id="helpClose" class="btn">返回 ✕</button></div>
+    <div id="helpBody" class="codex-body"></div>
+  </div>
+</div>
+
+<!-- 结算：事件报告 -->
+<div id="report" class="screen hidden">
+  <div class="report-inner">
+    <div class="report-head"><span id="reportTag">EVENT REPORT</span><h1 id="reportTitle">事件报告</h1></div>
+    <div id="reportBody"></div>
+    <div class="report-btns">
+      <button id="btnRetry" class="btn big">重开本图</button>
+      <button id="btnBack" class="btn big">返回关卡选择</button>
+    </div>
+  </div>
+</div>
+
+<!-- 暂停遮罩 -->
+<div id="pauseMask" class="hidden"><div class="pause-box">⏸ 已暂停<span>空格继续</span></div></div>
+
+<!-- 演示：字幕 / 虚拟鼠标 / 退出 -->
+<div id="subtitle" class="hidden"></div>
+<div id="demoCursor" class="hidden"><div class="dc-dot"></div><div class="dc-ring"></div></div>
+<div id="demoTop" class="hidden">
+  <span id="demoName"></span>
+  <span id="demoTimer"></span>
+  <button id="btnDemoExit" class="btn">退出演示 ✕</button>
+</div>
+
+<!-- 提示 -->
+<div id="toast" class="hidden"></div>
+
+<script src="js/engine.js"></script>
+<script src="js/pathfinding.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/data.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

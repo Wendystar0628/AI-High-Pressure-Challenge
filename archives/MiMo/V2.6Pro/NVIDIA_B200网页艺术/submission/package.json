@@ -1,0 +1,15 @@
+{
+  "name": "b200-web-art",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NVIDIA B200 网页艺术 - dual-die GPU package scroll experience",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "puppeteer-core": "^23.11.1",
+    "three": "0.170.0"
+  }
+}

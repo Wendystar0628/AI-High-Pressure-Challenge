@@ -1,0 +1,23 @@
+{
+    "task":  "通用数字电路仿真器加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "总分",
+                      "max":  100,
+                      "score":  62.5,
+                      "reason":  "编译成功，未发现第十节第1–7条违规；7/7正确性输入及24/24性能输入均通过。官方 evaluate.py 的性能平均分和最终得分均为62.5，G=3.7504904840531053。"
+                  }
+              ],
+    "metrics":  {
+                    "correctness_passed":  7,
+                    "correctness_total":  7,
+                    "performance_inputs":  24,
+                    "performance_passed":  24,
+                    "performance_score":  62.5,
+                    "G":  3.7504904840531053,
+                    "report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluate-report.json"
+                },
+    "notes":  "评的是工作目录中的 solution.cpp，与最新提交 477ac037e2aa5131e7a7676f19d59c7200e64626 完全一致。源码 SHA256：456cb076e0badb5ee131a81e42a4b757a18b64826b5ffb1c32ae3c6b04e098db。副本与官方基线均使用指定 g++ -O2 -std=c++20 -march=native -fopenmp 编译；官方 evaluate.py 仅运行一次，无环境错误。"
+}

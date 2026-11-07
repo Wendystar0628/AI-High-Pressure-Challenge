@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>果冻冲击与造浪水槽 · 软体 / 刚体 / 流体交互模拟</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<div id="ui">
+  <header id="topbar">
+    <div class="brand">
+      <div class="brand-mark"><span class="bm-core"></span></div>
+      <div class="brand-text">
+        <h1>果冻冲击与造浪水槽</h1>
+        <p>软体形变 · 刚体碰撞 · 流体浮沉 &nbsp;/&nbsp; 三维物理交互实验</p>
+      </div>
+    </div>
+    <nav id="scene-tabs">
+      <button class="tab active" data-scene="jelly"><em>01</em> 果冻冲击</button>
+      <button class="tab" data-scene="tank"><em>02</em> 造浪水槽</button>
+    </nav>
+    <div class="top-actions">
+      <button id="sound-toggle" class="ghost" aria-pressed="true"><span class="ico-sound"></span><span id="sound-label">声音 开</span></button>
+      <button id="panel-toggle" class="ghost"><span class="ico-panel"></span>参数</button>
+    </div>
+  </header>
+
+  <aside id="panel">
+    <div class="panel-head">
+      <div>
+        <div class="ph-kicker">CONTROL PANEL</div>
+        <div class="ph-title" id="panel-title">场景参数</div>
+      </div>
+      <button id="panel-close" title="收起">&#10005;</button>
+    </div>
+    <div id="panel-body"></div>
+    <div class="panel-foot">调节参数后重新触发即可观察差异</div>
+  </aside>
+
+  <div id="status">
+    <div class="st-row">
+      <span class="st-dot"></span>
+      <span id="st-phase">准备就绪</span>
+      <span class="st-time" id="st-time">0.00 s</span>
+    </div>
+    <div class="st-bar"><div id="st-fill"></div></div>
+    <div class="st-phases" id="st-phases"></div>
+  </div>
+
+  <div id="transport">
+    <button id="btn-trigger" class="btn primary"><span class="tri"></span><span id="trigger-label">触发冲击</span></button>
+    <span class="sep"></span>
+    <button id="btn-pause" class="btn">暂停</button>
+    <button id="btn-reset" class="btn">重置</button>
+    <span class="sep"></span>
+    <label class="speed-wrap" for="speed">速度</label>
+    <select id="speed" class="sel">
+      <option value="0.25">0.25×</option>
+      <option value="0.5">0.5×</option>
+      <option value="1" selected>1×</option>
+      <option value="2">2×</option>
+    </select>
+  </div>
+
+  <div id="hint">拖拽旋转视角 · 滚轮缩放 · 空格暂停 / 继续 · R 重置</div>
+  <div id="toast"></div>
+</div>
+
+<script src="lib/three.min.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/jelly.js"></script>
+<script src="js/tank.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -5,8 +5,14 @@
   --lb-rank-w: 3.9rem;
   --lb-name-w: 13.25rem;
   --lb-grid: 2rem var(--lb-rank-w) 1.5rem minmax(9rem, var(--lb-name-w)) minmax(4rem, 1fr) 4.75rem;
+  --lb-cost-w: 6.25rem;
+  --lb-tok-w: 5.5rem;
   --lb-tb-h: 6.5rem;
   --lb-pad: 1.15rem;
+}
+/* with test costs: two more columns right of the score, 测试开销 and Token (ui.css .mrow-cost, .mrow-tok) */
+.page-leaderboard .lb-board.has-cost {
+  --lb-grid: 2rem var(--lb-rank-w) 1.5rem minmax(9rem, var(--lb-name-w)) minmax(4rem, 1fr) 4.75rem var(--lb-cost-w) var(--lb-tok-w);
 }
 @media (min-width: 1360px) {
   .page-leaderboard {
@@ -135,9 +141,9 @@
   position: absolute;
   z-index: 0;
   top: 0;
-  bottom: 0;
   left: 0;
   width: 0;
+  height: 100%;
   background: var(--st-wash);
   box-shadow: inset 0 calc(-1 * var(--st-bar-w)) 0 var(--st-orbit);
   pointer-events: none;
@@ -268,6 +274,13 @@
 .lb-board-tools .site-export {
   margin-left: 0;
 }
+/* the cost legend sits at the left of the board tools; the compare view has no cost columns */
+.lb-cost-legend {
+  margin-right: 0.5rem;
+}
+.lb-board[data-view='compare'] .lb-cost-legend {
+  display: none;
+}
 .lb-cols label {
   min-height: 2rem;
   padding: 0 0.85rem;
@@ -325,6 +338,28 @@
 .lb-h-rank {
   display: grid !important;
   gap: 0.15rem;
+}
+/* the cost column head is a button: click to sort by cost (cheapest first, again for dearest first) */
+.lb-h-sort {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  border-bottom: 1px dashed var(--st-ink-2);
+}
+.lb-h-sort:is(:hover, :focus-visible),
+.lb-h-sort.is-on {
+  color: var(--st-ink);
+  border-bottom: 2px solid var(--st-orbit);
+}
+.lb-h-sort:focus-visible {
+  outline: 2px solid var(--st-ink);
+  outline-offset: 2px;
 }
 .lb-h-by {
   color: var(--text-violet);
@@ -707,6 +742,14 @@
   font-weight: 700;
   white-space: nowrap;
 }
+/* the compare view has no cost column: the difference takes the score and cost columns */
+.lb-board.has-cost .lb-cmp-diff,
+.lb-board.has-cost[data-view='compare'] .lb-h-score {
+  grid-column: 6 / -1;
+}
+.lb-board.has-cost[data-view='compare'] .lb-h-cost {
+  display: none;
+}
 .lb-cmp-bar.is-c1 {
   fill: var(--compare-1);
 }
@@ -897,4 +940,189 @@
 }
 .lb-foot a:is(:hover, :focus-visible) {
   color: var(--st-ink);
+}
+/* the test cost note: how the amounts are converted, the quota source written out in full (a link, new
+   window), how to re-test; the long address breaks anywhere so a phone never scrolls sideways */
+.lb-foot.cost-note {
+  display: grid;
+  gap: 0.2rem;
+  max-width: 64rem;
+  margin-top: 0.35rem;
+}
+.cost-note-line {
+  display: block;
+}
+.cost-note a {
+  overflow-wrap: anywhere;
+}
+/* ---------- phone width: everything stays inside the window ----------
+   Head figures under the title; the six views in two rows of three; no tick column (comparing is a
+   desk task, as on the category boards); each model row in two lines: name and score, then the plot and,
+   under the score, the test cost with its mark; the token total moves to the tooltip and the side panel. */
+@media (max-width: 599px) {
+  .page-leaderboard {
+    --lb-pad: 0.75rem;
+    --lb-grid: 0 1.75rem 1rem minmax(0, 1fr) 3rem;
+  }
+  .page-leaderboard .lb-board.has-cost {
+    --lb-grid: 0 1.75rem 1rem minmax(0, 1fr) max-content;
+  }
+  .lb-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .lb-banner {
+    width: 10rem;
+  }
+  .lb-figs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 1rem;
+  }
+  .lb-figs > div {
+    min-width: 0;
+  }
+  .lb-figs b {
+    font-size: 1.9rem;
+  }
+  .lb-figs span {
+    font-size: 0.75rem;
+  }
+  .lb-views {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: row;
+    width: 100%;
+  }
+  .lb-views label {
+    padding: 0 0.35rem;
+  }
+  .lb-views label:nth-of-type(4) {
+    border-left: 0;
+  }
+  .lb-views label:nth-of-type(n + 4) {
+    border-top: 1px solid var(--st-rule);
+  }
+  .lb-sort {
+    flex: 1 1 100%;
+  }
+  .lb-sort-box,
+  .lb-sort-select {
+    flex: 1;
+    width: 100%;
+  }
+  .page-leaderboard .tb-top > .tb-end {
+    margin-left: 0;
+  }
+  .lb-board-head {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .lb-board-title {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.75rem;
+  }
+  .lb-board-tools {
+    margin-left: 0;
+  }
+  /* the toolbar scrolls away at this width (ui.css), so the axis bar sticks right under the command bar */
+  .lb-sticky {
+    top: var(--shell-h);
+  }
+
+  .page-leaderboard .mrow {
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0 0.45rem;
+    height: 3.85rem;
+    padding: 0.3rem 0.35rem 0.25rem 0;
+  }
+
+  .page-leaderboard .mrow > .mrow-check {
+    display: none;
+  }
+  .page-leaderboard .mrow > .mrow-rank {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+  .page-leaderboard .mrow > .mrow-icon {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+  .page-leaderboard .mrow > .mrow-name {
+    grid-column: 4;
+    grid-row: 1;
+  }
+  .page-leaderboard .mrow > .mrow-score {
+    grid-column: 5;
+    grid-row: 1;
+  }
+  .page-leaderboard li.mrow > .mrow-score {
+    font-size: 1rem;
+  }
+  .page-leaderboard .mrow > .mrow-plot {
+    grid-column: 4;
+    grid-row: 2;
+  }
+  .page-leaderboard .lb-board:not(.has-cost) .mrow > .mrow-plot {
+    grid-column: 4 / -1;
+  }
+  /* the cost cell: under the score, one line (amount and its mark); the token column folds away */
+  .page-leaderboard .mrow > .mrow-cost {
+    grid-column: 5;
+    grid-row: 2;
+    justify-content: flex-end;
+    align-self: center;
+    padding-left: 0;
+  }
+  .page-leaderboard .mrow > .mrow-tok {
+    display: none;
+  }
+  .page-leaderboard .mrow-open {
+    min-height: 1.4rem;
+    font-size: 0.9rem;
+  }
+  .page-leaderboard .mrow-rank .lb-rank-sub {
+    display: none;
+  }
+  /* the axis bar: the column labels above, the scale below */
+  .page-leaderboard .lb-axisrow {
+    grid-template-rows: auto 54px;
+    height: auto;
+    padding: 0.35rem 0.35rem 0 0;
+  }
+  .page-leaderboard .lb-axisrow > span:not(.mrow-plot) {
+    padding-bottom: 0.2rem;
+  }
+  .page-leaderboard .lb-axisrow > .mrow-rank {
+    grid-row: 1;
+    align-self: end;
+  }
+  /* compare view: the item and its difference above, the bars across below */
+  .lb-cmp-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    padding: 0.3rem 0.35rem 0.2rem 0;
+  }
+  .lb-cmp-name {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .lb-board .lb-cmp-diff,
+  .lb-board.has-cost .lb-cmp-diff {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .lb-cmp-plot {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .lb-cmp-row.is-task .lb-cmp-name {
+    padding-left: 0.75rem;
+  }
+  .lb-notice {
+    flex-wrap: wrap;
+  }
+  /* the cost legend: a long item wraps inside the window */
+  .lb-cost-legend .cost-legend-item {
+    white-space: normal;
+  }
 }

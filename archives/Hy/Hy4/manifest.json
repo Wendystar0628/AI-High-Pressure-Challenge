@@ -1,0 +1,1274 @@
+{
+  "schema": 1,
+  "model": "Hy/Hy4",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\AE风味动效设计编辑器\\claude\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 6631,
+      "sha256": "17e439428d3d33e9bc9949fb7308648567f1c0b19c0fde04501314620c1c23ec"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 11699,
+      "sha256": "b718af81faf9cbea0758c83cd7183dedadf3d23d90e5afe693ea0d2a10c51bdf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 7905,
+      "sha256": "9c18433264ad1d0c5fe3fdbce08a4757dca9ee7153d2cefb225284ead8eb4a66"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 8091,
+      "sha256": "144afced87d573a30950e17cc7fdd6892c080952f8bea2a45ea62acb94054034"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 6555,
+      "sha256": "6cd062532f6d1bd2fbcdee126d4de61f69a0e0d901ba586eafd49777a4b21871"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/js/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 4558,
+      "sha256": "ee349ae154c8e4e7bf5219a8776653a1e1b9f72048cb4225672e8c2d4298a6a7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\core.js",
+      "path": "AE风味动效设计编辑器/submission/js/core.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 23220,
+      "sha256": "1fd9f9c999dea3e5be1f9a3c7f206f4f6605ce8693550de115d9550d38a51aec"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/js/demo.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 21339,
+      "sha256": "84f763e2ced97a1682dd591f673daabc3367e5f88154ef6a5b5da4e2ce6013bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\engine.js",
+      "path": "AE风味动效设计编辑器/submission/js/engine.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 35233,
+      "sha256": "910389bf6dbbd85b6d0affafce6e2209150787a76fffe7af1677f9c6dd6eece4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\export.js",
+      "path": "AE风味动效设计编辑器/submission/js/export.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 2596,
+      "sha256": "f920debe703411ddc7ac0f4a7759152833b742745ea5d968b186205a996b23af"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\geometry.js",
+      "path": "AE风味动效设计编辑器/submission/js/geometry.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 18419,
+      "sha256": "eafa312cf0cf196764467312cce0944dbe6e1887e0dc8c469708ef33b51863e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\main.js",
+      "path": "AE风味动效设计编辑器/submission/js/main.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 3944,
+      "sha256": "52e42cb59d480f529f6fbcde00f4e332815d0a25eb162e00ad1ab8d7de3640b1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\renderer.js",
+      "path": "AE风味动效设计编辑器/submission/js/renderer.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 19325,
+      "sha256": "6618a98be3d6b3baf7ac9f5b081691d9fe3b8a1e5322c8033bc3a459e50e940b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 38659,
+      "sha256": "d0f4d8046c7ef8f71814d54f0657694cfccc0ba25c047b3b1707034fcfa33e6a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui_canvas.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui_canvas.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 14254,
+      "sha256": "d2ec28b84d203c040d47d80551baa26583dcd9f583bb7cc4fa819f5ddc1ae699"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui_curve.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui_curve.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 16781,
+      "sha256": "82456c458dd6ab0a85ebb88791b62a76ed6d7a914b0d1499bdbbb83370f206e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui_nodes.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui_nodes.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 15769,
+      "sha256": "d2aca0bd9f4c1614c02b2b63b2caece550dafdf028a3f56b4a77556f863b222a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui_props.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui_props.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 20208,
+      "sha256": "94a1e69cbe6c7ec0250dd7f7192851f1cfe6ce61386d11fd331bdeb7daf5be7f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\js\\ui_timeline.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui_timeline.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 25148,
+      "sha256": "f09cf43b38a28505ea6b7ab2ac9504ba30b9d8cdda4a9b629303d694102dca10"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\style.css",
+      "path": "AE风味动效设计编辑器/submission/style.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 28442,
+      "sha256": "fe3f354700f4d8bd237c0995ae7064edbd32716f3c1e2323ae3432f75c7d201a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6449,
+      "sha256": "e45dfe3c0fafbbc9bb1bb59626ec40a19f2d6d59390799f16b577b0b8e70cd34"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
+      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
+      "role": "result",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9755,
+      "sha256": "bb3532325f7ca07339dcc1d03f8e5ce1c05bdb42401bbb13f567ec4a1b858856"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6448,
+      "sha256": "53151649877a73d6039f0c7a55febb53ea341e34b38b39473744d373c5762d71"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
+      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 6587,
+      "sha256": "e2b64ada9436710536601dc4ff3965509e6f1997090e856ee00da7415915ad06"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\css\\style.css",
+      "path": "NVIDIA_B200网页艺术/submission/css/style.css",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 20157,
+      "sha256": "e968c2fd4da5c0005ed48383974413145a955ad5a55e4760145003da95d077b9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\index.html",
+      "path": "NVIDIA_B200网页艺术/submission/index.html",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 12416,
+      "sha256": "e2ab3abea8056e5f017682ef6358df29914a60c3ce5fb0cb3016b213bb549743"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\js\\core.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/core.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 11892,
+      "sha256": "1fc1e9a8529c000668ad0fe3bbb7c08fe3a446141a3b1b51fdfa85f037a424f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\js\\director.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/director.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 9845,
+      "sha256": "aea8960fc6d5d22b72d371233477884473496b02712b4ee180ce21f820cbcb2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\js\\svg.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/svg.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 42952,
+      "sha256": "f5cd501ec138d26f89b881c3ffcc90c11088c3e9a7e1803faaa02abd11d4b147"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\js\\ui.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/ui.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 27459,
+      "sha256": "a0405bc1edcd26ee66d0c7784e420886c94bde43c3a2edf220b6fe3162af45db"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\js\\world.js",
+      "path": "NVIDIA_B200网页艺术/submission/js/world.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 33949,
+      "sha256": "d1f85fa42c2539fafc0bac0e9d95ae2984b9a13df26fcd6aca7cf0126d1582e2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\lib\\three.min.js",
+      "path": "NVIDIA_B200网页艺术/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "NVIDIA_B200网页艺术",
+      "bytes": 608081,
+      "sha256": "8a5f7249903b54d30f79f708699d2fed2d6a1d0741a4cd41377d1f01bb5a2271"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
+      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1377,
+      "sha256": "09001fe61fcfb41fdab933636613c614d87aff17d9e5dc4aee4b48e9c6ed3898"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
+      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "Transformer前向推理的GPU加速",
+      "bytes": 1421,
+      "sha256": "fb418d2829b56a5da2f0d06a1ceb4e4d941b7e6d68198ce18ba3bc04f5a3ca16"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\动态路由塔防\\claude\\main\\result.json",
+      "path": "动态路由塔防/grading/claude/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 5540,
+      "sha256": "abe327aac7cf15607ff6091dd1fcd3a07234c288c13f48bd2e85cfd0ea36e994"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 6890,
+      "sha256": "c2b228de11c3135a890ea8a1dee541a4e499c9741609a60e1d8f4f8b1af98073"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4085,
+      "sha256": "23d2b58e5363a6638fb244b926d27e8ea8abb1ec449ab320f53dbe0954c32418"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\评分表_Opus5.5.md",
+      "path": "动态路由塔防/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4143,
+      "sha256": "456197de65e5bc1304f9cbe6149caafad238f7abdd4df3efe7ab419e4b2a5df5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 5543,
+      "sha256": "7e4b028fda2d1dd4ce8aa95bc53e5173c2db0fa6b8e443aee3a923581a1f5160"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\audio.js",
+      "path": "动态路由塔防/submission/js/audio.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 6523,
+      "sha256": "6bd093bdccc3168cb77a67725642167d7ea920f9a54dfc18c59ee6af9e6eb6e3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\data.js",
+      "path": "动态路由塔防/submission/js/data.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 18897,
+      "sha256": "d3dfd017082b3cfa938d562b63045a90a95eb108220118fcd8573d2b638496a6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\engine.js",
+      "path": "动态路由塔防/submission/js/engine.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 21308,
+      "sha256": "018de4a063f82f7d2a06e2976f7d28cb5c46e69d5294df75465c84955dd680c5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\game.js",
+      "path": "动态路由塔防/submission/js/game.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 46835,
+      "sha256": "f8a9e60ad2a10c50f482bb632b718220df0395d3007c502a1b84022622842c2c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\main.js",
+      "path": "动态路由塔防/submission/js/main.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 31810,
+      "sha256": "ad692fa8bc1ba1d2001dce544bbd738cdefa2f21072c0fc2f92ac6c4ea7d32bf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\maps.js",
+      "path": "动态路由塔防/submission/js/maps.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 9981,
+      "sha256": "aefc0324ac8b76608c88d4aeadf75f07dc4e9718d631eb3ca0368ed48b039622"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\pathfinding.js",
+      "path": "动态路由塔防/submission/js/pathfinding.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 6256,
+      "sha256": "26da07729b58f16c24d45fa85e56c579e79253a45541a8dbd967f3c84aec89ed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\render.js",
+      "path": "动态路由塔防/submission/js/render.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 32668,
+      "sha256": "f062ecb319d5b733411fc7bdc3191fda3bb42d56503cf8c06686a9af6e1ff9b5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\js\\ui.js",
+      "path": "动态路由塔防/submission/js/ui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 28155,
+      "sha256": "2f98a8eb338a77ede35a1e49c2df8e3d507631e07796894118b8ba79078c8160"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\style.css",
+      "path": "动态路由塔防/submission/style.css",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 18270,
+      "sha256": "c684fa079c774e4e02ba7fb992f5b515f8f22b717ad162a21c0a752ee9e2c84c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\tools\\verify_full.js",
+      "path": "动态路由塔防/submission/tools/verify_full.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2910,
+      "sha256": "54aae8c9f06f9188e14ee0d0481eae32296a46d25f3539b17460617d32be6879"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\tools\\verify_game.js",
+      "path": "动态路由塔防/submission/tools/verify_game.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 3236,
+      "sha256": "ce02162f4e3cd0cb7f5b861061d0f0a57ccc05d7a6545d436f270f40a9771865"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\tools\\verify_maps.js",
+      "path": "动态路由塔防/submission/tools/verify_maps.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 2815,
+      "sha256": "447048f769de31ab0385f13c291614e011c9d71216ff711c6daf01d9c5f707f6"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
+      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
+      "role": "result",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1443,
+      "sha256": "7bf236580b52ca3cbdcb2e02c5e0e2c3c1b548f5c2c7cc63ac56f121f3a5b717"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
+      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1125,
+      "sha256": "e475a4d8d40081894e1e9407fa4f7f9ee01bcf1c39c5a9f91744943f1dbc2c93"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\answer.md",
+      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
+      "role": "submission",
+      "task": "单位正方形内最小三角形面积最大化",
+      "bytes": 1021,
+      "sha256": "ef0fe01ac3bfff97d5f5e21bdaeea4a16712f632b0ba497ef20b5f91a705d989"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\太阳雨渔港3D渲染\\claude\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/claude/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4673,
+      "sha256": "96d94a22bd0f5e7db62bba9d324562a970edd543d2845344d3ab317811430e6e"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6627,
+      "sha256": "181def860bc707d397565b175b0961dd7bbe04961ff9c4131e134e4adcc722ed"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4077,
+      "sha256": "9b61998a3944e9e0a0f6a6edaaf3a392e996a154fe44e8fcf626f41794cb8c4b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\评分表_Opus5.5.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4119,
+      "sha256": "2912bea0a93cf9faaf8f199bcf2e7b0383e96ffc81c4f3da87699c36a0a1c555"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 965,
+      "sha256": "d03ab3183e9fddbd88d03ea1e1227dcd17c25dbe4f21e9975b51abcf3b54b240"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\anim.js",
+      "path": "太阳雨渔港3D渲染/submission/js/anim.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 16694,
+      "sha256": "95b95e95eea3b6476b66ef9c045bb8fee0df1a42c160e48c46ed6f53eb454467"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\base.js",
+      "path": "太阳雨渔港3D渲染/submission/js/base.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12956,
+      "sha256": "d97588d235be22f0eeb2d8045d4a90a536ff772e3ed9621775760fe14259617b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/js/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 19548,
+      "sha256": "b75da6b665960ee6e87c9ea1af2f59ef38620d8b45b8061633b4dc2f6254cea2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/js/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 15268,
+      "sha256": "fa7b4ff658d8c69f5a5df36c7a8286b84cb3f424d62c0be3f1dfc5746b32a11a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\camera.js",
+      "path": "太阳雨渔港3D渲染/submission/js/camera.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 2991,
+      "sha256": "afab3f40f1441150d87a373fbcb397a25edd8999c3e6e1ee3e750a2ff9133215"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\core.js",
+      "path": "太阳雨渔港3D渲染/submission/js/core.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 17563,
+      "sha256": "30ba5a0aa7b0cc543313409750cab3d4d9978ddd4b3ba5e27b7771e34d88015c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\harbor.js",
+      "path": "太阳雨渔港3D渲染/submission/js/harbor.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12039,
+      "sha256": "f6a833c476ec59fcdccb70ade9aaa67fbbe05492c04a76da040fe84ebf7a197c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/js/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 1727,
+      "sha256": "1969358212f17746caefe194326b2e748d924b56a1c9c120e5a832120196e218"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\props.js",
+      "path": "太阳雨渔港3D渲染/submission/js/props.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 16569,
+      "sha256": "cf4ef81e167c40a276a5d9520dcdfc243a4c0b2b7aa298ce2599131c72b8b5bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\textures.js",
+      "path": "太阳雨渔港3D渲染/submission/js/textures.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 25072,
+      "sha256": "f100b7391d3082a36db9adadb9d598b001813572829b458de9b18e8e6aad89b5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\tour.js",
+      "path": "太阳雨渔港3D渲染/submission/js/tour.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4034,
+      "sha256": "9e11fb7b175a7309e034dd86d683458c6a23e599b9f08c2f4197c63f945c87e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\water.js",
+      "path": "太阳雨渔港3D渲染/submission/js/water.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 13587,
+      "sha256": "921508d7b40a167199103c1e6eecc6b6cdbf8517f9c0ffbf259f05374bfdf5a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\js\\weather.js",
+      "path": "太阳雨渔港3D渲染/submission/js/weather.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 12406,
+      "sha256": "933a2b92a7385f194decd6a29984f4808749e2e264dd1c427dd2896b11bb25a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\lib\\three.min.js",
+      "path": "太阳雨渔港3D渲染/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 608081,
+      "sha256": "8a5f7249903b54d30f79f708699d2fed2d6a1d0741a4cd41377d1f01bb5a2271"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 2244,
+      "sha256": "12a4cd588a0ca4eed0c91d29b0794882b0c006b4a9fdc2d9bcacb09dd89602ac"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1098,
+      "sha256": "616eee23ff68825b20bd6fca6d624a5537ee979a65dc172540709189d286d881"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\操作系统嵌套\\claude\\main\\result.json",
+      "path": "操作系统嵌套/grading/claude/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 10169,
+      "sha256": "5638a92d0ce20ee306a43f7fb5a3483f9e88f3b1e6e861d879107d1efd85447f"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 12401,
+      "sha256": "d6bc4859cc19dc3457b47d0927854e3e76ca2f81d77bbbb4957e716e8dabcfe8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12469,
+      "sha256": "5d9af518e2ef41c135ce683173f5698a03d8141a6c081419bc2128c0738640bd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\评分表_Opus5.5.md",
+      "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 12647,
+      "sha256": "da9e2cdcd95c3966e98ddb0edc6ca2793c9c3dc8eb035c611f84f7a4dda84f87"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\.gitignore",
+      "path": "操作系统嵌套/submission/.gitignore.txt",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 27,
+      "sha256": "ff3d97deb6048faada069235f7c32b14dc32dc5de11f28ff06b522b90b889a97"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4927,
+      "sha256": "569e499c7b6028c7bb5a338c4437d512b37d3f0fa11fda202bd71bd89ba67c87"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\assets\\wallpaper.svg",
+      "path": "操作系统嵌套/submission/assets/wallpaper.svg",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5230,
+      "sha256": "76f7d7b2ed1a333752d890b05912925737e44e71ba2b518994ee794104beec4b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3119,
+      "sha256": "cadb742fb4f0071a0aa4ec865d54490e5143c7b209bf4386bde472cd6172fdaa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\index.html",
+      "path": "操作系统嵌套/submission/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 437,
+      "sha256": "d245c43b85239bfcdf383f8e6bbedd7b1c4911d81cabeb6847dba7bd73665335"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\main.js",
+      "path": "操作系统嵌套/submission/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3333,
+      "sha256": "b3e5fa85e564aae9577e90205590022052ed3c039f7760cd155351e99cc8e116"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6084,
+      "sha256": "24b1f03a3398b9ccd8f5786c936848042386b96c351fb3b3fa6782eb9e6b1a14"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 282,
+      "sha256": "23c4285a95b644564a41b7ab2bd010548015843dc63d56c8232334a4ca374dbe"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\apps-ui.js",
+      "path": "操作系统嵌套/submission/src/apps-ui.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 57040,
+      "sha256": "eb1a694a8b297dc396aed39e0766a3b2d2b15bf006c0a006a2c24151e97c507f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\bench.js",
+      "path": "操作系统嵌套/submission/src/bench.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 616,
+      "sha256": "ccd0799ec223dac8627ae4056827700dce97e6515bdac40294c1becccfa843bf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\boot.js",
+      "path": "操作系统嵌套/submission/src/boot.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 658,
+      "sha256": "42913fc3a47be16935995d0b5aca408fc1de0f17624096fefbe4b40b36e06865"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\docs.js",
+      "path": "操作系统嵌套/submission/src/docs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 23596,
+      "sha256": "d43b25bef705b4b4d2c9a3db9a298172aada20da66cc046d3424ac47454ca6bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\engine.js",
+      "path": "操作系统嵌套/submission/src/engine.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 50858,
+      "sha256": "564a6fb9ef286deea460e4fde41cf53eeedc19bab26d9e655baa76b0056143e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\gfx.js",
+      "path": "操作系统嵌套/submission/src/gfx.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20658,
+      "sha256": "a2e51e2b113554b3e2cbf3d680cb0ed91962fac67986469937eadee174b5eacb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\programs.js",
+      "path": "操作系统嵌套/submission/src/programs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10241,
+      "sha256": "f304caa4ac685c6f7a00bbde29860287710a6f2e97a3f26669122f3386da63b7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\runtime.js",
+      "path": "操作系统嵌套/submission/src/runtime.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 44924,
+      "sha256": "97312c0d9429ff63a98fda144935c28d9659fc7df1f78e8dad24c9a8cca77f62"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\scene.js",
+      "path": "操作系统嵌套/submission/src/scene.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16917,
+      "sha256": "c17d09885ab3dc5df65ece53e9f5ff3d44c942397ca61676551e7b92cadc06ae"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\ui.js",
+      "path": "操作系统嵌套/submission/src/ui.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 39951,
+      "sha256": "e6695e4c02573bfbc490fb723a220e47d9a49f1fd9934f62affb785536a6edd8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\util.js",
+      "path": "操作系统嵌套/submission/src/util.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2018,
+      "sha256": "cd2684ca57a89172f120f4a3e01e35e7025efcdb4e302e6bdac1f130e7f922a4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\vfs.js",
+      "path": "操作系统嵌套/submission/src/vfs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5441,
+      "sha256": "cc6b85d36a5c69e7dd07cf756a36304601aac834d5b4d44593bb963a4e0f7b03"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\src\\vm.js",
+      "path": "操作系统嵌套/submission/src/vm.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16145,
+      "sha256": "240d73fdf0b6446d5fa93b14d7bf3b27e2ab93b4da2d96ff9f764937185db241"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\style.css",
+      "path": "操作系统嵌套/submission/style.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 23226,
+      "sha256": "8ee15b59743ef10e95f81c30d03970f53bd9a0b56946a667c48c805fd702a652"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\操作说明.md",
+      "path": "操作系统嵌套/submission/操作说明.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 23447,
+      "sha256": "f68cdbe096579f09b4b55ba3d28c0c9ac9115ae53f5ca0d2fc80223ae339a265"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 5863,
+      "sha256": "00dd5ed4ccce6a0cd4d3ec9c18ef613ddf89c0f3e207a26b43b6839e0402806e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 2450,
+      "sha256": "d53e8c4e275706ef3d01fa3a44c5ee33da06be49018701d3edab0c27e157070c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\果冻冲击与造浪水槽\\claude\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 5626,
+      "sha256": "9aec5228a4b72d099d3cd0fdfe5a22910a27758ee19ad3acba99aa41d4a73afd"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 7056,
+      "sha256": "8af6f60dd5539ab91521eabebd2fd3f2daeec0115d973d419b677361d22646ff"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4689,
+      "sha256": "25a1a117793b3edc9a35663989dd2414985878cbb5a709cf9a983067847d684e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4705,
+      "sha256": "babe5e2c1ed715334b3e845db94bd97e39236197f3519f3187a86cb7a53e7ccf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\css\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/css/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 11977,
+      "sha256": "c7c24bc2788a9948af28af167e844dc9521d35f83e53af48eab6b27fff6c2354"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 2755,
+      "sha256": "7b4287a47eb5ad0d5f2537ddb824ee0f21a246d612d37af2834f51437b1c7fc1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\js\\app.js",
+      "path": "果冻冲击与造浪水槽/submission/js/app.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 17656,
+      "sha256": "a91f15c6eb13adb98e425378e6105b18fe61b94019c93c97003fb37d51dbf838"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\js\\engine.js",
+      "path": "果冻冲击与造浪水槽/submission/js/engine.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 24703,
+      "sha256": "80a2fcc4f92b1f5e71c837db2836def5e7fbd590aebfa87b459729559e9e3ff1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\js\\jelly.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 28009,
+      "sha256": "7cfa0ee21b97332a39065cfadf729e3f4fb2369e334e476935cadd285b63543c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\js\\tank.js",
+      "path": "果冻冲击与造浪水槽/submission/js/tank.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 30370,
+      "sha256": "493559489be30f04d8fbd3866d8eb4354078a51c9fb9b9dcc7e584f95c0f7b9f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\lib\\three.min.js",
+      "path": "果冻冲击与造浪水槽/submission/lib/three.min.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 608081,
+      "sha256": "8a5f7249903b54d30f79f708699d2fed2d6a1d0741a4cd41377d1f01bb5a2271"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\通用数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1540,
+      "sha256": "c9c084a2eeb3ec186964271519ccb4512d71d5db1037cb821d7dd2ab2578743b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 1462,
+      "sha256": "649ec61ea05bec9b77a01409ec5b73e8f2e278352cd703d3975c4dba698cb8d8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\solution.cpp",
+      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "通用数字电路仿真器加速",
+      "bytes": 10991,
+      "sha256": "b686e4be5ce0125da3bbae45d5fec84edda4593a8fc5cded1f02062ae044b24c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 3946,
+      "sha256": "11ffc7083593b33025cf9ab069ef9b2147f772c3007d67a0fc2ab1aa19378672"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1306,
+      "sha256": "e67be05748db57dd7c41b019be853d8117059870913f8dbd5f5ae48734951c16"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 1478,
+      "sha256": "2d8f77d59433ebcc570286c56f84e25f25c5daa40ded16c00c6e76d40632c124"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\Transformer前向推理的GPU加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\Transformer前向推理的GPU加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\__pycache__",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\algo_best.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\algotest.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\best.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\best_A.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\cpp_val0.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\cpp_val1.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\explore.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\fastcore.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\finalize.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heil.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heil.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heil.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heil_s.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heilcore.c",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\heilcore.dll",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\perm.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\perm_grid.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\pol_err.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\pol_out.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\polish.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\polished.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\search.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\search_fast.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\search_mem.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\val_start.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\_probe.lean",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\_probe2.lean",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\.git",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\.gitignore",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze3.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\analyze3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\diag_grader.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\diag_noBr.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\diag_noGate.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\diag_v.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\grader_diag.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\.git",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\_solve.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": [
+    "形式化证明题",
+    "数学竞赛原创试题",
+    "Transformer前向推理的GPU加速"
+  ],
+  "created": "2026-11-07T02:54:08"
+}

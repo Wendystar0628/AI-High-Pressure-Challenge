@@ -1,0 +1,11 @@
+﻿const fs=require('fs');
+let p='js/demo.js'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("      this._applyPresentation(this.t, false);\n      this._renderFrame();\n    },", "      this._applyPresentation(this.t, false);\n    },");
+fs.writeFileSync(p,s);
+let q='js/ui.js'; let u=fs.readFileSync(q,'utf8');
+u=u.replace("      this.dom.mapNameHud.textContent = mapDef.code + ' · ' + mapDef.name;", "      document.getElementById('screen-result').classList.remove('active');\n      document.getElementById('overlay-pause').classList.remove('show');\n      document.getElementById('overlay-menu').classList.remove('show');\n      this.dom.mapNameHud.textContent = mapDef.code + ' · ' + mapDef.name;");
+fs.writeFileSync(q,u);
+let h=fs.readFileSync('index.html','utf8');
+h=h.replace("  /* ---------- battle hud ---------- */", "  /* demo disables battle interaction except exit */\n  #app.demo-active #hud-top, #app.demo-active #threat-panel, #app.demo-active #buildbar,\n  #app.demo-active .selection-panel, #app.demo-active .route-legend, #app.demo-active .cam-reset,\n  #app.demo-active .log-panel, #app.demo-active .ent-chips { pointer-events: none; }\n  #app.demo-active #btn-demo-exit { pointer-events: auto; }\n  #app.demo-active #webgl { cursor: none; }\n\n  /* ---------- battle hud ---------- */");
+h=h.replace("#subtitle { position: absolute; left: 50%; bottom: 8.9rem;", "#subtitle { transition: opacity .35s ease; position: absolute; left: 50%; bottom: 8.9rem;");
+fs.writeFileSync('index.html',h);

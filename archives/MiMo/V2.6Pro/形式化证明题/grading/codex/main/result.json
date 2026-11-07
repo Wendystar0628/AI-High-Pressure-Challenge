@@ -1,0 +1,57 @@
+{
+  "task": "形式化证明题",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "第 1 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：expected token；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 2 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：unexpected identifier; expected ','；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 3 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：unexpected token '}'; expected term；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 4 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：Submodule 未识别，Module.finrank 等标识符未知；文件未导入所需模块且仍保留 sorry。"
+    },
+    {
+      "name": "第 5 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：expected token；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 6 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：unknown namespace `Polynomial`；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 7 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：expected token；文件仍保留 sorry。"
+    },
+    {
+      "name": "第 8 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "单独编译失败（退出码 1）：expected token；文件仍保留 sorry。"
+    }
+  ],
+  "metrics": {},
+  "notes": "评分版本：最近一次 git 提交 a961f80fa6564e80b2f79ccf546ab50f0c474d58（Baseline: Problem1-8 statements as given (with sorry)）。工作目录八题均为未完成的 sorry 桩，按规则采用该提交；八份 Lean 文件与工作目录文本相同（仅换行形式可能不同）。在工作目录下的 submission 副本逐题单独编译，未修改证明源码；不另查公理、不逐字核对命题。"
+}

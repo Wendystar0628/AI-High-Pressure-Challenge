@@ -1,0 +1,11 @@
+﻿const fs=require('fs');
+let p='js/models.js'; let s=fs.readFileSync(p,'utf8');
+s=s.replace("  function roadTexture() {\n    return canvasTex(256, 256, (g) => {\n      g.fillStyle = '#1c3e4e'; g.fillRect(0, 0, 256, 256);\n      g.strokeStyle = 'rgba(120,245,235,.36)'; g.lineWidth = 2;", "  function roadTexture(baseCol, lineCol) {\n    baseCol = baseCol || '#1c3e4e'; lineCol = lineCol || 'rgba(120,245,235,.36)';\n    return canvasTex(256, 256, (g) => {\n      g.fillStyle = baseCol; g.fillRect(0, 0, 256, 256);\n      g.strokeStyle = lineCol; g.lineWidth = 2;");
+s=s.replace("      g.strokeStyle = 'rgba(110,235,225,.16)';\n      for (let i = 12; i < 256; i += 32)", "      g.strokeStyle = lineCol.replace(/[\\d.]+\\)$/, '0.13)');\n      for (let i = 12; i < 256; i += 32)");
+s=s.replace("      g.fillStyle = 'rgba(90,240,230,.22)';", "      g.fillStyle = lineCol.replace(/[\\d.]+\\)$/, '0.42)');");
+s=s.replace("      g.strokeStyle = 'rgba(120,255,245,.35)'; g.lineWidth = 3; g.strokeRect(6, 6, 244, 244);", "      g.strokeStyle = lineCol; g.lineWidth = 3; g.strokeRect(6, 6, 244, 244);");
+fs.writeFileSync(p,s);
+let q='js/engine.js'; let e=fs.readFileSync(q,'utf8');
+e=e.replace("      const roadTex = M.roadTexture();", "      const palettes = {\n        segment: { base: '#163845', line: 'rgba(110,245,235,.42)' },\n        backbone: { base: '#251d3e', line: 'rgba(175,140,255,.44)' },\n        airgap: { base: '#2a2d17', line: 'rgba(218,236,120,.42)' }\n      };\n      const pal = palettes[this.def.id] || palettes.segment;\n      const roadTex = M.roadTexture(pal.base, pal.line);");
+e=e.replace("        color: 0x0b1a24, roughness: 0.78, metalness: 0.45, map: tex, emissive: this.theme.roadEdge, emissiveIntensity: 0.018", "        color: { segment: 0x08141c, backbone: 0x0e0a18, airgap: 0x121308 }[this.def.id] || 0x0b1a24, roughness: 0.78, metalness: 0.45, map: tex, emissive: this.theme.roadEdge, emissiveIntensity: 0.018");
+fs.writeFileSync(q,e);

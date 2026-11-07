@@ -28,6 +28,7 @@ LOGOS = WEBSITE / 'logos' / 'mark'
 sys.path.insert(0, str(BENCH / 'orchestrator'))
 
 import grading  # noqa: E402  (read-only use: load, task_scores, model_scores, phases, run_dir)
+import costs  # noqa: E402  (read-only use: load)
 from run_state import paths  # noqa: E402
 from tasks import TASKS  # noqa: E402
 
@@ -183,11 +184,13 @@ def model_record(state, model, categories):
 
 def build_scores(models, categories):
     state = grading.load()
+    cost_source, model_costs = costs.load()
     records, newest = {}, []
     for m in models:
         if m['key'] not in state['models']:
             print(f'提示：{m["key"]} 还没有评分记录，按评测中导出。')
         records[m['id']], latest = model_record(state, m, categories)
+        records[m['id']]['cost'] = model_costs[m['key']]
         if latest:
             newest.append(latest)
     ids = [m['id'] for m in models]
@@ -201,6 +204,7 @@ def build_scores(models, categories):
     order = sorted(ids, key=lambda i: (overall[i] is None, overall[i] or 0, ids.index(i)))
     return {
         'updated': date_of(max(newest)) if newest else None,
+        'cost_source': cost_source,
         'order': order,
         'scores': {i: records[i] for i in order},
     }

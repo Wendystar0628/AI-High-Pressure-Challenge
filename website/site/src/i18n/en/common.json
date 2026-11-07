@@ -205,6 +205,56 @@
     "weights": "Custom weights",
     "pending": "Being tested"
   },
+  "cost": {
+    "label": "Test cost",
+    "eyebrow": "Test cost",
+    "basis": {
+      "subscription": "Sub-prorated",
+      "api": "API spend",
+      "none": "No data"
+    },
+    "per": {
+      "month": "{price}/mo",
+      "week": "{price}/wk",
+      "year": "{price}/yr"
+    },
+    "credits": "{n} credits",
+    "planTerms": "{name} ({terms})",
+    "sep": ", ",
+    "listSep": ", ",
+    "plan": {
+      "subscription": "Plan: {plan}",
+      "api": "Billed on {plan}"
+    },
+    "tokensUnit": "{v} tokens",
+    "tokens": "{v} over {n} tasks",
+    "tokensNone": "No token usage recorded",
+    "tokensNoneShort": "Tokens: no data",
+    "est": "est.",
+    "legendEst": "includes estimates (tasks without usage records)",
+    "tokensHead": "Tokens",
+    "estSuffix": " (incl. estimates)",
+    "noteQuota": "Prorated from ModelDial weekly quotas: the share of the quota used, at the subscription fee",
+    "noteApiPrice": "No quota data on ModelDial; estimated from official API prices",
+    "noteApiPriceUsd": "No quota data on ModelDial; estimated from official API prices (API equivalent {usd})",
+    "noteCredits": "Converted from the credits the sessions used",
+    "noteNone": "No quota or price data available",
+    "fitted": "Includes estimates: no usage records for {list}",
+    "fittedAll": "No usage records for any of the {n} tasks: all estimated",
+    "sr": "test cost ¥{cost}, {basis}",
+    "srNone": "test cost: no data",
+    "srAppend": "{text}, {cost}",
+    "srTokens": "{money}, {tokens}{est}",
+    "srEst": ", including estimates",
+    "source": "Test cost: subscription models are prorated from weekly quotas (data: {src}), at the subscription fee for the share of the quota used, or estimated from official API prices where no quota is listed; API models show the amount paid. US$1 = ¥{rate}; quota data as of {date}.",
+    "sourceUrl": "Subscription quota source: {url}",
+    "retest": "If you doubt the measured usage, download the tasks and their isolated environments from GitHub and run them yourself to compare: {repo}",
+    "csv": {
+      "cny": "Test cost (CNY)",
+      "basis": "Cost basis",
+      "tokens": "Tokens"
+    }
+  },
   "export": {
     "button": "Save as image",
     "saved": "Saved",

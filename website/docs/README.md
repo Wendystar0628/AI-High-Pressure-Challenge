@@ -106,6 +106,8 @@ tasks.json    [{ key, name, en, weight, tasks: [{ key, name, short, weight, minu
 scores.json   { updated, scores: { <模型id>: { total, kinds: { standard, design },
                                        categories: { <类别>: 分 | null }, tasks: { <题目>: 分 | null } } } }
               kinds：标准评判题（40%）和主动设计题（60%）各自折成 0–100 的分；类别里的题没出齐时类别分为 null
+              测试开销：顶层 cost_source { name, url, fetched, usd_cny }，每个模型 cost { cny, basis, plan, tokens,
+              fitted, method, api_usd }（orchestrator/docs/测试开销.md 第五节）；排行总榜和侧面板显示（leaderboard.md）
 stems/<类别>/<题目>.json   { statement, materials, omitted, blocks, sections: [{ title, blocks, sections }] }
               题目页的题干，导出时从题面原件按 STEM_RULE 摘录（tasks.md「题干的摘录规则」）；只有题目页读取
               statement：题面在仓库里的路径；materials：题目材料文件夹或 null；omitted：没收的章节标题

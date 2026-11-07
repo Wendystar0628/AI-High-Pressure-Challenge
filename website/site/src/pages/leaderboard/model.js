@@ -2,6 +2,11 @@
 // rows (sorted and filtered), and the best values each view highlights.
 // Everything is computed from the data; nothing about the models is fixed.
 import { rankBy, modelStatus, round1 } from '../../core/index.js';
+import { hasCosts } from '../../ui/cost.js';
+
+/** Sorting by test cost: cheapest first, or (cost-desc) dearest first. */
+export const COST_SORTS = ['cost', 'cost-desc'];
+export const isCostSort = (k) => COST_SORTS.includes(k);
 
 export const VIEWS = ['total', 'pass', 'parts', 'kinds', 'matrix', 'compare'];
 export const PASS = 60;
@@ -57,9 +62,33 @@ export function presets(data) {
   ];
 }
 
-/** Sort options: total, the two kinds, then each category (data order). */
+/** Sort options: total, the two kinds, each category (data order), then the test cost when the data has it. */
 export function sortKeys(data) {
-  return ['total', 'standard', 'design', ...data.categories.map((c) => c.key)];
+  return ['total', 'standard', 'design', ...data.categories.map((c) => c.key), ...(hasCosts(data) ? COST_SORTS : [])];
+}
+
+/**
+ * The order by test cost (leaderboard.md 排序): models with an amount by cny (ascending, or descending for
+ * cost-desc), equal amounts share a rank (1, 1, 3) and go by total score; then the ranked models without an
+ * amount (数据暂缺, no rank), then the models still being tested (no rank), both by total score.
+ * totalOf(id) is the total in use (custom weights included). Returns [{ id, value, rank }].
+ */
+function costOrder(data, desc, totalOf) {
+  const cny = (id) => data.score(id)?.cost?.cny ?? null;
+  const ranked = (id) => modelStatus(data, id) === 'ranked';
+  const byTotal = (a, b) => (totalOf(b) ?? -1) - (totalOf(a) ?? -1);
+  const priced = data.order.filter((id) => ranked(id) && cny(id) != null).sort((a, b) => (desc ? cny(b) - cny(a) : cny(a) - cny(b)) || byTotal(a, b));
+  let rank = 0;
+  let prev = null;
+  const out = priced.map((id, i) => {
+    if (cny(id) !== prev) {
+      rank = i + 1;
+      prev = cny(id);
+    }
+    return { id, value: cny(id), rank };
+  });
+  const rest = data.order.filter((id) => !priced.includes(id)).sort((a, b) => (ranked(a) ? 0 : 1) - (ranked(b) ? 0 : 1) || byTotal(a, b));
+  return out.concat(rest.map((id) => ({ id, value: null, rank: null })));
 }
 
 const maxOf = (vals) => {
@@ -87,7 +116,7 @@ export function compute(data, S) {
   const official = S.custom ? rankBy(data, 'total') : totals;
   const offRank = new Map(official.map((e) => [e.id, e.rank]));
   const totRank = new Map(totals.map((e) => [e.id, e]));
-  const sorted = S.sort === 'total' ? totals : rankBy(data, S.sort);
+  const sorted = S.sort === 'total' ? totals : isCostSort(S.sort) ? costOrder(data, S.sort === 'cost-desc', (id) => totRank.get(id)?.value ?? null) : rankBy(data, S.sort);
 
   const info = new Map();
   for (const id of data.order) {

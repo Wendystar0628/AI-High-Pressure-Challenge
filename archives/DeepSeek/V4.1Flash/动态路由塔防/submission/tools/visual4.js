@@ -1,0 +1,16 @@
+﻿const fs=require('fs');let p='js/engine.js';let s=fs.readFileSync(p,'utf8');
+// route markers: non-additive, bigger glow
+s=s.replace("          const cone = new THREE.Mesh(new THREE.ConeGeometry(0.34, 1.1, 3), new THREE.MeshBasicMaterial({\n            color: r.color, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false\n          }));", "          const cone = new THREE.Mesh(new THREE.ConeGeometry(0.42, 1.5, 3), new THREE.MeshBasicMaterial({\n            color: r.color, transparent: true, opacity: 0.95, depthWrite: false\n          }));");
+s=s.replace("          const glow = M.glowSprite(r.color, 1.6, 0.5); m.add(glow);", "          const glow = M.glowSprite(r.color, 1.7, 0.28); m.add(glow);");
+// route shader stronger
+s=s.replace("            float base=(0.16+chev*0.68)*edge;\n            vec3 c=uColor*(1.0+chev*0.9);\n            float a=base*uOpacity;", "            float base=(0.34+chev*0.5)*edge;\n            vec3 c=uColor*(0.9+chev*0.8);\n            float a=base*uOpacity;");
+// zone labels stronger
+s=s.replace("fontSize: 40, color: this.def.theme.accent, plain: true, opacity: 0.3, scale: 1.6", "fontSize: 40, color: this.def.theme.accent, plain: true, opacity: 0.46, scale: 1.8");
+s=s.replace("          lbl.position.set(cx, 1.2, cz);", "          lbl.position.set(cx, 1.9, cz);");
+// spire window details
+s=s.replace("          bar.position.y = yy + sh * 0.82; g.add(band);", "          bar.position.y = yy + sh * 0.82; g.add(band);\n          for (let w = 0; w < 3; w++) {\n            const win = new THREE.Mesh(new THREE.BoxGeometry(r * 1.4, 0.055, 0.04), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));\n            win.position.set(0, yy + sh * (0.25 + w * 0.18), r + 0.04); g.add(win);\n          }");
+// public flow brighter
+s=s.replace("          uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(0x8e6bff) } },", "          uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(0xb08cff) } },");
+s=s.replace("            void main(){ vec2 p=vUv*vec2(30.0,2.0); p.x-=uTime*1.6; float s=step(0.4,h(floor(p*vec2(2.0,1.0))));\n              float line=smoothstep(0.48,0.5,abs(fract(vUv.y*2.0)-0.5))*0.5;\n              float a=(0.18*s+0.06)*smoothstep(0.0,0.2,vUv.x)*smoothstep(1.0,0.8,vUv.x);\n              gl_FragColor=vec4(uColor*(1.0+s),a+line*0.3);}", "            void main(){ vec2 p=vUv*vec2(26.0,2.0); p.x-=uTime*1.8; float s=step(0.38,h(floor(p*vec2(2.0,1.0))));\n              float line=smoothstep(0.46,0.5,abs(fract(vUv.y*2.0)-0.5))*0.7;\n              float a=(0.38*s+0.12)*smoothstep(0.0,0.12,vUv.x)*smoothstep(1.0,0.88,vUv.x);\n              gl_FragColor=vec4(uColor*(1.3+s),min(0.75,a+line*0.35));}");
+s=s.replace("        const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xc6a4ff, size: 0.35, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false }));", "        const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xe0c8ff, size: 0.55, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false }));\n        pts.position.y = 0.35;");
+fs.writeFileSync(p,s);

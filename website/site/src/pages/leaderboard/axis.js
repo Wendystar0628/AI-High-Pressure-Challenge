@@ -47,7 +47,9 @@ export function createAxis({ data, state, computed, onFocus }) {
   function drawTicks(g, kind, x) {
     g.replaceChildren();
     if (!kind) return;
-    for (const v of [0, 20, 40, 60, 80, 100]) {
+    // a narrow plot (phone width) keeps 0, the pass line and 100
+    const narrow = x(100) - x(0) < 170;
+    for (const v of narrow ? [0, 60, 100] : [0, 20, 40, 60, 80, 100]) {
       const label = kind === 'pass' ? (v === PASS ? '0' : v > PASS ? `+${v - PASS}` : `−${PASS - v}`) : String(v);
       text(g, { class: `tick-label${v === PASS ? ' is-pass' : ''}`, x: x(v), y: Y3, 'text-anchor': v === 0 ? 'start' : 'middle' }, label);
     }
@@ -140,7 +142,9 @@ export function createAxis({ data, state, computed, onFocus }) {
             if (my !== token) el.remove();
           });
         }
-        text(a, { class: 'ax-weight', x: col.x + col.w / 2, y: Y3, 'text-anchor': 'middle' }, fmtPct(weights[c.key]));
+        const wt = text(a, { class: 'ax-weight', x: col.x + col.w / 2, y: Y3, 'text-anchor': 'middle' }, fmtPct(weights[c.key]));
+        // a column narrower than its weight (phone width) leaves it to the tooltip
+        if (wt.getComputedTextLength() > col.w - 2) wt.textContent = '';
         attachTip(a, () => `${pick(c, 'name')} ${fmtPct(weights[c.key])}`);
         if (legend) {
           a.addEventListener('pointerenter', () => onFocus?.(c.key));
@@ -172,7 +176,8 @@ export function createAxis({ data, state, computed, onFocus }) {
       const task = col.task;
       const a = linkTo(links.task(task), `${String(task.no).padStart(2, '0')} ${pick(task, 'name')}`);
       a.append(svgEl('rect', { class: 'ax-hit', x: col.x, y: Y3 - 9, width: col.w, height: 18 }));
-      text(a, { class: 'ax-no', x: col.x + col.w / 2, y: Y3, 'text-anchor': 'middle' }, String(task.no).padStart(2, '0'));
+      const no = text(a, { class: 'ax-no', x: col.x + col.w / 2, y: Y3, 'text-anchor': 'middle' }, String(task.no).padStart(2, '0'));
+      if (no.getComputedTextLength() > col.w) no.textContent = '';
       attachTip(a, () => `${String(task.no).padStart(2, '0')} ${pick(task, 'name')}`);
     }
   }

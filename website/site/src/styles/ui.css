@@ -196,6 +196,129 @@
   margin: 1.5rem 0;
   color: var(--st-ink-2);
 }
+/* test cost (cost: true): two more columns right of the score, each one line, vertically centred like the
+   score: 测试开销 (the amount, then its small tag 按订阅折算 / API 实付 / 数据暂缺) and Token (the 12-task
+   total, then a quiet dashed 含估算 mark when some tasks are estimated). Same row height, no stacked lines. */
+.mrow.has-cost {
+  grid-template-columns: 2rem 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem var(--mrow-cost-w, 8.25rem) var(--mrow-tok-w, 6.25rem);
+}
+.mrow.has-cost.no-check {
+  grid-template-columns: 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem var(--mrow-cost-w, 8.25rem) var(--mrow-tok-w, 6.25rem);
+}
+.mrow-cost,
+.mrow-tok {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+.mrow-cost,
+.mrow-tok {
+  justify-content: flex-end;
+}
+.mrow-cost {
+  padding-left: 0.9rem;
+}
+.mrow-tok-v {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-stretch: var(--st-wide);
+}
+.mrow-tok.is-none .mrow-tok-v {
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+.mrow-cost-v {
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-stretch: var(--st-wide);
+}
+.mrow-cost-none {
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+/* the basis marks (shape, not colour): ring = 按订阅折算, solid diamond = API 实付; * = 含估算 */
+.cost-mark {
+  position: relative;
+  top: -0.05em;
+  flex: none;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  box-sizing: border-box;
+}
+.cost-mark.is-subscription {
+  border: 1.5px solid var(--st-ink-2);
+  border-radius: 50%;
+}
+.cost-mark.is-api {
+  width: 0.46rem;
+  height: 0.46rem;
+  background: var(--st-ink-2);
+  transform: rotate(45deg) scale(0.92);
+}
+.cost-est {
+  flex: none;
+  width: 0.5rem;
+  text-align: left;
+  color: var(--st-ink-2);
+  font-size: 0.85rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+}
+.cost-est.is-off {
+  visibility: hidden;
+}
+.cost-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  color: var(--st-ink-2);
+  font-size: 0.75rem;
+}
+.cost-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+.cost-legend .cost-est {
+  font-size: 0.95rem;
+  transform: translateY(0.12em);
+}
+.mrow-cost-est {
+  flex: none;
+  padding: 0 0.25rem;
+  border: 1px dashed var(--st-ink-2);
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.mrow-head :is(.mrow-cost, .mrow-tok) {
+  display: block;
+}
+.mrow-head :is(.mrow-cost, .mrow-tok) {
+  text-align: right;
+}
+/* the cost tooltip: the amount line, then plan, tokens and the notes */
+.cost-tip {
+  display: grid;
+  gap: 0.1rem;
+}
+.cost-tip > b {
+  font-weight: 700;
+}
+.cost-tip-note {
+  opacity: 0.78;
+}
 
 /* ---------- toolbar ---------- */
 .site-toolbar {
