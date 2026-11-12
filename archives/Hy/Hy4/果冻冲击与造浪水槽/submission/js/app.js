@@ -1,454 +1,518 @@
-/* ============================================================
-   app.js — 应用编排 / 界面 / 音效开关 / 视频导出接口
-   ============================================================ */
-(function (global) {
-'use strict';
-var JW = global.JW;
-var $ = function (id) { return document.getElementById(id); };
-var clamp = JW.util.clamp;
+/* 应用主控：场景接口 / 固定步长模拟 / 界面 / 演示导演 / 导出接口 */
+(function () {
+  'use strict';
+  const M = window.M, GPU = window.GPU;
+  const $ = (id) => document.getElementById(id);
+  const SIM_DT = 1 / 120;
 
-/* ---------------- 初始化 ---------------- */
-var canvas = $('gl');
-var stage = new JW.Stage(canvas);
-var audio = new JW.AudioEngine();
-var jelly = new JW.JellyScene(stage, audio);
-var tank = new JW.TankScene(stage, audio);
-var scenes = { jelly: jelly, tank: tank };
-var sceneName = 'jelly';
-
-JW.stage = stage; JW.audio = audio; JW.scenes = scenes;
-
-var appState = {
-  paused: false, speed: 1, soundOn: true, autoPending: false,
-  sceneName: 'jelly'
-};
-var autoTimer = null;
-
-function current() { return scenes[appState.sceneName]; }
-
-function applyCamera(name, isExport) {
-  var rig = stage.rig;
-  if (name === 'jelly') {
-    rig.setView(0.42, 1.19);
-    stage.setFit(3.15, 2.95, 2.15);
-  } else {
-    rig.setView(0.33, 1.30);
-    stage.setFit(5.75, 2.95, 1.78);
+  function showFatal(msg, sub) {
+    window.__fatal = { msg: String(msg), sub: String(sub || '') };
+    const lt = $('loadingText'), ls = $('loadingSub');
+    if (lt) lt.textContent = '启动失败：' + msg;
+    if (ls) { ls.textContent = sub || ''; ls.style.color = '#ffb072'; }
+    const sp = document.querySelector('.spinner');
+    if (sp) sp.style.display = 'none';
+    console.error('[FATAL]', msg, sub);
   }
-  rig.enabled = !isExport;
-  rig.drift = 0;
-}
 
-/* ---------------- 控制面板定义 ---------------- */
-function S(key, label, min, max, step, unit, digits) {
-  return { type: 'slider', key: key, label: label, min: min, max: max, step: step, unit: unit || '', digits: digits };
-}
-function SEG(label, key, options, get, set) {
-  return { type: 'seg', label: label, key: key, options: options, get: get, set: set };
-}
-function CHK(label, key, get, set) {
-  return { type: 'check', label: label, key: key, get: get, set: set };
-}
-function ACT(items) { return { type: 'actions', items: items }; }
+  /* ---------------------------------------------------------------- *
+   * 场景二占位（Phase C 由 water.js 的 WaterSim 取代）
+   * ---------------------------------------------------------------- */
+  function makeFallbackTank() {
+    const rnd = M.mulberry32(9876);
+    const base = [];
+    const sp = 0.075;
+    for (let x = -2.9; x <= 2.9; x += sp)
+      for (let y = 0.06; y <= 1.34; y += sp)
+        for (let z = -0.78; z <= 0.78; z += sp)
+          base.push(x + (rnd() - .5) * sp * .4, y + (rnd() - .5) * sp * .4, z + (rnd() - .5) * sp * .4, y, x);
+    const n = base.length / 5;
+    const out = new Float32Array(n * 8);
+    const cols = [[1,.42,.34],[1,.78,.34],[.46,.92,.6],[.34,.62,1],[.72,.48,1]];
+    const balls = [];
+    for (let g = 0; g < 5; g++) for (let k = 0; k < 3; k++)
+      balls.push({ p: [-2.1 + g * 1.05 + (k - 1) * .12, 0.30 + g * 0.30 + k * .16, -.35 + k * .32],
+        r: .14, col: cols[g], metal: .08, rough: .26, type: 1 });
+    return {
+      mode: 2, time: 0, params: {},
+      reset() { this.time = 0; },
+      setParams(p) { Object.assign(this.params, p); },
+      trigger() {}, step(dt) { this.time += dt; },
+      balls() { return balls; },
+      density() {
+        const amp = this.params.amp === undefined ? .5 : this.params.amp;
+        for (let i = 0; i < n; i++) {
+          const o = i * 8, b = i * 5;
+          let y = base[b + 1];
+          y += (Math.sin(base[b + 4] * 2.1 - this.time * 2.0) * .12 + Math.sin(base[b + 4] * 3.7 - this.time * 3.1) * .05)
+            * (0.3 + amp) * M.smoothstep(1.0, 1.34, y);
+          out[o] = base[b]; out[o + 1] = y; out[o + 2] = base[b + 2]; out[o + 3] = 1;
+          out[o + 4] = 0.02; out[o + 5] = 0; out[o + 6] = 0; out[o + 7] = 0;
+        }
+        return { data: out, count: n };
+      },
+      volume() { return { min: [-3.05, -.1, -.92], max: [3.05, 3.05, .92], refCount: 0.30 }; },
+      renderP() {
+        return { sceneMode: 2, volumeActive: true, iso: 0.34, stepWorld: 0.075, foamStr: 1.0,
+          exposure: 1.32, groundRefl: 0.85, lightDir: [0.42, 0.84, 0.52], lightCol: [1.0, 0.95, 0.86],
+          waterTint: [0.52, 0.24, 0.13], tankP: [-2.55 + Math.sin(this.time * 1.2) * .18, .14, 1.55, 1] };
+      },
+      drainEvents() { return []; },
+      status() { return '造浪水槽（占位）'; },
+    };
+  }
 
-function controlsFor(name) {
-  if (name === 'jelly') return [
-    { t: '演示模式', en: 'IMPACT MODE', rows: [
-      SEG('', 'mode', [['center', '单球正中'], ['offset', '偏心撞击'], ['multi', '多球连续']],
-        function () { return jelly.mode; },
-        function (v) { jelly.setMode(v); buildPanel('jelly'); })
-    ] },
-    { t: '重球', en: 'RIGID BALL', rows: [
-      S('ballMass', '质量', 2, 30, 0.5, ' kg', 1),
-      S('ballRadius', '半径', 0.30, 0.85, 0.01, ' m', 2),
-      S('dropHeight', '初始高度', 1.0, 6.0, 0.1, ' m', 1),
-      S('ballCount', '球数（多球）', 2, 5, 1, '', 0),
-      S('releaseGap', '释放间隔（多球）', 0.4, 2.5, 0.05, ' s', 2)
-    ] },
-    { t: '果冻', en: 'SOFT BODY', rows: [
-      S('jellyWidth', '宽度', 2.0, 4.4, 0.05, ' m', 2),
-      S('jellyHeight', '高度', 0.8, 2.0, 0.05, ' m', 2),
-      S('jellyDepth', '纵深', 2.0, 4.4, 0.05, ' m', 2),
-      S('stiffness', '弹性 / 软硬', 0.35, 2.2, 0.05, '', 2),
-      S('damping', '阻尼', 0.30, 3.0, 0.05, '', 2),
-      S('jellyMass', '质量 / 密度', 8, 60, 1, ' kg', 0),
-      SEG('底部固定', 'bottomFix', [['full', '完全固定'], ['edge', '边缘固定'], ['slide', '摩擦滑动']],
-        function () { return jelly.params.bottomFix; },
-        function (v) { jelly.setParams({ bottomFix: v }); })
-    ] },
-    { t: '碰撞与环境', en: 'ENVIRONMENT', rows: [
-      S('gravity', '重力', 2, 20, 0.2, ' m/s²', 1),
-      S('platformFriction', '平台摩擦', 0, 1, 0.02, '', 2),
-      S('platformBounce', '平台弹性', 0, 0.7, 0.02, '', 2),
-      CHK('重球连续多次撞击', 'multiHit',
-        function () { return jelly.params.multiHit; },
-        function (v) { jelly.setParams({ multiHit: v }); })
-    ] },
-    { t: '快速操作', en: 'ACTIONS', rows: [
-      ACT([['重新触发', function () { cancelAuto(); jelly.trigger(); }],
-           ['重置初态', function () { cancelAuto(); jelly.reset(); }]])
-    ] }
-  ];
+  /* ---------------------------------------------------------------- *
+   * 演示导演
+   * ---------------------------------------------------------------- */
+  function warp(T, slow) {
+    let s = T;
+    for (const w of slow) {
+      const ov = Math.max(0, Math.min(T, w.t1) - w.t0);
+      s -= (1 - w.speed) * ov;
+    }
+    return s;
+  }
+  function sampleCam(keys, T) {
+    const k0 = keys[0];
+    if (T <= k0.t) return { target: k0.target.slice(), yaw: k0.yaw, pitch: k0.pitch, dist: k0.dist, fov: k0.fov };
+    for (let i = 0; i < keys.length - 1; i++) {
+      const a = keys[i], b = keys[i + 1];
+      if (T <= b.t) {
+        const s = M.smoothstep(a.t, b.t, T);
+        return { target: M.V.lerp(a.target, b.target, s), yaw: M.lerp(a.yaw, b.yaw, s),
+          pitch: M.lerp(a.pitch, b.pitch, s), dist: M.lerp(a.dist, b.dist, s), fov: M.lerp(a.fov, b.fov, s) };
+      }
+    }
+    const z = keys[keys.length - 1];
+    return { target: z.target.slice(), yaw: z.yaw, pitch: z.pitch, dist: z.dist, fov: z.fov };
+  }
 
-  var densRows = [
-    S('ballRadius', '统一半径', 0.18, 0.42, 0.005, ' m', 3),
-    {
-      type: 'slider', label: '总数量', min: 5, max: 25, step: 5, unit: ' 颗', digits: 0,
-      get: function () { return tank.params.perGroup * 5; },
-      set: function (v) { tank.setParams({ perGroup: Math.round(v / 5) }); }
+  const J0 = [-1.74, 0.6, 0];
+  const DIRECTORS = {
+    'jelly-center': {
+      scene: 1, duration: 7.2,
+      params: { soft: 0.72, tough: 0.92, mass: 0.60, height: 0.62 },
+      cues: [{ t: 0.05, a: 'center' }],
+      slow: [{ t0: 0.45, t1: 1.85, speed: 0.30 }],
+      cam: [
+        { t: 0, target: [0, 0.78, 0], yaw: 0.40, pitch: 0.25, dist: 7.4, fov: 38 },
+        { t: 2.2, target: [0, 0.70, 0], yaw: 0.26, pitch: 0.20, dist: 5.7, fov: 34 },
+        { t: 4.6, target: [0, 0.80, 0], yaw: 0.52, pitch: 0.27, dist: 6.6, fov: 36 },
+        { t: 7.2, target: [0, 0.85, 0], yaw: 0.64, pitch: 0.30, dist: 7.6, fov: 38 },
+      ],
     },
-    S('perGroup', '每组数量', 1, 5, 1, '', 0),
-    S('releaseHeight', '释放高度', 0.4, 2.2, 0.05, ' m', 2)
-  ];
-  JW.TANK_GROUPS.forEach(function (g, gi) {
-    densRows.push({
-      type: 'slider', label: g.name + '密度', min: 0.2, max: 2.3, step: 0.01, unit: '', digits: 2,
-      get: function () { return tank.params.densities[gi]; },
-      set: function (v) { var a = tank.params.densities.slice(); a[gi] = v; tank.setParams({ densities: a }); }
-    });
-  });
-  return [
-    { t: '实验流程', en: 'EXPERIMENT', rows: [
-      ACT([['释放球体', function () { cancelAuto(); tank.releaseBalls(); }],
-           ['开始造浪', function () { cancelAuto(); tank.startWave(); }],
-           ['停止造浪', function () { cancelAuto(); tank.stopWave(); }]]),
-      { type: 'legend' }
-    ] },
-    { t: '球体', en: 'RIGID SPHERES', rows: densRows },
-    { t: '流体', en: 'FLUID', rows: [
-      S('waterLevel', '水位高度', 1.4, 3.0, 0.05, ' m', 2),
-      S('gravity', '重力', 2, 20, 0.2, ' m/s²', 1),
-      S('viscosity', '粘性 / 阻尼', 0.3, 3.0, 0.05, '', 2)
-    ] },
-    { t: '水槽', en: 'TANK', rows: [
-      S('tankLength', '长度', 6, 12, 0.2, ' m', 1),
-      S('tankWidth', '宽度（纵深）', 2.2, 4.4, 0.1, ' m', 1),
-      S('tankHeight', '高度', 2.8, 4.6, 0.1, ' m', 1)
-    ] },
-    { t: '造浪装置', en: 'WAVE MAKER', rows: [
-      SEG('装置类型', 'waveType', [['piston', '侧向推板'], ['flap', '往复波板'], ['dual', '双端活塞']],
-        function () { return tank.params.waveType; },
-        function (v) { tank.setParams({ waveType: v }); buildPanel('tank'); }),
-      S('waveDelay', '入水后启动延迟', 0, 3, 0.1, ' s', 1),
-      S('waveAmp', '运动幅度', 0.08, 0.45, 0.005, ' m', 3),
-      S('waveFreq', '运动频率', 0.5, 2.0, 0.05, ' Hz', 2),
-      S('waveDuration', '持续时长', 2, 9, 0.1, ' s', 1)
-    ] },
-    { t: '快速操作', en: 'ACTIONS', rows: [
-      ACT([['完整实验', function () { cancelAuto(); tank.trigger(); }],
-           ['重置初态', function () { cancelAuto(); tank.reset(); }]])
-    ] }
-  ];
-}
+    'jelly-multi': {
+      scene: 1, duration: 9.6,
+      params: { soft: 0.84, tough: 0.16, mass: 0.70, height: 0.66 },
+      cues: [{ t: 0.05, a: 'multi' }, { t: 1.85, a: 'multi2' }, { t: 3.75, a: 'multi3' }],
+      slow: [{ t0: 0.5, t1: 1.35, speed: 0.42 }, { t0: 2.2, t1: 2.9, speed: 0.42 },
+             { t0: 4.1, t1: 5.6, speed: 0.28 }],
+      cam: [
+        { t: 0, target: [0, 0.80, 0], yaw: 0.44, pitch: 0.26, dist: 7.6, fov: 38 },
+        { t: 4.3, target: [0, 0.72, 0], yaw: 0.30, pitch: 0.20, dist: 5.9, fov: 34 },
+        { t: 6.4, target: [0.15, 0.70, 0], yaw: -0.16, pitch: 0.22, dist: 6.2, fov: 35 },
+        { t: 9.6, target: [0.2, 0.78, 0], yaw: 0.58, pitch: 0.30, dist: 7.8, fov: 38 },
+      ],
+    },
+    'jelly-offset': {
+      scene: 1, duration: 7.4,
+      params: { soft: 0.70, tough: 0.92, mass: 0.66, height: 0.60 },
+      cues: [{ t: 0.05, a: 'offset' }],
+      slow: [{ t0: 0.55, t1: 1.7, speed: 0.32 }],
+      cam: [
+        { t: 0, target: [0.25, 0.72, 0], yaw: 0.34, pitch: 0.24, dist: 7.2, fov: 38 },
+        { t: 2.4, target: [0.55, 0.62, 0], yaw: -0.10, pitch: 0.18, dist: 5.8, fov: 34 },
+        { t: 5.0, target: [1.2, 0.55, 0.2], yaw: 0.30, pitch: 0.24, dist: 6.8, fov: 36 },
+        { t: 7.4, target: [1.0, 0.7, 0.1], yaw: 0.62, pitch: 0.30, dist: 7.8, fov: 38 },
+      ],
+    },
+    'tank-full': {
+      scene: 2, duration: 19.0,
+      params: { amp: 0.12, freq: 0.42 },
+      cues: [{ t: 0.12, a: 'release' }, { t: 1.0, a: 'release' }, { t: 1.9, a: 'release' },
+             { t: 2.8, a: 'waveOn' }, { t: 15.0, a: 'waveOff' }],
+      slow: [{ t0: 8.6, t1: 10.4, speed: 0.42 }],
+      cam: [
+        { t: 0, target: [0, 1.20, 0], yaw: 0.14, pitch: 0.14, dist: 9.6, fov: 36 },
+        { t: 4.0, target: [-0.2, 1.25, 0], yaw: 0.28, pitch: 0.16, dist: 8.6, fov: 35 },
+        { t: 9.0, target: [0.5, 1.35, 0], yaw: 0.06, pitch: 0.10, dist: 7.6, fov: 33 },
+        { t: 13.5, target: [0.8, 1.30, 0], yaw: -0.20, pitch: 0.18, dist: 8.2, fov: 35 },
+        { t: 19.0, target: [0, 1.20, 0], yaw: 0.18, pitch: 0.16, dist: 9.4, fov: 36 },
+      ],
+      tick(T, scene, App) {
+        let amp;
+        if (T < 2.8) amp = 0.10;
+        else if (T < 9.5) amp = M.lerp(0.14, 1.0, M.smoothstep(2.8, 9.5, T));
+        else if (T < 15.0) amp = 1.0;
+        else amp = M.lerp(1.0, 0.0, M.smoothstep(15.0, 15.8, T));
+        scene.setParams({ amp, freq: 0.42 + 0.12 * Math.sin(T * 0.3) });
+        void App;
+      },
+    },
+  };
 
-/* ---------------- 面板构建 ---------------- */
-function buildPanel(name) {
-  var body = $('panel-body');
-  body.innerHTML = '';
-  var defs = controlsFor(name);
-  var sc = scenes[name];
-  defs.forEach(function (grp) {
-    var g = document.createElement('div'); g.className = 'grp';
-    var t = document.createElement('div'); t.className = 'grp-t';
-    t.appendChild(document.createTextNode(grp.t));
-    var en = document.createElement('span'); en.className = 'gt-en'; en.textContent = grp.en; t.appendChild(en);
-    g.appendChild(t);
-    grp.rows.forEach(function (row) { g.appendChild(buildRow(row, sc)); });
-    body.appendChild(g);
-  });
-  $('panel-title').textContent = name === 'jelly' ? '场景一 · 果冻冲击' : '场景二 · 造浪水槽';
-}
+  /* ---------------------------------------------------------------- *
+   * App
+   * ---------------------------------------------------------------- */
+  const App = {
+    renderer: null, scene1: null, scene2: null,
+    sceneMode: 1, playing: true,
+    speeds: [0.25, 0.5, 1, 2], speedIdx: 2,
+    lastT: 0, acc: 0, simClock: 0, simSteps: 0,
+    triggerQueue: [], firstFrame: false,
+    params: { soft: 0.55, tough: 0.6, mass: 0.62, height: 0.6, amp: 0.55, freq: 0.45, sound: true },
+    cam: { target: [0, 0.72, 0], yaw: 0.42, pitch: 0.26, dist: 7.6, fov: 38 },
+    cam2: { target: [0, 1.25, 0], yaw: 0.16, pitch: 0.14, dist: 9.4, fov: 36 },
+    dragging: 0, lastX: 0, lastY: 0,
+    exportMode: false, exportRun: null, exportFps: 60, exportCam: null, frames: 0,
 
-function buildRow(row, sc) {
-  if (row.type === 'slider') {
-    var wrap = document.createElement('div'); wrap.className = 'ctl';
-    var top = document.createElement('div'); top.className = 'ctl-top';
-    var lab = document.createElement('span'); lab.className = 'ctl-label'; lab.textContent = row.label;
-    var val = document.createElement('span'); val.className = 'ctl-val';
-    top.appendChild(lab); top.appendChild(val);
-    var inp = document.createElement('input'); inp.type = 'range';
-    inp.min = row.min; inp.max = row.max; inp.step = row.step;
-    var getter = row.get || function () { return sc.params[row.key]; };
-    var setter = row.set || function (v) { var o = {}; o[row.key] = v; sc.setParams(o); };
-    inp.value = getter();
-    function upd() {
-      var v = parseFloat(inp.value);
-      var d = row.digits === undefined ? 2 : row.digits;
-      val.textContent = v.toFixed(d) + row.unit;
-      inp.style.setProperty('--p', ((v - row.min) / (row.max - row.min) * 100) + '%');
-    }
-    inp.addEventListener('input', function () { upd(); setter(parseFloat(inp.value)); });
-    upd();
-    wrap.appendChild(top); wrap.appendChild(inp);
-    return wrap;
-  }
-  if (row.type === 'seg') {
-    var box = document.createElement('div');
-    if (row.label) {
-      var lt = document.createElement('div'); lt.className = 'ctl-top';
-      var l1 = document.createElement('span'); l1.className = 'ctl-label'; l1.textContent = row.label;
-      lt.appendChild(l1); box.appendChild(lt);
-    }
-    var seg = document.createElement('div'); seg.className = 'seg';
-    row.options.forEach(function (op) {
-      var b = document.createElement('button'); b.textContent = op[1];
-      b.className = (row.get() === op[0]) ? 'on' : '';
-      b.addEventListener('click', function () {
-        row.set(op[0]);
-        Array.prototype.forEach.call(seg.children, function (c, i2) { c.className = (row.options[i2][0] === op[0]) ? 'on' : ''; });
+    get scene() { return this.sceneMode === 1 ? this.scene1 : this.scene2; },
+
+    async boot() {
+      try {
+        const dev = await GPU.init($('gpu'));
+        dev.addEventListener('uncapturederror', (e) => showFatal('WebGPU 错误', e.error && e.error.message ? e.error.message : String(e.error)));
+        window.__gpuOK = true;
+        this.renderer = new window.Renderer();
+        this.scene1 = new window.JellySim();
+        this.scene2 = window.WaterSim ? new window.WaterSim() : makeFallbackTank();
+        this.setupUI();
+        this.setupCameraControls();
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.applyVolumeConfig();
+        this.pushParams();
+        // 开场即有动作
+        this.queueTrigger(0.05, 'center');
+        this.lastT = performance.now();
+        requestAnimationFrame(() => this.loop());
+        this.installExport();
+      } catch (e) { showFatal(e.message || e, e.stack); }
+    },
+
+    resize() {
+      const c = $('gpu');
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const w = Math.max(2, Math.floor(window.innerWidth * dpr));
+      const h = Math.max(2, Math.floor(window.innerHeight * dpr));
+      if (c.width !== w || c.height !== h) {
+        c.width = w; c.height = h;
+        GPU.context.configure({ device: GPU.device, format: GPU.format, alphaMode: 'opaque' });
+      }
+    },
+
+    applyVolumeConfig() {
+      const v = this.scene.volume();
+      this.renderer.configureVolume(v.min, v.max, v.refCount);
+    },
+
+    pushParams() {
+      const p = this.params;
+      this.scene1.setParams({ soft: p.soft, tough: p.tough, mass: p.mass, height: p.height });
+      this.scene2.setParams({ amp: p.amp, freq: p.freq,
+        dens: [p.dens0, p.dens1, p.dens2, p.dens3, p.dens4] });
+    },
+
+    queueTrigger(atSimTime, name) {
+      this.triggerQueue.push({ at: this.simClock + atSimTime, name });
+      this.triggerQueue.sort((a, b) => a.at - b.at);
+    },
+
+    stepOnce() {
+      while (this.triggerQueue.length && this.triggerQueue[0].at <= this.simClock + 1e-9) {
+        const q = this.triggerQueue.shift();
+        this.scene.trigger(q.name);
+      }
+      this.scene.step(SIM_DT);
+      this.simClock += SIM_DT;
+      this.simSteps++;
+      const evs = this.scene.drainEvents();
+      if (window.AudioFX && this.params.sound) for (const e of evs) window.AudioFX.play(e);
+    },
+
+    getCameraObj() {
+      if (this.exportMode && this.exportCam) {
+        const c = this.exportCam;
+        return M.orbitCamera(c.target, c.yaw, c.pitch, c.dist, c.fov);
+      }
+      const c = this.sceneMode === 1 ? this.cam : this.cam2;
+      return M.orbitCamera(c.target, c.yaw, c.pitch, c.dist, c.fov);
+    },
+
+    renderParams() {
+      const base = {
+        time: this.simClock, sceneMode: this.sceneMode, volumeActive: true,
+        iso: 0.35, stepWorld: 0.075, foamStr: 1.0, reflStr: 1.0,
+        exposure: 1.32, fog: 0, groundRefl: 0.85,
+        lightDir: [0.42, 0.84, 0.52], lightCol: [1.0, 0.95, 0.86],
+        waterTint: [0.52, 0.24, 0.13], jellyTint: [1, 0.4, 0.5],
+        tankP: [-2.55, 0.14, 1.55, 1], p4: [2.4, 1, 0, 0],
+      };
+      return Object.assign(base, this.scene.renderP());
+    },
+
+    renderOnce() {
+      const d = this.scene.density();
+      this.renderer.setDensityParticles(d.data, d.count);
+      this.renderer.setBalls(this.scene.balls());
+      const enc = GPU.device.createCommandEncoder();
+      this.renderer.buildDensity(enc);
+      this.renderer.present(enc, this.getCameraObj(), this.renderParams());
+      GPU.queue.submit([enc.finish()]);
+    },
+
+    loop() {
+      const now = performance.now();
+      let dt = (now - this.lastT) / 1000;
+      this.lastT = now;
+      dt = Math.min(dt, 0.05);
+      if (!this.exportMode) {
+        if (this.playing) {
+          this.acc += dt * this.speeds[this.speedIdx];
+          let k = 0;
+          while (this.acc >= SIM_DT && k < 12) { this.stepOnce(); this.acc -= SIM_DT; k++; }
+        }
+        this.renderOnce();
+        if (!this.firstFrame) {
+          this.firstFrame = true;
+          const l = $('loading'); if (l) l.style.display = 'none';
+        }
+        this.setStatus();
+      }
+      requestAnimationFrame(() => this.loop());
+    },
+
+    setStatus() {
+      const s = $('status');
+      if (!s) return;
+      s.innerHTML = '<b>' + (this.sceneMode === 1 ? '场景一 · 果冻冲击' : '场景二 · 造浪水槽') + '</b>　' +
+        (this.exportMode ? '导出中' : (this.playing ? '运行中' : '已暂停')) +
+        '　速度 <b>' + this.speeds[this.speedIdx] + '×</b><br>' +
+        this.scene.status() + ' · ' + $('gpu').width + '×' + $('gpu').height;
+    },
+
+    resetAll() {
+      this.scene.reset();
+      this.simClock = 0; this.simSteps = 0; this.acc = 0;
+      this.triggerQueue.length = 0;
+      this.pushParams();
+      this.queueTrigger(0.05, 'center');
+      this.applyVolumeConfig();
+    },
+
+    /* ---------------- UI ---------------- */
+    setupUI() {
+      const bindSlider = (id, key, fmt) => {
+        const el = $(id), out = $('v' + id.slice(1));
+        const upd = () => {
+          this.params[key] = parseFloat(el.value);
+          if (out) out.textContent = fmt(this.params[key]);
+          el.style.background = 'linear-gradient(90deg,var(--accent) 0%,var(--accent) ' +
+            (this.params[key] * 100).toFixed(0) + '%,rgba(120,205,225,.16) ' + (this.params[key] * 100).toFixed(0) + '%)';
+          this.pushParams();
+        };
+        el.addEventListener('input', upd); upd();
+      };
+      const pct = (v) => (v * 100).toFixed(0) + '%';
+      bindSlider('sSoft', 'soft', pct); bindSlider('sTough', 'tough', pct);
+      bindSlider('sMass', 'mass', pct); bindSlider('sHeight', 'height', pct);
+      bindSlider('sAmp', 'amp', pct); bindSlider('sFreq', 'freq', pct);
+
+      const cols = ['#ff7d63', '#ffd36b', '#7ee8a4', '#5aa9ff', '#c58bff'];
+      const names = ['低密度', '偏低密度', '中性浮力', '偏高密度', '高密度'];
+      const dens = [0.35, 0.70, 1.0, 1.35, 1.80];
+      const ds = $('densSliders'), lg = $('legend');
+      for (let i = 0; i < 5; i++) {
+        const row = document.createElement('div'); row.className = 'row densrow';
+        row.innerHTML = '<label><span class="swatch" style="background:' + cols[i] + ';color:' + cols[i] + '"></span>' + names[i] + '</label>' +
+          '<input type="range" id="dens' + i + '" min="0.15" max="2.0" step="0.01" value="' + dens[i] + '">' +
+          '<span class="val" id="vdens' + i + '"></span>';
+        ds.appendChild(row);
+        const item = document.createElement('div'); item.className = 'item';
+        item.innerHTML = '<span class="dot" style="background:' + cols[i] + ';color:' + cols[i] + '"></span>' + names[i];
+        lg.appendChild(item);
+        const el = row.querySelector('input'), out = row.querySelector('.val');
+        const upd = () => {
+          const v = parseFloat(el.value);
+          out.textContent = v.toFixed(2) + '×';
+          el.style.background = 'linear-gradient(90deg,var(--accent) 0%,var(--accent) ' +
+            (v / 2 * 100).toFixed(0) + '%,rgba(120,205,225,.16) ' + (v / 2 * 100).toFixed(0) + '%)';
+          this.params['dens' + i] = v;
+          this.pushParams();
+        };
+        el.addEventListener('input', upd); upd();
+      }
+
+      const self = this;
+      $('tabJelly').addEventListener('click', () => self.switchScene(1));
+      $('tabTank').addEventListener('click', () => self.switchScene(2));
+      $('btnPlay').addEventListener('click', () => {
+        self.playing = !self.playing;
+        $('btnPlay').textContent = self.playing ? '⏸ 暂停' : '▶ 继续';
+        self.setStatus();
       });
-      seg.appendChild(b);
-    });
-    box.appendChild(seg);
-    return box;
-  }
-  if (row.type === 'check') {
-    var lb = document.createElement('label'); lb.className = 'chk';
-    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!row.get();
-    cb.addEventListener('change', function () { row.set(cb.checked); });
-    lb.appendChild(cb); lb.appendChild(document.createTextNode(row.label));
-    return lb;
-  }
-  if (row.type === 'actions') {
-    var ar = document.createElement('div'); ar.className = 'act-row';
-    row.items.forEach(function (it) {
-      var b = document.createElement('button'); b.className = 'act'; b.textContent = it[0];
-      b.addEventListener('click', it[1]); ar.appendChild(b);
-    });
-    return ar;
-  }
-  if (row.type === 'legend') {
-    var lg = document.createElement('div'); lg.className = 'legend';
-    JW.TANK_GROUPS.forEach(function (g) {
-      var e = document.createElement('span'); e.className = 'lg';
-      var dot = document.createElement('i'); dot.style.background = '#' + g.color.toString(16).padStart(6, '0');
-      dot.style.color = '#' + g.color.toString(16).padStart(6, '0');
-      e.appendChild(dot); e.appendChild(document.createTextNode(g.name));
-      lg.appendChild(e);
-    });
-    return lg;
-  }
-  return document.createElement('div');
-}
-
-/* ---------------- 状态栏 ---------------- */
-var phaseEls = [];
-function buildPhases(list) {
-  var box = $('st-phases'); box.innerHTML = ''; phaseEls = [];
-  list.forEach(function (s) {
-    var e = document.createElement('span'); e.className = 'ph'; e.textContent = s;
-    box.appendChild(e); phaseEls.push(e);
-  });
-}
-function updateStatus() {
-  var st = current().getStatus();
-  $('st-phase').textContent = st.phase;
-  $('st-time').textContent = st.time.toFixed(2) + ' s';
-  $('st-fill').style.width = clamp(st.time / st.duration * 100, 0, 100) + '%';
-  for (var i = 0; i < phaseEls.length; i++) {
-    phaseEls[i].className = 'ph' + (i === st.phaseIndex ? ' on' : (i < st.phaseIndex ? ' done' : ''));
-  }
-}
-
-/* ---------------- 界面状态 ---------------- */
-function updateUI() {
-  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b) {
-    b.className = 'tab' + (b.getAttribute('data-scene') === appState.sceneName ? ' active' : '');
-  });
-  $('trigger-label').textContent = appState.sceneName === 'jelly' ? '触发冲击' : '开始实验';
-  $('btn-pause').textContent = appState.paused ? '继续' : '暂停';
-  $('btn-pause').className = 'btn' + (appState.paused ? ' active' : '');
-  $('sound-toggle').setAttribute('aria-pressed', appState.soundOn ? 'true' : 'false');
-  $('sound-label').textContent = appState.soundOn ? '声音 开' : '声音 关';
-}
-
-function switchScene(name) {
-  if (name === appState.sceneName && phaseEls.length) return;
-  appState.sceneName = name;
-  stage.setSubject(name);
-  applyCamera(name, false);
-  current().reset();
-  buildPanel(name);
-  buildPhases(current().getStatus().phases);
-  updateUI();
-  scheduleAuto();
-  toast(name === 'jelly' ? '场景一 · 重球冲击果冻台' : '场景二 · 多密度球与造浪水槽');
-}
-
-var toastTimer = null;
-function toast(msg) {
-  var el = $('toast'); el.textContent = msg; el.className = 'show';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function () { el.className = ''; }, 2200);
-}
-
-function cancelAuto() { appState.autoPending = false; if (autoTimer) clearTimeout(autoTimer); }
-function scheduleAuto() {
-  cancelAuto();
-  appState.autoPending = true;
-  autoTimer = setTimeout(function () {
-    if (!appState.autoPending) return;
-    appState.autoPending = false;
-    var sc = current();
-    sc.reset(); sc.trigger();
-  }, 950);
-}
-
-/* ---------------- 事件绑定 ---------------- */
-Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b) {
-  b.addEventListener('click', function () { switchScene(b.getAttribute('data-scene')); });
-});
-$('sound-toggle').addEventListener('click', function () {
-  appState.soundOn = !appState.soundOn;
-  audio.setEnabled(appState.soundOn);
-  updateUI();
-});
-$('panel-toggle').addEventListener('click', function () { $('panel').classList.toggle('hidden'); });
-$('panel-close').addEventListener('click', function () { $('panel').classList.add('hidden'); });
-
-$('btn-trigger').addEventListener('click', function () {
-  cancelAuto();
-  var sc = current();
-  sc.reset(); sc.trigger();
-  if (appState.paused) { appState.paused = false; updateUI(); }
-});
-$('btn-pause').addEventListener('click', function () {
-  appState.paused = !appState.paused; updateUI();
-});
-$('btn-reset').addEventListener('click', function () {
-  cancelAuto(); current().reset();
-  if (appState.paused) { appState.paused = false; updateUI(); }
-});
-$('speed').addEventListener('change', function () { appState.speed = parseFloat(this.value); });
-
-global.addEventListener('keydown', function (e) {
-  if (e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
-  if (e.code === 'Space') { e.preventDefault(); appState.paused = !appState.paused; updateUI(); }
-  else if (e.key === 'r' || e.key === 'R') { cancelAuto(); current().reset(); }
-  else if (e.key === '1') switchScene('jelly');
-  else if (e.key === '2') switchScene('tank');
-});
-// 首次用户操作解锁音频
-['pointerdown', 'keydown'].forEach(function (ev) {
-  global.addEventListener(ev, function once() {
-    if (appState.soundOn) audio.ensure();
-    global.removeEventListener(ev, once);
-  }, { once: true });
-});
-global.addEventListener('resize', function () { stage.resize(); });
-
-/* ---------------- 实时循环 ---------------- */
-var lastTime = performance.now();
-function loop(now) {
-  global.requestAnimationFrame(loop);
-  var dtReal = Math.min(0.05, (now - lastTime) / 1000);
-  lastTime = now;
-  if (exportState.active) return;
-  if (!appState.paused) current().step(dtReal * appState.speed);
-  current().sync();
-  stage.render(current().t);
-  updateStatus();
-}
-
-/* ---------------- 视频导出接口 ---------------- */
-var RUNS = {
-  'jelly-center': 'jelly',
-  'jelly-multi': 'jelly',
-  'jelly-offset': 'jelly',
-  'tank-full': 'tank'
-};
-var exportState = {
-  active: false, runId: null, fps: 30, frames: 0, T: 0,
-  curFrame: 0, scene: null, prevPaused: false, prevSound: true
-};
-
-var videoExport = global.videoExport = {
-  runs: ['jelly-center', 'jelly-multi', 'jelly-offset', 'tank-full'],
-
-  begin: function (runId, opt) {
-    var fps = Math.max(1, Math.round((opt && opt.fps) || 30));
-    var name = RUNS[runId] || 'jelly';
-    cancelAuto();
-    exportState.active = true;
-    exportState.prevPaused = appState.paused;
-    exportState.prevSound = appState.soundOn;
-    appState.paused = true;
-    audio.enabled = false;
-    audio.stopWave();
-
-    document.body.classList.add('export-mode');
-    appState.sceneName = name;
-    stage.setSubject(name);
-    var sc = scenes[name];
-    exportState.scene = sc;
-    exportState.runId = runId;
-    exportState.fps = fps;
-    var T = sc.prepareExport(runId);
-    exportState.T = T;
-    exportState.frames = Math.ceil(T * fps);
-    exportState.curFrame = 0;
-
-    applyCamera(name, true);
-    stage.resize();
-    sc.sync();
-    stage.render(0);
-
-    return new Promise(function (resolve) {
-      global.requestAnimationFrame(function () {
-        global.requestAnimationFrame(function () { resolve({ frames: exportState.frames }); });
+      $('btnStep').addEventListener('click', () => { self.stepOnce(); self.renderOnce(); });
+      $('btnSlow').addEventListener('click', () => {
+        self.speedIdx = (self.speedIdx + 1) % self.speeds.length;
+        $('btnSlow').textContent = '▶ 速度 ' + self.speeds[self.speedIdx] + '×';
+        self.setStatus();
       });
-    });
-  },
+      $('btnReset').addEventListener('click', () => { self.resetAll(); self.renderOnce(); });
+      $('btnRerun').addEventListener('click', () => {
+        self.resetAll(); self.playing = true; $('btnPlay').textContent = '⏸ 暂停'; self.setStatus();
+      });
+      $('btnSound').addEventListener('click', () => {
+        self.params.sound = !self.params.sound;
+        $('btnSound').classList.toggle('off', !self.params.sound);
+        $('btnSound').textContent = self.params.sound ? '🔊' : '🔇';
+        if (window.AudioFX) window.AudioFX.setEnabled(self.params.sound);
+      });
+      $('btnHelp').addEventListener('click', () => $('helpModal').classList.add('show'));
+      $('helpClose').addEventListener('click', () => $('helpModal').classList.remove('show'));
+      $('btnCenter').addEventListener('click', () => { self.scene1.trigger('center'); });
+      $('btnOffset').addEventListener('click', () => { self.scene1.trigger('offset'); });
+      $('btnMulti').addEventListener('click', () => {
+        self.scene1.trigger('multi');
+        self.queueTrigger(1.55, 'multi2');
+        self.queueTrigger(3.25, 'multi3');
+      });
+      $('btnRelease').addEventListener('click', () => { self.scene2.trigger('release'); });
+      $('btnWave').addEventListener('click', (e) => {
+        const on = !e.target.classList.contains('toggled');
+        e.target.classList.toggle('toggled', on);
+        e.target.textContent = on ? '≋ 停止造浪' : '≈ 开始造浪';
+        self.scene2.trigger(on ? 'waveOn' : 'waveOff');
+      });
+      document.querySelectorAll('.demo-btn').forEach((b) => {
+        b.addEventListener('click', () => self.playDemo(b.dataset.run));
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') { e.preventDefault(); $('btnPlay').click(); }
+        else if (e.key === '1') self.switchScene(1);
+        else if (e.key === '2') self.switchScene(2);
+        else if (e.key === 'r' || e.key === 'R') $('btnReset').click();
+        else if (e.key === 's' || e.key === 'S') $('btnSound').click();
+      });
+    },
 
-  frame: function (i) {
-    if (!exportState.active) return Promise.resolve();
-    var st = exportState, sc = st.scene;
-    if (i < st.curFrame) {
-      sc.prepareExport(st.runId);
-      st.curFrame = 0;
-      applyCamera(appState.sceneName, true);
-      stage.resize();
-    }
-    var steps = i - st.curFrame;
-    var dt = 1 / st.fps;
-    for (var s = 0; s < steps; s++) sc.step(dt);
-    st.curFrame = i;
-    var t = i / st.fps;
-    stage.rig.drift = 0.030 * Math.sin(t * 0.42);
-    sc.sync();
-    stage.render(t);
-    return new Promise(function (resolve) { global.requestAnimationFrame(function () { resolve(); }); });
-  },
+    switchScene(m) {
+      this.sceneMode = m;
+      $('tabJelly').classList.toggle('active', m === 1);
+      $('tabTank').classList.toggle('active', m === 2);
+      $('jellyParams').style.display = m === 1 ? '' : 'none';
+      $('tankParams').style.display = m === 2 ? '' : 'none';
+      $('jellyTriggers').style.display = m === 1 ? '' : 'none';
+      $('tankTriggers').style.display = m === 2 ? '' : 'none';
+      this.applyVolumeConfig();
+      this.setStatus();
+    },
 
-  end: function () {
-    if (!exportState.active) return;
-    exportState.active = false;
-    document.body.classList.remove('export-mode');
-    stage.rig.drift = 0;
-    stage.rig.enabled = true;
-    appState.paused = exportState.prevPaused;
-    appState.soundOn = exportState.prevSound;
-    audio.setEnabled(appState.soundOn);
-    var sc = current();
-    sc.reset();
-    applyCamera(appState.sceneName, false);
-    stage.resize();
-    buildPanel(appState.sceneName);
-    buildPhases(sc.getStatus().phases);
-    updateUI();
-    lastTime = performance.now();
-    scheduleAuto();
-  }
-};
+    setupCameraControls() {
+      const c = $('gpu'), self = this;
+      c.addEventListener('mousedown', (e) => { self.dragging = e.button === 2 ? 2 : 1; self.lastX = e.clientX; self.lastY = e.clientY; });
+      window.addEventListener('mouseup', () => { self.dragging = 0; });
+      window.addEventListener('mousemove', (e) => {
+        if (!self.dragging || self.exportMode) return;
+        const dx = e.clientX - self.lastX, dy = e.clientY - self.lastY;
+        self.lastX = e.clientX; self.lastY = e.clientY;
+        const cc = self.sceneMode === 1 ? self.cam : self.cam2;
+        if (self.dragging === 1) { cc.yaw -= dx * 0.005; cc.pitch = M.clamp(cc.pitch + dy * 0.004, -0.35, 1.15); }
+        else {
+          const cam = M.orbitCamera(cc.target, cc.yaw, cc.pitch, cc.dist, cc.fov);
+          const s = cc.dist * 0.0013;
+          cc.target = M.V.add(cc.target, M.V.scale(cam.right, -dx * s));
+          cc.target = M.V.add(cc.target, M.V.scale(cam.up, dy * s));
+        }
+      });
+      c.addEventListener('contextmenu', (e) => e.preventDefault());
+      c.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (self.exportMode) return;
+        const cc = self.sceneMode === 1 ? self.cam : self.cam2;
+        cc.dist = M.clamp(cc.dist * (1 + Math.sign(e.deltaY) * 0.08), 3.2, 22);
+      }, { passive: false });
+    },
 
-/* ---------------- 启动 ---------------- */
-stage.setSubject('jelly');
-applyCamera('jelly', false);
-buildPanel('jelly');
-buildPhases(jelly.getStatus().phases);
-updateUI();
-stage.resize();
-scheduleAuto();
-global.requestAnimationFrame(loop);
+    /* ---------------- 演示 / 导出 ---------------- */
+    playDemo(runId) {
+      const D = DIRECTORS[runId];
+      if (!D) return;
+      this.switchScene(D.scene);
+      this.scene.reset();
+      this.simClock = 0; this.simSteps = 0; this.acc = 0;
+      this.triggerQueue.length = 0;
+      this.scene.setParams(D.params);
+      for (const cue of D.cues) {
+        this.triggerQueue.push({ at: warp(cue.t, D.slow), name: cue.a });
+      }
+      this.triggerQueue.sort((a, b) => a.at - b.at);
+      this.playing = true; $('btnPlay').textContent = '⏸ 暂停';
+      document.querySelectorAll('.demo-btn').forEach((x) => x.classList.toggle('active', x.dataset.run === runId));
+      this.applyVolumeConfig();
+    },
 
-})(window);
+    installExport() {
+      const self = this;
+      window.videoExport = {
+        runs: ['jelly-center', 'jelly-multi', 'jelly-offset', 'tank-full'],
+        async begin(runId, opts) {
+          const fps = (opts && opts.fps) || 30;
+          const D = DIRECTORS[runId];
+          if (!D) throw new Error('未知演示: ' + runId);
+          self.exportMode = true;
+          self.exportRun = D; self.exportFps = fps;
+          document.body.classList.add('exporting');
+          self.resize();
+          self.switchScene(D.scene);
+          self.scene.reset();
+          self.simClock = 0; self.simSteps = 0; self.acc = 0;
+          self.triggerQueue.length = 0;
+          const P = Object.assign({}, self.params, D.params);
+          self.scene.setParams(P);
+          for (const cue of D.cues) self.triggerQueue.push({ at: warp(cue.t, D.slow), name: cue.a });
+          self.triggerQueue.sort((a, b) => a.at - b.at);
+          self.applyVolumeConfig();
+          self.frames = Math.max(1, Math.ceil(D.duration * fps));
+          self.exportCam = sampleCam(D.cam, 0);
+          // 先渲染第 0 帧的静态状态（保证场景就绪）
+          self.renderOnce();
+          await GPU.queue.onSubmittedWorkDone();
+          return { frames: self.frames };
+        },
+        async frame(i) {
+          const D = self.exportRun;
+          const T = i / self.exportFps;
+          const target = warp(T, D.slow);
+          const targetStep = Math.floor(target / SIM_DT + 1e-6);
+          let guard = 0;
+          while (self.simSteps < targetStep && guard < 4000) { self.stepOnce(); guard++; }
+          if (D.tick) D.tick(T, self.scene, self);
+          self.exportCam = sampleCam(D.cam, T);
+          self.renderOnce();
+          await GPU.queue.onSubmittedWorkDone();
+          await new Promise((r) => requestAnimationFrame(() => r()));
+        },
+        end() {
+          self.exportMode = false;
+          self.exportRun = null;
+          self.exportCam = null;
+          document.body.classList.remove('exporting');
+          self.scene.reset();
+          self.simClock = 0; self.simSteps = 0; self.acc = 0;
+          self.triggerQueue.length = 0;
+          self.pushParams();
+          self.queueTrigger(0.05, 'center');
+          self.playing = true; $('btnPlay').textContent = '⏸ 暂停';
+          self.applyVolumeConfig();
+          self.setStatus();
+        },
+      };
+    },
+  };
+
+  window.App = App;
+  window.addEventListener('error', (e) => showFatal(e.message, e.filename + ':' + e.lineno));
+  window.addEventListener('unhandledrejection', (e) => showFatal('Promise: ' + e.reason, e.reason && e.reason.stack));
+  document.addEventListener('DOMContentLoaded', () => App.boot());
+})();

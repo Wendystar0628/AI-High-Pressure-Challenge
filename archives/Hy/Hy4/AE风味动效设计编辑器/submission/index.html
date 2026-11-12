@@ -1,162 +1,176 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRISMA · 动效设计编辑器</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>锻字 · AE 风味动效设计编辑器</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div id="app">
 
-  <!-- ================= TOP BAR ================= -->
   <header id="topbar">
-    <div class="brand"><span class="brand-mark">◈</span><span class="brand-name">PRISMA</span><span class="brand-sub">动效设计编辑器</span></div>
-    <nav class="menubar" id="menubar"></nav>
+    <div class="brand">
+      <span class="logo" aria-hidden="true">锻</span>
+      <span class="brand-text"><b>FORGE</b><i>动效设计编辑器</i></span>
+    </div>
+    <nav id="mainmenu" class="menu"></nav>
+    <div class="top-mid">
+      <span id="projectName">锻字 · 示例工程</span>
+      <span class="dot-sep">·</span>
+      <span id="compName">主合成</span>
+    </div>
     <div class="top-right">
-      <span class="autosave" id="autosaveLabel">● 已自动保存</span>
-      <span class="sep"></span>
-      <div class="ws-switch" id="wsSwitch"></div>
-      <button class="icon-btn" id="helpBtn" title="快捷键与帮助 (?)">?</button>
+      <span class="badge" id="rendererBadge">WebGL 2</span>
+      <button class="tbtn" id="btnSave" title="保存工程 (Ctrl+S)">保存</button>
+      <button class="tbtn" id="btnOpen" title="打开工程 (Ctrl+O)">打开</button>
+      <button class="tbtn accent" id="btnPlayTop" title="播放/暂停 (空格)">▶ 播放</button>
     </div>
   </header>
 
-  <!-- ================= TOOL ROW ================= -->
-  <div id="toolrow">
-    <div class="tools" id="tools"></div>
-    <div class="tool-divider"></div>
-    <label class="chk"><input type="checkbox" id="snapChk" checked><span>吸附</span></label>
-    <div class="snap-to" id="snapTo" title="吸附目标">关键帧 · 播放头 · 标记 · 入出点</div>
-    <div class="tool-divider"></div>
-    <label class="chk"><input type="checkbox" id="guideChk" checked><span>辅助线</span></label>
-    <label class="chk"><input type="checkbox" id="mbChk" checked><span>运动模糊</span></label>
+  <div id="toolbar">
+    <div class="tool-group" id="toolButtons"></div>
+    <div class="tool-sep"></div>
+    <div class="tool-group" id="viewerTabs"></div>
     <div class="tool-spacer"></div>
-    <div class="tool-info" id="toolInfo">选择工具 · 拖动移动 / 缩放 / 旋转</div>
+    <div class="tool-group small">
+      <label class="mini-lbl">视图</label>
+      <select id="zoomSelect" class="mini-select">
+        <option value="fit">适合</option>
+        <option value="0.25">25%</option>
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1" selected>100%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+      </select>
+      <button class="tbtn" id="btnGrid" title="显示网格/辅助">⊞ 辅助</button>
+      <button class="tbtn" id="btnOverlay" title="叠加辅助元素">◈ 叠加</button>
+    </div>
   </div>
 
-  <!-- ================= MAIN ================= -->
-  <div id="main">
+  <div id="workspace">
 
-    <!-- LEFT -->
-    <aside id="left" class="panel-col">
-      <section class="panel" id="projectPanel">
-        <div class="panel-head"><span class="ph-title">项目</span><span class="ph-actions" id="projActions"></span></div>
-        <div class="panel-body" id="projectBody"></div>
+    <aside id="left" class="col">
+      <section class="panel" id="panelProject">
+        <div class="panel-head"><span>项目</span><div class="ph-actions"><button data-act="newComp" title="新建合成">＋</button><button data-act="newFolder" title="新建文件夹">▢</button></div></div>
+        <div class="panel-body" id="projectTree"></div>
       </section>
-      <section class="panel" id="infoPanel">
-        <div class="panel-head"><span class="ph-title">信息 / 资源</span></div>
-        <div class="panel-body" id="infoBody"></div>
+      <section class="panel" id="panelAssets">
+        <div class="panel-head"><span>素材 / 字形库</span></div>
+        <div class="panel-body" id="assetList"></div>
+      </section>
+      <section class="panel grow" id="panelAudio">
+        <div class="panel-head"><span>声音 / 电平</span></div>
+        <div class="panel-body" id="audioPanel"></div>
       </section>
     </aside>
 
-    <div class="splitter" data-split="left"></div>
+    <section id="center" class="col">
+      <div id="viewerWrap">
+        <div class="view" id="viewComp">
+          <div class="canvas-stage" id="canvasStage">
+            <canvas id="glCanvas"></canvas>
+            <canvas id="overlayCanvas"></canvas>
+            <div class="comp-label" id="compLabel"></div>
+            <div class="safe-guides" id="safeGuides"></div>
+          </div>
+        </div>
+        <div class="view" id="viewGraph" hidden>
+          <div class="graph-head">
+            <span class="ph-title">曲线编辑器 · 动画/速度</span>
+            <div class="seg" id="graphMode"><button data-m="value" class="on">值曲线</button><button data-m="speed">速度曲线</button></div>
+            <div class="seg" id="graphProps"></div>
+            <span class="hint" id="graphHint">拖动关键帧与手柄编辑 · 滚轮缩放</span>
+          </div>
+          <canvas id="graphCanvas"></canvas>
+        </div>
+        <div class="view" id="viewNodes" hidden>
+          <div class="graph-head">
+            <span class="ph-title">程序节点 · 几何流</span>
+            <button class="tbtn" id="nodeAdd">＋ 节点</button>
+            <button class="tbtn" id="nodeEval">重新计算</button>
+            <span class="hint">拖动连线 · 端口区分标量/向量/颜色/几何/场</span>
+          </div>
+          <canvas id="nodeCanvas"></canvas>
+          <div class="node-inspector" id="nodeInspector"></div>
+        </div>
+        <div class="view" id="viewRender" hidden>
+          <div id="renderSettings"></div>
+        </div>
+      </div>
 
-    <!-- CENTER -->
-    <section id="center">
-      <div id="viewer">
-        <div id="viewtoolbar">
-          <div class="comp-tabs" id="compTabs"></div>
-          <div class="vt-right">
-            <select id="viewSelect" class="mini-sel" title="辅助视图">
-              <option value="persp">透视 / 活动相机</option>
-              <option value="front">前视图</option>
-              <option value="top">顶视图</option>
-              <option value="left">左视图</option>
-              <option value="custom">自定义视图</option>
-            </select>
-            <select id="zoomSelect" class="mini-sel" title="画布缩放">
-              <option value="fit">适配</option>
-              <option value="0.25">25%</option>
-              <option value="0.5">50%</option>
-              <option value="0.75">75%</option>
-              <option value="1">100%</option>
-              <option value="1.5">150%</option>
-            </select>
-            <span class="vsep"></span>
-            <button class="tb active" id="toggleGrid" title="网格 / 安全框">▦</button>
-            <button class="tb active" id="toggleOverlay" title="选择框与控制手柄">◻</button>
-            <button class="tb active" id="toggleMotion" title="运动路径">⤳</button>
-            <span class="vsep"></span>
-            <span class="res-badge" id="resBadge">完整</span>
-          </div>
-        </div>
-        <div id="canvasWrap">
-          <canvas id="gl"></canvas>
-          <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
-          <div id="canvasBadge">合成画布</div>
-          <div id="pasteHint">画布缩放与平移 · 滚轮缩放 · 空格拖动平移</div>
-        </div>
-        <div id="transport">
-          <div class="tr-left">
-            <span class="time-code" id="timeCode">00:00:00:00</span>
-            <span class="tc-sub" id="tcSub">0.000 s</span>
-          </div>
-          <div class="tr-center" id="transportBtns"></div>
-          <div class="tr-right">
-            <label class="chk mini"><input type="checkbox" id="loopChk" checked><span>循环工作区</span></label>
-            <label class="chk mini"><input type="checkbox" id="audioChk" checked><span>声音</span></label>
-            <span class="vsep"></span>
-            <span class="fps-badge" id="fpsBadge">30 fps</span>
-          </div>
+      <div id="viewerFooter">
+        <div class="transport" id="transport"></div>
+        <div class="vf-right">
+          <span class="tc" id="timeCode">00:00:00:00</span>
+          <span class="fps" id="fpsLbl">30 fps</span>
         </div>
       </div>
     </section>
 
-    <div class="splitter" data-split="right"></div>
-
-    <!-- RIGHT -->
-    <aside id="right" class="panel-col">
-      <div class="rt-tabs" id="rightTabs"></div>
-      <div class="rt-body" id="rightBody"></div>
+    <aside id="right" class="col">
+      <section class="panel grow" id="panelProps">
+        <div class="panel-head"><span id="propTitle">属性 / 效果控件</span><div class="ph-actions"><button data-act="collapseAll" title="折叠全部">⇤</button></div></div>
+        <div class="panel-body" id="propBody"></div>
+      </section>
+      <section class="panel" id="panelAlign">
+        <div class="panel-head"><span>对齐 / 分布 / 视图</span></div>
+        <div class="panel-body" id="alignBody"></div>
+      </section>
     </aside>
   </div>
 
-  <div class="splitter horizontal" data-split="bottom"></div>
-
-  <!-- ================= BOTTOM WORKSPACE ================= -->
-  <div id="bottom">
-    <div id="bottomHead">
-      <div class="bw-tabs" id="bottomTabs"></div>
-      <div class="bw-actions" id="bottomActions"></div>
+  <div id="timeline">
+    <div id="tlHead">
+      <div class="tl-title">时间轴 <span id="tlCompName"></span></div>
+      <div class="tl-controls" id="tlControls"></div>
+      <div class="tl-legend" id="tlLegend"></div>
     </div>
-    <div id="bottomBody"></div>
+    <div id="tlMain">
+      <div id="tlLeft">
+        <div id="tlColHeads"><span>图层名称</span><span>入/出</span><span>模式</span></div>
+        <div id="tlLayerList"></div>
+      </div>
+      <div id="tlRight">
+        <div id="tlRulerWrap"><canvas id="tlRuler"></canvas></div>
+        <div id="tlTracksWrap">
+          <canvas id="tlTracks"></canvas>
+          <div id="tlPlayhead"></div>
+          <div id="tlWorkArea"></div>
+          <div id="tlMarquee"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ================= STATUS ================= -->
-  <footer id="status">
-    <span class="st-item" id="stActive">活动合成：—</span>
-    <span class="st-sep"></span>
-    <span class="st-item" id="stSel">未选择</span>
-    <span class="st-sep"></span>
-    <span class="st-item" id="stCam">相机：默认</span>
-    <span class="st-sep"></span>
-    <span class="st-item" id="stTime">t = 0.000s</span>
-    <span class="st-grow"></span>
-    <span class="st-item" id="stMode">标准工作区</span>
-    <span class="st-sep"></span>
-    <span class="st-item" id="stHint">空格播放 · F9 缓动 · ? 帮助</span>
+  <footer id="statusbar">
+    <span id="statusText">就绪 · 打开时已自动载入 15 秒示例《锻字》</span>
+    <span id="statusExpr"></span>
+    <span id="statusRight">空格 播放 · F9 缓动 · Ctrl+Z 撤销 · Ctrl+Shift+C 预合成</span>
   </footer>
 </div>
 
 <div id="modalRoot"></div>
-<div id="contextMenu"></div>
 <div id="toastRoot"></div>
-<input type="file" id="fileInput" style="display:none">
+<input type="file" id="fileInput" accept=".json,application/json" hidden>
 
-<!-- classic scripts, file:// safe (no ES modules) -->
-<script src="js/core.js"></script>
-<script src="js/geometry.js"></script>
+<!-- classic scripts: file:// friendly, load order matters -->
+<script src="js/util.js"></script>
+<script src="js/expr.js"></script>
+<script src="js/model.js"></script>
+<script src="js/geom.js"></script>
+<script src="js/glyphs.js"></script>
+<script src="js/nodes.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/shaders.js"></script>
 <script src="js/renderer.js"></script>
-<script src="js/engine.js"></script>
-<script src="js/demo.js"></script>
-<script src="js/export.js"></script>
+<script src="js/scene.js"></script>
 <script src="js/audio.js"></script>
-<script src="js/ui_canvas.js"></script>
-<script src="js/ui_timeline.js"></script>
-<script src="js/ui_props.js"></script>
-<script src="js/ui_curve.js"></script>
-<script src="js/ui_nodes.js"></script>
+<script src="js/demo.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/views.js"></script>
+<script src="js/export.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

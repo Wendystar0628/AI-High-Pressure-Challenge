@@ -1,0 +1,21 @@
+import { NestedOS } from '../src/core/os.js';
+
+const os = new NestedOS();
+await os.init({}, null);
+console.log('root', os.root.id, os.root.state);
+await os.start();
+const child = os.createChildSystem('outer');
+console.log('child created', child.id, child.state, 'kernel?', child.processes.map((p) => [p.pid, p.name, p.state]));
+await new Promise((r) => setTimeout(r, 800));
+console.log('child after 800ms', child.state, 'clock', child.clock.toFixed(2));
+console.log('processes', child.processes.map((p) => ({ pid: p.pid, name: p.name, role: p.role, state: p.state, cpu: p.cpu })));
+console.log('appConfig', child.appConfig, 'syscalls', child.syscalls);
+console.log('budget', child.totalBudget, 'spent', child.spent, 'kernelErr', child.kernelError);
+console.log('log', child.log.slice(-10));
+const g = os.createChildSystem(child.id);
+console.log('grandchild', g.id, g.state, 'proc', g.processes.length);
+await new Promise((r) => setTimeout(r, 800));
+console.log('grandchild state', g.state, 'err', g.kernelError, 'clock', g.clock.toFixed(2), 'procs', g.processes.map(p => [p.name, p.state, p.cpu]));
+console.log('parent carrier', os.carrierOf(g)?.cpu, 'kernel/inner', os.carrierOf(g)?.cpuKernel, os.carrierOf(g)?.cpuInner);
+os.stopTicking();
+process.exit(0);

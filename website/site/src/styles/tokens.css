@@ -26,6 +26,7 @@
   --g-300: #e6ffa3;
   --g-500: #d1ff57;
   --g-600: #a9d932;
+  --g-700: #7fa318;
   --g-800: #4f6a00;
   --c-100: #e2f7fd;
   --c-500: #62d4f5;
@@ -39,7 +40,9 @@
   /* ---- category colours (visual.md 三; fixed site-wide) ---- */
   --cat-reason: var(--g-600);
   --cat-algo: var(--g-300);
+  --cat-battle: var(--g-700);
   --cat-spatial: var(--g-500);
+  --cat-drawing: var(--g-800);
   --cat-interact: var(--v-800);
   --cat-game: var(--v-400);
   --cat-physics: var(--v-600);

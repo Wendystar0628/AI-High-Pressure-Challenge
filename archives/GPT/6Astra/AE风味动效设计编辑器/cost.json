@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 8463606,
+  "minutes": 53.0,
+  "time": "实际停止",
+  "cny": 2.99,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "GPT/6Astra/AE风味动效设计编辑器/run-6c7a7297cc2c46f0864b5aaa84329d88"
+  ]
+}

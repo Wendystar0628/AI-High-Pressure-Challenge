@@ -1,4 +1,4 @@
-/* README figures for AI八项全能·定时挑战赛, in the star-atlas style of website/stellar-ui-skill.
+/* README figures for AI十项全能·定时挑战赛, in the star-atlas style of website/stellar-ui-skill.
    Every figure links this file and takes colours, type and marks only from here. Rules: ../README.md (src/README.md). */
 
 /* Saira: wide geometric Latin and figures (SIL OFL 1.1, licence in fonts/). Chinese comes from the system sans. */
@@ -33,6 +33,7 @@
   --lime-100: #F6FFDB;
   --lime-300: #E6FFA3;
   --lime-600: #A9D932;
+  --lime-700: #7FA318;
   --lime-800: #4F6A00;     /* lime-family small text on light ground */
   --cyan: #62D4F5;         /* 500: reference and baseline marks only (pass line, reference steps, average, best-so-far tick) */
   --cyan-100: #E2F7FD;
@@ -112,7 +113,8 @@ h3, .h3 { font-size: 17px; font-weight: 700; line-height: 1.35; }
    Lightness alternates so neighbours in category order differ clearly; nothing lighter than 300, so no bar looks empty.
    Lime steps always take the ink edge (.edge). */
 :root {
-  --cat-reason: var(--lime-600);     --cat-algo: var(--lime-300);       --cat-spatial: var(--lime);
+  --cat-reason: var(--lime-600);     --cat-algo: var(--lime-300);       --cat-battle: var(--lime-700);
+  --cat-spatial: var(--lime); --cat-drawing: var(--lime-800);
   --cat-interact: var(--violet-800); --cat-game: var(--violet-400);     --cat-physics: var(--violet-600);
   --cat-visual: var(--violet-300);   --cat-system: var(--violet);
 }

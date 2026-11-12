@@ -1,0 +1,23 @@
+{
+  "problem": "23",
+  "parts": [
+    {"name": "1", "title": "四向斜置夹紧阀组壳体", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,190,140], "r": 6}], "depth": [0,10], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-120,0],
+       "loops": [{"path": [[15,10],[175,10],[160,75],[30,75]]}], "name": "阀组壳体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [35,22,155,108]}], "depth": [10,64], "name": "内腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [65,38], "d": 64}], "depth": [0,10], "name": "前凸台Φ64"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [65,38], "d": 46}], "depth": [0,10], "name": "前沉孔Φ46"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[65,38]], "d": 32, "through": true, "name": "前轴孔Φ32"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [125,38], "d": 64}], "depth": [0,10], "name": "前凸台2Φ64"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [125,38], "d": 46}], "depth": [0,10], "name": "前沉孔2Φ46"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[125,38]], "d": 32, "through": true, "name": "前轴孔2Φ32"},
+      {"type": "extrude", "plane": {"origin": [40,40,74], "normal": [-0.6,-0.15,0.79], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 52}], "depth": [0,46], "name": "斜座1"},
+      {"type": "extrude", "plane": {"origin": [150,40,74], "normal": [0.6,-0.15,0.79], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 52}], "depth": [0,46], "name": "斜座2"},
+      {"type": "extrude", "plane": {"origin": [40,95,74], "normal": [-0.6,0.15,0.79], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 52}], "depth": [0,46], "name": "斜座3"},
+      {"type": "extrude", "plane": {"origin": [150,95,74], "normal": [0.6,0.15,0.79], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 52}], "depth": [0,46], "name": "斜座4"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,75], "at": [[95,70]], "d": 30, "depth": 65, "name": "中心孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,10], "at": [[12,12],[178,12],[12,128],[178,128]], "d": 12, "through": true, "name": "底板四角孔"}
+    ]}
+  ]
+}

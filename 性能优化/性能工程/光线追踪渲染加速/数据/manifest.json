@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "status": "园林输入与答案已完成；10 倍满分，锚点已定",
+  "performance": [
+    {
+      "id": "garden",
+      "name": "江南园林",
+      "input": "inputs/input_01.bin",
+      "expected": "expected/expected_01.bin",
+      "width": 1920,
+      "height": 1080,
+      "spp": 56,
+      "ao": 1,
+      "depth": 4,
+      "triangles": 176522,
+      "baseline_exceptions": 803,
+      "seed": 1,
+      "camera": "A",
+      "anchors": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          22
+        ],
+        [
+          4,
+          50
+        ],
+        [
+          6,
+          70
+        ],
+        [
+          8,
+          87
+        ],
+        [
+          10,
+          100
+        ]
+      ]
+    }
+  ],
+  "hidden": [],
+  "boundary": [
+    {
+      "id": "boundary_01",
+      "name": "无遮挡采样",
+      "input": "boundary/input_01.bin",
+      "expected": "boundary_expected/expected_01.bin",
+      "width": 512,
+      "height": 288,
+      "spp": 16,
+      "ao": 0,
+      "depth": 4,
+      "triangles": 176522,
+      "baseline_exceptions": 28,
+      "seed": 1,
+      "camera": "A"
+    },
+    {
+      "id": "boundary_02",
+      "name": "单层反射",
+      "input": "boundary/input_02.bin",
+      "expected": "boundary_expected/expected_02.bin",
+      "width": 512,
+      "height": 288,
+      "spp": 16,
+      "ao": 1,
+      "depth": 1,
+      "triangles": 176522,
+      "baseline_exceptions": 32,
+      "seed": 1,
+      "camera": "A"
+    },
+    {
+      "id": "boundary_03",
+      "name": "全镜面",
+      "input": "boundary/input_03.bin",
+      "expected": "boundary_expected/expected_03.bin",
+      "width": 512,
+      "height": 288,
+      "spp": 16,
+      "ao": 1,
+      "depth": 8,
+      "triangles": 176522,
+      "baseline_exceptions": 126,
+      "seed": 1,
+      "camera": "A"
+    }
+  ]
+}

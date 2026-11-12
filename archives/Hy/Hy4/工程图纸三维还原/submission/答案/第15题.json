@@ -1,0 +1,18 @@
+{
+  "problem": "15",
+  "parts": [
+    {"name": "1", "title": "双轴错层传动箱体", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 96, 78]}], "depth": 6, "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 6], "loops": [{"rect": [6, 6, 90, 72]}], "depth": 48, "name": "箱体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 6],
+       "at": [[6, 6], [90, 6], [6, 72], [90, 72]], "d": 8, "through": true, "name": "底板4角孔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 6, 0], "loops": [{"circle": [28, 32], "d": 78}], "depth": 6, "name": "Φ78凸台"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 6, 0], "loops": [{"circle": [68, 28], "d": 74}], "depth": 6, "name": "Φ74凸台"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 0, 0], "at": [28, 32], "d": 50, "through": true, "name": "Φ50轴孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 0, 0], "at": [68, 28], "d": 44, "through": true, "name": "Φ44轴孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 72, 0],
+       "loops": [{"rect": [10, 14, 86, 42]}], "depth": 12, "name": "后腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 54], "at": [[20, 20], [76, 20], [20, 58], [76, 58]], "d": 8, "depth": 8, "name": "顶孔"}
+    ]}
+  ]
+}

@@ -1,0 +1,4303 @@
+{
+  "problem": "18",
+  "title": "复合环腔涡轮轴承箱",
+  "sheets": [
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-1",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "front",
+          "free": true,
+          "name": "A-A（底板宽向中面）",
+          "section": {
+            "label": "A",
+            "point": [
+              0,
+              98,
+              0
+            ],
+            "mode": "full",
+            "parent": "俯视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1
+          ],
+          "from": [
+            298,
+            106
+          ],
+          "to": [
+            300,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1
+          ],
+          "from": [
+            124,
+            194
+          ],
+          "to": [
+            300,
+            196
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "7",
+          "value": 7,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1,
+            3,
+            40,
+            41,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50
+          ],
+          "from": [
+            12,
+            11
+          ],
+          "to": [
+            300,
+            18
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            0,
+            0
+          ],
+          "text": [
+            "R6 地脚四角"
+          ],
+          "value": 6,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            6,
+            36,
+            40
+          ],
+          "from": [
+            124,
+            12
+          ],
+          "to": [
+            24,
+            20
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            8,
+            37,
+            41
+          ],
+          "from": [
+            124,
+            164
+          ],
+          "to": [
+            24,
+            176
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            12,
+            0
+          ],
+          "to": [
+            24,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            86,
+            142
+          ],
+          "to": [
+            88,
+            164
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            41
+          ],
+          "from": [
+            220.0,
+            174.0
+          ],
+          "to": [
+            240,
+            154
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            274,
+            18
+          ],
+          "to": [
+            276,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            48.0,
+            100.0
+          ],
+          "to": [
+            276,
+            104
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            210,
+            106
+          ],
+          "to": [
+            24,
+            108
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            16,
+            17
+          ],
+          "from": [
+            86,
+            142
+          ],
+          "to": [
+            240,
+            154
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            164.0,
+            159.0
+          ],
+          "to": [
+            88,
+            164
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "36",
+          "value": 36,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "from": [
+            88,
+            164
+          ],
+          "to": [
+            124,
+            90
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4,
+            13
+          ],
+          "from": [
+            124,
+            26
+          ],
+          "to": [
+            124,
+            36
+          ],
+          "dir": "v",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-1"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-2",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "left",
+          "free": true,
+          "name": "B-B（过主轴承轴线）",
+          "section": {
+            "label": "B",
+            "point": [
+              124,
+              0,
+              0
+            ],
+            "mode": "full",
+            "parent": "主视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "46",
+          "value": 46,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4,
+            6,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            32
+          ],
+          "from": [
+            150.0,
+            44
+          ],
+          "to": [
+            124,
+            90
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4
+          ],
+          "from": [
+            124,
+            154
+          ],
+          "to": [
+            124,
+            160
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "Φ100 主环腔"
+          ],
+          "value": 100,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "46",
+          "value": 46.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5,
+            18,
+            20
+          ],
+          "from": [
+            164.0,
+            159.0
+          ],
+          "to": [
+            210,
+            106
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5
+          ],
+          "from": [
+            74.0,
+            46.0
+          ],
+          "to": [
+            210,
+            48
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5,
+            18,
+            19,
+            20
+          ],
+          "from": [
+            276,
+            104
+          ],
+          "to": [
+            210,
+            106
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5
+          ],
+          "from": [
+            124,
+            148
+          ],
+          "to": [
+            210,
+            150
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            210,
+            106
+          ],
+          "text": [
+            "Φ64 偏置副环腔"
+          ],
+          "value": 64,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "diameter",
+          "text": "Φ116",
+          "value": 116,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 6,
+          "covers_features": [
+            6
+          ],
+          "center": [
+            124,
+            90
+          ],
+          "d": 116,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            148
+          ],
+          "text": [
+            "R4 前轴承座根部"
+          ],
+          "value": 4,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 7,
+          "covers_features": [
+            7
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 8,
+          "covers_features": [
+            8,
+            12
+          ],
+          "from": [
+            240,
+            188
+          ],
+          "to": [
+            124,
+            194
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "diameter",
+          "text": "Φ108",
+          "value": 108,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 8,
+          "covers_features": [
+            8
+          ],
+          "center": [
+            124,
+            90
+          ],
+          "d": 108,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 9,
+          "covers_features": [
+            9,
+            10,
+            43,
+            44,
+            47,
+            48
+          ],
+          "from": [
+            28,
+            10
+          ],
+          "to": [
+            124,
+            12
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "Φ64 轴承阶梯孔"
+          ],
+          "value": 64,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 9,
+          "covers_features": [
+            9
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 10,
+          "covers_features": [
+            10
+          ],
+          "from": [
+            124,
+            36
+          ],
+          "to": [
+            124,
+            38
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "Φ46 轴承阶梯孔"
+          ],
+          "value": 46,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 10,
+          "covers_features": [
+            10
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-2"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-3",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "top",
+          "free": true,
+          "name": "C-C（过主轴承轴线）",
+          "section": {
+            "label": "C",
+            "point": [
+              0,
+              0,
+              90
+            ],
+            "mode": "full",
+            "parent": "主视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 11,
+          "covers_features": [
+            11
+          ],
+          "from": [
+            218,
+            152
+          ],
+          "to": [
+            124,
+            154
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 11,
+          "covers_features": [
+            11,
+            12
+          ],
+          "from": [
+            24,
+            176
+          ],
+          "to": [
+            124,
+            182
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "Φ46 轴承阶梯孔"
+          ],
+          "value": 46,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 11,
+          "covers_features": [
+            11
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "Φ60 轴承阶梯孔"
+          ],
+          "value": 60,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 12,
+          "covers_features": [
+            12
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔外径Φ116"
+          ],
+          "value": 116,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔内径Φ106"
+          ],
+          "value": 106,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔轴向宽10"
+          ],
+          "value": 10,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ],
+          "from": [
+            24,
+            20
+          ],
+          "to": [
+            124,
+            26
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔外径Φ116"
+          ],
+          "value": 116,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔内径Φ108"
+          ],
+          "value": 108,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔轴向宽12"
+          ],
+          "value": 12,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ],
+          "from": [
+            144,
+            70
+          ],
+          "to": [
+            124,
+            72
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ],
+          "from": [
+            124,
+            72
+          ],
+          "to": [
+            124,
+            84
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔外径Φ114"
+          ],
+          "value": 114,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔内径Φ104"
+          ],
+          "value": 104,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            90
+          ],
+          "text": [
+            "环腔轴向宽16"
+          ],
+          "value": 16,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-3"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-4",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "detail",
+          "parent": "主视图",
+          "center": [
+            124,
+            128
+          ],
+          "r": 20,
+          "label": "Ⅰ",
+          "name": "局部Ⅰ",
+          "scale": 2.5
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ],
+          "from": [
+            220.0,
+            146.0
+          ],
+          "to": [
+            124,
+            148
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ],
+          "from": [
+            124,
+            160
+          ],
+          "to": [
+            124,
+            164
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16
+          ],
+          "from": [
+            76,
+            18
+          ],
+          "to": [
+            86,
+            142
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16
+          ],
+          "from": [
+            124,
+            38
+          ],
+          "to": [
+            86,
+            44
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16,
+            17
+          ],
+          "from": [
+            246.0,
+            130.0
+          ],
+          "to": [
+            86,
+            142
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16
+          ],
+          "from": [
+            210,
+            106
+          ],
+          "to": [
+            218,
+            154
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16
+          ],
+          "from": [
+            210,
+            150
+          ],
+          "to": [
+            218,
+            152
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            124,
+            90
+          ],
+          "to": [
+            144,
+            142
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            164.0,
+            62.0
+          ],
+          "to": [
+            144,
+            70
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            150.0,
+            0
+          ],
+          "to": [
+            154,
+            154
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            210,
+            114
+          ],
+          "to": [
+            154,
+            126
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "16",
+          "value": 16.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 18,
+          "covers_features": [
+            18,
+            19,
+            20
+          ],
+          "from": [
+            150.0,
+            98.0
+          ],
+          "to": [
+            210,
+            114
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 18,
+          "covers_features": [
+            18
+          ],
+          "from": [
+            276,
+            18
+          ],
+          "to": [
+            282,
+            106
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "左视图",
+          "type": "leader",
+          "at": [
+            -114,
+            106
+          ],
+          "text": [
+            "Φ32 右副轴承孔"
+          ],
+          "value": 32,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 18,
+          "covers_features": [
+            18
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "24",
+          "value": 24.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19
+          ],
+          "from": [
+            246.0,
+            130.0
+          ],
+          "to": [
+            270,
+            106
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19,
+            20
+          ],
+          "from": [
+            288,
+            0
+          ],
+          "to": [
+            298,
+            106
+          ],
+          "dir": "h",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-4"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-5",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "front",
+          "free": true,
+          "name": "A-A（底板宽向中面）",
+          "section": {
+            "label": "A",
+            "point": [
+              0,
+              98,
+              0
+            ],
+            "mode": "full",
+            "parent": "俯视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "左视图",
+          "type": "diameter",
+          "text": "Φ64",
+          "value": 64,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19
+          ],
+          "center": [
+            -114,
+            106
+          ],
+          "d": 64,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "左视图",
+          "type": "leader",
+          "at": [
+            -114,
+            106
+          ],
+          "text": [
+            "Φ32 右颈复通"
+          ],
+          "value": 32,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 20,
+          "covers_features": [
+            20
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "26",
+          "value": 26.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ],
+          "from": [
+            48.0,
+            100.0
+          ],
+          "to": [
+            74.0,
+            174.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ],
+          "from": [
+            86,
+            44
+          ],
+          "to": [
+            74.0,
+            46.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21,
+            25
+          ],
+          "from": [
+            88,
+            164
+          ],
+          "to": [
+            74.0,
+            174.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ],
+          "from": [
+            218,
+            154
+          ],
+          "to": [
+            220.0,
+            174.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ],
+          "from": [
+            -26.0,
+            144.0
+          ],
+          "to": [
+            220.0,
+            146.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ],
+          "from": [
+            300,
+            18
+          ],
+          "to": [
+            310.0,
+            124.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ],
+          "from": [
+            210,
+            48
+          ],
+          "to": [
+            310.0,
+            60.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "16",
+          "value": 16.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29,
+            40
+          ],
+          "from": [
+            24,
+            108
+          ],
+          "to": [
+            310.0,
+            124.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "26",
+          "value": 26.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            -26.0,
+            90.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ],
+          "from": [
+            164.0,
+            134.0
+          ],
+          "to": [
+            -26.0,
+            144.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ],
+          "from": [
+            28,
+            18
+          ],
+          "to": [
+            48.0,
+            100.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ],
+          "from": [
+            124,
+            90
+          ],
+          "to": [
+            48.0,
+            100.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ],
+          "from": [
+            240,
+            154
+          ],
+          "to": [
+            246.0,
+            130.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ],
+          "from": [
+            240,
+            128
+          ],
+          "to": [
+            246.0,
+            130.0
+          ],
+          "dir": "v",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-5"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-6",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "left",
+          "free": true,
+          "name": "B-B（过主轴承轴线）",
+          "section": {
+            "label": "B",
+            "point": [
+              124,
+              0,
+              0
+            ],
+            "mode": "full",
+            "parent": "主视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38,
+            39
+          ],
+          "from": [
+            154,
+            154
+          ],
+          "to": [
+            164.0,
+            159.0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38
+          ],
+          "from": [
+            310.0,
+            60.0
+          ],
+          "to": [
+            164.0,
+            62.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38,
+            39
+          ],
+          "from": [
+            240,
+            154
+          ],
+          "to": [
+            164.0,
+            159.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 39,
+          "covers_features": [
+            39
+          ],
+          "from": [
+            154,
+            126
+          ],
+          "to": [
+            164.0,
+            134.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 40,
+          "covers_features": [
+            40
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            28,
+            10
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 40,
+          "covers_features": [
+            40
+          ],
+          "from": [
+            24,
+            18
+          ],
+          "to": [
+            28,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 40,
+          "covers_features": [
+            40
+          ],
+          "from": [
+            74.0,
+            174.0
+          ],
+          "to": [
+            76,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 41,
+          "covers_features": [
+            41
+          ],
+          "from": [
+            12,
+            184
+          ],
+          "to": [
+            240,
+            188
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 41,
+          "covers_features": [
+            41
+          ],
+          "from": [
+            270,
+            106
+          ],
+          "to": [
+            274,
+            18
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 41,
+          "covers_features": [
+            41
+          ],
+          "from": [
+            310.0,
+            124.0
+          ],
+          "to": [
+            240,
+            128
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            124,
+            122
+          ],
+          "text": [
+            "C2 前轴承口"
+          ],
+          "value": 2,
+          "category": "45度等距倒角",
+          "angle": 45,
+          "source_feature": 42,
+          "covers_features": [
+            42
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 43,
+          "covers_features": [
+            43,
+            44,
+            45,
+            46
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            12,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            12,
+            12
+          ],
+          "text": [
+            "Φ10 地脚锪孔1"
+          ],
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 43,
+          "covers_features": [
+            43
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "11",
+          "value": 11,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 44,
+          "covers_features": [
+            44,
+            46,
+            48,
+            50
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            12,
+            11
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            12,
+            12
+          ],
+          "text": [
+            "Φ18 沉孔"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 44,
+          "covers_features": [
+            44
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 45,
+          "covers_features": [
+            45,
+            46,
+            49,
+            50
+          ],
+          "from": [
+            124,
+            182
+          ],
+          "to": [
+            12,
+            184
+          ],
+          "dir": "v",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-6"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-7",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "top",
+          "free": true,
+          "name": "C-C（过主轴承轴线）",
+          "section": {
+            "label": "C",
+            "point": [
+              0,
+              0,
+              90
+            ],
+            "mode": "full",
+            "parent": "主视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            12,
+            184
+          ],
+          "text": [
+            "Φ10 地脚锪孔2"
+          ],
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 45,
+          "covers_features": [
+            45
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            12,
+            184
+          ],
+          "text": [
+            "Φ18 沉孔"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 46,
+          "covers_features": [
+            46
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 47,
+          "covers_features": [
+            47,
+            48,
+            49,
+            50
+          ],
+          "from": [
+            282,
+            106
+          ],
+          "to": [
+            288,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            288,
+            12
+          ],
+          "text": [
+            "Φ10 地脚锪孔3"
+          ],
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 47,
+          "covers_features": [
+            47
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            288,
+            12
+          ],
+          "text": [
+            "Φ18 沉孔"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 48,
+          "covers_features": [
+            48
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            288,
+            184
+          ],
+          "text": [
+            "Φ10 地脚锪孔4"
+          ],
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 49,
+          "covers_features": [
+            49
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            288,
+            184
+          ],
+          "text": [
+            "Φ18 沉孔"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 50,
+          "covers_features": [
+            50
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 51,
+          "covers_features": [
+            51
+          ],
+          "from": [
+            144,
+            142
+          ],
+          "to": [
+            150.0,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "14",
+          "value": 14.0,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 51,
+          "covers_features": [
+            51
+          ],
+          "from": [
+            124,
+            84
+          ],
+          "to": [
+            150.0,
+            98.0
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "26",
+          "value": 26,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 51,
+          "covers_features": [
+            51
+          ],
+          "from": [
+            300,
+            18
+          ],
+          "to": [
+            150.0,
+            44
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            150.0,
+            98.0
+          ],
+          "text": [
+            "Φ10 底排液"
+          ],
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 51,
+          "covers_features": [
+            51
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-7"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-8",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            0.37470950522068514,
+            0.374709505220685,
+            -0.848048096156426
+          ],
+          "up": [
+            0.7071067811865475,
+            -0.7071067811865476,
+            -2.7755575615628914e-17
+          ],
+          "label": "斜视1",
+          "name": "斜视1",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            74.0,
+            174.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -164.16521912432367,
+              19.798989873223324
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视1",
+          "type": "diameter",
+          "text": "Φ52 轴系油座1",
+          "value": 52,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ],
+          "center": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "d": 52,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "text": [
+            "轴向长62"
+          ],
+          "value": 62,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ]
+        },
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "text": [
+            "倾角32°"
+          ],
+          "value": 32,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ]
+        },
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "text": [
+            "方位225°"
+          ],
+          "value": 225,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ]
+        },
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            45.79898987322332
+          ],
+          "text": [
+            "R1.2 轴系油座1外端圆棱"
+          ],
+          "value": 1.2,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 22,
+          "covers_features": [
+            22
+          ]
+        },
+        {
+          "view": "斜视1",
+          "type": "diameter",
+          "text": "Φ20 通道",
+          "value": 20,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23
+          ],
+          "center": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "d": 20,
+          "outside": true,
+          "avoid_box": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-8"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-9",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            0.37470950522068514,
+            0.374709505220685,
+            -0.848048096156426
+          ],
+          "up": [
+            0.7071067811865475,
+            -0.7071067811865476,
+            -2.7755575615628914e-17
+          ],
+          "label": "斜视1",
+          "name": "斜视1",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            74.0,
+            174.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -164.16521912432367,
+              19.798989873223324
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "text": [
+            "从外端面深96"
+          ],
+          "value": 96,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23
+          ]
+        },
+        {
+          "view": "斜视1",
+          "type": "diameter",
+          "text": "Φ34 沉台",
+          "value": 34,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 24,
+          "covers_features": [
+            24
+          ],
+          "center": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "d": 34,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视1",
+          "type": "leader",
+          "at": [
+            -164.16521912432367,
+            19.798989873223324
+          ],
+          "text": [
+            "沉台深7"
+          ],
+          "value": 7,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 24,
+          "covers_features": [
+            24
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-9"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-10",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.5086500507968374,
+            -0.5086500507968374,
+            -0.6946583704589973
+          ],
+          "up": [
+            -0.7071067811865476,
+            0.7071067811865476,
+            0.0
+          ],
+          "label": "斜视2",
+          "name": "斜视2",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            220.0,
+            174.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              54.613212576671415,
+              -52.32590180780451
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视2",
+          "type": "diameter",
+          "text": "Φ52 轴系油座2",
+          "value": 52,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ],
+          "center": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "d": 52,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "text": [
+            "轴向长62"
+          ],
+          "value": 62,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ]
+        },
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "text": [
+            "倾角46°"
+          ],
+          "value": 46,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ]
+        },
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "text": [
+            "方位45°"
+          ],
+          "value": 45,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ]
+        },
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -26.325901807804513
+          ],
+          "text": [
+            "R1.2 轴系油座2外端圆棱"
+          ],
+          "value": 1.2,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 26,
+          "covers_features": [
+            26
+          ]
+        },
+        {
+          "view": "斜视2",
+          "type": "diameter",
+          "text": "Φ20 通道",
+          "value": 20,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 27,
+          "covers_features": [
+            27
+          ],
+          "center": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "d": 20,
+          "outside": true,
+          "avoid_box": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-10"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-11",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.5086500507968374,
+            -0.5086500507968374,
+            -0.6946583704589973
+          ],
+          "up": [
+            -0.7071067811865476,
+            0.7071067811865476,
+            0.0
+          ],
+          "label": "斜视2",
+          "name": "斜视2",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            220.0,
+            174.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              54.613212576671415,
+              -52.32590180780451
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "text": [
+            "从外端面深96"
+          ],
+          "value": 96,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 27,
+          "covers_features": [
+            27
+          ]
+        },
+        {
+          "view": "斜视2",
+          "type": "diameter",
+          "text": "Φ34 沉台",
+          "value": 34,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 28,
+          "covers_features": [
+            28
+          ],
+          "center": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "d": 34,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视2",
+          "type": "leader",
+          "at": [
+            54.613212576671415,
+            -52.32590180780451
+          ],
+          "text": [
+            "沉台深7"
+          ],
+          "value": 7,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 28,
+          "covers_features": [
+            28
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-11"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-12",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.9271838545667874,
+            -0.0,
+            -0.37460659341591196
+          ],
+          "up": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "label": "斜视3",
+          "name": "斜视3",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            310.0,
+            124.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              1.1572459926510703,
+              60.0
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视3",
+          "type": "diameter",
+          "text": "Φ52 轴系油座3",
+          "value": 52,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ],
+          "center": [
+            1.1572459926510703,
+            60.0
+          ],
+          "d": 52,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视3",
+          "type": "leader",
+          "at": [
+            1.1572459926510703,
+            60.0
+          ],
+          "text": [
+            "轴向长62"
+          ],
+          "value": 62,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ]
+        },
+        {
+          "view": "斜视3",
+          "type": "leader",
+          "at": [
+            1.1572459926510703,
+            60.0
+          ],
+          "text": [
+            "倾角68°"
+          ],
+          "value": 68,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ]
+        },
+        {
+          "view": "斜视3",
+          "type": "leader",
+          "at": [
+            1.1572459926510703,
+            60.0
+          ],
+          "text": [
+            "方位0°"
+          ],
+          "value": 0,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 29,
+          "covers_features": [
+            29
+          ]
+        },
+        {
+          "view": "斜视3",
+          "type": "diameter",
+          "text": "Φ20 通道",
+          "value": 20,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 30,
+          "covers_features": [
+            30
+          ],
+          "center": [
+            1.1572459926510703,
+            60.0
+          ],
+          "d": 20,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视3",
+          "type": "leader",
+          "at": [
+            1.1572459926510703,
+            60.0
+          ],
+          "text": [
+            "从外端面深96"
+          ],
+          "value": 96,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 30,
+          "covers_features": [
+            30
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-12"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-13",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.9271838545667874,
+            -0.0,
+            -0.37460659341591196
+          ],
+          "up": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "label": "斜视3",
+          "name": "斜视3",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            310.0,
+            124.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              1.1572459926510703,
+              60.0
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视3",
+          "type": "diameter",
+          "text": "Φ34 沉台",
+          "value": 34,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 31,
+          "covers_features": [
+            31
+          ],
+          "center": [
+            1.1572459926510703,
+            60.0
+          ],
+          "d": 34,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视3",
+          "type": "leader",
+          "at": [
+            1.1572459926510703,
+            60.0
+          ],
+          "text": [
+            "沉台深7"
+          ],
+          "value": 7,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 31,
+          "covers_features": [
+            31
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-13"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-14",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            1.0,
+            -0.0,
+            -0.0
+          ],
+          "up": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "label": "斜视4",
+          "name": "斜视4",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            -26.0,
+            90.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -90.0,
+              -144.0
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视4",
+          "type": "diameter",
+          "text": "Φ52 轴系油座4",
+          "value": 52,
+          "category": "直径",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ],
+          "center": [
+            -90.0,
+            -144.0
+          ],
+          "d": 52,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -144.0
+          ],
+          "text": [
+            "轴向长90"
+          ],
+          "value": 90,
+          "category": "轴向长度",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ]
+        },
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -144.0
+          ],
+          "text": [
+            "倾角90°"
+          ],
+          "value": 90,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ]
+        },
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -144.0
+          ],
+          "text": [
+            "方位180°"
+          ],
+          "value": 180,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 32,
+          "covers_features": [
+            32
+          ]
+        },
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -118.0
+          ],
+          "text": [
+            "R1.2 轴系油座4外端圆棱"
+          ],
+          "value": 1.2,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 33,
+          "covers_features": [
+            33
+          ]
+        },
+        {
+          "view": "斜视4",
+          "type": "diameter",
+          "text": "Φ20 通道",
+          "value": 20,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 34,
+          "covers_features": [
+            34
+          ],
+          "center": [
+            -90.0,
+            -144.0
+          ],
+          "d": 20,
+          "outside": true,
+          "avoid_box": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-14"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-15",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            1.0,
+            -0.0,
+            -0.0
+          ],
+          "up": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "label": "斜视4",
+          "name": "斜视4",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            -26.0,
+            90.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -90.0,
+              -144.0
+            ],
+            "r": 40.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -144.0
+          ],
+          "text": [
+            "从外端面深96"
+          ],
+          "value": 96,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 34,
+          "covers_features": [
+            34
+          ]
+        },
+        {
+          "view": "斜视4",
+          "type": "diameter",
+          "text": "Φ34 沉台",
+          "value": 34,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 35,
+          "covers_features": [
+            35
+          ],
+          "center": [
+            -90.0,
+            -144.0
+          ],
+          "d": 34,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视4",
+          "type": "leader",
+          "at": [
+            -90.0,
+            -144.0
+          ],
+          "text": [
+            "沉台深7"
+          ],
+          "value": 7,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 35,
+          "covers_features": [
+            35
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-15"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-16",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.0,
+            0.8660254037844386,
+            -0.5000000000000001
+          ],
+          "up": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "label": "斜视5",
+          "name": "斜视5",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            48.0,
+            100.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -96.60254037844386,
+              48.0
+            ],
+            "r": 18.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视5",
+          "type": "diameter",
+          "text": "Φ8 迷宫交叉油孔1",
+          "value": 8,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ],
+          "center": [
+            -96.60254037844386,
+            48.0
+          ],
+          "d": 8,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视5",
+          "type": "leader",
+          "at": [
+            -96.60254037844386,
+            48.0
+          ],
+          "text": [
+            "轴向长100"
+          ],
+          "value": 100,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ]
+        },
+        {
+          "view": "斜视5",
+          "type": "leader",
+          "at": [
+            -96.60254037844386,
+            48.0
+          ],
+          "text": [
+            "倾角60°"
+          ],
+          "value": 60,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ]
+        },
+        {
+          "view": "斜视5",
+          "type": "leader",
+          "at": [
+            -96.60254037844386,
+            48.0
+          ],
+          "text": [
+            "方位270°"
+          ],
+          "value": 270,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 36,
+          "covers_features": [
+            36
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-16"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-17",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.0,
+            -0.8090169943749475,
+            -0.5877852522924731
+          ],
+          "up": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "label": "斜视6",
+          "name": "斜视6",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            246.0,
+            130.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -1.7220048652679054,
+              -246.0
+            ],
+            "r": 18.5
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视6",
+          "type": "diameter",
+          "text": "Φ9 迷宫交叉油孔2",
+          "value": 9,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ],
+          "center": [
+            -1.7220048652679054,
+            -246.0
+          ],
+          "d": 9,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视6",
+          "type": "leader",
+          "at": [
+            -1.7220048652679054,
+            -246.0
+          ],
+          "text": [
+            "轴向长100"
+          ],
+          "value": 100,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ]
+        },
+        {
+          "view": "斜视6",
+          "type": "leader",
+          "at": [
+            -1.7220048652679054,
+            -246.0
+          ],
+          "text": [
+            "倾角54°"
+          ],
+          "value": 54,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ]
+        },
+        {
+          "view": "斜视6",
+          "type": "leader",
+          "at": [
+            -1.7220048652679054,
+            -246.0
+          ],
+          "text": [
+            "方位90°"
+          ],
+          "value": 90,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 37,
+          "covers_features": [
+            37
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-17"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-18",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            0.5591929034707469,
+            -0.0,
+            -0.8290375725550417
+          ],
+          "up": [
+            -0.0,
+            -1.0000000000000002,
+            0.0
+          ],
+          "label": "斜视7",
+          "name": "斜视7",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            164.0,
+            159.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              -224.87383355087562,
+              -62.000000000000014
+            ],
+            "r": 19.0
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视7",
+          "type": "diameter",
+          "text": "Φ10 迷宫交叉油孔3",
+          "value": 10,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38
+          ],
+          "center": [
+            -224.87383355087562,
+            -62.000000000000014
+          ],
+          "d": 10,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视7",
+          "type": "leader",
+          "at": [
+            -224.87383355087562,
+            -62.000000000000014
+          ],
+          "text": [
+            "轴向长100"
+          ],
+          "value": 100,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38
+          ]
+        },
+        {
+          "view": "斜视7",
+          "type": "leader",
+          "at": [
+            -224.87383355087562,
+            -62.000000000000014
+          ],
+          "text": [
+            "倾角34°"
+          ],
+          "value": 34,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38
+          ]
+        },
+        {
+          "view": "斜视7",
+          "type": "leader",
+          "at": [
+            -224.87383355087562,
+            -62.000000000000014
+          ],
+          "text": [
+            "方位180°"
+          ],
+          "value": 180,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 38,
+          "covers_features": [
+            38
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-18"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.25,
+        1,
+        0.8,
+        0.65,
+        0.5
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "复合环腔涡轮轴承箱",
+      "drawing_no": "JX-18-01-19",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "auxiliary",
+          "direction": [
+            -0.6427876096865393,
+            -0.0,
+            -0.766044443118978
+          ],
+          "up": [
+            -0.0,
+            0.9999999999999999,
+            0.0
+          ],
+          "label": "斜视8",
+          "name": "斜视8",
+          "hidden": true,
+          "parent": "主视图",
+          "arrow_at": [
+            164.0,
+            159.0
+          ],
+          "keep": {
+            "shape": "circle",
+            "center": [
+              23.42805873135265,
+              133.99999999999997
+            ],
+            "r": 19.5
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "斜视8",
+          "type": "diameter",
+          "text": "Φ11 迷宫交叉油孔4",
+          "value": 11,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 39,
+          "covers_features": [
+            39
+          ],
+          "center": [
+            23.42805873135265,
+            133.99999999999997
+          ],
+          "d": 11,
+          "outside": true,
+          "avoid_box": true
+        },
+        {
+          "view": "斜视8",
+          "type": "leader",
+          "at": [
+            23.42805873135265,
+            133.99999999999997
+          ],
+          "text": [
+            "轴向长100"
+          ],
+          "value": 100,
+          "category": "孔深",
+          "angle": 45,
+          "source_feature": 39,
+          "covers_features": [
+            39
+          ]
+        },
+        {
+          "view": "斜视8",
+          "type": "leader",
+          "at": [
+            23.42805873135265,
+            133.99999999999997
+          ],
+          "text": [
+            "倾角40°"
+          ],
+          "value": 40,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 39,
+          "covers_features": [
+            39
+          ]
+        },
+        {
+          "view": "斜视8",
+          "type": "leader",
+          "at": [
+            23.42805873135265,
+            133.99999999999997
+          ],
+          "text": [
+            "方位0°"
+          ],
+          "value": 0,
+          "category": "角度",
+          "angle": 45,
+          "source_feature": 39,
+          "covers_features": [
+            39
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；链式和相对尺寸须结合剖视推算。",
+        "R/C均须建模；未注棱保持理论交线。",
+        "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+        "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。"
+      ],
+      "id": "18-19"
+    }
+  ]
+}

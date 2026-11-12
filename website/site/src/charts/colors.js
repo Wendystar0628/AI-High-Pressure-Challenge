@@ -16,7 +16,9 @@ export function resolve(name, el = document.documentElement) {
 export const CATEGORY_VAR = {
   reason: '--cat-reason',
   algo: '--cat-algo',
+  battle: '--cat-battle',
   spatial: '--cat-spatial',
+  drawing: '--cat-drawing',
   interact: '--cat-interact',
   game: '--cat-game',
   physics: '--cat-physics',
@@ -25,7 +27,7 @@ export const CATEGORY_VAR = {
 };
 
 /** Lime-family fills get a 1px ink edge (light theme). */
-export const LIME_FAMILY = new Set(['reason', 'algo', 'spatial']);
+export const LIME_FAMILY = new Set(['reason', 'algo', 'battle', 'spatial', 'drawing']);
 
 export const fill = {
   /** a category's fixed colour */

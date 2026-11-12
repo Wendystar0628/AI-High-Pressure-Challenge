@@ -117,7 +117,7 @@
     "logo": "openai",
     "agent": "Codex",
     "effort": "xhigh",
-    "tested": "2026-11-07"
+    "tested": "2026-11-12"
   },
   {
     "id": "deepseek-v4-1-flash",
@@ -133,7 +133,7 @@
     "logo": "deepseek",
     "agent": "DeepSeek Harness",
     "effort": "max",
-    "tested": "2026-11-06"
+    "tested": "2026-11-12"
   },
   {
     "id": "mimo-v2-6-pro",
@@ -150,7 +150,7 @@
     "logo": "xiaomimimo",
     "agent": "MiMo Code",
     "effort": "high",
-    "tested": "2026-11-06"
+    "tested": "2026-11-12"
   },
   {
     "id": "hy4",
@@ -167,20 +167,41 @@
     "logo": "hunyuan",
     "agent": "CodeBuddy Code",
     "effort": "high",
-    "tested": "2026-11-06"
+    "tested": "2026-11-13"
   },
   {
-    "id": "gpt-6-2-sol",
-    "key": "GPT/6.2Sol",
-    "name": "GPT 6.2 Sol",
-    "short": "6.2Sol",
+    "id": "gemini-4-carbon",
+    "key": "Gemini/4Carbon",
+    "name": "Gemini 4 Carbon",
+    "short": "4Carbon",
     "aliases": [
-      "6.2 Sol",
-      "GPT-6.2 Sol"
+      "Carbon",
+      "Gemini Carbon",
+      "Gemini 4",
+      "Google",
+      "谷歌"
     ],
-    "vendor": "OpenAI",
-    "logo": "openai",
-    "agent": "Codex",
+    "vendor": "Google",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "high",
+    "tested": null
+  },
+  {
+    "id": "gemini-4-hydrogen",
+    "key": "Gemini/4Hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "short": "4Hydrogen",
+    "aliases": [
+      "Hydrogen",
+      "Gemini Hydrogen",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
+    "vendor": "Google",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
     "effort": "xhigh",
     "tested": null
   }

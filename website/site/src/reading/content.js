@@ -2,6 +2,7 @@
 // website/site/content/<zh|en>/ as JSON:
 //
 //   content/<lang>/about.json                 the about page (the README, section by section)
+//   content/<lang>/faq.json                   猜你想问: sections of questions (format and the en-by-id merge: src/pages/faq/model.js)
 //   content/<lang>/tasks/<category>/<task>.json   the hand-filled blocks of one task page:
 //     {
 //       "brief":  [block, …],   题面要点：paragraphs and lists (block format below); empty = empty state

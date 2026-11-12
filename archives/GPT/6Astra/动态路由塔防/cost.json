@@ -1,0 +1,23 @@
+{
+  "model": "GPT/6Astra",
+  "task": "动态路由塔防",
+  "tokens": 19212632,
+  "minutes": 90.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 6.79,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [
+    "运行时长比例"
+  ],
+  "runs": [
+    "GPT/6Astra/动态路由塔防/timer-1793583558.0270402"
+  ]
+}

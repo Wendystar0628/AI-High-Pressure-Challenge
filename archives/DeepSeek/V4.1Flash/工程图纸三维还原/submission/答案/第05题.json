@@ -1,0 +1,18 @@
+{
+  "problem": "05",
+  "parts": [
+    {"name": "1", "title": "双层交汇混流阀箱", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,160,100], "r": 2}], "depth": [0,10], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-92,0],
+       "loops": [{"path": [[8,10],[152,10],[152,56],[118,68],[8,68]]}], "name": "主体斜顶"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [20,18,78,82]}], "depth": [10,44], "name": "腔"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [84,18,144,82]}], "depth": [10,36], "name": "右腔"},
+      {"type": "extrude", "plane": "YZ", "origin": [0,0,0], "loops": [{"circle": [50,40], "d": 40}], "depth": [-6,14], "name": "左法兰凸台"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[50,40]], "d": 22, "depth": 118, "reverse": true, "name": "左孔"},
+      {"type": "hole", "plane": "YZ", "origin": [160,0,0], "at": [[50,32]], "d": 18, "depth": 20, "name": "右孔"},
+      {"type": "hole", "plane": {"origin": [120,0,67], "normal": [0.70710678,0,0.70710678], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 10, "depth": 34, "name": "斜孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,10], "at": [[10,10],[150,10],[10,90],[150,90]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,68], "at": [[40,30],[40,70]], "d": 6, "depth": 30, "name": "顶面孔"}
+    ]}
+  ]
+}

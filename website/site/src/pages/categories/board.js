@@ -1,18 +1,26 @@
 // One category board (categories.md): head with icon, paired name, fields,
-// task links, "各题得分" switch and per-task sort; a bar chart of model rows
-// ranked inside the category; per-task sub rows. More than ROWS models: the
-// rows scroll inside the board, ROWS rows high, under the head row that stays
-// put; the model tested last is scrolled into view at first; 存为图片 draws
-// the whole list.
+// task links and a three-way view switch 按题 / 矩阵 / 按型号:
+//   按题    one block per measure (category score first, then each task), all
+//           models ranked inside each block (bytask.js)
+//   矩阵    models × this category's tasks and the category score (ui/matrix.js)
+//   按型号  model rows ranked by the category, each with its task sub rows. More
+//           than ROWS models: the rows scroll inside the board, ROWS rows high,
+//           under the head row that stays put; the model tested last is
+//           scrolled into view at first.
+// 存为图片 draws the current view, whole.
 //
-//   const b = createBoard(category, { data, tb, index, open, onToggle, below, focus });
+//   const b = createBoard(category, { data, tb, index, view, onView, focus });
 //   b.el                     <section id="<key>">
-//   b.refresh({ animate })   recompute rows (filter, compare, sort) and update
-//   b.setOpen(on)            open / close the task sub rows (animated)
+//   b.refresh({ animate })   recompute the current view (filter, compare) and update
 import { h, t, pick, links, rankBy, fmtPct, fmtRank, fmtScore, modelLabel, categoryIcon } from '../../core/index.js';
-import { createModelList, createRowHead, barPlot, listToSVG, attachTip } from '../../ui/index.js';
+import { createModelList, createRowHead, barPlot, listToSVG } from '../../ui/index.js';
+import { createMatrix } from '../../ui/matrix.js';
 import { exportButton, createBar, setBar } from '../../charts/index.js';
-import { dur, durOut, flip, stagger, isInView, play } from '../../motion.js';
+import { dur, stagger, isInView } from '../../motion.js';
+import { createByTask } from './bytask.js';
+
+/** The views of a board, default first. */
+export const VIEWS = ['task', 'matrix', 'model'];
 
 /** Rows a board shows before its rows scroll inside it (categories.md 行数多时). */
 const ROWS = 10;
@@ -20,33 +28,26 @@ const ROWS = 10;
 const GRID = [20, 40, 60, 80];
 let seq = 0;
 
-export function createBoard(cat, { data, tb, index, open = false, onToggle, below, focus }) {
+export function createBoard(cat, { data, tb, index, view = 'task', onView, focus }) {
   const multi = cat.tasks.length > 1;
-  const state = { sort: 'cat', open: multi && open };
+  const state = { view: VIEWS.includes(view) ? view : 'task' };
   const uid = `cb${++seq}`;
-  let current = { shown: [] };
-  let growSubs = false; // sub bars grow from 0 during the open motion
+  // the sub rows are part of 按型号 (a category with one task has none)
+  const subsOn = () => multi && state.view === 'model';
 
   const catDone = (id) => cat.tasks.filter((k) => data.score(id).tasks?.[k.key] != null).length;
   const noScores = data.models.every((m) => catDone(m.id) === 0);
 
   // ---------- head ----------
   const titleId = `${uid}-title`;
-  const listId = `${uid}-list`;
-  const toggle = multi
-    ? h(
-        'button.st-btn.small.cat-toggle',
-        { type: 'button', 'aria-expanded': String(state.open), 'aria-controls': listId, title: t('categories.board.toggleTitle') },
-        h('span.cat-chev', { 'aria-hidden': 'true' }),
-        t('categories.board.toggle'),
-      )
-    : null;
-  const seg = multi ? buildSeg() : null;
-  const ol = h('ol', { id: listId });
+  const seg = buildSeg();
+  const ol = h('ol');
   const head = createRowHead({ rank: t('categories.board.rank'), name: t('categories.board.model'), score: t('categories.board.score'), plot: axisNode() });
-  // the image always has every row: the scroll box opens up while the rows are measured (no paint in between)
+  // the image is the current view, whole: a scroll box opens up while it is measured (no paint in between)
   const exportBtn = exportButton({
     build: () => {
+      if (state.view === 'task') return byTask.build();
+      if (state.view === 'matrix') return matrix.build();
       const top = scroll.scrollTop;
       scroll.classList.add('is-full');
       try {
@@ -56,8 +57,8 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
         scroll.scrollTop = top;
       }
     },
-    title: () => t('categories.board.exportTitle', { name: pick(cat, 'name') }),
-    filename: `ai-octathlon-category-${cat.key}`,
+    title: () => t('categories.board.exportTitle', { name: pick(cat, 'name'), view: t(`categories.view.${state.view}`) }),
+    filename: () => `ai-decathlon-category-${cat.key}-${state.view}`,
   });
 
   const taskLinks = multi
@@ -71,7 +72,7 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
   const eyebrow = t('categories.board.eyebrow', { en: cat.en, no: fmtRank(index + 1) });
   const el = h(
     'section.st-panel.cat-board',
-    { id: cat.key, class: `is-${cat.kind}`, 'aria-labelledby': titleId, tabindex: '-1', dataset: { flip: '' } },
+    { id: cat.key, class: `is-${cat.kind}`, 'aria-labelledby': titleId, tabindex: '-1', dataset: { flip: '', view: state.view } },
     h(
       'header.cat-board-head',
       h(
@@ -79,7 +80,7 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
         categoryIcon(cat.icon ?? cat.key),
         h('h2.st-pair#' + titleId, h('span.st-eyebrow', eyebrow), h('span', pick(cat, 'name'))),
       ),
-      h('div.cat-board-tools', toggle, seg?.el, exportBtn),
+      h('div.cat-board-tools', seg.el, exportBtn),
       h(
         'div.cat-board-meta',
         h(
@@ -94,11 +95,18 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
     ),
   );
   const scroll = h('div.cat-board-scroll', head, ol);
-  const body = h('div.cat-board-body', scroll);
+  const byTask = noScores ? null : createByTask(cat, { data, tb });
+  const matrix = noScores ? null : createMatrix({ data, tb, cats: [cat], last: 'category', label: t('categories.view.matrixLabel', { name: pick(cat, 'name') }) });
+  const panes = {
+    task: h('div.cat-pane.cat-pane-task', byTask?.el),
+    matrix: h('div.cat-pane.cat-pane-matrix', matrix?.el),
+    model: h('div.cat-pane.cat-pane-model', scroll),
+  };
+  const body = h('div.cat-board-body', Object.values(panes));
   const foot = h('p.cat-board-foot.st-field');
   if (noScores) {
     el.append(h('div.site-empty.cat-empty', h('p', t('categories.board.empty'))));
-    toggle?.setAttribute('disabled', '');
+    seg.el.querySelectorAll('input').forEach((i) => (i.disabled = true));
     exportBtn.disabled = true;
   } else el.append(body, foot);
 
@@ -113,53 +121,40 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
     rank: rankCell,
     plot: (cell, entry, ctx) => {
       barPlot(cell, entry, ctx);
-      decorate(ctx.row, entry);
+      renderSubs(ctx.row, entry, ctx);
     },
   };
   const list = noScores ? null : createModelList(ol, opts);
 
-  // ---------- per-task sort (segmented, only while the sub rows are open) ----------
+  // ---------- the view switch ----------
   function buildSeg() {
-    const name = `${uid}-sort`;
-    const wrap = h('div.st-seg.cat-sort', { role: 'radiogroup', 'aria-label': t('categories.board.sortLabel') });
-    const opt = (value, label, title) => {
-      const input = h('input', { type: 'radio', name, value });
-      const lab = h('label', { dataset: { value } }, input, h('span', label));
-      if (title) {
-        input.setAttribute('aria-label', title);
-        attachTip(lab, () => title);
-      }
-      input.addEventListener('change', () => input.checked && setSort(value));
+    const name = `${uid}-view`;
+    const wrap = h('div.st-seg.cat-views', { role: 'radiogroup', 'aria-label': t('categories.view.label') });
+    const inputs = VIEWS.map((value) => {
+      const input = h('input', { type: 'radio', name, value, checked: value === state.view });
+      const lab = h('label', { dataset: { value }, title: t(`categories.view.${value}Title`) }, input, h('span', t(`categories.view.${value}`)));
+      input.addEventListener('change', () => input.checked && setView(value));
       wrap.append(lab);
       return input;
-    };
-    const inputs = [opt('cat', t('categories.board.sortCategory')), ...cat.tasks.map((k) => opt(k.key, fmtRank(k.no), t('categories.board.sortTask', { no: fmtRank(k.no), name: pick(k, 'name') })))];
+    });
     return {
       el: wrap,
       sync() {
-        wrap.hidden = !state.open;
-        for (const i of inputs) i.checked = i.value === state.sort;
+        for (const i of inputs) i.checked = i.value === state.view;
       },
     };
   }
 
-  function setSort(value) {
-    if (state.sort === value) return;
-    state.sort = value;
+  function setView(value, { silent = false } = {}) {
+    if (state.view === value || !VIEWS.includes(value)) return;
+    state.view = value;
+    el.dataset.view = value;
+    seg.sync();
     refresh({ animate: true });
+    if (!silent) onView?.(cat.key, value);
   }
 
-  // ---------- rows ----------
-  const vendorOk = (m) => !tb.state.vendors.size || tb.state.vendors.has(m.vendor);
-
-  function compute() {
-    const catList = rankBy(data, cat.key);
-    const catMap = new Map(catList.map((e) => [e.id, e]));
-    const sortList = state.sort === 'cat' ? catList : rankBy(data, state.sort);
-    const ordered = sortList.map((e) => ({ ...catMap.get(e.id), sortRank: e.rank, sortValue: e.value }));
-    return { shown: ordered.filter((e) => vendorOk(e.model) && tb.matches(e.model)) };
-  }
-
+  // ---------- 按型号 rows ----------
   function axisNode() {
     return h(
       'span.cat-axis',
@@ -167,31 +162,19 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
     );
   }
 
-  // the rank cell (shared hook): the category rank, or the rank by the task the board is sorted by
+  // the rank cell (shared hook): the category rank, or 评测中 with how many of its tasks are in
   function rankCell(cell, entry, ctx) {
     const m = entry.model;
     if (entry.value == null) ctx.sr.textContent = t('categories.board.ariaPending', { name: modelLabel(m), done: catDone(entry.id), all: cat.tasks.length });
-    const byTask = state.sort !== 'cat';
-    const rank = byTask ? entry.sortRank : entry.rank != null && entry.value != null ? entry.rank : null;
+    const rank = entry.rank != null && entry.value != null ? entry.rank : null;
     if (rank != null) cell.textContent = fmtRank(rank);
     else cell.replaceChildren(h('span.st-state.is-draft', t('common.score.pending')));
-    if (!byTask) return;
-    const task = data.task(state.sort);
-    ctx.sr.textContent =
-      rank != null
-        ? t('categories.board.ariaTask', { task: pick(task, 'name'), rank, name: modelLabel(m), score: fmtScore(entry.value) })
-        : t('categories.board.ariaTaskPending', { task: pick(task, 'name'), name: modelLabel(m) });
-  }
-
-  // what this board adds to a row: the per-task sub rows
-  function decorate(li, entry) {
-    renderSubs(li, entry);
   }
 
   // ---------- sub rows: one per task ----------
-  function renderSubs(li, entry) {
+  function renderSubs(li, entry, ctx) {
     let box = li.querySelector(':scope > .cat-subs');
-    if (!state.open) {
+    if (!subsOn()) {
       box?.remove();
       return;
     }
@@ -202,12 +185,12 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
       li.append(box);
     }
     const s = data.score(entry.id);
-    const animate = growSubs && isInView(li);
+    const animate = (fresh || ctx.first) && ctx.animate && isInView(li);
     [...box.children].forEach((row, i) => {
       const k = data.task(row.dataset.task);
       const v = s.tasks?.[k.key] ?? null;
       const rank = v == null ? null : rankBy(data, k.key, { ids: [entry.id] })[0]?.rank;
-      fillSub(row, k, v, rank === 1, { animate, delay: animate ? dur('expand') * 0.5 + i * stagger('row', cat.tasks.length, 120) : 0 });
+      fillSub(row, k, v, rank === 1, { animate, delay: animate ? i * stagger('row', cat.tasks.length, 120) : 0 });
     });
   }
 
@@ -226,7 +209,6 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
   }
 
   function fillSub(row, k, v, best, { animate, delay }) {
-    row.classList.toggle('is-sort', state.sort === k.key);
     row.classList.toggle('is-none', v == null);
     const w = setBar(row.querySelector('svg.bar-svg'), v, { duration: animate ? dur('power') : 0, delay: animate ? delay : 0, from0: animate });
     const star = row.querySelector('.mrow-best');
@@ -239,15 +221,15 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
 
   // ---------- update ----------
   const countEl = h('span');
-  function paintFoot() {
-    countEl.textContent = t('categories.board.count', { n: current.shown.length });
+  function paintFoot(n) {
+    countEl.textContent = t('categories.board.count', { n });
     if (foot.firstChild !== countEl) foot.replaceChildren(countEl);
   }
 
   // more than ROWS rows: the box is as tall as the head and the first ROWS rows (sub rows included) and scrolls
   function fitScroll() {
     const rows = ol.children;
-    const on = rows.length > ROWS;
+    const on = rows.length > ROWS && state.view === 'model';
     scroll.classList.toggle('is-scroll', on);
     scroll.style.maxHeight = on ? `${rows[ROWS - 1].offsetTop + rows[ROWS - 1].offsetHeight}px` : '';
   }
@@ -264,52 +246,32 @@ export function createBoard(cat, { data, tb, index, open = false, onToggle, belo
     if (y + li.offsetHeight > scroll.scrollTop + view) scroll.scrollTop = Math.max(0, y - (view - li.offsetHeight) / 2);
   }
 
+  // only the view on show is drawn; the others catch up when switched to
   function refresh({ animate = true } = {}) {
-    seg?.sync();
-    if (!list) return;
-    current = compute();
-    list.update(current.shown, { animate });
-    paintFoot();
-    fitScroll();
-    if (!focused) showFocus();
-  }
-
-  /** Open or close the task sub rows: rows reveal top-down, what is below moves with them. */
-  let busy = false;
-  async function setOpen(on, { animate = true } = {}) {
-    if (!multi || on === state.open || !list || busy) return;
-    const go = animate && dur('expand') > 0;
-    busy = true;
-    toggle.setAttribute('aria-expanded', String(on));
-    if (!on && go) {
-      const boxes = [...ol.querySelectorAll('.cat-subs')].filter(isInView);
-      await Promise.all(boxes.map((b) => play(b, [{ clipPath: 'inset(0 0 0 0)' }, { clipPath: 'inset(0 0 100% 0)' }], { duration: durOut('expand'), easing: 'mech', fill: 'forwards' })));
+    if (noScores) return;
+    for (const [k, pane] of Object.entries(panes)) pane.hidden = k !== state.view;
+    if (state.view === 'task') {
+      byTask.refresh({ animate });
+      paintFoot(byTask.count);
+    } else if (state.view === 'matrix') {
+      matrix.refresh();
+      paintFoot(matrix.count);
+    } else {
+      const shown = rankBy(data, cat.key).filter((e) => tb.matches(e.model));
+      list.update(shown, { animate });
+      paintFoot(shown.length);
+      fitScroll();
+      if (!focused) showFocus();
     }
-    busy = false;
-    state.open = on;
-    if (!on) state.sort = 'cat';
-    const moving = go ? below(el) : [];
-    growSubs = on && go;
-    flip(moving, () => refresh({ animate: go }), { duration: on ? 'expand' : durOut('expand') });
-    growSubs = false;
-    if (on && go) {
-      for (const b of ol.querySelectorAll('.cat-subs')) if (isInView(b)) play(b, [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 'expand', easing: 'mech', fill: 'none' });
-      seg.el.classList.remove('st-in-wipe');
-      void seg.el.offsetWidth;
-      seg.el.classList.add('st-in-wipe');
-    }
-    onToggle?.(cat.key, on);
   }
-
-  toggle?.addEventListener('click', () => setOpen(!state.open));
 
   return {
     el,
     key: cat.key,
-    get open() {
-      return state.open;
+    get view() {
+      return state.view;
     },
     refresh,
-    setOpen,
+    setView,
   };
 }

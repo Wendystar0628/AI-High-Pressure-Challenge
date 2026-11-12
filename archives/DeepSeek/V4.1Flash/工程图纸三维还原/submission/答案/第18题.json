@@ -1,0 +1,20 @@
+{
+  "problem": "18",
+  "parts": [
+    {"name": "1", "title": "复合环腔涡轮轴承箱", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,170,130], "r": 6}], "depth": [0,12], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-110,0],
+       "loops": [{"path": [[15,12],[155,12],[155,55],[125,72],[45,72],[15,55]]}], "name": "箱体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [30,22,140,100]}], "depth": [12,62], "name": "内腔"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[75,38]], "d": 80, "depth": 12, "name": "前轴承座孔Φ80"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[75,38]], "d": 50, "through": true, "name": "主轴孔Φ50"},
+      {"type": "hole", "plane": "XZ", "origin": [0,130,0], "at": [[75,38]], "d": 70, "depth": 10, "reverse": true, "name": "后轴承座孔Φ70"},
+      {"type": "extrude", "plane": {"origin": [45,45,70], "normal": [-0.5,-0.1,0.86], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 50}], "depth": [0,40], "name": "斜座1"},
+      {"type": "hole", "plane": {"origin": [45,45,70], "normal": [-0.5,-0.1,0.86], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 30, "depth": 55, "name": "斜孔1"},
+      {"type": "extrude", "plane": {"origin": [105,45,70], "normal": [0.5,-0.1,0.86], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 44}], "depth": [0,36], "name": "斜座2"},
+      {"type": "hole", "plane": {"origin": [105,45,70], "normal": [0.5,-0.1,0.86], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 26, "depth": 50, "name": "斜孔2"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,12], "at": [[12,12],[158,12],[12,118],[158,118]], "d": 11, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,72], "at": [[30,65],[140,65]], "d": 14, "depth": 30, "name": "顶面孔"}
+    ]}
+  ]
+}

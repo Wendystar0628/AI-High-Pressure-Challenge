@@ -1,9 +1,10 @@
 {
   "brief": [
-    "No compatibility with existing operating systems is required, and no hardware or instruction set is emulated; the program format and system interface are the model's own, but scheduling, messages, files and window management must all be run by programs inside the system.",
+    "No compatibility with existing operating systems is required, and no hardware or instruction set is emulated; the program format and system interface are the model's own, but a child system's kernel, scheduling, messages, files, window management and apps must all really run as programs in the child system's files, not be done by the host.",
     {
       "ul": [
         "Edit a subsystem's kernel source and restart it, and its behaviour changes; a broken kernel only takes down that subtree.",
+        "Window management, the file manager, the player and the chart workbench are programs the kernel starts as well; rewrite their stacking, focus, hit-testing or app rules and restart, and they follow the new rules, and a new program of the same kind written by the instructions can replace the original.",
         "Execution budget and memory and storage quotas are handed down level by level; kernels, programs, apps and subsystems compete for them, and work is billed by size.",
         "Every level can pause, step, snapshot, restore and fork its child systems; a restore resumes from the saved moment without touching systems outside.",
         "The purple-and-yellow helicopter numbered 24 is kept airborne by a scheduled flight-control process; when budget runs short the control period lengthens and the airframe diverges until it crashes. The default show lasts 15 seconds.",
@@ -12,10 +13,10 @@
     }
   ],
   "points": [
-    "**The kernel is a program**: scheduling, messages, files and window management really run as programs inside the system, not as calls back to the host.",
-    "**Competition and isolation**: under a shared multi-level budget every process keeps getting time, and a runaway program only hurts its own quota.",
-    "**State and causality**: after snapshots, restores and forks, processes, messages, files and images still match the same moment.",
-    "**Closed-loop flight**: the flight is decided by the flight-control program, scheduling budget and inputs together, and recordings can be replayed and branched."
+    "**The kernel is a program**: a child system's kernel, scheduling, messages, files, window management and apps are all programs stored in files and run by the system itself; rewrite one and restart, and the system follows the new rules.",
+    "**Competition and isolation**: kernels, programs, app services and descendant systems compete for one budget handed down level by level, work is billed by size, and a runaway program only hurts its own quota.",
+    "**State and causality**: after pauses, snapshots, restores and forks, processes, messages, files, projections and images still match the same moment, and systems outside the scope are untouched.",
+    "**Closed-loop flight**: the helicopter stays airborne through a scheduled flight-control process, with budget, scheduling and inputs deciding the flight together; rehearsal recordings can be replayed and continued from one point into different outcomes."
   ],
   "scoring": [
     "**Mechanisms are 78 points**: the kernel as a program weighs most at 28, closed-loop flight and replay 14, shared resources and isolation 12, and the other three mechanism directions 6–10.",

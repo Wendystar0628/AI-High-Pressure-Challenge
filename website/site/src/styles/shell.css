@@ -102,7 +102,7 @@
 .site-search-short {
   display: none;
 }
-@media (max-width: 1279px) {
+@media (max-width: 1319px) {
   .site-search-ph {
     max-width: 5.5rem;
     overflow: hidden;
@@ -182,19 +182,31 @@
     gap: 0 0.75rem;
   }
   .site-bar nav a {
-    padding-inline: 0.6rem 0.85rem;
+    padding-inline: 0.5rem 0.75rem;
   }
   .site-bar .brand-name small {
     display: none;
   }
 }
-/* six nav entries still fit on one line at 1024 wide */
+/* seven nav entries still fit on one line at 1024 wide */
 @media (max-width: 1099px) {
+  .site-bar {
+    gap: 0 0.5rem;
+  }
   .site-bar nav a {
-    padding-inline: 0.45rem 0.65rem;
+    padding-inline: 0.3rem 0.45rem;
   }
   .site-search-ph {
     max-width: 4rem;
+  }
+}
+/* the Chinese nav (two-line entries) is wider: below 1280 the search block shows its short label */
+@media (max-width: 1279px) {
+  body[data-lang='zh'] .site-search-ph {
+    display: none;
+  }
+  body[data-lang='zh'] .site-search-short {
+    display: inline;
   }
 }
 /* narrow windows (the model page and the category boards are read on phones too): the bar never widens the

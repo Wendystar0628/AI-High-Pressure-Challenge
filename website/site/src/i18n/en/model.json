@@ -32,13 +32,13 @@
     "remove": "Remove from compare",
     "full": "Compare up to 4",
     "download": "Download data",
-    "csv": "CSV table (this model's 8 categories and 12 tasks)",
+    "csv": "CSV table (this model's 10 categories and {n} tasks)",
     "json": "JSON (this model's scores)",
     "saved": "Downloaded"
   },
   "dial": {
     "eyebrow": "Star dial",
-    "title": "Octathlon Star Dial",
+    "title": "Decathlon Star Dial",
     "note": "A star's distance from the centre is the task score and its size follows the task weight; flare stars are tasks this model leads."
   },
   "cats": {

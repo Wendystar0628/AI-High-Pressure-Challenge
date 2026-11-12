@@ -1,0 +1,51 @@
+{
+  "timing": {
+    "repeats": 5,
+    "statistic": "min"
+  },
+  "cpus": "16-27",
+  "priority": "high",
+  "process_timeout_s": 120,
+  "gpu_idle_timeout_s": 120,
+  "gpu_idle_util_percent": 10,
+  "recovery_wait_s": 15,
+  "max_device_failures": 2,
+  "comparison": {
+    "absolute": 0.003,
+    "relative": 0.002,
+    "baseline_multiplier": 4,
+    "pixel_slack": 20,
+    "bias": 3e-06,
+    "rmse": 0.0001,
+    "minor_multiplier": 4
+  },
+  "scoring": {
+    "full_speedup": 10,
+    "anchors": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        22
+      ],
+      [
+        4,
+        50
+      ],
+      [
+        6,
+        70
+      ],
+      [
+        8,
+        87
+      ],
+      [
+        10,
+        100
+      ]
+    ]
+  }
+}

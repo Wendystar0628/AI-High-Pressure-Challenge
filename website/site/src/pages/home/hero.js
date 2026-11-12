@@ -1,5 +1,5 @@
 // 首屏 (home.md 2): left column — fields, wordmark, marker line, intro, top 5;
-// right column — the 八项星盘 (shared dial) with its three-line legend.
+// right column — the 十项星盘 (shared dial) with its three-line legend.
 import { h, svg, t, tv, lang, fmtDate, fmtRank, fmtScore, fmtInt, modelName, modelLabel, vendorIcon, links, iconURL } from '../../core/index.js';
 import { createStarDial, exportButton, starD } from '../../charts/index.js';
 import { dur, durIn, stagger, reduced, calm } from '../../motion.js';
@@ -119,8 +119,9 @@ function topFive(data, page, top) {
 
   const head = h(
     'header.t5-head',
-    h('p.st-eyebrow.slash', t('home.top.eyebrow', { n })),
-    h('h2.st-bar-title#t5-title', n === 5 ? t('home.top.title') : t('home.top.titleN', { n })),
+    // no ranked model yet (everyone 评测中): keep the section's own name, "前五名", above the empty note
+    h('p.st-eyebrow.slash', t('home.top.eyebrow', { n: n || 5 })),
+    h('h2.st-bar-title#t5-title', n === 5 || !n ? t('home.top.title') : t('home.top.titleN', { n })),
   );
   const foot = h(
     'div.t5-foot',
@@ -186,7 +187,7 @@ function dialBlock(data, page) {
   const exp = exportButton({
     getSvg: () => dial?.svg,
     title: () => `${t('common.dial.title')} ${modelLabel(data.model(page.id))}`,
-    filename: () => `ai-octathlon-dial-${page.id}`,
+    filename: () => `ai-decathlon-dial-${page.id}`,
   });
   // the figure fills the right column; the stack is a square dial plus its caption
   const el = h('figure.hero-dial', h('div.hero-dial-stack', box, h('figcaption.hero-dial-foot', legend, h('p.hero-dial-acts', detail, exp))));

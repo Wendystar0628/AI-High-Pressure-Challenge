@@ -1,6 +1,6 @@
 {
   "brief": [
-    "The eighteen problems were newly set for this project, covering algebra, number theory, geometry and combinatorics, plus some adapted from research-level sample problems; they run roughly from easy to hard. Solutions are written in Simplified Chinese with formulas in LaTeX.",
+    "The twenty-four problems were newly set for this project, covering algebra, number theory, geometry and combinatorics, plus some adapted from research-level sample problems; they run roughly from easy to hard. Solutions are written in Simplified Chinese with formulas in LaTeX.",
     {
       "ul": [
         "For a value, an extremum or all solutions, state the final answer first, then prove it: rule out other solutions, or give a construction and prove nothing does better.",
@@ -17,7 +17,7 @@
     "**One problem at a time**: write each solution into its file as soon as it is done; if a problem resists, write down the progress and move on."
   ],
   "scoring": [
-    "**0–7 per problem**: whole points by IMO grading practice; the eighteen problems total 126, scaled to 100.",
+    "**0–7 per problem**: whole points by IMO grading practice; the twenty-four problems total 168, scaled to 100 by 100/168.",
     "**Against the reference solution**: a different approach that is correct and complete earns full marks; incomplete work earns partial credit by how far it gets.",
     "**Proof required**: an answer without proof, missing key steps or gaps in the argument lose points accordingly; concise writing that graders accept loses nothing.",
     "**Lowest of several**: if several approaches are written and none is marked, the lowest-scoring one counts; drafts are not graded."

@@ -1,0 +1,20 @@
+{
+  "problem": "08",
+  "parts": [
+    {"name": "1", "title": "交错隔板双层润滑箱", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 44, 38]}], "depth": 4, "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 4], "loops": [{"rect": [4, 4, 40, 34]}], "depth": 24, "name": "箱体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 4],
+       "at": [[4, 4], [40, 4], [4, 34], [40, 34]], "d": 5, "through": true, "name": "底板4角孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 34, 0],
+       "loops": [{"rect": [7, 8, 18, 25]}], "depth": 26, "name": "左前腔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 34, 0],
+       "loops": [{"rect": [21, 8, 37, 16]}], "depth": 26, "name": "右下腔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 34, 0],
+       "loops": [{"rect": [21, 18, 37, 25]}], "depth": 26, "name": "右上腔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 4, 0], "at": [12, 17], "d": 10, "depth": 6, "name": "前小孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 4, 0], "at": [30, 17], "d": 10, "depth": 6, "name": "前右孔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 28], "at": [[14, 19], [28, 12], [28, 26]], "d": 6, "depth": 6, "name": "顶孔"}
+    ]}
+  ]
+}

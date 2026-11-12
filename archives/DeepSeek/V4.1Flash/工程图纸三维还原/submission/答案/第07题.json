@@ -1,0 +1,23 @@
+{
+  "problem": "07",
+  "parts": [
+    {"name": "1", "title": "双轴错层回油支承座", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,110,62], "r": 2}], "depth": [0,6], "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [12,10,34,56]}], "depth": [6,70], "name": "左支承"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [80,10,102,56]}], "depth": [6,75], "name": "右支承"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [30,10,80,56]}], "depth": [6,16], "name": "连接筋"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "depth": [-56,-10],
+       "loops": [{"path": [[28,30],[84,14],[84,10],[28,10]]}], "name": "回油斜面"},
+      {"type": "extrude", "plane": "YZ", "origin": [12,0,0], "loops": [{"circle": [33,40], "d": 70}], "depth": [-6,0], "name": "左凸台Φ70"},
+      {"type": "extrude", "plane": "YZ", "origin": [80,0,0], "loops": [{"circle": [33,45], "d": 70}], "depth": [-6,0], "name": "右凸台Φ70"},
+      {"type": "hole", "plane": "YZ", "origin": [6,0,0], "at": [[33,40]], "d": 50, "reverse": true, "depth": 10, "name": "左沉孔Φ50"},
+      {"type": "hole", "plane": "YZ", "origin": [6,0,0], "at": [[33,40]], "d": 38, "reverse": true, "depth": 30, "name": "左轴孔Φ38"},
+      {"type": "hole", "plane": "YZ", "origin": [74,0,0], "at": [[33,45]], "d": 42, "reverse": true, "depth": 10, "name": "右沉孔Φ42"},
+      {"type": "hole", "plane": "YZ", "origin": [74,0,0], "at": [[33,45]], "d": 32, "reverse": true, "depth": 30, "name": "右轴孔Φ32"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,16], "at": [[55,33]], "d": 10, "through": true, "name": "中间孔Φ10"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,6], "at": [[8,8],[102,8],[8,54],[102,54]], "d": 8, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,70], "at": [[23,33]], "d": 8, "depth": 14, "name": "左顶孔Φ8"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,75], "at": [[91,45]], "d": 8, "depth": 14, "name": "右顶孔Φ8"}
+    ]}
+  ]
+}

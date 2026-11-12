@@ -1,0 +1,23 @@
+{
+  "model": "Hy/Hy4",
+  "task": "果冻冲击与造浪水槽",
+  "tokens": 13189797,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.24,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "credits",
+  "plan": {
+    "name": "CodeBuddy 140 元档",
+    "name_en": "CodeBuddy",
+    "price": 140,
+    "currency": "CNY",
+    "period": "month",
+    "credits": 9000
+  },
+  "fitted": [],
+  "runs": [
+    "Hy/Hy4/果冻冲击与造浪水槽/run-a29a639aeb7d42b2b7982f3a0c678f38"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "problem": "11",
+  "parts": [
+    {"name": "1", "title": "三腔分层伺服分配箱", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,150,105], "r": 2}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-90,0],
+       "loops": [{"path": [[8,8],[142,8],[142,40],[102,52],[8,52]]}], "name": "箱体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [18,16,58,84]}], "depth": [8,40], "name": "腔一"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [66,16,98,84]}], "depth": [8,44], "name": "腔二"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [106,16,136,84]}], "depth": [8,30], "name": "腔三"},
+      {"type": "extrude", "plane": "YZ", "origin": [0,0,0], "loops": [{"circle": [52,32], "d": 36}], "depth": [-8,10], "name": "左法兰"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[52,32]], "d": 20, "reverse": true, "depth": 100, "name": "左孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,52], "at": [[38,50],[82,50]], "d": 12, "depth": 40, "name": "顶孔Φ12"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,52], "at": [[70,30],[120,60]], "d": 10, "depth": 30, "name": "顶孔Φ10"},
+      {"type": "hole", "plane": {"origin": [110,0,50], "normal": [0.70710678,0,0.70710678], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 8, "depth": 26, "name": "斜孔Φ8"},
+      {"type": "hole", "plane": "YZ", "origin": [150,0,0], "at": [[52,26]], "d": 18, "depth": 30, "name": "右孔Φ18"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[140,10],[10,95],[140,95]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,50],[140,50]], "d": 8, "depth": 10, "name": "侧向孔"}
+    ]}
+  ]
+}

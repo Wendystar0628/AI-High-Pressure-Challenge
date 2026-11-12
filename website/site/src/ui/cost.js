@@ -6,9 +6,9 @@
 //   costOf(data, id)            the cost object or null
 //   costKey(cost)               'subscription' | 'api' | 'none'  (the tag under the amount)
 //   fillCost(cell, cost)        a model row's cost cell, one line: the amount and a small basis mark (○ 按订阅折算,
-//                               ◆ API 实付; shapes, not colours); no amount: 数据暂缺
-//   fillTokens(cell, cost)      a model row's token cell, one line: the 12-task total, * when some tasks are estimated
-//   costLegend()                the marks explained once (○ 按订阅折算  ◆ API 实付  * 含估算), for the board head
+//                               ◆ 按 API 标价折算; shapes, not colours); no amount: 数据暂缺
+//   fillTokens(cell, cost)      a model row's token cell, one line: the 13-task total, * when some tasks are estimated
+//   costLegend()                the marks explained once (○ 按订阅折算  ◆ 按 API 标价折算  * 含估算), for the board head
 //   costMark(key)               the mark element of a basis ('subscription' | 'api')
 //   costTip(data, id)           tooltip content: plan, tokens, estimated tasks, the api_price note
 //   costSr(cost)                the sentence a screen reader hears after the row
@@ -57,7 +57,7 @@ export const fmtTokens = (n) => (n == null ? DASH : t('common.cost.tokensUnit', 
 /** Some tasks had no usage record and were estimated (cost.fitted not empty). */
 export const isEstimated = (cost) => !!cost?.fitted?.length;
 
-/** The tag under the amount: 按订阅折算 / API 实付 / 数据暂缺. */
+/** The tag under the amount: 按订阅折算 / 按 API 标价折算 / 数据暂缺. */
 export function costKey(cost) {
   if (!cost || cost.cny == null) return 'none';
   return cost.basis === 'api' ? 'api' : 'subscription';
@@ -87,14 +87,14 @@ function fittedNames(data, cost) {
   });
 }
 
-/** The basis mark: a ring for 按订阅折算, a solid diamond for API 实付 (shape tells them apart, not colour). */
+/** The basis mark: a ring for 按订阅折算, a solid diamond for 按 API 标价折算 (shape tells them apart, not colour). */
 export const costMark = (key) => h('i.cost-mark', { class: `is-${key}`, 'aria-hidden': 'true' });
 /** The 含估算 mark: an asterisk after the token total. */
 export const estMark = () => h('i.cost-est', { 'aria-hidden': 'true' }, '*');
 
 /**
  * A model row's cost cell (.mrow-cost), one line, vertically centred: the amount and a small basis mark after it
- * (the words 按订阅折算 / API 实付 are written once, in the legend). No amount: 数据暂缺.
+ * (the words 按订阅折算 / 按 API 标价折算 are written once, in the legend). No amount: 数据暂缺.
  */
 export function fillCost(cell, cost) {
   const key = costKey(cost);
@@ -106,7 +106,7 @@ export function fillCost(cell, cost) {
 }
 
 /**
- * A model row's token cell (.mrow-tok), one line: the 12-task total ("17.1 亿" / "1.71B"; the column head says
+ * A model row's token cell (.mrow-tok), one line: the 13-task total ("17.1 亿" / "1.71B"; the column head says
  * Token) and * when some tasks are estimated (explained once in the legend). No record: 数据暂缺.
  */
 export function fillTokens(cell, cost) {
@@ -118,7 +118,7 @@ export function fillTokens(cell, cost) {
   cell.replaceChildren(h('span.mrow-tok-v.num', none ? t('common.cost.basis.none') : fmtTokenValue(cost.tokens)), est);
 }
 
-/** The marks explained once: ○ 按订阅折算  ◆ API 实付  * 含估算 (only the marks the data uses). */
+/** The marks explained once: ○ 按订阅折算  ◆ 按 API 标价折算  * 含估算 (only the marks the data uses). */
 export function costLegend(data, tag = 'p.cost-legend') {
   const costs = Object.values(data.scores ?? {}).map((s) => s?.cost).filter(Boolean);
   const keys = new Set(costs.map(costKey));
@@ -158,6 +158,7 @@ export function costNotes(data, id) {
   if (!cost || cost.cny == null) {
     if (cost?.tokens != null) out.push(t('common.cost.noteNone'));
   }
+  else if (cost.method === 'api_price' && cost.basis === 'api') out.push(t('common.cost.noteApiDirect'));
   else if (cost.method === 'api_price') out.push(cost.api_usd == null ? t('common.cost.noteApiPrice') : t('common.cost.noteApiPriceUsd', { usd: fmtUSD(cost.api_usd) }));
   else if (cost.method === 'credits') out.push(t('common.cost.noteCredits'));
   else if (cost.method === 'quota') out.push(t('common.cost.noteQuota'));

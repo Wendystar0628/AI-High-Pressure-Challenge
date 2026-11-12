@@ -2,7 +2,7 @@
 // column of a header row, so its scale lines up with every row:
 //   total / kinds / compare: 0 … 100 and the pass line label
 //   pass:   −60 … +40 (0 at 60), "及格 4 │ 未及格 3" at the right end
-//   parts:  the legend (two kind groups, 8 categories with weights), hover = focus
+//   parts:  the legend (two kind groups, 10 categories with weights), hover = focus
 //   matrix: the column heads (category icon, name, weight; or task numbers)
 // Groups whose content kind changes are wiped in again (stage 1 of a switch).
 import { svg as svgEl, t, pick, fmtPct, links, iconURL, inlineSVG, round1 } from '../../core/index.js';

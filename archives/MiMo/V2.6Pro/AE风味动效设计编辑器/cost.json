@@ -1,0 +1,18 @@
+{
+  "model": "MiMo/V2.6Pro",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 36602696,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 4.96,
+  "api_usd": 0.74,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "MiMo API"
+  },
+  "fitted": [],
+  "runs": [
+    "MiMo/V2.6Pro/AE风味动效设计编辑器/run-fd4e21a1891747118af49f08e70708a7"
+  ]
+}

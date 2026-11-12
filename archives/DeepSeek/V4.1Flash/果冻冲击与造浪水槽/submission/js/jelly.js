@@ -1,1668 +1,1042 @@
-/* ============================================================
-   场景一：重球冲击果冻台
-   - 晶格 PBD 软体（结构 / 剪切 / 弯曲约束）
-   - 半球—变形表面弹簧接触，双向作用
-   - FFD 变形网格 + 透射材质
-   ============================================================ */
+/* jelly.js — tetrahedral volumetric soft body (XPBD), rigid balls, fracture & splitting */
 (function () {
   'use strict';
 
-  const E = 0.5;            // 超椭球指数（圆角方块的圆润程度）
-  const M = 2 / E;          // 隐式曲面指数
-  const BASE_W = 2.7;
-  const BASE_H = 1.45;
-  const BASE_D = 2.1;
-  const NX = 9, NY = 7, NZ = 9;
-  const DT = 1 / 120;
-  const SUBSTEPS = 2;
+  const GRAV = -9.81;
+  const TABLE = { hx: 1.46, hz: 0.91, top: 0, floor: -0.92 };
 
-  const THEMES = {
-    mint: { color: 0x19d6b2, atten: 0x043f37, rim: 0x63fff0, glow: 0x54ffdd },
-    berry: { color: 0xff6aa9, atten: 0x5c0d31, rim: 0xffa0cd, glow: 0xff7fc0 },
-    amber: { color: 0xffbb55, atten: 0x633304, rim: 0xffd79a, glow: 0xffc166 }
-  };
-
-  const DEFAULTS = {
-    mode: 'center',
-    jelly: { scale: 1, softness: 0.55, damping: 0.22, density: 1.0, fixed: true, color: 'mint' },
-    ball: { mass: 22, radius: 0.42, height: 1.8, count: 3, interval: 0.85 },
-    env: { gravity: 9.8, friction: 0.55, restitution: 0.22, repeat: false }
-  };
-
-  function deepMerge(base, extra) {
-    const out = {};
-    for (const k in base) {
-      if (base[k] && typeof base[k] === 'object' && !Array.isArray(base[k])) {
-        out[k] = deepMerge(base[k], (extra && extra[k]) || {});
-      } else {
-        out[k] = extra && extra[k] !== undefined ? extra[k] : base[k];
-      }
-    }
-    return out;
+  function qMul(a, b) {
+    return [
+      a[3]*b[0] + a[0]*b[3] + a[1]*b[2] - a[2]*b[1],
+      a[3]*b[1] - a[0]*b[2] + a[1]*b[3] + a[2]*b[0],
+      a[3]*b[2] + a[0]*b[1] - a[1]*b[0] + a[2]*b[3],
+      a[3]*b[3] - a[0]*b[0] - a[1]*b[1] - a[2]*b[2]
+    ];
+  }
+  function qNorm(q) { const l = Math.hypot(q[0], q[1], q[2], q[3]) || 1; return [q[0]/l, q[1]/l, q[2]/l, q[3]/l]; }
+  function qToMat3(q) {
+    const [x, y, z, w] = q;
+    return new Float32Array([
+      1-2*(y*y+z*z), 2*(x*y+z*w), 2*(x*z-y*w),
+      2*(x*y-z*w), 1-2*(x*x+z*z), 2*(y*z+x*w),
+      2*(x*z+y*w), 2*(y*z-x*w), 1-2*(x*x+y*y)
+    ]);
   }
 
-  class JellyScene {
-    constructor(renderer, envTex, events) {
-      this.renderer = renderer;
-      this.events = events || {};
-      this.p = deepMerge(DEFAULTS, null);
-      this.a = BASE_W / 2;
-      this.b = BASE_H / 2;
-      this.c = BASE_D / 2;
-      this.centerY = this.b;
+  function boxTetMesh(sx, sy, sz, nx, ny, nz) {
+    const nvx = nx + 1, nvy = ny + 1, nvz = nz + 1;
+    const nv = nvx * nvy * nvz;
+    const rest = new Float32Array(nv * 3);
+    const idx = (i, j, k) => i + nvx * (j + nvy * k);
+    let p = 0;
+    for (let k = 0; k < nvz; k++) for (let j = 0; j < nvy; j++) for (let i = 0; i < nvx; i++) {
+      rest[p++] = (i / nx - 0.5) * sx;
+      rest[p++] = (j / ny - 0.5) * sy;
+      rest[p++] = (k / nz - 0.5) * sz;
+    }
+    const tets = [];
+    for (let k = 0; k < nz; k++) for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+      const a = idx(i, j, k), b = idx(i+1, j, k), c = idx(i+1, j+1, k), d = idx(i, j+1, k);
+      const e = idx(i, j, k+1), f = idx(i+1, j, k+1), g = idx(i+1, j+1, k+1), h = idx(i, j+1, k+1);
+      // six-tetrahedra decomposition around diagonal a-g
+      tets.push(a, b, c, g);
+      tets.push(a, c, d, g);
+      tets.push(a, d, h, g);
+      tets.push(a, h, e, g);
+      tets.push(a, e, f, g);
+      tets.push(a, f, b, g);
+    }
+    return { rest, tets: new Int32Array(tets), nx, ny, nz, sx, sy, sz };
+  }
 
-      this.time = 0;
-      this.started = false;
-      this.ended = false;
-      this.startAt = 0;
-      this.startDelay = 0.25;
-      this.lastImpactAt = -10;
-      this.firstImpactAt = -10;
-      this.contactCount = 0;
-      this.settleTimer = 0;
-      this.impactEnergy = 0;
-      this.shake = 0;
-      this.repeatCount = 0;
-      this.autoSoundTimer = 0;
-      this.exportMode = false;
-      this.exportTime = 0;
-      this.tune = { k: 900, kSoft: 1600, zeta: 0.5, dent: 1.0 };
-      this.wob = { sq: 0, sqv: 0, sway: 0, swayv: 0, bend: 0, bendv: 0, twist: 0, twistv: 0, lean: 0, leanv: 0 };
-      this._lastModeX = 0;
+  function invert3(cols) {
+    // cols: [ax,ay,az, bx,by,bz, cx,cy,cz] column-major
+    const a = cols[0], d = cols[1], g = cols[2];
+    const b = cols[3], e = cols[4], h = cols[5];
+    const c = cols[6], f = cols[7], i = cols[8];
+    const A = e*i - f*h, B = f*g - d*i, C = d*h - e*g;
+    const det = a*A + b*B + c*C;
+    if (Math.abs(det) < 1e-12) return null;
+    const id = 1 / det;
+    return new Float32Array([
+      A*id, B*id, C*id,
+      (c*h - b*i)*id, (a*i - c*g)*id, (b*g - a*h)*id,
+      (b*f - c*e)*id, (c*d - a*f)*id, (a*e - b*d)*id
+    ]);
+  }
 
-      this._buildScene(envTex);
-      this._buildBody();
-      this._buildBalls();
-      this.reset();
+  let BODY_ID = 0;
+
+  class JellyBody {
+    constructor(sim, data) {
+      this.sim = sim;
+      this.id = BODY_ID++;
+      this.tag = (data.tag !== undefined) ? data.tag : null;
+      this.color = data.color || [0.55, 1.0, 0.78];
+      this.deepColor = data.deepColor || [0.10, 0.45, 0.34];
+      this.alpha = data.alpha !== undefined ? data.alpha : 0.80;
+      this.density = data.density || 150;
+      this.toughMul = data.toughMul !== undefined ? data.toughMul : 1;
+      this.softMul = data.softMul !== undefined ? data.softMul : 1;
+      this.restPos = data.rest.slice();
+      this.pos = data.rest.slice();
+      this.prev = data.rest.slice();
+      this.vel = new Float32Array(this.pos.length);
+      this.tets = new Int32Array(data.tets);
+      this.nt = this.tets.length / 4;
+      // enforce positive rest orientation of each tetrahedron
+      for (let t = 0; t < this.nt; t++) {
+        const a = this.tets[t*4], b = this.tets[t*4+1], c = this.tets[t*4+2], d = this.tets[t*4+3];
+        const rp = this.restPos;
+        const e1x = rp[b*3]-rp[a*3], e1y = rp[b*3+1]-rp[a*3+1], e1z = rp[b*3+2]-rp[a*3+2];
+        const e2x = rp[c*3]-rp[a*3], e2y = rp[c*3+1]-rp[a*3+1], e2z = rp[c*3+2]-rp[a*3+2];
+        const e3x = rp[d*3]-rp[a*3], e3y = rp[d*3+1]-rp[a*3+1], e3z = rp[d*3+2]-rp[a*3+2];
+        const vol = e1x*(e2y*e3z-e2z*e3y) + e1y*(e2z*e3x-e2x*e3z) + e1z*(e2x*e3y-e2y*e3x);
+        if (vol < 0) { this.tets[t*4+1] = c; this.tets[t*4+2] = b; }
+      }
+      this.alive = new Uint8Array(this.nt).fill(1);
+      this.damage = new Float32Array(this.nt);
+      this.restVol = new Float32Array(this.nt);
+      this.restInv = new Float32Array(this.nt * 9);
+      this.faces = [];
+      this.faceOwner = [];
+      this.invMass = new Float32Array(this.pos.length / 3);
+      this.edgeA = null; this.edgeB = null; this.edgeRest = null;
+      this.mass = 0;
+      this.fractured = false;
+      this.groundY = 0;
+      this.mesh = null;
+      this.renderData = null;
+      this.buildRest();
+      this.rebuildFaces();
+      this.bounds = { min: [0,0,0], max: [0,0,0] };
     }
 
-    /* =================== 场景骨架 =================== */
-    _buildScene(envTex) {
-      const s = this.scene = new THREE.Scene();
-      s.background = U.makeBackdropTexture(false);
-      s.fog = new THREE.FogExp2(0x040a0d, 0.036);
+    get nv() { return this.pos.length / 3; }
 
-      this.camera = new THREE.PerspectiveCamera(43, 1, 0.1, 80);
-      this.orbit = new U.OrbitCam(this.camera, this.renderer.domElement, {
-        target: new THREE.Vector3(0, 1.42, 0),
-        yaw: 0.1,
-        pitch: 0.23,
-        dist: 7.9,
-        minPitch: 0.03,
-        maxPitch: 0.9,
-        minDist: 3.6,
-        maxDist: 12
-      });
-
-      // 灯光
-      const hemi = new THREE.HemisphereLight(0x9be0e4, 0x0b1518, 0.5);
-      s.add(hemi);
-
-      const key = new THREE.DirectionalLight(0xfff0d8, 0.95);
-      key.position.set(4.5, 8.0, 5.4);
-      key.castShadow = true;
-      key.shadow.mapSize.set(2048, 2048);
-      key.shadow.camera.left = -6.5;
-      key.shadow.camera.right = 6.5;
-      key.shadow.camera.top = 8;
-      key.shadow.camera.bottom = -3.5;
-      key.shadow.camera.near = 0.5;
-      key.shadow.camera.far = 26;
-      key.shadow.bias = -0.0004;
-      key.shadow.normalBias = 0.025;
-      s.add(key);
-      this.keyLight = key;
-
-      const rim = new THREE.SpotLight(0x67f7e6, 2.0, 28, 0.68, 0.85, 1.4);
-      rim.position.set(-5.2, 4.2, -3.4);
-      rim.target.position.set(0, 1.1, 0);
-      s.add(rim, rim.target);
-      this.rimLight = rim;
-
-      const fill = new THREE.SpotLight(0xffd9c2, 0.12, 26, 0.7, 1.0, 1.3);
-      fill.position.set(3.6, 3.4, 7.2);
-      fill.target.position.set(0, 0.9, 0);
-      s.add(fill, fill.target);
-
-      const back = new THREE.SpotLight(0x9ff8ff, 0.7, 30, 0.55, 0.9, 1.2);
-      back.position.set(1.0, 3.2, -8.5);
-      back.target.position.set(0, 1.2, 0);
-      s.add(back, back.target);
-
-      const pink = new THREE.PointLight(0xff5e9e, 0.8, 11, 1.8);
-      pink.position.set(4.2, 1.2, -2.4);
-      s.add(pink);
-
-      const under = new THREE.PointLight(0x53ffe4, 0.55, 7, 2.0);
-      under.position.set(-2.8, 0.6, 3.0);
-      s.add(under);
-
-      // 平台
-      const platform = new THREE.Mesh(
-        new THREE.CylinderGeometry(4.8, 5.1, 0.26, 96, 1),
-        new THREE.MeshStandardMaterial({
-          color: 0x0a1519, metalness: 0.82, roughness: 0.3, envMapIntensity: 1.0
-        })
-      );
-      platform.position.y = -0.13;
-      platform.receiveShadow = true;
-      s.add(platform);
-
-      const plate = new THREE.Mesh(
-        new THREE.CylinderGeometry(3.86, 3.9, 0.035, 96, 1),
-        new THREE.MeshStandardMaterial({
-          color: 0x0d1d22, metalness: 0.9, roughness: 0.22, envMapIntensity: 1.1
-        })
-      );
-      plate.position.y = 0.005;
-      plate.receiveShadow = true;
-      s.add(plate);
-
-      // 平台上的发光环与刻度
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: 0x57efd2, transparent: true, opacity: 0.33,
-        blending: THREE.AdditiveBlending, depthWrite: false
-      });
-      const ring = new THREE.Mesh(new THREE.RingGeometry(3.84, 3.87, 128), ringMat);
-      ring.rotation.x = -Math.PI / 2;
-      ring.position.y = 0.026;
-      s.add(ring);
-
-      const ring2mat = ringMat.clone();
-      ring2mat.opacity = 0.11;
-      const ring2 = new THREE.Mesh(new THREE.RingGeometry(2.55, 2.575, 128), ring2mat);
-      ring2.rotation.x = -Math.PI / 2;
-      ring2.position.y = 0.027;
-      s.add(ring2);
-
-      const tickMat = new THREE.MeshBasicMaterial({
-        color: 0x4fcfc0, transparent: true, opacity: 0.3,
-        blending: THREE.AdditiveBlending, depthWrite: false
-      });
-      for (let i = 0; i < 72; i++) {
-        const ang = (i / 72) * Math.PI * 2;
-        const len = i % 6 === 0 ? 0.18 : 0.07;
-        const tick = new THREE.Mesh(new THREE.PlaneGeometry(0.012, len), tickMat);
-        tick.rotation.x = -Math.PI / 2;
-        tick.rotation.z = -ang;
-        tick.position.set(Math.cos(ang) * 3.76, 0.028, Math.sin(ang) * 3.76);
-        s.add(tick);
+    buildRest() {
+      const nv = this.nv;
+      const inv = new Float32Array(nv);
+      const vol = new Float32Array(nv);
+      const tet = this.tets;
+      for (let t = 0; t < this.nt; t++) {
+        const a = tet[t*4], b = tet[t*4+1], c = tet[t*4+2], d = tet[t*4+3];
+        const cols = new Float32Array(9);
+        for (let k = 0; k < 3; k++) {
+          cols[k] = this.restPos[b*3+k] - this.restPos[a*3+k];
+          cols[k+3] = this.restPos[c*3+k] - this.restPos[a*3+k];
+          cols[k+6] = this.restPos[d*3+k] - this.restPos[a*3+k];
+        }
+        const im = invert3(cols);
+        this.restInv.set(im || [0,0,0,0,0,0,0,0,0], t * 9);
+        const v = Math.abs(
+          (this.restPos[b*3] - this.restPos[a*3]) * ((this.restPos[c*3+1]-this.restPos[a*3+1])*(this.restPos[d*3+2]-this.restPos[a*3+2]) - (this.restPos[c*3+2]-this.restPos[a*3+2])*(this.restPos[d*3+1]-this.restPos[a*3+1])) -
+          (this.restPos[b*3+1] - this.restPos[a*3+1]) * ((this.restPos[c*3]-this.restPos[a*3])*(this.restPos[d*3+2]-this.restPos[a*3+2]) - (this.restPos[c*3+2]-this.restPos[a*3+2])*(this.restPos[d*3]-this.restPos[a*3])) +
+          (this.restPos[b*3+2] - this.restPos[a*3+2]) * ((this.restPos[c*3]-this.restPos[a*3])*(this.restPos[d*3+1]-this.restPos[a*3+1]) - (this.restPos[c*3+1]-this.restPos[a*3+1])*(this.restPos[d*3]-this.restPos[a*3]))
+        ) / 6;
+        this.restVol[t] = v;
+        vol[a] += v; vol[b] += v; vol[c] += v; vol[d] += v;
       }
+      for (let i = 0; i < nv; i++) {
+        inv[i] = vol[i] * this.density / 4;
+        this.invMass[i] = inv[i] > 1e-12 ? 1 / inv[i] : 0;
+        this.mass += inv[i];
+      }
+      // unique edges
+      const set = new Set();
+      const ea = [], eb = [];
+      for (let t = 0; t < this.nt; t++) for (let m = 0; m < 4; m++) for (let n = m + 1; n < 4; n++) {
+        const u = this.tets[t*4+m], v = this.tets[t*4+n];
+        const key = u < v ? u * 4096 + v : v * 4096 + u;
+        if (!set.has(key)) { set.add(key); ea.push(u); eb.push(v); }
+      }
+      this.edgeA = new Int32Array(ea); this.edgeB = new Int32Array(eb);
+      this.edgeRest = new Float32Array(ea.length);
+      for (let e = 0; e < ea.length; e++) {
+        const a = ea[e], b = eb[e];
+        this.edgeRest[e] = Math.hypot(
+          this.restPos[a*3]-this.restPos[b*3],
+          this.restPos[a*3+1]-this.restPos[b*3+1],
+          this.restPos[a*3+2]-this.restPos[b*3+2]
+        );
+      }
+    }
 
-      // 中央地光
-      const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: U.glowTexture(),
-        color: 0x2f9f95,
-        transparent: true,
-        opacity: 0.26,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      }));
-      glow.scale.set(7.5, 7.5, 1);
-      glow.position.set(0, 0.09, 0);
-      s.add(glow);
-      this.floorGlow = glow;
-
-      // 果冻接触阴影
-      this.jellyShadow = U.contactShadow(5.1, 4.2, 0.62);
-      this.jellyShadow.position.y = 0.031;
-      s.add(this.jellyShadow);
-
-      // 背景柔光与灯条：为透明体和金属球提供可读的反射层次
-      const glowTex = U.glowTexture();
-      const addBackGlow = (color, sx, sy, x, y, z, op) => {
-        const sp = new THREE.Sprite(new THREE.SpriteMaterial({
-          map: glowTex, color, transparent: true, opacity: op,
-          blending: THREE.AdditiveBlending, depthWrite: false
-        }));
-        sp.scale.set(sx, sy, 1);
-        sp.position.set(x, y, z);
-        s.add(sp);
+    rebuildFaces() {
+      const faces = [], owners = [];
+      const map = new Map();
+      const tet = this.tets;
+      const faceDefs = [[1,2,3,0],[0,3,2,1],[0,1,3,2],[0,2,1,3]];
+      const key = (a,b,c) => {
+        const s = [a,b,c].sort((x,y) => x-y);
+        return s[0] * 1048576 + s[1] * 1024 + s[2];
       };
-      addBackGlow(0x1e8f86, 12, 7.2, 0, 2.0, -7.8, 0.18);
-      addBackGlow(0xff8f62, 5.2, 4.0, 5.4, 1.5, -6.8, 0.1);
-      addBackGlow(0xff5f9f, 5.0, 4.4, -5.6, 2.1, -6.6, 0.07);
-      addBackGlow(0x81f8ff, 6.5, 3.4, 0.4, 4.1, -7.2, 0.12);
-
-      const stripGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: glowTex, color: 0x9ff8ee, transparent: true, opacity: 0.15,
-        blending: THREE.AdditiveBlending, depthWrite: false
-      }));
-      stripGlow.scale.set(9.5, 0.75, 1);
-      stripGlow.position.set(0, 3.4, -7.05);
-      s.add(stripGlow);
-
-      // 地面浮尘
-      this._buildDust();
-
-      // 场景主体容器
-      this.jellyGroup = new THREE.Group();
-      this.jellyGroup.position.set(0, this.centerY, 0);
-      s.add(this.jellyGroup);
-
-      this.ballGroup = new THREE.Group();
-      s.add(this.ballGroup);
-
-      this.fxGroup = new THREE.Group();
-      s.add(this.fxGroup);
-      this.hoverGroup = new THREE.Group();
-      s.add(this.hoverGroup);
-
-      // 环境反射
-      s.environment = envTex;
+      for (let t = 0; t < this.nt; t++) {
+        if (!this.alive[t]) continue;
+        const ids = [tet[t*4], tet[t*4+1], tet[t*4+2], tet[t*4+3]];
+        for (let f = 0; f < 4; f++) {
+          const fd = faceDefs[f];
+          let a = ids[fd[0]], b = ids[fd[1]], c = ids[fd[2]];
+          const o = ids[fd[3]];
+          const k = key(a,b,c);
+          const prev = map.get(k);
+          if (prev) { prev.count++; continue; }
+          // orient outwards from opposite vertex
+          const ax=this.pos[a*3], ay=this.pos[a*3+1], az=this.pos[a*3+2];
+          const bx=this.pos[b*3], by=this.pos[b*3+1], bz=this.pos[b*3+2];
+          const cx=this.pos[c*3], cy=this.pos[c*3+1], cz=this.pos[c*3+2];
+          const ox=this.pos[o*3], oy=this.pos[o*3+1], oz=this.pos[o*3+2];
+          const nx=(by-ay)*(cz-az)-(bz-az)*(cy-ay);
+          const ny=(bz-az)*(cx-ax)-(bx-ax)*(cz-az);
+          const nz=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax);
+          const cenx=(ax+bx+cx)/3, ceny=(ay+by+cy)/3, cenz=(az+bz+cz)/3;
+          if (nx*(cenx-ox)+ny*(ceny-oy)+nz*(cenz-oz) < 0) { const tmp=b; b=c; c=tmp; }
+          const rec = { a, b, c, owner: t, count: 1 };
+          map.set(k, rec);
+          // stash in map order-independent
+          rec.k = k;
+        }
+      }
+      for (const rec of map.values()) { if (rec.count === 1) { faces.push(rec.a, rec.b, rec.c); owners.push(rec.owner); } }
+      this.faces = faces;
+      this.faceOwner = owners;
+      this.faceCount = owners.length;
     }
 
-    _buildDust() {
-      const count = 90;
-      const g = new THREE.BufferGeometry();
-      const pos = new Float32Array(count * 3);
-      const rand = U.rng(9173);
-      for (let i = 0; i < count; i++) {
-        pos[i * 3] = (rand() - 0.5) * 10;
-        pos[i * 3 + 1] = rand() * 5.2;
-        pos[i * 3 + 2] = (rand() - 0.5) * 8 - 1;
+    addBallContacts(balls, h, sim) {
+      const faces = this.faces, pos = this.pos;
+      if (!faces.length) return;
+      let minx=1e9, miny=1e9, minz=1e9, maxx=-1e9, maxy=-1e9, maxz=-1e9;
+      for (let i = 0; i < pos.length; i += 3) {
+        if (pos[i] < minx) minx = pos[i]; if (pos[i] > maxx) maxx = pos[i];
+        if (pos[i+1] < miny) miny = pos[i+1]; if (pos[i+1] > maxy) maxy = pos[i+1];
+        if (pos[i+2] < minz) minz = pos[i+2]; if (pos[i+2] > maxz) maxz = pos[i+2];
       }
-      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      this.dustInitial = pos.slice();
-      const mat = new THREE.PointsMaterial({
-        map: U.glowTexture(),
-        color: 0x9ff5e3,
-        size: 0.028,
-        transparent: true,
-        opacity: 0.32,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        sizeAttenuation: true
-      });
-      this.dust = new THREE.Points(g, mat);
-      this.scene.add(this.dust);
+      this.bounds.min = [minx,miny,minz]; this.bounds.max = [maxx,maxy,maxz];
+      for (const ball of balls) {
+        const bpos = ball.pos;
+        if (bpos[0] + ball.r < minx || bpos[0] - ball.r > maxx ||
+            bpos[1] + ball.r < miny || bpos[1] - ball.r > maxy ||
+            bpos[2] + ball.r < minz || bpos[2] - ball.r > maxz) continue;
+        let best = null;
+        const hits = [];
+        const R = ball.r;
+        for (let f = 0; f < this.faceCount; f++) {
+          const ia = faces[f*3], ib = faces[f*3+1], ic = faces[f*3+2];
+          const ax=pos[ia*3], ay=pos[ia*3+1], az=pos[ia*3+2];
+          const bx=pos[ib*3], by=pos[ib*3+1], bz=pos[ib*3+2];
+          const cx=pos[ic*3], cy=pos[ic*3+1], cz=pos[ic*3+2];
+          if (bpos[0] < Math.min(ax,bx,cx)-R || bpos[0] > Math.max(ax,bx,cx)+R) continue;
+          if (bpos[1] < Math.min(ay,by,cy)-R || bpos[1] > Math.max(ay,by,cy)+R) continue;
+          if (bpos[2] < Math.min(az,bz,cz)-R || bpos[2] > Math.max(az,bz,cz)+R) continue;
+          const abx=bx-ax, aby=by-ay, abz=bz-az;
+          const acx=cx-ax, acy=cy-ay, acz=cz-az;
+          const apx=bpos[0]-ax, apy=bpos[1]-ay, apz=bpos[2]-az;
+          const d1=abx*apx+aby*apy+abz*apz, d2=acx*apx+acy*apy+acz*apz;
+          let qx, qy, qz, w0, w1, w2;
+          if (d1 <= 0 && d2 <= 0) { qx=ax; qy=ay; qz=az; w0=1; w1=0; w2=0; }
+          else {
+            const bpx=bpos[0]-bx, bpy=bpos[1]-by, bpz=bpos[2]-bz;
+            const d3=abx*bpx+aby*bpy+abz*bpz, d4=acx*bpx+acy*bpy+acz*bpz;
+            if (d3 >= 0 && d4 <= d3) { qx=bx; qy=by; qz=bz; w0=0; w1=1; w2=0; }
+            else {
+              const vc=d1*d4-d3*d2;
+              if (vc <= 0 && d1 >= 0 && d3 <= 0) {
+                const v=d1/(d1-d3); qx=ax+abx*v; qy=ay+aby*v; qz=az+abz*v; w0=1-v; w1=v; w2=0;
+              } else {
+                const cpx=bpos[0]-cx, cpy=bpos[1]-cy, cpz=bpos[2]-cz;
+                const d5=abx*cpx+aby*cpy+abz*cpz, d6=acx*cpx+acy*cpy+acz*cpz;
+                if (d6 >= 0 && d5 <= d6) { qx=cx; qy=cy; qz=cz; w0=0; w1=0; w2=1; }
+                else {
+                  const vb=d5*d2-d1*d6;
+                  if (vb <= 0 && d2 >= 0 && d6 <= 0) {
+                    const w=d2/(d2-d6); qx=ax+acx*w; qy=ay+acy*w; qz=az+acz*w; w0=1-w; w1=0; w2=w;
+                  } else {
+                    const va=d3*d6-d5*d4;
+                    if (va <= 0 && (d4-d3) >= 0 && (d5-d6) >= 0) {
+                      const w=(d4-d3)/((d4-d3)+(d5-d6)); qx=bx+(cx-bx)*w; qy=by+(cy-by)*w; qz=bz+(cz-bz)*w; w0=0; w1=1-w; w2=w;
+                    } else {
+                      const den=1/Math.max(1e-12, va+vb+vc);
+                      w1=vb*den; w2=vc*den; w0=1-w1-w2;
+                      qx=ax*w0+bx*w1+cx*w2; qy=ay*w0+by*w1+cy*w2; qz=az*w0+bz*w1+cz*w2;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          const dx=bpos[0]-qx, dy=bpos[1]-qy, dz=bpos[2]-qz;
+          const dist2=dx*dx+dy*dy+dz*dz;
+          if (dist2 > R*R) continue;
+          const dist=Math.sqrt(dist2);
+          const pen=R-dist;
+          if (pen <= 0) continue;
+          let fnx=(by-ay)*(cz-az)-(bz-az)*(cy-ay);
+          let fny=(bz-az)*(cx-ax)-(bx-ax)*(cz-az);
+          let fnz=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax);
+          const fl=Math.hypot(fnx,fny,fnz)||1; fnx/=fl; fny/=fl; fnz/=fl;
+          let nx,ny,nz;
+          if (dist > 1e-6 && (dx*fnx+dy*fny+dz*fnz) > 0) { nx=dx/dist;ny=dy/dist;nz=dz/dist; }
+          else { nx=fnx;ny=fny;nz=fnz; }
+          const hrec = { f, ia, ib, ic, w0, w1, w2, nx, ny, nz, pen, qx, qy, qz };
+          hits.push(hrec);
+          if (!best || pen > best.pen) best = hrec;
+        }
+        if (!best || !hits.length) continue;
+        const firm = 1 - Math.min(1, sim.softness * this.softMul);
+        const kPer = sim.contactK * (0.35 + firm * firm * 2.2) * this.toughMul;
+        const cPer = sim.contactC * (0.6 + firm);
+        let fx = 0, fy = 0, fz = 0, maxPen = 0, cx0 = 0, cy0 = 0, cz0 = 0;
+        let avgVsx = 0, avgVsy = 0, avgVsz = 0, nContrib = 0;
+        const ballSpeed = Math.hypot(ball.vel[0], ball.vel[1], ball.vel[2]);
+        for (let hi = 0; hi < hits.length; hi++) {
+          const ht = hits[hi];
+          const { ia, ib, ic, w0, w1, w2, nx, ny, nz } = ht;
+          const svx=this.vel[ia*3]*w0+this.vel[ib*3]*w1+this.vel[ic*3]*w2;
+          const svy=this.vel[ia*3+1]*w0+this.vel[ib*3+1]*w1+this.vel[ic*3+1]*w2;
+          const svz=this.vel[ia*3+2]*w0+this.vel[ib*3+2]*w1+this.vel[ic*3+2]*w2;
+          const vn=(ball.vel[0]-svx)*nx+(ball.vel[1]-svy)*ny+(ball.vel[2]-svz)*nz;
+          let F = kPer * Math.min(ht.pen, 0.22) - cPer * vn;
+          F = Math.max(0, Math.min(F, 500));
+          // stronger resistance for very deep penetration
+          if (ht.pen > 0.16) F += (ht.pen - 0.16) * 16000;
+          fx += nx*F; fy += ny*F; fz += nz*F;
+          maxPen = Math.max(maxPen, ht.pen);
+          cx0 += ht.qx; cy0 += ht.qy; cz0 += ht.qz;
+          avgVsx += svx; avgVsy += svy; avgVsz += svz;
+          nContrib++;
+        }
+        if (!nContrib) continue;
+        cx0 /= nContrib; cy0 /= nContrib; cz0 /= nContrib;
+        avgVsx /= nContrib; avgVsy /= nContrib; avgVsz /= nContrib;
+        // cap net force
+        let fmag = Math.hypot(fx, fy, fz);
+        const fcap = 7000;
+        if (fmag > fcap) { const s = fcap/fmag; fx*=s; fy*=s; fz*=s; fmag=fcap; }
+        ball.vel[0] += fx * ball.invMass * h;
+        ball.vel[1] += fy * ball.invMass * h;
+        ball.vel[2] += fz * ball.invMass * h;
+        // gentle anti-tunnelling, never kicks hard
+        if (maxPen > 0.10) {
+          const bm = Math.min((maxPen - 0.10) * 0.12, 0.008);
+          bpos[0] += best.nx * bm; bpos[1] += best.ny * bm; bpos[2] += best.nz * bm;
+        }
+        // distribute reaction + dent over nearby vertices
+        const dent = Math.min(maxPen * sim.dentScale, sim.dentMax);
+        const reach = ball.r + sim.dentReach;
+        const reach2 = reach * reach;
+        let wsum = 0;
+        const ids = [], wts = [];
+        for (let i = 0; i < this.nv; i++) {
+          const dx = pos[i*3] - cx0, dy = pos[i*3+1] - cy0, dz = pos[i*3+2] - cz0;
+          const d2 = dx*dx + dy*dy + dz*dz;
+          if (d2 < reach2) {
+            const w = 1 - Math.sqrt(d2)/reach;
+            const ww = w*w * (0.5 + 0.5 * Math.min(2, this.invMass[i]/22));
+            ids.push(i); wts.push(ww); wsum += ww;
+          }
+        }
+        const relvx = ball.vel[0]-avgVsx, relvy = ball.vel[1]-avgVsy, relvz = ball.vel[2]-avgVsz;
+        if (wsum > 1e-9) {
+          const J = fmag * h * 0.32;
+          const ax = fx/Math.max(fmag,1e-6), ay = fy/Math.max(fmag,1e-6), az = fz/Math.max(fmag,1e-6);
+          for (let j = 0; j < ids.length; j++) {
+            const i = ids[j], w = wts[j]/wsum;
+            const dv = Math.min(J * w * this.invMass[i], 1.2);
+            this.vel[i*3] -= ax*dv; this.vel[i*3+1] -= ay*dv; this.vel[i*3+2] -= az*dv;
+            const dm = dent * w * Math.min(1, this.invMass[i]/12);
+            pos[i*3] -= ax*dm; pos[i*3+1] -= ay*dm; pos[i*3+2] -= az*dm;
+          }
+        }
+        if (ball.mass > 10) sim.dbg = { F: +fmag.toFixed(1), n: nContrib, pen: +maxPen.toFixed(3), ballY: +bpos[1].toFixed(3), vy: +ball.vel[1].toFixed(2) };
+        const impactSpeed = Math.max(0, -(relvx*best.nx + relvy*best.ny + relvz*best.nz));
+        if (impactSpeed > 1.1 && ball.impactCool <= 0) {
+          sim.events.push({ type: 'jelly-hit', strength: Math.min(1, impactSpeed / 6), body: this, pos: [bpos[0], bpos[1], bpos[2]] });
+          ball.impactCool = 0.10;
+        }
+        // tangential friction + spin (only the component tangent to the contact)
+        const nvx = best.nx, nvy = best.ny, nvz = best.nz;
+        const vnBest = relvx*nvx + relvy*nvy + relvz*nvz;
+        const tx = relvx - nvx*vnBest, ty = relvy - nvy*vnBest, tz = relvz - nvz*vnBest;
+        const tl = Math.hypot(tx, ty, tz);
+        if (tl > 1e-4) {
+          const ft = Math.min(tl * 0.05, 0.06);
+          ball.vel[0] -= tx/tl*ft; ball.vel[1] -= ty/tl*ft; ball.vel[2] -= tz/tl*ft;
+          const contactArm = [best.qx-bpos[0], best.qy-bpos[1], best.qz-bpos[2]];
+          const jf = [ -tx/tl*ft*ball.mass, -ty/tl*ft*ball.mass, -tz/tl*ft*ball.mass ];
+          ball.spin[0] += (contactArm[1]*jf[2]-contactArm[2]*jf[1]) * 0.9;
+          ball.spin[1] += (contactArm[2]*jf[0]-contactArm[0]*jf[2]) * 0.9;
+          ball.spin[2] += (contactArm[0]*jf[1]-contactArm[1]*jf[0]) * 0.9;
+        }
+        const t = this.faceOwner[best.f];
+        this.damage[t] = Math.min(this.damage[t] + impactSpeed * 0.006, 1.2);
+        if (ball.impactCool > 0) ball.impactCool -= h;
+      }
     }
 
-    /* =================== 果冻几何与晶格 =================== */
-    _buildBody() {
-      if (this.jellyMesh) {
-        this.jellyGroup.remove(this.jellyMesh);
-        this.jellyMesh.geometry.dispose();
-        this.jellyMesh.material.dispose();
+    applyGround(friction) {
+      const pos=this.pos, prev=this.prev, vel=this.vel;
+      const tableTop = 0;
+      const onTable = this.centerXZonTable();
+      const g = onTable ? tableTop : TABLE.floor;
+      this.groundY = g;
+      for (let i=0;i<this.nv;i++) {
+        if (pos[i*3+1] < g) {
+          pos[i*3+1] = g;
+          const nx = pos[i*3] - (prev[i*3] + (pos[i*3]-prev[i*3])*0.0);
+          // static-ish friction: pull horizontal position back toward previous
+          pos[i*3] = prev[i*3] + (pos[i*3]-prev[i*3]) * (1 - friction);
+          pos[i*3+2] = prev[i*3+2] + (pos[i*3+2]-prev[i*3+2]) * (1 - friction);
+          if (vel[i*3+1] < 0) vel[i*3+1] *= -0.15;
+        }
       }
-      if (this.bubbleGroup) {
-        this.jellyGroup.remove(this.bubbleGroup);
-      }
-
-      const scale = this.p.jelly.scale;
-      this.a = (BASE_W / 2) * scale;
-      this.b = (BASE_H / 2) * scale;
-      this.c = (BASE_D / 2) * scale;
-      this.centerY = this.b;
-      this.jellyGroup.position.set(0, this.centerY, 0);
-
-      this._buildLattice();
-      this._buildJellyGeometry();
-      this._buildBubbles();
-
-      this.jellyShadow.scale.set(1.0 * scale, 0.82 * scale, 1);
-      this.jellyShadow.position.y = 0.031;
     }
 
-    _buildLattice() {
-      const n = NX * NY * NZ;
-      this.nP = n;
-      this.rest = new Float32Array(n * 3);
-      this.pos = new Float32Array(n * 3);
-      this.prev = new Float32Array(n * 3);
-      this.vel = new Float32Array(n * 3);
-      this.inv = new Float32Array(n);
-      this.disp = new Float32Array(n * 3);
+    centerXZonTable() {
+      let cx=0, cz=0;
+      for (let i=0;i<this.nv;i++){cx+=this.pos[i*3];cz+=this.pos[i*3+2];}
+      cx/=this.nv; cz/=this.nv;
+      return Math.abs(cx) < TABLE.hx + 0.2 && Math.abs(cz) < TABLE.hz + 0.2;
+    }
 
-      const jellyMass = 34 * this.p.jelly.density;
-      this.nodeMass = jellyMass / n;
+    integrate(h) {
+      const pos=this.pos, vel=this.vel;
+      this.prev.set(pos);
+      const damp = Math.exp(-0.9 * h);
+      for (let i=0;i<this.nv;i++) {
+        if (this.invMass[i] <= 0) continue;
+        vel[i*3+1] += GRAV * h;
+        vel[i*3] *= damp; vel[i*3+1] *= damp; vel[i*3+2] *= damp;
+        pos[i*3] += vel[i*3]*h; pos[i*3+1] += vel[i*3+1]*h; pos[i*3+2] += vel[i*3+2]*h;
+      }
+    }
 
-      let idx = 0;
-      for (let k = 0; k < NZ; k++) {
-        for (let j = 0; j < NY; j++) {
-          for (let i = 0; i < NX; i++) {
-            const x = -this.a + (i / (NX - 1)) * 2 * this.a;
-            const y = -this.b + (j / (NY - 1)) * 2 * this.b;
-            const z = -this.c + (k / (NZ - 1)) * 2 * this.c;
-            this.rest[idx * 3] = x;
-            this.rest[idx * 3 + 1] = y;
-            this.rest[idx * 3 + 2] = z;
-            this.inv[idx] = this.p.jelly.fixed && j === 0 ? 0 : 1 / this.nodeMass;
-            idx++;
+    solve(h, sim) {
+      const iter = this.sim.iterations;
+      const pos=this.pos, inv=this.invMass;
+      const soft = this.sim.softness * this.softMul; // 0 firm .. 1 soft
+      const edgeCompliance = (0.00000006 + soft * soft * 0.000060) / (this.sim.stiffScale);
+      const volCompliance = (0.000000006 + soft * 0.000000060) * this.sim.volScale;
+      const ea=this.edgeA, eb=this.edgeB, er=this.edgeRest;
+      const h2 = h*h;
+      let lambdaE = new Float32Array(ea.length);
+      let lambdaV = new Float32Array(this.nt);
+      for (let it=0; it<iter; it++) {
+        // edges
+        const alphaE = edgeCompliance / h2;
+        for (let e=0;e<ea.length;e++) {
+          const a=ea[e], b=eb[e];
+          const wa=inv[a], wb=inv[b];
+          if (wa+wb < 1e-12) continue;
+          let dx=pos[b*3]-pos[a*3], dy=pos[b*3+1]-pos[a*3+1], dz=pos[b*3+2]-pos[a*3+2];
+          const L=Math.hypot(dx,dy,dz);
+          if (L<1e-8) continue;
+          dx/=L; dy/=L; dz/=L;
+          const C = L - er[e];
+          const dlambda = (-C - alphaE*lambdaE[e]) / (wa+wb+alphaE);
+          lambdaE[e] += dlambda;
+          const ca = dlambda * wa, cb = dlambda * wb;
+          pos[a*3] -= dx*ca; pos[a*3+1] -= dy*ca; pos[a*3+2] -= dz*ca;
+          pos[b*3] += dx*cb; pos[b*3+1] += dy*cb; pos[b*3+2] += dz*cb;
+        }
+        // volumes
+        const alphaV = volCompliance / h2;
+        const tet=this.tets;
+        for (let t=0;t<this.nt;t++) {
+          if (!this.alive[t]) continue;
+          const ia=tet[t*4], ib=tet[t*4+1], ic=tet[t*4+2], id=tet[t*4+3];
+          const ax=pos[ia*3], ay=pos[ia*3+1], az=pos[ia*3+2];
+          const bx=pos[ib*3], by=pos[ib*3+1], bz=pos[ib*3+2];
+          const cx=pos[ic*3], cy=pos[ic*3+1], cz=pos[ic*3+2];
+          const dx=pos[id*3], dy=pos[id*3+1], dz=pos[id*3+2];
+          const e1x=bx-ax, e1y=by-ay, e1z=bz-az;
+          const e2x=cx-ax, e2y=cy-ay, e2z=cz-az;
+          const e3x=dx-ax, e3y=dy-ay, e3z=dz-az;
+          // V = dot(e1, cross(e2,e3))/6
+          const n2x=e2y*e3z-e2z*e3y, n2y=e2z*e3x-e2x*e3z, n2z=e2x*e3y-e2y*e3x;
+          const V = (e1x*n2x+e1y*n2y+e1z*n2z)/6;
+          // gradients
+          const g1x=(e2y*e3z-e2z*e3y)/6, g1y=(e2z*e3x-e2x*e3z)/6, g1z=(e2x*e3y-e2y*e3x)/6;
+          const g2x=(e3y*e1z-e3z*e1y)/6, g2y=(e3z*e1x-e3x*e1z)/6, g2z=(e3x*e1y-e3y*e1x)/6;
+          const g3x=(e1y*e2z-e1z*e2y)/6, g3y=(e1z*e2x-e1x*e2z)/6, g3z=(e1x*e2y-e1y*e2x)/6;
+          const g0x=-(g1x+g2x+g3x), g0y=-(g1y+g2y+g3y), g0z=-(g1z+g2z+g3z);
+          const wsum = inv[ia]*(g0x*g0x+g0y*g0y+g0z*g0z) + inv[ib]*(g1x*g1x+g1y*g1y+g1z*g1z) + inv[ic]*(g2x*g2x+g2y*g2y+g2z*g2z) + inv[id]*(g3x*g3x+g3y*g3y+g3z*g3z);
+          if (wsum < 1e-14) continue;
+          const C = V - this.restVol[t];
+          const dlambda = (-C - alphaV*lambdaV[t]) / (wsum + alphaV);
+          lambdaV[t] += dlambda;
+          pos[ia*3] += dlambda*inv[ia]*g0x; pos[ia*3+1] += dlambda*inv[ia]*g0y; pos[ia*3+2] += dlambda*inv[ia]*g0z;
+          pos[ib*3] += dlambda*inv[ib]*g1x; pos[ib*3+1] += dlambda*inv[ib]*g1y; pos[ib*3+2] += dlambda*inv[ib]*g1z;
+          pos[ic*3] += dlambda*inv[ic]*g2x; pos[ic*3+1] += dlambda*inv[ic]*g2y; pos[ic*3+2] += dlambda*inv[ic]*g2z;
+          pos[id*3] += dlambda*inv[id]*g3x; pos[id*3+1] += dlambda*inv[id]*g3y; pos[id*3+2] += dlambda*inv[id]*g3z;
+        }
+        // bounds
+        for (let i=0;i<this.nv;i++) {
+          if (pos[i*3+1] < this.groundY) pos[i*3+1] = this.groundY;
+        }
+      }
+      this.shapeMatch(sim, h);
+    }
+
+    shapeMatch(sim, h) {
+      // soft global shape memory (best-fit rotation + translation)
+      const nv = this.nv, pos = this.pos, rest = this.restPos;
+      if (!this._restCenter) {
+        this._restCenter = [0,0,0];
+        for (let i=0;i<nv;i++){ this._restCenter[0]+=rest[i*3]; this._restCenter[1]+=rest[i*3+1]; this._restCenter[2]+=rest[i*3+2]; }
+        this._restCenter = this._restCenter.map(v=>v/nv);
+      }
+      const rc = this._restCenter;
+      let cx=0, cy=0, cz=0;
+      for (let i=0;i<nv;i++){ cx+=pos[i*3]; cy+=pos[i*3+1]; cz+=pos[i*3+2]; }
+      cx/=nv; cy/=nv; cz/=nv;
+      // covariance A = sum q r^T
+      let a00=0,a01=0,a02=0,a10=0,a11=0,a12=0,a20=0,a21=0,a22=0;
+      for (let i=0;i<nv;i++) {
+        const qx=pos[i*3]-cx, qy=pos[i*3+1]-cy, qz=pos[i*3+2]-cz;
+        const rx=rest[i*3]-rc[0], ry=rest[i*3+1]-rc[1], rz=rest[i*3+2]-rc[2];
+        a00+=qx*rx; a01+=qx*ry; a02+=qx*rz;
+        a10+=qy*rx; a11+=qy*ry; a12+=qy*rz;
+        a20+=qz*rx; a21+=qz*ry; a22+=qz*rz;
+      }
+      // polar decomposition: R <- 0.5(R + R^-T), 6 iterations
+      let R = new Float32Array([a00,a10,a20, a01,a11,a21, a02,a12,a22]);
+      for (let it=0; it<6; it++) {
+        const inv = invert3(R);
+        if (!inv) break;
+        const itx = new Float32Array([inv[0],inv[3],inv[6], inv[1],inv[4],inv[7], inv[2],inv[5],inv[8]]);
+        for (let k=0;k<9;k++) R[k] = 0.5*(R[k] + itx[k]);
+      }
+      const det = R[0]*(R[4]*R[8]-R[5]*R[7]) - R[3]*(R[1]*R[8]-R[2]*R[7]) + R[6]*(R[1]*R[5]-R[2]*R[4]);
+      if (!isFinite(det) || det < 0.05) R = new Float32Array([1,0,0, 0,1,0, 0,0,1]);
+      const firm = 1 - Math.min(1, sim.softness * this.softMul);
+      const st = 0.020 + firm * 0.050;
+      const maxMove = 0.008;
+      for (let i=0;i<nv;i++) {
+        const rx=rest[i*3]-rc[0], ry=rest[i*3+1]-rc[1], rz=rest[i*3+2]-rc[2];
+        const tx=cx + R[0]*rx + R[3]*ry + R[6]*rz;
+        const ty=cy + R[1]*rx + R[4]*ry + R[7]*rz;
+        const tz=cz + R[2]*rx + R[5]*ry + R[8]*rz;
+        let dx=(tx-pos[i*3])*st, dy=(ty-pos[i*3+1])*st, dz=(tz-pos[i*3+2])*st;
+        const dl=Math.hypot(dx,dy,dz);
+        if (dl>maxMove){ const s=maxMove/dl; dx*=s;dy*=s;dz*=s; }
+        pos[i*3]+=dx; pos[i*3+1]+=dy; pos[i*3+2]+=dz;
+      }
+    }
+
+    updateVelocities(h) {
+      const pos=this.pos, prev=this.prev, vel=this.vel;
+      for (let i=0;i<this.nv;i++) {
+        vel[i*3] = (pos[i*3]-prev[i*3])/h;
+        vel[i*3+1] = (pos[i*3+1]-prev[i*3+1])/h;
+        vel[i*3+2] = (pos[i*3+2]-prev[i*3+2])/h;
+      }
+    }
+
+    boundsOf() {
+      let mnx=1e9,mny=1e9,mnz=1e9,mxx=-1e9,mxy=-1e9,mxz=-1e9;
+      for (let i=0;i<this.pos.length;i+=3) {
+        mnx=Math.min(mnx,this.pos[i]); mxx=Math.max(mxx,this.pos[i]);
+        mny=Math.min(mny,this.pos[i+1]); mxy=Math.max(mxy,this.pos[i+1]);
+        mnz=Math.min(mnz,this.pos[i+2]); mxz=Math.max(mxz,this.pos[i+2]);
+      }
+      return [mnx,mny,mnz,mxx,mxy,mxz];
+    }
+
+    checkFracture(sim) {
+      if (this.nt === 0) return null;
+      const limitBase = (0.16 + sim.toughness * 0.95) * this.toughMul;
+      const tet=this.tets, pos=this.pos;
+      let broke=false;
+      const freshDead = [];
+      const edgeSet = new Map();
+      for (let t=0;t<this.nt;t++) if (this.alive[t]) {
+        const a=tet[t*4];
+        const cols = new Float32Array(9);
+        for (let k=0;k<3;k++) {
+          cols[k  ] = pos[tet[t*4+1]*3+k] - pos[a*3+k];
+          cols[k+3] = pos[tet[t*4+2]*3+k] - pos[a*3+k];
+          cols[k+6] = pos[tet[t*4+3]*3+k] - pos[a*3+k];
+        }
+        const m = this.restInv.subarray(t*9, t*9+9);
+        // F = cols * m
+        let frob2=0;
+        for (let c=0;c<3;c++) for (let r=0;r<3;r++) {
+          const v = cols[0*3+r]*m[c*3+0] + cols[1*3+r]*m[c*3+1] + cols[2*3+r]*m[c*3+2];
+          frob2 += v*v;
+        }
+        const strain = Math.sqrt(Math.max(0, (frob2-3)/3));
+        const limit = limitBase * (this.damage[t] > 0 ? 0.8 : 1.0);
+        if (strain > limit) {
+          this.alive[t] = 0;
+          this.damage[t] = 1.5;
+          freshDead.push(t);
+          broke = true;
+          sim.events.push({ type: 'crack', strength: Math.min(1, strain / (limitBase + 0.3)), pos: [0,0,0] });
+        } else {
+          this.damage[t] = Math.max(0, this.damage[t] - 0.0007);
+          if (strain > limit * 0.55) this.damage[t] += (strain/limit - 0.55) * 0.55;
+          if (this.damage[t] > 1.0) { this.alive[t] = 0; freshDead.push(t); broke = true; sim.events.push({ type:'crack', strength: 0.3, pos:[0,0,0] }); }
+        }
+      }
+      if (!broke) return null;
+      this.fractured = true;
+      // stress-concentration: damaged neighbours of a fresh crack can tear too
+      if (freshDead.length) {
+        const fmap = new Map();
+        const faceDefs2 = [[1,2,3],[0,3,2],[0,1,3],[0,2,1]];
+        for (let t=0;t<this.nt;t++) if (this.alive[t]) {
+          const ids=[tet[t*4],tet[t*4+1],tet[t*4+2],tet[t*4+3]];
+          for (const fd of faceDefs2) {
+            const s=[ids[fd[0]],ids[fd[1]],ids[fd[2]]].sort((a,b)=>a-b);
+            fmap.set(s[0]*1048576+s[1]*1024+s[2], t);
+          }
+        }
+        for (const t of freshDead) {
+          const ids=[tet[t*4],tet[t*4+1],tet[t*4+2],tet[t*4+3]];
+          for (const fd of faceDefs2) {
+            const s=[ids[fd[0]],ids[fd[1]],ids[fd[2]]].sort((a,b)=>a-b);
+            const other=fmap.get(s[0]*1048576+s[1]*1024+s[2]);
+            if (other !== undefined && this.alive[other]) {
+              this.damage[other] = Math.min(1.0, this.damage[other] + 0.55);
+              if (this.damage[other] >= 1.0) {
+                this.alive[other] = 0;
+                sim.events.push({ type:'crack', strength: 0.25, pos:[0,0,0] });
+              }
+            }
           }
         }
       }
-
-      // 约束构建
-      const A = [], B = [], L = [], S = [];
-      const add = (ia, ib, stiff) => {
-        const ax = this.rest[ia * 3], ay = this.rest[ia * 3 + 1], az = this.rest[ia * 3 + 2];
-        const bx = this.rest[ib * 3], by = this.rest[ib * 3 + 1], bz = this.rest[ib * 3 + 2];
-        const d = Math.hypot(bx - ax, by - ay, bz - az);
-        if (d > 1e-6) { A.push(ia); B.push(ib); L.push(d); S.push(stiff); }
-      };
-      const pi = (i, j, k) => (k * NY + j) * NX + i;
-
-      for (let k = 0; k < NZ; k++) {
-        for (let j = 0; j < NY; j++) {
-          for (let i = 0; i < NX; i++) {
-            const p = pi(i, j, k);
-            if (i < NX - 1) add(p, pi(i + 1, j, k), 1.0);
-            if (j < NY - 1) add(p, pi(i, j + 1, k), 1.0);
-            if (k < NZ - 1) add(p, pi(i, j, k + 1), 1.0);
-
-            // 剪切
-            if (i < NX - 1 && j < NY - 1) {
-              add(p, pi(i + 1, j + 1, k), 0.55);
-              add(pi(i + 1, j, k), pi(i, j + 1, k), 0.55);
-            }
-            if (j < NY - 1 && k < NZ - 1) {
-              add(p, pi(i, j + 1, k + 1), 0.55);
-              add(pi(i, j + 1, k), pi(i, j, k + 1), 0.55);
-            }
-            if (i < NX - 1 && k < NZ - 1) {
-              add(p, pi(i + 1, j, k + 1), 0.55);
-              add(pi(i + 1, j, k), pi(i, j, k + 1), 0.55);
-            }
-            // 体对角线
-            if (i < NX - 1 && j < NY - 1 && k < NZ - 1) {
-              add(p, pi(i + 1, j + 1, k + 1), 0.16);
-            }
-            // 弯曲（隔点）
-            if (i < NX - 2) add(p, pi(i + 2, j, k), 0.16);
-            if (j < NY - 2) add(p, pi(i, j + 2, k), 0.16);
-            if (k < NZ - 2) add(p, pi(i, j, k + 2), 0.16);
-          }
+      // macro crack: once local damage is sufficient, a through-going crack becomes unstable
+      let brokenTotal = 0;
+      for (let t=0;t<this.nt;t++) if (!this.alive[t]) brokenTotal++;
+      if (sim.toughness < 0.5 && brokenTotal > 22 && (this.macroCracks || 0) < 1) {
+        this.macroCracks = 1;
+        let dx=0, dy=0, dz=0, nDead=0;
+        const pos2=this.pos;
+        for (const t of freshDead) {
+          const a=tet[t*4],b=tet[t*4+1],c=tet[t*4+2],d=tet[t*4+3];
+          dx += (pos2[a*3]+pos2[b*3]+pos2[c*3]+pos2[d*3])/4;
+          dy += (pos2[a*3+1]+pos2[b*3+1]+pos2[c*3+1]+pos2[d*3+1])/4;
+          dz += (pos2[a*3+2]+pos2[b*3+2]+pos2[c*3+2]+pos2[d*3+2])/4;
+          nDead++;
         }
-      }
-      this.cA = new Int32Array(A);
-      this.cB = new Int32Array(B);
-      this.cL = new Float32Array(L);
-      this.cS = new Float32Array(S);
-
-      // 顶部 / 侧面 索引
-      this.topBase = (NY - 1) * NX;
-      this.topIds = [];
-      for (let k = 0; k < NZ; k++) {
-        for (let i = 0; i < NX; i++) {
-          this.topIds.push(pi(i, NY - 1, k));
+        if (nDead) { dx/=nDead; dy/=nDead; dz/=nDead; }
+        else { const c=this.sim.bodyCenter(this); dx=c[0]; dy=c[1]; dz=c[2]; }
+        let cx=0,cy=0,cz=0;
+        for (let i=0;i<this.nv;i++){cx+=pos2[i*3];cy+=pos2[i*3+1];cz+=pos2[i*3+2];}
+        cx/=this.nv;cy/=this.nv;cz/=this.nv;
+        let nx=dx-cx, ny=dy-cy, nz=dz-cz;
+        ny += 0.35 * Math.hypot(nx,ny,nz);
+        const nl=Math.hypot(nx,ny,nz)||1; nx/=nl;ny/=nl;nz/=nl;
+        const px=cx + (dx-cx)*0.55, py=cy + (dy-cy)*0.55, pz=cz + (dz-cz)*0.55;
+        for (let t=0;t<this.nt;t++) {
+          if (!this.alive[t]) continue;
+          const a=tet[t*4],b=tet[t*4+1],c=tet[t*4+2],d=tet[t*4+3];
+          const tx=(pos2[a*3]+pos2[b*3]+pos2[c*3]+pos2[d*3])/4;
+          const ty=(pos2[a*3+1]+pos2[b*3+1]+pos2[c*3+1]+pos2[d*3+1])/4;
+          const tz=(pos2[a*3+2]+pos2[b*3+2]+pos2[c*3+2]+pos2[d*3+2])/4;
+          const sd=(tx-px)*nx+(ty-py)*ny+(tz-pz)*nz;
+          if (Math.abs(sd) < 0.035) { this.alive[t]=0; this.damage[t]=1.5; }
         }
+        sim.events.push({ type:'crack', strength: 1.0, pos:[dx,dy,dz] });
       }
+      this.rebuildFaces();
+      const comps = this.components();
+      if (comps.length > 1) {
+        const pieces = comps.filter(c => c.length >= 1).map(c => this.extract(c));
+        return pieces;
+      }
+      return null;
     }
 
-    _buildJellyGeometry() {
-      const uSeg = 100;
-      const vSeg = 58;
-      const verts = [];
-      const indices = [];
-      const grid = [];
-      for (let iv = 0; iv <= vSeg; iv++) {
-        const v = -Math.PI / 2 + (iv / vSeg) * Math.PI;
-        const cv = Math.cos(v);
-        const sv = Math.sin(v);
-        const cvp = Math.pow(Math.abs(cv), E);
-        const svp = Math.pow(Math.abs(sv), E);
-        const row = [];
-        for (let iu = 0; iu < uSeg; iu++) {
-          const u = (iu / uSeg) * Math.PI * 2;
-          const cu = Math.cos(u);
-          const su = Math.sin(u);
-          const cup = Math.pow(Math.abs(cu), E) * Math.sign(cu);
-          const sup = Math.pow(Math.abs(su), E) * Math.sign(su);
-          const x = this.a * cvp * cup;
-          const y = this.b * svp * (sv >= 0 ? 1 : -1);
-          const z = this.c * cvp * sup;
-          row.push(verts.length / 3);
-          verts.push(x, y, z);
-        }
-        grid.push(row);
-      }
-      for (let iv = 0; iv < vSeg; iv++) {
-        for (let iu = 0; iu < uSeg; iu++) {
-          const ni = (iu + 1) % uSeg;
-          const a = grid[iv][iu], b = grid[iv][ni];
-          const c = grid[iv + 1][iu], d = grid[iv + 1][ni];
-          if (iv === 0) {
-            indices.push(a, c, d);
-          } else if (iv === vSeg - 1) {
-            indices.push(a, c, b);
-          } else {
-            indices.push(a, c, b);
-            indices.push(c, d, b);
-          }
+    components() {
+      const parent = new Int32Array(this.nt);
+      for (let i=0;i<this.nt;i++) parent[i]=i;
+      const find = (x) => { while(parent[x]!==x){parent[x]=parent[parent[x]];x=parent[x];} return x; };
+      const union = (a,b) => { a=find(a);b=find(b); if(a!==b) parent[b]=a; };
+      const faceMap = new Map();
+      const faceDefs = [[1,2,3],[0,3,2],[0,1,3],[0,2,1]];
+      for (let t=0;t<this.nt;t++) if (this.alive[t]) {
+        const ids=[this.tets[t*4],this.tets[t*4+1],this.tets[t*4+2],this.tets[t*4+3]];
+        for (const fd of faceDefs) {
+          const s=[ids[fd[0]],ids[fd[1]],ids[fd[2]]].sort((a,b)=>a-b);
+          const key=s[0]*1048576+s[1]*1024+s[2];
+          if (faceMap.has(key)) union(t, faceMap.get(key)); else faceMap.set(key,t);
         }
       }
-
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
-      geo.setIndex(indices);
-
-      // 自动修正面向：以隐式曲面梯度作为外部方向
-      const pos = geo.attributes.position;
-      const va = new THREE.Vector3(), vb = new THREE.Vector3(), vc = new THREE.Vector3();
-      const ab = new THREE.Vector3(), ac = new THREE.Vector3(), fn = new THREE.Vector3();
-      let score = 0;
-      const idx = geo.index.array;
-      for (let t = 0; t < idx.length; t += 3 * 7) {
-        va.fromBufferAttribute(pos, idx[t]);
-        vb.fromBufferAttribute(pos, idx[t + 1]);
-        vc.fromBufferAttribute(pos, idx[t + 2]);
-        ab.subVectors(vb, va); ac.subVectors(vc, va);
-        fn.crossVectors(ab, ac);
-        const mx = (va.x + vb.x + vc.x) / 3, my = (va.y + vb.y + vc.y) / 3, mz = (va.z + vb.z + vc.z) / 3;
-        const nx = Math.sign(mx) * Math.pow(Math.abs(mx) / this.a, M - 1) / this.a;
-        const ny = Math.sign(my) * Math.pow(Math.abs(my) / this.b, M - 1) / this.b;
-        const nz = Math.sign(mz) * Math.pow(Math.abs(mz) / this.c, M - 1) / this.c;
-        score += fn.x * nx + fn.y * ny + fn.z * nz;
+      const groups = new Map();
+      for (let t=0;t<this.nt;t++) if (this.alive[t]) {
+        const r=find(t);
+        if (!groups.has(r)) groups.set(r,[]);
+        groups.get(r).push(t);
       }
-      if (score < 0) {
-        for (let t = 0; t < idx.length; t += 3) {
-          const tmp = idx[t + 1]; idx[t + 1] = idx[t + 2]; idx[t + 2] = tmp;
-        }
-        geo.index.needsUpdate = true;
-      }
-      geo.computeVertexNormals();
-
-      this.geo = geo;
-      this.vCount = pos.count;
-      this.vRest = new Float32Array(pos.array);
-      this.vPids = new Int32Array(this.vCount * 8);
-      this.vW = new Float32Array(this.vCount * 8);
-
-      // 预计算 FFD 三线性权重
-      const pi = (i, j, k) => (k * NY + j) * NX + i;
-      for (let vi = 0; vi < this.vCount; vi++) {
-        const x = this.vRest[vi * 3], y = this.vRest[vi * 3 + 1], z = this.vRest[vi * 3 + 2];
-        const u = U.clamp((x + this.a) / (2 * this.a), 0, 0.99999) * (NX - 1);
-        const v = U.clamp((y + this.b) / (2 * this.b), 0, 0.99999) * (NY - 1);
-        const w = U.clamp((z + this.c) / (2 * this.c), 0, 0.99999) * (NZ - 1);
-        const i0 = Math.floor(u), j0 = Math.floor(v), k0 = Math.floor(w);
-        const fu = u - i0, fv = v - j0, fw = w - k0;
-        const i1 = Math.min(i0 + 1, NX - 1), j1 = Math.min(j0 + 1, NY - 1), k1 = Math.min(k0 + 1, NZ - 1);
-        const ws = [
-          (1 - fu) * (1 - fv) * (1 - fw), fu * (1 - fv) * (1 - fw),
-          (1 - fu) * fv * (1 - fw), fu * fv * (1 - fw),
-          (1 - fu) * (1 - fv) * fw, fu * (1 - fv) * fw,
-          (1 - fu) * fv * fw, fu * fv * fw
-        ];
-        const ids = [
-          pi(i0, j0, k0), pi(i1, j0, k0), pi(i0, j1, k0), pi(i1, j1, k0),
-          pi(i0, j0, k1), pi(i1, j0, k1), pi(i0, j1, k1), pi(i1, j1, k1)
-        ];
-        for (let q = 0; q < 8; q++) {
-          this.vPids[vi * 8 + q] = ids[q];
-          this.vW[vi * 8 + q] = ws[q];
-        }
-      }
-
-      const theme = THEMES[this.p.jelly.color] || THEMES.mint;
-      const mat = new THREE.MeshPhysicalMaterial({
-        color: theme.color,
-        roughness: 0.2,
-        metalness: 0.0,
-        transmission: 0.7,
-        transparent: true,
-        opacity: 0.92,
-        depthWrite: false,
-        thickness: 0.35 * this.p.jelly.scale,
-        ior: 1.34,
-        clearcoat: 0.12,
-        clearcoatRoughness: 0.4,
-        attenuationColor: new THREE.Color(theme.atten),
-        attenuationDistance: 0.7,
-        envMapIntensity: 0.55,
-        sheen: 0.12,
-        sheenColor: new THREE.Color(theme.rim),
-        sheenRoughness: 0.5
-      });
-      mat.receiveShadow = true;
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.castShadow = false;
-      mesh.receiveShadow = true;
-      mesh.frustumCulled = false;
-      mesh.renderOrder = 3;
-      this.jellyMesh = mesh;
-      this.jellyMaterial = mat;
-      this.jellyGroup.add(mesh);
-
-      // 内部气泡：让透射体有可读的内部层次
-      const bubbleGroup = new THREE.Group();
-      const bmat = new THREE.MeshBasicMaterial({
-        color: theme.rim,
-        transparent: true,
-        opacity: 0.12,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      });
-      const bgeo = new THREE.IcosahedronGeometry(1, 1);
-      const rand = U.rng(4411);
-      this.bubbles = [];
-      for (let i = 0; i < 22; i++) {
-        const bx = (rand() * 2 - 1) * this.a * 0.74;
-        const by = (rand() * 2 - 1) * this.b * 0.7;
-        const bz = (rand() * 2 - 1) * this.c * 0.74;
-        const r = 0.012 + rand() * 0.033 * this.p.jelly.scale;
-        const m = new THREE.Mesh(bgeo, bmat);
-        m.scale.setScalar(r);
-        m.frustumCulled = false;
-        m.renderOrder = 4;
-        bubbleGroup.add(m);
-        this.bubbles.push({ mesh: m, x: bx, y: by, z: bz, r });
-      }
-      // 内部柔光核（体积感）
-      this.coreGlow = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 24, 16),
-        new THREE.MeshBasicMaterial({
-          color: theme.glow, transparent: true, opacity: 0.028,
-          blending: THREE.AdditiveBlending, depthWrite: false
-        })
-      );
-      this.coreGlow.scale.set(this.a * 0.82, this.b * 0.62, this.c * 0.82);
-      this.coreGlow.renderOrder = 2;
-      bubbleGroup.add(this.coreGlow);
-      this.bubbleGroup = bubbleGroup;
-      this.bubbleMaterial = bmat;
-      this.jellyGroup.add(bubbleGroup);
+      return [...groups.values()];
     }
 
-    _buildBubbles() { /* 气泡在几何构建中一并创建 */ }
-
-    _buildBalls() {
-      if (this.ballMeshes) {
-        for (const b of this.ballMeshes) this.ballGroup.remove(b.group);
+    extract(tetList) {
+      const used = new Map();
+      const oldVerts = [];
+      for (const t of tetList) for (let k=0;k<4;k++) {
+        const v=this.tets[t*4+k];
+        if (!used.has(v)) { used.set(v, oldVerts.length); oldVerts.push(v); }
       }
-      this.ballMeshes = [];
+      const nv=oldVerts.length;
+      const rest=new Float32Array(nv*3), pos=new Float32Array(nv*3), vel=new Float32Array(nv*3);
+      for (let i=0;i<nv;i++) {
+        const o=oldVerts[i];
+        for (let k=0;k<3;k++) {
+          rest[i*3+k]=this.restPos[o*3+k];
+          pos[i*3+k]=this.pos[o*3+k];
+          vel[i*3+k]=this.vel[o*3+k];
+        }
+      }
+      const tets=new Int32Array(tetList.length*4);
+      for (let i=0;i<tetList.length;i++) for (let k=0;k<4;k++) tets[i*4+k]=used.get(this.tets[tetList[i]*4+k]);
+      const nb=new JellyBody(this.sim, {
+        rest, tets, color: this.color, deepColor: this.deepColor, alpha: this.alpha,
+        density: this.density, tag: null, toughMul: this.toughMul, softMul: this.softMul
+      });
+      nb.pos.set(pos); nb.prev.set(pos); nb.vel.set(vel);
+      return nb;
+    }
+
+    getMesh() {
+      const gl = this.sim.gl;
+      if (!this.mesh) {
+        const maxFaces = Math.max(160, this.faceCount * 4 + 80);
+        this.mesh = new GLU.DynMesh(gl, maxFaces * 3, [{ name: 'aBruise', size: 1 }]);
+      }
+      return this.mesh;
+    }
+
+    buildRenderData() {
+      if (!this.faceCount) return 0;
+      const mesh=this.getMesh();
+      const maxVerts=mesh.maxVerts;
+      const nf=this.faceCount;
+      const count=nf*3;
+      if (count > maxVerts) return 0;
+      const P=mesh.pos, N=mesh.normal, B=mesh.extraArrays.aBruise;
+      const acc=new Float32Array(this.nv*3);
+      const pos=this.pos;
+      for (let f=0; f<nf; f++) {
+        const a=this.faces[f*3], b=this.faces[f*3+1], c=this.faces[f*3+2];
+        const ax=pos[a*3], ay=pos[a*3+1], az=pos[a*3+2];
+        const bx=pos[b*3], by=pos[b*3+1], bz=pos[b*3+2];
+        const cx=pos[c*3], cy=pos[c*3+1], cz=pos[c*3+2];
+        let nx=(by-ay)*(cz-az)-(bz-az)*(cy-ay);
+        let ny=(bz-az)*(cx-ax)-(bx-ax)*(cz-az);
+        let nz=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax);
+        const l=Math.hypot(nx,ny,nz)||1; nx/=l;ny/=l;nz/=l;
+        acc[a*3]+=nx; acc[a*3+1]+=ny; acc[a*3+2]+=nz;
+        acc[b*3]+=nx; acc[b*3+1]+=ny; acc[b*3+2]+=nz;
+        acc[c*3]+=nx; acc[c*3+1]+=ny; acc[c*3+2]+=nz;
+      }
+      for (let f=0; f<nf; f++) {
+        const a=this.faces[f*3], b=this.faces[f*3+1], c=this.faces[f*3+2];
+        const br=Math.min(1, this.damage[this.faceOwner[f]] * 0.8);
+        const idx=[a,b,c];
+        for (let k=0;k<3;k++) {
+          const vi=idx[k], o=f*9+k*3;
+          P[o]=pos[vi*3];P[o+1]=pos[vi*3+1];P[o+2]=pos[vi*3+2];
+          let nx=acc[vi*3],ny=acc[vi*3+1],nz=acc[vi*3+2];
+          const nl=Math.hypot(nx,ny,nz)||1;
+          N[o]=nx/nl;N[o+1]=ny/nl;N[o+2]=nz/nl;
+          B[f*3+k]=br;
+        }
+      }
+      mesh.uploadAll(count);
+      return count;
+    }
+  }
+
+  class Ball {
+    constructor(opts) {
+      this.pos = opts.pos.slice();
+      this.vel = (opts.vel || [0,0,0]).slice();
+      this.r = opts.r || 0.1;
+      this.mass = opts.mass || 10;
+      this.invMass = 1 / this.mass;
+      this.color = opts.color || [0.72,0.73,0.75];
+      this.metal = opts.metal !== undefined ? opts.metal : 1;
+      this.rough = opts.rough !== undefined ? opts.rough : 0.22;
+      this.rest = opts.rest !== undefined ? opts.rest : 0.42;
+      this.name = opts.name || '';
+      this.spin = [0,0,0];
+      this.quat = [0,0,0,1];
+      this.rotMat = qToMat3(this.quat);
+      this.impactCool = 0;
+      this.age = 0;
+      this.sleep = false;
+    }
+    integrate(h) {
+      this.age += h;
+      if (this.sleep) return;
+      this.vel[1] += GRAV * h;
+      this.pos[0] += this.vel[0]*h;
+      this.pos[1] += this.vel[1]*h;
+      this.pos[2] += this.vel[2]*h;
+    }
+    integrateRotation(h) {
+      const sp=this.spin;
+      if (Math.abs(sp[0])+Math.abs(sp[1])+Math.abs(sp[2]) < 1e-5) return;
+      const angle=Math.hypot(sp[0],sp[1],sp[2])*h;
+      if (angle < 1e-7) return;
+      const ax=sp[0]/Math.hypot(sp[0],sp[1],sp[2]);
+      const ay=sp[1]/Math.hypot(sp[0],sp[1],sp[2]);
+      const az=sp[2]/Math.hypot(sp[0],sp[1],sp[2]);
+      const s=Math.sin(angle/2), c=Math.cos(angle/2);
+      this.quat=qNorm(qMul([ax*s,ay*s,az*s,c], this.quat));
+      this.rotMat=qToMat3(this.quat);
+    }
+  }
+
+  class JellySim {
+    constructor(gl) {
+      this.gl = gl;
+      this.bodies = [];
       this.balls = [];
-      while (this.hoverGroup.children.length) {
-        const ch = this.hoverGroup.children[this.hoverGroup.children.length - 1];
-        this.hoverGroup.remove(ch);
-        if (ch.geometry) ch.geometry.dispose();
-        if (ch.material) ch.material.dispose();
-      }
-      const count = this.p.mode === 'multi' ? U.clamp(Math.round(this.p.ball.count), 2, 5) : 1;
-      const theme = THEMES[this.p.jelly.color] || THEMES.mint;
-      const r = this.p.ball.radius;
-      const metal = new THREE.MeshStandardMaterial({
-        color: 0xbfcfd3,
-        metalness: 0.86,
-        roughness: 0.2,
-        envMapIntensity: 1.5
-      });
-      const grooveMat = new THREE.MeshStandardMaterial({
-        color: 0x77858a,
-        metalness: 0.9,
-        roughness: 0.34,
-        envMapIntensity: 1.1
-      });
-      const posList = this._ballPositions();
-      for (let i = 0; i < count; i++) {
-        const group = new THREE.Group();
-        const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 48, 36), metal);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        group.add(mesh);
-
-        // 赤道与纬度压线，增强旋转可读性
-        for (const sy of [0, 0.48, -0.48]) {
-          const rr = Math.sqrt(Math.max(0.02, 1 - sy * sy)) * r * 1.001;
-          const ring = new THREE.Mesh(new THREE.TorusGeometry(rr, r * 0.012, 6, 72), grooveMat);
-          ring.rotation.x = Math.PI / 2;
-          ring.position.y = sy * r;
-          group.add(ring);
-        }
-        // 小标记点
-        const dot = new THREE.Mesh(new THREE.SphereGeometry(r * 0.055, 12, 8),
-          new THREE.MeshStandardMaterial({ color: theme.glow, metalness: 0.2, roughness: 0.35, emissive: theme.glow, emissiveIntensity: 0.6 }));
-        dot.position.set(r * 0.72, r * 0.56, r * 0.4);
-        group.add(dot);
-
-        const hover = this.centerY + this.b + this.p.ball.height + r;
-        this.ballGroup.add(group);
-
-        // 悬浮释放环
-        const ringMat = new THREE.MeshBasicMaterial({
-          color: theme.glow, transparent: true, opacity: 0.55,
-          blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide
-        });
-        const hring = new THREE.Mesh(new THREE.TorusGeometry(r * 1.35, 0.008, 6, 64), ringMat);
-        hring.rotation.x = Math.PI / 2;
-        hring.position.set(posList[i].x, hover - r - 0.16, posList[i].z);
-        this.hoverGroup.add(hring);
-
-        this.balls.push({
-          group, mesh, x: posList[i].x, z: posList[i].z,
-          hover, y: hover, vy: 0, vx: 0, vz: 0,
-          speed: 0, active: false, released: false, inContact: false,
-          contactSound: 0, landed: false, radius: r, mass: this.p.ball.mass, pen: 0,
-          angVel: new THREE.Vector3(), ang: new THREE.Vector3(),
-          hring, hringMat: ringMat, hoverPhase: i * 1.7,
-          dropIndex: i
-        });
-        this.ballMeshes.push({ group });
-      }
-      this._syncBallMeshes(0);
-    }
-
-    _ballPositions() {
-      const a = this.a, c = this.c;
-      if (this.p.mode === 'offset') {
-        return [{ x: -a * 0.68, z: c * 0.04 }];
-      }
-      if (this.p.mode === 'multi') {
-        const base = [
-          { x: 0, z: 0 },
-          { x: -a * 0.36, z: -c * 0.18 },
-          { x: a * 0.34, z: c * 0.16 },
-          { x: -a * 0.12, z: c * 0.34 },
-          { x: a * 0.16, z: -c * 0.32 }
-        ];
-        return base;
-      }
-      return [{ x: 0, z: 0 }];
-    }
-
-    /* =================== 生命周期 =================== */
-    configure(partial) {
-      const old = this.p;
-      this.p = deepMerge(this.p, partial);
-      const structural = !old || old.jelly.scale !== this.p.jelly.scale ||
-        old.jelly.color !== this.p.jelly.color ||
-        old.ball.radius !== this.p.ball.radius ||
-        old.mode !== this.p.mode ||
-        old.ball.count !== this.p.ball.count ||
-        old.jelly.fixed !== this.p.jelly.fixed;
-      if (structural) {
-        this._buildBody();
-        this._buildBalls();
-      } else {
-        const oldNodeMass = this.nodeMass;
-        this.nodeMass = (34 * this.p.jelly.density) / this.nP;
-        this.balls.forEach((b) => { b.mass = this.p.ball.mass; });
-        if (oldNodeMass !== this.nodeMass) {
-          for (let i = 0; i < this.nP; i++) {
-            const pinned = this.p.jelly.fixed && Math.abs(this.rest[i * 3 + 1] + this.b) < 1e-6;
-            this.inv[i] = pinned ? 0 : 1 / this.nodeMass;
-          }
-        }
-      }
-      this._applyModeCamera();
-      this.reset();
-    }
-
-    applyPreset(partial) {
-      this.p = deepMerge(DEFAULTS, partial);
-      this._buildBody();
-      this._buildBalls();
-      this._applyModeCamera();
-      this.reset();
-    }
-
-    setMode(mode) {
-      if (this.p.mode === mode) return;
-      this.p.mode = mode;
-      this._buildBody();
-      this._buildBalls();
-      this._applyModeCamera();
-      this.reset();
-    }
-
-    _applyModeCamera() {
-      const base = this.p.mode === 'multi' ? 8.5 : (this.p.mode === 'offset' ? 7.7 : 7.9);
-      const view = { target: new THREE.Vector3(0, 1.42, 0), yaw: 0.1, pitch: 0.23, dist: this._fitDist(base) };
-      if (this.p.mode === 'multi') {
-        view.target.set(0, 1.45, 0);
-        view.pitch = 0.25;
-      } else if (this.p.mode === 'offset') {
-        view.yaw = 0.05;
-      }
-      this.orbit.home.yaw = this.orbit.goal.yaw = view.yaw;
-      this.orbit.home.pitch = this.orbit.goal.pitch = view.pitch;
-      this.orbit.home.dist = this.orbit.goal.dist = view.dist;
-      this.orbit.target.copy(view.target);
-      this.orbit.home.target.copy(view.target);
-      this.orbit.cur.yaw = view.yaw;
-      this.orbit.cur.pitch = view.pitch;
-      this.orbit.cur.dist = view.dist;
-    }
-
-    _fitDist(base) {
-      const ballTop = this.centerY + this.b + this.p.ball.height + this.p.ball.radius;
-      const half = Math.max(2.6, ballTop - 1.42 + 0.55);
-      const d = half / Math.tan(THREE.MathUtils.degToRad(this.camera.fov * 0.5));
-      return U.clamp(Math.max(base, d), 7.4, 11.5);
-    }
-
-    reset() {
+      this.events = [];
+      this.pending = [];
       this.time = 0;
-      this.started = false;
-      this.ended = false;
-      this.startAt = 0;
-      this.lastImpactAt = -10;
-      this.firstImpactAt = -10;
-      this.contactCount = 0;
-      this.settleTimer = 0;
-      this.repeatCount = 0;
-      this.shake = 0;
-      this.autoSoundTimer = 0;
-      this.wob = { sq: 0, sqv: 0, sway: 0, swayv: 0, bend: 0, bendv: 0, twist: 0, twistv: 0, lean: 0, leanv: 0 };
-      this._lastModeX = 0;
-      if (this.dustInitial && this.dust) {
-        this.dust.geometry.attributes.position.array.set(this.dustInitial);
-        this.dust.geometry.attributes.position.needsUpdate = true;
-      }
-      this._clearFx();
-
-      for (let i = 0; i < this.nP; i++) {
-        this.pos[i * 3] = this.rest[i * 3];
-        this.pos[i * 3 + 1] = this.rest[i * 3 + 1];
-        this.pos[i * 3 + 2] = this.rest[i * 3 + 2];
-        this.prev[i * 3] = this.rest[i * 3];
-        this.prev[i * 3 + 1] = this.rest[i * 3 + 1];
-        this.prev[i * 3 + 2] = this.rest[i * 3 + 2];
-        this.vel[i * 3] = this.vel[i * 3 + 1] = this.vel[i * 3 + 2] = 0;
-        if (this.p.jelly.fixed && Math.abs(this.rest[i * 3 + 1] + this.b) < 1e-6) {
-          this.inv[i] = 0;
-        } else {
-          this.inv[i] = 1 / this.nodeMass;
-        }
-      }
-      // 让自由放置的果冻稳定落座
-      if (!this.p.jelly.fixed) {
-        for (let s = 0; s < 100; s++) this._substep(1 / 120 / 2, true);
-        for (let i = 0; i < this.nP; i++) {
-          this.prev[i * 3] = this.pos[i * 3];
-          this.prev[i * 3 + 1] = this.pos[i * 3 + 1];
-          this.prev[i * 3 + 2] = this.pos[i * 3 + 2];
-          this.vel[i * 3] = this.vel[i * 3 + 1] = this.vel[i * 3 + 2] = 0;
-        }
-      }
-
-      for (const b of this.balls) {
-        b.x = 0; // 重置位置在 _buildBalls 定的初始位置重新读取
-      }
-      this._resetBallPositions();
-      this._updateMesh();
-      this._updateBubbles();
-      this._applyModeCamera();
+      this.iterations = 7;
+      this.softness = 0.55;
+      this.toughness = 0.55;
+      this.stiffScale = 0.15;
+      this.contactK = 1000;
+      this.contactC = 120;
+      this.dentScale = 0.7;
+      this.dentMax = 0.02;
+      this.dentReach = 0.18;
+      this.volScale = 4;
+      this.ballJellyRestitution = 0.22;
+      this.bodyMassScale = 1;
+      this.onReset = null;
+      this.selected = 0;
+      this.impacts = 0;
     }
 
-    _resetBallPositions() {
-      const list = this._ballPositions();
-      this.balls.forEach((b, i) => {
-        const pp = list[i % list.length];
-        b.x = pp.x;
-        b.z = pp.z;
-        b.hover = this.centerY + this.b + this.p.ball.height + b.radius;
-        b.y = b.hover;
-        b.vx = b.vy = b.vz = 0;
-        b.speed = 0;
-        b.active = false;
-        b.released = false;
-        b.inContact = false;
-        b.landed = false;
-        b.contactSound = 0;
-        b.pen = 0;
-        b.ang.set(0, 0, 0);
-        b.angVel.set(0, 0, 0);
-        if (b.hring) {
-          b.hring.visible = true;
-          b.hring.position.set(b.x, b.y - b.radius - 0.16, b.z);
-          b.hring.scale.setScalar(1);
-          b.hringMat.opacity = 0.5;
-        }
-        if (b.group) {
-          b.group.position.set(b.x, b.y, b.z);
-          b.group.rotation.set(0, 0, 0);
-          b.group.visible = true;
-        }
+    addBody(def, tag) {
+      const mesh = boxTetMesh(def.sx, def.sy, def.sz, def.nx, def.ny, def.nz);
+      // bevel the outer boundary into a rounded gummy block
+      const rr = Math.min(def.sx, def.sy, def.sz) * 0.105;
+      const hx = def.sx/2 - rr, hy = def.sy/2 - rr, hz = def.sz/2 - rr;
+      const nvx = def.nx + 1, nvy = def.ny + 1, nvz = def.nz + 1;
+      for (let k = 0; k < nvz; k++) for (let j = 0; j < nvy; j++) for (let i = 0; i < nvx; i++) {
+        if (i !== 0 && i !== def.nx && j !== 0 && j !== def.ny && k !== 0 && k !== def.nz) continue;
+        const vi = (i + nvx * (j + nvy * k)) * 3;
+        const x = mesh.rest[vi], y = mesh.rest[vi+1], z = mesh.rest[vi+2];
+        const cx = Math.max(-hx, Math.min(hx, x));
+        const cy = Math.max(-hy, Math.min(hy, y));
+        const cz = Math.max(-hz, Math.min(hz, z));
+        let dx = x-cx, dy = y-cy, dz = z-cz;
+        const L = Math.hypot(dx,dy,dz) || 1;
+        mesh.rest[vi] = cx + dx/L*rr;
+        mesh.rest[vi+1] = cy + dy/L*rr;
+        mesh.rest[vi+2] = cz + dz/L*rr;
+      }
+      for (let i=0;i<mesh.rest.length;i+=3) {
+        mesh.rest[i] += def.center[0];
+        mesh.rest[i+1] += def.center[1];
+        mesh.rest[i+2] += def.center[2];
+      }
+      const body = new JellyBody(this, {
+        rest: mesh.rest, tets: mesh.tets, color: def.color, deepColor: def.deepColor,
+        density: def.density || 150, tag, toughMul: def.toughMul, softMul: def.softMul,
+        alpha: def.alpha
       });
+      body.spawn = { center: def.center, sx: def.sx, sy: def.sy, sz: def.sz, def };
+      this.bodies.push(body);
+      return body;
     }
 
-    trigger(delay) {
-      if (this.started) this.reset();
-      this.started = true;
-      this.ended = false;
-      this.startDelay = delay === undefined ? 0.25 : delay;
-      this.startAt = this.time + this.startDelay;
-      this.repeatCount = 0;
-      if (this.events.onJelly) this.events.onJelly(0.18);
+    addBall(opts) {
+      const b = new Ball(opts);
+      this.balls.push(b);
+      return b;
     }
 
-    /** 导出：回到初始，使用演示镜头，准备计时 */
-    exportReset() {
-      this.exportMode = true;
-      this.reset();
-      this.orbit.enabled = false;
-      this.orbit.goal.yaw = this.orbit.cur.yaw = 0.08;
-      this.orbit.goal.pitch = this.orbit.cur.pitch = 0.225;
-      const base = this.p.mode === 'multi' ? 8.5 : (this.p.mode === 'offset' ? 7.7 : 7.9);
-      this.orbit.goal.dist = this.orbit.cur.dist = this._fitDist(base) + 0.1;
-      this.orbit.target.set(0, 1.42, 0);
-      this.orbit.home.target.set(0, 1.42, 0);
-      if (this.p.mode === 'multi') {
-        this.orbit.goal.dist = this.orbit.cur.dist = this._fitDist(8.5) + 0.1;
-        this.orbit.target.set(0, 1.45, 0);
-        this.orbit.home.target.set(0, 1.45, 0);
-      } else if (this.p.mode === 'offset') {
-        this.orbit.goal.dist = this.orbit.cur.dist = this._fitDist(7.7) + 0.1;
-      }
+    clearBalls(keepStatic) {
+      this.balls = this.balls.filter(b => keepStatic && b.static);
     }
 
-    /* =================== 模拟 =================== */
     step(dt) {
-      const n = Math.max(1, Math.round(dt / (DT / SUBSTEPS)));
-      const h = dt / n;
-      for (let i = 0; i < n; i++) this._substep(h, false);
+      const sub = 9;
+      const h = dt / sub;
+      for (let s=0;s<sub;s++) {
+        for (const b of this.bodies) { b.groundY = 0; b.integrate(h); }
+        for (const b of this.balls) b.integrate(h);
+        for (const body of this.bodies) body.solve(h, this);
+        for (const body of this.bodies) body.applyGround(0.55);
+        for (const body of this.bodies) body.updateVelocities(h);
+        // contacts transfer impulses after velocities are derived from deformation
+        for (const ball of this.balls) {
+          ball.impactCool -= h;
+          for (const body of this.bodies) body.addBallContacts([ball], h, this);
+        }
+        for (const ball of this.balls) this.ballWorld(ball, h);
+        this.ballBall(h);
+      }
+      // fracture check at lower rate
+      const newBodies = [];
+      const kept = [];
+      for (const body of this.bodies) {
+        const pieces = body.checkFracture(this);
+        if (pieces) {
+          for (const p of pieces) newBodies.push(p);
+        } else if (body.alive.some(a => a)) {
+          kept.push(body);
+        }
+      }
+      this.bodies = kept.concat(newBodies);
       this.time += dt;
-
-      if (this.started && !this.ended) {
-        const since = this.time - this.firstImpactAt;
-        if (this.contactCount === 0 && this.time > this.startAt + 0.6) {
-          // 尚未接触，正常下落
-        }
-        if (since > 1.8) {
-          const calm = this._isCalm();
-          if (calm) this.settleTimer += dt;
-          else this.settleTimer = Math.max(0, this.settleTimer - dt * 0.8);
-          if (this.settleTimer > 1.1) this.ended = true;
-        }
-        // 连击参数：自动重新释放
-        if (this.p.env.repeat && this.contactCount > 0 && this.time - this.lastImpactAt > 3.0 && this.repeatCount < 2) {
-          this.repeatCount++;
-          this._resetBallPositions();
-          this.started = true;
-          this.startAt = this.time + 0.25;
-          this.contactCount = 0;
-          this.settleTimer = 0;
-          this.ended = false;
-          this.firstImpactAt = this.time;
-          this.shake = 0.05;
-        }
+      // pending drops
+      for (let i=this.pending.length-1;i>=0;i--) {
+        const p=this.pending[i];
+        p.delay -= dt;
+        if (p.delay <= 0) { this.spawnDrop(p.opts); this.pending.splice(i,1); }
       }
-      this._updateVisuals(dt);
-      this._updateMesh();
-      this._updateBubbles();
+      // remove old balls
+      if (this.balls.length > 9) {
+        this.balls.sort((a,b)=>(a.static?1:0)-(b.static?1:0) || b.age-a.age);
+        this.balls.length = 9;
+      }
     }
 
-    _substep(h, quiet) {
-      const g = this.p.env.gravity;
-      const p = this.pos, v = this.vel, prev = this.prev, inv = this.inv;
-      const nP = this.nP;
-      const dampF = Math.exp(-this.p.jelly.damping * 2.6 * h);
-
-      this._integrateWobble(h);
-
-      // 重球接触力（在积分前估计）
-      if (!quiet) {
-        for (const b of this.balls) {
-          if (!b.active) continue;
-          this._ballContact(b, h);
-        }
-      }
-
-      // 粒子积分
-      for (let i = 0; i < nP; i++) {
-        const i3 = i * 3;
-        prev[i3] = p[i3]; prev[i3 + 1] = p[i3 + 1]; prev[i3 + 2] = p[i3 + 2];
-        if (inv[i] === 0) continue;
-        v[i3 + 1] -= g * h;
-        v[i3] *= dampF; v[i3 + 1] *= dampF; v[i3 + 2] *= dampF;
-        p[i3] += v[i3] * h;
-        p[i3 + 1] += v[i3 + 1] * h;
-        p[i3 + 2] += v[i3 + 2] * h;
-      }
-
-      // 重球积分
-      if (!quiet) {
-        for (const b of this.balls) {
-          if (!b.active) continue;
-          b.vy -= g * h;
-          const ad = Math.exp(-0.03 * h);
-          b.vx *= ad; b.vy *= ad; b.vz *= ad;
-          b.x += b.vx * h;
-          b.y += b.vy * h;
-          b.z += b.vz * h;
-          b.speed = Math.hypot(b.vx, b.vy, b.vz);
-          this._ballGround(b, h);
-        }
-        this._ballBallCollisions(h);
-      }
-
-      // 距离约束
-      const iters = 3 + Math.round((1 - this.p.jelly.softness) * 3);
-      const stiffScale = 0.45 + (1 - this.p.jelly.softness) * 0.3;
-      for (let it = 0; it < iters; it++) {
-        this._solveConstraints(h, stiffScale);
-        if (!this.p.jelly.fixed) this._groundParticles(h);
-      }
-      this._shapeRestore();
-      this._applyDents(h);
-
-      // 速度回写
-      for (let i = 0; i < nP; i++) {
-        const i3 = i * 3;
-        if (inv[i] === 0) {
-          v[i3] = v[i3 + 1] = v[i3 + 2] = 0;
-          p[i3] = this.rest[i3]; p[i3 + 1] = this.rest[i3 + 1]; p[i3 + 2] = this.rest[i3 + 2];
-          continue;
-        }
-        v[i3] = (p[i3] - prev[i3]) / h;
-        v[i3 + 1] = (p[i3 + 1] - prev[i3 + 1]) / h;
-        v[i3 + 2] = (p[i3 + 2] - prev[i3 + 2]) / h;
-        // 限制异常速度
-        const sp = Math.hypot(v[i3], v[i3 + 1], v[i3 + 2]);
-        if (sp > 22) {
-          const k = 22 / sp;
-          v[i3] *= k; v[i3 + 1] *= k; v[i3 + 2] *= k;
-        }
-      }
-
-      // 球的旋转与地面摩擦
-      if (!quiet) {
-        for (const b of this.balls) {
-          if (!b.active) continue;
-          b.ang.x += b.angVel.x * h;
-          b.ang.y += b.angVel.y * h;
-          b.ang.z += b.angVel.z * h;
-          b.angVel.multiplyScalar(Math.exp(-1.4 * h));
-          b.group.rotation.set(b.ang.x, b.ang.y, b.ang.z);
-          this._ballBounds(b);
-          // 静置吸能，避免在果冻表面无限微振
-          if (b.inContact) {
-            if (Math.abs(b.vy) < 0.16) b.vy *= Math.exp(-14 * h);
-            if (Math.abs(b.vx) < 0.06) b.vx *= Math.exp(-10 * h);
-            if (Math.abs(b.vz) < 0.06) b.vz *= Math.exp(-10 * h);
+    ballWorld(ball, h) {
+      const p=ball.pos, v=ball.vel;
+      const onTable = Math.abs(p[0]) < TABLE.hx && Math.abs(p[2]) < TABLE.hz;
+      const g = onTable ? 0 : TABLE.floor;
+      if (p[1] - ball.r < g) {
+        p[1] = g + ball.r;
+        if (v[1] < 0) {
+          if (v[1] < -0.8 && ball.impactCool <= 0) {
+            this.events.push({ type:'ball-floor', strength: Math.min(1, -v[1]/5), pos:[...p] });
+            ball.impactCool = 0.08;
           }
+          v[1] = -v[1] * ball.rest;
+          if (Math.abs(v[1]) < 0.35) v[1] = 0;
         }
-        // 释放调度
-        if (this.started && this.time >= this.startAt) {
-          for (const b of this.balls) {
-            if (!b.active && !b.released && this.time >= this.startAt + b.dropIndex * this.p.ball.interval) {
-              b.active = true;
-              b.released = true;
-              b.vy = 0;
-              if (this.events.onRelease) this.events.onRelease();
-            }
-          }
-        }
+        v[0] *= 0.985; v[2] *= 0.985;
+        // rolling spin
+        const r=ball.r;
+        ball.spin[0] *= 0.9; ball.spin[1] *= 0.92; ball.spin[2] *= 0.9;
+        ball.spin[0] += (v[2]/r - ball.spin[0]) * 0.25;
+        ball.spin[2] += (-v[0]/r - ball.spin[2]) * 0.25;
       }
+      // table edge: ball rolls off
+      if (!onTable && p[1]-ball.r < TABLE.floor) { p[1]=TABLE.floor+ball.r; v[1]=Math.abs(v[1])*0.3; }
+      ball.integrateRotation(h);
+      // studio bounds
+      if (Math.abs(p[0])>6 || Math.abs(p[2])>6) { v[0]*=-0.2; v[2]*=-0.2; p[0]=Math.max(-6,Math.min(6,p[0])); p[2]=Math.max(-6,Math.min(6,p[2])); }
     }
 
-    _solveConstraints(h, stiffScale) {
-      const p = this.pos, inv = this.inv;
-      const A = this.cA, B = this.cB, L = this.cL, S = this.cS;
-      for (let c = 0; c < A.length; c++) {
-        const ia = A[c], ib = B[c];
-        const ia3 = ia * 3, ib3 = ib * 3;
-        const dx = p[ib3] - p[ia3];
-        const dy = p[ib3 + 1] - p[ia3 + 1];
-        const dz = p[ib3 + 2] - p[ia3 + 2];
-        const d2 = dx * dx + dy * dy + dz * dz;
-        if (d2 < 1e-12) continue;
-        const d = Math.sqrt(d2);
-        const wa = inv[ia], wb = inv[ib];
-        const wsum = wa + wb;
-        if (wsum === 0) continue;
-        const rest = L[c];
-        const diff = ((d - rest) / d) * S[c] * stiffScale * 0.5;
-        const ka = (wa / wsum) * diff;
-        const kb = (wb / wsum) * diff;
-        p[ia3] += dx * ka; p[ia3 + 1] += dy * ka; p[ia3 + 2] += dz * ka;
-        p[ib3] -= dx * kb; p[ib3 + 1] -= dy * kb; p[ib3 + 2] -= dz * kb;
-      }
-    }
-
-    _groundParticles(h) {
-      const p = this.pos, prev = this.prev;
-      const bottom = -this.b;
-      for (let i = 0; i < this.nP; i++) {
-        const i3 = i * 3;
-        if (p[i3 + 1] < bottom) {
-          p[i3 + 1] = bottom;
-          p[i3] = (p[i3] + prev[i3]) * 0.5;
-          p[i3 + 2] = (p[i3 + 2] + prev[i3 + 2]) * 0.5;
+    ballBall(h) {
+      const balls=this.balls;
+      for (let i=0;i<balls.length;i++) for (let j=i+1;j<balls.length;j++) {
+        const a=balls[i], b=balls[j];
+        let dx=b.pos[0]-a.pos[0], dy=b.pos[1]-a.pos[1], dz=b.pos[2]-a.pos[2];
+        const d=Math.hypot(dx,dy,dz);
+        const rr=a.r+b.r;
+        if (d>rr || d<1e-6) continue;
+        dx/=d;dy/=d;dz/=d;
+        const pen=rr-d;
+        const tot=a.invMass+b.invMass;
+        a.pos[0]-=dx*pen*(a.invMass/tot); a.pos[1]-=dy*pen*(a.invMass/tot); a.pos[2]-=dz*pen*(a.invMass/tot);
+        b.pos[0]+=dx*pen*(b.invMass/tot); b.pos[1]+=dy*pen*(b.invMass/tot); b.pos[2]+=dz*pen*(b.invMass/tot);
+        const rvx=b.vel[0]-a.vel[0], rvy=b.vel[1]-a.vel[1], rvz=b.vel[2]-a.vel[2];
+        const vn=rvx*dx+rvy*dy+rvz*dz;
+        if (vn<0) {
+          const e=0.55;
+          const jimp=-(1+e)*vn/tot;
+          a.vel[0]-=dx*jimp*a.invMass; a.vel[1]-=dy*jimp*a.invMass; a.vel[2]-=dz*jimp*a.invMass;
+          b.vel[0]+=dx*jimp*b.invMass; b.vel[1]+=dy*jimp*b.invMass; b.vel[2]+=dz*jimp*b.invMass;
+          if (Math.abs(vn)>0.9) this.events.push({type:'ball-ball', strength:Math.min(1,Math.abs(vn)/4), pos:[...b.pos]});
         }
       }
     }
 
-    _volumeBulge(h) {
-      // 顶部平均压缩 → 侧向鼓出（体积近似守恒）
-      let sum = 0, cnt = 0;
-      for (let k = 0; k < NZ; k++) {
-        for (let i = 0; i < NX; i++) {
-          const idx = (k * NY + (NY - 1)) * NX + i;
-          sum += this.pos[idx * 3 + 1] - this.rest[idx * 3 + 1];
-          cnt++;
-        }
-      }
-      const avg = sum / Math.max(1, cnt);
-      if (avg < -0.002) {
-        const fac = 1 + Math.min(0.24, -avg * 0.85);
-        for (let i = 0; i < this.nP; i++) {
-          if (this.inv[i] === 0) continue;
-          const i3 = i * 3;
-          const wy = U.clamp((this.pos[i3 + 1] + this.b) / (2 * this.b), 0, 1);
-          const f = 1 + (fac - 1) * wy;
-          this.pos[i3] *= f;
-          this.pos[i3 + 2] *= f;
-        }
-      }
+    bodyCenter(body) {
+      let cx=0,cy=0,cz=0;
+      for (let i=0;i<body.nv;i++){cx+=body.pos[i*3];cy+=body.pos[i*3+1];cz+=body.pos[i*3+2];}
+      return [cx/body.nv, cy/body.nv, cz/body.nv];
     }
 
-    _collideParticlesBall() {
-      if (!this.balls) return;
-      for (const b of this.balls) {
-        if (!b.active) continue;
-        const r = b.radius + 0.045;
-        const bx = b.x, by = b.y, bz = b.z;
-        const r2 = r * r;
-        for (let i = 0; i < this.nP; i++) {
-          const i3 = i * 3;
-          const wx = this.pos[i3] + 0;
-          const wy = this.pos[i3 + 1] + this.centerY;
-          const wz = this.pos[i3 + 2] + 0;
-          const dx = wx - bx, dy = wy - by, dz = wz - bz;
-          const d2 = dx * dx + dy * dy + dz * dz;
-          if (d2 < r2 && d2 > 1e-8) {
-            const d = Math.sqrt(d2);
-            const push = (r - d);
-            const nx = dx / d, ny = dy / d, nz = dz / d;
-            // 只推开晶格粒子；重球受力由表面弹簧接触负责
-            this.pos[i3] += nx * push * 0.85;
-            this.pos[i3 + 1] += ny * push * 0.85;
-            this.pos[i3 + 2] += nz * push * 0.85;
-          }
-        }
-      }
+    bodyTop(body) {
+      let m=-1e9;
+      for (let i=1;i<body.pos.length;i+=3) if (body.pos[i]>m) m=body.pos[i];
+      return m;
     }
 
-    _shapeRestore() {
-      // 形状记忆：轻微拉回静止形，防止厚块在自重下塌陷（局部凹陷由外力覆盖）
-      const k = 0.012;
-      const p = this.pos, rest = this.rest, inv = this.inv;
-      for (let i = 0; i < this.nP; i++) {
-        if (inv[i] === 0) continue;
-        const i3 = i * 3;
-        p[i3] += (rest[i3] - p[i3]) * k;
-        p[i3 + 1] += (rest[i3 + 1] - p[i3 + 1]) * k;
-        p[i3 + 2] += (rest[i3 + 2] - p[i3 + 2]) * k;
+    findTag(tag) { return this.bodies.find(b => b.tag === tag); }
+
+    spawnDrop(opts) {
+      const body = opts.body && this.bodies.includes(opts.body) ? opts.body : this.findTag(opts.tag);
+      if (body) {
+        const c = this.bodyCenter(body);
+        const top = this.bodyTop(body);
+        opts.pos = [c[0] + (opts.dx||0), top + 0.12 + opts.height, c[2] + (opts.dz||0)];
+        opts.vel = [opts.vx||0, opts.vy||0, opts.vz||0];
       }
-    }
-
-    _ballGround(b, h) {
-      const floor = 0.02 + b.radius;
-      if (b.y < floor) {
-        b.y = floor;
-        if (b.vy < -0.2) {
-          b.vy = -b.vy * this.p.env.restitution;
-          if (this.events.onBall) this.events.onBall(U.clamp(-b.vy * 0.2, 0.1, 1));
-        } else {
-          b.vy = 0;
-        }
-        const fr = this.p.env.friction;
-        b.vx *= (1 - fr * 0.22);
-        b.vz *= (1 - fr * 0.22);
-        // 滚动角速度
-        b.angVel.z = -b.vx / b.radius * 0.85;
-        b.angVel.x = b.vz / b.radius * 0.85;
-        b.landed = true;
-      }
-    }
-
-    _ballBounds(b) {
-      const lim = 8.5;
-      if (Math.abs(b.x) > lim || Math.abs(b.z) > lim || b.y < -2) {
-        b.active = false;
-        b.group.visible = false;
-      }
-    }
-
-    _ballBallCollisions(h) {
-      for (let i = 0; i < this.balls.length; i++) {
-        const A = this.balls[i];
-        if (!A.active) continue;
-        for (let j = i + 1; j < this.balls.length; j++) {
-          const B = this.balls[j];
-          if (!B.active) continue;
-          const dx = B.x - A.x, dy = B.y - A.y, dz = B.z - A.z;
-          const rr = A.radius + B.radius;
-          const d2 = dx * dx + dy * dy + dz * dz;
-          if (d2 < rr * rr && d2 > 1e-8) {
-            const d = Math.sqrt(d2);
-            const nx = dx / d, ny = dy / d, nz = dz / d;
-            const overlap = rr - d;
-            A.x -= nx * overlap * 0.5; A.y -= ny * overlap * 0.5; A.z -= nz * overlap * 0.5;
-            B.x += nx * overlap * 0.5; B.y += ny * overlap * 0.5; B.z += nz * overlap * 0.5;
-            const rvx = B.vx - A.vx, rvy = B.vy - A.vy, rvz = B.vz - A.vz;
-            const vn = rvx * nx + rvy * ny + rvz * nz;
-            if (vn < 0) {
-              const e = 0.35;
-              const jimp = -(1 + e) * vn * 0.5;
-              A.vx -= nx * jimp; A.vy -= ny * jimp; A.vz -= nz * jimp;
-              B.vx += nx * jimp; B.vy += ny * jimp; B.vz += nz * jimp;
-              if (Math.abs(vn) > 0.4 && this.events.onBall) this.events.onBall(U.clamp(Math.abs(vn) * 0.12, 0.08, 1));
-            }
-          }
-        }
-      }
-    }
-
-    /** 变形表面高度（局部坐标） */
-    _surfaceHeight(lx, lz, out) {
-      const nx = U.clamp(lx / this.a, -0.999, 0.999);
-      const nz = U.clamp(lz / this.c, -0.999, 0.999);
-      const rr = 1 - Math.pow(Math.abs(nx), M) - Math.pow(Math.abs(nz), M);
-      let y = rr > 0 ? this.b * Math.pow(rr, 1 / M) : 0;
-
-      // 顶层的变形位移（双线性）
-      const u = U.clamp((lx + this.a) / (2 * this.a), 0, 0.99999) * (NX - 1);
-      const w = U.clamp((lz + this.c) / (2 * this.c), 0, 0.99999) * (NZ - 1);
-      const i0 = Math.floor(u), k0 = Math.floor(w);
-      const i1 = Math.min(i0 + 1, NX - 1), k1 = Math.min(k0 + 1, NZ - 1);
-      const fu = u - i0, fw = w - k0;
-      const top = (NY - 1) * NX;
-      const idxOf = (i, k) => (k * NY + (NY - 1)) * NX + i;
-      const id00 = idxOf(i0, k0), id10 = idxOf(i1, k0), id01 = idxOf(i0, k1), id11 = idxOf(i1, k1);
-      const dy = (1 - fu) * (1 - fw) * (this.pos[id00 * 3 + 1] - this.rest[id00 * 3 + 1]) +
-        fu * (1 - fw) * (this.pos[id10 * 3 + 1] - this.rest[id10 * 3 + 1]) +
-        (1 - fu) * fw * (this.pos[id01 * 3 + 1] - this.rest[id01 * 3 + 1]) +
-        fu * fw * (this.pos[id11 * 3 + 1] - this.rest[id11 * 3 + 1]);
-      // 顶层速度
-      const vy = (1 - fu) * (1 - fw) * this.vel[id00 * 3 + 1] +
-        fu * (1 - fw) * this.vel[id10 * 3 + 1] +
-        (1 - fu) * fw * this.vel[id01 * 3 + 1] +
-        fu * fw * this.vel[id11 * 3 + 1];
-      out.y = y + dy;
-      out.vy = vy;
-      return out;
-    }
-
-    _ballContact(b, h) {
-      const lx = b.x; // 世界 x 即局部 x（果冻中心在 x=0）
-      const lz = b.z;
-      if (Math.abs(lx) > this.a * 1.04 + b.radius * 0.55 || Math.abs(lz) > this.c * 1.04 + b.radius * 0.55) {
-        b.inContact = false;
-        b.pen = 0;
-        return;
-      }
-      const s = { y: 0, vy: 0 };
-      this._surfaceHeight(lx, lz, s);
-      const restTopW = this.centerY + this._restTop(lx, lz) + this._modeDispY(lx, this._restTop(lx, lz), lz);
-      const bottom = b.y - b.radius;
-      const pen = restTopW - bottom;
-      if (pen <= 0.002) {
-        b.inContact = false;
-        b.pen = 0;
-        return;
-      }
-      b.pen = Math.min(pen, this.b * 1.2);
-
-      // 静态形状法线 + 温和的形变倾斜（避免局部凹坑把球横向弹出）
-      const invA = 1 / this.a, invC = 1 / this.c;
-      const nx0 = lx * invA, nz0 = lz * invC;
-      let q = 1 - Math.pow(Math.abs(nx0), M) - Math.pow(Math.abs(nz0), M);
-      q = Math.max(0.02, q);
-      const qq = Math.pow(q, 1 / M - 1);
-      const dhx = -this.b * qq * Math.pow(lx, 3) / Math.pow(this.a, 4);
-      const dhz = -this.b * qq * Math.pow(lz, 3) / Math.pow(this.c, 4);
-      let nx = -dhx, ny = 1, nz = -dhz;
-
-      const eps = Math.max(0.24, b.radius * 0.7);
-      const s1 = { y: 0, vy: 0 }, s2 = { y: 0, vy: 0 }, s3 = { y: 0, vy: 0 }, s4 = { y: 0, vy: 0 };
-      this._surfaceHeight(lx + eps, lz, s1);
-      this._surfaceHeight(lx - eps, lz, s2);
-      this._surfaceHeight(lx, lz + eps, s3);
-      this._surfaceHeight(lx, lz - eps, s4);
-      // 只取位移场的斜率，减弱深坑边缘带来的异常法线
-      const r1 = this._restTop(lx + eps, lz), r2 = this._restTop(lx - eps, lz);
-      const r3 = this._restTop(lx, lz + eps), r4 = this._restTop(lx, lz - eps);
-      const dsx = ((s1.y - r1) - (s2.y - r2)) / (2 * eps);
-      const dsz = ((s3.y - r3) - (s4.y - r4)) / (2 * eps);
-      nx += dsx * 0.55;
-      nz += dsz * 0.55;
-
-      const nl = Math.hypot(nx, ny, nz);
-      nx /= nl; ny /= nl; nz /= nl;
-      if (ny < 0.55) {
-        nx *= 0.55 / ny; nz *= 0.55 / ny; ny = 0.55;
-        const l2 = Math.hypot(nx, ny, nz);
-        nx /= l2; ny /= l2; nz /= l2;
-      }
-
-      const soft = this.p.jelly.softness;
-      const H = this.b * 2;
-      const k = this.tune.k + (1 - soft) * this.tune.kSoft;
-      const c = 2 * Math.sqrt(k * b.mass) * this.tune.zeta;
-      const rvx = b.vx, rvy = b.vy, rvz = b.vz;
-      const vn = rvx * nx + rvy * ny + rvz * nz;
-      const stiffen = 1 + 2.2 * Math.min(1.5, (pen / H) * (pen / H));
-      let fn = k * pen * stiffen - c * vn;
-      fn = Math.max(0, Math.min(fn, 60000));
-
-      // 施加在球上
-      const imp = fn * h;
-      b.vx += nx * imp / b.mass;
-      b.vy += ny * imp / b.mass;
-      b.vz += nz * imp / b.mass;
-
-      // 切向摩擦 + 滚动
-      const tx = rvx - vn * nx, tz = rvz - vn * nz;
-      const ts = Math.hypot(tx, tz);
-      if (ts > 1e-4) {
-        const mu = this.p.env.friction;
-        const fr = Math.min(ts, mu * fn * h / b.mass);
-        b.vx -= (tx / ts) * fr;
-        b.vz -= (tz / ts) * fr;
-        b.angVel.x = (tz / ts) * fr / b.radius * 0.8;
-        b.angVel.z = -(tx / ts) * fr / b.radius * 0.8;
-      }
-
-      // 局部凹陷是通过形变目标驱动的，这里保留少量力耦合让晶格获得侧向响应
-      let sw = 0;
-      const weights = [];
-      const maxLat = Math.max(0.4, b.radius * 1.9);
-      for (let i = 0; i < this.nP; i++) {
-        const i3 = i * 3;
-        const wx = this.pos[i3];
-        const wy = this.pos[i3 + 1];
-        const wz = this.pos[i3 + 2];
-        if (wy < -this.b * 0.12) continue;
-        const ddx = wx - lx, ddz = wz - lz;
-        const lat2 = ddx * ddx + ddz * ddz;
-        if (lat2 > maxLat * maxLat) continue;
-        const wgt = Math.exp(-lat2 / (maxLat * maxLat * 0.55)) * (0.35 + 0.65 * U.clamp((wy + this.b * 0.2) / (this.b * 1.1), 0, 1));
-        if (wgt < 0.01) continue;
-        weights.push([i, wgt]);
-        sw += wgt;
-      }
-      if (sw > 0) {
-        const forceScale = fn * 0.08;
-        for (const [i, wgt] of weights) {
-          const i3 = i * 3;
-          const amt = (forceScale * (wgt / sw) / this.nodeMass) * h;
-          const lim = 1.25 * h * 120;
-          this.vel[i3] += U.clamp(-nx * amt, -lim, lim);
-          this.vel[i3 + 1] += U.clamp(-ny * amt, -lim, lim);
-          this.vel[i3 + 2] += U.clamp(-nz * amt, -lim, lim);
-        }
-      }
-
-      // 接触事件
-      if (!b.inContact && b.speed > 0.2) {
-        const strength = U.clamp((Math.abs(vn) + pen * 8) / 12, 0.15, 1);
-        this.contactCount++;
-        this.lastImpactAt = this.time;
-        if (this.contactCount === 1) this.firstImpactAt = this.time;
-        this.shake = Math.min(0.09, this.shake + strength * 0.075);
-        this.impactEnergy = Math.max(this.impactEnergy, strength);
-        this._spawnImpactFx(lx, restTopW, lz, strength);
-        this._exciteWobble(strength, lx, lz, vn);
-        if (this.events.onImpact) this.events.onImpact(strength);
-        if (this.events.onJelly) this.events.onJelly(strength);
-      }
-      b.inContact = true;
-      b.contactSound += h;
-      if (b.vy > 5.2) b.vy = 5.2;
-    }
-
-    _applyDents(h) {
-      if (!this.dentTarget) this.dentTarget = new Float32Array(this.nP);
-      const target = this.dentTarget;
-      target.fill(0);
-      const H = this.b * 2;
-      let any = false;
-      for (const b of this.balls) {
-        if (!b.active || !b.pen || b.pen <= 0) continue;
-        const depth = Math.min(b.pen, H * 0.62) * (this.tune.dent || 1);
-        const sigma = Math.max(0.16, b.radius * 0.62);
-        const maxLat = b.radius * 2.15;
-        const maxLat2 = maxLat * maxLat;
-        for (let i = 0; i < this.nP; i++) {
-          const i3 = i * 3;
-          const dx = this.pos[i3] - b.x;
-          const dz = this.pos[i3 + 2] - b.z;
-          const lat2 = dx * dx + dz * dz;
-          if (lat2 > maxLat2) continue;
-          const ynRest = U.clamp((this.rest[i3 + 1] + this.b) / H, 0, 1);
-          if (ynRest < 0.2) continue;
-          const wLat = Math.exp(-lat2 / (2 * sigma * sigma));
-          const wY = Math.pow(U.clamp(1 - (1 - ynRest) / 0.62, 0, 1), 0.72);
-          const t = depth * wLat * wY;
-          if (t > target[i]) { target[i] = t; any = true; }
-        }
-      }
-      if (!any) return;
-      const prev = this.prev;
-      for (let i = 0; i < this.nP; i++) {
-        if (target[i] <= 0 || this.inv[i] === 0) continue;
-        const i3 = i * 3;
-        const wantY = this.rest[i3 + 1] - target[i];
-        const dy = (wantY - this.pos[i3 + 1]) * 0.9;
-        this.pos[i3 + 1] += dy;
-        // 同步上一位置，避免强制位移产生虚假的巨大速度
-        prev[i3 + 1] += dy;
-      }
-    }
-
-    _restTop(lx, lz) {
-      const nx = U.clamp(lx / this.a, -0.999, 0.999);
-      const nz = U.clamp(lz / this.c, -0.999, 0.999);
-      const rr = 1 - Math.pow(Math.abs(nx), M) - Math.pow(Math.abs(nz), M);
-      return rr > 0 ? this.b * Math.pow(rr, 1 / M) : 0;
-    }
-
-    /** 受冲击激发的低阶软体振荡模式（阻尼谐振子，与晶格形变叠加） */
-    _exciteWobble(strength, lx, lz, vn) {
-      const sx = U.clamp(lx / this.a, -1, 1);
-      const sz = U.clamp(lz / this.c, -1, 1);
-      const impact = U.clamp(strength, 0.1, 1.2);
-      this.wob.sqv += impact * 8.4;
-      this.wob.swayv += sx * impact * 2.9;
-      this.wob.bendv += sx * impact * 1.6;
-      this.wob.twistv += sx * sz * impact * 1.2;
-    }
-
-    _integrateWobble(h) {
-      const w = this.wob;
-      const scale = 1 / Math.sqrt(this.p.jelly.scale);
-      const zeta = 0.027 + this.p.jelly.damping * 0.016;
-      const stepMode = (x, v, omega) => {
-        const a = -omega * omega * x - 2 * zeta * omega * v;
-        v += a * h;
-        x += v * h;
-        return [x, v];
-      };
-      let r;
-      r = stepMode(w.sq, w.sqv, 17 * scale); w.sq = r[0]; w.sqv = r[1];
-      r = stepMode(w.sway, w.swayv, 9.5 * scale); w.sway = r[0]; w.swayv = r[1];
-      r = stepMode(w.bend, w.bendv, 12.5 * scale); w.bend = r[0]; w.bendv = r[1];
-      r = stepMode(w.twist, w.twistv, 10.5 * scale); w.twist = r[0]; w.twistv = r[1];
-    }
-
-    _modeDisp(x, y, z, out) {
-      const h = U.clamp((y + this.b) / (2 * this.b), 0, 1);
-      const hh = h * h;
-      const w = this.wob;
-      const sq = w.sq;
-      out.x = x * sq * 0.35 * hh + w.sway * hh - z * w.twist * hh;
-      out.z = z * sq * 0.35 * hh + x * w.twist * hh;
-      out.y = -sq * this.b * Math.pow(h, 1.15) + w.bend * (x / this.a) * h * 0.9;
-      return out;
-    }
-
-    _modeDispY(x, y, z) {
-      const h = U.clamp((y + this.b) / (2 * this.b), 0, 1);
-      return -this.wob.sq * this.b * Math.pow(h, 1.15) + this.wob.bend * (x / this.a) * h * 0.9;
-    }
-
-    _spawnImpactFx(x, y, z, strength) {
-      const theme = THEMES[this.p.jelly.color] || THEMES.mint;
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: theme.glow,
-        transparent: true,
-        opacity: 0.55,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.DoubleSide
+      if (!opts.pos) return null;
+      const ball = this.addBall({
+        pos: opts.pos, vel: opts.vel || [0,0,0],
+        r: opts.r || (0.062 + Math.cbrt(opts.mass / 8) * 0.024),
+        mass: opts.mass, color: opts.color || [0.78,0.79,0.81],
+        metal: opts.metal !== undefined ? opts.metal : 1,
+        rough: opts.rough !== undefined ? opts.rough : 0.18,
+        rest: opts.rest !== undefined ? opts.rest : 0.34,
+        name: opts.name
       });
-      const ring = new THREE.Mesh(new THREE.RingGeometry(0.93, 1.0, 80), ringMat);
-      ring.rotation.x = -Math.PI / 2;
-      ring.position.set(x, y + 0.012, z);
-      ring.scale.setScalar(0.25);
-      this.fxGroup.add(ring);
-      this._fx = this._fx || [];
-      this._fx.push({ type: 'ring', mesh: ring, mat: ringMat, t: 0, dur: 1.1, strength });
-
-      const sprMat = new THREE.SpriteMaterial({
-        map: U.glowTexture(), color: theme.glow, transparent: true,
-        opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false
-      });
-      const spr = new THREE.Sprite(sprMat);
-      spr.position.set(x, y + 0.06, z);
-      spr.scale.setScalar(1.5 + strength * 1.6);
-      this.fxGroup.add(spr);
-      this._fx.push({ type: 'glow', mesh: spr, mat: sprMat, t: 0, dur: 0.55, strength });
-
-      // 微小水花般的胶体颗粒
-      const rand = U.rng(Math.floor(this.time * 1000) + 71);
-      const count = 14 + Math.floor(strength * 18);
-      const geo = new THREE.BufferGeometry();
-      const pos = new Float32Array(count * 3);
-      const vv = [];
-      for (let i = 0; i < count; i++) {
-        pos[i * 3] = x + (rand() - 0.5) * b0(this.a);
-        pos[i * 3 + 1] = y + 0.03;
-        pos[i * 3 + 2] = z + (rand() - 0.5) * b0(this.c);
-        vv.push(new THREE.Vector3((rand() - 0.5) * 2.2, 0.7 + rand() * 2.2 * strength, (rand() - 0.5) * 2.2));
-      }
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const pm = new THREE.PointsMaterial({
-        map: U.sprayTexture(), color: theme.glow, size: 0.055, transparent: true,
-        opacity: 0.75, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
-      });
-      const pts = new THREE.Points(geo, pm);
-      this.fxGroup.add(pts);
-      this._fx.push({ type: 'spray', mesh: pts, mat: pm, t: 0, dur: 0.8, vv, geo });
-
-      function b0(v) { return v; }
+      this.events.push({ type:'whoosh', pos: [opts.pos[0], opts.pos[1], opts.pos[2]] });
+      return ball;
     }
 
-    _clearFx() {
-      if (this._fx) {
-        for (const f of this._fx) {
-          this.fxGroup.remove(f.mesh);
-          if (f.geo) f.geo.dispose();
-          if (f.mat) f.mat.dispose();
-          if (f.type === 'ring' && f.mesh.geometry) f.mesh.geometry.dispose();
+    trigger(mode, p) {
+      const tag = p.tag !== undefined ? p.tag : this.selected;
+      const target = this.findTag(tag);
+      if (!target) return;
+      const mass = p.mass || 10;
+      const height = p.height || 1.2;
+      const base = { tag, mass, height, color:[0.8,0.81,0.83] };
+      if (mode === 'center') {
+        this.spawnDrop({ ...base, dx: 0.01, dz: 0.01, r: 0.062 + Math.cbrt(mass/8)*0.024 });
+      } else if (mode === 'offset') {
+        const c = this.bodyCenter(target);
+        // choose offset relative to body extents
+        const b = target.spawn;
+        const dx = Math.min(0.24, (b ? b.sx : 0.5) * 0.36);
+        const dz = Math.min(0.16, (b ? b.sz : 0.5) * 0.18);
+        this.spawnDrop({ ...base, dx, dz, vx: 0.5, r: 0.062 + Math.cbrt(mass/8)*0.024, metal: 1 });
+      } else if (mode === 'multi') {
+        const m = mass;
+        const h = height;
+        const c = this.bodyCenter(target);
+        const top = this.bodyTop(target);
+        const seq = [
+          { delay: 0.00, mass: m*0.72, height: h*0.55, dx: 0.03, dz: 0.02, r: 0.075 },
+          { delay: 0.48, mass: m*1.08, height: h*0.82, dx: -0.05, dz: 0.03, r: 0.083 },
+          { delay: 0.98, mass: m*1.7, height: h*1.12, dx: 0.02, dz: -0.02, r: 0.094 }
+        ];
+        for (const s of seq) {
+          this.pending.push({ delay: s.delay, opts: { ...base, ...s,
+            pos: [c[0] + s.dx, top + 0.16 + s.height, c[2] + s.dz],
+            vel: [0, 0, 0], tag: undefined } });
         }
       }
-      this._fx = [];
-      while (this.fxGroup.children.length) {
-        const ch = this.fxGroup.children[this.fxGroup.children.length - 1];
-        this.fxGroup.remove(ch);
-        if (ch.geometry && ch.isMesh) ch.geometry.dispose();
-        if (ch.material && !ch.material.__keep) ch.material.dispose();
-      }
+      this.impacts++;
     }
 
-    _updateVisuals(dt) {
-      // 悬浮环
-      for (const b of this.balls) {
-        if (!b.active) {
-          b.group.position.set(
-            b.x,
-            b.y + Math.sin(this.time * 1.5 + b.hoverPhase) * 0.018,
-            b.z
-          );
-          if (b.hring && b.hring.visible) {
-            b.hring.rotation.z += dt * 0.7;
-            b.hringMat.opacity = 0.36 + Math.sin(this.time * 2.2 + b.hoverPhase) * 0.12;
-          }
-        } else if (b.hring && b.hring.visible) {
-          b.hring.scale.setScalar(b.hring.scale.x + dt * 2.4);
-          b.hringMat.opacity = Math.max(0, b.hringMat.opacity - dt * 1.6);
-          if (b.hringMat.opacity <= 0) b.hring.visible = false;
-        }
-        if (b.active) {
-          b.group.position.set(b.x, b.y, b.z);
-        }
-      }
-
-      // 特效
-      if (this._fx) {
-        for (let i = this._fx.length - 1; i >= 0; i--) {
-          const f = this._fx[i];
-          f.t += dt;
-          const k = U.clamp(f.t / f.dur, 0, 1);
-          if (f.type === 'ring') {
-            f.mesh.scale.setScalar(0.3 + k * 2.6);
-            f.mat.opacity = (1 - k) * 0.5 * f.strength;
-          } else if (f.type === 'glow') {
-            f.mat.opacity = (1 - k) * 0.75;
-            f.mesh.scale.setScalar((1.5 + f.strength * 1.6) * (1 + k * 0.6));
-          } else if (f.type === 'spray') {
-            const pos = f.geo.attributes.position.array;
-            for (let q = 0; q < f.vv.length; q++) {
-              const v = f.vv[q];
-              v.y -= 5.5 * dt;
-              pos[q * 3] += v.x * dt;
-              pos[q * 3 + 1] += v.y * dt;
-              pos[q * 3 + 2] += v.z * dt;
-            }
-            f.geo.attributes.position.needsUpdate = true;
-            f.mat.opacity = (1 - k) * 0.7;
-          }
-          if (k >= 1) {
-            this.fxGroup.remove(f.mesh);
-            if (f.geo) f.geo.dispose();
-            if (f.mat) f.mat.dispose();
-            this._fx.splice(i, 1);
-          }
-        }
-      }
-
-      // 浮尘缓慢上升
-      if (this.dust) {
-        const pos = this.dust.geometry.attributes.position.array;
-        for (let i = 0; i < pos.length; i += 3) {
-          pos[i + 1] += dt * 0.055;
-          pos[i] += Math.sin(this.time * 0.25 + i) * dt * 0.012;
-          if (pos[i + 1] > 5.4) pos[i + 1] = -0.2;
-        }
-        this.dust.geometry.attributes.position.needsUpdate = true;
-      }
-
-      // 地光强度随冲击
-      if (this.floorGlow) {
-        this.impactEnergy *= Math.exp(-2.4 * dt);
-        this.floorGlow.material.opacity = 0.12 + this.impactEnergy * 0.3;
-      }
-      this.shake *= Math.exp(-5.5 * dt);
-    }
-
-    _isCalm() {
-      const w = this.wob;
-      if (Math.abs(w.sq) > 0.02 || Math.abs(w.sway) > 0.03 || Math.abs(w.bend) > 0.03 || Math.abs(w.twist) > 0.03) return false;
-      for (const b of this.balls) {
-        if (b.active && b.speed > 0.1) return false;
-      }
-      return true;
-    }
-
-    _updateMesh() {
-      const nP = this.nP;
-      const disp = this.disp;
-      const p = this.pos, rest = this.rest;
-      for (let i = 0; i < nP; i++) {
-        const i3 = i * 3;
-        disp[i3] = p[i3] - rest[i3];
-        disp[i3 + 1] = p[i3 + 1] - rest[i3 + 1];
-        disp[i3 + 2] = p[i3 + 2] - rest[i3 + 2];
-      }
-      const posArr = this.geo.attributes.position.array;
-      const vRest = this.vRest;
-      const pids = this.vPids;
-      const ws = this.vW;
-      const md = { x: 0, y: 0, z: 0 };
-      for (let vi = 0; vi < this.vCount; vi++) {
-        const vi3 = vi * 3;
-        let dx = 0, dy = 0, dz = 0;
-        const base = vi * 8;
-        for (let q = 0; q < 8; q++) {
-          const id3 = pids[base + q] * 3;
-          const w = ws[base + q];
-          dx += disp[id3] * w;
-          dy += disp[id3 + 1] * w;
-          dz += disp[id3 + 2] * w;
-        }
-        const rx = vRest[vi3], ry = vRest[vi3 + 1], rz = vRest[vi3 + 2];
-        this._modeDisp(rx, ry, rz, md);
-        posArr[vi3] = rx + dx + md.x;
-        posArr[vi3 + 1] = ry + dy + md.y;
-        posArr[vi3 + 2] = rz + dz + md.z;
-      }
-      this.geo.attributes.position.needsUpdate = true;
-      this.geo.computeVertexNormals();
-      this.geo.attributes.normal.needsUpdate = true;
-    }
-
-    _updateBubbles() {
-      if (!this.bubbles) return;
-      for (const b of this.bubbles) {
-        const u = U.clamp((b.x + this.a) / (2 * this.a), 0, 0.99999) * (NX - 1);
-        const v = U.clamp((b.y + this.b) / (2 * this.b), 0, 0.99999) * (NY - 1);
-        const w = U.clamp((b.z + this.c) / (2 * this.c), 0, 0.99999) * (NZ - 1);
-        const i0 = Math.floor(u), j0 = Math.floor(v), k0 = Math.floor(w);
-        const i1 = Math.min(i0 + 1, NX - 1), j1 = Math.min(j0 + 1, NY - 1), k1 = Math.min(k0 + 1, NZ - 1);
-        const fu = u - i0, fv = v - j0, fw = w - k0;
-        const pi = (i, j, k) => (k * NY + j) * NX + i;
-        const ids = [pi(i0, j0, k0), pi(i1, j0, k0), pi(i0, j1, k0), pi(i1, j1, k0),
-          pi(i0, j0, k1), pi(i1, j0, k1), pi(i0, j1, k1), pi(i1, j1, k1)];
-        const ws = [(1 - fu) * (1 - fv) * (1 - fw), fu * (1 - fv) * (1 - fw),
-          (1 - fu) * fv * (1 - fw), fu * fv * (1 - fw),
-          (1 - fu) * (1 - fv) * fw, fu * (1 - fv) * fw,
-          (1 - fu) * fv * fw, fu * fv * fw];
-        let dx = 0, dy = 0, dz = 0;
-        for (let q = 0; q < 8; q++) {
-          const id3 = ids[q] * 3;
-          dx += this.disp[id3] * ws[q];
-          dy += this.disp[id3 + 1] * ws[q];
-          dz += this.disp[id3 + 2] * ws[q];
-        }
-        const md = { x: 0, y: 0, z: 0 };
-        this._modeDisp(b.x, b.y, b.z, md);
-        b.mesh.position.set(b.x + dx + md.x, b.y + dy + md.y, b.z + dz + md.z);
-      }
-    }
-
-    _syncBallMeshes() {
-      for (const b of this.balls) {
-        b.group.position.set(b.x, b.y, b.z);
-        b.group.rotation.set(b.ang.x, b.ang.y, b.ang.z);
-      }
-    }
-
-    setActive(on) {
-      this.orbit.enabled = on && !this.exportMode;
-    }
-
-    render(dt) {
-      this.orbit.update(dt || 0.016);
-      if (!this.exportMode && this.shake > 0.0005) {
-        const t = performance.now() * 0.001;
-        this.camera.position.x += Math.sin(t * 57) * this.shake;
-        this.camera.position.y += Math.sin(t * 71 + 1.7) * this.shake * 0.8;
-        this.camera.position.z += Math.sin(t * 63 + 0.6) * this.shake * 0.6;
-      }
-      this.renderer.render(this.scene, this.camera);
-    }
-
-    getPhase() {
-      if (!this.started) return { key: 'ready', label: '准备' };
-      if (this.time < this.startAt) return { key: 'ready', label: '准备' };
-      if (this.contactCount === 0) return { key: 'drop', label: '下落' };
-      if (this.ended) return { key: 'settled', label: '稳定' };
-      if (this.time - this.firstImpactAt < 0.7) return { key: 'impact', label: '冲击' };
-      return { key: 'after', label: '余波' };
-    }
-
-    getProgress() {
-      const target = this.p.mode === 'multi' ? 9.5 : 7.2;
-      if (!this.started) return 0;
-      if (this.ended) return 1;
-      return U.clamp(this.time / target, 0, 0.98);
-    }
-
-    getStatusLine() {
-      if (!this.started) return '重球悬停，等待释放';
-      if (this.time < this.startAt) return '系统就绪';
-      if (this.contactCount === 0) return '重球自由下落';
-      if (this.ended) return '振荡衰减，系统稳定';
-      if (this.time - this.firstImpactAt < 0.7) return '接触 · 局部凹陷扩散';
-      return '回弹 · 形变在晶格中传播';
+    snapshotBalls() {
+      return this.balls.filter(b=>b.static).map(b => ({ pos: [...b.pos], vel: [...b.vel] }));
     }
   }
 
-  JellyScene.DEFAULTS = DEFAULTS;
-  window.JellyScene = JellyScene;
+  JellySim.Ball = Ball;
+  JellySim.JellyBody = JellyBody;
+  JellySim.boxTetMesh = boxTetMesh;
+  JellySim.TABLE = TABLE;
+  window.JellySim = JellySim;
+  window.QMath = { qMul, qNorm, qToMat3 };
 })();

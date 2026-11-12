@@ -475,7 +475,7 @@ body[data-lang='en'] .md-side-head .st-eyebrow {
   margin: 0;
 }
 
-/* ---------- a narrower content column: the dial above the 8 categories ---------- */
+/* ---------- a narrower content column: the dial above the 10 categories ---------- */
 @media (max-width: 1279px) {
   .md-top,
   .md-skeleton {

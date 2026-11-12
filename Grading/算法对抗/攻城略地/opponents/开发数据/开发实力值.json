@@ -1,0 +1,69 @@
+{
+  "ratings": {
+    "tier1": 0.0,
+    "tier2": 187.50981855031398,
+    "tier3": 377.0266133630331,
+    "tier4": 595.4955244127405
+  },
+  "anchor": "tier1",
+  "converged": true,
+  "iterations": 12,
+  "ridge": 0.0,
+  "finite_mle": true,
+  "games": 2400,
+  "pairs": [
+    {
+      "a": "tier1",
+      "b": "tier2",
+      "wins": 84,
+      "draws": 0,
+      "losses": 316,
+      "maps": 200
+    },
+    {
+      "a": "tier1",
+      "b": "tier3",
+      "wins": 45,
+      "draws": 0,
+      "losses": 355,
+      "maps": 200
+    },
+    {
+      "a": "tier1",
+      "b": "tier4",
+      "wins": 26,
+      "draws": 0,
+      "losses": 374,
+      "maps": 200
+    },
+    {
+      "a": "tier2",
+      "b": "tier3",
+      "wins": 104,
+      "draws": 0,
+      "losses": 296,
+      "maps": 200
+    },
+    {
+      "a": "tier2",
+      "b": "tier4",
+      "wins": 14,
+      "draws": 0,
+      "losses": 386,
+      "maps": 200
+    },
+    {
+      "a": "tier3",
+      "b": "tier4",
+      "wins": 96,
+      "draws": 0,
+      "losses": 304,
+      "maps": 200
+    }
+  ],
+  "gaps": [
+    187.50981855031398,
+    189.51679481271913,
+    218.46891104970734
+  ]
+}

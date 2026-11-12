@@ -1,0 +1,27 @@
+{
+  "brief": [
+    "Implement `decide()` in C++: two sides fight over 16–24 nodes on a point-symmetric map, each turn both send troops at the same time from their own nodes to any node, and troops on their own nodes grow by each node's growth rate every turn. Troops travel for as many turns as the distance between the nodes and cannot turn back once sent; on arrival the node goes to the side with the most troops. A game lasts at most 200 turns: a side that loses all its nodes and troops loses, otherwise total troops decide.",
+    {
+      "ul": [
+        "The engine `engine.hpp` is the same code the referee uses, so the bot can simulate turns directly; the host program, map generator, local arena and a sample bot come with the task.",
+        "Two compiled sparring partners come too: the weak one is about as strong as tier 2 of the real opponents, the strong one sits between tiers 4 and 5; the real opponents play differently from both.",
+        "Opponents come in five tiers from weak to strong, the strongest a carefully written program by the task setters; the opponent programs and the seeds of the 96 scoring maps are not public, and the scoring maps follow the same rules as the generator handed out.",
+        "Each turn has 50 ms of CPU time, turn 1 has 1 s; a turn over time gives no orders, and a crash or no orders within 5 s of wall time loses the game.",
+        "Only the C++ standard library and `engine.hpp`, single-threaded, no file I/O, network or new processes."
+      ]
+    }
+  ],
+  "points": [
+    "**Simultaneous moves and foresight**: both sides order in the same turn and troops cannot turn back once sent, so the bot must work out each node's future troops and owner from the troops on the way.",
+    "**Expansion and defense**: taking neutral nodes raises growth, but the troops sent out leave its own nodes bare; attack and defense must be weighed together.",
+    "**Search under a time limit**: the engine can simulate turns directly, but each turn has only 50 ms of CPU time, so how deep and how wide to look is the program's own trade-off.",
+    "**Strength, not tricks**: the score comes from a rating estimated over all games against the five tiers, so the bot must hold up on every kind of map; matching the strongest tier earns 80, and full marks need a clearly stronger bot."
+  ],
+  "scoring": [
+    "**480 games**: on each of 96 hidden maps, one game against each tier, 96 games per tier; seats alternate by map order, the submission playing A on odd maps and B on even ones. A win scores 1, a draw 0.5, a loss 0.",
+    "**Rating**: before testing, the five opponents play a round robin on the same 96 maps and a Bradley–Terry fit gives their Elo-scale ratings $R_1$–$R_5$, which are then frozen; the bot's rating $r$ is the value at which its expected total score over the 480 games equals its actual total, clamped to $[R_1-200,\\ R_5+200]$.",
+    "**Conversion**: $r$ equal to $R_1-200$ scores 0, equal to the ratings of tiers 1–5 scores 10, 20, 40, 60 and 80, and 200 above tier 5 scores 100, interpolated linearly in rating between neighbouring anchors, to one decimal; $r\\le R_1-200$ scores 0 and $r\\ge R_5+200$ scores 100.",
+    "**Measured together**: run at the end of grading, 8 games at a time on the 8 performance cores, each game's two programs pinned to one logical processor each and timed by their own process's CPU time.",
+    "**Rules come first**: a compile failure or a broken submission rule (threads, file I/O, interfering with timing or the opponent's process, for example) scores 0 for the whole task."
+  ]
+}

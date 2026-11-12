@@ -6,6 +6,7 @@
 //     /leaderboard/          leaderboard   /en/leaderboard/
 //     /categories/           categories    /en/categories/
 //     /about/                about         /en/about/
+//     /faq/                  faq           /en/faq/      猜你想问（内容 content/<lang>/faq.json）
 //     /tasks/                tasks         /en/tasks/
 //     /tasks/<cat>/<task>/   task          (one per task in data/tasks.json)
 //     /models/               model         入口页：总分第 1 名（scores.json 的 order 第一个）的模型得分页
@@ -26,7 +27,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, posix } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-export const PAGE_TYPES = ['home', 'leaderboard', 'categories', 'about', 'tasks', 'task', 'model'];
+export const PAGE_TYPES = ['home', 'leaderboard', 'categories', 'about', 'faq', 'tasks', 'task', 'model'];
 const LANGS = ['zh', 'en'];
 
 const readJSON = (file, fallback) => {
@@ -66,9 +67,9 @@ export function listRoutes(dataDir) {
   for (const lang of LANGS) {
     const pre = lang === 'en' ? 'en/' : '';
     out.push({ path: pre, page: 'home', lang, id: '' });
-    for (const p of ['leaderboard', 'categories', 'about', 'tasks']) out.push({ path: `${pre}${p}/`, page: p, lang, id: '' });
+    for (const p of ['leaderboard', 'categories', 'about', 'faq', 'tasks']) out.push({ path: `${pre}${p}/`, page: p, lang, id: '' });
     for (const c of cats) for (const t of c.tasks ?? []) out.push({ path: `${pre}tasks/${c.key}/${t.key}/`, page: 'task', lang, id: `${c.key}/${t.key}` });
-    if (top) out.push({ path: `${pre}models/`, page: 'model', lang, id: top });
+    out.push({ path: `${pre}models/`, page: 'model', lang, id: top ?? '' });   // 没有模型时（暂停公示）入口页照样生成，显示提示
     for (const m of models) out.push({ path: `${pre}models/${m.id}/`, page: 'model', lang, id: m.id });
   }
   return out;

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0a1f"/>
+      <stop offset="0.35" stop-color="#241a4a"/>
+      <stop offset="0.62" stop-color="#5b3a7a"/>
+      <stop offset="0.80" stop-color="#b25b7e"/>
+      <stop offset="0.92" stop-color="#f0a06a"/>
+      <stop offset="1" stop-color="#ffd9a0"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe9b8" stop-opacity="0.95"/>
+      <stop offset="0.25" stop-color="#ffbf7a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ff9d6a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c98a72"/>
+      <stop offset="0.25" stop-color="#6e4a78"/>
+      <stop offset="1" stop-color="#161233"/>
+    </linearGradient>
+    <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a2a63"/><stop offset="1" stop-color="#241a4a"/>
+    </linearGradient>
+    <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26204f"/><stop offset="1" stop-color="#161130"/>
+    </linearGradient>
+    <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#171238"/><stop offset="1" stop-color="#0c0a22"/>
+    </linearGradient>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a081c"/><stop offset="1" stop-color="#050410"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+
+  <!-- stars -->
+  <g fill="#fff" opacity="0.5">
+    <circle cx="220" cy="120" r="1.6"/><circle cx="480" cy="80" r="1.2"/><circle cx="760" cy="160" r="1.8"/>
+    <circle cx="1020" cy="90" r="1.1"/><circle cx="1280" cy="140" r="1.5"/><circle cx="1560" cy="70" r="1.3"/>
+    <circle cx="1740" cy="180" r="1.7"/><circle cx="340" cy="230" r="1"/><circle cx="1420" cy="250" r="1.1"/>
+    <circle cx="620" cy="300" r="1"/><circle cx="900" cy="220" r="1.2"/><circle cx="1680" cy="320" r="1"/>
+  </g>
+
+  <!-- sun glow and disc -->
+  <circle cx="980" cy="690" r="360" fill="url(#sunGlow)"/>
+  <circle cx="980" cy="700" r="86" fill="#ffe6b0" opacity="0.9" filter="url(#soft)"/>
+  <circle cx="980" cy="700" r="70" fill="#fff2cf"/>
+
+  <!-- distant mountains -->
+  <path d="M0 700 L180 560 L340 640 L520 470 L700 610 L880 500 L1080 640 L1280 520 L1480 620 L1680 500 L1920 640 L1920 1080 L0 1080 Z" fill="url(#m1)" opacity="0.9"/>
+  <path d="M0 760 L240 640 L420 720 L640 600 L820 720 L1040 620 L1260 740 L1500 630 L1720 730 L1920 650 L1920 1080 L0 1080 Z" fill="url(#m2)"/>
+  <!-- snow caps -->
+  <path d="M520 470 L560 512 L520 502 L486 520 Z" fill="#e9d9f2" opacity="0.5"/>
+  <path d="M1680 500 L1718 540 L1682 530 L1650 548 Z" fill="#e9d9f2" opacity="0.45"/>
+
+  <!-- lake -->
+  <rect x="0" y="800" width="1920" height="280" fill="url(#water)"/>
+  <ellipse cx="980" cy="850" rx="150" ry="26" fill="#ffe6b0" opacity="0.35" filter="url(#blur)"/>
+  <g stroke="#ffd9a0" stroke-width="2" opacity="0.18">
+    <line x1="820" y1="838" x2="1140" y2="838"/>
+    <line x1="780" y1="862" x2="1180" y2="862"/>
+    <line x1="840" y1="890" x2="1120" y2="890"/>
+    <line x1="790" y1="922" x2="1170" y2="922"/>
+  </g>
+
+  <!-- near hills -->
+  <path d="M0 820 L300 700 L520 790 L760 690 L960 800 L1200 700 L1440 800 L1680 710 L1920 800 L1920 1080 L0 1080 Z" fill="url(#m3)"/>
+
+  <!-- foreground ridge with pines -->
+  <path d="M0 900 L260 830 L520 900 L820 840 L1120 910 L1400 850 L1680 910 L1920 860 L1920 1080 L0 1080 Z" fill="url(#fg)"/>
+  <g fill="#050410">
+    <!-- pine clusters -->
+    <g transform="translate(150,862)"><path d="M0 0 L-26 60 L-10 60 L-34 110 L34 110 L10 60 L26 60 Z"/></g>
+    <g transform="translate(240,880) scale(0.8)"><path d="M0 0 L-26 60 L-10 60 L-34 110 L34 110 L10 60 L26 60 Z"/></g>
+    <g transform="translate(1500,880)"><path d="M0 0 L-26 60 L-10 60 L-34 110 L34 110 L10 60 L26 60 Z"/></g>
+    <g transform="translate(1600,900) scale(1.1)"><path d="M0 0 L-26 60 L-10 60 L-34 110 L34 110 L10 60 L26 60 Z"/></g>
+    <g transform="translate(1760,872) scale(0.9)"><path d="M0 0 L-26 60 L-10 60 L-34 110 L34 110 L10 60 L26 60 Z"/></g>
+  </g>
+
+  <!-- birds -->
+  <g stroke="#1a1430" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7">
+    <path d="M620 300 q14 -12 28 0 q14 -12 28 0"/>
+    <path d="M690 340 q10 -9 20 0 q10 -9 20 0"/>
+    <path d="M560 360 q8 -7 16 0 q8 -7 16 0"/>
+  </g>
+
+  <!-- subtle vignette -->
+  <rect width="1920" height="1080" fill="url(#sky)" opacity="0"/>
+  <radialGradient id="vig" cx="0.5" cy="0.45" r="0.75">
+    <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+  </radialGradient>
+  <rect width="1920" height="1080" fill="url(#vig)"/>
+</svg>

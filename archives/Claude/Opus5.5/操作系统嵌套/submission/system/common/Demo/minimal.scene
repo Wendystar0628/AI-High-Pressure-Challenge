@@ -1,0 +1,171 @@
+{
+ "format": "nest-scene",
+ "version": 1,
+ "name": "最小场景：一个立方体、一盏灯、一台相机",
+ "fps": 60,
+ "duration": 4,
+ "environment": {
+  "sky": {
+   "top": "#24324f",
+   "horizon": "#6b7da3",
+   "ground": "#222",
+   "sunGlow": "#ffffff"
+  },
+  "sun": {
+   "dir": [
+    0.5,
+    0.8,
+    0.3
+   ],
+   "color": "#ffffff",
+   "intensity": 2.5,
+   "shadow": {
+    "size": 1024,
+    "area": 6,
+    "far": 40
+   }
+  },
+  "ambient": {
+   "sky": "#8899bb",
+   "ground": "#332211",
+   "intensity": 0.5
+  }
+ },
+ "materials": {
+  "red": {
+   "color": "#e5484d",
+   "rough": 0.4,
+   "metal": 0.1
+  },
+  "floor": {
+   "color": "#8899aa",
+   "rough": 0.9
+  }
+ },
+ "objects": [
+  {
+   "id": "floor",
+   "geo": {
+    "type": "box",
+    "w": 8,
+    "h": 0.2,
+    "d": 8
+   },
+   "mat": "floor",
+   "pos": [
+    0,
+    -0.1,
+    0
+   ],
+   "receive": true
+  }
+ ],
+ "parts": [
+  {
+   "id": "cube",
+   "parent": null,
+   "geo": {
+    "type": "box",
+    "w": 1,
+    "h": 1,
+    "d": 1
+   },
+   "mat": "red",
+   "pos": [
+    0,
+    0.6,
+    0
+   ],
+   "cast": true,
+   "label": "立方体",
+   "pick": {
+    "r": 0.8,
+    "at": [
+     0,
+     0,
+     0
+    ]
+   }
+  }
+ ],
+ "cameras": {
+  "show": {
+   "fixed": {
+    "pos": [
+     3,
+     2.2,
+     3.5
+    ],
+    "look": [
+     0,
+     0.5,
+     0
+    ],
+    "fov": 45
+   }
+  },
+  "orbit": {
+   "dist": 5,
+   "yaw": 40,
+   "pitch": 20,
+   "fov": 45
+  }
+ },
+ "timeline": {
+  "type": "keys",
+  "tracks": [
+   {
+    "part": "cube",
+    "prop": "rot",
+    "keys": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      4,
+      [
+       0,
+       360,
+       0
+      ]
+     ]
+    ]
+   },
+   {
+    "part": "cube",
+    "prop": "pos",
+    "keys": [
+     [
+      0,
+      [
+       0,
+       0.6,
+       0
+      ]
+     ],
+     [
+      2,
+      [
+       0,
+       1.6,
+       0
+      ]
+     ],
+     [
+      4,
+      [
+       0,
+       0.6,
+       0
+      ]
+     ]
+    ]
+   }
+  ]
+ }
+}

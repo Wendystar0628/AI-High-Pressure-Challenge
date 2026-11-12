@@ -1,0 +1,339 @@
+/* 成绩矩阵 (ui/matrix.js): models × tasks, the total or category score last.
+   Cells write their score on the step ground of their kind (tokens.css --step-*);
+   the best of a column carries a small flare star; cells without a score are
+   grey with a hatch and a short mark. At phone width the table scrolls sideways
+   under a model column that stays at the left. */
+.mx-wrap {
+  position: relative;
+}
+.mx-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--st-rule) transparent;
+}
+/* 存为图片 measures the whole table */
+.mx-scroll.is-full {
+  overflow: visible;
+}
+.mx-scroll.is-full .mx-model {
+  position: static;
+}
+.mx {
+  --mx-model: 18.5rem;
+  --mx-cell-h: 2.35rem;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--st-font-ui);
+  font-variant-numeric: tabular-nums;
+}
+/* one category: a few wide columns would be too wide, so the table stays compact */
+.mx.is-single {
+  width: min(100%, 46rem);
+}
+.mx th,
+.mx td {
+  padding: 0;
+  border-bottom: 2px solid var(--st-panel);
+  font-weight: inherit;
+}
+.mx thead th {
+  color: var(--st-ink-2);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-stretch: var(--st-wider);
+  vertical-align: bottom;
+}
+.mx thead tr:last-child th,
+.mx thead .mx-corner,
+.mx thead .mx-last {
+  border-bottom: 1px solid var(--st-ink);
+}
+
+/* ---- the model column: rank, tick, vendor icon, full name (effort kept when cut) ---- */
+.mx .mx-model {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: var(--mx-model);
+  background: var(--st-panel);
+  text-align: left;
+  border-bottom: 1px solid var(--st-rule);
+}
+.mx-m {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  height: var(--mx-cell-h);
+  padding: 0 0.75rem 0 0.4rem;
+}
+.mx-corner .mx-m {
+  height: auto;
+  min-height: 2rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.mx-rank {
+  flex: none;
+  width: 1.6rem;
+  color: var(--st-ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-stretch: var(--st-wide);
+}
+.mx-check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.75rem;
+  cursor: pointer;
+}
+.mx-m > .icon-vendor {
+  flex: none;
+}
+.mx-name {
+  display: flex;
+  min-width: 0;
+  color: var(--st-ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mx-name:is(:hover, :focus-visible) .mname-text {
+  text-decoration: underline 2px var(--st-orbit);
+  text-underline-offset: 4px;
+}
+/* pointing at a row, and a ticked row: the violet bar on the left of the model cell */
+.mx-row > .mx-model .mx-m::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s var(--st-snap);
+}
+.mx-row {
+  cursor: pointer;
+}
+.mx-row:is(:hover, :focus-within) > .mx-model {
+  background: var(--st-paper);
+}
+.mx-row:is(:hover, :focus-within, .is-checked) > .mx-model .mx-m::before {
+  transform: none;
+}
+.mx-row.is-checked .mx-name {
+  font-weight: 800;
+}
+/* the row pointed at: its cells get an ink edge underneath */
+.mx-row:hover > td {
+  box-shadow: inset 0 -2px 0 var(--st-ink);
+}
+
+/* ---- category groups and column heads ---- */
+.mx-group {
+  padding: 0.35rem 0.2rem 0.3rem;
+  border-bottom: 1px solid var(--st-rule) !important;
+  text-align: center;
+}
+.mx-gname {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1rem 0.35rem;
+  color: var(--st-ink);
+  font-size: 0.72rem;
+  font-stretch: var(--st-wide);
+  letter-spacing: 0;
+  text-decoration: none;
+}
+.mx-gname:is(:hover, :focus-visible) .mx-gtext {
+  text-decoration: underline 1px var(--st-orbit);
+  text-underline-offset: 3px;
+}
+.mx-gname > .icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+.mx-gw {
+  color: var(--st-ink-2);
+  font-weight: 500;
+}
+.mx .is-gstart {
+  border-left: 1px solid var(--st-rule);
+}
+.mx-sort {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  width: 100%;
+  min-height: 2.6rem;
+  padding: 0.3rem 0.2rem 0.35rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.mx-sort:hover {
+  background: var(--st-paper);
+}
+.mx-sort:focus-visible {
+  outline: 2px solid var(--st-ink);
+  outline-offset: -3px;
+}
+.mx-no {
+  color: var(--st-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.mx-short {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.66rem;
+  font-weight: 500;
+  font-stretch: var(--st-wide);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.mx-arrow {
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top-color: transparent;
+  border-bottom: 0;
+}
+/* the column the rows are ranked by: violet underline under its head, an arrow */
+.mx-head.is-sort .mx-sort {
+  background: var(--st-wash);
+  box-shadow: inset 0 calc(-1 * var(--st-bar-w)) 0 var(--st-orbit);
+}
+.mx-head.is-sort .mx-arrow {
+  border-top-color: var(--st-ink);
+  border-width: 5px 4px 0;
+}
+.mx-head.mx-last {
+  width: 5rem;
+  padding: 0 0.4rem 0.35rem;
+  text-align: center;
+}
+.mx-head.mx-last.is-sort .mx-lastname {
+  box-shadow: inset 0 calc(-1 * var(--st-bar-w)) 0 var(--st-orbit);
+}
+.mx-lastname {
+  display: inline-block;
+  padding-bottom: 0.15rem;
+  color: var(--st-ink);
+  font-size: 0.72rem;
+}
+
+/* ---- cells ---- */
+.mx-cell {
+  position: relative;
+  height: var(--mx-cell-h);
+  border-right: 2px solid var(--st-panel);
+  text-align: center;
+}
+.mx-v {
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-stretch: var(--st-wide);
+}
+.mx-cell.mx-last {
+  border-left: 1px solid var(--st-ink);
+}
+.mx-cell.mx-last .mx-v {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.mx-cell.is-best .mx-v {
+  font-weight: 800;
+}
+.mx-cell .mx-best {
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+}
+/* the graders noted an anomaly: a short slash in the corner (the tooltip says what) */
+.mx-flag {
+  position: absolute;
+  left: 4px;
+  bottom: 6px;
+  width: 9px;
+  height: 1.5px;
+  background: currentColor;
+  rotate: -45deg;
+  opacity: 0.7;
+}
+/* no score: grey hatch, the short mark on a small grey ground */
+.mx-cell.is-none {
+  background: var(--hatch), var(--pending-fill);
+  color: var(--st-ink-2);
+}
+.mx-cell.is-none .mx-v {
+  padding: 0.05rem 0.3rem;
+  background: var(--pending-fill);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.mx-empty {
+  margin: 1rem 0 0.5rem;
+  color: var(--st-ink-2);
+}
+
+/* ---- phone width: the table scrolls sideways, the model column stays ---- */
+@media (max-width: 599px) {
+  .mx {
+    --mx-model: 11rem;
+    --mx-cell-h: 2.25rem;
+  }
+  .mx.is-grouped {
+    width: calc(var(--mx-model) + 13 * 3.4rem);
+  }
+  .mx.is-single {
+    width: 100%;
+  }
+  .mx-m {
+    gap: 0.35rem;
+    padding: 0 0.4rem 0 0.25rem;
+  }
+  .mx-rank {
+    width: 1.25rem;
+    font-size: 0.75rem;
+  }
+  /* comparing is a desk task (as in the model rows) */
+  .mx-check {
+    display: none;
+  }
+  .mx-name {
+    font-size: 0.78rem;
+  }
+  .mx .mx-model {
+    box-shadow: 1px 0 0 var(--st-rule);
+  }
+  .mx-head.mx-last {
+    width: 3.75rem;
+  }
+  .mx-v {
+    font-size: 0.82rem;
+  }
+  .mx-cell.is-none .mx-v {
+    padding: 0 0.1rem;
+    font-size: 0.6rem;
+  }
+}

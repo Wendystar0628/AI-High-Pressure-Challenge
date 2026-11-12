@@ -3,64 +3,86 @@
   "launch": {
     "command": "npm",
     "args": ["start", "--", "--data-dir", "{dataDir}", "--width", "{width}", "--height", "{height}", "--remote-debugging-port={port}"],
-    "cwd": "."
+    "cwd": ".",
+    "notes": "等效命令：node_modules/electron/dist/electron.exe . --data-dir <目录> --width <宽> --height <高> --remote-debugging-port=<端口>。首次启动会自动构建系统映像（build/），约 1 秒。"
   },
-  "connection": {
-    "type": "chrome-devtools-protocol",
-    "note": "用 --remote-debugging-port 指定端口；连接 http://127.0.0.1:{port}/json/list 中地址以 nestos://app/ 开头的页面。window.bench 在这个页面的主世界。浏览器标签是独立的 webview 目标，外部网站内部不要求标识。"
+  "mainWindow": {
+    "title": "Nested OS",
+    "url": "app://local/src/index.html",
+    "connection": "Chrome DevTools Protocol：http://127.0.0.1:{port}/json 中 type=page、url 以 app://local/ 开头的目标",
+    "bench": "主页面的 window.bench（version、ready()、reset()、inspect()）"
   },
-  "mainWindow": { "title": "Nested OS", "pageUrlPrefix": "nestos://app/src/index.html" },
-  "bench": {
-    "global": "window.bench",
-    "version": 1,
-    "methods": ["ready()", "reset()", "inspect()"],
-    "note": "所有子系统界面都渲染在同一页面的 DOM 中，控件用 data-testid、data-system-id、data-window-id 定位，没有 iframe。子系统输入经各层窗口管理器进程分发，操作后界面在 1 到几个逻辑步内更新，请按需等待。"
+  "surfaces": {
+    "notes": "根系统桌面与应用是普通 DOM；子系统桌面与应用由各子系统的程序提交显示列表，显示设备渲染为同一页面中的 DOM 节点（不使用 iframe），因此所有控件都可用 [data-testid=...][data-system-id=...][data-window-id=...] 定位。三维视图是 canvas（data-testid=player-view）。浏览器网页内容在 <webview> 中，外部网站内部控件不带标识。",
+    "systemWindow": "根桌面上子系统的系统窗口：[data-testid=app-window][data-app-id=system][data-target-system-id=inner-N]；其内的子系统桌面根节点为 .surface[data-sid='inner-N:desktop']",
+    "projectionWindow": "[data-testid=app-window][data-app-id=projection][data-source-system-id][data-source-window-id][data-source-app-id]，其中的 player-*/chart-* 控件 data-system-id 为目标桌面（例如 outer）、data-window-id 为投送窗口标识"
   },
   "fixtures": {
     "outer": {
-      "workbook": "/Demo/sample.sheet",
+      "workbook": "/Documents/sample.sheet",
       "chartRange": "A1:D4",
       "chartLabelColumn": "A",
-      "chartSeries": "B,C,D",
+      "chartValueColumns": ["D"],
       "helicopter": "/Demo/helicopter-24.scene",
       "minimalScene": "/Demo/minimal.scene",
       "documents": "/Documents",
       "downloads": "/Downloads",
       "recycle": "/Recycle",
-      "programs": { "sum": "/Programs/sum.nest", "msgSend": "/Programs/msg_send.nest", "msgRecv": "/Programs/msg_recv.nest", "spin": "/Programs/spin.nest", "hello": "/Programs/hello.nest", "draw2d": "/Programs/draw2d.nest", "draw3d": "/Programs/draw3d.nest" },
+      "desktop": "/Desktop",
+      "snapshots": "/Snapshots",
       "kernelTemplate": "/System/kernel.nest",
-      "kernelOfChild": "/Systems/{childId}/kernel.nest",
+      "kernel": "/System/Kernels/{systemId}.nest",
       "compiler": "/System/compiler.nest",
-      "compilerBinary": "/System/bin/compiler.nbc",
-      "flightController": "/Flight/flightctl.nest",
-      "help": "/Docs/操作说明.md"
+      "flightController": "/Programs/flight/autopilot.nest",
+      "programs": {
+        "accumulate": "/Programs/examples/accumulate.nest",
+        "send": "/Programs/examples/send.nest",
+        "receive": "/Programs/examples/receive.nest",
+        "busy": "/Programs/examples/busy.nest",
+        "draw": "/Programs/examples/draw.nest"
+      },
+      "manual": "/System/操作说明.md"
     },
     "inner": {
       "helicopter": "/Demo/helicopter-24.scene",
       "minimalScene": "/Demo/minimal.scene",
       "documents": "/Documents",
-      "programs": { "sum": "/Programs/sum.nest", "msgSend": "/Programs/msg_send.nest", "msgRecv": "/Programs/msg_recv.nest", "spin": "/Programs/spin.nest" },
+      "records": "/Records",
+      "snapshots": "/Snapshots",
       "kernelTemplate": "/System/kernel.nest",
-      "kernelOfChild": "/Systems/{childId}/kernel.nest",
-      "windowManager": "/System/wm.nest",
-      "filesApp": "/System/apps/files.nest",
-      "playerApp": "/System/apps/player.nest",
-      "chartsApp": "/System/apps/charts.nest",
+      "kernel": "父系统中的 /System/Kernels/{systemId}.nest",
+      "childKernels": "/System/Kernels/{childSystemId}.nest",
       "compiler": "/System/compiler.nest",
-      "flightController": "/Flight/flightctl.nest",
-      "help": "/Docs/操作说明.md"
+      "windowManager": "/System/wm.nest",
+      "flightController": "/Programs/flight/autopilot.nest",
+      "apps": {
+        "files": "/Apps/files.nest",
+        "editor": "/Apps/editor.nest",
+        "tasks": "/Apps/tasks.nest",
+        "player": "/Apps/player.nest",
+        "playerTimeline": "/Apps/player/timeline.nest",
+        "playerScene": "/Apps/player/scene.nest",
+        "playerFx": "/Apps/player/fx.nest",
+        "charts": "/Apps/charts.nest",
+        "chartsReceiver": "/Apps/charts/recv.nest"
+      },
+      "programs": {
+        "accumulate": "/Programs/examples/accumulate.nest",
+        "send": "/Programs/examples/send.nest",
+        "receive": "/Programs/examples/receive.nest",
+        "busy": "/Programs/examples/busy.nest",
+        "draw": "/Programs/examples/draw.nest"
+      },
+      "manual": "/System/操作说明.md"
     }
   },
-  "testIdExtras": {
-    "player": ["player-path", "player-replay", "rehearsal-toggle", "rehearsal-save", "rehearsal-land", "rehearsal-wind-dir", "rehearsal-fault-kind"],
-    "system": ["system-step", "system-rate", "system-snapshot", "system-restore", "system-fork", "system-start", "system-stop", "system-close", "system-manage", "system-state"],
-    "desktop": ["back-to-parent", "tray-clock"],
-    "launch": ["launch-systems", "launch-help"]
+  "ids": {
+    "root": "outer",
+    "inner": "inner-1、inner-2 … 按全局创建顺序（reset() 后从 inner-1 重新编号）",
+    "windows": "<系统标识>:wN（根系统应用窗口为 outer:wN，子系统系统窗口为 <父系统>:sys-<子系统>，投送窗口为 <目标系统>:pjN 或 outer:wN）"
   },
-  "notes": [
-    "新建子系统：每个桌面任务栏的 system-new（带 data-system-id）。新实例按全局创建顺序命名 inner-1、inner-2…",
-    "新建的子系统默认打开播放器并载入 /Demo/helicopter-24.scene，处于停止状态，不自动播放。",
-    "文件拖放：从 files-item 按住拖到目标系统的 files-list 或 files-nav，拖动时指针旁显示目标系统与目录。",
-    "投送：先点源窗口内的 window-project，再点 project-target（带 data-target-system-id）。"
-  ]
+  "timing": {
+    "logicalStep": "1/60 秒（根系统逻辑步；子系统单步 = 父系统逻辑时间 1/60 秒 × 子系统速率）",
+    "playerFps": 60
+  }
 }

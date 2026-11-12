@@ -18,6 +18,7 @@ import { createRows, axisChanges } from './rows.js';
 import { createAxis } from './axis.js';
 import { createCompare } from './compare.js';
 import { createSandbox } from './sandbox.js';
+import { createMatrix } from '../../ui/matrix.js';
 
 boot(async ({ data }) => {
   const main = document.querySelector('main');
@@ -128,7 +129,7 @@ boot(async ({ data }) => {
   const exportBtn = exportButton({
     build: () => buildExport(),
     title: () => [t('leaderboard.title'), viewName(state.view), state.custom ? t('common.score.custom') : ''].filter(Boolean).join(' │ '),
-    filename: () => `ai-octathlon-leaderboard-${state.view}${state.custom ? '-custom' : ''}`,
+    filename: () => `ai-decathlon-leaderboard-${state.view}${state.custom ? '-custom' : ''}`,
   });
   // the cost marks explained once, above the board's columns (ui/cost.js costLegend)
   const legend = withCost ? costLegend(data, 'p.cost-legend.lb-cost-legend') : null;
@@ -160,7 +161,25 @@ boot(async ({ data }) => {
   const foot = h('p.lb-foot.st-field', h('a', { href: links.about('scoring-1') }, t('leaderboard.foot', { n: data.categories.length })));
   // how the test costs are converted (ModelDial weekly quotas, the dollar rate, the date of the quota data)
   const costFoot = withCost ? costSourceNote(data, 'div.lb-foot.cost-note.st-field') : null;
-  slot.replaceChildren(tb.el, board, foot, ...(costFoot ? [costFoot] : []));
+  // 成绩矩阵 under the ranking: models × 13 tasks grouped by category, the total last (ui/matrix.js)
+  const matrix = createMatrix({ data, tb, cats: data.categories, last: 'total', label: t('leaderboard.matrix.label') });
+  const mxBoard = h(
+    'section.st-panel.lb-mx',
+    { 'aria-labelledby': 'lb-mx-title' },
+    h(
+      'div.lb-board-head',
+      h('h2.lb-board-title#lb-mx-title', h('span.st-pair', h('span.st-eyebrow', t('leaderboard.matrix.eyebrow')), h('span', t('leaderboard.matrix.title'))), h('span.lb-q', t('leaderboard.matrix.q'))),
+      h(
+        'div.lb-board-tools',
+        h('p.lb-mx-hint.st-field', t('leaderboard.matrix.hint')),
+        exportButton({ build: () => matrix.build(), title: () => t('leaderboard.matrix.exportTitle'), filename: 'ai-decathlon-leaderboard-score-matrix' }),
+      ),
+    ),
+    matrix.el,
+  );
+  matrix.refresh();
+  tb.on('change', () => matrix.refresh());
+  slot.replaceChildren(tb.el, board, mxBoard, foot, ...(costFoot ? [costFoot] : []));
 
   // ---------------- rows ----------------
   const list = createModelList(ol, {

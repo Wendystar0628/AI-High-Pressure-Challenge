@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x740">
+<meta name="size" content="960x790">
 <title>设计题计分</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -43,7 +43,7 @@
   </header>
   <p class="desc">指南只列方向、分项、分值和一行打分点，不写评判标准。下例取物理题的一个方向，分数为示意。</p>
 
-  <svg class="chart" id="chart" width="960" height="740"></svg>
+  <svg class="chart" id="chart" width="960" height="790"></svg>
 
   <p class="foot"><b>不分档、不扣分、不清零</b>：分项得分就是评分员在分值内给的分。</p>
 </div>
@@ -90,20 +90,21 @@ const gauge = (x, cy, value, score) => {
   }
 };
 
-const DIR = { name: '作用关系', value: 22 };
+const DIR = { name: '作用关系', value: 24 };
 const ITEMS = [
-  { name: '重球接触反应', value: 5, point: '重球接触果冻后的减速、弹起、陷入或滑落，随当时接触状态改变', s: [4.0, 4.5] },
-  { name: '密度与浮沉', value: 5, point: '同尺寸各密度组的浮沉方向、稳定浸入程度和停留位置符合密度关系', s: [4.0, 4.5] },
-  { name: '造浪源响应', value: 3, point: '水体扰动对应可见造浪装置的运动，装置停止后不再输入', s: [2.0, 2.5] },
-  { name: '水流推动响应', value: 4, point: '球体受水流推动的方向和变化，对应当时水体的运动状态', s: [3.0, 3.5] },
-  { name: '刚体接触响应', value: 5, point: '球与球、平台、槽壁和槽底接触时的分离、转向与滚动', s: [3.5, 4.0] },
+  { name: '重球接触反应', value: 5, point: '重球接触后的减速、被包住、弹起、吞住或滚落，随接触状态改变', s: [4.0, 4.5] },
+  { name: '密度与浮沉', value: 4, point: '同尺寸各组球的浮沉方向与浸入深度符合密度关系', s: [3.0, 3.5] },
+  { name: '造浪源响应', value: 2, point: '水体扰动来自可见造浪装置的运动，装置停止后不再输入扰动', s: [1.5, 2.0] },
+  { name: '水流推动响应', value: 5, point: '球被浪峰托起前推、在破碎处抛起、随水流和底流移动', s: [3.5, 4.0] },
+  { name: '刚体接触响应', value: 4, point: '球与球、台面、槽壁、果冻和碎块相碰后的分离、转向与滚动', s: [3.0, 3.5] },
+  { name: '参数响应', value: 4, point: '改软硬、结实程度、质量、造浪和密度后，现象相应改变', s: [2.5, 3.0] },
 ];
 
 // Column heads between an ink rule and a hairline.
 const H0 = 142;
 hr(H0, L, R, true);
 el('image', { href: '../../icon-physics.svg', x: L, y: H0 + 11, width: 16, height: 16 }, svg);
-txt(svg, L + 22, H0 + 24, 'colh', '评分指南（物理题共 4 个方向、25 个分项）');
+txt(svg, L + 22, H0 + 24, 'colh', '评分指南（物理题共 4 个方向、24 个分项）');
 COLS.forEach(c => txt(svg, c.gauge - 46, H0 + 24, 'who', c.head));
 txt(svg, R, H0 + 24, 'colh', '逐项取平均', 'end');
 hr(H0 + 36, L, R);
@@ -146,7 +147,7 @@ const SUMY = ROW0 + ITEMS.length * ROWH + 6;
 /* Lower block: the whole task. Four directions side by side, length by value (100 in all), each filled to its
    averaged subtotal; the direction worked through above is violet 500, the others violet 300. */
 const DIRS = [
-  ['现象形态与运动层次', 44, 34.5], ['材质与光影', 24, 18.5], ['作用关系', 22, 17.75], ['演示与交付', 10, 8.5],
+  ['现象形态与运动层次', 47, 37.5], ['材质与光影', 17, 13.5], ['作用关系', 24, 19.0], ['演示与交付', 12, 9.5],
 ];
 {
   const yR = SUMY + 46, yH = yR + 34, yBar = yH + 46, BH = 24, SG = 4, BR = 740;

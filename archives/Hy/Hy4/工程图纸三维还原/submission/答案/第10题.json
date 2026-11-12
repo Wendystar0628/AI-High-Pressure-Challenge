@@ -1,0 +1,19 @@
+{
+  "problem": "10",
+  "parts": [
+    {"name": "1", "title": "双斜座多腔阀体铸件", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 48, 42]}], "depth": 4, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 38, 0],
+       "loops": [{"path": [[5, 4], [5, 14], [14, 23], [34, 23], [43, 14], [43, 4]]}], "depth": 34, "name": "双斜坡主体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 4],
+       "at": [[4, 4], [44, 4], [4, 38], [44, 38]], "d": 7, "through": true, "name": "底板4角孔"},
+      {"type": "extrude", "plane": "YZ", "origin": [4, 0, 0], "loops": [{"circle": [21, 20], "d": 64}], "depth": 40, "name": "Φ64侧凸台"},
+      {"type": "hole", "plane": "YZ", "origin": [4, 0, 0], "at": [21, 20], "d": 30, "through": true, "reverse": true, "name": "Φ30轴孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 4, 0], "at": [24, 14], "d": 20, "through": true, "name": "Φ20主孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 38, 0],
+       "loops": [{"rect": [9, 7, 19, 18]}], "depth": 8, "name": "左腔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 38, 0],
+       "loops": [{"rect": [29, 7, 39, 18]}], "depth": 8, "name": "右腔"}
+    ]}
+  ]
+}

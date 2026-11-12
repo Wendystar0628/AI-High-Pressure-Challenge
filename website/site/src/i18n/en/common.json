@@ -1,9 +1,13 @@
 {
   "site": {
-    "name": "AI Octathlon · Timed Challenge",
-    "short": "AI Octathlon",
-    "wordmark": "AI OCTATHLON",
-    "sub": "TIMED CHALLENGE"
+    "name": "AI Decathlon · Timed Challenge",
+    "short": "AI Decathlon",
+    "wordmark": "AI DECATHLON",
+    "sub": "TIMED CHALLENGE",
+    "seal": "10"
+  },
+  "hold": {
+    "flag": "Notice"
   },
   "pages": {
     "home": {
@@ -21,6 +25,10 @@
     "about": {
       "title": "About the challenge",
       "en": "About"
+    },
+    "faq": {
+      "title": "FAQ",
+      "en": "FAQ"
     },
     "tasks": {
       "title": "Tasks",
@@ -48,7 +56,9 @@
     "tasks": "Tasks",
     "tasksEn": "Tasks",
     "about": "About",
-    "aboutEn": "About"
+    "aboutEn": "About",
+    "faq": "FAQ",
+    "faqEn": "FAQ"
   },
   "shell": {
     "skip": "Skip to content",
@@ -100,9 +110,15 @@
     "modelLine": "Total {score} │ Rank {rank}",
     "modelLinePending": "Being tested │ {done} / {all} tasks scored",
     "taskLine": "{category} │ {minutes} min │ weight {weight}",
-    "categoryLine": { "one": "Weight {weight} │ {n} task", "other": "Weight {weight} │ {n} tasks" },
+    "categoryLine": {
+      "one": "Weight {weight} │ {n} task",
+      "other": "Weight {weight} │ {n} tasks"
+    },
     "sectionLine": "About the challenge",
-    "count": { "one": "{n} result", "other": "{n} results" }
+    "count": {
+      "one": "{n} result",
+      "other": "{n} results"
+    }
   },
   "keys": {
     "title": "Keyboard shortcuts (?)",
@@ -125,9 +141,9 @@
     "total": "Total",
     "standard": "Standard tasks",
     "design": "Design tasks",
-    "categories": "8 categories",
+    "categories": "10 categories",
     "categoriesEyebrow": "Categories",
-    "tasks": "12 tasks",
+    "tasks": "{n} tasks",
     "tasksEyebrow": "Tasks",
     "rankOf": "{rank} / {n}",
     "noScore": "Not scored",
@@ -162,11 +178,26 @@
   },
   "unit": {
     "minutes": "{n} min",
-    "models": { "one": "{n} model", "other": "{n} models" },
-    "tasks": { "one": "{n} task", "other": "{n} tasks" },
-    "tasksShort": { "one": "{n} task", "other": "{n} tasks" },
-    "categories": { "one": "{n} category", "other": "{n} categories" },
-    "categoriesShort": { "one": "{n} category", "other": "{n} categories" }
+    "models": {
+      "one": "{n} model",
+      "other": "{n} models"
+    },
+    "tasks": {
+      "one": "{n} task",
+      "other": "{n} tasks"
+    },
+    "tasksShort": {
+      "one": "{n} task",
+      "other": "{n} tasks"
+    },
+    "categories": {
+      "one": "{n} category",
+      "other": "{n} categories"
+    },
+    "categoriesShort": {
+      "one": "{n} category",
+      "other": "{n} categories"
+    }
   },
   "toolbar": {
     "label": "Leaderboard tools",
@@ -210,7 +241,7 @@
     "eyebrow": "Test cost",
     "basis": {
       "subscription": "Sub-prorated",
-      "api": "API spend",
+      "api": "API list price",
       "none": "No data"
     },
     "per": {
@@ -224,7 +255,7 @@
     "listSep": ", ",
     "plan": {
       "subscription": "Plan: {plan}",
-      "api": "Billed on {plan}"
+      "api": "At {plan} list prices"
     },
     "tokensUnit": "{v} tokens",
     "tokens": "{v} over {n} tasks",
@@ -246,14 +277,15 @@
     "srAppend": "{text}, {cost}",
     "srTokens": "{money}, {tokens}{est}",
     "srEst": ", including estimates",
-    "source": "Test cost: subscription models are prorated from weekly quotas (data: {src}), at the subscription fee for the share of the quota used, or estimated from official API prices where no quota is listed; API models show the amount paid. US$1 = ¥{rate}; quota data as of {date}.",
+    "source": "Test cost: subscription models are prorated from weekly quotas (data: {src}) at the subscription fee; where no quota is listed, the API equivalent is computed first and prorated against the plan. API models are priced request by request from local usage at official list prices. US$1 = ¥{rate}; quota data as of {date}.",
     "sourceUrl": "Subscription quota source: {url}",
     "retest": "If you doubt the measured usage, download the tasks and their isolated environments from GitHub and run them yourself to compare: {repo}",
     "csv": {
       "cny": "Test cost (CNY)",
       "basis": "Cost basis",
       "tokens": "Tokens"
-    }
+    },
+    "noteApiDirect": "Each request's input, cache-hit and output tokens from local records, at the official API list prices in force when it was made; the API equivalent is the cost"
   },
   "export": {
     "button": "Save as image",
@@ -263,21 +295,50 @@
   },
   "footer": {
     "updated": "Data updated {date}",
-    "models": { "one": "{n} model", "other": "{n} models" },
-    "tasks": { "one": "{n} task", "other": "{n} tasks" },
+    "models": {
+      "one": "{n} model",
+      "other": "{n} models"
+    },
+    "tasks": {
+      "one": "{n} task",
+      "other": "{n} tasks"
+    },
     "logos": "Vendor icons from LobeHub Icons; trademarks belong to their owners",
     "icp": "蜀ICP备2025171371号-1",
     "icpUrl": "https://beian.miit.gov.cn/"
   },
   "dial": {
-    "label": "Octathlon star dial: {name}",
+    "label": "Decathlon star dial: {name}",
     "standardGroup": "Standard {w}",
     "designGroup": "Design {w}",
     "sectorAria": "{name}, weight {weight}, score {score}, {rank}",
     "starAria": "{no} {name}, {category}, weight {weight}, score {score}, {rank}",
-    "title": "Octathlon star dial",
+    "title": "Decathlon star dial",
     "noScore": "Not scored",
     "rank": "Rank {n}",
     "pending": "Being tested"
+  },
+  "cell": {
+    "mark": {
+      "testing": "Testing",
+      "missing": "Missing",
+      "failed": "Failed",
+      "unscored": "—"
+    },
+    "state": {
+      "testing": "being tested, no score yet",
+      "missing": "no answer handed in",
+      "failed": "grading failed, no score yet",
+      "unscored": "the graders gave no total"
+    },
+    "categoryScore": "{name} score",
+    "weight": "weight {w}",
+    "graders": "Graders {list}",
+    "anomaly": "Score anomaly ({grader}): {text}"
+  },
+  "matrix": {
+    "model": "Model",
+    "categoryScore": "Category",
+    "sortTitle": "Sort by {name}, highest first; click again for the default order"
   }
 }

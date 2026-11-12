@@ -1,14 +1,16 @@
 // 题目类别榜 /categories/ (website/docs/categories.md), a console page:
-// page head → toolbar + category jump bar (sticky together) → 8 category
+// page head → toolbar + category jump bar (sticky together) → 10 category
 // boards in two groups (standard / design), each a bar chart of model rows
-// ranked inside the category. URL: ?tasks=reason,algo (open sub rows) + #<key>.
+// ranked inside the category, each with a view switch 按题 / 矩阵 / 按型号
+// (board.js). URL: ?views=reason.matrix,algo.model (boards off the default
+// 按题) + #<key>.
 import './style.css';
 import { boot, registerShortcut } from '../../shell/index.js';
 import { h, t, pick, fmtDate, fmtPct, fmtRank, getListParam, setParams, modelLabel } from '../../core/index.js';
 import { createToolbar } from '../../ui/index.js';
 import { dur, isInView } from '../../motion.js';
 import { scramble } from '../../vendor/stellar/fx.js';
-import { createBoard } from './board.js';
+import { createBoard, VIEWS } from './board.js';
 import { createJumpBar } from './jumpbar.js';
 
 boot(({ data }) => {
@@ -27,9 +29,12 @@ boot(({ data }) => {
   );
 
   // ---------- state from the address ----------
-  const multi = new Set(data.categories.filter((c) => c.tasks.length > 1).map((c) => c.key));
-  const open = new Set(getListParam('tasks').filter((k) => multi.has(k)));
-  const writeOpen = () => setParams({ tasks: data.categories.map((c) => c.key).filter((k) => open.has(k)) });
+  const views = new Map(
+    getListParam('views')
+      .map((x) => x.split('.'))
+      .filter(([k, v]) => data.category(k) && VIEWS.includes(v)),
+  );
+  const writeViews = () => setParams({ views: data.categories.filter((c) => (views.get(c.key) ?? VIEWS[0]) !== VIEWS[0]).map((c) => `${c.key}.${views.get(c.key)}`) });
 
   // ---------- toolbar + jump bar ----------
   const tb = createToolbar({ data, download: { csv: csvTable, json: true } });
@@ -42,18 +47,16 @@ boot(({ data }) => {
   // the model tested last: one being tested, else the latest test date; on the same date the later registration
   const stamp = (m) => `${data.score(m.id).status === 'testing' ? 1 : 0}|${m.tested ?? ''}`;
   const focus = data.models.reduce((a, m) => (!a || stamp(m) >= stamp(a) ? m : a), null)?.id;
-  const below = (el) => [...main.querySelectorAll('[data-flip]')].filter((x) => x !== el && x.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING && isInView(x));
   const boards = data.categories.map((c, i) =>
     createBoard(c, {
       data,
       tb,
       index: i,
-      open: open.has(c.key),
-      below,
+      view: views.get(c.key) ?? VIEWS[0],
       focus,
-      onToggle: (key, on) => {
-        on ? open.add(key) : open.delete(key);
-        writeOpen();
+      onView: (key, v) => {
+        views.set(key, v);
+        writeViews();
       },
     }),
   );
@@ -182,7 +185,7 @@ boot(({ data }) => {
     handler: () => tb.el.querySelector('.tb-compare:not(:disabled)')?.click(),
   });
 
-  // ---------- CSV: models × 8 categories (+ the tasks of open categories) ----------
+  // ---------- CSV: models × 10 categories and their tasks ----------
   function csvTable() {
     const columns = [
       { key: 'model', label: t('common.csv.model') },
@@ -190,7 +193,7 @@ boot(({ data }) => {
     ];
     for (const c of data.categories) {
       columns.push({ key: `c:${c.key}`, label: pick(c, 'name') });
-      if (byKey.get(c.key)?.open) for (const k of c.tasks) columns.push({ key: `t:${k.key}`, label: `${fmtRank(k.no)} ${pick(k, 'name')}` });
+      if (c.tasks.length > 1) for (const k of c.tasks) columns.push({ key: `t:${k.key}`, label: `${fmtRank(k.no)} ${pick(k, 'name')}` });
     }
     const rows = data.order
       .map((id) => data.model(id))

@@ -1,0 +1,16 @@
+{
+  "problem": "18",
+  "parts": [
+    {"name": "1", "title": "复合环腔涡轮轴承箱", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 150, 130]}], "depth": 10, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 105, 0], "loops": [{"circle": [75, 50], "d": 116}], "depth": 85, "name": "主圆柱Φ116"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [75, 50], "d": 100, "depth": 90, "name": "主环腔Φ100"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 105, 0],
+       "loops": [{"circle": [75, 50], "d": 116}, {"circle": [75, 50], "d": 106}], "depth": 22, "name": "外环腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 20, 0], "loops": [{"circle": [75, 50], "d": 108}], "depth": 6, "name": "前法兰Φ108"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10],
+       "at": [[8, 8], [142, 8], [8, 122], [142, 122]], "d": 10, "through": true, "name": "地脚4孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [75, 50], "d": 46, "depth": 20, "name": "轴承阶梯孔"}
+    ]}
+  ]
+}

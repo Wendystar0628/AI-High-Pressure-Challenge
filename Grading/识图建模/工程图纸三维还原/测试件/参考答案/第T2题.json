@@ -1,0 +1,26 @@
+{
+  "problem": "T2",
+  "parts": [
+    {"name": "1", "title": "支架",
+     "features": [
+       {"type": "extrude", "name": "底板", "plane": "XY", "loops": [{"rect": [-50, 0, 50, 60], "r": 6}], "depth": 10},
+       {"type": "extrude", "name": "左侧板", "plane": "YZ", "origin": [-30, 0, 0],
+        "loops": [{"path": [[10, 10], [50, 10], [50, 45], {"arc": [10, 45], "center": [30, 45]}]}], "depth": 10},
+       {"type": "mirror", "features": [2], "plane": "YZ"},
+       {"type": "hole", "name": "轴孔", "plane": "YZ", "origin": [30, 0, 0], "at": [30, 45], "d": 12, "through": true},
+       {"type": "hole", "name": "安装孔", "plane": "XY", "origin": [0, 0, 10], "at": [[-40, 12], [40, 12], [-40, 48], [40, 48]], "d": 7, "through": true}
+     ]},
+    {"name": "2", "title": "轴",
+     "placement": {"rotate": [{"axis": "Y", "angle": 90}], "translate": [-35, 30, 45]},
+     "features": [
+       {"type": "revolve", "name": "轴", "plane": "XZ", "axis": "y",
+        "loops": [{"path": [[0, 0], [10, 0], [10, 5], [6, 5], [6, 74], [5, 75], [0, 75]]}]}
+     ]},
+    {"name": "3", "title": "滑轮",
+     "placement": {"rotate": [{"axis": "Y", "angle": 90}], "translate": [-18, 30, 45]},
+     "features": [
+       {"type": "revolve", "name": "轮体", "plane": "XZ", "axis": "y",
+        "loops": [{"path": [[6, 0], [20, 0], [20, 8], [14, 18], [20, 28], [20, 36], [6, 36]]}]}
+     ]}
+  ]
+}

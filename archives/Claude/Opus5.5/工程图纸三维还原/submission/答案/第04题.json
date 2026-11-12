@@ -1,0 +1,25 @@
+{
+  "problem": "04",
+  "parts": [
+    {"name": "1", "title": "偏心双级迷宫泵盖", "features": [
+      {"type": "extrude", "name": "大法兰Φ144", "plane": "XY", "loops": [{"circle": [0, 0], "d": 144}], "depth": 14},
+      {"type": "extrude", "name": "左上耳", "plane": "XY", "loops": [{"rect": [-68, 30, -54, 50]}], "depth": 14},
+      {"type": "extrude", "op": "cut", "name": "左侧开口槽", "plane": "XY", "loops": [{"rect": [-80, -6, -62, 6]}], "through": true},
+      {"type": "extrude", "name": "中台Φ90", "plane": "XY", "origin": [0, 0, 14], "loops": [{"circle": [12, 0], "d": 90}], "depth": 24},
+      {"type": "extrude", "name": "上台Φ68", "plane": "XY", "origin": [0, 0, 38], "loops": [{"circle": [12, 0], "d": 68}], "depth": 14},
+      {"type": "extrude", "op": "cut", "name": "上腔Φ50", "plane": "XY", "origin": [0, 0, 30], "loops": [{"circle": [12, 0], "d": 50}], "depth": 22},
+      {"type": "extrude", "op": "cut", "name": "中孔Φ30", "plane": "XY", "origin": [0, 0, 8], "loops": [{"circle": [12, 0], "d": 30}], "depth": 22},
+      {"type": "extrude", "op": "cut", "name": "键槽", "plane": "XY", "origin": [0, 0, 8], "loops": [{"rect": [20, -4, 30, 4]}], "depth": 22},
+      {"type": "extrude", "op": "cut", "name": "底腔Φ74", "plane": "XY", "origin": [0, 0, 0], "loops": [{"circle": [12, 0], "d": 74}], "depth": 8},
+      {"type": "revolve", "op": "cut", "name": "迷宫环槽", "plane": "XZ", "origin": [12, 0, 0], "axis": "y", "loops": [{"rect": [29, 20, 33, 24]}]},
+      {"type": "hole", "name": "X向孔Φ6", "plane": "YZ", "origin": [-34, 0, 0], "at": [0, 18], "d": 6, "depth": 32, "reverse": true},
+      {"type": "hole", "name": "Y向孔Φ8", "plane": "XZ", "origin": [0, -46, 0], "at": [12, 22], "d": 8, "depth": 32},
+      {"type": "hole", "name": "竖孔Φ8", "plane": "XY", "origin": [0, 0, 8], "at": [12, -26], "d": 8, "depth": 14, "reverse": true},
+      {"type": "hole", "name": "斜孔Φ6", "plane": {"origin": [40, -8, 52], "normal": [0.5, 0, 0.8660254], "x_dir": [0, 1, 0]}, "at": [0, 0], "d": 6, "depth": 28},
+      {"type": "hole", "name": "螺栓孔4-Φ9", "plane": "XY", "origin": [0, 0, 14], "at": [[42, 42], [-42, 42], [42, -42], [-42, -42]], "d": 9, "through": true},
+      {"type": "hole", "name": "Φ12孔", "plane": "XY", "origin": [0, 0, 14], "at": [-40, 0], "d": 12, "through": true},
+      {"type": "hole", "name": "耳孔Φ6", "plane": "XY", "origin": [0, 0, 14], "at": [-62, 40], "d": 6, "through": true},
+      {"type": "chamfer", "name": "大法兰下外圆棱C1", "distance": 1, "edges": [[72, 0, 0], [-69.7137, 18, 0]]}
+    ]}
+  ]
+}

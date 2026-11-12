@@ -1,7 +1,7 @@
-// FIG 分数进入总分 / 六种题型怎样计分 / 分项打分示意 (05 打分机制).
+// FIG 分数进入总分 / 七种题型怎样计分 / 分项打分示意 (05 打分机制).
 import { t, pick, fmtPct } from '../../core/index.js';
 import { createFigure, d3, W, text, line, rect, path, star, eyebrow, wrap, lines, wrapText, measure, bracket, kindMark, icon, ebW } from './common.js';
-import { perfChart, logLerp } from './standard.js';
+import { perfChart, logLerp, battleAnchors } from './standard.js';
 
 
 
@@ -148,7 +148,7 @@ export function pipelineFigure({ data, c }) {
 }
 
 // ---------------------------------------------------------------------------
-// 六种题型怎样计分: 2 × 3 small blocks, each with a closing line for the
+// 七种题型怎样计分: 7 small blocks in rows of two, each with a closing line for the
 // cases that need a word of their own.
 export function typesFigure({ c }) {
   const fc = c.fig.types;
@@ -156,14 +156,16 @@ export function typesFigure({ c }) {
   const g = fig.g;
   const BW = 340;
   const GX = W - BW;
-  const order = ['formal', 'olympiad', 'extremal', 'perf', 'luban', 'design'];
+  const order = ['formal', 'olympiad', 'perf', 'battle', 'luban', 'drawing', 'design'];
+  const rows = Math.ceil(order.length / 2);
   let rowTop = 0;
   fig._anchors = c.fig.algo.anchors;
-  fig._luban = { w: c.fig.spatial.w, groups: c.fig.spatial.tiers.groups };
-  for (let r = 0; r < 3; r++) {
+  fig._tiers = battleAnchors(c.fig.battle);
+  fig._puzzles = Object.fromEntries(['luban', 'drawing'].map((k) => [k, { w: c.fig[k === 'drawing' ? 'drawing' : 'spatial'][k].w, groups: c.fig[k === 'drawing' ? 'drawing' : 'spatial'][k].tiers.groups }]));
+  for (let r = 0; r < rows; r++) {
     let rowH = 0;
     const heads = [];
-    for (let k = 0; k < 2; k++) {
+    for (let k = 0; k < 2 && r * 2 + k < order.length; k++) {
       const key = order[r * 2 + k];
       const b = fc.blocks[key];
       const x0 = k * GX;
@@ -193,11 +195,37 @@ export function typesFigure({ c }) {
       } else fh = Math.max(fh, 19);
     }
     rowTop = fy + fh + 14;
-    if (r < 2) line(g, 0, rowTop, W, rowTop, 'l-ink');
+    if (r < rows - 1) line(g, 0, rowTop, W, rowTop, 'l-ink');
     rowTop += 20;
   }
   fig.size(rowTop - 14);
   return fig;
+}
+
+/** One cell per puzzle (width by points), grouped by tier or kind, filled by an example score. */
+function puzzleCells(fig, g, x0, y, w, b, { w: wts, groups }) {
+  const px = w / 100;
+  let x = x0;
+  const xs = wts.map((v) => {
+    const r = x;
+    x += v * px;
+    return r;
+  });
+  for (const [name, from, to] of groups) {
+    const sum = wts.slice(from, to + 1).reduce((a, v) => a + v, 0);
+    text(g, xs[from] + 1, y + 12, name, 't2');
+    text(g, xs[from] + 1, y + 30, String(+sum.toFixed(2)), 'tb tn');
+    bracket(g, xs[from] + 1, xs[to] + wts[to] * px - 3, y + 42, 1, 'l-ink');
+  }
+  const cy = y + 50;
+  b.ex.forEach((v, i) => {
+    const cw = wts[i] * px - 3;
+    rect(g, xs[i], cy, cw, 30, 'f-zero', true);
+    if (v) rect(g, xs[i], cy, (cw * v) / wts[i], 30, 'f-std', true);
+    if (cw >= 24) text(g, xs[i] + cw / 2, cy + 50, String(v), v ? 'tb tn' : 't2 tn', 'middle');
+  });
+  const n = wrapText(g, x0, cy + 80, b.exText, w, { cls: '' });
+  return cy + 80 + (n - 1) * 19 + 8;
 }
 
 const DRAW = {
@@ -226,88 +254,60 @@ const DRAW = {
       text(g, x0 + i * cw + (cw - 3) / 2, y + 7 * (ch + 2) + 15, String(v), 't2 tn', 'middle');
     }
     const sum = b.scores.reduce((a, v) => a + v, 0);
+    const max = 7 * n;
     text(g, x0 + w, y + 14, b.ex, 't2', 'end');
     text(g, x0 + w, y + 46, String(sum), 'tbig tn', 'end');
     // raw -> converted
     const ly = y + 7 * (ch + 2) + 38;
     const bw = w - 70;
     rect(g, x0, ly, bw, 8, 'f-chip');
-    rect(g, x0, ly, (bw * sum) / 126, 8, 'f-std', true);
-    text(g, x0 + bw + 8, ly + 8, `${sum} / 126`, 't2 tn');
-    text(g, x0 + (bw * sum) / 126, ly + 28, (Math.round((sum / 126) * 1000) / 10).toFixed(1), 'tb tn', 'middle');
+    rect(g, x0, ly, (bw * sum) / max, 8, 'f-std', true);
+    text(g, x0 + bw + 8, ly + 8, `${sum} / ${max}`, 't2 tn');
+    text(g, x0 + (bw * sum) / max, ly + 28, (Math.round((sum / max) * 1000) / 10).toFixed(1), 'tb tn', 'middle');
     text(g, x0 + bw + 8, ly + 28, b.conv, 't2');
     return ly + 34;
-  },
-  extremal(fig, g, x0, y, w, b) {
-    const A = fig._anchors.ext;
-    const x = d3.scaleLinear().domain([0, 1]).range([x0 + 30, x0 + w - 6]);
-    const yy = d3.scaleLinear().domain([0, 100]).range([y + 110, y + 8]);
-    for (const v of [0, 50, 100]) {
-      line(g, x0 + 30, yy(v), x0 + w - 6, yy(v), v ? 'l-rule' : 'l-ink', false);
-      text(g, x0 + 22, yy(v) + 4.5, String(v), 't2 tn', 'end');
-    }
-    const pts = [[0, 0], ...A];
-    g.append('path')
-      .attr('d', `M${x(0)} ${yy(0)}` + pts.map((p) => `L${x(p[0])} ${yy(p[1])}`).join('') + `L${x(1)} ${yy(0)}Z`)
-      .attr('class', 'f-std-band');
-    path(g, pts.map((p, i) => `${i ? 'L' : 'M'}${x(p[0])} ${yy(p[1])}`).join(''), 'l-ink');
-    for (const r of [0, 0.5, 1]) text(g, x(r), y + 128, String(r), 't2 tn', 'middle');
-    text(g, x0 + w - 6, y + 148, b.axis, 't2', 'end');
-    const m = g
-      .append('g')
-      .selectAll('rect')
-      .data(A)
-      .join('rect')
-      .attr('x', (d) => x(d[0]) - 3.5)
-      .attr('y', (d) => yy(d[1]) - 3.5)
-      .attr('width', 7)
-      .attr('height', 7)
-      .attr('class', (d) => (d[0] === 1 ? 'f-ref f-pt' : 'f-std f-pt'))
-      .attr('data-fx', 'cell');
-    fig.mark(m, (d) => [b.name, `r = ${d[0].toFixed(2)}`, t('about.fig.points', { v: d[1] })]);
-    return y + 152;
   },
   perf(fig, g, x0, y, w, b) {
     const a = fig._anchors;
     const top = y + 8;
-    const r1 = perfChart(fig, g, { x0: x0 + 30, x1: x0 + w - 6, y0: top, y1: top + 102, anchors: a.tr, ticks: [0.1, 1, 16], showBase: true });
-    const r2 = perfChart(fig, g, { x0: x0 + 30, x1: x0 + w - 6, y0: top, y1: top + 102, anchors: a.ci, ticks: [], dashed: true, showBase: false });
+    const r1 = perfChart(fig, g, { x0: x0 + 36, x1: x0 + w - 6, y0: top, y1: top + 102, anchors: a.rt, ticks: [0.1, 1, 10], showBase: true });
+    const r2 = perfChart(fig, g, { x0: x0 + 36, x1: x0 + w - 6, y0: top, y1: top + 102, anchors: a.ci, ticks: [], dashed: true, showBase: false, showAxes: false });
+    const r3 = perfChart(fig, g, { x0: x0 + 36, x1: x0 + w - 6, y0: top, y1: top + 102, anchors: a.ciRegfile, ticks: [], dashed: true, dashArray: '2 3', showBase: false, showAxes: false });
     text(g, r1.x(1) + 6, top + 14, b.base, 'tcy tb');
     fig.mark(r1.marks, (d) => [b.legend[0], `s = ${+d[0].toFixed(2)}×`, t('about.fig.points', { v: d[1] })]);
     fig.mark(r2.marks, (d) => [b.legend[1], `s = ${+d[0].toFixed(2)}×`, t('about.fig.points', { v: d[1] })]);
+    fig.mark(r3.marks, (d) => [b.legend[2], `s = ${+d[0].toFixed(2)}×`, t('about.fig.points', { v: d[1] })]);
     // legend
     const ly = top + 146;
-    line(g, x0, ly - 4, x0 + 20, ly - 4, 'l-ink l-thick', false);
-    text(g, x0 + 26, ly, b.legend[0], 't2');
-    const lx = x0 + 26 + measure(b.legend[0], 13) + 20;
-    line(g, lx, ly - 4, lx + 20, ly - 4, 'l-ink l-dash', false);
-    text(g, lx + 26, ly, b.legend[1], 't2');
-    return ly + 6;
+    b.legend.forEach((label, i) => {
+      const key = line(g, x0, ly + i * 18 - 4, x0 + 20, ly + i * 18 - 4, i ? 'l-ink l-dash' : 'l-ink l-thick', false);
+      if (i === 2) key.attr('stroke-dasharray', '2 3');
+      text(g, x0 + 26, ly + i * 18, label, 't2');
+    });
+    return ly + 42;
+  },
+  battle(fig, g, x0, y, w, b) {
+    // the rating axis: R1 − 200 scoring 0, tier ratings R1–R5 scoring 10 / 20 / 40 / 60 / 80 and R5 + 200 scoring 100,
+    // linear in between
+    const n = fig._tiers.length;
+    const half = (i) => Math.max(16, measure(fig._tiers[i].r, 13, 700) / 2 + 2); // room for the end labels, R1 − 200 and R5 + 200
+    const pad = half(0);
+    const step = (w - pad - half(n - 1)) / (n - 1);
+    text(g, x0, y + 12, b.axis, 't2');
+    fig._tiers.forEach((tier, i) => {
+      const x = x0 + pad + i * step;
+      if (i < n - 1) rect(g, x + 1.5, y + 36, step - 3, 16, i % 2 ? 'f-std-soft' : 'f-std', true);
+      text(g, x, y + 30, tier.r, 'tb', 'middle');
+      text(g, x, y + 70, String(tier.pts), 'tb tn', 'middle');
+    });
+    text(g, x0, y + 96, b.games, 't2');
+    return y + 104;
   },
   luban(fig, g, x0, y, w, b) {
-    const wts = fig._luban.w;
-    const px = w / 100;
-    let x = x0;
-    const xs = wts.map((v) => {
-      const r = x;
-      x += v * px;
-      return r;
-    });
-    for (const [name, from, to] of fig._luban.groups) {
-      const sum = wts.slice(from, to + 1).reduce((a, v) => a + v, 0);
-      text(g, xs[from] + 1, y + 12, name, 't2');
-      text(g, xs[from] + 1, y + 30, String(sum), 'tb tn');
-      bracket(g, xs[from] + 1, xs[to] + wts[to] * px - 3, y + 42, 1, 'l-ink');
-    }
-    const cy = y + 50;
-    b.ex.forEach((v, i) => {
-      const cw = wts[i] * px - 3;
-      rect(g, xs[i], cy, cw, 30, 'f-zero', true);
-      if (v) rect(g, xs[i], cy, (cw * v) / wts[i], 30, 'f-std', true);
-      text(g, xs[i] + cw / 2, cy + 50, String(v), v ? 'tb tn' : 't2 tn', 'middle');
-    });
-    const n = wrapText(g, x0, cy + 80, b.exText, w, { cls: '' });
-    return cy + 80 + (n - 1) * 19 + 8;
+    return puzzleCells(fig, g, x0, y, w, b, fig._puzzles.luban);
+  },
+  drawing(fig, g, x0, y, w, b) {
+    return puzzleCells(fig, g, x0, y, w, b, fig._puzzles.drawing);
   },
   design(fig, g, x0, y, w, b) {
     let yy = y + 6;

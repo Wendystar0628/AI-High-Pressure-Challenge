@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "鲁班锁拆解",
+  "tokens": 131971425,
+  "minutes": 53.0,
+  "time": "实际停止",
+  "cny": 6.78,
+  "api_usd": 1.01,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/鲁班锁拆解/20261106-113248"
+  ]
+}

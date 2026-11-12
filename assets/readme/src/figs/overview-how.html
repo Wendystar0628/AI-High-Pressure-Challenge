@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x708">
+<meta name="size" content="960x765">
 <title>一道题怎么测</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -36,8 +36,9 @@
   .sub { color: var(--ink-2); }
   .share { display: flex; align-items: center; column-gap: 16px; }
   .share .fig { font-size: 28px; width: 64px; }
-  .seg { display: grid; grid-template-columns: repeat(20, 10px); column-gap: 3px; }
-  .seg i { height: 14px; background: var(--chip); }
+  /* Weight share on a 0–100 % track: the lit part takes the kind's colour, lime with the ink edge. */
+  .seg { width: 257px; height: 14px; background: var(--chip); }
+  .seg i { display: block; height: 14px; }
   /* Kind colours: standard = lime with an ink edge (.edge), design = violet; the heading shape marks the kind as well. */
   #s40 i.on { background: var(--lime); }
   #s60 i.on { background: var(--violet); }
@@ -49,7 +50,7 @@
     <div class="pair"><span class="eyebrow slash">How a Task Runs</span><h2 class="title">一道题怎么测</h2></div>
     <i class="lead"></i>
   </header>
-  <p class="desc">12 道题都走同样的四步；两类题在交付、评分员和计分方式上不同。</p>
+  <p class="desc">13 道题都走同样的四步；两类题在交付、评分员和计分方式上不同。</p>
 
   <div class="steps">
     <div class="sno fig hollow" style="left:0">01</div>
@@ -60,22 +61,24 @@
       <div class="run" style="background:var(--violet-300)"></div><div class="stop"></div><div class="line"></div>
       <span class="star" style="right:0;top:3px"></span>
     </div>
-    <div class="step" style="left:0"><h3>拿到题面</h3><p>作答目录里只放这道题的题面和材料<br>目录是一个 git 仓库</p></div>
+    <div class="step" style="left:0"><h3>拿到题面</h3><p>新建作答目录<br>只复制这道题的题面和材料</p></div>
     <div class="step" style="left:220px"><h3>独立作答</h3><p>新会话从拿到题面起计时<br>无人答疑，模型看不到限时</p></div>
-    <div class="step" style="left:440px"><h3>到时中止</h3><p>时间一到立即结束，不延长<br>可用的阶段由模型自己 git 提交</p></div>
-    <div class="step" style="left:660px"><h3>评分与合成</h3><p>评完整的工作目录或最近的提交<br>每题折算 0–100，按权重加总</p></div>
+    <div class="step" style="left:440px"><h3>到时中止</h3><p>时间一到立即结束，不延长<br>数学、锁、图纸保存答案文件</p></div>
+    <div class="step" style="left:660px"><h3>评分与合成</h3><p>一律评作答结束时的工作目录<br>每题折算 0–100，按权重加总</p></div>
   </div>
 
   <div class="grid">
     <div class="ch"></div>
-    <div class="ch"><span class="eyebrow slash">Standard</span><h3><i class="k std"></i>标准评判题</h3><span class="field">6 题</span></div>
+    <div class="ch"><span class="eyebrow slash">Standard</span><h3><i class="k std"></i>标准评判题</h3><span class="field">7 题</span></div>
     <div class="ch"><span class="eyebrow slash">Design</span><h3><span class="star k des"></span>主动设计题</h3><span class="field">6 题</span></div>
 
     <div class="rh">类别</div>
     <div class="cats">
       <span class="cat"><img class="icon" src="../../icon-reason.svg" alt="">数学推理</span>
-      <span class="cat"><img class="icon" src="../../icon-algo.svg" alt="">算法竞赛</span>
+      <span class="cat"><img class="icon" src="../../icon-algo.svg" alt="">性能优化</span>
+      <span class="cat"><img class="icon" src="../../icon-battle.svg" alt="">算法对抗</span>
       <span class="cat"><img class="icon" src="../../icon-spatial.svg" alt="">空间推理</span>
+      <span class="cat"><img class="icon" src="../../icon-drawing.svg" alt="">识图建模</span>
     </div>
     <div class="cats">
       <span class="cat"><img class="icon" src="../../icon-interact.svg" alt="">复杂交互应用</span>
@@ -86,30 +89,27 @@
     </div>
 
     <div class="rh">交付</div>
-    <div class="t">Lean 证明、数学竞赛解答、极值构造、CUDA 或 C++ 源码、鲁班锁拆解路线</div>
+    <div class="t">Lean 证明、数学竞赛解答、CUDA 或 C++ 源码、鲁班锁拆解路线、零件建模描述</div>
     <div class="t">网页作品（双击 <span class="num" style="font-weight:600">index.html</span> 运行）或 Windows 桌面项目</div>
 
     <div class="rh">限时</div>
     <div class="t"><span class="num">60</span> 分钟</div>
-    <div class="t"><span class="num">90</span> 或 <span class="num">100</span> 分钟，物理 <span class="num">60</span> 分钟</div>
+    <div class="t"><span class="num">90</span> 或 <span class="num">100</span> 分钟，物理和 AE <span class="num">60</span> 分钟</div>
 
     <div class="rh">评分员</div>
-    <div class="t">程序校验生成分数<br><span class="sub">编译、检查器和评测脚本给出分数</span></div>
+    <div class="t">程序校验生成分数<br><span class="sub">编译、检查器、评测脚本和对局给出分数</span></div>
     <div class="t">Claude Opus 5.5 与 GPT 6.1 Sol 各评，逐项取平均</div>
 
     <div class="rh">计分</div>
-    <div class="t">编译检查、按 IMO 惯例阅卷、锚点表、加速比、拆解步数</div>
+    <div class="t">编译检查、按 IMO 惯例阅卷、锚点表、加速比、对局实力值、拆解步数、形状吻合度</div>
     <div class="t">每个分项在分值内直接打分，相加满分 100</div>
 
     <div class="rh last">权重合计</div>
-    <div class="last share"><span class="fig">40%</span><span class="seg" id="s40"></span></div>
-    <div class="last share"><span class="fig">60%</span><span class="seg" id="s60"></span></div>
+    <div class="last share"><span class="fig">50%</span><span class="seg" id="s40"><i class="on edge" style="width:50%"></i></span></div>
+    <div class="last share"><span class="fig">50%</span><span class="seg" id="s60"><i class="on" style="width:50%"></i></span></div>
   </div>
 </div>
-<script>
-// Weight share as 20 segments of 5 % each; lit segments take the kind's colour, lime ones with the ink edge.
-for (const [id, n, lit] of [['s40', 8, 'on edge'], ['s60', 12, 'on']])
-  document.getElementById(id).innerHTML = Array.from({ length: 20 }, (_, i) => `<i${i < n ? ` class="${lit}"` : ''}></i>`).join('');
-</script>
 </body>
+</html>
+dy>
 </html>

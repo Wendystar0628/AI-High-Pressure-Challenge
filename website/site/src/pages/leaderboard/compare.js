@@ -1,5 +1,5 @@
 // The compare view: the only view not drawn one model per row. Rows are the
-// measures (total, the two kinds, 8 categories, and the 12 tasks when the
+// measures (total, the two kinds, 10 categories, and the 13 tasks when the
 // "题目" grain is on); each row has 2–4 thin bars in ticking order on the
 // same fixed 0–100 scale as the model rows, the highest number highlighted
 // and "差 x" (highest minus lowest) at the right end. A real <table> for

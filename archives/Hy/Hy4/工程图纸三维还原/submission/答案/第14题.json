@@ -1,0 +1,18 @@
+{
+  "problem": "14",
+  "parts": [
+    {"name": "1", "title": "偏置双出口泵体铸件", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 100, 80]}], "depth": 6, "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 6], "loops": [{"rect": [6, 6, 94, 74]}], "depth": 50, "name": "箱体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 6],
+       "at": [[6, 6], [94, 6], [6, 74], [94, 74]], "d": 9, "through": true, "name": "底板4角孔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 6, 0], "loops": [{"circle": [30, 34], "d": 82}], "depth": 6, "name": "Φ82凸台"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 6, 0], "loops": [{"circle": [70, 34], "d": 76}], "depth": 6, "name": "Φ76凸台"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 0, 0], "at": [30, 34], "d": 54, "through": true, "name": "Φ54轴孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 0, 0], "at": [70, 34], "d": 46, "through": true, "name": "Φ46轴孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 74, 0],
+       "loops": [{"rect": [10, 16, 90, 44]}], "depth": 12, "name": "后腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 56], "at": [[20, 20], [80, 20], [20, 60], [80, 60]], "d": 9, "depth": 8, "name": "顶孔"}
+    ]}
+  ]
+}

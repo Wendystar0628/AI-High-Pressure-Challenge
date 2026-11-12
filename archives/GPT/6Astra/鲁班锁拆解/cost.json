@@ -1,0 +1,23 @@
+{
+  "model": "GPT/6Astra",
+  "task": "鲁班锁拆解",
+  "tokens": 12808422,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 4.52,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [
+    "运行时长比例"
+  ],
+  "runs": [
+    "GPT/6Astra/鲁班锁拆解/timer-1793742813.8459013"
+  ]
+}

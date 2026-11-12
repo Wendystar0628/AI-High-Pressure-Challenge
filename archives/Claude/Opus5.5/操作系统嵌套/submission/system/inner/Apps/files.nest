@@ -1,0 +1,423 @@
+;; =====================================================================
+;; 子系统文件管理器
+;; 目录导航、新建/重命名/复制/移动/删除（回收站）/打开，按类型打开到对应应用，
+;; 以及跨层拖放：从本窗口拖出文件（根桌面负责显示目标），或接收其他系统拖来的文件。
+;; 排序规则见 sort-entries；操作规则见 do-delete / do-paste / receive-file。
+;; =====================================================================
+(include "/System/lib/core.nest")
+(include "/System/lib/ui.nest")
+(include "/System/lib/app.nest")
+
+(var INFO (ui-init))
+(var SYSID INFO.id)
+(var CWD (or (get ARGS "path") "/Documents"))
+(var ENTRIES []) (var SEL []) (var ANCHOR nil) (var SCROLL 0)
+(var HIST [CWD]) (var HI 0)
+(var PATH-EDIT nil)
+(var DIALOG nil)   ; {kind "name" title value action} | {kind "conflict" ...} | {kind "menu" x y items}
+(var PRESS nil) (var DRAGGING nil) (var DROP-DIR nil)
+(var MSG "") (var PULLS {}) (var PULL-SEQ 0)
+(def ROW-H 30) (def NAV-W 150) (def TOP 44) (def HEAD-H 26)
+(def NAV [["/Desktop" "桌面" "desktop"] ["/Documents" "文档" "folder"] ["/Downloads" "下载" "download"] ["/Demo" "演示素材" "scene"]
+          ["/Programs" "程序" "code"] ["/Records" "排演记录" "record"] ["/Snapshots" "快照" "snapshot"] ["/System" "系统" "settings"] ["/Recycle" "回收站" "recycle"]])
+
+;; 排序规则：文件夹在前，再按名称
+(defn sort-entries (es)
+  (sort-with es (fn (a b)
+    (cond ((and (= a.type "dir") (!= b.type "dir")) -1)
+          ((and (!= a.type "dir") (= b.type "dir")) 1)
+          (else (compare (lower a.name) (lower b.name)))))))
+
+(defn refresh ()
+  (set! ENTRIES (try (sort-entries (filter (fn (e) (not (starts-with? e.name "."))) (sys "list" CWD)))
+                  (catch e (set! MSG (to-str e)) [])))
+  (set! SEL (filter (fn (p) (any? (fn (e) (= e.path p)) ENTRIES)) SEL))
+  (sys "win-title" APP-WID (str "文件管理器 — " CWD))
+  (dirty!))
+
+(defn go (p from-hist)
+  (when (= (get (sys "stat" p) "type") "dir")
+    (set! CWD p) (set! SEL []) (set! SCROLL 0) (set! PATH-EDIT nil)
+    (when (not from-hist) (set! HIST (concat (slice HIST 0 (+ HI 1)) [p])) (set! HI (- (len HIST) 1)))
+    (refresh)))
+
+(defn note (s) (set! MSG s) (dirty!))
+(defn selected? (p) (>= (index-of SEL p) 0))
+(defn first-sel () (first SEL))
+(defn entry-of (p) (find (fn (e) (= e.path p)) ENTRIES))
+
+(defn file-icon (e)
+  (if (= e.type "dir") (if (= e.path "/Recycle") "recycle" "folder")
+    (case (ext-of e.path) ("nest" "code") ("scene" "scene") ("rec" "record") ("snap" "snapshot") ("sheet" "sheet")
+                          (("txt" "md") "doc") ("json" "code") ("nx" "kernel") (else "file"))))
+(defn type-name (e)
+  (if (= e.type "dir") "文件夹"
+    (case (ext-of e.path) ("nest" "Nest 程序") ("scene" "三维场景") ("rec" "排演记录") ("snap" "子树快照") ("sheet" "工作簿")
+                          ("txt" "文本") ("md" "Markdown") ("json" "JSON") ("nx" "可执行文件") (else "文件"))))
+
+;; ---------------- 打开 ----------------
+(defn open-entry (e)
+  (if (= e.type "dir")
+    (go e.path false)
+    (try
+      (case (ext-of e.path)
+        (("scene" "rec") (sys "spawn" "/Apps/player.nest" {:path e.path} {:kind "app" :detached true}))
+        ("snap" (sys "spawn" "/Apps/tasks.nest" {:tab "systems" :snapshot e.path} {:kind "app" :detached true}))
+        (else (sys "spawn" "/Apps/editor.nest" {:path e.path} {:kind "app" :detached true})))
+      (catch err (note (str "无法打开：" (to-str err)))))))
+
+;; ---------------- 文件操作 ----------------
+(defn unique-name (dir name)
+  (if (not (sys "exists" (path-join dir name)))
+    name
+    (do (var st (stem-of name)) (var ex (ext-of name)) (var n 2) (var r nil)
+        (while (nil? r)
+          (var cand (str st " (" n ")" (if (= ex "") "" (str "." ex))))
+          (if (sys "exists" (path-join dir cand)) (inc! n) (set! r cand)))
+        r)))
+
+(defn recycle-index () (var s (sys "read" "/Recycle/.index.json")) (if s (parse-json s) {}))
+(defn do-delete ()
+  ;; 删除规则：回收站外的项目移入回收站并记住原位置；回收站内的项目永久删除
+  (var idx (recycle-index))
+  (each (p SEL)
+    (try
+      (if (starts-with? p "/Recycle/")
+        (do (sys "delete" p) (del! idx (basename p)))
+        (do (var nm (unique-name "/Recycle" (basename p)))
+            (sys "rename" p (path-join "/Recycle" nm))
+            (put! idx nm p)))
+      (catch e (note (str "删除失败：" (to-str e))))))
+  (sys "write" "/Recycle/.index.json" (to-json idx))
+  (note (str "已删除 " (len SEL) " 项" (if (starts-with? CWD "/Recycle") "" "（可从回收站还原）")))
+  (set! SEL []) (refresh))
+
+(defn do-restore ()
+  (var idx (recycle-index))
+  (each (p SEL)
+    (var orig (or (get idx (basename p)) (path-join "/Documents" (basename p))))
+    (var dst (path-join (dirname orig) (unique-name (dirname orig) (basename orig))))
+    (try (sys "rename" p dst) (del! idx (basename p)) (note (str "已还原到 " dst))
+      (catch e (note (str "还原失败：" (to-str e))))))
+  (sys "write" "/Recycle/.index.json" (to-json idx))
+  (set! SEL []) (refresh))
+
+(defn do-copy (mode)
+  (when (> (len SEL) 0)
+    (sys "bus-write" "files-clipboard" {:mode mode :paths SEL})
+    (note (str (if (= mode "cut") "已剪切 " "已复制 ") (len SEL) " 项"))))
+
+(defn do-paste ()
+  (var cb (sys "bus-read" "files-clipboard"))
+  (when cb
+    (var c cb.v)
+    (each (p c.paths)
+      (try
+        (var dst (path-join CWD (unique-name CWD (basename p))))
+        (if (= c.mode "cut")
+          (when (!= (dirname p) CWD) (sys "rename" p dst))
+          (sys "copy" p dst))
+        (note (str (if (= c.mode "cut") "已移动到 " "已粘贴到 ") dst))
+        (catch e (note (str "粘贴失败：" (to-str e))))))
+    (when (= c.mode "cut") (sys "bus-write" "files-clipboard" nil))
+    (refresh)))
+
+(defn ask-name (title value action)
+  (set! DIALOG {:kind "name" :title title :value value :action action})
+  (dirty!))
+
+(defn dialog-ok ()
+  (var d DIALOG)
+  (set! DIALOG nil)
+  (when (and d (= d.kind "name") (!= (trim d.value) ""))
+    (var name (trim d.value))
+    (try
+      (case d.action
+        ("newfile" (if (sys "exists" (path-join CWD name)) (note "已存在同名项目") (do (sys "write" (path-join CWD name) "") (set! SEL [(path-join CWD name)]) (note (str "已新建 " name)))))
+        ("newdir" (if (sys "exists" (path-join CWD name)) (note "已存在同名项目") (do (sys "mkdir" (path-join CWD name)) (note (str "已新建文件夹 " name)))))
+        ("rename" (var p (first-sel)) (var dst (path-join (dirname p) name))
+                  (when (!= p dst) (sys "rename" p dst) (set! SEL [dst]) (note (str "已重命名为 " name))))
+        (else nil))
+      (catch e (note (str "操作失败：" (to-str e)))))
+    (refresh))
+  (dirty!))
+
+;; ---------------- 跨层拖放 ----------------
+(defn target-dir-at (x y)
+  (var id (ui-hit x y))
+  (cond ((and id (starts-with? id "row:")) (var e (entry-of (substr id 4))) (if (and e (= e.type "dir")) e.path CWD))
+        ((and id (starts-with? id "nav:")) (substr id 4))
+        (else CWD)))
+
+(defn on-dragover (ev)
+  (set! DROP-DIR (target-dir-at ev.x ev.y))
+  (sys "route" {:to ["outer"] :kind "drop-info" :data {:label (str SYSID " · " DROP-DIR) :ok true :sys SYSID :dir DROP-DIR}})
+  (dirty!))
+
+(defn on-drop (ev)
+  (var dir (target-dir-at ev.x ev.y))
+  (set! DROP-DIR nil)
+  (var p ev.payload)
+  (when p
+    (if (= (last p.src) SYSID)
+      ;; 同一系统内：移动
+      (when (!= (dirname p.path) dir)
+        (try (sys "rename" p.path (path-join dir (unique-name dir p.name))) (note (str "已移动到 " dir))
+          (catch e (note (str "移动失败：" (to-str e)))))
+        (refresh))
+      ;; 来自其他系统：经系统接口取得一份独立副本
+      (do (inc! PULL-SEQ)
+          (var req (str "pull-" SYSID "-" APP-WID "-" PULL-SEQ))
+          (sys "endpoint" req)
+          (put! PULLS req {:dir dir :from p.srcSys :path p.path})
+          (sys "route" {:to p.src :kind "file-pull" :data {:req req :path p.path}})
+          (note (str "正在从 " p.srcSys " 接收 " p.name " …")))))
+  (dirty!))
+
+(defn receive-file (d)
+  (var pull (get PULLS d.req))
+  (when pull
+    (del! PULLS d.req)
+    (sys "endpoint-drop" d.req)
+    (if (or d.error (nil? d.content))
+      (note (str "接收失败：" (or d.error "源文件不可读")))
+      (do (var dst (path-join pull.dir d.name))
+          (if (sys "exists" dst)
+            (set! DIALOG {:kind "conflict" :dst dst :dir pull.dir :name d.name :content d.content :from pull.from})
+            (write-received dst d.content pull.from))))
+    (dirty!)))
+
+(defn write-received (dst content from)
+  (try (sys "write" dst content)
+       (note (str "已接收 " (basename dst) "（来自 " from "）"))
+       (sys "notify" "已接收文件" (str from " → " SYSID ":" dst))
+    (catch e (note (str "传递失败：" (to-str e))) (sys "notify" "文件传递失败" (to-str e))))
+  (refresh))
+
+(defn conflict-action (a)
+  (var d DIALOG)
+  (set! DIALOG nil)
+  (case a
+    ("overwrite" (try (sys "delete" d.dst) (catch e nil)) (write-received d.dst d.content d.from))
+    ("both" (write-received (path-join d.dir (unique-name d.dir d.name)) d.content d.from))
+    (else (note "已取消传递")))
+  (dirty!))
+
+;; ---------------- 输入 ----------------
+(defn list-top () (+ TOP HEAD-H))
+(defn list-h () (- APP-H (list-top) 24))
+(defn max-scroll () (max 0 (- (* (len ENTRIES) ROW-H) (list-h) -6)))
+
+(defn on-input (ev view)
+  (case ev.type
+    ("down" (on-down ev))
+    ("move"
+     (when (and PRESS (not DRAGGING) (> (+ (abs (- ev.x PRESS.x)) (abs (- ev.y PRESS.y))) 6))
+       (var e (entry-of PRESS.path))
+       (when e
+         (set! DRAGGING e)
+         (sys "route" {:to ["outer"] :kind "drag-begin" :data {:path e.path :name e.name :type e.type :size e.size}})
+         (dirty!))))
+    ("up" (set! PRESS nil) (when DRAGGING (set! DRAGGING nil) (dirty!)))
+    ("wheel" (set! SCROLL (clamp (+ SCROLL ev.dy) 0 (max-scroll))) (dirty!))
+    ("dragover" (on-dragover ev))
+    ("drop" (on-drop ev))
+    ("leave" (when DROP-DIR (set! DROP-DIR nil) (dirty!)))
+    (else nil)))
+
+(defn on-down (ev)
+  (var id (ui-hit ev.x ev.y))
+  (when DIALOG
+    (cond ((nil? id) nil)
+          ((= id "dlg-ok") (dialog-ok))
+          ((= id "dlg-cancel") (set! DIALOG nil) (dirty!))
+          ((starts-with? id "cf:") (conflict-action (substr id 3)))
+          ((starts-with? id "mi:") (var a (substr id 3)) (set! DIALOG nil) (menu-action a))
+          ((= id "dlg-field") nil)
+          (else (when (= DIALOG.kind "menu") (set! DIALOG nil) (dirty!))))
+    (return nil))
+  (when (nil? id) (set! SEL []) (dirty!) (return nil))
+  (cond
+    ((starts-with? id "nav:") (go (substr id 4) false))
+    ((starts-with? id "row:")
+     (var p (substr id 4))
+     (var e (entry-of p))
+     (cond ((mods-ctrl? ev) (if (selected? p) (remove-item! SEL p) (push! SEL p)) (set! ANCHOR p))
+           ((and ev.mods ev.mods.shift ANCHOR)
+            (var a (find-index (fn (x) (= x.path ANCHOR)) ENTRIES)) (var b (find-index (fn (x) (= x.path p)) ENTRIES))
+            (set! SEL (map-list (fn (x) x.path) (slice ENTRIES (min a b) (+ (max a b) 1)))))
+           (else (when (not (selected? p)) (set! SEL [p])) (set! ANCHOR p)))
+     (cond ((= ev.button 2) (open-menu ev.x ev.y e))
+           ((>= (get-or ev "detail" 1) 2) (set! PRESS nil) (open-entry e))
+           (else (set! PRESS {:x ev.x :y ev.y :path p})))
+     (dirty!))
+    ((= id "tb:back") (when (> HI 0) (dec! HI) (go (nth HIST HI) true)))
+    ((= id "tb:fwd") (when (< HI (- (len HIST) 1)) (inc! HI) (go (nth HIST HI) true)))
+    ((= id "tb:up") (go (dirname CWD) false))
+    ((= id "tb:newfile") (ask-name "新建文件" "新建文本.txt" "newfile"))
+    ((= id "tb:newdir") (ask-name "新建文件夹" "新建文件夹" "newdir"))
+    ((= id "tb:open") (var e (entry-of (first-sel))) (when e (open-entry e)))
+    ((= id "tb:copy") (do-copy "copy"))
+    ((= id "tb:cut") (do-copy "cut"))
+    ((= id "tb:paste") (do-paste))
+    ((= id "tb:rename") (when (first-sel) (ask-name "重命名" (basename (first-sel)) "rename")))
+    ((= id "tb:delete") (when (> (len SEL) 0) (do-delete)))
+    ((= id "tb:restore") (when (> (len SEL) 0) (do-restore)))
+    ((= id "path") nil)
+    (else nil)))
+
+(defn open-menu (x y e)
+  (var items [["open" "打开"]])
+  (when (= (ext-of e.path) "nest") (push! items ["run" "运行程序"]))
+  (when (starts-with? CWD "/Recycle") (push! items ["restore" "还原"]))
+  (each (it [["copy" "复制"] ["cut" "剪切"] ["rename" "重命名"] ["delete" (if (starts-with? CWD "/Recycle") "永久删除" "删除")]]) (push! items it))
+  (set! DIALOG {:kind "menu" :x (min x (- APP-W 170)) :y (min y (- APP-H (* 28 (len items)) 10)) :items items :entry e})
+  (dirty!))
+
+(defn menu-action (a)
+  (var e (entry-of (first-sel)))
+  (case a
+    ("open" (when e (open-entry e)))
+    ("run" (when e (try (var pid (sys "spawn" e.path nil {:detached true})) (note (str "已启动 " e.name "（进程 " pid "）")) (catch err (note (to-str err))))))
+    ("restore" (do-restore))
+    ("copy" (do-copy "copy"))
+    ("cut" (do-copy "cut"))
+    ("rename" (when e (ask-name "重命名" e.name "rename")))
+    ("delete" (do-delete))
+    (else nil))
+  (dirty!))
+
+(defn on-key (ev view)
+  (cond
+    ((and DIALOG (= ev.key "Enter")) (if (= DIALOG.kind "name") (dialog-ok) (set! DIALOG nil)))
+    ((and DIALOG (= ev.key "Escape")) (set! DIALOG nil) (dirty!))
+    ((and (= ev.field "path") (= ev.key "Enter")) (go (trim (or PATH-EDIT CWD)) false))
+    (ev.inField nil)
+    ((= ev.key "Delete") (when (> (len SEL) 0) (do-delete)))
+    ((= ev.key "F2") (when (first-sel) (ask-name "重命名" (basename (first-sel)) "rename")))
+    ((= ev.key "Enter") (var e (entry-of (first-sel))) (when e (open-entry e)))
+    ((= ev.key "Backspace") (go (dirname CWD) false))
+    ((and (mods-ctrl? ev) (= (lower ev.key) "c")) (do-copy "copy"))
+    ((and (mods-ctrl? ev) (= (lower ev.key) "x")) (do-copy "cut"))
+    ((and (mods-ctrl? ev) (= (lower ev.key) "v")) (do-paste))
+    ((and (mods-ctrl? ev) (= (lower ev.key) "a")) (set! SEL (map-list (fn (e) e.path) ENTRIES)) (dirty!))
+    (else nil)))
+
+(defn on-text (ev view)
+  (cond ((= ev.field "path") (set! PATH-EDIT (apply-text-edit (or PATH-EDIT CWD) ev)))
+        ((and DIALOG (= ev.field "dlg-field")) (put! DIALOG "value" (apply-text-edit DIALOG.value ev))))
+  (dirty!))
+
+(defn on-msg (m)
+  (case m.k
+    ("file-data" (receive-file m.data))
+    (else nil)))
+
+;; ---------------- 绘制 ----------------
+(defn tb-btn (id x ic label tid)
+  (button id x 8 30 28 "" {:icon ic :tid tid :label label :title label}))
+
+(defn render ()
+  (ui-begin)
+  (var W APP-W) (var H APP-H)
+  (var nodes [(box 0 0 W H {:fill C-BG})])
+  ;; 工具栏
+  (push! nodes (box 0 0 W TOP {:fill "#ffffff06"}))
+  (push! nodes (hline 0 (- TOP 1) W))
+  (var x 8)
+  (each (b [["tb:back" "back" "后退" "files-back"] ["tb:fwd" "forward" "前进" "files-forward"] ["tb:up" "up" "上一级" "files-up"]])
+    (push! nodes (tb-btn (nth b 0) x (nth b 1) (nth b 2) (nth b 3))) (inc! x 34))
+  (var pw (max 120 (- W x 8 (* 34 9))))
+  (push! nodes (field "path" (+ x 4) 9 pw 26 (or PATH-EDIT CWD) {:tid "files-path" :label "路径" :mono true}))
+  (set! x (+ x pw 12))
+  (each (b [["tb:newfile" "newfile" "新建文件" "files-new-file"] ["tb:newdir" "newfolder" "新建文件夹" "files-new-folder"] ["tb:open" "open" "打开" "files-open"]
+            ["tb:copy" "copy" "复制" "files-copy"] ["tb:cut" "menu" "剪切" "files-cut"] ["tb:paste" "paste" "粘贴" "files-paste"]
+            ["tb:rename" "rename" "重命名" "files-rename"] ["tb:delete" "trash" "删除" "files-delete"] ["tb:restore" "restore" "还原" "files-restore"]])
+    (when (or (!= (nth b 0) "tb:restore") (starts-with? CWD "/Recycle"))
+      (push! nodes (tb-btn (nth b 0) x (nth b 1) (nth b 2) (nth b 3))) (inc! x 34)))
+  ;; 侧栏
+  (push! nodes (box 0 TOP NAV-W (- H TOP 24) {:fill "#00000020"}))
+  (push! nodes (vline NAV-W TOP (- H TOP 24)))
+  (each-i (i n NAV)
+    (var p (nth n 0)) (var y (+ TOP 8 (* i 32)))
+    (var on (under? CWD p)) (var id (str "nav:" p))
+    (hit! id 6 y (- NAV-W 12) 30)
+    (push! nodes (group 6 y (- NAV-W 12) 30
+      [(box 0 0 (- NAV-W 12) 30 {:fill (cond ((= DROP-DIR p) (str ACCENT "55")) (on (str ACCENT "30")) ((= UI-HOVER id) "#ffffff12") (else "#00000000")) :r 7})
+       (icon 8 6 18 (nth n 2) {})
+       (text 34 0 100 30 (nth n 1) {:size 12 :color (if on "#ffffff" C-TEXT) :valign "middle"})]
+      {:tid "files-nav" :attrs {"file-path" p} :label (nth n 1) :cursor "pointer"})))
+  ;; 列表
+  (var lx (+ NAV-W 1)) (var lw (- W NAV-W 1)) (var ly (list-top)) (var lh (list-h))
+  (push! nodes (group lx TOP lw HEAD-H [(text 40 0 200 HEAD-H "名称" {:size 11 :color C-DIM :valign "middle"})
+                                        (text (- lw 250) 0 90 HEAD-H "类型" {:size 11 :color C-DIM :valign "middle"})
+                                        (text (- lw 150) 0 70 HEAD-H "大小" {:size 11 :color C-DIM :valign "middle" :align "right"})] {}))
+  (var rows [])
+  (each-i (i e ENTRIES)
+    (var ry (- (* i ROW-H) SCROLL))
+    (when (and (> (+ ry ROW-H) 0) (< ry lh))
+      (var id (str "row:" e.path)) (var sel (selected? e.path))
+      (hit! id (+ lx 6) (+ ly ry) (- lw 12) (- ROW-H 2))
+      (push! rows (group 6 ry (- lw 12) (- ROW-H 2)
+        [(box 0 0 (- lw 12) (- ROW-H 2) {:fill (cond ((= DROP-DIR e.path) (str ACCENT "55")) (sel (str ACCENT "2e")) ((= UI-HOVER id) "#ffffff0d") (else "#00000000"))
+                                          :r 6 :stroke (if sel (str ACCENT "77") nil)})
+         (icon 8 5 18 (file-icon e) {})
+         (text 34 0 (- lw 300) (- ROW-H 2) e.name {:size 12 :color C-TEXT :valign "middle"})
+         (text (- lw 262) 0 100 (- ROW-H 2) (type-name e) {:size 11 :color C-DIM :valign "middle"})
+         (text (- lw 172) 0 80 (- ROW-H 2) (if (= e.type "dir") "" (fmt-bytes e.size)) {:size 11 :color C-DIM :valign "middle" :align "right"})]
+        {:tid "files-item" :attrs {"file-path" e.path} :label e.name :k e.path :cursor "default"}))))
+  (when (= (len ENTRIES) 0) (push! rows (text 0 30 lw 30 (if (starts-with? CWD "/Recycle") "回收站是空的" "此文件夹为空") {:size 12 :color C-FAINT :align "center"})))
+  (push! nodes (group lx ly lw lh rows {:clip true :tid "files-list" :label "文件列表" :k "list"
+                                        :attrs {"drop-dir" CWD}}))
+  (when DROP-DIR (push! nodes (box (+ lx 2) (- ly 1) (- lw 4) (+ lh 2) {:stroke ACCENT :sw 2 :r 6})))
+  ;; 状态栏
+  (var st (sys "storage"))
+  (push! nodes (box 0 (- H 24) W 24 {:fill "#00000033"}))
+  (push! nodes (text 10 (- H 24) (- W 20) 24 (str (len ENTRIES) " 个项目" (if (> (len SEL) 0) (str " · 已选 " (len SEL)) "") "   " MSG) {:size 11 :color C-DIM :valign "middle"}))
+  (push! nodes (text (- W 260) (- H 24) 250 24 (str SYSID " 存储 " (fmt-bytes st.used) " / " (fmt-bytes st.quota)) {:size 11 :color C-FAINT :valign "middle" :align "right"}))
+  (when DRAGGING (push! nodes (text (+ lx 10) (- H 48) 400 20 (str "拖动 " DRAGGING.name " — 移到其他系统的文件管理器上松开") {:size 11 :color ACCENT})))
+  (when DIALOG (push! nodes (draw-dialog)))
+  (app-display nodes {:kind "files" :cwd CWD :selected SEL})
+  nil)
+
+(defn draw-dialog ()
+  (case DIALOG.kind
+    ("menu"
+     (var n (len DIALOG.items)) (var mw 160)
+     (var kids [(box 0 0 mw (+ 8 (* n 28)) {:fill "#151c31f8" :r 8 :stroke "#ffffff22" :shadow 3})])
+     (each-i (i it DIALOG.items)
+       (var id (str "mi:" (first it)))
+       (hit! id (+ DIALOG.x 4) (+ DIALOG.y 4 (* i 28)) (- mw 8) 26)
+       (push! kids (group 4 (+ 4 (* i 28)) (- mw 8) 26 [(box 0 0 (- mw 8) 26 {:fill (if (= UI-HOVER id) (str ACCENT "38") "#00000000") :r 6})
+                                                       (text 10 0 (- mw 20) 26 (nth it 1) {:size 12 :color C-TEXT :valign "middle"})]
+                          {:tid (str "files-menu-" (first it)) :label (nth it 1)})))
+     (group DIALOG.x DIALOG.y mw (+ 8 (* n 28)) kids {:k "menu"}))
+    ("name"
+     (var dw (min 360 (- APP-W 40))) (var dh 140) (var x (/ (- APP-W dw) 2)) (var y (/ (- APP-H dh) 2))
+     (ui-offset x y)
+     (var kids [(box 0 0 dw dh {:fill "#161d33fa" :r 10 :stroke (str ACCENT "77") :shadow 3})
+                (text 16 12 (- dw 32) 22 DIALOG.title {:size 14 :weight 700 :color C-TEXT})
+                (field "dlg-field" 16 44 (- dw 32) 30 DIALOG.value {:tid "files-name-input" :label "名称"})
+                (button "dlg-ok" (- dw 170) (- dh 44) 74 30 "确定" {:primary true :tid "dialog-confirm"})
+                (button "dlg-cancel" (- dw 88) (- dh 44) 74 30 "取消" {:tid "dialog-cancel"})])
+     (ui-offset (- x) (- y))
+     (group 0 0 APP-W APP-H [(box 0 0 APP-W APP-H {:fill "#0000004d"}) (group x y dw dh kids {})] {:k "dlg" :tid "dialog"}))
+    ("conflict"
+     (var dw (min 420 (- APP-W 30))) (var dh 150) (var x (/ (- APP-W dw) 2)) (var y (/ (- APP-H dh) 2))
+     (ui-offset x y)
+     (var kids [(box 0 0 dw dh {:fill "#161d33fa" :r 10 :stroke "#fbbf2499" :shadow 3})
+                (icon 16 14 20 "warning" {})
+                (text 44 12 (- dw 60) 22 "目标已有同名文件" {:size 14 :weight 700 :color C-TEXT})
+                (text 44 40 (- dw 60) 40 (str DIALOG.dst " 已存在。") {:size 12 :color C-DIM :wrap true})
+                (button "cf:overwrite" 16 (- dh 44) 90 30 "覆盖" {:danger true :tid "dialog-confirm"})
+                (button "cf:both" 114 (- dh 44) 100 30 "保留两者" {:tid "dialog-extra"})
+                (button "cf:cancel" (- dw 90) (- dh 44) 74 30 "取消" {:tid "dialog-cancel"})])
+     (ui-offset (- x) (- y))
+     (group 0 0 APP-W APP-H [(box 0 0 APP-W APP-H {:fill "#0000004d"}) (group x y dw dh kids {})] {:k "dlg" :tid "dialog"}))
+    (else (box 0 0 0 0 {}))))
+
+(app-open {:app "files" :title "文件管理器" :w 640 :h 400 :icon "files"})
+(refresh)
+(app-run {:render render :input on-input :key on-key :text on-text :msg on-msg
+          :restored (fn (mode) (refresh))
+          :after (fn () nil)})

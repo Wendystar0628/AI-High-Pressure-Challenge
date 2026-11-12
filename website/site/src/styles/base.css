@@ -168,3 +168,18 @@ body.site::after {
 .site-load-error {
   margin: 1.5rem 0;
 }
+/* 暂停公示 (shell/index.js showHold): the one notice that replaces a score page's content */
+.site-hold {
+  margin: 1.5rem 0 3rem;
+}
+.site-hold .st-notice {
+  max-width: 40rem;
+  font-size: 1.05rem;
+}
+.site-hold .st-actions {
+  margin-top: 1rem;
+}
+.page-home > .site-hold {
+  width: min(48rem, calc(100% - 2rem));
+  margin: 4rem auto;
+}

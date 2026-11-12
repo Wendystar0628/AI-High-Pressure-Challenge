@@ -61,25 +61,25 @@
   <div class="notes">
     <div><span><b>新的一轮</b>星在条下方：开场、接回原会话，或一轮正常结束后立即续做</span></div>
     <div><span><b>整体进度提示</b>星在条上方：只发给主动设计题，累计用时到限时一半时</span></div>
-    <div><span><b>提交提醒</b>星在条上方：两类题每段作答剩余 10 分钟时各一次</span></div>
-    <div><i class="last"></i><span><b>最后 10 分钟</b>一轮结束后不再续做，会话空闲（斜线纹）到时</span></div>
+    <div><i class="last"></i><span><b>最后 1 分钟</b>一轮结束后不再续做，会话空闲（斜线纹）到时</span></div>
   </div>
 </div>
 <script>
-// A schematic: turn lengths are an example; the rules (half time, last 10 minutes, 72 minutes left) are from README.md.
+// A schematic: turn lengths are an example; the rules (half time, the last minute, 72 minutes left) are from README.md.
+const LAST = 1;  // minutes at the end of a stretch with no immediate continuation
 const LANES = [
   { kind: 'des', name: '主动设计题', sub: ['以 100 分钟题为例'], end: 100,
-    turns: [[0, 24], [24, 47], [47, 71], [71, 94]], idle: [94, 100],
+    turns: [[0, 24], [24, 47], [47, 71], [71, 99.4]], idle: [99.4, 100],
     below: [[0, '开场提示'], [24, '立即续做'], [47, '立即续做'], [71, '立即续做']],
-    above: [[50, '整体进度提示'], [90, '提交提醒']], note: [97, '不再续做'] },
-  { kind: 'std', name: '标准评判题', sub: ['以 60 分钟题为例', '没有整体进度提示'], end: 60,
-    turns: [[0, 29], [29, 42], [42, 56]], idle: [56, 60],
+    above: [[50, '整体进度提示']], note: [97.5, '不再续做'] },
+  { kind: 'std', name: '形式化 / 性能题', sub: ['以 60 分钟题为例', '所有标准评判题无中途定时提醒'], end: 60,
+    turns: [[0, 29], [29, 42], [42, 59.4]], idle: [59.4, 60],
     below: [[0, '开场提示'], [29, '立即续做'], [42, '立即续做']],
-    above: [[50, '提交提醒']], note: [58, '不再续做'] },
+    above: [], note: [57.5, '不再续做'] },
   { kind: 'des', name: '中断后续做', sub: ['同一道 100 分钟题'], end: 100, cut: 28,
-    turns: [[0, 28], [28, 66], [66, 93]], idle: [93, 100],
+    turns: [[0, 28], [28, 66], [66, 99.4]], idle: [99.4, 100],
     below: [[0, '开场提示'], [28, '续做提示'], [66, '立即续做']],
-    above: [[50, '整体进度提示'], [90, '本段的提交提醒']], note: [96.5, '不再续做'],
+    above: [[50, '整体进度提示']], note: [97.5, '不再续做'],
     brackets: [[0, 28, '额度用尽，中断'], [28, 100, '用剩余的 72 分钟接回原会话，故障处理的时间不计']] },
 ];
 
@@ -112,8 +112,8 @@ LANES.forEach((L, li) => {
   put('lane', `left:0;top:${barY - 16}px`, mark + L.name);
   L.sub.forEach((s, i) => put('sub', `left:0;top:${barY + 8 + i * 18}px;transform:none`, s));
 
-  // The last 10 minutes of the segment: a cyan reference band behind the bar.
-  put('last', `left:${x(L.end - 10)}px;top:${barY - 14}px;width:${10 * S}px;height:${BAR + 28}px`);
+  // The last minute of the segment: a cyan reference band behind the bar.
+  put('last', `left:${x(L.end - LAST)}px;top:${barY - 14}px;width:${LAST * S}px;height:${BAR + 28}px`);
   // Turns, separated by a 3 px paper gap; the idle tail is hatched.
   L.turns.forEach(([a, b]) => put('turn ' + L.kind, `left:${x(a) + (a ? 1.5 : 0)}px;top:${barY}px;width:${(b - a) * S - (a ? 3 : 1.5)}px`));
   put('idle', `left:${x(L.idle[0]) + 1.5}px;top:${barY}px;width:${(L.idle[1] - L.idle[0]) * S - 1.5}px`);

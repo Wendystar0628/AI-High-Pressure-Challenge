@@ -1,0 +1,94 @@
+{
+  "lede": "The questions people ask most about the scores, the test costs and individual tasks.",
+  "sections": [
+    {
+      "id": "leaderboard",
+      "title": "Overall scores",
+      "items": [
+        {
+          "id": "opus-vs-astra",
+          "q": "Why does Opus~5.5 rank below 6~Astra?",
+          "a": "Besides the design tasks, this challenge has many **rigorous reasoning and algorithm design tasks**, and those are where GPT models are strong. The site lets you change the weights and recompute the scores yourself. **A gap of under three points** can be treated as natural variation."
+        },
+        {
+          "id": "sol-vs-astra",
+          "q": "Why is 6.1~Sol's score so close to 6~Astra's?",
+          "a": "Because 6.1~Sol is a **top-tier distillation of Astra**: its abilities and behaviour are almost identical."
+        },
+        {
+          "id": "terra-60",
+          "q": "How does 6.1~Terra reach 60 points?",
+          "a": "First, Terra stands on the GPT family's intelligence base. Second, Terra measured **close to 100 TPS**, a real speed edge under a time limit. And this challenge is **not a pure front-end test**."
+        },
+        {
+          "id": "grader-bias",
+          "q": "Does grading with Opus~5.5 and 6.1~Sol make them favour their own family's models?",
+          "a": "No. I ran dedicated comparisons **graded blind and with model names shown**: when Opus and GPT grade their own family's models, the gap moves by **under 2~points**, which is normal variation. And from the attention mechanism's point of view alone, a grader spends its time checking code and running tests; it does not pay attention to the model's code name."
+        }
+      ]
+    },
+    {
+      "id": "cost",
+      "title": "Test cost and token usage",
+      "items": [
+        {
+          "id": "cost-method",
+          "q": "How are the test cost and token usage calculated?",
+          "a": [
+            "By an automatic tally that Sol wrote: it adds up the tokens of **the last attempt** from the logs. Subscriptions are priced from ModelDial's weekly quotas, credits at their tier price, and APIs at what was actually paid.",
+            { "source": { "label": "Quota source", "url": "https://modeldial.com/subscriptions?period=week&view=insights" } }
+          ]
+        },
+        {
+          "id": "deepseek-cost",
+          "q": "Why does DeepSeek cost the most?",
+          "a": "DeepSeek runs at **about 200 TPS** and **calls tools very often**, so it reads a great many input tokens."
+        },
+        {
+          "id": "subscription-value",
+          "q": "Why do Claude and GPT cost so little?",
+          "a": [
+            "Because GPT and Claude subscriptions are **very good value**. API-equivalent cost against the subscription price:",
+            {
+              "ratios": [
+                { "label": "GPT Sol", "pre": "≈", "value": "20×" },
+                { "label": "Astra", "pre": "≈", "value": "30×" },
+                { "label": "Claude overall", "pre": "≈", "value": "58×" }
+              ]
+            },
+            "I have paid for both $200 plans for several months, and my own usage matches these numbers. It is a harsh fact, but one we have to face."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tasks",
+      "title": "Scores on individual tasks",
+      "items": [
+        {
+          "id": "zero-scores",
+          "q": "Why did Hy and MiMo score 0?",
+          "a": "Both models **thought furiously for the whole 60~minutes** and never wrote a word: a big fat zero."
+        },
+        {
+          "id": "opus-design",
+          "tag": { "text": "Other design tasks" },
+          "q": "Why does Opus~5.5 score fairly high on all of these?",
+          "a": "Opus has **a very strong drive to design on its own initiative**, and it is fast, which pays off in a timed challenge. That does not prove Opus is always stronger at these tasks when time is open-ended."
+        }
+      ]
+    },
+    {
+      "id": "weights",
+      "title": "About model scores",
+      "items": [
+        {
+          "id": "default-weights",
+          "lead": "If you think a task isn't worth testing,\njust **set its weight to 0** on the site.",
+          "a": "Questions about the tasks themselves are **always welcome**.",
+          "side": [{ "weights": "The model scores only reflect **the default weights I chose**:" }]
+        }
+      ]
+    }
+  ]
+}

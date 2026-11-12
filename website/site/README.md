@@ -1,6 +1,6 @@
 # 成绩网站 `website/site`
 
-「AI八项全能·定时挑战赛」成绩网站的源码：Vite 8 多页静态站，原生 JS 模块，图表用 D3 v7 画 SVG。设计以 `website/docs/` 为准，分工约定见 `website/docs/architecture.md`。本文是各页负责人的主要参考：怎么跑、路由怎么来、谁改哪里、共用部件的 API。
+「AI十项全能·定时挑战赛」成绩网站的源码：Vite 8 多页静态站，原生 JS 模块，图表用 D3 v7 画 SVG。设计以 `website/docs/` 为准，分工约定见 `website/docs/architecture.md`。本文是各页负责人的主要参考：怎么跑、路由怎么来、谁改哪里、共用部件的 API。
 
 ## 一、运行与构建
 
@@ -27,6 +27,7 @@ npm run sync           # 只同步素材（dev 和构建前会自动跑）
 | `/leaderboard/` | `leaderboard` | 空 |
 | `/categories/` | `categories` | 空 |
 | `/about/` | `about` | 空 |
+| `/faq/` | `faq` | 空（猜你想问，内容在 `content/<lang>/faq.json`） |
 | `/tasks/` | `tasks` | 空 |
 | `/tasks/<类别>/<题目>/` | `task` | `reason/formal-proof`（tasks.json 的 `path`） |
 | `/models/` | `model` | 总分第 1 名的模型 id（scores.json 的 `order` 第一个）：「模型得分」入口页，静态生成，不跳转 |
@@ -68,7 +69,7 @@ site/
     i18n/zh/common.json  i18n/en/common.json            骨架方
     i18n/<zh|en>/<页面类型>.json                         各页负责人（已建好空壳）
     pages/<类型>/main.js 及本页的样式和部件               各页负责人
-  content/                   说明页和题目页的长文（阅读页负责人）
+  content/                   说明页、猜你想问（faq.json，格式见 src/pages/faq/model.js）和题目页的长文（阅读页负责人）
 ```
 
 - 各页负责人只改：`pages/<自己的类型>.html` 的 `<main>`、`src/pages/<自己的类型>/`、`src/i18n/*/<自己的类型>.json`、`content/` 下自己的文件。
@@ -122,7 +123,7 @@ boot(async ({ route, data, t, lang }) => {
   models: [model],          // models.json：{ id, key, name, short, aliases, vendor, logo, agent, effort, tested }
   order: [id],              // scores.order：官方顺序（已排名按总分，后接评测中）
   categories: [category],   // tasks.json：{ key, name, en, short, short_en, icon, weight, kind, brief, brief_en, tasks: [task] }
-  tasks: [task],            // 按 no 1–12 摊平：{ key, path, no, category, name, name_en, short, short_en, weight, minutes, kind, brief, deliverable, statement, … }
+  tasks: [task],            // 按 no 1–13 摊平：{ key, path, no, category, name, name_en, short, short_en, weight, minutes, kind, brief, deliverable, statement, … }
   scores: { id: score },    // { total, kinds:{standard,design}, categories, tasks, status:'ranked'|'testing', done, rank, category_ranks, task_ranks }
   vendors: [{ vendor, logo, count }],   // 按模型数排
   kinds: { standard: { weight, categories:[key], tasks:[key] }, design: {…} },
@@ -150,7 +151,7 @@ boot(async ({ route, data, t, lang }) => {
 
 ### i18n `core/i18n.js`
 
-- 文件：`src/i18n/<zh|en>/<命名空间>.json`。`common` 归骨架方，每页一个与页面类型同名的命名空间（`home`、`leaderboard`、`categories`、`about`、`tasks`、`task`、`model`）。
+- 文件：`src/i18n/<zh|en>/<命名空间>.json`。`common` 归骨架方，每页一个与页面类型同名的命名空间（`home`、`leaderboard`、`categories`、`about`、`faq`、`tasks`、`task`、`model`）。
 - `t('ns.key', vars)`：`{name}` 占位；英文缺键回落中文，再缺显示键名。`tv(key)` 取原值（对象、数组）。`has(key)`。
 - 单复数：英文值写成 `{ "one": "{n} model", "other": "{n} models" }`，`t()` 按 `vars.count`（没有时 `vars.n`）选形式；中文照旧写字符串。`plural(key, n)` 只取选好的原文（不填占位），给把占位换成元素的场合用。构建时的 `{{t:…}}` 同样支持。
 - `lang`：`'zh' | 'en'`。`pick(obj, 'name')`：英文页取 `name_en`（类别名取 `en`），没有就用中文；也用于 `short`、`brief`、`deliverable`。
@@ -161,7 +162,7 @@ boot(async ({ route, data, t, lang }) => {
 
 - `route`：`{ page, lang, id, category, task, model, base }`。`BASE`：基础路径。
 - `href(path, { lang, query, hash })`：站内链接，自动加基础路径和 `/en/`。`query` 可以是对象（数组用逗号连起来）。
-- `links`：`home()`、`leaderboard(query)`、`categories(类别key)`、`about(锚点)`、`tasks(类别key)`、`task(task 或 'reason/formal-proof')`、`model(id)`、`compare(ids)`（→ `/leaderboard/?view=compare&cmp=…`）、`data(file)`、`asset(path)`。每个都可再传 `{ lang }`。
+- `links`：`home()`、`leaderboard(query)`、`categories(类别key)`、`about(锚点)`、`faq(锚点)`、`tasks(类别key)`、`task(task 或 'reason/formal-proof')`、`model(id)`、`models()`（模型得分入口页）、`compare(ids)`（→ `/leaderboard/?view=compare&cmp=…`）、`data(file)`、`asset(path)`。每个都可再传 `{ lang }`。
 - `altHref(lang?)`：本页另一种语言的地址（带查询和锚点）。
 
 ### 地址参数与存储 `core/state.js`
@@ -202,9 +203,9 @@ boot(async ({ route, data, t, lang }) => {
 
 ## 七、charts（`src/charts/index.js` 一处全导出）
 
-### 八项星盘 `createStarDial(container, options)`
+### 十项星盘 `createStarDial(container, options)`
 
-首页和模型得分页共用（README 变体卡、home.md 首屏右栏、models.md 星盘）。从里到外：紫盘（模型、总分、名次）→ 星区（紫盘外沿 0 分，外沿 100 分，25/50/75/100 虚线圈）→ 8 段类别板（圆心角 = 权重 × 3.6°，12 点起顺时针；标准评判题荧光绿 100、主动设计题紫 100，两组间一道墨线；板内侧括弧写「标准评判 40% / 主动设计 60%」）→ 外沿刻度（每 1% 一格，类别分界加长）。12 道题是四角星：到中心的距离 = 该题得分，面积 ∝ 题目权重，本模型该题全场第一时是荧光绿；星座连线顺时针、在每颗星前断开。
+首页和模型得分页共用（README 变体卡、home.md 首屏右栏、models.md 星盘）。从里到外：紫盘（模型、总分、名次）→ 星区（紫盘外沿 0 分，外沿 100 分，25/50/75/100 虚线圈）→ 10 段类别板（圆心角 = 权重 × 3.6°，12 点起顺时针；标准评判题荧光绿 100、主动设计题紫 100，两组间一道墨线；板内侧括弧写「标准评判 50% / 主动设计 50%」）→ 外沿刻度（每 1% 一格，类别分界加长）。13 道题是四角星：到中心的距离 = 该题得分，面积 ∝ 题目权重，本模型该题全场第一时是荧光绿；星座连线顺时针、在每颗星前断开。
 
 ```js
 import { createStarDial, exportButton } from '../../charts/index.js';
@@ -226,14 +227,15 @@ dial.destroy();
 - SVG 的 viewBox 是 640×640，宽度随容器（`width:100%`），高宽相等；容器决定大小。
 - 指向扇区：板填深一档、外沿紫括弧和光束、其余扇区的星和连线退淡、紫盘换成该类分数和名次；指向星：星填荧光绿、紫盘换成该题。离开回到本模型。键盘聚焦同样有效，每段每颗星都有 `aria-label`。
 - 没出分的题不画星，在扇区里写「未出分」。home.md 要的「星盘下方三行图例」由首页负责人写在星盘外面。
-- 盘内小字按渲染尺寸放大，屏上不小于 11px（技能字号阶最小一级）；扇区名和权重两条弧随字号拉开，放不下的扇区名换简称；分组括弧在「标准评判 40%」处断开。紫盘标签放不下全名时依次换简称、去掉厂商图标，最后才截断（保留推理强度）。
+- 盘内小字按渲染尺寸放大，屏上不小于 11px（技能字号阶最小一级）；扇区名和权重两条弧随字号拉开，放不下的扇区名换简称；分组括弧在「标准评判 46%」处断开。紫盘标签放不下全名时依次换简称、去掉厂商图标，最后才截断（保留推理强度）。
 
 ### 存为图片 `charts/export.js`
 
 - `exportButton({ getSvg, title, filename })`：看板头右端的小按钮「存为图片」，完成时荧光绿穿过一次、字换成「已保存」。`getSvg` 返回在页上的 `<svg>`。
 - `exportButton({ build, title })`：图不是一整块 SVG 时用，`build()` 返回 `{ svg, width, height }`（样式已内联，可以是 Promise），例如 `build: () => listToSVG(ol, { head })`。
 - `rowsToSVG([head, ...rows], { sub: '.mrow-sub', skip: '.sr-only' })` → Promise：一组 HTML 行（连同行里的子行）拼成一张 SVG：文字照位置和样式写成 `<text>`（省略号照样截断），行里每个 SVG 原样带上，高光、虚线「评测中」框、柱尾四角星、厂商和类别图标、勾选紫条都保留，每行和每个子行下沿画自己的细线。带底色的标签加 `data-ground` 会连底色一起导出。
-- `exportChart(svg, { title, filename, scale = 2 })`、`exportPrepared(svg, w, h, opts)`：直接导出。PNG 是 2 倍像素、当前主题和状态，下加一行页脚「站名 │ 图名 │ 数据 日期 │ 网址」，嵌入 Saira。文件名默认 `ai-octathlon-<图名>-<更新日期>.png`。
+- `exportChart(svg, { title, filename, scale = 2 })`、`exportPrepared(svg, w, h, opts)`：直接导出。PNG 是 2 倍像素、当前主题和状态，下加一行页脚「站名 │ 图名 │ 数据 日期 │ 网址」，嵌入 Saira。文件名默认 `ai-decathlon-<图名>-<更新日期>.png`。
+- 底层：`svgToPNG(svg, w, h, { scale })` → PNG Blob（样式已内联、字体已内嵌的 SVG），`saveBlob(blob, 文件名)` 下载，`fontCSS()` → Saira 的 `@font-face`（data URL）。猜你想问的整页导出（`src/pages/faq/sheet.js`，1920×1080，自动分页）用的就是这几个。
 - 导出靠复制每个元素的计算样式，所以图里的颜色写在 CSS（类或 `style`）里就行；HTML 元素（遮罩图标、`<div>` 柱）导不进去，图标用 `inlineSVG`。
 
 ### 配色 `charts/colors.js`（visual.md）
@@ -252,7 +254,7 @@ dial.destroy();
 
 ### 模型行 `ui/modelRow.js`
 
-列：勾选 │ 名次 │ 厂商图标 │ 全名（链接，到模型得分页 `/models/<id>/`，名字接力）│ 图区 │ 分数。点行的其余部分打开侧面板（行上有 `data-model-panel`；键盘用全名后面一个读屏可见的按钮）。行高 `--row-h`，指向或聚焦时左边落紫条、底变纸色、图形加深一档；勾选的行常显紫条（类 `is-checked`，`--cmp` 是勾选序号）。评测中的行名次写虚线框「评测中」、分数 `—`、图区斜线纹加「已出 8 / 12 题」。读屏把一行读作「第 1 名，GPT 6 Astra (xhigh)，74.7 分」。
+列：勾选 │ 名次 │ 厂商图标 │ 全名（链接，到模型得分页 `/models/<id>/`，名字接力）│ 图区 │ 分数。点行的其余部分打开侧面板（行上有 `data-model-panel`；键盘用全名后面一个读屏可见的按钮）。行高 `--row-h`，指向或聚焦时左边落紫条、底变纸色、图形加深一档；勾选的行常显紫条（类 `is-checked`，`--cmp` 是勾选序号）。评测中的行名次写虚线框「评测中」、分数 `—`、图区斜线纹加「已出 8 / 13 题」。读屏把一行读作「第 1 名，GPT 6 Astra (xhigh)，74.7 分」。
 
 ```js
 import { createModelList, createRowHead, barPlot, listToSVG } from '../../ui/index.js';
@@ -272,7 +274,7 @@ list.rows;  // Map<id, li>
 ```
 
 - 列宽：名字列 `--mrow-name`（默认 15rem，可在本页 CSS 里改）。行 `li.mrow` 带 `data-id`，图区是 `.mrow-plot`。
-- 每行（entry）可以带 `best`（全场最佳：分数垫荧光绿、柱尾荧光绿星；不写时名次 1 即最佳）和 `note`（行内备注：没出分的行写在斜线纹上，有分的行跟在柱尾；没出分又没写时是「已出 8 / 12 题」，写 `''` 不显示）。列表选项的 `note` 写成字符串时只给没出分的行。
+- 每行（entry）可以带 `best`（全场最佳：分数垫荧光绿、柱尾荧光绿星；不写时名次 1 即最佳）和 `note`（行内备注：没出分的行写在斜线纹上，有分的行跟在柱尾；没出分又没写时是「已出 8 / 13 题」，写 `''` 不显示）。列表选项的 `note` 写成字符串时只给没出分的行。
 - 名次格钩子 `rank(cell, entry, ctx)`：自己往名次格里写（例如按某题排序的名次、名次变化），它在本行读屏句 `ctx.sr` 写好之后跑，需要时可改写。
 - `createRowHead({ …, hidden: true })`：默认整行对读屏隐藏；`hidden: false` 时标签可读，只隐藏装饰格（勾选位、图标位、没有链接的图区）。表头的名次、分数和其他表头字同一字号。
 - `barPlot`：共用的横向分数柱（`charts/bar.js`），固定 0–100，柱尾荧光绿四角星（HTML 叠加层）。自己画图区时同样只往 `cell` 里画。
@@ -281,7 +283,7 @@ list.rows;  // Map<id, li>
 
 ### 测试开销 `ui/cost.js`
 
-`hasCosts(data)`（数据里有没有开销）、`costOf(data, id)`、`costKey(cost)`（`subscription` | `api` | `none`）、`costTag(cost)`（按订阅折算 / API 实付 / 数据暂缺）、`fmtCNY(v)`（`¥45.1`）、`fmtUSD(v)`、`fmtTokens(n)`（`17.1 亿 Token` / `1.71B tokens`）、`fmtTokenValue(n)`（只要数字）、`isEstimated(cost)`（`fitted` 非空）、`planText(plan)`、`fillCost(cell, cost)` / `fillTokens(cell, cost)`（行里的两格：金额加依据记号、Token 加 `*`）、`costMark(key)` / `estMark()`（○ 按订阅折算、◆ API 实付、* 含估算）、`costLegend(data, tag)`（记号图例，只写一次）、`costTip(data, id)`（浮签内容）、`costFacts` / `costNotes`（侧面板的字段和说明：套餐、Token、`method` 的来历、拟合的题）、`costSr(cost)`（读屏）、`costSourceNote(data, tag)`（页脚的说明三行：换算依据；完整写出的额度来源网址 `cost_source.url`，新窗口链接；复测说明和 GitHub 仓库链接）。文案在 `common.cost`。
+`hasCosts(data)`（数据里有没有开销）、`costOf(data, id)`、`costKey(cost)`（`subscription` | `api` | `none`）、`costTag(cost)`（按订阅折算 / 按 API 标价折算 / 数据暂缺）、`fmtCNY(v)`（`¥45.1`）、`fmtUSD(v)`、`fmtTokens(n)`（`17.1 亿 Token` / `1.71B tokens`）、`fmtTokenValue(n)`（只要数字）、`isEstimated(cost)`（`fitted` 非空）、`planText(plan)`、`fillCost(cell, cost)` / `fillTokens(cell, cost)`（行里的两格：金额加依据记号、Token 加 `*`）、`costMark(key)` / `estMark()`（○ 按订阅折算、◆ 按 API 标价折算、* 含估算）、`costLegend(data, tag)`（记号图例，只写一次）、`costTip(data, id)`（浮签内容）、`costFacts` / `costNotes`（侧面板的字段和说明：套餐、Token、`method` 的来历、拟合的题）、`costSr(cost)`（读屏）、`costSourceNote(data, tag)`（页脚的说明三行：换算依据；完整写出的额度来源网址 `cost_source.url`，新窗口链接；复测说明和 GitHub 仓库链接）。文案在 `common.cost`。
 
 ### 工具条 `ui/toolbar.js`
 
@@ -309,8 +311,8 @@ tb.setQuery(q); tb.clear(); tb.state;   // { vendors: Set, query }
 
 ### 数据下载 `ui/download.js`
 
-- `downloadCSV({ columns, rows, preface, filename, updated })`：UTF-8 带 BOM，Excel 直接开；`columns` 是 `[{ key, label }]`（行是对象）或 `[label]`（行是数组）；`preface` 是第一行（用了自定义权重时写权重）。默认文件名 `ai-octathlon-scores-<更新日期>.csv`。
-- `scoreTable(data, entries, { weights })` → `{ columns, rows, preface }`：名次、模型（带推理强度）、厂商、总分（+自定义总分）、标准评判题、主动设计题、8 类、12 题；数据有测试开销时再加测试开销（元）、开销依据、Token 合计。`entries` 按页面当前的排序和筛选传入。
+- `downloadCSV({ columns, rows, preface, filename, updated })`：UTF-8 带 BOM，Excel 直接开；`columns` 是 `[{ key, label }]`（行是对象）或 `[label]`（行是数组）；`preface` 是第一行（用了自定义权重时写权重）。默认文件名 `ai-decathlon-scores-<更新日期>.csv`。
+- `scoreTable(data, entries, { weights })` → `{ columns, rows, preface }`：名次、模型（带推理强度）、厂商、总分（+自定义总分）、标准评判题、主动设计题、10 类、13 题；数据有测试开销时再加测试开销（元）、开销依据、Token 合计。`entries` 按页面当前的排序和筛选传入。
 - 数字照数据原样写：整数写整数（`78`，不写 `78.0`），小数保留数据里的位数；只有算出来的长小数（自定义总分）留一位。
 - `downloadJSON(obj, filename)`、`downloadBundle()`（models + tasks + scores 合成一份）、`dataFilename(updated, ext)`、`toCSV(...)`。
 
@@ -325,7 +327,7 @@ tb.setQuery(q); tb.clear(); tb.state;   // { vendors: Set, query }
 | 变量 | 意思 |
 |---|---|
 | `--v-100 … --v-800`、`--g-100 … --g-800`、`--c-100/500/800` | 紫、荧光绿、星光青色阶（visual.md 二） |
-| `--cat-reason` … `--cat-system` | 8 个类别的固定色 |
+| `--cat-reason` … `--cat-system` | 10 个类别的固定色 |
 | `--kind-standard(-deep/-soft)`、`--kind-design(-deep/-soft)` | 两类题的数据色、加深一档、子行浅一档 |
 | `--series`、`--series-deep` | 单一指标图表：紫 300、紫 600 |
 | `--ref-line`、`--ref-band` | 参考和基准：青 800 / 青 100（深色自动换） |

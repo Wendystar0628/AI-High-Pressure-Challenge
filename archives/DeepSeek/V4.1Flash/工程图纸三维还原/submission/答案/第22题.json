@@ -1,0 +1,21 @@
+{
+  "problem": "22",
+  "parts": [
+    {"name": "1", "title": "三斜轴液压分配器总装壳体", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,180,130], "r": 6}], "depth": [0,10], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-110,0],
+       "loops": [{"path": [[15,10],[165,10],[150,72],[30,72]]}], "name": "壳体主体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [35,22,145,98]}], "depth": [10,62], "name": "内腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [60,36], "d": 60}], "depth": [0,10], "name": "前凸台Φ60"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [60,36], "d": 42}], "depth": [0,10], "name": "前沉孔Φ42"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[60,36]], "d": 30, "through": true, "name": "前轴孔Φ30"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [120,36], "d": 60}], "depth": [0,10], "name": "前凸台2Φ60"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [120,36], "d": 42}], "depth": [0,10], "name": "前沉孔2Φ42"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[120,36]], "d": 30, "through": true, "name": "前轴孔2Φ30"},
+      {"type": "extrude", "plane": {"origin": [45,40,70], "normal": [-0.55,0,0.84], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 50}], "depth": [0,44], "name": "斜座1"},
+      {"type": "extrude", "plane": {"origin": [90,40,72], "normal": [0,0,1], "x_dir": [1,0,0]}, "loops": [{"circle": [0,0], "d": 46}], "depth": [0,40], "name": "中座"},
+      {"type": "extrude", "plane": {"origin": [135,40,70], "normal": [0.55,0,0.84], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 50}], "depth": [0,44], "name": "斜座2"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,10], "at": [[12,12],[168,12],[12,118],[168,118]], "d": 11, "through": true, "name": "底板四角孔"}
+    ]}
+  ]
+}

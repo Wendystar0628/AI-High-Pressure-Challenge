@@ -197,7 +197,7 @@
   color: var(--st-ink-2);
 }
 /* test cost (cost: true): two more columns right of the score, each one line, vertically centred like the
-   score: 测试开销 (the amount, then its small tag 按订阅折算 / API 实付 / 数据暂缺) and Token (the 12-task
+   score: 测试开销 (the amount, then its small tag 按订阅折算 / 按 API 标价折算 / 数据暂缺) and Token (the 13-task
    total, then a quiet dashed 含估算 mark when some tasks are estimated). Same row height, no stacked lines. */
 .mrow.has-cost {
   grid-template-columns: 2rem 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem var(--mrow-cost-w, 8.25rem) var(--mrow-tok-w, 6.25rem);
@@ -240,7 +240,7 @@
   font-size: 0.7rem;
   font-weight: 500;
 }
-/* the basis marks (shape, not colour): ring = 按订阅折算, solid diamond = API 实付; * = 含估算 */
+/* the basis marks (shape, not colour): ring = 按订阅折算, solid diamond = 按 API 标价折算; * = 含估算 */
 .cost-mark {
   position: relative;
   top: -0.05em;
@@ -478,6 +478,16 @@
   transition:
     opacity 0.16s var(--st-snap),
     translate 0.16s var(--st-snap);
+}
+
+/* a tooltip of several lines (ui/cells.js cellTip): model, measure and score, weight, graders, anomaly notes */
+.site-tip-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.site-tip-note {
+  color: var(--st-flare);
 }
 
 /* the save-as-image button sits at the right end of a panel head */

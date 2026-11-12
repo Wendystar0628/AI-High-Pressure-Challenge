@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "星际战舰编队",
+  "tokens": 227558263,
+  "minutes": 89.4,
+  "time": "实际停止",
+  "cny": 11.69,
+  "api_usd": 1.75,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/星际战舰编队/run-a9b4173758534527b30edb09f29b157a"
+  ]
+}

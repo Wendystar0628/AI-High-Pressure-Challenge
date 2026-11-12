@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>Nested OS</title>
-<link rel="stylesheet" href="styles.css">
-<style>html,body{background:#0d0f1c}</style>
+  <meta charset="utf-8">
+  <title>Nested OS</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' app:; img-src 'self' app: data: blob:; style-src 'self' 'unsafe-inline' app:; script-src 'self' app:; connect-src 'self' app:; frame-src *; media-src *">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="apps/apps.css">
 </head>
 <body>
-<div id="host"><div id="desktop"></div></div>
-<script type="module" src="host/main.js"></script>
+  <div id="app"></div>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

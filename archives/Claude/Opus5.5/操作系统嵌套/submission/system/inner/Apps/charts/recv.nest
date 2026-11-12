@@ -1,0 +1,62 @@
+;; =====================================================================
+;; 图表数据接收进程：与根系统电子表格之间的实时数据连接
+;; 连接按“工作簿文档身份 + 选区”建立；数据经各层系统接口以副本到达（信封），
+;; 本进程校验连接身份与版本（只前进不后退），保存数据缓存，再用消息交给图表进程处理。
+;; =====================================================================
+(include "/System/lib/core.nest")
+
+(var UI ARGS.ui)
+(var SYSID (get (sys "sysinfo") "id"))
+(var SUB nil) (var STATE "未连接") (var CACHE nil) (var VERSION 0) (var RECEIVED 0) (var STALE 0) (var SEQ 0)
+(var REQ (str "src-" SYSID "-" (sys "self")))
+(sys "endpoint" REQ)
+
+(defn tell (m) (send UI m))
+(defn status () (tell {:k "conn" :state STATE :version VERSION :received RECEIVED :stale STALE :sub SUB}))
+
+(defn connect (doc range)
+  (when SUB (disconnect true))
+  (inc! SEQ)
+  (set! SUB (str "sub-" SYSID "-" (sys "self") "-" SEQ))
+  (sys "endpoint" SUB)
+  (set! STATE "连接中") (set! VERSION 0)
+  (sys "route" {:to ["outer"] :kind "data-sub" :data {:sub SUB :endpoint SUB :doc doc :range range}})
+  (status))
+
+(defn disconnect (quiet)
+  (when SUB
+    (sys "route" {:to ["outer"] :kind "data-unsub" :data {:sub SUB}})
+    (sys "endpoint-drop" SUB))
+  (set! SUB nil)
+  (when (not quiet) (set! STATE "已断开") (status)))
+
+(defn on-data (kind d)
+  (cond
+    ((and (contains? ["data-full" "data-update"] kind) (= d.sub SUB))
+     (inc! RECEIVED)
+     (if (<= d.version VERSION)
+       (inc! STALE)
+       (do (set! VERSION d.version)
+           (set! CACHE {:version d.version :values d.values :title d.title :range d.range :doc d.doc})
+           (set! STATE "已连接")
+           (tell {:k "data" :data CACHE}))))
+    ((and (= kind "data-closed") (= d.sub SUB))
+     (set! STATE "数据源已关闭") (sys "endpoint-drop" SUB) (set! SUB nil))
+    ((and (= kind "data-error") (= d.sub SUB))
+     (set! STATE (str "错误：" d.error)) (sys "endpoint-drop" SUB) (set! SUB nil))
+    ((= kind "data-sources-r") (tell {:k "sources" :sources d.sources}))
+    (else nil)))
+
+(status)
+(while true
+  (var m (recv))
+  (case m.k
+    ("connect" (connect m.doc m.range))
+    ("disconnect" (disconnect false))
+    ("sources" (sys "route" {:to ["outer"] :kind "data-sources" :data {:req REQ :endpoint REQ}}))
+    (("data-full" "data-update" "data-closed" "data-error" "data-sources-r") (on-data m.k m.data) (status))
+    ("restored"
+     ;; 从快照恢复或分叉：保留缓存与已接收的数据，连接需要重新建立
+     (when SUB (sys "endpoint-drop" SUB))
+     (set! SUB nil) (set! STATE "已恢复，待重新连接") (status))
+    (else nil)))

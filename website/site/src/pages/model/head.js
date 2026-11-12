@@ -32,7 +32,7 @@ export function createHead(root, { data }) {
     });
     return b;
   };
-  const menu = h('div.tb-dl-menu', { id: menuId, popover: 'auto', role: 'menu' }, item(t('model.actions.csv'), () => downloadCSV(csvTable())), item(t('model.actions.json'), () => downloadJSON(jsonOf(), `ai-octathlon-${id}-${data.updated}.json`)));
+  const menu = h('div.tb-dl-menu', { id: menuId, popover: 'auto', role: 'menu' }, item(t('model.actions.csv', { n: data.tasks.length }), () => downloadCSV(csvTable())), item(t('model.actions.json'), () => downloadJSON(jsonOf(), `ai-decathlon-${id}-${data.updated}.json`)));
   menu.addEventListener('toggle', (e) => {
     if (e.newState !== 'open') return;
     const r = dl.getBoundingClientRect();
@@ -131,7 +131,7 @@ export function createHead(root, { data }) {
     paintActions();
   }
 
-  // ---------- data download: this model's 8 categories and 12 tasks ----------
+  // ---------- data download: this model's 10 categories and 13 tasks ----------
   function csvTable() {
     const m = data.model(id);
     const s = data.score(id);
@@ -144,7 +144,7 @@ export function createHead(root, { data }) {
       ...data.categories.map((c) => row(t('model.csv.category'), '', c, c.key, s.categories?.[c.key] ?? null)),
       ...data.tasks.map((k) => row(t('model.csv.task'), fmtRank(k.no), k, k.key, s.tasks?.[k.key] ?? null)),
     ];
-    return { columns, rows, preface: `${modelLabel(m)} │ ${m.vendor} │ ${m.agent}`, filename: `ai-octathlon-${id}-${data.updated}.csv` };
+    return { columns, rows, preface: `${modelLabel(m)} │ ${m.vendor} │ ${m.agent}`, filename: `ai-decathlon-${id}-${data.updated}.csv` };
   }
   function jsonOf() {
     return { updated: data.updated, model: data.model(id), score: data.score(id) };

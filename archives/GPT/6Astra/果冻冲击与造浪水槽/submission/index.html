@@ -1,45 +1,13 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111a1e">
-  <title>物态实验室 · 果冻冲击与造浪水槽</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="topbar ui">
-    <a class="brand" href="#" aria-label="物态实验室首页"><span class="brand-mark"><i></i><i></i><i></i></span><span>物态实验室<small>MATTER / MOTION</small></span></a>
-    <nav class="scene-tabs" aria-label="实验场景"><button class="active" data-scene="jelly"><span>01</span> 果冻冲击</button><button data-scene="tank"><span>02</span> 造浪水槽</button></nav>
-    <div class="live-badge"><span></span> 实时物理实验 <b>↗</b></div>
-  </header>
-  <main>
-    <section id="stage" aria-label="三维物理实验场景">
-      <canvas id="world"></canvas>
-      <div class="stage-heading ui"><div class="eyebrow" id="eyebrow">实验 01 <span>/</span> 软体与刚体</div><h1 id="scene-title">柔软，也有力量。</h1><p id="scene-description">让重力落下，看一次冲击如何传遍整个果冻。</p><div id="mode-tabs" class="mode-tabs"><button data-mode="center" class="active">正中冲击</button><button data-mode="offset">偏心冲击</button><button data-mode="multi">连续冲击</button></div></div>
-      <div class="view-tools ui"><button id="view-cycle" title="切换观察视角"><span>◇</span> <span id="view-name">透视</span></button><button id="view-reset" title="恢复默认镜头" aria-label="恢复默认镜头">⌖</button><button id="focus" title="专注观察（F）" aria-label="专注观察">⛶</button></div>
-      <div class="stage-tag ui"><span class="tag-line"></span><span id="material-tag">半透明弹性体 <b>×</b> 金属重球</span></div>
-      <div class="density-legend ui" id="density-legend" hidden></div>
-      <div class="stage-metrics ui"><div><span id="metric-label-a">最大形变</span><strong id="metric-a">0.00 <small>m</small></strong></div><div><span id="metric-label-b">重球速度</span><strong id="metric-b">0.00 <small>m/s</small></strong></div><div><span id="metric-label-c">接触次数</span><strong id="metric-c">00</strong></div></div>
-      <div class="camera-hint ui">拖动旋转 <span>·</span> 滚轮缩放</div>
-      <div class="playback ui">
-        <div class="timeline-head"><div class="phase"><span id="phase-dot"></span><strong id="phase-title">准备就绪</strong><span id="phase-detail">释放重球，观察形变传播</span></div><div class="time"><b id="sim-time">00.00</b><span> s</span></div></div>
-        <div class="timeline"><div id="timeline-fill"></div><i></i><i></i><i></i><i></i></div>
-        <div class="control-row"><button id="play" class="primary"><span id="play-icon">▶</span><span id="play-label">释放重球</span></button><button id="reset" class="icon-button" title="重置实验（R）" aria-label="重置实验">↺</button><div class="control-divider"></div><div class="speed-control"><span>播放速度</span><button data-speed="0.25">¼×</button><button data-speed="0.5">½×</button><button data-speed="1" class="active">1×</button></div><div class="tank-actions" id="tank-actions" hidden><button id="release-more">＋ 再次投球</button><button id="wave-toggle">≈ 手动造浪</button></div><div class="control-spacer"></div><button id="sound" class="sound-button" title="开启或关闭声音（M）"><span id="sound-icon">♪</span><span id="sound-label">声音关闭</span></button></div>
-      </div>
-      <div id="toast" class="toast ui" role="status"></div>
-    </section>
-    <aside class="sidebar ui">
-      <div class="panel-head"><div><span class="eyebrow">CONTROL ROOM</span><h2>实验参数</h2></div><button id="defaults" title="恢复默认参数" aria-label="恢复默认参数">↺</button></div>
-      <div class="parameter-scroll" id="parameters"></div>
-      <div class="monitor"><div class="monitor-head"><span><i></i><b id="chart-title">形变响应</b></span><small>实时观测</small></div><canvas id="chart" width="520" height="110"></canvas><div class="monitor-foot"><span id="chart-caption">局部受压 → 弹性传播 → 阻尼衰减</span><span id="chart-unit">m</span></div></div>
-      <div class="panel-foot"><span>鼠标探索 · 空格暂停 · R 重置</span><span>LAB / 2026</span></div>
-    </aside>
-  </main>
-  <div class="focus-hint ui">专注观察 <span>按 F 返回实验台</span></div>
-  <script src="vendor/three.min.js"></script>
-  <script src="physics.js"></script>
-  <script src="visuals.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+﻿<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>相态 · 软物质实验室</title><link rel="stylesheet" href="style.css"></head><body>
+<div id="viewport"></div><div id="interface">
+<header><a class="brand" href="#"><span class="brand-icon">◒</span><span>相态<small>MATTER / MOTION LAB</small></span></a><nav><button class="tab active" data-scene="jelly"><span>01</span> 果冻冲击</button><button class="tab" data-scene="tank"><span>02</span> 造浪水槽</button></nav><div class="header-right"><span class="live-dot"></span><span id="engine">正在准备实验</span><button id="sound" class="icon" title="开启声音">♫</button></div></header>
+<section class="intro"><div class="eyebrow">交互物理实验 / EXPERIMENT <span id="sceneNo">01</span></div><h1 id="title">柔软，也有力量。</h1><p id="description">一次冲击，观察形变如何传递、储存与释放。</p></section>
+<aside class="panel"><div class="panel-head"><span>实验控制</span><span class="tiny">LIVE PARAMETERS</span></div><div id="jelly-controls"><div class="section-label">01 / 材料</div><div class="samples"><button data-sample="1">A 薄荷</button><button data-sample="0" class="active">B 琥珀</button><button data-sample="2">C 珊瑚</button></div><label>果冻硬度 <output id="stiffness-out"></output><input id="stiffness" type="range" min="0.2" max="1.5" step="0.05" value="0.65"></label><div class="range-hints"><span>柔软</span><span>坚韧</span></div><label>结实程度 <output id="strength-out"></output><input id="strength" type="range" min="0.2" max="5" step="0.05" value="1.3"></label><div class="section-label">02 / 冲击</div><label>重球质量 <output id="mass-out"></output><input id="mass" type="range" min="1" max="12" step="0.5" value="4"></label><label>释放高度 <output id="height-out"></output><input id="height" type="range" min="0.5" max="5" step="0.1" value="2.6"></label><div class="impact-buttons"><button data-impact="center" class="primary">↓ 正中冲击</button><button data-impact="offset">↘ 偏心冲击</button><button data-impact="multi">⇣ 连续冲击</button></div></div>
+<div id="tank-controls" hidden><div class="section-label">01 / 造浪装置</div><label>推进幅度 <output id="amplitude-out"></output><input id="amplitude" type="range" min="0.05" max="1.3" step="0.05" value="0.7"></label><label>驱动频率 <output id="frequency-out"></output><input id="frequency" type="range" min="0.25" max="1.2" step="0.05" value="0.55"></label><div class="section-label">02 / 相对水密度</div><label><i class="dot amber"></i> 琥珀组 <output id="rho0-out"></output><input id="rho0" type="range" min="0.2" max="2.5" step="0.05" value="0.45"></label><label><i class="dot mint"></i> 薄荷组 <output id="rho1-out"></output><input id="rho1" type="range" min="0.2" max="2.5" step="0.05" value="1"></label><label><i class="dot pink"></i> 珊瑚组 <output id="rho2-out"></output><input id="rho2" type="range" min="0.2" max="2.5" step="0.05" value="1.8"></label><div class="impact-buttons"><button id="release" class="primary">↓ 释放一组球</button><button id="wave">≈ 开始造浪</button></div></div>
+<div class="panel-foot"><span class="live-dot"></span><span id="event">准备就绪 · 选择一种冲击</span></div></aside>
+<div class="scene-caption"><span id="captionMain">弹性体 / 03 试样</span><span id="captionSub">体积约束 · 应力断裂 · 双向接触</span></div>
+<div class="transport"><button id="pause" title="空格：暂停">Ⅱ</button><button id="reset" title="R：重置">↺</button><span class="separator"></span><button id="speed">1× 速度</button><span class="separator"></span><span class="time" id="time">00:00.00</span><span class="transport-end">拖动旋转 · 滚轮缩放</span></div>
+<footer><div class="demo-label"><span>观察档案</span><small>预置实验 / 一键重演</small></div><button class="demo" data-run="jelly-center"><span class="demo-num">01</span><span><b>正中 · 回弹</b><small>压缩 → 储能 → 释放</small></span><em>08s ↗</em></button><button class="demo" data-run="jelly-multi"><span class="demo-num">02</span><span><b>连击 · 临界</b><small>叠加 → 失稳 → 断裂</small></span><em>10s ↗</em></button><button class="demo" data-run="jelly-offset"><span class="demo-num">03</span><span><b>偏心 · 偏转</b><small>倾斜 → 滑移 → 碰撞</small></span><em>08s ↗</em></button><button class="demo" data-run="tank-full"><span class="demo-num">04</span><span><b>风浪 · 浮沉</b><small>入水 → 破浪 → 平息</small></span><em>20s ↗</em></button></footer>
+<div id="loading"><span class="spinner"></span><b>正在建立物理实验室</b><small>准备体积约束与粒子计算网格</small></div></div>
+<script src="vendor/three.min.js"></script><script src="physics.js"></script><script src="fluid.js"></script><script src="app.js"></script></body></html>
+

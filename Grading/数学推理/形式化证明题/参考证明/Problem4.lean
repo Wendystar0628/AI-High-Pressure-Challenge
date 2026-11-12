@@ -1,457 +1,374 @@
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.Topology.Instances.Matrix
-import Mathlib.Tactic.FunProp
+import Mathlib.Combinatorics.Colex
+import Mathlib.Combinatorics.SetFamily.HarrisKleitman
+import Mathlib.Data.Finset.Interval
+import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.Tactic.Choose
+import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
-import Mathlib.Data.Matrix.Basis
 
-open Matrix Module
-open scoped ComplexOrder
+open Finset
 
-namespace Flanders
+namespace Reimer
 
-def prodSubmoduleEquiv {K V V' : Type*} [Field K]
-    [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V']
-    (P : Submodule K V) (Q : Submodule K V') : P.prod Q ≃ₗ[K] P × Q where
-  toFun x := (⟨x.1.1, x.2.1⟩, ⟨x.1.2, x.2.2⟩)
-  invFun x := ⟨(x.1.1, x.2.1), x.1.2, x.2.2⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
+variable {α : Type*} [DecidableEq α]
 
-theorem rank_eq_zero_iff {m n : Type*} [Fintype m] [Fintype n]
-    (A : Matrix m n ℂ) : A.rank = 0 ↔ A = 0 := by
+/-- The members of `A` contained in `s` have largest member `a`. -/
+def Good (A : Finset (Finset α)) (a s : Finset α) : Prop :=
+  a ⊆ s ∧ ∀ b ∈ A, b ⊆ s → b ⊆ a
+
+omit [DecidableEq α] in
+lemma good_self (A : Finset (Finset α)) (a : Finset α) : Good A a a :=
+  ⟨Subset.rfl, fun _ _ h => h⟩
+
+lemma exists_good_root (A : Finset (Finset α))
+    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A)
+    {a t : Finset α} (ha : a ∈ A) (hat : a ⊆ t) :
+    ∃ c ∈ A, Good A c t ∧ a ⊆ c := by
+  let S := A.filter (fun b => b ⊆ t)
+  have hS : S.Nonempty := ⟨a, mem_filter.mpr ⟨ha, hat⟩⟩
+  let c := S.sup' hS id
+  have hc : c ∈ A :=
+    Finset.sup'_mem (A : Set (Finset α)) hunion S hS id
+      (fun b hb => (mem_filter.mp hb).1)
+  refine ⟨c, hc, ⟨?_, ?_⟩, ?_⟩
+  · exact Finset.sup'_le hS id (fun b hb => (mem_filter.mp hb).2)
+  · intro b hb hbt
+    exact Finset.le_sup' id (mem_filter.mpr ⟨hb, hbt⟩ : b ∈ S)
+  · exact Finset.le_sup' id (mem_filter.mpr ⟨ha, hat⟩ : a ∈ S)
+
+/-- Colex-maximal representatives of the fibers form an upper family. -/
+lemma exists_representatives [LinearOrder α]
+    (A : Finset (Finset α)) (u : Finset α)
+    (hAu : ∀ a ∈ A, a ⊆ u)
+    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A) :
+    ∃ f : Finset α → Finset α,
+      (∀ a ∈ A, Good A a (f a) ∧ f a ⊆ u) ∧
+      (∀ a ∈ A, ∀ x ∈ u, insert x (f a) ∈ A.image f) := by
   classical
-  rw [Matrix.rank, Submodule.finrank_eq_zero, LinearMap.range_eq_bot]
-  constructor
-  · intro h
-    apply Matrix.toLin'.injective
-    change A.mulVecLin = (0 : Matrix m n ℂ).mulVecLin
-    simpa only [Matrix.mulVecLin_zero] using h
-  · intro h
-    simp [h]
+  have hex : ∀ a : Finset α, ∃ s : Finset α, a ∈ A →
+      Good A a s ∧ s ⊆ u ∧
+        ∀ t : Finset α, Good A a t → t ⊆ u →
+          toColex t ≤ toColex s := by
+    intro a
+    by_cases ha : a ∈ A
+    · let S := u.powerset.filter (Good A a)
+      have hS : S.Nonempty :=
+        ⟨a, mem_filter.mpr ⟨mem_powerset.mpr (hAu a ha), good_self A a⟩⟩
+      obtain ⟨s, hs, hmax⟩ := S.exists_max_image toColex hS
+      have hs' := mem_filter.mp hs
+      refine ⟨s, fun _ => ⟨hs'.2, mem_powerset.mp hs'.1, ?_⟩⟩
+      intro t ht htu
+      exact hmax t (mem_filter.mpr ⟨mem_powerset.mpr htu, ht⟩)
+    · exact ⟨∅, fun h => (ha h).elim⟩
+  choose f hf using hex
+  refine ⟨f, (fun a ha => ⟨(hf a ha).1, (hf a ha).2.1⟩), ?_⟩
+  intro a ha x hxu
+  by_cases hxa : x ∈ f a
+  · simpa [insert_eq_of_mem hxa] using mem_image_of_mem f ha
+  have hfa := hf a ha
+  have htu : insert x (f a) ⊆ u := insert_subset hxu hfa.2.1
+  obtain ⟨c, hc, hct, hac⟩ :=
+    exists_good_root A hunion ha (hfa.1.1.trans (subset_insert x (f a)))
+  have hxc : x ∈ c := by
+    by_contra hn
+    have hcf : c ⊆ f a := (subset_insert_iff_of_notMem hn).mp hct.1
+    have hca : c = a := (hfa.1.2 c hc hcf).antisymm hac
+    subst c
+    have hh := hfa.2.2 (insert x (f a)) hct htu
+    have hl : toColex (f a) < toColex (insert x (f a)) :=
+      Finset.Colex.toColex_lt_toColex_of_ssubset (ssubset_insert hxa)
+    exact (not_le_of_gt hl) hh
+  have hfc := hf c hc
+  have hx_fc : x ∈ f c := hfc.1.1 hxc
+  have haerase : a ⊆ (f c).erase x := by
+    intro y hy
+    exact mem_erase.mpr ⟨fun h => hxa (h ▸ hfa.1.1 hy), hfc.1.1 (hac hy)⟩
+  have herase : Good A a ((f c).erase x) := by
+    refine ⟨haerase, ?_⟩
+    intro b hb hbe
+    have hbc : b ⊆ c := hfc.1.2 b hb (hbe.trans (erase_subset _ _))
+    have hbf : b ⊆ f a := by
+      intro y hy
+      have hyt := hct.1 (hbc hy)
+      rcases mem_insert.mp hyt with h | h
+      · exact False.elim ((mem_erase.mp (hbe hy)).1 h)
+      · exact h
+    exact hfa.1.2 b hb hbf
+  have herase_le := hfa.2.2 ((f c).erase x) herase
+    ((erase_subset _ _).trans hfc.2.1)
+  have hle : toColex (f c) ≤ toColex (insert x (f a)) := by
+    apply (Finset.Colex.toColex_sdiff_le_toColex_sdiff
+      (singleton_subset_iff.mpr hx_fc)
+      (singleton_subset_iff.mpr (mem_insert_self x (f a)))).mp
+    simpa [sdiff_singleton_eq_erase, erase_insert hxa] using herase_le
+  have hge := hfc.2.2 (insert x (f a)) hct htu
+  have heq : f c = insert x (f a) := toColex.injective (hle.antisymm hge)
+  exact mem_image.mpr ⟨c, hc, heq⟩
 
-theorem rank_block_diagonal {m n : Type*} [Fintype m] [Fintype n]
-    [DecidableEq m] [DecidableEq n] (A : Matrix m m ℂ) (D : Matrix n n ℂ) :
-    (Matrix.fromBlocks A 0 0 D).rank = A.rank + D.rank := by
-  let e := LinearEquiv.sumArrowLequivProdArrow m n ℂ ℂ
-  have he : e.toLinearMap.comp (Matrix.fromBlocks A 0 0 D).mulVecLin =
-      (A.mulVecLin.prodMap D.mulVecLin).comp e.toLinearMap := by
-    apply LinearMap.ext
-    intro x
-    apply Prod.ext <;> ext i <;>
-      simp [e, Matrix.fromBlocks_mulVec] <;> rfl
-  have h := congrArg (fun f => finrank ℂ (LinearMap.range f)) he
-  rw [LinearMap.range_comp, LinearEquiv.finrank_map_eq,
-    LinearMap.range_comp_of_range_eq_top _ e.range,
-    LinearMap.range_prodMap] at h
-  exact h.trans (by
-    simpa only [Module.finrank_prod, Matrix.rank] using
-      (prodSubmoduleEquiv A.mulVecLin.range D.mulVecLin.range).finrank_eq)
+lemma entropy_chord {p : ℝ} (hp : 0 ≤ p) (hp' : p ≤ 1 / 2) :
+    2 * p * Real.log 2 ≤ Real.binEntropy p := by
+  obtain ⟨_, hconc⟩ := Real.strictConcave_binEntropy.concaveOn
+  have h := hconc
+    (x := 0) (y := (2 : ℝ)⁻¹) (by norm_num) (by norm_num)
+    (a := 1 - 2 * p) (b := 2 * p) (by linarith) (by positivity) (by ring)
+  have heq : 2 * p * (2 : ℝ)⁻¹ = p := by ring
+  simpa only [smul_eq_mul, Real.binEntropy_zero, Real.binEntropy_two_inv,
+    mul_zero, zero_add, heq] using h
 
-theorem schur_eq_zero {m n : Type*} [Fintype m] [Fintype n]
-    [DecidableEq m] [DecidableEq n]
-    (A : Matrix m m ℂ) (B : Matrix m n ℂ) (C : Matrix n m ℂ)
-    (D : Matrix n n ℂ) (hA : IsUnit A)
-    (h : (Matrix.fromBlocks A B C D).rank ≤ Fintype.card m) :
-    D = C * A⁻¹ * B := by
-  letI := hA.nonempty_invertible.some
-  have hL : IsUnit (Matrix.fromBlocks (1 : Matrix m m ℂ) 0 (C * ⅟A)
-      (1 : Matrix n n ℂ)).det := by
-    rw [← Matrix.isUnit_iff_isUnit_det, Matrix.isUnit_fromBlocks_zero₁₂]
-    exact ⟨isUnit_one, isUnit_one⟩
-  have hR : IsUnit (Matrix.fromBlocks (1 : Matrix m m ℂ) (⅟A * B) 0
-      (1 : Matrix n n ℂ)).det := by
-    rw [← Matrix.isUnit_iff_isUnit_det, Matrix.isUnit_fromBlocks_zero₂₁]
-    exact ⟨isUnit_one, isUnit_one⟩
-  rw [Matrix.fromBlocks_eq_of_invertible₁₁,
-    Matrix.rank_mul_eq_left_of_isUnit_det _ _ hR,
-    Matrix.rank_mul_eq_right_of_isUnit_det _ _ hL, rank_block_diagonal] at h
-  have hAr : A.rank = Fintype.card m := by
-    have hh := Matrix.rank_mul_eq_right_of_isUnit_det A (1 : Matrix m m ℂ)
-      (Matrix.isUnit_det_of_invertible A)
-    simpa using hh
-  rw [hAr] at h
-  have hz : (D - C * ⅟A * B).rank = 0 := by omega
-  have hz' := (rank_eq_zero_iff _).mp hz
-  rw [Matrix.invOf_eq_nonsing_inv] at hz'
-  exact sub_eq_zero.mp hz'
-
-open Filter Topology
-
-theorem pencil_blocks {m n : Type*} [Fintype m] [Fintype n]
-    [DecidableEq m] [DecidableEq n]
-    (P : Matrix m m ℂ) (Q : Matrix m n ℂ) (R : Matrix n m ℂ)
-    (D : Matrix n n ℂ)
-    (h : ∀ t : ℂ, (Matrix.fromBlocks (1 + t • P) (t • Q) (t • R) (t • D)).rank ≤
-      Fintype.card m) :
-    D = 0 ∧ R * Q = 0 ∧ R * P * Q = 0 := by
-  have hp : Continuous (fun t : ℂ => (1 : Matrix m m ℂ) + t • P) := by fun_prop
-  have hi : ContinuousAt (fun t : ℂ => ((1 : Matrix m m ℂ) + t • P)⁻¹) 0 := by
-    apply ContinuousAt.comp (g := Inv.inv) (by simpa using
-      (continuousAt_matrix_inv (1 : Matrix m m ℂ) (by
-        simpa only [Matrix.det_one, Ring.inverse_eq_inv'] using
-          (continuousAt_inv₀ (one_ne_zero : (1 : ℂ) ≠ 0)))))
-    exact hp.continuousAt
-  have hu : ∀ᶠ t : ℂ in 𝓝 0, IsUnit ((1 : Matrix m m ℂ) + t • P) := by
-    have hc : ContinuousAt (fun t : ℂ => ((1 : Matrix m m ℂ) + t • P).det) 0 :=
-      hp.matrix_det.continuousAt
-    have hh : ∀ᶠ t : ℂ in 𝓝 0, ((1 : Matrix m m ℂ) + t • P).det ≠ 0 :=
-      hc.eventually_ne (by simp)
-    filter_upwards [hh] with t ht
-    exact (Matrix.isUnit_iff_isUnit_det _).mpr (isUnit_iff_ne_zero.mpr ht)
-  have he : ∀ᶠ t : ℂ in 𝓝[≠] 0,
-      D = t • (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) := by
-    filter_upwards [hu.filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with t ht ht0
-    have hh := schur_eq_zero _ _ _ _ ht (h t)
-    have ht' : t ≠ 0 := ht0
-    simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul] at hh
-    apply (smul_right_injective _ ht')
-    simpa only [smul_smul] using hh
-  have hlim : Tendsto (fun t : ℂ => t •
-      (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q)) (𝓝[≠] 0) (𝓝 0) := by
-    have hc : ContinuousAt (fun t : ℂ => t •
-      (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q)) 0 := by
-      fun_prop
-    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
-  have hD : D = 0 := tendsto_nhds_unique
-    (tendsto_const_nhds.congr' he) hlim
-  have he' : ∀ᶠ t : ℂ in 𝓝[≠] 0,
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q = 0 := by
-    filter_upwards [he, self_mem_nhdsWithin] with t ht ht0
-    rw [hD, eq_comm, smul_eq_zero] at ht
-    exact ht.resolve_left ht0
-  have hlim' : Tendsto (fun t : ℂ =>
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) (𝓝[≠] 0) (𝓝 (R * Q)) := by
-    have hc : ContinuousAt (fun t : ℂ =>
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) 0 := by fun_prop
-    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
-  have hRQ : R * Q = 0 := tendsto_nhds_unique hlim'
-    (tendsto_const_nhds.congr' (he'.mono fun _ ht => ht.symm))
-  have he'' : ∀ᶠ t : ℂ in 𝓝[≠] 0,
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q = 0 := by
-    filter_upwards [hu.filter_mono nhdsWithin_le_nhds, he', self_mem_nhdsWithin]
-      with t ht ht' ht0
-    have hinv := Matrix.nonsing_inv_mul ((1 : Matrix m m ℂ) + t • P)
-      ((Matrix.isUnit_iff_isUnit_det _).mp ht)
-    have hx := congrArg (fun M => R * M * Q) hinv
-    simp only [Matrix.mul_add, Matrix.mul_one, Matrix.mul_smul, Matrix.mul_assoc,
-      Matrix.add_mul, Matrix.smul_mul] at hx
-    rw [← Matrix.mul_assoc R _ Q, ht', zero_add, hRQ] at hx
-    have hz := (smul_eq_zero.mp hx).resolve_left ht0
-    simpa only [Matrix.mul_assoc] using hz
-  have hlim'' : Tendsto (fun t : ℂ =>
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q)
-      (𝓝[≠] 0) (𝓝 (R * P * Q)) := by
-    have hc : ContinuousAt (fun t : ℂ =>
-      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q) 0 := by fun_prop
-    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
-  exact ⟨hD, hRQ, tendsto_nhds_unique hlim''
-    (tendsto_const_nhds.congr' (he''.mono fun _ ht => ht.symm))⟩
-
-def blend {m n : Type*} :
-    Matrix (m ⊕ n) (m ⊕ n) ℂ →ₗ[ℝ] Matrix m m ℂ × Matrix m n ℂ where
-  toFun A := (A.toBlocks₁₁, A.toBlocks₁₂ + A.toBlocks₂₁ᴴ)
-  map_add' A B := by
-    apply Prod.ext <;> ext i j <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
-      Matrix.toBlocks₂₁, Matrix.conjTranspose, add_add_add_comm]
-  map_smul' c A := by
-    apply Prod.ext <;> ext i j <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
-      Matrix.toBlocks₂₁, Matrix.conjTranspose, smul_add]
-
-theorem blocks11_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
-    (A + B).toBlocks₁₁ = A.toBlocks₁₁ + B.toBlocks₁₁ := rfl
-
-theorem blocks12_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
-    (A + B).toBlocks₁₂ = A.toBlocks₁₂ + B.toBlocks₁₂ := rfl
-
-theorem blocks21_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
-    (A + B).toBlocks₂₁ = A.toBlocks₂₁ + B.toBlocks₂₁ := rfl
-
-theorem normalized {m n : Type*} [Fintype m] [Fintype n]
-    [DecidableEq m] [DecidableEq n]
-    (S : Submodule ℂ (Matrix (m ⊕ n) (m ⊕ n) ℂ))
-    (hA : Matrix.fromBlocks (1 : Matrix m m ℂ) 0 0 (0 : Matrix n n ℂ) ∈ S)
-    (hS : ∀ A ∈ S, A.rank ≤ Fintype.card m) :
-    finrank ℂ S ≤ (Fintype.card m + Fintype.card n) * Fintype.card m ∧
-    (finrank ℂ S = (Fintype.card m + Fintype.card n) * Fintype.card m →
-      (∀ A ∈ S, A.toBlocks₁₂ = 0) ∨ (∀ A ∈ S, A.toBlocks₂₁ = 0)) := by
-  have hb (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hAS : A ∈ S) :
-      A.toBlocks₂₂ = 0 ∧ A.toBlocks₂₁ * A.toBlocks₁₂ = 0 ∧
-        A.toBlocks₂₁ * A.toBlocks₁₁ * A.toBlocks₁₂ = 0 := by
-    apply pencil_blocks
-    intro t
-    have hm := hS _ (S.add_mem hA (S.smul_mem t hAS))
-    convert hm using 1
-    congr 1
-    ext (i | i) (j | j) <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
-      Matrix.toBlocks₂₁, Matrix.toBlocks₂₂]
-  let f : S →ₗ[ℝ] Matrix m m ℂ × Matrix m n ℂ :=
-    blend.comp (S.subtype.restrictScalars ℝ)
-  have hf0 (A : S) (h : f A = 0) : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) = 0 := by
-    have hp : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₁ = 0 := congrArg Prod.fst h
-    have hq : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ =
-        -(A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₂₁ᴴ :=
-      eq_neg_of_add_eq_zero_left (congrArg Prod.snd h)
-    obtain ⟨hd, hrq, _⟩ := hb A A.2
-    rw [hq, Matrix.mul_neg, neg_eq_zero] at hrq
-    have hr := Matrix.self_mul_conjTranspose_eq_zero.mp hrq
-    have hq' : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ = 0 := by simp [hq, hr]
-    rw [← Matrix.fromBlocks_toBlocks (A : Matrix (m ⊕ n) (m ⊕ n) ℂ), hp, hq', hr, hd]
-    simp
-  have hf : Function.Injective f := by
-    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
-    intro A h
-    apply Subtype.ext
-    exact hf0 A h
-  have hdimS : finrank ℝ S = 2 * finrank ℂ S := by
-    rw [← Module.finrank_mul_finrank ℝ ℂ S, Complex.finrank_real_complex]
-  have hdimT : finrank ℝ (Matrix m m ℂ × Matrix m n ℂ) =
-      2 * ((Fintype.card m + Fintype.card n) * Fintype.card m) := by
-    simp only [Module.finrank_prod, Module.finrank_matrix, Complex.finrank_real_complex]
+lemma entropy_split {x y : ℝ} (_hx : 0 ≤ x) (hy : 0 ≤ y) (hyx : y ≤ x) :
+    x * Real.log x + y * Real.log y + 2 * y * Real.log 2 ≤
+      (x + y) * Real.log (x + y) := by
+  by_cases hy0 : y = 0
+  · simp [hy0]
+  have hypos : 0 < y := lt_of_le_of_ne hy (Ne.symm hy0)
+  have hxpos : 0 < x := hypos.trans_le hyx
+  have hmpos : 0 < x + y := add_pos hxpos hypos
+  have hp0 : 0 ≤ y / (x + y) := div_nonneg hy hmpos.le
+  have hp1 : y / (x + y) ≤ 1 / 2 := by
+    apply (div_le_iff₀ hmpos).mpr
+    linarith
+  have h := mul_le_mul_of_nonneg_left (entropy_chord hp0 hp1) hmpos.le
+  have hq : 1 - y / (x + y) = x / (x + y) := by
+    field_simp
     ring
-  have hdim := LinearMap.finrank_le_finrank_of_injective hf
-  rw [hdimS, hdimT] at hdim
-  refine ⟨by omega, ?_⟩
-  intro heq
-  have hsurj : Function.Surjective f :=
-    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (by
-      rw [hdimS, hdimT, heq])).mp hf
-  have hfull (P : Matrix m m ℂ) :
-      Matrix.fromBlocks P 0 0 (0 : Matrix n n ℂ) ∈ S := by
-    obtain ⟨A, ha⟩ := hsurj (P, 0)
-    have hp : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₁ = P := congrArg Prod.fst ha
-    have hq : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ =
-        -(A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₂₁ᴴ :=
-      eq_neg_of_add_eq_zero_left (congrArg Prod.snd ha)
-    obtain ⟨hd, hrq, _⟩ := hb A A.2
-    rw [hq, Matrix.mul_neg, neg_eq_zero] at hrq
-    have hr := Matrix.self_mul_conjTranspose_eq_zero.mp hrq
-    have hq' : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ = 0 := by simp [hq, hr]
-    have hh : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) = Matrix.fromBlocks P 0 0 0 := by
-      rw [← Matrix.fromBlocks_toBlocks (A : Matrix (m ⊕ n) (m ⊕ n) ℂ), hp, hq', hr, hd]
-    exact hh ▸ A.2
-  have hRPQ (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) (P : Matrix m m ℂ) :
-      A.toBlocks₂₁ * P * A.toBlocks₁₂ = 0 := by
-    have h := (hb (A + Matrix.fromBlocks P 0 0 0) (S.add_mem ha (hfull P))).2.2
-    have h' := (hb A ha).2.2
-    simp only [blocks11_add, blocks12_add, blocks21_add, Matrix.toBlocks_fromBlocks₁₁,
-      Matrix.toBlocks_fromBlocks₁₂, Matrix.toBlocks_fromBlocks₂₁, add_zero,
-      Matrix.mul_add, Matrix.add_mul, h', zero_add] at h
-    exact h
-  have hor (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) :
-      A.toBlocks₁₂ = 0 ∨ A.toBlocks₂₁ = 0 := by
-    by_cases hq : A.toBlocks₁₂ = 0
-    · exact Or.inl hq
-    right
-    obtain ⟨i, j, hij⟩ : ∃ i j, A.toBlocks₁₂ i j ≠ 0 := by
-      by_contra h
-      apply hq
-      ext i j
-      by_contra hij
-      exact h ⟨i, j, hij⟩
-    ext a b
-    have hh := congrArg (fun M => M a j) (hRPQ A ha (Matrix.single b i 1))
-    have hh' : A.toBlocks₂₁ a b * A.toBlocks₁₂ i j = 0 := by
-      simpa [Matrix.mul_apply, Matrix.single, ite_and] using hh
-    exact (mul_eq_zero.mp hh').resolve_right hij
-  by_cases hq : ∀ A ∈ S, A.toBlocks₁₂ = 0
-  · exact Or.inl hq
-  right
-  push Not at hq
-  obtain ⟨A, ha, hq⟩ := hq
-  have hr := (hor A ha).resolve_left hq
-  intro B hbS
-  rcases hor B hbS with hB | hB
-  · have hAB := hor (A + B) (S.add_mem ha hbS)
-    simp only [blocks12_add, blocks21_add, hB, hr, add_zero, zero_add] at hAB
-    exact hAB.resolve_left hq
-  · exact hB
+  have hid : (x + y) * Real.binEntropy (y / (x + y)) =
+      (x + y) * Real.log (x + y) - x * Real.log x - y * Real.log y := by
+    rw [Real.binEntropy, hq, Real.log_inv, Real.log_inv,
+      Real.log_div hypos.ne' hmpos.ne', Real.log_div hxpos.ne' hmpos.ne']
+    field_simp
+    ring
+  have hl : (x + y) * (2 * (y / (x + y)) * Real.log 2) =
+      2 * y * Real.log 2 := by
+    field_simp
+  rw [hid, hl] at h
+  linarith
 
-def leftEmbedding (m n : Type*) : (m → ℂ) →ₗ[ℂ] (m ⊕ n → ℂ) where
-  toFun x := Sum.elim x 0
-  map_add' _ _ := by ext (i | i) <;> simp
-  map_smul' _ _ := by ext (i | i) <;> simp
-
-def rightEmbedding (m n : Type*) : (n → ℂ) →ₗ[ℂ] (m ⊕ n → ℂ) where
-  toFun x := Sum.elim 0 x
-  map_add' _ _ := by ext (i | i) <;> simp
-  map_smul' _ _ := by ext (i | i) <;> simp
-
-theorem leftEmbedding_injective (m n : Type*) : Function.Injective (leftEmbedding m n) := by
-  intro x y h
-  exact funext fun i => congrFun h (Sum.inl i)
-
-theorem rightEmbedding_injective (m n : Type*) : Function.Injective (rightEmbedding m n) := by
-  intro x y h
-  exact funext fun i => congrFun h (Sum.inr i)
-
-theorem normalized_result {m n : Type*} [Fintype m] [Fintype n]
-    [DecidableEq m] [DecidableEq n]
-    (S : Submodule ℂ (Matrix (m ⊕ n) (m ⊕ n) ℂ))
-    (hA : Matrix.fromBlocks (1 : Matrix m m ℂ) 0 0 (0 : Matrix n n ℂ) ∈ S)
-    (hS : ∀ A ∈ S, A.rank ≤ Fintype.card m) :
-    finrank ℂ S ≤ (Fintype.card m + Fintype.card n) * Fintype.card m ∧
-    (finrank ℂ S = (Fintype.card m + Fintype.card n) * Fintype.card m →
-      (∃ U : Submodule ℂ (m ⊕ n → ℂ), finrank ℂ U = Fintype.card m ∧
-        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
-      (∃ W : Submodule ℂ (m ⊕ n → ℂ), finrank ℂ W = Fintype.card n ∧
-        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
-  obtain ⟨hdim, heq⟩ := normalized S hA hS
-  refine ⟨hdim, fun hh => ?_⟩
-  have hD (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) : A.toBlocks₂₂ = 0 := by
-    apply (pencil_blocks A.toBlocks₁₁ A.toBlocks₁₂ A.toBlocks₂₁ A.toBlocks₂₂ _).1
-    intro t
-    have hm := hS _ (S.add_mem hA (S.smul_mem t ha))
-    convert hm using 1
-    congr 1
-    ext (i | i) (j | j) <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
-      Matrix.toBlocks₂₁, Matrix.toBlocks₂₂]
-  rcases heq hh with hQ | hR
-  · right
-    refine ⟨(rightEmbedding m n).range, ?_, ?_⟩
-    · rw [LinearMap.finrank_range_of_inj (rightEmbedding_injective m n)]
-      simp
-    · intro A ha x hx
-      obtain ⟨v, rfl⟩ := hx
-      rw [LinearMap.mem_ker, ← Matrix.fromBlocks_toBlocks A, hQ A ha, hD A ha]
-      ext (i | i) <;> simp [Matrix.fromBlocks_mulVec, rightEmbedding,
-        Function.comp_def, Matrix.mulVec, dotProduct]
-  · left
-    refine ⟨(leftEmbedding m n).range, ?_, ?_⟩
-    · rw [LinearMap.finrank_range_of_inj (leftEmbedding_injective m n)]
-      simp
-    · intro A ha x hx
-      obtain ⟨v, rfl⟩ := hx
-      refine ⟨(A.mulVecLin v) ∘ Sum.inl, ?_⟩
-      rw [← Matrix.fromBlocks_toBlocks A, hR A ha, hD A ha]
-      ext (i | i) <;> simp [Matrix.fromBlocks_mulVec, leftEmbedding,
-        Function.comp_def]
-
-theorem transport_result {a b : Type*} [Fintype a] [Fintype b]
-    (S : Submodule ℂ (Matrix a a ℂ))
-    (E : Matrix a a ℂ ≃ₗ[ℂ] Matrix b b ℂ)
-    (L : (a → ℂ) ≃ₗ[ℂ] (b → ℂ))
-    (R : (b → ℂ) ≃ₗ[ℂ] (a → ℂ))
-    (hE : ∀ A, (E A).mulVecLin = L.toLinearMap.comp (A.mulVecLin.comp R.toLinearMap))
-    (u w : ℕ)
-    (h : (∃ U : Submodule ℂ (b → ℂ), finrank ℂ U = u ∧
-          ∀ A ∈ S.map E.toLinearMap, LinearMap.range A.mulVecLin ≤ U) ∨
-        (∃ W : Submodule ℂ (b → ℂ), finrank ℂ W = w ∧
-          ∀ A ∈ S.map E.toLinearMap, W ≤ LinearMap.ker A.mulVecLin)) :
-    (∃ U : Submodule ℂ (a → ℂ), finrank ℂ U = u ∧
-        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
-    (∃ W : Submodule ℂ (a → ℂ), finrank ℂ W = w ∧
-        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin) := by
-  have hmem (A : Matrix a a ℂ) (ha : A ∈ S) : E A ∈ S.map E.toLinearMap :=
-    Submodule.mem_map.mpr ⟨A, ha, rfl⟩
-  rcases h with ⟨U, hu, hU⟩ | ⟨W, hw, hW⟩
-  · left
-    refine ⟨U.map L.symm.toLinearMap, ?_, ?_⟩
-    · rw [LinearEquiv.finrank_map_eq, hu]
-    · intro A ha y hy
-      obtain ⟨x, rfl⟩ := hy
-      have hx : L (A.mulVecLin x) ∈ U := by
-        apply hU _ (hmem A ha)
-        refine ⟨R.symm x, ?_⟩
-        simp [hE]
-      exact Submodule.mem_map.mpr ⟨L (A.mulVecLin x), hx, by simp⟩
-  · right
-    refine ⟨W.map R.toLinearMap, ?_, ?_⟩
-    · rw [LinearEquiv.finrank_map_eq, hw]
-    · intro A ha y hy
-      obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp hy
-      have hz := hW _ (hmem A ha) hx
-      rw [LinearMap.mem_ker, hE] at hz
-      rw [LinearMap.mem_ker]
-      apply L.injective
-      simpa using hz
-
-theorem max_rank_result (n : ℕ)
-    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))
-    (M : Matrix (Fin n) (Fin n) ℂ) (hM : M ∈ S)
-    (hS : ∀ A ∈ S, A.rank ≤ M.rank) :
-    finrank ℂ S ≤ n * M.rank ∧ (finrank ℂ S = n * M.rank →
-      (∃ U : Submodule ℂ (Fin n → ℂ), finrank ℂ U = M.rank ∧
-        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
-      (∃ W : Submodule ℂ (Fin n → ℂ), finrank ℂ W = n - M.rank ∧
-        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
+lemma sum_split (D : Finset (Finset α)) (x : α) (w : Finset α → ℝ) :
+    ∑ s ∈ D, w s =
+      (∑ s ∈ D.nonMemberSubfamily x, w s) +
+      ∑ s ∈ D.memberSubfamily x, w (insert x s) := by
   classical
-  obtain ⟨V, U, e, hV, hU, hform⟩ := Matrix.exists_rank_normal_form M
-  let E : Matrix (Fin n) (Fin n) ℂ ≃ₗ[ℂ]
-      Matrix (Fin M.rank ⊕ Fin (Fintype.card (Fin n) - M.rank))
-        (Fin M.rank ⊕ Fin (Fintype.card (Fin n) - M.rank)) ℂ :=
-    ((hV.unit.mulLeftLinearEquiv ℂ _).trans (hU.unit.mulRightLinearEquiv ℂ)).trans
-      (Matrix.reindexLinearEquiv ℂ ℂ e e)
-  have hEa (A : Matrix (Fin n) (Fin n) ℂ) :
-      E A = (V * A * U).reindex e e := by simp [E]
-  have hEr (A : Matrix (Fin n) (Fin n) ℂ) : (E A).rank = A.rank := by
-    rw [hEa, Matrix.rank_reindex,
-      Matrix.rank_mul_eq_left_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hU),
-      Matrix.rank_mul_eq_right_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hV)]
-  let T := S.map E.toLinearMap
-  have hT : ∀ A ∈ T, A.rank ≤ Fintype.card (Fin M.rank) := by
-    intro A ha
-    obtain ⟨B, hb, rfl⟩ := Submodule.mem_map.mp ha
-    simpa only [LinearEquiv.coe_coe, hEr, Fintype.card_fin] using hS B hb
-  have hN : Matrix.fromBlocks (1 : Matrix (Fin M.rank) (Fin M.rank) ℂ) 0 0
-      (0 : Matrix (Fin (Fintype.card (Fin n) - M.rank))
-        (Fin (Fintype.card (Fin n) - M.rank)) ℂ) ∈ T := by
-    refine Submodule.mem_map.mpr ⟨M, hM, ?_⟩
-    rw [LinearEquiv.coe_coe, hEa, hform]
-    ext i j
-    simp [Matrix.reindex_apply]
-  have hd : finrank ℂ T = finrank ℂ S := E.finrank_map_eq S
-  have hn : M.rank + (n - M.rank) = n := Nat.add_sub_of_le M.rank_le_width
-  obtain ⟨hbound, heq⟩ := normalized_result T hN hT
-  simp only [Fintype.card_fin, hn, hd] at hbound heq
-  refine ⟨hbound, fun hh => ?_⟩
-  let L0 : (Fin n → ℂ) ≃ₗ[ℂ] (Fin n → ℂ) :=
-    LinearEquiv.ofBijective V.mulVecLin
-      ⟨Matrix.mulVec_injective_iff_isUnit.mpr hV, Matrix.mulVec_surjective_iff_isUnit.mpr hV⟩
-  let R0 : (Fin n → ℂ) ≃ₗ[ℂ] (Fin n → ℂ) :=
-    LinearEquiv.ofBijective U.mulVecLin
-      ⟨Matrix.mulVec_injective_iff_isUnit.mpr hU, Matrix.mulVec_surjective_iff_isUnit.mpr hU⟩
-  let L := L0.trans (LinearEquiv.funCongrLeft ℂ ℂ e.symm)
-  let R := (LinearEquiv.funCongrLeft ℂ ℂ e).trans R0
-  apply transport_result S E L R _ M.rank (n - M.rank) (heq hh)
-  intro A
-  rw [hEa, Matrix.mulVecLin_reindex, Matrix.mulVecLin_mul, Matrix.mulVecLin_mul]
-  rfl
+  have hinj : Set.InjOn (insert x) (D.memberSubfamily x : Set (Finset α)) := by
+    intro s hs t ht hst
+    have hsx := (mem_memberSubfamily.mp hs).2
+    have htx := (mem_memberSubfamily.mp ht).2
+    simpa [erase_insert hsx, erase_insert htx] using
+      congrArg (fun r : Finset α => r.erase x) hst
+  rw [← sum_image hinj, image_insert_memberSubfamily]
+  simpa only [nonMemberSubfamily, add_comm] using
+    (sum_filter_add_sum_filter_not D (fun s => x ∈ s) w).symm
 
-end Flanders
+/-- The edge bound for a lower family in a Boolean cube. -/
+lemma lower_sum_card (D : Finset (Finset α))
+    (hD : IsLowerSet (D : Set (Finset α))) :
+    2 * (∑ s ∈ D, (s.card : ℝ)) * Real.log 2 ≤
+      (D.card : ℝ) * Real.log D.card := by
+  induction D using Finset.memberFamily_induction_on with
+  | empty => simp
+  | singleton_empty => simp
+  | @subfamily x D ih0 ih1 =>
+    have h0 := ih0 hD.nonMemberSubfamily
+    have h1 := ih1 hD.memberSubfamily
+    have hcard := card_memberSubfamily_add_card_nonMemberSubfamily x D
+    have hcardR : (D.nonMemberSubfamily x).card +
+        ((D.memberSubfamily x).card : ℝ) = D.card := by
+      exact_mod_cast (by simpa [add_comm] using hcard)
+    have hsum : (∑ s ∈ D, (s.card : ℝ)) =
+        (∑ s ∈ D.nonMemberSubfamily x, (s.card : ℝ)) +
+        (∑ s ∈ D.memberSubfamily x, (s.card : ℝ)) +
+        (D.memberSubfamily x).card := by
+      rw [sum_split D x]
+      have heq : (∑ s ∈ D.memberSubfamily x, ((insert x s).card : ℝ)) =
+          (∑ s ∈ D.memberSubfamily x, (s.card : ℝ)) +
+          (D.memberSubfamily x).card := by
+        calc
+          _ = ∑ s ∈ D.memberSubfamily x, ((s.card : ℝ) + 1) := by
+            apply sum_congr rfl
+            intro s hs
+            rw [card_insert_of_notMem (mem_memberSubfamily.mp hs).2, Nat.cast_add,
+              Nat.cast_one]
+          _ = _ := by simp [sum_add_distrib]
+      rw [heq]
+      ring
+    have hle : ((D.memberSubfamily x).card : ℝ) ≤ (D.nonMemberSubfamily x).card := by
+      exact_mod_cast card_le_card hD.memberSubfamily_subset_nonMemberSubfamily
+    have hn := entropy_split (x := ((D.nonMemberSubfamily x).card : ℝ))
+      (y := ((D.memberSubfamily x).card : ℝ)) (by positivity) (by positivity) hle
+    rw [hcardR] at hn
+    rw [hsum]
+    nlinarith
 
-theorem problem4 (n r : ℕ) (hr : r ≤ n)
-    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))
-    (hS : ∀ A ∈ S, A.rank ≤ r) :
-    Module.finrank ℂ S ≤ n * r ∧ (Module.finrank ℂ S = n * r →
-      (∃ U : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ U = r ∧
-        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
-      (∃ W : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ W = n - r ∧
-        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
+omit [DecidableEq α] in
+lemma good_inj {A : Finset (Finset α)} {f : Finset α → Finset α}
+    (hf : ∀ a ∈ A, Good A a (f a)) : Set.InjOn f (A : Set (Finset α)) := by
+  intro a ha b hb hab
+  have ha' := hf a ha
+  have hb' := hf b hb
+  exact (hb'.2 a ha (hab ▸ ha'.1)).antisymm (ha'.2 b hb (hab.symm ▸ hb'.1))
+
+/-- The intervals from members to their representatives are pairwise disjoint. -/
+lemma interval_count {A : Finset (Finset α)} {u : Finset α}
+    {f : Finset α → Finset α}
+    (hf : ∀ a ∈ A, Good A a (f a) ∧ f a ⊆ u) :
+    ∑ a ∈ A, 2 ^ ((f a).card - a.card) ≤ 2 ^ u.card := by
   classical
-  let P : ℕ → Prop := fun k => ∃ A ∈ S, A.rank = k
-  have h0 : P 0 := ⟨0, S.zero_mem, Matrix.rank_zero⟩
-  let k := Nat.findGreatest P r
-  have hkr : k ≤ r := Nat.findGreatest_le _
-  obtain ⟨M, hM, hMk⟩ := Nat.findGreatest_spec (Nat.zero_le r) h0
-  have hmax : ∀ A ∈ S, A.rank ≤ M.rank := by
-    intro A ha
-    rw [hMk]
-    exact Nat.le_findGreatest (hS A ha) ⟨A, ha, rfl⟩
-  obtain ⟨hbound, heq⟩ := Flanders.max_rank_result n S M hM hmax
-  have hMr : M.rank ≤ r := hS M hM
-  refine ⟨hbound.trans (Nat.mul_le_mul_left n hMr), fun hh => ?_⟩
-  by_cases hn : n = 0
-  · have hr0 : r = 0 := by omega
-    left
-    refine ⟨⊤, ?_, fun _ _ => le_top⟩
-    simp [hn, hr0]
-  have hrank : M.rank = r := by nlinarith
-  rw [hrank] at heq
-  exact heq hh
+  have hd : (A : Set (Finset α)).PairwiseDisjoint (fun a => Icc a (f a)) := by
+    intro a ha b hb hab
+    apply disjoint_left.mpr
+    intro t hta htb
+    obtain ⟨hat, htf⟩ := mem_Icc.mp hta
+    obtain ⟨hbt, htfb⟩ := mem_Icc.mp htb
+    exact hab (((hf b hb).1.2 a ha (hat.trans htfb)).antisymm
+      ((hf a ha).1.2 b hb (hbt.trans htf)))
+  have hs : (A.biUnion (fun a => Icc a (f a))) ⊆ u.powerset := by
+    intro t ht
+    obtain ⟨a, ha, hat⟩ := mem_biUnion.mp ht
+    exact mem_powerset.mpr ((mem_Icc.mp hat).2.trans (hf a ha).2)
+  have h := card_le_card hs
+  rw [card_biUnion hd, card_powerset] at h
+  convert h using 1
+  apply sum_congr rfl
+  intro a ha
+  exact (card_Icc_finset (hf a ha).1.1).symm
+
+lemma upper_of_insert {U : Finset (Finset α)} {u s t : Finset α}
+    (hup : ∀ s ∈ U, ∀ x ∈ u, insert x s ∈ U)
+    (hs : s ∈ U) (hst : s ⊆ t) (htu : t ⊆ u) : t ∈ U := by
+  have hadd : ∀ q : Finset α, q ⊆ u → s ∪ q ∈ U := by
+    intro q
+    induction q using Finset.induction_on with
+    | empty => simpa using hs
+    | @insert x q hx ih =>
+      intro hq
+      have hq' : q ⊆ u := (subset_insert _ _).trans hq
+      simpa only [union_insert] using hup (s ∪ q) (ih hq') x (hq (mem_insert_self _ _))
+  simpa only [union_sdiff_of_subset hst] using
+    hadd (t \ s) (sdiff_subset.trans htu)
+
+lemma upper_missing_bound {U : Finset (Finset α)} {u : Finset α}
+    (hUu : ∀ s ∈ U, s ⊆ u)
+    (hup : ∀ s ∈ U, ∀ x ∈ u, insert x s ∈ U) :
+    2 * (∑ s ∈ U, ((u.card - s.card : ℕ) : ℝ)) * Real.log 2 ≤
+      (U.card : ℝ) * Real.log U.card := by
+  classical
+  let D := U.image (fun s => u \ s)
+  have hinj : Set.InjOn (fun s => u \ s) (U : Set (Finset α)) := by
+    intro s hs t ht hst
+    have h := congrArg (fun r => u \ r) hst
+    simpa only [Finset.sdiff_sdiff_eq_self (hUu s hs),
+      Finset.sdiff_sdiff_eq_self (hUu t ht)] using h
+  have hD : IsLowerSet (D : Set (Finset α)) := by
+    intro t s hst ht
+    obtain ⟨a, ha, rfl⟩ := mem_image.mp ht
+    have hsu : s ⊆ u := hst.trans sdiff_subset
+    have has : a ⊆ u \ s := by
+      intro x hx
+      refine mem_sdiff.mpr ⟨hUu a ha hx, ?_⟩
+      intro hxs
+      exact (mem_sdiff.mp (hst hxs)).2 hx
+    have hu : u \ s ∈ U := upper_of_insert hup ha has sdiff_subset
+    exact mem_image.mpr ⟨u \ s, hu, Finset.sdiff_sdiff_eq_self hsu⟩
+  have h := lower_sum_card D hD
+  have hc : D.card = U.card := card_image_of_injOn hinj
+  have hsum : (∑ s ∈ D, (s.card : ℝ)) =
+      ∑ s ∈ U, ((u.card - s.card : ℕ) : ℝ) := by
+    rw [show D = U.image (fun s => u \ s) from rfl, sum_image hinj]
+    apply sum_congr rfl
+    intro s hs
+    rw [card_sdiff_of_subset (hUu s hs)]
+  rwa [hsum, hc] at h
+
+/-- Apply the logarithm inequality to the sizes of disjoint intervals. -/
+lemma kraft_log_bound (A : Finset (Finset α)) (hA : A.Nonempty)
+    (n : ℕ) (d : Finset α → ℕ)
+    (hcount : ∑ a ∈ A, 2 ^ d a ≤ 2 ^ n) :
+    (A.card : ℝ) * Real.log A.card + (∑ a ∈ A, (d a : ℝ)) * Real.log 2 ≤
+      (A.card : ℝ) * n * Real.log 2 := by
+  have hm : (0 : ℝ) < A.card := by exact_mod_cast hA.card_pos
+  have hT : (0 : ℝ) < 2 ^ n := by positivity
+  let q : Finset α → ℝ := fun a => (A.card : ℝ) * (2 : ℝ) ^ d a / (2 : ℝ) ^ n
+  have hq : ∀ a, 0 < q a := fun a => by dsimp [q]; positivity
+  have hsumq : ∑ a ∈ A, q a ≤ (A.card : ℝ) := by
+    have hc : (∑ a ∈ A, (2 : ℝ) ^ d a) ≤ (2 : ℝ) ^ n := by
+      exact_mod_cast hcount
+    dsimp [q]
+    rw [← sum_div, ← mul_sum]
+    apply (div_le_iff₀ hT).mpr
+    exact mul_le_mul_of_nonneg_left hc hm.le
+  have hlog := sum_le_sum (s := A)
+    (fun a _ => Real.log_le_sub_one_of_pos (hq a))
+  have hsumlog : (∑ a ∈ A, Real.log (q a)) =
+      (A.card : ℝ) * Real.log A.card + (∑ a ∈ A, (d a : ℝ)) * Real.log 2 -
+      (A.card : ℝ) * n * Real.log 2 := by
+    have hterm (a : Finset α) : Real.log (q a) = Real.log A.card +
+        (d a : ℝ) * Real.log 2 - (n : ℝ) * Real.log 2 := by
+      dsimp [q]
+      rw [Real.log_div (by positivity) (by positivity),
+        Real.log_mul hm.ne' (by positivity), Real.log_pow, Real.log_pow]
+    simp_rw [hterm]
+    simp only [sum_sub_distrib, sum_add_distrib, sum_const, nsmul_eq_mul, ← sum_mul]
+    ring
+  have hsub : (∑ a ∈ A, (q a - 1)) = (∑ a ∈ A, q a) - A.card := by
+    simp [sum_sub_distrib]
+  rw [hsumlog, hsub] at hlog
+  linarith
+
+lemma main_log (A : Finset (Finset α)) (hA : A.Nonempty)
+    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A) :
+    (A.card : ℝ) * Real.log A.card ≤
+      2 * (∑ a ∈ A, (a.card : ℝ)) * Real.log 2 := by
+  classical
+  letI : LinearOrder α := IsWellOrder.linearOrder WellOrderingRel
+  let u : Finset α := A.sup id
+  have hAu : ∀ a ∈ A, a ⊆ u := fun _ ha => Finset.le_sup (f := id) ha
+  obtain ⟨f, hf, hup⟩ := exists_representatives A u hAu hunion
+  have hinj := good_inj (fun a ha => (hf a ha).1)
+  let U := A.image f
+  have hUu : ∀ s ∈ U, s ⊆ u := by
+    intro s hs
+    obtain ⟨a, ha, rfl⟩ := mem_image.mp hs
+    exact (hf a ha).2
+  have hUp : ∀ s ∈ U, ∀ x ∈ u, insert x s ∈ U := by
+    intro s hs x hxu
+    obtain ⟨a, ha, rfl⟩ := mem_image.mp hs
+    exact hup a ha x hxu
+  have hmissing := upper_missing_bound hUu hUp
+  have hUcard : U.card = A.card := card_image_of_injOn hinj
+  have hmiss_sum : (∑ s ∈ U, ((u.card - s.card : ℕ) : ℝ)) =
+      ∑ a ∈ A, ((u.card - (f a).card : ℕ) : ℝ) := sum_image hinj
+  rw [hUcard, hmiss_sum] at hmissing
+  have hcount := interval_count hf
+  have hkraft := kraft_log_bound A hA u.card (fun a => (f a).card - a.card) hcount
+  have htotal : (∑ a ∈ A, (((f a).card - a.card : ℕ) : ℝ)) +
+      (∑ a ∈ A, ((u.card - (f a).card : ℕ) : ℝ)) +
+      (∑ a ∈ A, (a.card : ℝ)) = (A.card : ℝ) * u.card := by
+    calc
+      _ = ∑ a ∈ A, (((((f a).card - a.card : ℕ) : ℝ)) +
+          ((u.card - (f a).card : ℕ) : ℝ) + (a.card : ℝ)) := by
+        rw [sum_add_distrib, sum_add_distrib]
+      _ = ∑ _a ∈ A, (u.card : ℝ) := by
+        apply sum_congr rfl
+        intro a ha
+        rw [Nat.cast_sub (card_le_card (hf a ha).1.1),
+          Nat.cast_sub (card_le_card (hf a ha).2)]
+        ring
+      _ = _ := by simp
+  have htotal' := congrArg (fun r : ℝ => r * Real.log 2) htotal
+  nlinarith
+
+end Reimer
+
+theorem problem4 {α : Type*} [DecidableEq α]
+    (A : Finset (Finset α)) (hA : A.Nonempty)
+    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A) :
+    A.card ^ A.card ≤ 2 ^ (2 * ∑ a ∈ A, a.card) := by
+  have h := Reimer.main_log A hA hunion
+  have hm : (0 : ℝ) < A.card := by exact_mod_cast hA.card_pos
+  have hr : (A.card : ℝ) ^ A.card ≤ (2 : ℝ) ^ (2 * ∑ a ∈ A, a.card) := by
+    apply (Real.log_le_log_iff (by positivity) (by positivity)).mp
+    rw [Real.log_pow, Real.log_pow]
+    simpa only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum, mul_assoc] using h
+  exact_mod_cast hr

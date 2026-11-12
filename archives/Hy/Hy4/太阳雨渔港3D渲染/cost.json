@@ -1,0 +1,24 @@
+{
+  "model": "Hy/Hy4",
+  "task": "太阳雨渔港3D渲染",
+  "tokens": 81985900,
+  "minutes": 98.3,
+  "time": "日志末时间上界（实际停止未知）、实际停止",
+  "cny": 13.93,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "credits",
+  "plan": {
+    "name": "CodeBuddy 140 元档",
+    "name_en": "CodeBuddy",
+    "price": 140,
+    "currency": "CNY",
+    "period": "month",
+    "credits": 9000
+  },
+  "fitted": [],
+  "runs": [
+    "Hy/Hy4/太阳雨渔港3D渲染/20261106-184501",
+    "Hy/Hy4/太阳雨渔港3D渲染/20261106-215504"
+  ]
+}

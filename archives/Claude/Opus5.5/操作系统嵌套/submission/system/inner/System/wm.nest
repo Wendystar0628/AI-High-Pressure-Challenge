@@ -1,0 +1,779 @@
+;; =====================================================================
+;; 窗口管理程序（子系统桌面外壳）
+;; 由内核启动。负责：窗口次序与焦点、命中判断与输入分发、标题栏拖动/缩放/
+;; 贴靠/最小化/最大化、任务栏、开始菜单、桌面图标与右键菜单、通知、
+;; 直属子系统的系统窗口，以及投送到本桌面的投送窗口外框。
+;; 修改 hit-window / raise! / focus! 等函数并重启本系统，桌面即按新规则工作。
+;; =====================================================================
+(include "/System/lib/core.nest")
+(include "/System/lib/ui.nest")
+
+(def TB-H 44) (def TH 32) (def EDGE 6) (def MIN-W 240) (def MIN-H 150)
+
+(var INFO (ui-init))
+(var SYSID INFO.id) (var SYSNAME INFO.name)
+(var W (nth (or (get ARGS "size") [1000 640]) 0))
+(var H (nth (or (get ARGS "size") [1000 640]) 1))
+(var WINS []) (var FOCUS nil) (var DRAG nil) (var CAPTURE nil)
+(var START nil) (var MENU nil) (var NOTIF-OPEN false) (var NOTIFS []) (var TOASTS [])
+(var DIALOG nil) (var SEL-ICON nil) (var TREE []) (var DIRTY true) (var LAST-SEC -1)
+(var WALL 0) (var CASCADE 0) (var SNAP-PREVIEW nil) (var PJ-SEQ 0) (var UNREAD 0)
+(var NOW 0)
+
+(def APPS [{:id "files" :name "文件管理器" :path "/Apps/files.nest" :icon "files"}
+           {:id "editor" :name "文本与程序编辑器" :path "/Apps/editor.nest" :icon "editor"}
+           {:id "tasks" :name "进程管理器" :path "/Apps/tasks.nest" :icon "tasks"}
+           {:id "player" :name "三维场景播放器" :path "/Apps/player.nest" :icon "player"}
+           {:id "charts" :name "图表工作台" :path "/Apps/charts.nest" :icon "charts"}])
+(def PINNED ["files" "editor" "tasks" "player" "charts"])
+
+(defn app-def (id) (find (fn (a) (= a.id id)) APPS))
+(defn launch (id args)
+  (var a (app-def id))
+  (when a
+    (try (sys "spawn" a.path args {:kind "app" :detached true})
+      (catch e (toast (str "无法启动 " a.name) (to-str e) "error")))))
+
+;; ---------------- 窗口表 ----------------
+(defn win-by-id (wid) (find (fn (w) (= w.wid wid)) WINS))
+(defn win-of-child (id) (find (fn (w) (and (= w.kind "system") (= w.child id))) WINS))
+(defn frame-rect (w)
+  (cond ((= w.state "max") [0 0 W (- H TB-H)])
+        ((= w.snap "left") [0 0 (floor (/ W 2)) (- H TB-H)])
+        ((= w.snap "right") [(floor (/ W 2)) 0 (- W (floor (/ W 2))) (- H TB-H)])
+        (else [w.x w.y w.w w.h])))
+(defn client-rect (w)
+  (var f (frame-rect w))
+  [(+ (nth f 0) 1) (+ (nth f 1) TH) (- (nth f 2) 2) (- (nth f 3) TH 1)])
+
+(defn raise! (w)
+  ;; 层叠规则：被激活的窗口移到最上层
+  (remove-item! WINS w)
+  (push! WINS w)
+  (focus! w.wid))
+
+(defn focus! (wid)
+  (when (!= FOCUS wid)
+    (var old (win-by-id FOCUS))
+    (when (and old (= old.kind "app")) (send old.pid {:k "focus" :wid old.wid :on false}))
+    (when (and old (= old.kind "system")) (sys "child-input" old.child {:type "focus" :on false}))
+    (set! FOCUS wid)
+    (var w (win-by-id wid))
+    (when (and w (= w.kind "app")) (send w.pid {:k "focus" :wid w.wid :on true}))
+    (when (and w (= w.kind "system")) (sys "child-input" w.child {:type "focus" :on true})))
+  (set! DIRTY true))
+
+(defn top-visible ()
+  (var r nil)
+  (each (w WINS) (when (!= w.state "min") (set! r w)))
+  r)
+
+(defn notify-size (w)
+  (var c (client-rect w))
+  (var cw (floor (nth c 2))) (var ch (floor (nth c 3)))
+  (when (or (!= cw w.cw) (!= ch w.ch))
+    (put! w "cw" cw) (put! w "ch" ch)
+    (case w.kind
+      ("app" (send w.pid {:k "resize" :wid w.wid :w cw :h ch}))
+      ("system" (sys "child-resize" w.child cw ch))
+      ("proj" (sys "route" {:to w.src-path :kind "proj-resize" :data {:src-win w.src-win :proj w.wid :w cw :h ch}}))
+      (else nil))))
+
+(defn place-new (w h)
+  (set! CASCADE (% (+ CASCADE 1) 8))
+  (var ww (min w (- W 40))) (var hh (min h (- H TB-H 30)))
+  [(clamp (+ 40 (* CASCADE 30)) 0 (max 0 (- W ww))) (clamp (+ 24 (* CASCADE 26)) 0 (max 0 (- H TB-H hh))) ww hh])
+
+(defn add-window (rec)
+  (push! WINS rec)
+  (raise! rec)
+  (notify-size rec)
+  rec)
+
+(defn minimize! (w)
+  (put! w "state" (if (= w.state "max") "min-max" "min"))
+  (put! w "state" "min")
+  (when (= FOCUS w.wid)
+    (var t (top-visible))
+    (focus! (if t t.wid nil)))
+  (set! DIRTY true))
+
+(defn restore-min! (w)
+  (put! w "state" (if w.was-max "max" "normal"))
+  (raise! w))
+
+(defn toggle-max! (w)
+  (if (= w.state "max")
+    (put! w "state" "normal")
+    (do (put! w "snap" nil) (put! w "state" "max") (put! w "was-max" true)))
+  (when (= w.state "normal") (put! w "was-max" false))
+  (notify-size w)
+  (set! DIRTY true))
+
+(defn close-window! (w)
+  (case w.kind
+    ("app" (send w.pid {:k "close" :wid w.wid}))
+    ("system" (set! DIALOG {:kind "close-system" :id w.child :wid w.wid}))
+    ("proj" (sys "route" {:to w.src-path :kind "proj-closed" :data {:src-win w.src-win :proj w.wid}})
+            (drop-window w.wid))
+    (else nil))
+  (set! DIRTY true))
+
+(defn drop-window (wid)
+  (var w (win-by-id wid))
+  (when w
+    (remove-item! WINS w)
+    (when (= FOCUS wid) (set! FOCUS nil) (var t (top-visible)) (when t (focus! t.wid)))
+    (when (and CAPTURE (= CAPTURE.wid wid)) (set! CAPTURE nil))
+    (when (and DRAG (= DRAG.wid wid)) (set! DRAG nil))
+    (set! DIRTY true)))
+
+;; ---------------- 通知 ----------------
+(defn toast (title body level)
+  (var n {:title (to-str title) :body (to-str (or body "")) :level (or level "info") :t NOW :id (+ (len NOTIFS) 1)})
+  (unshift! NOTIFS n)
+  (when (> (len NOTIFS) 40) (pop! NOTIFS))
+  (push! TOASTS n)
+  (inc! UNREAD)
+  (set! DIRTY true))
+
+;; ---------------- 输入 ----------------
+(defn zone-of (w x y)
+  ;; 命中规则：标题栏、边缘（缩放）与客户区
+  (var f (frame-rect w))
+  (var fx (nth f 0)) (var fy (nth f 1)) (var fw (nth f 2)) (var fh (nth f 3))
+  (var resizable (= w.state "normal"))
+  (var e "")
+  (when resizable
+    (when (< y (+ fy EDGE)) (set! e "n"))
+    (when (>= y (- (+ fy fh) EDGE)) (set! e "s"))
+    (when (< x (+ fx EDGE)) (set! e (str e "w")))
+    (when (>= x (- (+ fx fw) EDGE)) (set! e (str e "e"))))
+  (cond ((!= e "") e)
+        ((< y (+ fy TH)) "title")
+        (else "client")))
+
+(defn local-ev (w ev)
+  (var c (client-rect w))
+  (merge ev {:x (- ev.x (nth c 0)) :y (- ev.y (nth c 1))}))
+
+(defn forward (w ev)
+  ;; 把输入分发给窗口对应的应用、子系统或投送来源
+  (case w.kind
+    ("app" (send w.pid {:k "input" :wid w.wid :ev (local-ev w ev)}))
+    ("system" (sys "child-input" w.child (local-ev w ev)))
+    ("proj" (sys "route" {:to w.src-path :kind "proj-input" :data {:src-win w.src-win :proj w.wid :ev (local-ev w ev)}}))
+    (else nil)))
+
+(defn split-id (id)
+  (var i (index-of id ":"))
+  (if (< i 0) [id ""] [(substr id 0 i) (substr id (+ i 1))]))
+
+(defn close-overlays ()
+  (when (or START MENU NOTIF-OPEN) (set! DIRTY true))
+  (set! START nil) (set! MENU nil) (set! NOTIF-OPEN false))
+
+(defn on-down (ev)
+  (var id (ui-hit ev.x ev.y))
+  (var parts (if id (split-id id) ["desk" ""]))
+  (var kind (first parts)) (var arg (nth parts 1))
+  ;; 点击覆盖层以外的地方时收起开始菜单/右键菜单/通知面板
+  (when (not (contains? ["start" "launch" "menu" "notif" "notifs" "startmenu" "start-search" "dlg" "clearnotif" "sysnew"] kind)) (close-overlays))
+  (when (and DIALOG (not (= kind "dlg"))) (return nil))
+  (case kind
+    ("dlg" (dialog-action arg))
+    ("start" (if START (set! START nil) (do (set! START {:q ""}) (set! MENU nil) (set! NOTIF-OPEN false))) (set! DIRTY true))
+    ("startmenu" nil)
+    ("start-search" nil)
+    ("launch" (set! START nil) (launch arg nil) (set! DIRTY true))
+    ("sysnew" (set! START nil) (set! MENU nil) (new-child))
+    ("notif" (set! NOTIF-OPEN (not NOTIF-OPEN)) (set! START nil) (set! UNREAD 0) (set! DIRTY true))
+    ("notifs" nil)
+    ("clearnotif" (set! NOTIFS []) (set! DIRTY true))
+    ("menu" (menu-action arg) (set! MENU nil) (set! DIRTY true))
+    ("task" (task-click arg))
+    ("pin" (pin-click arg))
+    ("icon" (icon-down arg ev))
+    ("close" (var w (win-by-id arg)) (when w (close-window! w)))
+    ("max" (var w (win-by-id arg)) (when w (raise! w) (toggle-max! w)))
+    ("min" (var w (win-by-id arg)) (when w (minimize! w)))
+    (("pause" "resume" "step" "restart" "snap")
+     (var w (win-by-id arg))
+     (when w (raise! w) (system-action kind w.child)))
+    ("kerr" (var w (win-by-id arg)) (when w (system-action "restart" w.child)))
+    ("win" (var w (win-by-id arg)) (when w (window-down w ev)))
+    (else
+     (set! SEL-ICON nil) (set! DIRTY true)
+     (when (= ev.button 2) (open-menu ev.x ev.y "desk")))))
+
+(defn window-down (w ev)
+  (var z (zone-of w ev.x ev.y))
+  (raise! w)
+  (cond
+    ((= z "title")
+     (if (>= (get-or ev "detail" 1) 2)
+       (toggle-max! w)
+       (do (var f (frame-rect w))
+           (set! DRAG {:mode "move" :wid w.wid :sx ev.x :sy ev.y :ox (nth f 0) :oy (nth f 1) :ow (nth f 2) :oh (nth f 3)
+                       :was (if (or (= w.state "max") w.snap) true false)}))))
+    ((= z "client")
+     (set! CAPTURE {:wid w.wid})
+     (forward w ev))
+    (else
+     (set! DRAG {:mode "resize" :edge z :wid w.wid :sx ev.x :sy ev.y :ox w.x :oy w.y :ow w.w :oh w.h}))))
+
+(defn on-move (ev)
+  (cond
+    (DRAG (drag-move ev))
+    (CAPTURE (var w (win-by-id CAPTURE.wid)) (if w (forward w ev) (set! CAPTURE nil)))
+    (else
+     (var id (ui-hit ev.x ev.y))
+     (when (!= id UI-HOVER) (set! UI-HOVER id) (set! DIRTY true))
+     (when (and id (starts-with? id "win:"))
+       (var w (win-by-id (substr id 4)))
+       (when (and w (= (zone-of w ev.x ev.y) "client")) (forward w ev))))))
+
+(defn drag-move (ev)
+  (var w (win-by-id DRAG.wid))
+  (when (nil? w) (set! DRAG nil) (return nil))
+  (var dx (- ev.x DRAG.sx)) (var dy (- ev.y DRAG.sy))
+  (if (= DRAG.mode "move")
+    (do (when (and DRAG.was (> (+ (abs dx) (abs dy)) 6))
+          ;; 从最大化/贴靠状态拖出：恢复原尺寸
+          (put! w "state" "normal") (put! w "snap" nil) (put! w "was-max" false)
+          (put! DRAG "ox" (- ev.x (/ w.w 2))) (put! DRAG "oy" 0) (put! DRAG "sx" ev.x) (put! DRAG "sy" ev.y)
+          (put! DRAG "was" false)
+          (set! dx 0) (set! dy 0))
+        (when (not DRAG.was)
+          ;; 拖动范围限于本桌面
+          (put! w "x" (clamp (+ DRAG.ox dx) (- 100 w.w) (- W 100)))
+          (put! w "y" (clamp (+ DRAG.oy dy) 0 (- H TB-H TH)))
+          (set! SNAP-PREVIEW (cond ((<= ev.x 3) "left") ((>= ev.x (- W 4)) "right") ((<= ev.y 2) "max") (else nil)))))
+    (do (var e DRAG.edge)
+        (var x DRAG.ox) (var y DRAG.oy) (var ww DRAG.ow) (var hh DRAG.oh)
+        (when (contains? e "e") (set! ww (max MIN-W (+ DRAG.ow dx))))
+        (when (contains? e "s") (set! hh (max MIN-H (+ DRAG.oh dy))))
+        (when (contains? e "w") (set! ww (max MIN-W (- DRAG.ow dx))) (set! x (- (+ DRAG.ox DRAG.ow) ww)))
+        (when (contains? e "n") (set! hh (max MIN-H (- DRAG.oh dy))) (set! y (- (+ DRAG.oy DRAG.oh) hh)))
+        (put! w "x" x) (put! w "y" (max 0 y)) (put! w "w" (min ww W)) (put! w "h" (min hh (- H TB-H)))
+        (when (= w.kind "app") (notify-size w))))
+  (set! DIRTY true))
+
+(defn on-up (ev)
+  (cond
+    (DRAG
+     (var w (win-by-id DRAG.wid))
+     (when w
+       (when (and (= DRAG.mode "move") SNAP-PREVIEW)
+         (if (= SNAP-PREVIEW "max")
+           (do (put! w "state" "max") (put! w "was-max" true))
+           (put! w "snap" SNAP-PREVIEW)))
+       (notify-size w))
+     (set! DRAG nil) (set! SNAP-PREVIEW nil) (set! DIRTY true))
+    (CAPTURE
+     (var w (win-by-id CAPTURE.wid))
+     (when w (forward w ev))
+     (set! CAPTURE nil))
+    (else nil)))
+
+(defn on-wheel (ev)
+  (var id (ui-hit ev.x ev.y))
+  (when (and id (starts-with? id "win:"))
+    (var w (win-by-id (substr id 4)))
+    (when (and w (= (zone-of w ev.x ev.y) "client")) (forward w ev))))
+
+(defn on-key (ev)
+  (cond
+    ((= ev.key "Escape")
+     (cond (DIALOG (set! DIALOG nil) (set! DIRTY true))
+           ((or START MENU NOTIF-OPEN) (close-overlays))
+           (else (key-to-focus ev))))
+    ((and START (= ev.key "Enter"))
+     (var hits (start-matches START.q))
+     (when (> (len hits) 0) (set! START nil) (launch (get (first hits) "id") nil) (set! DIRTY true)))
+    ((and DIALOG (= ev.key "Enter")) (dialog-action "ok"))
+    (else (key-to-focus ev))))
+
+(defn key-to-focus (ev)
+  ;; 键盘只交给当前获得焦点的窗口
+  (var w (win-by-id FOCUS))
+  (when (and w (!= w.state "min"))
+    (case w.kind
+      ("app" (send w.pid {:k "key" :wid w.wid :ev ev}))
+      ("system" (sys "child-input" w.child ev))
+      ("proj" (sys "route" {:to w.src-path :kind "proj-input" :data {:src-win w.src-win :proj w.wid :ev ev}}))
+      (else nil))))
+
+(defn on-text (ev)
+  ;; 显示设备的输入框编辑：按路由交给更深的系统，或交给本系统中对应窗口的应用
+  (var route (or ev.route []))
+  (if (> (len route) 0)
+    (do (var w (win-of-child (first route)))
+        (when w (when (!= FOCUS w.wid) (raise! w)) (sys "child-input" w.child (merge ev {:route (rest route)}))))
+    (if (= ev.sid (str SYSID ":desktop"))
+      (when (and START (= ev.field "start-search")) (put! START "q" (apply-text-edit START.q ev)) (set! DIRTY true))
+      (do (var w (win-by-id ev.sid))
+          (when (nil? w) (set! w (find (fn (x) (and (= x.kind "proj") (starts-with? ev.sid x.src-win))) WINS)))
+          (when w
+            (when (!= FOCUS w.wid) (raise! w))
+            (case w.kind
+              ("app" (send w.pid {:k "text" :wid w.wid :ev ev}))
+              ("proj" (sys "route" {:to w.src-path :kind "proj-input" :data {:src-win w.src-win :proj w.wid :ev ev}}))
+              (else nil)))))))
+
+(defn on-dragdrop (ev)
+  ;; 跨层文件拖放：把拖动经过/投放的位置交给所指的窗口
+  (var id (ui-hit ev.x ev.y))
+  (var w (if (and id (starts-with? id "win:")) (win-by-id (substr id 4)) nil))
+  (cond
+    ((and w (= (zone-of w ev.x ev.y) "client") (contains? ["app" "system"] w.kind)) (forward w ev))
+    ((and (nil? w) (< ev.y (- H TB-H)))
+     (if (= ev.type "drop")
+       (desktop-drop ev)
+       (sys "route" {:to ["outer"] :kind "drop-info" :data {:label (str SYSID " 桌面 /Desktop") :ok true :sys SYSID :dir "/Desktop"}})))
+    (else (sys "route" {:to ["outer"] :kind "drop-info" :data {:label "此处不能投放" :ok false}}))))
+
+(defn desktop-drop (ev)
+  (var p ev.payload)
+  (when p
+    (var req (str "wmdrop-" (inc! PJ-SEQ)))
+    (sys "endpoint" req)
+    (sys "route" {:to p.src :kind "file-pull" :data {:req req :path p.path}})
+    (set! PENDING-PULL {:req req :dir "/Desktop"})))
+(var PENDING-PULL nil)
+
+(defn on-input (ev)
+  (case ev.type
+    ("down" (on-down ev))
+    ("move" (on-move ev))
+    ("up" (on-up ev))
+    ("wheel" (on-wheel ev))
+    ("key" (on-key ev))
+    ("text" (on-text ev))
+    (("dragover" "drop") (on-dragdrop ev))
+    ("leave" (when UI-HOVER (set! UI-HOVER nil) (set! DIRTY true)))
+    ("focus" (set! DIRTY true))
+    (else nil)))
+
+;; ---------------- 桌面动作 ----------------
+(def DESK-ICONS [{:k "app:files" :label "文件管理器" :icon "files" :app "files"}
+                 {:k "app:editor" :label "编辑器" :icon "editor" :app "editor"}
+                 {:k "app:tasks" :label "进程管理器" :icon "tasks" :app "tasks"}
+                 {:k "app:player" :label "三维播放器" :icon "player" :app "player"}
+                 {:k "app:charts" :label "图表工作台" :icon "charts" :app "charts"}
+                 {:k "help" :label "操作说明" :icon "help"}])
+(var DESK-FILES [])
+
+(defn refresh-desk-files ()
+  (set! DESK-FILES (try (sys "list" "/Desktop") (catch e [])))
+  (set! DIRTY true))
+
+(defn all-icons () (concat DESK-ICONS (map-list (fn (f) {:k (str "file:" f.path) :label f.name :icon (file-icon f) :path f.path}) DESK-FILES)))
+(defn file-icon (f)
+  (if (= f.type "dir") "folder"
+    (case (ext-of f.path) ("nest" "code") ("scene" "scene") ("rec" "record") ("snap" "snapshot") ("sheet" "sheet") (("txt" "md") "doc") (else "file"))))
+
+(defn icon-down (k ev)
+  (var ic (find (fn (i) (= i.k k)) (all-icons)))
+  (set! SEL-ICON k) (set! DIRTY true)
+  (when ic
+    (cond ((= ev.button 2) (open-menu ev.x ev.y (str "icon:" k)))
+          ((>= (get-or ev "detail" 1) 2) (open-icon ic)))))
+
+(defn open-icon (ic)
+  (cond (ic.app (launch ic.app nil))
+        ((= ic.k "help") (launch "editor" {:path "/System/操作说明.md" :readonly true}))
+        (ic.path (open-path ic.path))))
+
+(defn open-path (p)
+  (case (ext-of p)
+    ("scene" (launch "player" {:path p}))
+    ("rec" (launch "player" {:path p}))
+    (else (if (= (get (sys "stat" p) "type") "dir") (launch "files" {:path p}) (launch "editor" {:path p})))))
+
+(defn task-click (wid)
+  (var w (win-by-id wid))
+  (when w
+    (cond ((= w.state "min") (restore-min! w))
+          ((= FOCUS wid) (minimize! w))
+          (else (raise! w)))))
+
+(defn pin-click (app)
+  (var w (find (fn (x) (= x.app app)) WINS))
+  (if w (task-click w.wid) (launch app nil)))
+
+(defn open-menu (x y owner)
+  (var items (if (starts-with? owner "icon:")
+               [["open" "打开"] ["sep" ""] ["newsys" "新建子系统"]]
+               [["newsys" "新建子系统"] ["newtext" "新建文本文件"] ["sep" ""] ["tasks" "打开进程管理器"]
+                ["files" "打开文件管理器"] ["wall" "更换壁纸"] ["refresh" "刷新"] ["sep" ""] ["about" "关于本系统"]]))
+  (set! MENU {:x (min x (- W 200)) :y (min y (- H TB-H (* 30 (len items)) 10)) :items items :owner owner})
+  (set! DIRTY true))
+
+(defn menu-action (a)
+  (var owner (if MENU MENU.owner ""))
+  (case a
+    ("open" (var ic (find (fn (i) (= (str "icon:" i.k) owner)) (all-icons))) (when ic (open-icon ic)))
+    ("newsys" (new-child))
+    ("newtext" (var n (str "/Desktop/新建文本-" (floor NOW) ".txt")) (sys "write" n "") (refresh-desk-files))
+    ("tasks" (launch "tasks" nil))
+    ("files" (launch "files" nil))
+    ("wall" (set! WALL (% (+ WALL 1) 3)) (sys "write" "/System/wallpaper.json" (to-json {:variant WALL})))
+    ("refresh" (refresh-desk-files))
+    ("about" (toast (str SYSNAME "（" SYSID "）") (str "第 " DEPTH " 层桌面 · 内核与窗口管理均为本系统里的程序") "info"))
+    (else nil)))
+
+(defn new-child ()
+  (try (var id (sys "child" "new" nil nil))
+       (toast "已创建子系统" id "ok")
+    (catch e (toast "创建子系统失败" (to-str e) "error"))))
+
+(defn system-action (a id)
+  (try
+    (case a
+      ("pause" (sys "child" "pause" id nil))
+      ("resume" (sys "child" "resume" id nil))
+      ("step" (sys "child" "step" id nil))
+      ("restart" (sys "child" "restart" id nil))
+      ("snap" (var p (sys "child" "snapshot" id nil)) (toast "快照已保存" p "ok"))
+      (else nil))
+    (catch e (toast "操作失败" (to-str e) "error")))
+  (refresh-tree)
+  (set! DIRTY true))
+
+(defn dialog-action (a)
+  (when DIALOG
+    (when (and (= DIALOG.kind "close-system") (= a "ok"))
+      (try (sys "child" "close" DIALOG.id nil) (catch e (toast "关闭失败" (to-str e) "error")))
+      (drop-window DIALOG.wid))
+    (set! DIALOG nil)
+    (set! DIRTY true)))
+
+(defn refresh-tree ()
+  (set! TREE (try (sys "children") (catch e [])))
+  (set! DIRTY true))
+(defn child-state (id)
+  (var c (find (fn (x) (= x.id id)) TREE))
+  (if c c.state "booting"))
+(defn child-error (id) (var c (find (fn (x) (= x.id id)) TREE)) (if c c.error nil))
+(defn subtree-count (id) (var c (find (fn (x) (= x.id id)) TREE)) (if c (len c.subtree) 0))
+
+;; ---------------- 消息 ----------------
+(defn on-msg (m)
+  (case m.k
+    ("input" (on-input m.ev))
+    ("resize" (set! W m.w) (set! H m.h)
+              (each (w WINS) (put! w "x" (clamp w.x (- 100 w.w) (max 0 (- W 100)))) (put! w "y" (clamp w.y 0 (max 0 (- H TB-H TH)))) (notify-size w))
+              (set! DIRTY true))
+    ("win-new"
+     (var r (place-new m.w m.h))
+     (var w (add-window {:wid m.wid :pid m.pid :app m.app :title m.title :x (or m.x (nth r 0)) :y (or m.y (nth r 1)) :w (nth r 2) :h (nth r 3)
+                         :state (if m.max "max" "normal") :was-max (if m.max true false) :kind "app" :icon m.icon :cw 0 :ch 0}))
+     (notify-size w))
+    ("win-closed" (drop-window m.wid))
+    ("win-title" (var w (win-by-id m.wid)) (when w (put! w "title" m.title) (set! DIRTY true)))
+    ("win-focus" (var w (win-by-id m.wid)) (when w (when (= w.state "min") (put! w "state" "normal")) (raise! w)))
+    ("child-new"
+     (refresh-tree)
+     (when (nil? (win-of-child m.id))
+       (var ww (floor (* W 0.74))) (var hh (floor (* (- H TB-H) 0.9)))
+       (add-window {:wid (str SYSID ":sys-" m.id) :kind "system" :child m.id :app "system" :title m.name
+                    :x (- W ww 10) :y 6 :w ww :h hh :state "normal" :icon "system" :cw 0 :ch 0})))
+    ("child-state" (refresh-tree)
+                   (when (= m.state "kernel-error") (toast (str m.id " 内核错误") m.error "error")))
+    ("child-closed" (var w (win-of-child m.id)) (when w (drop-window w.wid)) (refresh-tree))
+    ("tree" (refresh-tree))
+    ("notify" (toast m.title m.body (or m.level "info")))
+    ("proj-open"
+     (var d m.env.data)
+     (inc! PJ-SEQ)
+     (var pw (str SYSID ":pj" PJ-SEQ))
+     (var r (place-new (+ d.w 2) (+ d.h TH 1)))
+     (add-window {:wid pw :kind "proj" :app "projection" :title (str "投送 · " d.title) :src-path m.env.from :src-sys d.src-sys
+                  :src-win d.src-win :src-app d.src-app :x (nth r 0) :y (nth r 1) :w (nth r 2) :h (nth r 3) :state "normal"
+                  :icon "projection" :cw 0 :ch 0})
+     (var pwr (win-by-id pw))
+     (var c (client-rect pwr))
+     (put! pwr "cw" (floor (nth c 2))) (put! pwr "ch" (floor (nth c 3)))
+     (sys "route" {:to m.env.from :kind "proj-opened" :data {:src-win d.src-win :proj pw :w pwr.cw :h pwr.ch}}))
+    ("proj-focus" (var w (win-by-id m.data.proj)) (when w (when (= w.state "min") (put! w "state" "normal")) (raise! w)))
+    ("proj-end" (var w (win-by-id m.data.proj)) (when w (drop-window w.wid) (toast "投送已结束" (or m.data.reason "") "info")))
+    ("file-data"
+     (when (and PENDING-PULL (= m.data.req PENDING-PULL.req))
+       (if m.data.error
+         (toast "文件传递失败" m.data.error "error")
+         (try (var dst (path-join PENDING-PULL.dir m.data.name))
+              (sys "write" dst m.data.content)
+              (toast "已接收文件" dst "ok")
+              (refresh-desk-files)
+           (catch e (toast "文件传递失败" (to-str e) "error"))))
+       (set! PENDING-PULL nil)))
+    ("restored" (set! DIRTY true))
+    (else nil)))
+
+;; ---------------- 绘制 ----------------
+(defn wallpaper ()
+  (var c ACCENT)
+  (var kids [(box 0 0 W H {:grad (case WALL (0 ["#0d1324" "#1b1840" 135]) (1 ["#0b1d24" "#13283a" 160]) (else ["#1d1424" "#2a1630" 120]))})])
+  ;; 层层嵌套的方框：本系统所在层级的装饰
+  (var cx (* W 0.66)) (var cy (* (- H TB-H) 0.52))
+  (for (i 0 6)
+    (var s (* (+ i 1) (min W H) 0.12))
+    (push! kids (box (- cx s) (- cy (* s 0.62)) (* s 2) (* s 1.24) {:r (* 8 (+ i 1)) :stroke (str c (if (= i (- DEPTH 1)) "aa" "2a")) :sw (if (= i (- DEPTH 1)) 2 1)})))
+  (push! kids (text (- W 330) (- H TB-H 120) 300 90 (str "L" DEPTH) {:size 84 :weight 800 :color (str c "26") :align "right" :font "display"}))
+  (push! kids (text (- W 420) (- H TB-H 38) 390 22 (str SYSID " · " SYSNAME) {:size 13 :color (str c "aa") :align "right"}))
+  (group 0 0 W H kids {}))
+
+(defn draw-icons ()
+  (var out [])
+  (each-i (i ic (all-icons))
+    (var col (floor (/ i 7))) (var row (% i 7))
+    (var x (+ 10 (* col 84))) (var y (+ 10 (* row 86)))
+    (when (< (+ y 80) (- H TB-H))
+      (var sel (= SEL-ICON ic.k))
+      (hit! (str "icon:" ic.k) x y 76 80)
+      (push! out (group x y 76 80
+        [(box 0 0 76 80 {:fill (cond (sel (str ACCENT "33")) ((= UI-HOVER (str "icon:" ic.k)) "#ffffff14") (else "#00000000")) :r 8 :stroke (if sel (str ACCENT "88") nil)})
+         (icon 20 6 36 ic.icon {})
+         (text 2 46 72 32 ic.label {:size 11 :color "#eef2fb" :align "center" :wrap true :shadow true})]
+        {:tid "desktop-icon" :label ic.label :attrs (if ic.app {"app-id" ic.app} (if ic.path {"file-path" ic.path} {"app-id" ic.k})) :cursor "default"}))))
+  out)
+
+(defn state-color (st)
+  (case st ("running" C-OK) ("paused" C-WARN) ("held" C-WARN) ("booting" "#93c5fd") ("kernel-error" C-DANGER) ("stopped" C-FAINT) (else C-DIM)))
+(defn state-text (st)
+  (case st ("running" "运行中") ("paused" "已暂停") ("held" "随祖先暂停") ("booting" "启动中") ("kernel-error" "内核错误") ("stopped" "已停止") (else st)))
+
+(defn title-button (id x name tid wid o)
+  (hit! id x 0 34 TH)
+  (var hov (= UI-HOVER id))
+  (group x 0 34 TH [(box 0 0 34 TH {:fill (if hov (if (= name "close") "#e5484d" "#ffffff1c") "#00000000")})
+                    (icon 10 (/ (- TH 14) 2) 14 name {:color "#dbe3f3"})]
+         (merge {:tid tid :label (get o "label") :attrs (merge {"window-id" wid} (or (get o "attrs") {}))} {})))
+
+(defn draw-window (w)
+  (var f (frame-rect w))
+  (var fx (nth f 0)) (var fy (nth f 1)) (var fw (nth f 2)) (var fh (nth f 3))
+  (var focused (= FOCUS w.wid))
+  (hit! (str "win:" w.wid) (- fx EDGE) (- fy EDGE) (+ fw (* 2 EDGE)) (+ fh (* 2 EDGE)))
+  (ui-offset fx fy)
+  (var kids [(box 0 0 fw fh {:fill "#10162a" :r (if (= w.state "max") 0 10) :stroke (if focused (str ACCENT "cc") "#ffffff22") :sw (if focused 1.5 1) :shadow (if focused 3 2)})
+             (box 0 0 fw TH {:fill (if focused "#1d2540" "#171d31") :r (if (= w.state "max") 0 10)})
+             (box 0 (- TH 10) fw 10 {:fill (if focused "#1d2540" "#171d31")})
+             (icon 10 8 16 (or w.icon "program") {})])
+  (var tx 34)
+  (when (= w.kind "system")
+    (var st (child-state w.child))
+    (push! kids (chip 32 7 (str "L" (+ DEPTH 1)) (nth LEVEL-COLORS (% DEPTH (len LEVEL-COLORS)))))
+    (push! kids (chip 66 7 (state-text st) (state-color st)))
+    (set! tx 140))
+  (when (= w.kind "proj") (push! kids (chip 32 7 (str "来自 " w.src-sys) "#5eead4")) (set! tx (+ 50 (text-w w.src-sys 11) 20)))
+  (var bx (- fw 102))
+  (when (= w.kind "system") (set! bx (- bx (* 34 4))))
+  (push! kids (text tx 0 (max 20 (- bx tx 6)) TH (if (= w.kind "system") (str w.child " · " w.title) w.title)
+                    {:size 12 :weight (if focused 600 400) :color (if focused "#f3f6fc" "#a8b3c9") :valign "middle" :tid "window-titlebar"
+                     :attrs {"window-id" w.wid} :cursor "default"}))
+  (when (= w.kind "system")
+    (var st (child-state w.child))
+    (var x0 (- fw 102 (* 34 4)))
+    (var attrs {"target-system-id" w.child})
+    (if (= st "paused")
+      (push! kids (title-button (str "resume:" w.wid) x0 "play" "system-resume" w.wid {:label "继续" :attrs attrs}))
+      (push! kids (title-button (str "pause:" w.wid) x0 "pause" "system-pause" w.wid {:label "暂停" :attrs attrs})))
+    (push! kids (title-button (str "step:" w.wid) (+ x0 34) "step" "system-step" w.wid {:label "单步" :attrs attrs}))
+    (push! kids (title-button (str "snap:" w.wid) (+ x0 68) "camera" "system-snapshot" w.wid {:label "快照" :attrs attrs}))
+    (push! kids (title-button (str "restart:" w.wid) (+ x0 102) "restart" "system-restart" w.wid {:label "重启" :attrs attrs})))
+  (push! kids (title-button (str "min:" w.wid) (- fw 102) "min" "window-minimize" w.wid {:label "最小化"}))
+  (push! kids (title-button (str "max:" w.wid) (- fw 68) (if (= w.state "max") "restore" "max") "window-maximize" w.wid {:label "最大化"}))
+  (push! kids (title-button (str "close:" w.wid) (- fw 34) "close" "window-close" w.wid {:label "关闭"}))
+  ;; 客户区：引用应用（或子系统、投送来源）的显示面
+  (var cw (- fw 2)) (var ch (- fh TH 1))
+  (var ref (case w.kind ("system" (str w.child ":desktop")) ("proj" (str w.src-win "@proj")) (else w.wid)))
+  (push! kids (surf 1 TH cw ch ref {:k (str "s-" w.wid) :clip true}))
+  (when (= w.kind "system")
+    (var st (child-state w.child))
+    (when (= st "kernel-error")
+      (hit! (str "kerr:" w.wid) 1 TH cw ch)
+      (push! kids (group 1 TH cw ch
+        [(box 0 0 cw ch {:fill "#1a0d12f0"})
+         (icon (- (/ cw 2) 24) (- (/ ch 2) 70) 48 "error" {})
+         (text 20 (- (/ ch 2) 14) (- cw 40) 24 (str w.child " 内核错误，子系统已停止") {:size 15 :weight 700 :color "#fecaca" :align "center"})
+         (text 30 (+ (/ ch 2) 14) (- cw 60) 60 (or (child-error w.child) "") {:size 12 :color "#fda4af" :align "center" :wrap true :font "mono"})
+         (text 20 (+ (/ ch 2) 78) (- cw 40) 20 "修改父系统中的内核源文件后，点击此处或标题栏的重启按钮" {:size 12 :color C-DIM :align "center"})]
+        {:tid "kernel-error" :attrs {"target-system-id" w.child} :label "内核错误"})))
+    (when (or (= st "paused") (= st "stopped"))
+      (push! kids (group (- cw 150) (+ TH 8) 140 26 [(box 0 0 140 26 {:fill "#00000099" :r 13 :stroke (str (state-color st) "88")})
+                                                     (text 0 0 140 26 (if (= st "paused") "⏸ 子树已暂停" "■ 已停止") {:size 12 :color (state-color st) :align "center" :valign "middle"})] {}))))
+  (ui-offset (- fx) (- fy))
+  (group fx fy fw fh kids {:tid "app-window" :attrs {"window-id" w.wid "app-id" w.app} :label w.title :k (str "w-" w.wid)
+                           :op (if (= w.state "min") 0 1) :hidden (= w.state "min")}))
+
+(defn draw-taskbar ()
+  (var y (- H TB-H))
+  (var kids [(box 0 0 W TB-H {:fill "#090e1cee" :blur 12}) (box 0 0 W 1 {:fill (str ACCENT "66")})])
+  (hit! "start:" 6 (+ y 4) 44 36)
+  (push! kids (group 6 4 44 36 [(box 0 0 44 36 {:fill (if START (str ACCENT "40") (if (= UI-HOVER "start:") "#ffffff18" "#00000000")) :r 8})
+                                (icon 12 8 20 "start" {})]
+                     {:tid "start-toggle" :label "开始" :cursor "pointer"}))
+  (var x 58)
+  (each (a PINNED)
+    (var ad (app-def a))
+    (var running (any? (fn (w) (= w.app a)) WINS))
+    (hit! (str "pin:" a) x (+ y 4) 38 36)
+    (push! kids (group x 4 38 36 [(box 0 0 38 36 {:fill (if (= UI-HOVER (str "pin:" a)) "#ffffff18" "#00000000") :r 8})
+                                  (icon 9 7 20 ad.icon {})
+                                  (box 15 32 8 2 {:fill (if running ACCENT "#00000000") :r 1})]
+                       {:tid (str "pin-" a) :label ad.name :cursor "pointer"}))
+    (inc! x 40))
+  (push! kids (box (+ x 4) 10 1 24 {:fill "#ffffff22"}))
+  (inc! x 12)
+  (var tw (clamp (/ (- W x 220) (max 1 (len WINS))) 60 180))
+  (each (w WINS)
+    (var act (and (= FOCUS w.wid) (!= w.state "min")))
+    (hit! (str "task:" w.wid) x (+ y 4) (- tw 4) 36)
+    (push! kids (group x 4 (- tw 4) 36
+      [(box 0 0 (- tw 4) 36 {:fill (cond (act (str ACCENT "30")) ((= UI-HOVER (str "task:" w.wid)) "#ffffff16") (else "#ffffff08")) :r 7})
+       (box 8 33 (- tw 20) 2 {:fill (if act ACCENT (if (= w.state "min") "#ffffff30" "#ffffff60")) :r 1})
+       (icon 8 9 18 (or w.icon "program") {})
+       (text 30 0 (- tw 38) 36 w.title {:size 11 :color (if (= w.state "min") C-DIM C-TEXT) :valign "middle"})]
+      {:tid "taskbar-item" :label w.title :attrs {"window-id" w.wid} :cursor "pointer"}))
+    (inc! x tw))
+  ;; 托盘：系统状态、通知入口、虚拟时钟
+  (var rx (- W 210))
+  (push! kids (chip rx 13 (str "L" DEPTH " " SYSID) ACCENT))
+  (hit! "notif:" (- W 118) (+ y 4) 36 36)
+  (push! kids (group (- W 118) 4 36 36 [(box 0 0 36 36 {:fill (if NOTIF-OPEN (str ACCENT "40") (if (= UI-HOVER "notif:") "#ffffff18" "#00000000")) :r 8})
+                                        (icon 9 8 18 "bell" {:color C-TEXT})
+                                        (if (> UNREAD 0) (group 21 4 14 14 [(box 0 0 14 14 {:fill "#ef4444" :r 7}) (text 0 0 14 14 (min UNREAD 9) {:size 9 :color "#fff" :align "center" :valign "middle"})] {}) (box 0 0 0 0 {}))]
+                     {:tid "notifications-toggle" :label "通知" :cursor "pointer"}))
+  (push! kids (text (- W 78) 4 72 20 (fmt-clock NOW) {:size 12 :color C-TEXT :align "center" :font "mono"}))
+  (push! kids (text (- W 78) 22 72 16 "虚拟时间" {:size 10 :color C-DIM :align "center"}))
+  (group 0 y W TB-H kids {:k "taskbar"}))
+
+(defn start-matches (q)
+  (if (or (nil? q) (= q "")) APPS (filter (fn (a) (or (contains? a.name q) (contains? a.id (lower q)))) APPS)))
+
+(defn draw-start ()
+  (var mw 320) (var mh 400) (var x 6) (var y (- H TB-H mh 6))
+  (hit! "startmenu:" x y mw mh)
+  (var kids [(box 0 0 mw mh {:fill "#0f1528f5" :r 12 :stroke (str ACCENT "55") :shadow 3 :blur 16})
+             (text 16 12 200 24 (str "开始 · " SYSID) {:size 14 :weight 700 :color C-TEXT})
+             (field "start-search" 16 44 (- mw 32) 30 START.q {:ph "搜索应用…" :tid "start-search" :label "搜索应用"})])
+  (hit! "start-search:" (+ x 16) (+ y 44) (- mw 32) 30)
+  (var yy 86)
+  (each (a (start-matches START.q))
+    (var id (str "launch:" a.id))
+    (hit! id (+ x 10) (+ y yy) (- mw 20) 38)
+    (push! kids (group 10 yy (- mw 20) 38
+      [(box 0 0 (- mw 20) 38 {:fill (if (= UI-HOVER id) "#ffffff16" "#00000000") :r 8})
+       (icon 10 9 20 a.icon {})
+       (text 40 0 200 38 a.name {:size 13 :color C-TEXT :valign "middle"})]
+      {:tid (str "launch-" a.id) :label a.name :cursor "pointer"}))
+    (inc! yy 40))
+  (hit! "sysnew:" (+ x 10) (+ y (- mh 48)) (- mw 20) 38)
+  (push! kids (group 10 (- mh 48) (- mw 20) 38
+    [(box 0 0 (- mw 20) 38 {:fill (if (= UI-HOVER "sysnew:") (str ACCENT "40") (str ACCENT "1c")) :r 8 :stroke (str ACCENT "55")})
+     (icon 10 9 20 "system" {})
+     (text 40 0 220 38 "新建子系统（下一层桌面）" {:size 13 :color C-TEXT :valign "middle"})]
+    {:tid "start-system-new" :label "新建子系统" :cursor "pointer"}))
+  (group x y mw mh kids {:tid "start-menu" :label "开始菜单" :k "startmenu"}))
+
+(defn draw-menu ()
+  (var mw 190) (var n (len MENU.items))
+  (var kids [(box 0 0 mw (+ 8 (* n 30)) {:fill "#121a2ef8" :r 8 :stroke "#ffffff22" :shadow 3})])
+  (each-i (i it MENU.items)
+    (var yy (+ 4 (* i 30)))
+    (if (= (first it) "sep")
+      (push! kids (box 10 (+ yy 14) (- mw 20) 1 {:fill "#ffffff1c"}))
+      (do (var id (str "menu:" (first it)))
+          (hit! id (+ MENU.x 4) (+ MENU.y yy) (- mw 8) 28)
+          (push! kids (group 4 yy (- mw 8) 28 [(box 0 0 (- mw 8) 28 {:fill (if (= UI-HOVER id) (str ACCENT "38") "#00000000") :r 6})
+                                              (text 12 0 (- mw 30) 28 (nth it 1) {:size 12 :color C-TEXT :valign "middle"})]
+                             {:tid (str "menu-" (first it)) :label (nth it 1) :cursor "pointer"})))))
+  (group MENU.x MENU.y mw (+ 8 (* n 30)) kids {:tid "context-menu" :label "右键菜单" :k "ctxmenu"}))
+
+(defn draw-notifs ()
+  (var pw 320) (var ph (min 460 (- H TB-H 12))) (var x (- W pw 6)) (var y (- H TB-H ph 6))
+  (hit! "notifs:" x y pw ph)
+  (var kids [(box 0 0 pw ph {:fill "#0f1528f5" :r 12 :stroke (str ACCENT "55") :shadow 3})
+             (text 16 10 200 24 "通知中心" {:size 14 :weight 700 :color C-TEXT})])
+  (hit! "clearnotif:" (+ x pw -80) (+ y 10) 64 24)
+  (push! kids (group (- pw 80) 10 64 24 [(box 0 0 64 24 {:fill "#ffffff12" :r 6}) (text 0 0 64 24 "清除" {:size 11 :color C-DIM :align "center" :valign "middle"})] {:tid "notifications-clear" :label "清除通知"}))
+  (var yy 44)
+  (when (= (len NOTIFS) 0) (push! kids (text 16 60 (- pw 32) 24 "暂无通知" {:size 12 :color C-DIM})))
+  (each (n NOTIFS)
+    (when (< (+ yy 60) ph)
+      (push! kids (group 10 yy (- pw 20) 56 [(box 0 0 (- pw 20) 56 {:fill "#ffffff0c" :r 8})
+                                             (icon 10 10 18 (case n.level ("error" "error") ("ok" "ok") (else "info")) {})
+                                             (text 36 6 (- pw 70) 20 n.title {:size 12 :weight 600 :color C-TEXT})
+                                             (text 36 26 (- pw 70) 26 n.body {:size 11 :color C-DIM})] {}))
+      (inc! yy 62)))
+  (group x y pw ph kids {:tid "notification-center" :label "通知中心" :k "notifs"}))
+
+(defn draw-toasts ()
+  (var out [])
+  (set! TOASTS (filter (fn (t) (< (- NOW t.t) 4)) TOASTS))
+  (each-i (i n (take TOASTS 3))
+    (var tw 300) (var x (- W tw 12)) (var y (- H TB-H 70 (* i 66)))
+    (push! out (group x y tw 58 [(box 0 0 tw 58 {:fill "#141c33f2" :r 10 :stroke (case n.level ("error" "#f8717188") ("ok" "#4ade8088") (else (str ACCENT "77"))) :shadow 3})
+                                 (icon 12 12 18 (case n.level ("error" "error") ("ok" "ok") (else "info")) {})
+                                 (text 40 8 (- tw 52) 20 n.title {:size 12 :weight 600 :color C-TEXT})
+                                 (text 40 28 (- tw 52) 26 n.body {:size 11 :color C-DIM})]
+                       {:tid "toast" :k (str "toast-" n.id)})))
+  out)
+
+(defn draw-dialog ()
+  (var dw 420) (var dh 170) (var x (/ (- W dw) 2)) (var y (/ (- H TB-H dh) 2))
+  (var n (subtree-count DIALOG.id))
+  (var kids [(box 0 0 dw dh {:fill "#141b31fa" :r 12 :stroke (str ACCENT "88") :shadow 3})
+             (icon 18 18 22 "warning" {})
+             (text 50 16 (- dw 70) 26 (str "关闭系统窗口 " DIALOG.id "？") {:size 15 :weight 700 :color C-TEXT})
+             (text 50 46 (- dw 70) 50 (str "关闭将停止整个子树（" DIALOG.id (if (> n 0) (str " 及其 " n " 个后代系统") "") "）。已保存的文件与快照会保留。") {:size 12 :color C-DIM :wrap true})])
+  (hit! "dlg:ok" (+ x dw -212) (+ y dh -48) 110 32)
+  (hit! "dlg:cancel" (+ x dw -94) (+ y dh -48) 80 32)
+  (push! kids (group (- dw 212) (- dh 48) 110 32 [(box 0 0 110 32 {:fill "#e5484d" :r 7}) (text 0 0 110 32 "停止并关闭" {:size 12 :color "#fff" :align "center" :valign "middle"})] {:tid "dialog-confirm" :label "停止并关闭"}))
+  (push! kids (group (- dw 94) (- dh 48) 80 32 [(box 0 0 80 32 {:fill "#ffffff18" :r 7}) (text 0 0 80 32 "取消" {:size 12 :color C-TEXT :align "center" :valign "middle"})] {:tid "dialog-cancel" :label "取消"}))
+  (group 0 0 W H [(box 0 0 W H {:fill "#00000066"}) (group x y dw dh kids {})] {:tid "dialog" :k "dialog"}))
+
+(defn render ()
+  (ui-begin)
+  (var nodes [(wallpaper)])
+  (each (n (draw-icons)) (push! nodes n))
+  (each (w WINS) (push! nodes (draw-window w)))
+  (when SNAP-PREVIEW
+    (var r (case SNAP-PREVIEW ("left" [0 0 (/ W 2) (- H TB-H)]) ("right" [(/ W 2) 0 (/ W 2) (- H TB-H)]) (else [0 0 W (- H TB-H)])))
+    (push! nodes (box (+ (nth r 0) 6) (+ (nth r 1) 6) (- (nth r 2) 12) (- (nth r 3) 12) {:fill (str ACCENT "22") :stroke (str ACCENT "aa") :r 10})))
+  (push! nodes (draw-taskbar))
+  (when START (push! nodes (draw-start)))
+  (when NOTIF-OPEN (push! nodes (draw-notifs)))
+  (when MENU (push! nodes (draw-menu)))
+  (each (n (draw-toasts)) (push! nodes n))
+  (when DIALOG (push! nodes (draw-dialog)))
+  (var meta {:windows (map-list (fn (w) {:id w.wid :app w.app :title w.title :state (if (= w.state "min") "minimized" (if (= w.state "max") "maximized" (if w.snap (str "snapped-" w.snap) "normal")))
+                                          :focused (= w.wid FOCUS) :kind w.kind :child w.child :src-sys w.src-sys :src-win w.src-win :src-app w.src-app})
+                                WINS)
+             :focus FOCUS :level DEPTH :accent ACCENT :name SYSNAME})
+  (sys "display" "desktop" {:w W :h H :nodes nodes :bg "#0d1324" :level DEPTH :accent ACCENT} meta)
+  (set! DIRTY false))
+
+;; ---------------- 主循环 ----------------
+(defn main ()
+  (var icons (sys "read" "/System/icons.json"))
+  (when icons (sys "display-res" "icons" (parse-json icons)))
+  (var wp (sys "read" "/System/wallpaper.json"))
+  (when wp (set! WALL (get-or (parse-json wp) "variant" 0)))
+  (refresh-desk-files)
+  (refresh-tree)
+  (set! NOW (sys "now"))
+  (render)
+  (while true
+    (var m (sys "recv" 0.5))
+    (set! NOW (sys "now"))
+    (when m (on-msg m))
+    (var more (sys "try-recv"))
+    (var guard 0)
+    (while (and more (< guard 200)) (on-msg more) (set! more (sys "try-recv")) (inc! guard))
+    (when (!= (floor NOW) LAST-SEC) (set! LAST-SEC (floor NOW)) (set! DIRTY true))
+    (when DIRTY (render))))
+
+(main)

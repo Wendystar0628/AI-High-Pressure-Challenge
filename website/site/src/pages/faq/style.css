@@ -1,0 +1,289 @@
+/* /faq/ 猜你想问: the reading frame (reading.css) with one entry per question:
+   number │ tag, question, answer. Ruled entries, no cards (about.md 的题目条目同理). */
+
+.rd-banner.faq-banner {
+  top: -0.75rem;
+  right: 0;
+  width: min(9rem, 28%);
+  aspect-ratio: 40 / 26;
+  opacity: 0.5;
+  background: var(--v-300);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* words joined by ~ in the content stay on one line (model.js rich) */
+.page-faq .nb {
+  word-break: keep-all;
+}
+
+/* ---------- export panel in the head ---------- */
+.faq-export {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--st-rule);
+}
+.faq-ex-head {
+  margin: 0 0 0.6rem;
+}
+.faq-ex-head .st-pair > :last-child {
+  font-size: var(--st-t-body);
+}
+body[data-lang='en'] .faq-ex-head .st-eyebrow {
+  display: none;
+}
+.faq-ex-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+.faq-ex-status {
+  min-width: 0;
+}
+.faq-ex-out {
+  margin-top: 1rem;
+}
+.faq-ex-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.faq-ex-thumb {
+  display: block;
+  border: 1px solid var(--st-rule);
+  transition: border-color 0.15s;
+}
+.faq-ex-thumb:is(:hover, :focus-visible) {
+  border-color: var(--st-ink);
+}
+.faq-ex-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.faq-ex-cap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+}
+.faq-ex-foot {
+  margin: 1rem 0 0;
+}
+
+/* ---------- questions ---------- */
+.faq-list {
+  border-bottom: 1px solid var(--st-rule);
+}
+.faq-qa {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0 1rem;
+  padding: 1.35rem 0 0.6rem;
+  border-top: 1px solid var(--st-rule);
+}
+.st a.faq-no {
+  align-self: start;
+  justify-self: start;
+  margin-top: 0.2rem;
+  color: var(--st-tag-fg);
+  font-weight: 700;
+}
+.st a.faq-no:is(:hover, :focus-visible) {
+  color: var(--st-on-flare);
+}
+.faq-body {
+  min-width: 0;
+}
+.faq-q {
+  position: relative;
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+body[data-lang='en'] .faq-q,
+body[data-lang='en'] .faq-lead {
+  font-family: var(--st-font-ui);
+  font-stretch: 100%;
+}
+.faq-a {
+  max-width: var(--st-measure);
+  color: var(--st-ink-2);
+}
+.faq-a .rd-p {
+  margin-bottom: 0.75rem;
+}
+/* the point of an answer: ink, bold, a highlighter stroke under it */
+.faq-a strong,
+.faq-lead strong {
+  color: var(--st-ink);
+  font-weight: 700;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background: linear-gradient(transparent 56%, var(--st-mark) 56%, var(--st-mark) 94%, transparent 94%);
+}
+
+/* landing on a question: the violet bar on the left of its heading */
+.faq-q::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-4.25rem - min(var(--rd-pad), 1.25rem));
+  width: var(--st-bar-w);
+  background: var(--st-orbit);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 200ms var(--st-mech);
+}
+.faq-q.rd-landed::before {
+  transform: none;
+  transition-duration: 280ms;
+}
+
+/* tag: the category's colour swatch, icon and name; a chip (to its board) */
+.faq-tag {
+  margin: 0 0 0.55rem;
+  white-space: normal;
+}
+.faq-swatch {
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--fill);
+}
+.faq-swatch.is-lime {
+  box-shadow: inset 0 0 0 1px var(--lime-edge);
+}
+.faq-tag .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* source address */
+.faq-src {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.75rem;
+  font-size: 0.95rem;
+}
+.faq-src-k {
+  flex: none;
+}
+.faq-src a {
+  min-width: 0;
+  font-family: var(--st-font-ui);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* ratios: big figures, three to a row */
+.faq-ratios.st-figs {
+  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+  max-width: 34rem;
+  margin: 0.25rem 0 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--st-rule);
+}
+.faq-ratios b {
+  color: var(--st-ink);
+  white-space: nowrap;
+}
+.faq-ratios b small {
+  margin: 0 0.15em;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.faq-ratios span {
+  color: var(--st-ink-2);
+}
+
+/* ---------- a note: one large sentence, then its text and blocks ---------- */
+.faq-note {
+  padding: 1.5rem 0 0.75rem;
+  border-top: 1px solid var(--st-rule);
+}
+.faq-lead {
+  max-width: var(--st-measure);
+  margin: 0 0 0.85rem;
+  font-size: var(--st-t-h2);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+/* weights: 标准评判题 lime with an ink edge │ 主动设计题 violet 300 */
+.faq-weights {
+  max-width: var(--st-measure);
+  margin: 0.25rem 0 0.5rem;
+}
+.faq-wcap {
+  margin-bottom: 0.5rem;
+}
+.faq-wbar {
+  display: flex;
+  min-height: 3.5rem;
+}
+.faq-wbar > span {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.4rem 0.75rem;
+  color: var(--st-on-flare);
+  line-height: 1.25;
+}
+.faq-wbar > .is-standard {
+  background: var(--kind-standard);
+  box-shadow: inset 0 0 0 1px var(--lime-edge);
+}
+.faq-wbar > .is-design {
+  background: var(--kind-design);
+}
+.faq-wbar > span + span {
+  border-left: 2px solid var(--st-panel);
+}
+.faq-wbar b {
+  font-size: 0.85rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.faq-wbar .num {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.faq-wgo {
+  margin: 0.75rem 0 0;
+}
+
+@media (max-width: 759px) {
+  .faq-qa {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 1.1rem;
+  }
+  .faq-no {
+    margin: 0 0 0.5rem;
+  }
+  .faq-q::before {
+    left: calc(-1 * min(var(--rd-pad), 1.25rem));
+  }
+  .faq-q {
+    font-size: 1.1rem;
+  }
+  .faq-ratios b {
+    font-size: 1.9rem;
+  }
+}

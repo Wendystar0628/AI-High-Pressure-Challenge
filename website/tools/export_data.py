@@ -4,6 +4,8 @@
 
 Writes website/site/data/models.json, tasks.json, scores.json, search.json and stems/<category>/<task>.json from:
   website/tools/models.json      the registry: only registered models appear on the site
+  website/tools/site.json        the site-wide hold: a non-null "notice" {zh, en} exports no model at all and
+                                 puts the notice in scores.json, which the score pages show instead (README「暂停公示」)
   website/tools/tasks_meta.json  bilingual copy of categories and tasks, and the about page's section titles
   orchestrator/tasks.py          task order within a category, weights, minutes, category and kind
   orchestrator/grading.py        load(), task_scores() and model_scores(): the scores_report algorithm
@@ -83,7 +85,32 @@ def load_registry():
             raise SystemExit(f'models.json：没有图标 website/logos/mark/{m["logo"]}.svg')
         seen_id.add(m['id'])
         seen_key.add(m['key'])
-    return models
+    # Temporary hold, rarely used: "audit": true keeps a model registered (videos and cost accounting still read it)
+    # but leaves it off the site entirely. The user removes the field when it may go public and publish.py runs again.
+    return [m for m in models if not m.get('audit')]
+
+
+def site_notice():
+    """site.json's "notice" ({zh, en}) while the site-wide hold is on, else None."""
+    path = TOOLS / 'site.json'
+    notice = read_json(path).get('notice') if path.is_file() else None
+    if notice and not (notice.get('zh') and notice.get('en')):
+        raise SystemExit('site.json：notice 要有 zh 和 en 两句，关闭时写 null')
+    return notice or None
+
+
+_timer = None
+
+
+def timer_state():
+    """The answering records of orchestrator/state.json ({'<model key>/<task>': record}), read once."""
+    global _timer
+    if _timer is None:
+        try:
+            _timer = json.loads(paths.state.read_text(encoding='utf-8')).get('tasks', {})
+        except (OSError, ValueError):
+            _timer = {}
+    return _timer
 
 
 def latest_session_date(key):
@@ -148,16 +175,64 @@ def ranks(values):
     return {k: (None if v is None else scored.index(v) + 1) for k, v in values.items()}
 
 
+def grader_scores(task, sc):
+    """A design task's score as each main-item grader alone would give it ([{name, score}]), composed like
+    grading.design_score (performance items keep their own grader), only when two or more graders scored the main
+    items; their mean is the task score."""
+    if TASKS[task].grading_type != 'design':
+        return []
+    sources = sc.get('sources') or []
+    main = [g for g in grading.GRADERS if any(s[0] == g and s[1] in (None, 'main') for s in sources)
+            and g in TASKS[task].graders_for('main')]
+    if len(main) < 2:
+        return []
+    expected = grading.guide_items(task)
+    performance = {grading.norm(k) for k in TASKS[task].performance_items}
+    out = []
+    for g in main:
+        total = full = 0
+        for key, (maximum, weight) in expected.items():
+            selected = 'performance' if key in performance else 'main'
+            vals = [mine[key]['score'] for grader, scope, r in sources if key in (mine := grading.by_key(r))
+                    and grader in TASKS[task].graders_for(selected) and scope in (None, selected)
+                    and (selected == 'performance' or grader == g)]
+            full += maximum * weight
+            if vals:
+                total += sum(vals) / len(vals) * weight
+        if full:
+            out.append({'name': grading.GRADERS[g], 'score': one(min(100, total / full * 100))})
+    return out
+
+
+def task_info(model, per, timer):
+    """Per task, only what the score itself does not say: why it has no score yet ('state': testing = 评测中,
+    missing = 未交, failed = 评分失败, unscored = 未给总分), each grader's score of a design task, and the graders'
+    anomaly notes ([{grader, text}]). Tasks with nothing to add are left out."""
+    out = {}
+    for n in TASKS:
+        p, info = per[n], {}
+        g = p['gap']
+        if g:
+            closed = isinstance(r := timer.get(f'{model["key"]}/{n}'), dict) and r.get('closed')
+            info['state'] = {'未评完': 'testing', '评分失败': 'failed', '未给总分': 'unscored'}.get(
+                g, 'missing' if closed else 'testing')
+        elif graders := grader_scores(n, p['sc']):
+            info['graders'] = graders
+        notes = [{'grader': grading.GRADERS[gk], 'text': r['anomaly']}
+                 for gk, r in zip(grading.GRADERS, p['rs']) if r and r.get('anomaly')]
+        if notes:
+            info['anomaly'] = notes
+        if info:
+            out[n] = info
+    return out
+
+
 def model_record(state, model, categories):
     """One model's scores. A task counts once its score is final (grading.py reports no gap for it); a category or
-    kind needs all its tasks, and the total needs all 12, otherwise null and the model is 评测中 (testing).
-    Temporary hold, rarely used: a model registered with "audit": true has finished grading, but the user is auditing
-    its scores before they go public. It is exported as if nothing were final, so the site shows it as 评测中 with
-    0 tasks done; that is the hold, not a grading gap. Grading and the videos never read this field. The user removes
-    it after the audit and publish.py runs again."""
+    kind needs all its tasks, and the total needs all 13, otherwise null and the model is 评测中 (testing)."""
     per = grading.task_scores(state, model['key'])
     total, cats = grading.model_scores(per)
-    final = {n: not model.get('audit') and per[n]['sc']['score'] is not None and not per[n]['gap'] for n in TASKS}
+    final = {n: per[n]['sc']['score'] is not None and not per[n]['gap'] for n in TASKS}
     score = {n: per[n]['sc']['score'] if final[n] else None for n in TASKS}
 
     def mean(names):
@@ -175,6 +250,9 @@ def model_record(state, model, categories):
         'status': 'ranked' if all(final.values()) else 'testing',
         'done': sum(final.values()),
     }
+    keys = {t['_source']: t['key'] for c in categories for t in c['tasks']}
+    info = task_info(model, per, timer_state())
+    record['task_info'] = {keys[n]: v for n, v in info.items() if n in keys}
     used = [grading.run_dir(p) / 'result.json'
             for n in TASKS if final[n] for job in per[n]['js'] if job
             for p in grading.phases(job) if p['state'] == 'done']
@@ -265,6 +343,7 @@ NOT_STEM = ('作答', '提交', '交付',                       # how to answer 
             '评分', '评价', '评测',                        # scoring, timing, the grader program and machine
             '运行环境', '本机环境', '技术要求',            # environment and technology
             '视频导出', '录制')                            # interfaces for recording the work
+STEM_KEEP = ('游戏规则',)                                  # the rules of play are 题干, though they contain 规则
 PROBLEM_FILE = re.compile(r'第(\d+)题\.md')
 
 MD_HEADING = re.compile(r'(#{1,6})\s+(.+?)\s*#*\s*$')
@@ -456,7 +535,7 @@ def stem_sections(node, base, omitted):
     """Kept subsections of a node as {title, blocks, sections}; left-out headings go to omitted."""
     out = []
     for sec in node['sections']:
-        if any(word in sec['title'] for word in NOT_STEM):
+        if any(word in sec['title'] for word in NOT_STEM) and not any(word in sec['title'] for word in STEM_KEEP):
             omitted.append(sec['title'])
             continue
         item = {'title': sec['title'], 'blocks': md_blocks(sec['lines'], base)}
@@ -508,6 +587,9 @@ def write_stems(categories):
 def main():
     sys.stdout.reconfigure(encoding='utf-8')
     registry = load_registry()
+    notice = site_notice()
+    if notice:   # site-wide hold: every model is left out, as if all had "audit"
+        registry = []
     categories, sections = load_tasks()
 
     models = []
@@ -518,6 +600,7 @@ def main():
                        'effort': m['effort'], 'tested': tested})
 
     scores = build_scores(registry, categories)
+    scores['notice'] = notice
     search = build_search(models, categories, sections)
     tasks = [c | {'tasks': [{k: v for k, v in t.items() if not k.startswith('_')} for t in c['tasks']]}
              for c in categories]
@@ -530,6 +613,8 @@ def main():
 
     print(f'已写入 {OUT}：models.json、tasks.json、scores.json、search.json，题干 stems/（{len(TASKS)} 题）；'
           f'数据日期 {scores["updated"]}')
+    if notice:
+        print(f'暂停公示（site.json 的 notice）：不导出任何模型，成绩页显示「{notice["zh"]}」')
     names = {m['id']: m['name'] for m in models}
     for i, r in scores['scores'].items():
         place = f'第 {r["rank"]} 名' if r['rank'] else '评测中'

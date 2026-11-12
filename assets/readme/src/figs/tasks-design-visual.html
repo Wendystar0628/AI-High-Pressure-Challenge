@@ -2,29 +2,21 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x674">
-<title>视觉两题评分方向</title>
+<meta name="size" content="960x620">
+<title>视觉设计与渲染评分方向</title>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="tasks-design-strip.css">
 </head>
 <body>
 <div class="frame"></div>
 <script>
-// Directions, points and subitems as in README.md (视觉设计与渲染 › 分项与计分, both tasks).
+// Directions, points and subitems as in README.md (视觉设计与渲染 › 分项与计分).
 window.FIG = {
   cat: 'visual', catName: '视觉设计与渲染', partner: 'violet-400',
-  title: '视觉设计与渲染：两道题的 100 分怎样分配',
-  desc: '两位评分员分别打分，逐项取平均。两题同一比例尺，条长按分值精确绘制，各方向从 0 依次排到 100。',
+  title: '视觉设计与渲染：两道题各 100 分怎样分配',
+  desc: '两位评分员分别打分，逐项取平均。条长按分值精确绘制，各方向从 0 依次排到 100。',
   facts: ['2 道题', '各 100 分'],
   groups: [
-    { head: 'NVIDIA_B200网页艺术', facts: ['6 个方向', '24 个分项'], dirs: [
-      ['美术风格',           10, [5, 3, 2]],
-      ['平面设计',           20, [4, 4, 5, 4, 3]],
-      ['SVG 动画与动态图形', 20, [6, 6, 4, 4]],
-      ['三维造型与渲染',     20, [7, 4, 3, 6]],
-      ['转场、滚动与导航',   15, [7, 3, 2, 3]],
-      ['交互',               15, [5, 3, 4, 3]],
-    ] },
     { head: '太阳雨渔港3D渲染', facts: ['6 个方向', '19 个分项'], dirs: [
       ['构图与纵深',  8, [3, 5]],
       ['造型与陈设', 34, [6, 5, 9, 6, 8]],
@@ -32,6 +24,13 @@ window.FIG = {
       ['色彩与光影', 17, [5, 7, 5]],
       ['动态',       20, [7, 3, 4, 6]],
       ['镜头与运行',  6, [4, 2]],
+    ] },
+    { head: '星际战舰编队', facts: ['5 个方向', '23 个分项'], dirs: [
+      ['舰队造型与规模', 32, [4, 8, 7, 5, 5, 3]],
+      ['武器、命中与航行动效', 25, [4, 7, 5, 5, 4]],
+      ['舰内空间设计', 20, [5, 6, 5, 4]],
+      ['环境、基础光与材质', 8, [3, 3, 2]],
+      ['镜头、剪辑与循环', 15, [4, 4, 3, 3, 1]],
     ] },
   ],
 };

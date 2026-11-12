@@ -1,0 +1,30 @@
+{
+  "problem": "T1",
+  "parts": [
+    {
+      "name": "1",
+      "title": "轴承座",
+      "features": [
+        {"type": "extrude", "name": "底板", "plane": "XY",
+         "loops": [{"rect": [-70, 0, 70, 80], "r": 10}], "depth": 15},
+        {"type": "extrude", "op": "cut", "name": "底面通槽", "plane": "XZ",
+         "loops": [{"rect": [-30, 0, 30, 4]}], "through": true},
+        {"type": "extrude", "name": "支撑板", "plane": "XZ", "origin": [0, 10, 0],
+         "loops": [{"path": [[-60, 15], [60, 15], [28, 60], [-28, 60]]}], "depth": [-12, 0]},
+        {"type": "extrude", "name": "圆筒", "plane": "XZ", "origin": [0, 10, 0],
+         "loops": [{"circle": [0, 65], "d": 60}], "depth": [-60, 0]},
+        {"type": "extrude", "name": "肋板", "plane": "YZ",
+         "loops": [{"path": [[22, 15], [65, 15], [65, 38], [22, 38]]}], "depth": [-6, 6]},
+        {"type": "extrude", "name": "斜凸台",
+         "plane": {"origin": [24, 40, 106.5692193], "normal": [0.5, 0, 0.8660254038], "x_dir": [0.8660254038, 0, -0.5]},
+         "loops": [{"circle": [0, 0], "d": 22}], "depth": [-30, 0]},
+        {"type": "hole", "name": "油孔",
+         "plane": {"origin": [24, 40, 106.5692193], "normal": [0.5, 0, 0.8660254038], "x_dir": [0.8660254038, 0, -0.5]},
+         "at": [0, 0], "d": 10, "depth": 32},
+        {"type": "hole", "name": "轴孔", "plane": "XZ", "origin": [0, 10, 0], "at": [0, 65], "d": 35, "through": true},
+        {"type": "hole", "name": "安装孔", "plane": "XY", "origin": [0, 0, 15],
+         "at": [[-50, 40], [50, 40]], "d": 11, "through": true, "spotface": {"d": 22, "depth": 2}}
+      ]
+    }
+  ]
+}

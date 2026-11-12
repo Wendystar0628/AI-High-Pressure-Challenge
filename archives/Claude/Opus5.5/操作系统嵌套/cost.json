@@ -1,0 +1,22 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "操作系统嵌套",
+  "tokens": 85413455,
+  "minutes": 110.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 4.01,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/操作系统嵌套/run-8b96a8f6a1d941fc860227570b5fa121",
+    "Claude/Opus5.5/操作系统嵌套/run-e1f31e1f00b84992861917c33ba348ae"
+  ]
+}

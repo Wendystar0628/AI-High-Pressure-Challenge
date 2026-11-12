@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x980">
-<title>算法竞赛计分曲线</title>
+<meta name="size" content="960x806">
+<title>性能优化计分曲线</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .desc { margin-top: 10px; }
@@ -28,54 +28,65 @@
   svg .cl { font-size: 13px; font-weight: 600; }
   svg .ref { font-size: 13px; font-weight: 600; fill: var(--cyan-800); }
 
-  /* Footer: how the circuit task turns 24 lookups and 7 checks into one score. */
+  /* Footers: how each task turns its lookups and checks into one score. */
   .eq { display: grid; grid-template-columns: auto 56px auto 56px auto; grid-template-rows: 40px auto; align-items: end;
         row-gap: 10px; margin-top: 14px; justify-content: start; }
+  .eq.three { grid-template-columns: auto 56px auto 56px auto 56px auto; }
   .eq > .bars { justify-self: start; }
   .eq > .v { align-self: end; }
   .cap { font-family: var(--font-text); font-size: 13px; line-height: 19px; color: var(--ink-2); white-space: nowrap; }
   .op { align-self: center; font-size: 22px; font-weight: 600; color: var(--ink-2); text-align: center; }
   .bars { display: flex; align-items: flex-end; height: 36px; border-bottom: 1px solid var(--ink); }
-  .bars i { display: block; width: 7px; background: var(--cat-algo); box-shadow: inset 0 0 0 1px var(--ink); }
+  .bars i { display: block; width: 24px; background: var(--cat-algo); box-shadow: inset 0 0 0 1px var(--ink); }
   .bars i + i { margin-left: 2px; }
   .bars i.gap { margin-left: 6px; }
   .checks { display: flex; column-gap: 4px; margin-bottom: 13px; }
   .checks i { width: 14px; height: 14px; }
   .checks i.c-hatch { box-shadow: inset 0 0 0 1px var(--ink); }
   .g5 { background: var(--cat-algo); box-shadow: inset 0 0 0 1px var(--ink); }
+  .half { background: linear-gradient(90deg, var(--cat-algo) 50%, var(--chip) 50%); box-shadow: inset 0 0 0 1px var(--ink); }
+  .bars i.q { width: 44px; height: 30px; }
   .eq .solid { justify-self: start; height: 40px; padding: 0 16px; display: flex; align-items: center; font-size: 15px; font-weight: 700; white-space: nowrap; }
 </style>
 </head>
 <body>
 <div class="frame">
   <header class="head">
-    <div class="pair"><span class="eyebrow slash">Algorithm Contests</span><h2 class="title"><img class="icon" src="../../icon-algo.svg" alt="">算法竞赛：三道题各比什么</h2></div>
+    <div class="pair"><span class="eyebrow slash">Performance Optimization</span><h2 class="title"><img class="icon" src="../../icon-algo.svg" alt="">性能优化：两道题各比什么</h2></div>
     <i class="lead"></i>
   </header>
-  <p class="desc">极值构造以参考构造值为满分线；性能题与基线在同一次评测中各跑 3 次取中位数，按加速比计分。</p>
+  <p class="desc">两道性能题都与基线在同一次评测中交错运行，按加速比计分：光追各跑 5 次取最小值，电路各跑 3 次取中位数。</p>
 
   <section class="band">
-    <div class="bh"><span class="eyebrow slash">Extremal Construction</span><h3>极值构造</h3><p>比构造质量，查锚点表分段线性插值；提交无效记 0 分</p></div>
-    <div class="task">
-      <h4>单位正方形内最小三角形面积最大化</h4>
-      <div class="facts"><b>最小面积 Δ 越大越好</b><span>作答：14 个逻辑处理器</span></div>
-      <svg id="tri" width="880" height="206"></svg>
+    <div class="bh"><span class="eyebrow slash">Performance Engineering</span><h3>性能工程</h3><p>s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；光追只有一个性能输入，电路逐个输入查</p></div>
+    <div class="two">
+      <div class="task">
+        <h4>光线追踪渲染加速</h4>
+        <div class="facts"><b>GPU：RTX 4080，CUDA</b><span>作答和评测限逻辑处理器 16–27</span></div>
+        <svg id="rt" width="416" height="206"></svg>
+      </div>
+      <div class="task">
+        <h4>数字电路仿真器加速</h4>
+        <div class="facts"><b>只用 CPU</b><span>作答和评测限逻辑处理器 0–15</span></div>
+        <svg id="circ" width="416" height="206"></svg>
+      </div>
     </div>
   </section>
 
   <section class="band">
-    <div class="bh"><span class="eyebrow slash">Performance Engineering</span><h3>性能工程</h3><p>加速比 s = 基线用时 ÷ 提交用时，在对数尺度上查锚点；Transformer 的 8 个输入直接取平均</p></div>
-    <div class="two">
-      <div class="task">
-        <h4>Transformer前向推理的GPU加速</h4>
-        <div class="facts"><b>GPU：RTX 4080，CUDA</b><span>作答：独占整机</span></div>
-        <svg id="transformer" width="416" height="206"></svg>
-      </div>
-      <div class="task">
-        <h4>通用数字电路仿真器加速</h4>
-        <div class="facts"><b>只用 CPU：评测限 16 个逻辑处理器</b><span>作答：独占整机</span></div>
-        <svg id="circ" width="416" height="206"></svg>
-      </div>
+    <div class="bh"><span class="eyebrow slash">Ray Tracing Score</span><h3>光追题的本题得分</h3></div>
+    <div class="eq three">
+      <div class="v bars"><i class="q"></i></div>
+      <div class="op">×</div>
+      <div class="v checks"><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="half"></i></div>
+      <div class="op">×</div>
+      <div class="v checks"><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="c-hatch"></i></div>
+      <div class="op">=</div>
+      <span class="v solid">本题得分</span>
+      <div class="cap">速度分 q<br>按加速比查锚点</div><div></div>
+      <div class="cap">5 次计时运行各判画面<br>平均为 c，图中一次略超差</div><div></div>
+      <div class="cap">12 个隐藏正确性输入<br>平均为 h，图中一个不通过</div><div></div>
+      <div class="cap">编译失败或违反规则<br>整题 0 分</div>
     </div>
   </section>
 
@@ -87,7 +98,7 @@
       <div class="v checks"><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="g5"></i><i class="c-hatch"></i></div>
       <div class="op">=</div>
       <span class="v solid">本题得分</span>
-      <div class="cap">24 个性能输入各自查表<br>失败的输入记 0 分，取平均</div><div></div>
+      <div class="cap">9 个性能输入各自查表<br>失败的输入记 0 分，取平均</div><div></div>
       <div class="cap">7 个正确性输入<br>通过数 ÷ 7，图中为 6/7</div><div></div>
       <div class="cap">编译失败或违反规则<br>整题 0 分</div>
     </div>
@@ -136,51 +147,48 @@ function series(P, pts, { closeRight = true } = {}) {
   el('polyline', { points: d, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, P.g);
 }
 
-/* Minimum triangle area: r = Δ / Δ*, anchors from the grading guide. Steepest segment 0.8–0.9 in the category colour;
-   r = 1 is the reference construction, drawn cyan. */
-{
-  const A = [[.05, 0], [.20, 4], [.35, 10], [.50, 20], [.65, 36], [.80, 60], [.90, 81], [.95, 90], [.99, 98], [1, 100]];
-  const minor = []; for (let i = 1; i < 20; i++) if (i % 4) minor.push(i / 20);
-  const P = plot('tri', r => r, [[0, '0'], [.2, '0.2'], [.4, '0.4'], [.6, '0.6'], [.8, '0.8'], [1, '1']], minor, 34.5);
-  P.R = P.X(1);
-  series(P, [[0, 0], ...A], { closeRight: false });
-  el('polygon', { points: `${P.X(.8)},${P.B} ${P.X(.8)},${P.Y(60)} ${P.X(.9)},${P.Y(81)} ${P.X(.9)},${P.B}`,
-                  fill: 'var(--cat-algo)', stroke: 'var(--ink)', 'stroke-width': 1 }, P.g);
-  el('polyline', { points: A.slice(5, 7).map(([r, p]) => `${P.X(r)},${P.Y(p)}`).join(' '), stroke: 'var(--ink)', 'stroke-width': 1.5 }, P.g);
-  txt(P.g, P.X(.85), P.B - 12, 'cl', '0.8–0.9 最陡', 'middle');
-  // The reference value: r = 1 scores 100.
-  line(P.g, P.X(1), P.B, P.X(1), P.T - 22, 'var(--cyan-800)', 1, DASH);
-  A.slice(0, -1).forEach(([r, p]) => sq(P.g, P.X(r), P.Y(p), r >= .95 ? 2.5 : 3.5));
-  for (const [r, p] of [[.5, 20], [.65, 36], [.8, 60], [.9, 81]]) txt(P.g, P.X(r) - 8, P.Y(p) - 6, 'pt', String(p), 'end');
-  sq(P.g, P.X(1), P.Y(100), 5, 'var(--cyan)');
-  txt(P.g, P.X(1) - 8, P.T - 12, 'ref', '参考值 = 100 分', 'end');
-  txt(P.g, P.X(1), P.B + 38, 'lb', 'r = Δ ÷ 参考值', 'end');
-}
-
 /* Speed-up: both tasks on the same log axis 0.1x–25x. s = 1 is the baseline, drawn cyan. */
 const LO = Math.log(.1), HI = Math.log(25), us = s => (Math.log(s) - LO) / (HI - LO);
 const sTicks = [[.1, '0.1×'], [.2, '0.2×'], [.5, '0.5×'], [1, '1×'], [2, '2×'], [4, '4×'], [8, '8×'], [16, '16×']];
-function perf(id, A, atRef, fullAt) {
+function perf(id, A, atRef, fullAt, v = 's', axis = '加速比 s（对数刻度）') {
   const P = plot(id, us, sTicks);
   series(P, [[.1, 0], ...A, [25, 100]]);
   line(P.g, P.X(1), P.B, P.X(1), P.Y(atRef), 'var(--cyan-800)', 1, DASH);
   line(P.g, P.L, P.Y(atRef), P.X(1), P.Y(atRef), 'var(--cyan-800)', 1, DASH);
   A.forEach(([s, p]) => { if (s !== 1 && s !== fullAt) sq(P.g, P.X(s), P.Y(p), 3.5); });
   sq(P.g, P.X(1), P.Y(atRef), 4.5, 'var(--cyan)');
-  txt(P.g, P.X(1) - 10, P.Y(atRef) - 12, 'ref', `与基线持平：${atRef} 分`, 'end');
+  txt(P.g, P.X(1) - 10, P.Y(atRef) - 12, 'ref', `${v} = 1：${atRef} 分`, 'end');
   sq(P.g, P.X(fullAt), P.Y(100), 5);
-  txt(P.g, P.X(fullAt) - 12, P.Y(100) + 4.5, 'cl', `${fullAt}× 起满分`, 'end');
-  txt(P.g, P.R, P.B + 38, 'lb', '加速比 s（对数刻度）', 'end');
+  txt(P.g, P.X(fullAt) - 12, P.Y(100) + 4.5, 'cl', `${v} = ${fullAt} 起满分`, 'end');
+  txt(P.g, P.R, P.B + 38, 'lb', axis, 'end');
 }
-perf('transformer', [[.2, 0], [.6, 5], [1.2, 15], [2, 25], [4, 45], [8, 70], [12, 86], [16, 100]], 12.4, 16);
-perf('circ', [[.1, 0], [.5, 5], [1, 15], [2, 35], [4, 65], [6, 85], [8, 100]], 15, 8);
-
-/* Footer: 24 inputs, eight families of three, bar height = an illustrative score. */
+perf('rt', [[1, 0], [2, 22], [4, 50], [6, 70], [8, 87], [10, 100]], 0, 10);
 {
-  const shade = [.9, .75, .85, .55, .7, .6, .95, .8, .35, .5, .4, .65, .3, .45, .7, .2, .6, .8, .5, .9, .4, .25, .55, .15];
+  const P = plot('circ', us, sTicks);
+  const deep = [[.1, 0], [.5, 5], [1, 12], [2, 27], [4, 47], [6, 62], [8, 76], [10, 89], [12, 100]];
+  const reg = [[.1, 0], [.5, 5], [1, 15], [2, 35], [4, 65], [6, 85], [8, 100]];
+  series(P, [...deep, [25, 100]]);
+  el('polyline', { points: [...reg, [25, 100]].map(([s, p]) => `${P.X(s)},${P.Y(p)}`).join(' '),
+    fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, ...DASH }, P.g);
+  deep.forEach(([s, p]) => sq(P.g, P.X(s), P.Y(p), 3.5));
+  reg.forEach(([s, p]) => sq(P.g, P.X(s), P.Y(p), 3, 'var(--paper)'));
+  line(P.g, P.X(1), P.B, P.X(1), P.Y(34), 'var(--cyan-800)', 1, DASH);
+  const key = (y, dash, label) => {
+    line(P.g, P.L + 10, y - 4, P.L + 32, y - 4, 'var(--ink)', 1.5, dash ? DASH : {});
+    sq(P.g, P.L + 21, y - 4, 3, dash ? 'var(--paper)' : 'var(--cat-algo)');
+    txt(P.g, P.L + 40, y, 'lb', label);
+  };
+  key(P.T + 12, false, '输入 1–6：基线 12 分，12× 满分');
+  key(P.T + 32, true, '输入 7–9：基线 15 分，8× 满分');
+  txt(P.g, P.R, P.B + 38, 'lb', '单个输入的加速比 s（对数刻度）', 'end');
+}
+
+/* Footer: 9 inputs, three families of three, bar height = an illustrative score. */
+{
+  const shade = [.9, .75, .85, .95, .8, .35, .2, .6, .8];
   let html = '';
-  for (let c = 0; c < 8; c++) for (let r = 0; r < 3; r++)
-    html += `<i${c && !r ? ' class="gap"' : ''} style="height:${Math.round(8 + 28 * shade[r * 8 + c])}px"></i>`;
+  for (let c = 0; c < 3; c++) for (let r = 0; r < 3; r++)
+    html += `<i${c && !r ? ' class="gap"' : ''} style="height:${Math.round(8 + 28 * shade[c * 3 + r])}px"></i>`;
   document.getElementById('bars').innerHTML = html;
 }
 </script>

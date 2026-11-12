@@ -1,0 +1,15 @@
+;; 消息接收：等待消息并按顺序处理；收到 done 后回执并结束。
+(include "/System/lib/core.nest")
+
+(var reply-to (get ARGS "reply"))
+(var got [])
+(var going true)
+(while going
+  (var m (recv))
+  (if (get m "done")
+    (set! going false)
+    (do (push! got (get m "seq"))
+        (log "收到第" (get m "seq") "条：" (get m "text") "（data.text =" (get (get m "data") "text") "）"))))
+(log "共收到" (len got) "条，顺序：" (join got ","))
+(when reply-to (send reply-to {:received (len got) :order got}))
+(len got)

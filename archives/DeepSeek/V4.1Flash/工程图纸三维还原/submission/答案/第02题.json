@@ -1,0 +1,46 @@
+{
+  "problem": "02",
+  "parts": [
+    {"name": "1", "title": "夹具底座", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,200,120], "r": 2}], "depth": [0,20], "name": "底板"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,20], "at": [[15,15],[185,15],[15,105],[185,105]], "d": 9, "through": true, "cbore": {"d": 15, "depth": 10}, "name": "四角沉孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,20], "at": [[35,25],[145,85]], "d": 18, "depth": 10, "name": "导柱定位孔Φ18"}
+    ]},
+    {"name": "2", "title": "左阶梯导柱", "features": [
+      {"type": "revolve", "plane": "XZ", "origin": [35,25,0], "axis": "y",
+       "loops": [{"path": [[0,10],[9,10],[9,20],[8,20],[8,104],[6,104],[6,118],[0,118]]}], "name": "阶梯导柱"},
+      {"type": "hole", "plane": "XY", "origin": [35,25,118], "at": [[0,0]], "d": 5, "depth": 10, "name": "顶孔Φ5"}
+    ]},
+    {"name": "3", "title": "右阶梯导柱", "features": [
+      {"type": "revolve", "plane": "XZ", "origin": [145,85,0], "axis": "y",
+       "loops": [{"path": [[0,10],[9,10],[9,20],[8,20],[8,104],[6,104],[6,118],[0,118]]}], "name": "阶梯导柱"},
+      {"type": "hole", "plane": "XY", "origin": [145,85,118], "at": [[0,0]], "d": 5, "depth": 10, "name": "顶孔Φ5"}
+    ]},
+    {"name": "4", "title": "上横梁", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [15,10,175,100]}], "depth": [104,118], "name": "横梁"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,118], "at": [[35,25],[145,85]], "d": 12, "through": true, "name": "导柱孔Φ12"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,110], "loops": [{"rect": [65,35,125,75]}], "depth": [0,8], "name": "顶面凹槽"}
+    ]},
+    {"name": "5", "title": "双孔滑动压头", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [20,10,170,100]}], "depth": [48,68], "name": "压头"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,68], "at": [[35,25],[145,85]], "d": 16, "through": true, "name": "导孔Φ16"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "depth": [-80,-20],
+       "loops": [{"path": [[70,68],[160,68],[160,58],[70,50]]}], "name": "斜槽"}
+    ]},
+    {"name": "6", "title": "驱动斜楔", "features": [
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-78,-22],
+       "loops": [{"path": [[70,69],[175,69],[175,83],[70,75]]}], "name": "斜楔"},
+      {"type": "hole", "plane": "YZ", "origin": [175,0,0], "at": [[50,76]], "d": 8, "depth": 26, "name": "拉杆孔Φ8"}
+    ]},
+    {"name": "7", "title": "右止推座", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [156,31,180,55]}], "depth": [20,81], "name": "止推座"},
+      {"type": "hole", "plane": "YZ", "origin": [180,0,0], "at": [[43,50]], "d": 18, "depth": 24, "name": "推轴孔Φ18"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,81], "at": [[168,43]], "d": 10, "depth": 20, "name": "顶孔Φ10"}
+    ]},
+    {"name": "8", "title": "调节推轴", "features": [
+      {"type": "revolve", "plane": "XZ", "origin": [0,43,50], "axis": "x",
+       "loops": [{"path": [[112,0],[180,0],[180,4],[176,4],[176,6],[164,6],[164,9],[112,9]]}], "name": "推轴"},
+      {"type": "hole", "plane": "YZ", "origin": [180,0,0], "at": [[43,50]], "d": 4, "depth": 68, "name": "中心孔Φ4"}
+    ]}
+  ]
+}

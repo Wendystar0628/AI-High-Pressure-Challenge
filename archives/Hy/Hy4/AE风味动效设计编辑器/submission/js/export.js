@@ -1,74 +1,57 @@
-/* =========================================================================
-   export.js — window.videoExport fixed frame interface + workspace export
-   ========================================================================= */
-(function(AE){
-'use strict';
+/* ============================================================
+   export.js — 整个编辑器的逐帧接口 window.videoExport
+   demo 展示整个编辑器界面，15 秒示例从头到尾播放一遍；
+   画布、播放头、时间轴与属性同步变化。
+   取样是时间 t 的纯函数：不额外推进播放/音频时钟，不重复触发模拟。
+   ============================================================ */
+(function(){
+  "use strict";
+  const AE=window.AE;
+  function raf(){return new Promise(r=>requestAnimationFrame(()=>r()));}
+  async function settle(){await raf();await raf();}
 
-function ensureAudioSilent(){ /* audio clock is frozen in export mode; see ui.js */ }
-
-AE.Export={
-  install(app){
-    const self=this;
-    const api={
-      runs:['demo'],
-      async begin(runId,opt){
-        opt=opt||{};
-        const fps=opt.fps||30;
-        AE.state.exportMode=true;
-        AE.state.playing=false;
-        AE.state.audioOn=false;               // freeze audio clock
-        self._fps=fps;
-        self._comp=AE.activeComp(app.project);
-        // ensure a clean, complete starting state
-        app.setTime(0,{silent:true});
-        await new Promise(r=>setTimeout(r,40));   // let glyph atlas / FBOs settle
-        app.setTime(0,{silent:true});
-        return {frames:Math.round(15*fps)};
-      },
-      async frame(i){
-        const fps=self._fps||30;
-        const t=i/fps;
-        app.setTime(t,{silent:true,quality:'high'});
-        // guarantee the frame is fully presented before returning
-        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-        return true;
-      },
-      end(){
-        AE.state.exportMode=false;
-        AE.state.audioOn=true;
-        app.setTime(AE.state.t,{silent:true});
-      }
-    };
-    window.videoExport=api;
-    self.app=app;
-  }
-};
-
-/* ---- workspace export: PNG sequence / WebM with progress + cancel ---- */
-AE.workspaceExport=(app,opt)=>{
-  opt=opt||{};
-  return new Promise((resolve)=>{
-    const fps=opt.fps||AE.state.fps;
-    const range=opt.range||[AE.activeComp(app.project).workIn,AE.activeComp(app.project).workOut];
-    const total=Math.max(1,Math.round((range[1]-range[0])*fps));
-    let i=0,cancelled=false;
-    const modal=AE.UI.openExportModal(app,{
-      total,fps,range,
-      onCancel:()=>{cancelled=true;}
-    });
-    const comp=AE.activeComp(app.project);
-    const prevT=AE.state.t,prevExport=AE.state.exportMode;
-    AE.state.exportMode=true;
-    const step=()=>{
-      if(cancelled){AE.state.exportMode=prevExport;app.setTime(prevT,{silent:true});resolve({cancelled:true});return;}
-      if(i>=total){AE.state.exportMode=prevExport;app.setTime(prevT,{silent:true});resolve({cancelled:false,frames:total});return;}
-      app.setTime(range[0]+i/fps,{silent:true,quality:'high'});
-      if(modal.onProgress)modal.onProgress(i+1,total);
-      i++;
-      setTimeout(step,0);
-    };
-    step();
-  });
-};
-
-})(window.AE);
+  const VX={
+    runs:['demo'],
+    async begin(runId,opts){
+      const ed=window.editor;
+      if(!ed)return {frames:0};
+      const fps=(opts&&opts.fps)||30;
+      ed._exportFps=fps;
+      ed.exportMode=true;
+      ed.playing=false;
+      AE.audio.stopBed();
+      // 回到这一段的起始状态：主合成 + 第 0 秒 + 重新计算派生缓存
+      ed.project.activeCompId=ed.project.comps[0].id;
+      ed.comp=AE.model.comp(ed.project);
+      ed.time=0;
+      AE.audio.resetFired();
+      AE.scene.rebuild(ed);
+      AE.ui.sizeCanvas(ed);
+      AE.ui.refreshAll(ed);
+      AE.ui.renderFrame(ed);
+      await settle();
+      return {frames:Math.round(15*fps)};
+    },
+    async frame(i){
+      const ed=window.editor;
+      if(!ed)return;
+      const fps=ed._exportFps||30;
+      ed.time=i/fps;
+      AE.ui.renderFrame(ed);
+      await settle();
+    },
+    end(){
+      const ed=window.editor;
+      if(!ed)return;
+      ed.exportMode=false;
+      ed.playing=false;
+      ed.time=0;
+      AE.audio.resetFired();
+      AE.audio.stopBed();
+      AE.ui.refreshAll(ed);
+      AE.ui.renderFrame(ed);
+    }
+  };
+  window.videoExport=VX;
+  console.log('[forge] videoExport ready · runs=',VX.runs);
+})();

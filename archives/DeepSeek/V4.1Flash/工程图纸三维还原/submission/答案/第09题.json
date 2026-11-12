@@ -1,0 +1,21 @@
+{
+  "problem": "09",
+  "parts": [
+    {"name": "1", "title": "跨腔三向斜流道歧管", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,150,105], "r": 3}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-90,0],
+       "loops": [{"path": [[10,8],[140,8],[140,43],[100,55],[10,55]]}], "name": "歧管主体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [22,16,70,84]}], "depth": [0,40], "name": "左腔"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [78,16,132,84]}], "depth": [0,34], "name": "右腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [38,36], "d": 22}], "depth": [0,6], "name": "前凸台Φ22"},
+      {"type": "hole", "plane": "XZ", "origin": [0,-5,0], "at": [[38,36]], "d": 14, "through": true, "name": "前孔Φ14"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [82,24], "d": 26}], "depth": [0,6], "name": "前凸台Φ26"},
+      {"type": "hole", "plane": "XZ", "origin": [0,-5,0], "at": [[82,24]], "d": 18, "depth": 66, "name": "前孔Φ18"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,55], "at": [[60,48]], "d": 16, "depth": 40, "name": "顶孔Φ16"},
+      {"type": "hole", "plane": {"origin": [104,0,54], "normal": [0.70710678,0,0.70710678], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 10, "depth": 32, "name": "斜孔Φ10"},
+      {"type": "hole", "plane": "YZ", "origin": [150,0,0], "at": [[52,32]], "d": 20, "depth": 60, "name": "右侧孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[140,10],[10,95],[140,95]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,55], "at": [[25,25],[120,70]], "d": 6, "depth": 24, "name": "顶面小孔"}
+    ]}
+  ]
+}

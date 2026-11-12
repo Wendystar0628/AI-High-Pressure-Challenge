@@ -1,0 +1,498 @@
+{
+  "problem": "07",
+  "parts": [
+    {
+      "name": "1",
+      "title": "双轴错层回油支承座",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "地脚板",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                160,
+                96
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "加强桥",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "path": [
+                [
+                  18,
+                  14
+                ],
+                [
+                  142,
+                  14
+                ],
+                [
+                  126,
+                  30
+                ],
+                [
+                  34,
+                  30
+                ]
+              ]
+            }
+          ],
+          "depth": [
+            -76,
+            -20
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "左支承凸台",
+          "op": "add",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                60
+              ],
+              "d": 62
+            }
+          ],
+          "depth": [
+            12,
+            48
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "右支承凸台",
+          "op": "add",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                70
+              ],
+              "d": 70
+            }
+          ],
+          "depth": [
+            104,
+            148
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "左支承颈",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                12,
+                27,
+                48,
+                69
+              ]
+            }
+          ],
+          "depth": [
+            14,
+            60
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "右支承颈",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                104,
+                24,
+                148,
+                72
+              ]
+            }
+          ],
+          "depth": [
+            14,
+            70
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "左轴承孔",
+          "op": "cut",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                60
+              ],
+              "d": 32
+            }
+          ],
+          "depth": [
+            12,
+            48
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "左端定位沉台",
+          "op": "cut",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                60
+              ],
+              "d": 42
+            }
+          ],
+          "depth": [
+            12,
+            20
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "右轴承孔",
+          "op": "cut",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                70
+              ],
+              "d": 38
+            }
+          ],
+          "depth": [
+            104,
+            148
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "右端定位沉台",
+          "op": "cut",
+          "plane": "YZ",
+          "loops": [
+            {
+              "circle": [
+                48,
+                70
+              ],
+              "d": 50
+            }
+          ],
+          "depth": [
+            138,
+            148
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "回油槽",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                35,
+                42,
+                124,
+                54
+              ]
+            }
+          ],
+          "depth": [
+            18,
+            26
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "左竖油孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                30,
+                48
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            18,
+            60
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "右竖油孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                124,
+                48
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            18,
+            70
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "侧面泄油孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                80,
+                22
+              ],
+              "d": 10
+            }
+          ],
+          "depth": [
+            -48,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "后侧三角肋",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "path": [
+                [
+                  48,
+                  14
+                ],
+                [
+                  104,
+                  14
+                ],
+                [
+                  104,
+                  48
+                ]
+              ]
+            }
+          ],
+          "depth": [
+            -76,
+            -68
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉头安装孔1",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                7,
+                9
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            0,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                7,
+                9
+              ],
+              "d": 13
+            }
+          ],
+          "depth": [
+            9,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉头安装孔2",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                7,
+                87
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            0,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                7,
+                87
+              ],
+              "d": 13
+            }
+          ],
+          "depth": [
+            9,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉头安装孔3",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                153,
+                9
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            0,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                153,
+                9
+              ],
+              "d": 13
+            }
+          ],
+          "depth": [
+            9,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉头安装孔4",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                153,
+                87
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            0,
+            14
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "沉孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                153,
+                87
+              ],
+              "d": 13
+            }
+          ],
+          "depth": [
+            9,
+            14
+          ]
+        },
+        {
+          "type": "fillet",
+          "name": "底板左前外竖棱",
+          "edges": [
+            [
+              0,
+              0,
+              7.0
+            ]
+          ],
+          "radius": 2
+        },
+        {
+          "type": "chamfer",
+          "name": "所指前下直棱",
+          "edges": [
+            [
+              40.0,
+              0,
+              0
+            ]
+          ],
+          "distance": 1
+        }
+      ]
+    }
+  ]
+}

@@ -86,7 +86,7 @@
     "presetsLabel": "预设",
     "presets": {
       "official": "官方权重",
-      "equal": "八类均等",
+      "equal": "各类均等",
       "standard": "只看标准评判题",
       "design": "只看主动设计题"
     },
@@ -115,5 +115,13 @@
   "foot": "总分 = {n} 个类别按权重相加，类别分是该类各题的平均",
   "empty": {
     "noData": "成绩数据读到后，模型会按总分排在这里。"
+  },
+  "matrix": {
+    "eyebrow": "Score matrix",
+    "title": "成绩矩阵",
+    "q": "每道题谁高谁低",
+    "label": "成绩矩阵：模型 × 13 道题",
+    "hint": "点题号按这道题排序，再点恢复按总分",
+    "exportTitle": "排行总榜 │ 成绩矩阵"
   }
 }

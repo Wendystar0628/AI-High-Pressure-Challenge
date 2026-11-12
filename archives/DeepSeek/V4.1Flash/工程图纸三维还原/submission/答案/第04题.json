@@ -1,0 +1,16 @@
+{
+  "problem": "04",
+  "parts": [
+    {"name": "1", "title": "偏心双级迷宫泵盖", "features": [
+      {"type": "revolve", "plane": "XZ", "axis": "y", "name": "主体回转",
+       "loops": [{"path": [[15,0],[72,0],[72,8],[45,8],[45,22],[34,22],[34,30],[25,30],[25,14],[15,14]]}]},
+      {"type": "revolve", "op": "cut", "plane": "XZ", "axis": "y", "name": "顶面迷宫槽Φ50-58",
+       "loops": [{"rect": [25,30,29,28]}]},
+      {"type": "revolve", "op": "cut", "plane": "XZ", "axis": "y", "name": "台阶迷宫槽Φ66-74",
+       "loops": [{"rect": [33,22,37,20]}]},
+      {"type": "revolve", "op": "cut", "plane": "XZ", "axis": "y", "name": "底面止口Φ66深4",
+       "loops": [{"rect": [15,0,33,4]}]},
+      {"type": "hole", "plane": "XY", "origin": [0,0,30], "at": [[0,60],[42.43,42.43],[60,0],[42.43,-42.43],[0,-60],[-42.43,-42.43],[-60,0],[-42.43,42.43]], "d": 9, "through": true}
+    ]}
+  ]
+}

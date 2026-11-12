@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x910">
+<meta name="size" content="960x968">
 <title>工具与联网规定</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .desc { margin-top: 10px; }
 
-  .grid { display: grid; grid-template-columns: 214px repeat(7, 1fr); margin-top: 18px; }
+  .grid { display: grid; grid-template-columns: 182px repeat(8, 1fr); margin-top: 18px; }
   .grid > div { border-top: 1px solid var(--rule); padding: 10px 4px; }
   .grid .bare { border-top: none; }
 
@@ -44,7 +44,7 @@
   .yes { width: 16px; height: 16px; flex: none; overflow: visible; }
   .no { width: 28px; height: 12px; flex: none; margin-top: 2px; background: var(--hatch); outline: 1px solid var(--ink); outline-offset: -1px; }
   .na { width: 12px; height: 1.5px; flex: none; margin-top: 7px; background: var(--ink-3); }
-  /* A rule for every task: one hatched band across the seven columns. */
+  /* A rule for every task: one hatched band across the task columns. */
   .all { grid-column: 2 / -1; display: flex; align-items: center; padding: 0 8px !important; }
   .all i { flex: 1; height: 12px; background: var(--hatch); outline: 1px solid var(--ink); outline-offset: -1px; }
 
@@ -72,21 +72,23 @@
     <span><i class="no"></i>规定禁止</span>
     <span><i class="na"></i>题面没有写</span>
   </div>
+  <p class="desc foot">攻城略地提交单个 <span class="num">bot.cpp</span>：只用 C++ 标准库和官方 <span class="num">engine.hpp</span>，单线程；不读写文件、不联网、不启动进程，不干扰计时和对手进程。</p>
   <p class="desc foot">所有受测会话都接入同一个浏览器 MCP（无窗口的本机 Chrome，使用显卡），只有网页题的题面提到它。</p>
 </div>
 <script>
 // Facts: each statement's 规定 section, README.md (工具与联网规定) and the previous figure.
 // Columns: task groups; cats give the colour bar and icons.
 const COLS = [
-  { name: '形式化证明题', sub: 'Lean 4', cats: ['reason'] },
+  { name: '形式化<br>证明题', sub: 'Lean 4', cats: ['reason'] },
   { name: '数学竞赛<br>原创试题', sub: '纸面证明', cats: ['reason'] },
-  { name: '极值构造', sub: '1 题', cats: ['algo'] },
-  { name: '性能工程', sub: '2 题', cats: ['algo'] },
-  { name: '鲁班锁拆解', sub: '手工推演', cats: ['spatial'] },
+  { name: '性能<br>工程', sub: '2 题', cats: ['algo'] },
+  { name: '攻城<br>略地', sub: '对战程序', cats: ['battle'] },
+  { name: '鲁班锁<br>拆解', sub: '手工推演', cats: ['spatial'] },
+  { name: '图纸读图<br>建模', sub: '手工推演', cats: ['drawing'] },
   { name: '网页题', sub: '5 题', cats: ['interact', 'game', 'physics', 'visual'] },
-  { name: '操作系统嵌套', sub: '桌面项目', cats: ['system'] },
+  { name: '操作系统<br>嵌套', sub: '桌面项目', cats: ['system'] },
 ];
-const STD = new Set(['reason', 'algo', 'spatial']);
+const STD = new Set(['reason', 'algo', 'battle', 'spatial', 'drawing']);
 const ALL = [
   ['开启子代理或多代理协作', '全程独立作答'],
   ['访问作答目录以外的路径', '必需工具的安装路径和临时目录除外'],
@@ -94,15 +96,15 @@ const ALL = [
 ];
 const ROWS = [
   ['联网、其他 AI、安装软件', '网页搜索与抓取，调用其他模型或服务，下载或安装软件包',
-    [['no'], ['no'], ['no'], ['no'], ['no'], ['no', '只禁访问 GitHub'], ['no', '只禁访问 GitHub']]],
+    [['no'], ['no'], ['no'], ['no'], ['no'], ['no'], ['no', '只禁访问 GitHub'], ['no', '只禁访问 GitHub']]],
   ['编写和运行程序', '',
-    [['yes', 'Lean 编译和<br>本机已装的程序'], ['no', '只靠推理，<br>只写答案和草稿'], ['yes', '本机已装的<br>软件和库'],
-     ['yes', '开发时不限，<br>提交另有规则'], ['no', '只运行题目给的<br>两个工具'], ['yes', '可开本地服务器'], ['yes', '可开本地服务器']]],
+    [['yes', 'Lean 编译和<br>本机程序'], ['no', '只靠推理，<br>只写答案草稿'],
+     ['yes', '开发时不限，<br>提交另有规则'], ['yes', '开发时不限，<br>提交规则见下'], ['no', '只运行题给<br>两个工具'], ['no', '只运行预览，<br>脚本只整理目录'], ['yes', '可开本地<br>服务器'], ['yes', '可开本地<br>服务器']]],
   ['浏览器 MCP', '打开作品、操作、截图',
-    [['na'], ['na'], ['na'], ['na'], ['na'], ['yes', '题面写明'], ['yes', '题面写可用<br>自动化工具']]],
+    [['na'], ['na'], ['na'], ['na'], ['na'], ['na'], ['yes', '题面写明'], ['yes', '题面写可用<br>自动化工具']]],
   ['处理器与显卡', '作答时的分配',
-    [['t', '与并行批共用'], ['t', '与并行批共用'], ['t', '并行批，限 14<br>个逻辑处理器'],
-     ['t', '独占整台机器'], ['t', '与并行批共用'], ['t', '与并行批共用'], ['t', '与并行批共用']]],
+    [['t', '与并行批<br>共用'], ['t', '与并行批<br>共用'],
+     ['t', '两题同时，<br>各占一组处理器'], ['t', '与并行批<br>共用'], ['t', '与并行批<br>共用'], ['t', '与并行批<br>共用'], ['t', '与并行批<br>共用'], ['t', '与并行批<br>共用']]],
 ];
 const grid = document.getElementById('grid');
 const add = html => grid.insertAdjacentHTML('beforeend', html);
@@ -110,8 +112,8 @@ const mark = k => k === 'yes' ? '<svg class="yes"><use href="#yes"/></svg>' : `<
 
 // Kinds over their columns, then the column heads.
 add('<div class="bare" style="grid-row:1"></div>');
-add('<div class="kind" style="grid-column:2 / 7"><h3><i class="k std"></i>标准评判题</h3><i class="br"></i></div>');
-add('<div class="kind" style="grid-column:7 / 9"><h3><span class="star k des"></span>主动设计题</h3><i class="br"></i></div>');
+add('<div class="kind" style="grid-column:2 / 8"><h3><i class="k std"></i>标准评判题</h3><i class="br"></i></div>');
+add('<div class="kind" style="grid-column:8 / 10"><h3><span class="star k des"></span>主动设计题</h3><i class="br"></i></div>');
 add('<div class="bare"></div>');
 COLS.forEach(c => add(`<div class="ch">
   <div class="bar">${c.cats.map(k => `<em class="${STD.has(k) ? 'edge' : ''}" style="background:var(--cat-${k})"></em>`).join('')}</div>

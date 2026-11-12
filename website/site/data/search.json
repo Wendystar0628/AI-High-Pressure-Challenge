@@ -177,19 +177,45 @@
     },
     {
       "type": "model",
-      "id": "gpt-6-2-sol",
-      "name": "GPT 6.2 Sol",
-      "en": "GPT 6.2 Sol",
-      "short": "6.2Sol",
+      "id": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon",
+      "en": "Gemini 4 Carbon",
+      "short": "4Carbon",
       "terms": [
-        "GPT-6.2 Sol",
-        "OpenAI",
-        "Codex",
-        "GPT/6.2Sol"
+        "Gemini Carbon",
+        "Google",
+        "谷歌",
+        "Antigravity CLI",
+        "Gemini/4Carbon"
       ],
-      "py": [],
-      "pyi": [],
-      "href": "/models/gpt-6-2-sol/"
+      "py": [
+        "guge"
+      ],
+      "pyi": [
+        "gg"
+      ],
+      "href": "/models/gemini-4-carbon/"
+    },
+    {
+      "type": "model",
+      "id": "gemini-4-hydrogen",
+      "name": "Gemini 4 Hydrogen",
+      "en": "Gemini 4 Hydrogen",
+      "short": "4Hydrogen",
+      "terms": [
+        "Gemini Hydrogen",
+        "Google",
+        "谷歌",
+        "Antigravity CLI",
+        "Gemini/4Hydrogen"
+      ],
+      "py": [
+        "guge"
+      ],
+      "pyi": [
+        "gg"
+      ],
+      "href": "/models/gemini-4-hydrogen/"
     },
     {
       "type": "task",
@@ -238,60 +264,42 @@
     },
     {
       "type": "task",
-      "id": "unit-square",
-      "name": "单位正方形内最小三角形面积最大化",
-      "en": "Maximizing the Smallest Triangle in a Unit Square",
-      "short": "最小三角形面积",
+      "id": "raytracing",
+      "name": "光线追踪渲染加速",
+      "en": "Ray Tracing Render Acceleration",
+      "short": "光线追踪加速",
       "terms": [
-        "极值构造",
-        "Extremal Construction",
-        "Heilbronn"
-      ],
-      "py": [
-        "danweizhengfangxingneizuixiaosanjiaoxingmianjizuidahua",
-        "zuixiaosanjiaoxingmianji",
-        "jizhigouzao"
-      ],
-      "pyi": [
-        "dwzfxnzxsjxmjzdh",
-        "zxsjxmj",
-        "jzgz"
-      ],
-      "category": "algo",
-      "short_en": "Smallest Triangle",
-      "href": "/tasks/algo/unit-square/"
-    },
-    {
-      "type": "task",
-      "id": "transformer",
-      "name": "Transformer前向推理的GPU加速",
-      "en": "GPU-Accelerated Transformer Inference",
-      "short": "Transformer 加速",
-      "terms": [
-        "Transformer Speedup",
+        "Ray Tracing Speedup",
         "性能工程",
         "Performance Engineering",
-        "CUDA"
+        "CUDA",
+        "光追",
+        "江南园林",
+        "BVH"
       ],
       "py": [
-        "transformerqianxiangtuilidegpujiasu",
-        "transformerjiasu",
-        "xingnenggongcheng"
+        "guangxianzhuizongxuanranjiasu",
+        "guangxianzhuizongjiasu",
+        "xingnenggongcheng",
+        "guangzhui",
+        "jiangnanyuanlin"
       ],
       "pyi": [
-        "transformerqxtldgpujs",
-        "transformerjs",
-        "xngc"
+        "gxzzxrjs",
+        "gxzzjs",
+        "xngc",
+        "gz",
+        "jnyl"
       ],
       "category": "algo",
-      "short_en": "Transformer Speedup",
-      "href": "/tasks/algo/transformer/"
+      "short_en": "Ray Tracing Speedup",
+      "href": "/tasks/algo/raytracing/"
     },
     {
       "type": "task",
       "id": "circuit",
-      "name": "通用数字电路仿真器加速",
-      "en": "Accelerating a General Digital Circuit Simulator",
+      "name": "数字电路仿真器加速",
+      "en": "Digital Circuit Simulator Acceleration",
       "short": "电路仿真加速",
       "terms": [
         "Circuit Speedup",
@@ -301,18 +309,41 @@
         "AVX2"
       ],
       "py": [
-        "tongyongshuzidianlufangzhenqijiasu",
+        "shuzidianlufangzhenqijiasu",
         "dianlufangzhenjiasu",
         "xingnenggongcheng"
       ],
       "pyi": [
-        "tyszdlfzqjs",
+        "szdlfzqjs",
         "dlfzjs",
         "xngc"
       ],
       "category": "algo",
       "short_en": "Circuit Speedup",
       "href": "/tasks/algo/circuit/"
+    },
+    {
+      "type": "task",
+      "id": "conquest",
+      "name": "攻城略地",
+      "en": "Siege & Conquest",
+      "short": "攻城略地",
+      "terms": [
+        "C++",
+        "博弈",
+        "Game AI"
+      ],
+      "py": [
+        "gongchenglvedi",
+        "boyi"
+      ],
+      "pyi": [
+        "gcld",
+        "by"
+      ],
+      "category": "battle",
+      "short_en": "Siege & Conquest",
+      "href": "/tasks/battle/conquest/"
     },
     {
       "type": "task",
@@ -332,6 +363,31 @@
       "category": "spatial",
       "short_en": "Luban Lock",
       "href": "/tasks/spatial/luban/"
+    },
+    {
+      "type": "task",
+      "id": "drawing",
+      "name": "工程图纸三维还原",
+      "en": "Reading Engineering Drawings into 3D Models",
+      "short": "图纸三维还原",
+      "terms": [
+        "Drawing to 3D",
+        "三视图",
+        "CAD"
+      ],
+      "py": [
+        "gongchengtuzhisanweihuanyuan",
+        "tuzhisanweihuanyuan",
+        "sanshitu"
+      ],
+      "pyi": [
+        "gctzswhy",
+        "tzswhy",
+        "sst"
+      ],
+      "category": "drawing",
+      "short_en": "Drawing to 3D",
+      "href": "/tasks/drawing/drawing/"
     },
     {
       "type": "task",
@@ -399,27 +455,6 @@
     },
     {
       "type": "task",
-      "id": "nvidia-b200",
-      "name": "NVIDIA_B200网页艺术",
-      "en": "NVIDIA B200 Web Art",
-      "short": "B200 网页艺术",
-      "terms": [
-        "GPU"
-      ],
-      "py": [
-        "nvidiab200wangyeyishu",
-        "b200wangyeyishu"
-      ],
-      "pyi": [
-        "nvidiab200wyys",
-        "b200wyys"
-      ],
-      "category": "visual",
-      "short_en": "B200 Web Art",
-      "href": "/tasks/visual/nvidia-b200/"
-    },
-    {
-      "type": "task",
       "id": "harbor",
       "name": "太阳雨渔港3D渲染",
       "en": "Sunshower Fishing Harbor in 3D",
@@ -442,6 +477,30 @@
       "category": "visual",
       "short_en": "Sunshower Harbor",
       "href": "/tasks/visual/harbor/"
+    },
+    {
+      "type": "task",
+      "id": "starship",
+      "name": "星际战舰编队",
+      "en": "Interstellar Battle Fleet",
+      "short": "星际战舰",
+      "terms": [
+        "体素",
+        "Voxel"
+      ],
+      "py": [
+        "xingjizhanjianbiandui",
+        "xingjizhanjian",
+        "tisu"
+      ],
+      "pyi": [
+        "xjzjbd",
+        "xjzj",
+        "ts"
+      ],
+      "category": "visual",
+      "short_en": "Battle Fleet",
+      "href": "/tasks/visual/starship/"
     },
     {
       "type": "task",
@@ -482,20 +541,34 @@
     {
       "type": "category",
       "id": "algo",
-      "name": "算法竞赛",
-      "en": "Algorithm Contests",
-      "short": "算法竞赛",
-      "terms": [
-        "Algorithms"
-      ],
+      "name": "性能优化",
+      "en": "Performance Optimization",
+      "short": "性能优化",
+      "terms": [],
       "py": [
-        "suanfajingsai"
+        "xingnengyouhua"
       ],
       "pyi": [
-        "sfjs"
+        "xnyh"
       ],
-      "short_en": "Algorithms",
+      "short_en": "Performance",
       "href": "/categories/#algo"
+    },
+    {
+      "type": "category",
+      "id": "battle",
+      "name": "算法对抗",
+      "en": "Algorithm Battle",
+      "short": "算法对抗",
+      "terms": [],
+      "py": [
+        "suanfaduikang"
+      ],
+      "pyi": [
+        "sfdk"
+      ],
+      "short_en": "Battle",
+      "href": "/categories/#battle"
     },
     {
       "type": "category",
@@ -512,6 +585,22 @@
       ],
       "short_en": "Spatial",
       "href": "/categories/#spatial"
+    },
+    {
+      "type": "category",
+      "id": "drawing",
+      "name": "识图建模",
+      "en": "Drawing Interpretation & Modeling",
+      "short": "识图建模",
+      "terms": [],
+      "py": [
+        "shitujianmo"
+      ],
+      "pyi": [
+        "stjm"
+      ],
+      "short_en": "Drawing",
+      "href": "/categories/#drawing"
     },
     {
       "type": "category",

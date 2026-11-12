@@ -1,0 +1,108 @@
+;; Nest 界面库：构造显示列表节点，并登记可点击区域供程序自己做命中判断。
+;; 显示列表是纯数据，经 (sys "display" 窗口 列表 元信息) 提交给显示设备。
+;; 节点类型：box text icon group input svg view3d surf；坐标相对于父节点。
+
+(def LEVEL-COLORS ["#5eead4" "#a78bfa" "#f5b942" "#34d399" "#f472b6" "#60a5fa" "#fb923c"])
+(var ACCENT "#a78bfa")
+(var DEPTH 2)
+(def C-BG "#141a29") (def C-PANEL "#1a2134") (def C-PANEL2 "#212a41") (def C-LINE "#ffffff17")
+(def C-TEXT "#e7ecf6") (def C-DIM "#97a3ba") (def C-FAINT "#66728a") (def C-DANGER "#f87171") (def C-OK "#4ade80") (def C-WARN "#fbbf24")
+
+(defn ui-init ()
+  (var info (sys "sysinfo"))
+  (set! DEPTH info.depth)
+  (set! ACCENT (nth LEVEL-COLORS (% (- DEPTH 1) (len LEVEL-COLORS))))
+  info)
+
+;; ---- 命中登记 ----
+(var UI-HITS []) (var UI-OX 0) (var UI-OY 0) (var UI-HOVER nil) (var UI-FOCUS nil)
+(defn ui-begin () (set! UI-HITS []) (set! UI-OX 0) (set! UI-OY 0))
+(defn ui-offset (dx dy) (inc! UI-OX dx) (inc! UI-OY dy))
+(defn hit! (id x y w h) (push! UI-HITS [id (+ x UI-OX) (+ y UI-OY) w h]) id)
+(defn ui-hit (px py)
+  (var r nil)
+  (each (h UI-HITS)
+    (when (and (>= px (nth h 1)) (>= py (nth h 2)) (< px (+ (nth h 1) (nth h 3))) (< py (+ (nth h 2) (nth h 4))))
+      (set! r (nth h 0))))
+  r)
+(defn ui-hit-rect (id) (find (fn (h) (= (first h) id)) UI-HITS))
+
+;; ---- 节点 ----
+(defn node (t x y w h o)
+  (var n (or o {}))
+  (put! n "t" t) (put! n "x" x) (put! n "y" y) (put! n "w" w) (put! n "h" h)
+  n)
+(defn box (x y w h o) (node "box" x y w h o))
+(defn text (x y w h s o) (var n (node "text" x y w h o)) (put! n "text" (to-str s)) n)
+(defn icon (x y size name o) (var n (node "icon" x y size size o)) (put! n "name" name) n)
+(defn group (x y w h kids o) (var n (node "group" x y w h o)) (put! n "kids" kids) n)
+(defn surf (x y w h ref o) (var n (node "surf" x y w h o)) (put! n "ref" ref) n)
+
+(defn text-w (s size)
+  ;; 估算文字宽度：中文按 1 个字号宽，其余按 0.56
+  (var w 0) (var n (len s))
+  (for (i 0 n) (if (> (char-code s i) 11904) (inc! w size) (inc! w (* size 0.56))))
+  w)
+
+(defn button (id x y w h label o)
+  (var opt (or o {}))
+  (hit! id x y w h)
+  (var hov (= UI-HOVER id))
+  (var dis (get opt "disabled"))
+  (var bg (cond ((get opt "primary") ACCENT)
+                ((get opt "active") (str ACCENT "38"))
+                ((get opt "danger") (if hov "#f8717155" "#f8717126"))
+                (hov "#ffffff22")
+                (else "#ffffff10")))
+  (var fg (cond (dis C-FAINT) ((get opt "primary") "#0d1220") (else C-TEXT)))
+  (var kids [(box 0 0 w h {:fill bg :r 6 :stroke (if (get opt "active") ACCENT "#ffffff12")})])
+  (var ic (get opt "icon"))
+  (if ic
+    (if (or (nil? label) (= label ""))
+      (push! kids (icon (/ (- w 16) 2) (/ (- h 16) 2) 16 ic {:color fg}))
+      (do (var tw (+ 20 (text-w label 12)))
+          (var sx (max 6 (/ (- w tw) 2)))
+          (push! kids (icon sx (/ (- h 16) 2) 16 ic {:color fg}))
+          (push! kids (text (+ sx 20) 0 (- w sx 22) h label {:size 12 :color fg :valign "middle"}))))
+    (push! kids (text 0 0 w h label {:size 12 :color fg :align "center" :valign "middle"})))
+  (group x y w h kids {:tid (get opt "tid") :label (or (get opt "label") label) :attrs (get opt "attrs")
+                       :cursor (if dis "default" "pointer") :title (get opt "title") :role "button" :disabled dis}))
+
+(defn label (x y w h s o)
+  (var opt (or o {}))
+  (when (nil? (get opt "size")) (put! opt "size" 12))
+  (when (nil? (get opt "color")) (put! opt "color" C-DIM))
+  (when (nil? (get opt "valign")) (put! opt "valign" "middle"))
+  (text x y w h s opt))
+
+(defn field (id x y w h value o)
+  ;; 显示设备提供的文本输入框；编辑结果以 text 事件送回程序
+  (var opt (or o {}))
+  (hit! id x y w h)
+  (var n (node "input" x y w h opt))
+  (put! n "id" id) (put! n "value" (or value ""))
+  (when (nil? (get opt "label")) (put! n "label" id))
+  n)
+
+(defn chip (x y s color)
+  (var w (+ 14 (text-w s 11)))
+  (group x y w 18 [(box 0 0 w 18 {:fill (str color "2e") :r 9 :stroke (str color "66")})
+                   (text 0 0 w 18 s {:size 11 :color color :align "center" :valign "middle" :weight 600})] {}))
+
+(defn panel (x y w h o) (box x y w h (merge {:fill C-PANEL :r 8 :stroke C-LINE} (or o {}))))
+(defn hline (x y w) (box x y w 1 {:fill C-LINE}))
+(defn vline (x y h) (box x y 1 h {:fill C-LINE}))
+
+(defn progress-bar (x y w h frac color)
+  (group x y w h [(box 0 0 w h {:fill "#ffffff12" :r (/ h 2)})
+                  (box 0 0 (max 0 (* w (clamp frac 0 1))) h {:fill (or color ACCENT) :r (/ h 2)})] {}))
+
+;; ---- 文本编辑模型：应用设备送来的增量 ----
+(defn apply-text-edit (old ev)
+  (if (nil? (get ev "ins"))
+    (or (get ev "value") old)
+    (str (substr old 0 ev.from) ev.ins (substr old ev.to))))
+
+;; ---- 事件辅助 ----
+(defn ev-in? (ev x y w h) (and (>= ev.x x) (>= ev.y y) (< ev.x (+ x w)) (< ev.y (+ y h))))
+(defn mods-ctrl? (ev) (and ev.mods ev.mods.ctrl))

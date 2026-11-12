@@ -1,0 +1,435 @@
+/* 导出图片的版式：1920×1080 一张（sheet.js），照 videos/faq/faq.html 和用户确认的效果图。
+   纸色底、白板、墨字，荧光绿和紫为主体色；直角，线宽至少 2px，不发光；彩色字只用在大号粗字上，
+   荧光绿填充加墨边。两种主题下都是浅色版：本块把主题相关的变量钉成 stellar.css 的浅色值，
+   次要墨色用视频的值（效果图的字色）。
+   画布放在屏幕外排版，量好位置后由 sheet-svg.js 转成 SVG 再画成 PNG，屏幕上看不到。 */
+
+.faq-stage {
+  position: fixed;
+  top: 0;
+  left: -12000px;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  pointer-events: none;
+}
+
+.faq-sheet {
+  --st-paper: #f2f1f6;
+  --st-panel: #ffffff;
+  --st-ink: #1a1726;
+  --st-ink-2: #4a465c;
+  --st-rule: #dcdae4;
+  --st-chip: #e7e5ee;
+  --lime-edge: #1a1726;
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 1920px;
+  height: 1080px;
+  padding: 44px 96px 0;
+  overflow: hidden;
+  background: var(--st-paper);
+  color: var(--st-ink);
+  color-scheme: light;
+  font-family: var(--st-font-ui);
+  font-size: 27px;
+  font-weight: 500;
+  font-stretch: 100%;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-kerning: normal;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+.faq-sheet *,
+.faq-sheet *::before,
+.faq-sheet *::after {
+  box-sizing: border-box;
+}
+.faq-sheet :is(h1, h2, h3, p) {
+  margin: 0;
+}
+.faq-sheet a {
+  color: inherit;
+  text-decoration: none;
+}
+/* words joined by ~ in the content, and the tail glued against a lone last character (sheet.js) */
+.faq-sheet .nb {
+  word-break: keep-all;
+}
+.fs-stars {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  pointer-events: none;
+}
+
+/* 页眉：荧光绿 FAQ 块（墨边）+ 眉标，下面题名；右侧页码 */
+.fs-head {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.fs-eb {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.fs-faq {
+  padding: 6px 10px 6px 14px;
+  border: 3px solid var(--st-ink);
+  background: var(--g-500);
+  font-size: 26px;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+.fs-ebt {
+  color: var(--st-ink-2);
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: 125%;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.faq-sheet .fs-title {
+  margin-top: 8px;
+  font-size: 74px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-wrap: nowrap;
+}
+.fs-title strong {
+  padding: 0 0.04em;
+  font-weight: inherit;
+  background: linear-gradient(transparent 58%, var(--g-500) 58%, var(--g-500) 90%, transparent 90%);
+}
+.fs-pager {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 8px;
+  font-size: 64px;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 0.9;
+}
+.fs-pager span {
+  color: var(--st-ink-2);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* 内容区：块自上而下；半宽的板块两栏并排，整宽的板块一行三张 */
+.fs-body {
+  position: relative;
+  margin-top: 18px;
+}
+.fs-block + .fs-block {
+  margin-top: 52px;
+}
+.fs-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+}
+.fs-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.fs-sec + .fs-sec {
+  margin-top: 36px;
+}
+.fs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fs-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.fs-row.is-band {
+  grid-template-columns: minmax(0, 1fr);
+}
+.fs-row + .fs-row {
+  margin-top: 24px;
+}
+
+/* 板块头：墨色整块标签 + 3px 墨线 */
+.fs-sh {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.faq-sheet .fs-sh h2 {
+  padding: 9px 18px 10px;
+  background: var(--st-ink);
+  color: var(--st-panel);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.fs-sh i {
+  flex: 1;
+  height: 3px;
+  background: var(--st-ink);
+}
+
+/* 问答卡：白板直角，2px 细线框 */
+.fs-qa {
+  position: relative;
+  min-width: 0;
+  padding: 14px 24px 16px;
+  border: 2px solid var(--st-rule);
+  background: var(--st-panel);
+}
+.fs-q {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: start;
+}
+.fs-no {
+  justify-self: start;
+  margin-top: 3px;
+  padding: 6px 8px 5px;
+  border: 3px solid var(--st-ink);
+  background: var(--g-500);
+  font-size: 24px;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 1;
+}
+.faq-sheet .fs-q h3 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.28;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.fs-a {
+  margin: 6px 0 0 74px;
+  color: var(--st-ink-2);
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: pretty;
+  line-break: strict;
+  overflow-wrap: anywhere;
+}
+.fs-a :is(strong, b),
+.fs-ask :is(strong, b) {
+  color: var(--st-ink);
+  font-weight: 700;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background: linear-gradient(transparent 52%, var(--g-300) 52%, var(--g-300) 94%, transparent 94%);
+}
+.fs-a code {
+  font-family: var(--st-font-mono);
+  font-size: 0.86em;
+}
+
+/* 题目类别标签：网站的类别色（或题型色），墨边 */
+.fs-tag {
+  display: inline-block;
+  margin: 0 0 12px 74px;
+  padding: 7px 12px 8px;
+  border: 3px solid var(--st-ink);
+  background: var(--tag);
+  color: var(--tag-ink);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+.fs-band-main > .fs-tag {
+  margin-left: 0;
+}
+
+/* 来源网址：参考信息用星光青虚线（小字仍是墨色） */
+.fs-src {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 8px;
+  color: var(--st-ink-2);
+  font-size: 21px;
+}
+.fs-src code {
+  padding-bottom: 1px;
+  border-bottom: 3px dashed var(--c-800);
+  color: var(--st-ink);
+  font-family: var(--st-font-ui);
+  font-size: 21px;
+  font-weight: 600;
+  font-stretch: 100%;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+/* 倍数：墨底荧光绿大字 */
+.fs-ratios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0;
+}
+.fs-ratio {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 8px;
+  padding: 4px 12px 6px;
+  background: var(--st-ink);
+  white-space: nowrap;
+}
+/* not all on one line (a narrow card): three equal blocks, the label over the figure */
+.fs-ratios.is-stacked {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+}
+.fs-ratios.is-stacked .fs-ratio {
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 8px 8px;
+}
+.fs-ratio .k {
+  color: var(--st-on-orbit);
+  font-size: 21px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.fs-ratio .v {
+  color: var(--g-500);
+  font-size: 42px;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 1;
+  white-space: nowrap;
+}
+.fs-ratio .v small {
+  margin: 0 3px;
+  color: var(--st-on-orbit);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* 说明块（没有问题的一条）：整宽时左边大号一句、右边附加块 */
+.fs-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px 48px;
+  align-items: center;
+  min-width: 0;
+  padding: 40px 36px 42px;
+  border: 2px solid var(--st-rule);
+  background: var(--st-panel);
+}
+.fs-band.has-side {
+  grid-template-columns: 700px minmax(0, 1fr);
+}
+.fs-lead {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+.fs-lead :is(strong, b) {
+  font-weight: inherit;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background: linear-gradient(transparent 52%, var(--g-500) 52%, var(--g-500) 94%, transparent 94%);
+}
+.fs-ask {
+  margin-top: 14px;
+  color: var(--st-ink-2);
+  font-size: 27px;
+  font-weight: 500;
+}
+.fs-ask :is(strong, b) {
+  font-weight: 800;
+}
+.fs-ask > * + *,
+.fs-band-side > * + * {
+  margin-top: 14px;
+}
+
+/* 权重条：标准评判题荧光绿 500、主动设计题紫 300，墨框墨缝 */
+.fs-sub {
+  color: var(--st-ink-2);
+  font-size: 27px;
+  font-weight: 500;
+}
+.fs-sub :is(strong, b) {
+  color: var(--st-ink);
+  font-weight: 700;
+}
+.fs-bar {
+  display: flex;
+  height: 96px;
+  margin-top: 14px;
+  border: 3px solid var(--st-ink);
+}
+.fs-bar > div {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 24px;
+  color: var(--st-on-flare);
+}
+.fs-bar > div + div {
+  border-left: 3px solid var(--st-ink);
+}
+.fs-bar .is-standard {
+  background: var(--kind-standard);
+}
+.fs-bar .is-design {
+  background: var(--kind-design);
+}
+.fs-bar .nm {
+  min-width: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+.fs-bar .pct {
+  font-size: 56px;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.fs-foot {
+  position: absolute;
+  right: 96px;
+  bottom: 24px;
+  left: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--st-ink-2);
+  font-size: 21px;
+  font-weight: 600;
+}
+.fs-foot-r {
+  font-stretch: 125%;
+  letter-spacing: 0.14em;
+}

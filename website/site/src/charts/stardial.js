@@ -1,10 +1,10 @@
-// 八项星盘 — the octathlon star dial (README 变体卡, home.md 首屏右栏, models.md 星盘).
+// 十项星盘 — the decathlon star dial (README 变体卡, home.md 首屏右栏, models.md 星盘).
 //
 // From the centre out: the violet disc (current model and its total) → the
-// star zone (disc edge = 0, outer edge = 100) → 8 category plates (angle =
+// star zone (disc edge = 0, outer edge = 100) → 10 category plates (angle =
 // weight × 3.6°, clockwise from 12 o'clock; standard tasks on lime 100,
 // design tasks on violet 100, an ink line between the groups) → the outer
-// tick ring (one tick per 1% weight). Each of the 12 tasks is a four-point
+// tick ring (one tick per 1% weight). Each of the 13 tasks is a four-point
 // star inside its category's sector: distance from the centre = the model's
 // score, area ∝ the task's weight; flare when the model is first on it. The
 // stars are joined clockwise by a violet constellation line, broken before
@@ -17,7 +17,7 @@
 //   dial.svg                         // for exportChart()
 //   dial.destroy()
 //
-// 盘内小字（「标准评判 40%」、权重、刻度数、未出分、紫盘标签）按渲染尺寸放大，
+// 盘内小字（「标准评判 50%」、权重、刻度数、未出分、紫盘标签）按渲染尺寸放大，
 // 渲染出来不小于技能字号阶的最小一级 11px（visual.md 五「字号」）；扇区名和权重
 // 的两条弧跟着字号拉开，放不下的扇区名换简称。容器变宽变窄时重排。
 // 点星去题目页时，紫盘标签作为名字接力的起点（motion.js relayGhost）。
@@ -131,7 +131,7 @@ export function createStarDial(target, opts) {
   for (const v of [25, 50, 75, 100]) gZone.append('circle').attr('class', 'sd-scale').attr('cx', C).attr('cy', C).attr('r', rOf(v));
   for (const v of [25, 50, 75, 100]) gZone.append('text').attr('class', 'sd-scale-label').attr('x', C).attr('y', C - rOf(v)).attr('dominant-baseline', 'central').attr('text-anchor', 'middle').text(v);
 
-  // group brackets inside the plates: 标准评判 40% / 主动设计 60%
+  // group brackets inside the plates: 标准评判 50% / 主动设计 50%
   const gGroups = svg.append('g').attr('class', 'sd-groups').attr('aria-hidden', 'true');
   const groupArcs = []; // { a0, a1, mid, arc, label }: the arc leaves a gap for its label (layoutText)
   for (const kind of ['standard', 'design']) {

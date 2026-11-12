@@ -7,9 +7,9 @@
     "start": "electron ."
   },
   "dependencies": {
+    "electron": "45.2.1",
     "three": "0.160.0"
   },
-  "devDependencies": {
-    "electron": "45.2.1"
-  }
+  "author": "",
+  "license": "MIT"
 }

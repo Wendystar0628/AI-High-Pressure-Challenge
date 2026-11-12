@@ -1,4 +1,4 @@
-// The two bar charts of the model page (models.md 8 类与 12 题): one row per
+// The two bar charts of the model page (models.md 10 类与 13 题): one row per
 // category (or per task, grouped by category), all on one fixed 0–100 scale.
 // Row: [no] name │ weight │ bar of this model │ cyan tick at the field best │
 // score │ rank "1 / 7". When this model is the best, a flare star ends the bar

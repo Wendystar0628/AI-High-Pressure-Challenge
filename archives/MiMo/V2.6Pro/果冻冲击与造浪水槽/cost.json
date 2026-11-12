@@ -1,0 +1,18 @@
+{
+  "model": "MiMo/V2.6Pro",
+  "task": "果冻冲击与造浪水槽",
+  "tokens": 26512171,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.59,
+  "api_usd": 0.54,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "MiMo API"
+  },
+  "fitted": [],
+  "runs": [
+    "MiMo/V2.6Pro/果冻冲击与造浪水槽/run-3d2043da14f348688960ca5782ec4dc6"
+  ]
+}

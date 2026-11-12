@@ -1,0 +1,13 @@
+﻿import { NestedOS } from '../src/core/os.js';
+const os = new NestedOS();
+await os.init({}, null);
+await os.start();
+const child = os.createChildSystem('outer');
+await new Promise(r=>setTimeout(r,500));
+console.log('boot state', child.state, 'clock', child.clock.toFixed(2), 'err', child.kernelError);
+const p = os.spawnProgram(child.id, '/Programs/消息联调.prog', '联调');
+await new Promise(r=>setTimeout(r,1800));
+console.log('output', p.output);
+console.log('procs', child.processes.map(x=>[x.pid,x.name,x.state,x.cpu]));
+console.log('status of recv', child.processes.find(x=>x.name==='message-receiver')?.output);
+os.stopTicking(); process.exit(0);

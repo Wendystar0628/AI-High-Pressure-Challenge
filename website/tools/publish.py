@@ -2,6 +2,7 @@
 
     python website/tools/publish.py              export + build + push to GitHub Pages
     python website/tools/publish.py --no-upload  export + build only, to check a build locally
+While website/tools/site.json has "hold": true, every run (manual or the automatic one after grading) only builds.
 
 The scheduler runs it on its own when a model's grading has ended (orchestrator/site_publish.py); run it by hand
 after scores are edited or the site code changes. Where it publishes is set only in website/tools/publish.json.
@@ -21,10 +22,19 @@ SITE = TOOLS.parent / 'site'
 DIST = SITE / 'dist'
 REPO = TOOLS.parent.parent
 CONFIG = TOOLS / 'publish.json'
+SITE_CONFIG = TOOLS / 'site.json'
 
 
 def config():
     return json.loads(CONFIG.read_text(encoding='utf-8'))
+
+
+def held():
+    """site.json "hold": true pauses every push (manual or automatic): publish only builds until the user lifts it."""
+    try:
+        return bool(json.loads(SITE_CONFIG.read_text(encoding='utf-8')).get('hold'))
+    except FileNotFoundError:
+        return False
 
 
 def run(cmd, cwd=None):
@@ -33,6 +43,12 @@ def run(cmd, cwd=None):
 
 
 def build():
+    sys.path.insert(0, str(REPO / 'orchestrator'))
+    import usage
+    if usage.ledger_only():
+        print('本地核账模式：只读用量台账和已保存请求，跳过会话采集与台账写入。', flush=True)
+    else:
+        usage.collect()
     run([sys.executable, TOOLS / 'export_data.py'])
     npm = shutil.which('npm') or 'npm'
     if not (SITE / 'node_modules').is_dir():
@@ -83,6 +99,9 @@ def main():
     print('\n'.join(summary()), flush=True)
     if '--no-upload' in sys.argv:
         print('按 --no-upload 只构建，没有推送。', flush=True)
+        return
+    if held():
+        print('site.json 的 hold 打开：推送暂停，只构建，没有推送。', flush=True)
         return
     deploy(config())
 

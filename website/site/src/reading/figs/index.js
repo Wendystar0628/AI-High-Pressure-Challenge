@@ -3,7 +3,7 @@
 //   parent.append(fig.el); fig.arm();
 import './figs.css';
 import { heroFigure, howtoFigure, weightsFigure } from './overview.js';
-import { reasonFigure, algoFigure, spatialFigure } from './standard.js';
+import { reasonFigure, algoFigure, battleFigure, spatialFigure, drawingFigure } from './standard.js';
 import { pointsFigure } from './points.js';
 import { timelineFigure, isolationFigure, scheduleFigure, rulesFigure } from './format.js';
 import { pipelineFigure, typesFigure, designscoreFigure } from './scoring.js';
@@ -11,7 +11,7 @@ import { pipelineFigure, typesFigure, designscoreFigure } from './scoring.js';
 export { ORDER, figNo } from './common.js';
 export { dirStats } from './points.js';
 
-const STANDARD = { reason: reasonFigure, algo: algoFigure, spatial: spatialFigure };
+const STANDARD = { reason: reasonFigure, algo: algoFigure, battle: battleFigure, spatial: spatialFigure, drawing: drawingFigure };
 
 /** The figure for a category on the about page / a task page (its category figure or its points bar). */
 export function categoryFigure(ctx, category, opts = {}) {

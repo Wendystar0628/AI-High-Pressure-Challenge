@@ -49,14 +49,15 @@ export function parseWeights(data, raw) {
 /** Slider values -> "15,15,10,…" for the address. */
 export const formatWeights = (data, sliders) => data.categories.map((c) => String(+(+sliders[c.key]).toFixed(1))).join(',');
 
-/** The presets of the sandbox, as slider values. */
+/** The presets of the sandbox, as slider values. "All equal" is left out while the official weights are already equal. */
 export function presets(data) {
   const off = officialWeights(data);
   const eq = Math.min(SLIDER.max, 100 / data.categories.length);
+  const equal = Object.fromEntries(data.categories.map((c) => [c.key, clampSlider(eq)]));
   const only = (kind) => Object.fromEntries(data.categories.map((c) => [c.key, c.kind === kind ? off[c.key] : 0]));
   return [
     { key: 'official', sliders: { ...off } },
-    { key: 'equal', sliders: Object.fromEntries(data.categories.map((c) => [c.key, clampSlider(eq)])) },
+    ...(isOfficial(data, equal) ? [] : [{ key: 'equal', sliders: equal }]),
     { key: 'standard', sliders: only('standard') },
     { key: 'design', sliders: only('design') },
   ];

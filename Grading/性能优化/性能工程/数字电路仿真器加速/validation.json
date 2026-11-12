@@ -1,0 +1,40 @@
+{
+  "inputs": [
+    {
+      "case": "input_01",
+      "family": "深链"
+    },
+    {
+      "case": "input_02",
+      "family": "深链"
+    },
+    {
+      "case": "input_03",
+      "family": "深链"
+    },
+    {
+      "case": "input_04",
+      "family": "阵列乘法器"
+    },
+    {
+      "case": "input_05",
+      "family": "阵列乘法器"
+    },
+    {
+      "case": "input_06",
+      "family": "阵列乘法器"
+    },
+    {
+      "case": "input_07",
+      "family": "寄存器堆"
+    },
+    {
+      "case": "input_08",
+      "family": "寄存器堆"
+    },
+    {
+      "case": "input_09",
+      "family": "寄存器堆"
+    }
+  ]
+}

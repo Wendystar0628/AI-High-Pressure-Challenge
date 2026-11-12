@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x1044">
+<title>算法对抗：攻城略地</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .desc { margin-top: 10px; }
+  .title .icon { width: 26px; height: 26px; vertical-align: -4px; margin-right: 10px; }
+  code { font-family: Consolas, 'Cascadia Mono', monospace; font-size: 12.5px; color: var(--ink); }
+
+  /* One band per topic under an ink rule. */
+  .band { border-top: 1px solid var(--ink); margin-top: 22px; padding-top: 12px; }
+  .bh { display: flex; align-items: baseline; column-gap: 12px; }
+  .bh h3 { font-size: 17px; }
+  .bh p { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); }
+
+  /* The game: numbered rule lines on the left, the hand-in facts on the right. */
+  .two { display: grid; grid-template-columns: 1fr 300px; column-gap: 48px; margin-top: 10px; }
+  .rules { border-top: 1px solid var(--rule); }
+  .r { display: grid; grid-template-columns: 34px 1fr; padding: 7px 0 8px; border-bottom: 1px solid var(--rule); }
+  .r .no { line-height: 20px; }
+  .r b { font-size: 14px; font-weight: 700; line-height: 20px; }
+  .r span { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-left: 8px; }
+  .kv { border-top: 1px solid var(--rule); }
+  .kv div { display: grid; grid-template-columns: 74px 1fr; padding: 7px 0 8px; border-bottom: 1px solid var(--rule); }
+  .kv .k { font-size: 13px; color: var(--ink-2); line-height: 20px; }
+  .kv .v { font-family: var(--font-text); font-size: 13.5px; line-height: 20px; }
+  .kv .v .num { font-family: var(--font-ui); font-weight: 700; }
+
+  /* The 480 games: one row per tier, a cell per game; the tier's game points (out of 96) on the right, small. */
+  .tiers { margin-top: 12px; }
+  .tier { display: grid; grid-template-columns: 150px 1fr 150px; align-items: center; column-gap: 14px; padding: 6px 0; border-top: 1px solid var(--rule); }
+  .tier:first-child { border-top: none; }
+  .tier .nm b { display: block; font-size: 14px; font-weight: 700; line-height: 20px; }
+  .tier .nm span { display: block; font-family: var(--font-text); font-size: 12px; line-height: 16px; color: var(--ink-2); white-space: nowrap; }
+  .cells { display: flex; column-gap: 1px; }
+  .cells .map { display: flex; flex-direction: column; row-gap: 1px; }
+  .cells .map + .map { margin-left: 2px; }
+  .cells i { display: block; width: 8px; height: 10px; }
+  .w { background: var(--cat-battle); box-shadow: inset 0 0 0 1px var(--ink); }
+  .d { background: var(--lime-100); box-shadow: inset 0 0 0 1px var(--ink); }
+  .l { background: var(--chip); }
+  .tier .res { text-align: right; white-space: nowrap; }
+  .tier .res .a { display: block; font-size: 12px; line-height: 16px; color: var(--ink-2); }
+  .tier .res .p { display: block; font-size: 14px; font-weight: 600; line-height: 20px; color: var(--ink); }
+  .tier .res .p small { font-size: 12px; font-weight: 400; color: var(--ink-2); }
+
+  /* The last step: 480 games -> rating r -> task score on the anchors R1 − 200, R1–R5 and R5 + 200. */
+  .final { border-top: 1px solid var(--ink); margin-top: 6px; padding-top: 14px; }
+  .final .f { font-size: 15px; font-weight: 700; line-height: 22px; }
+  .flow { display: grid; grid-template-columns: 170px 1fr 250px; column-gap: 24px; align-items: end; margin-top: 12px; }
+  .stat .stat { display: block; margin-top: 8px; }
+  .stat .k { display: block; font-size: 12px; line-height: 16px; color: var(--ink-2); }
+  .stat .v { display: block; font-size: 20px; font-weight: 700; line-height: 28px; white-space: nowrap; }
+  .stat .v small { font-size: 13px; font-weight: 400; color: var(--ink-2); }
+  .axis { position: relative; height: 70px; }
+  .axis .seg { position: absolute; top: 22px; height: 16px; background: var(--chip); }
+  .axis .fill { position: absolute; top: 22px; height: 16px; background: var(--cat-battle); box-shadow: inset 0 0 0 1px var(--ink); }
+  .axis .tk { position: absolute; top: 18px; width: 1px; height: 24px; background: var(--ink); }
+  .axis .rl, .axis .pl { position: absolute; transform: translateX(-50%); font-size: 12px; line-height: 16px; white-space: nowrap; }
+  .axis .rl { top: 0; color: var(--ink-2); }
+  .axis .pl { top: 46px; font-weight: 700; }
+  .axis .r { position: absolute; top: 12px; width: 2px; height: 36px; background: var(--ink); }
+  .axis .rn { position: absolute; top: -1px; font-size: 13px; font-weight: 700; }
+  .final .solid { height: 52px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; column-gap: 12px; font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .final .solid .num { font-size: 26px; color: var(--lime); }
+  .note { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 12px; }
+  .note b { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Algorithm Battle</span><h2 class="title"><img class="icon" src="../../icon-battle.svg" alt="">算法对抗：攻城略地</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">用 C++ 写一个双人对战程序，与五档固定对手在 96 张隐藏地图上各打一局、轮换座位，按胜负估出的实力值计分：和最强一档相当得 80 分，比它高 200 实力值才满分。</p>
+
+  <section class="band">
+    <div class="bh"><span class="eyebrow slash">The Game</span><h3>对局规则</h3><p>双方同时行动，结算代码随题给出</p></div>
+    <div class="two">
+      <div class="rules">
+        <div class="r"><span class="no field">01</span><div><b>节点</b><span>16–24 个节点，中心对称；双方各占一个起始节点，其余中立</span></div></div>
+        <div class="r"><span class="no field">02</span><div><b>派兵</b><span>每回合双方同时下命令，从己方节点向任意节点派兵；路程是两点距离向上取整</span></div></div>
+        <div class="r"><span class="no field">03</span><div><b>增长</b><span>己方节点每回合按增长率加兵，中立节点不增长</span></div></div>
+        <div class="r"><span class="no field">04</span><div><b>到达</b><span>部队到达后按归属合计，兵力最多的一方占有节点，剩下最多减第二多</span></div></div>
+        <div class="r"><span class="no field">05</span><div><b>胜负</b><span>一方没有节点也没有在途部队即被消灭；200 回合后比总兵力</span></div></div>
+      </div>
+      <div class="kv">
+        <div><span class="k">交付</span><span class="v"><code>bot.cpp</code>，实现 <code>decide()</code></span></div>
+        <div><span class="k">限时</span><span class="v"><span class="num">60</span> 分钟</span></div>
+        <div><span class="k">权重</span><span class="v"><span class="num">10%</span>，本类唯一一题</span></div>
+        <div><span class="k">每回合</span><span class="v">CPU 时间 <span class="num">50</span> ms，第 1 回合 <span class="num">1</span> 秒</span></div>
+        <div><span class="k">程序</span><span class="v">单线程，只用 C++ 标准库和 <code>engine.hpp</code></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="bh"><span class="eyebrow slash">480 Games</span><h3>480 局怎样计分</h3><p>5 档 × 96 张地图，每图一局、按地图顺序轮换座位；胜 1、平 0.5、负 0，由全部胜负估出实力值</p></div>
+    <div class="tiers" id="tiers"></div>
+    <div class="final">
+      <span class="f">实力值 r：使 480 局的预期总分 Σ 1 / (1 + 10<sup>(R − r)/400</sup>) 等于实际总分；r = R<sub>1</sub> − 200 得 0 分，R<sub>1</sub>…R<sub>5</sub> 得 10、20、40、60、80 分，R<sub>5</sub> + 200 得 100 分，其间线性插值</span>
+      <div class="flow">
+        <div class="stat" id="games"></div>
+        <div class="axis" id="axis"></div>
+        <div class="solid" id="total"></div>
+      </div>
+    </div>
+    <p class="note"><span class="legend" style="display:inline-flex;column-gap:14px;margin-right:12px;vertical-align:-1px"><span><i class="w" style="display:inline-block;width:8px;height:10px;margin-right:5px"></i>胜</span><span><i class="d" style="display:inline-block;width:8px;height:10px;margin-right:5px"></i>平</span><span><i class="l" style="display:inline-block;width:8px;height:10px;margin-right:5px"></i>负</span></span>每格一局，每列上下两格是相邻的两张地图：上格奇数张图（你的程序为甲方），下格偶数张图（为乙方）；对局结果和 R<sub>1</sub>–R<sub>5</sub> 都是示例（示例取相邻两档相差 300）。真实的 R<sub>1</sub>–R<sub>5</sub> 由五档基线在同样的 96 张地图上两两循环对打、用 Bradley–Terry 拟合后冻结；r 限制在 R<sub>1</sub> − 200 到 R<sub>5</sub> + 200，和第 5 档相当得 80 分，比它高 200 才满分。<b>判负</b>：崩溃、异常退出、一回合 5 秒内没交出命令或连续 3 回合超时的那一局；<b>记 0 分</b>：编译失败或违反题面规则。</p>
+  </section>
+</div>
+
+<script>
+// Facts from 算法对抗/攻城略地.md (sections 七、十一). Game results and the tier ratings R are an illustration only.
+// 96 maps, one game per map against each tier; a column holds two neighbouring maps: the odd map on top (the bot as
+// player A), the even map below (player B).
+const N = 96, MAPS = N / 2;
+const R = [0, 300, 600, 900, 1200];
+const ANCHORS = [R[0] - 200, ...R, R[4] + 200], PTS = [0, 10, 20, 40, 60, 80, 100];
+const TIERS = [
+  { name: '第 1 档', sub: '实力值 R₁ 对应 10 分', wins: 92, draws: 1 },
+  { name: '第 2 档', sub: '实力值 R₂ 对应 20 分', wins: 81, draws: 2 },
+  { name: '第 3 档', sub: '实力值 R₃ 对应 40 分', wins: 61, draws: 4 },
+  { name: '第 4 档', sub: '实力值 R₄ 对应 60 分', wins: 35, draws: 4 },
+  { name: '第 5 档', sub: '实力值 R₅ 对应 80 分', wins: 17, draws: 3 },
+];
+// Spread wins, draws and losses over the 96 games with a seeded shuffle so the pattern looks mixed but stays reproducible.
+function results(t) {
+  const r = Array(N).fill('l'), order = Array.from({ length: N }, (_, i) => i);
+  let seed = 7;
+  for (let i = N - 1; i > 0; i--) { seed = (seed * 16807) % 2147483647; const j = seed % (i + 1); [order[i], order[j]] = [order[j], order[i]]; }
+  order.slice(0, t.wins).forEach(i => r[i] = 'w');
+  order.slice(t.wins, t.wins + t.draws).forEach(i => r[i] = 'd');
+  return r;
+}
+let total = 0;
+document.getElementById('tiers').innerHTML = TIERS.map(t => {
+  const r = results(t), s = t.wins + .5 * t.draws;
+  total += s;
+  let maps = '';
+  for (let m = 0; m < MAPS; m++) maps += `<span class="map"><i class="${r[2 * m]}"></i><i class="${r[2 * m + 1]}"></i></span>`;
+  return `<div class="tier"><div class="nm"><b>${t.name}</b><span>${t.sub}</span></div>
+    <div class="cells">${maps}</div>
+    <div class="res"><span class="a">${t.wins} 胜 ${t.draws} 平 ${N - t.wins - t.draws} 负</span><span class="p num">${s.toFixed(1)} <small>/ ${N} 局分</small></span></div></div>`;
+}).join('');
+
+// Maximum likelihood: the r at which the expected total over all 480 games equals the actual total (bisection),
+// clamped to [R1 - 200, R5 + 200]; then linear between the anchors (R1 - 200 scores 0, R5 + 200 scores 100).
+const expected = r => R.reduce((a, Rk) => a + N / (1 + Math.pow(10, (Rk - r) / 400)), 0);
+let lo = ANCHORS[0], hi = ANCHORS[6];
+for (let i = 0; i < 80; i++) { const mid = (lo + hi) / 2; if (expected(mid) < total) lo = mid; else hi = mid; }
+const r = (lo + hi) / 2;
+let k = 0;
+while (k < ANCHORS.length - 2 && r >= ANCHORS[k + 1]) k++;
+const score = PTS[k] + (PTS[k + 1] - PTS[k]) * (r - ANCHORS[k]) / (ANCHORS[k + 1] - ANCHORS[k]);
+const t = R.reduce((a, v, i) => (r >= v ? i : a), -1); // the highest tier at or below r, -1 below R1
+const rText = t < 0 ? `R<sub style="font-size:12px">1</sub> − ${Math.round(R[0] - r)}` : `R<sub style="font-size:12px">${t + 1}</sub> + ${Math.round(r - R[t])}`;
+document.getElementById('games').innerHTML =
+  `<span class="stat"><span class="k">480 局合计</span><span class="v num">${total.toFixed(1)} <small>/ ${5 * N}</small></span></span>` +
+  `<span class="stat"><span class="k">估出的实力值</span><span class="v num">r = ${rText}</span></span>`;
+// The rating axis R1 - 200, R1..R5 and R5 + 200 (to scale, as in the example), filled up to r.
+const span = ANCHORS[6] - ANCHORS[0];
+const A = document.getElementById('axis'), Wd = A.getBoundingClientRect().width, pad = 30;
+const xOf = v => pad + (v - ANCHORS[0]) / span * (Wd - 2 * pad);
+let html = `<span class="seg" style="left:${pad}px;width:${Wd - 2 * pad}px"></span><span class="fill" style="left:${pad}px;width:${xOf(r) - pad}px"></span>`;
+ANCHORS.forEach((v, i) => {
+  const label = i === 0 ? 'R<sub>1</sub> − 200' : i < 6 ? `R<sub>${i}</sub>` : 'R<sub>5</sub> + 200';
+  html += `<span class="tk" style="left:${xOf(v)}px"></span><span class="rl" style="left:${xOf(v)}px">${label}</span><span class="pl num" style="left:${xOf(v)}px">${PTS[i]}</span>`;
+});
+html += `<span class="r" style="left:${xOf(r) - 1}px"></span><span class="rn" style="left:${xOf(r) + 6}px">r</span>`;
+A.innerHTML = html;
+document.getElementById('total').innerHTML = `本题得分（示例） <span class="num">${score.toFixed(1)}</span>`;
+</script>
+</body>
+</html>

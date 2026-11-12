@@ -1,0 +1,18 @@
+{
+  "problem": "12",
+  "parts": [
+    {"name": "1", "title": "偏轴阶梯双腔泵座", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,140,100], "r": 2}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-90,0],
+       "loops": [{"path": [[10,8],[130,8],[130,34],[100,74],[40,74],[10,34]]}], "name": "泵座主体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [28,16,108,84]}], "depth": [8,44], "name": "内腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [70,34], "d": 76}], "depth": [0,10], "name": "前法兰Φ76"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [70,34], "d": 45}], "depth": [0,10], "name": "法兰沉孔Φ45"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[70,34]], "d": 30, "through": true, "name": "中心孔Φ30"},
+      {"type": "hole", "plane": "YZ", "origin": [140,0,0], "at": [[50,30]], "d": 20, "depth": 30, "name": "右侧孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,58], "at": [[55,50],[85,50]], "d": 14, "depth": 40, "name": "顶孔Φ14"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[130,10],[10,90],[130,90]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,0], "at": [[10,50],[130,50]], "d": 13, "depth": 8, "reverse": true, "name": "底面锪孔"}
+    ]}
+  ]
+}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="size" content="960x850">
+<title>识图建模判法</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .desc { margin-top: 10px; }
+  .title .icon { width: 26px; height: 26px; vertical-align: -4px; margin-right: 10px; }
+  code { font-family: Consolas, 'Cascadia Mono', monospace; font-size: 12.5px; color: var(--ink); }
+
+  /* Two columns under one ink rule, then a second band for the tiers and the tools. */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-top: 1px solid var(--ink); }
+  .cols.top { margin-top: 10px; }
+  .part { display: flex; align-items: baseline; column-gap: 12px; margin-top: 22px; padding-bottom: 8px; }
+  .part h3 { font-size: 19px; }
+  .cols.bottom { margin-top: 26px; }
+  .part.second { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--ink); }
+  .ch { display: flex; align-items: flex-end; justify-content: space-between; padding-top: 12px; }
+  .ch .l { display: flex; flex-direction: column; row-gap: 2px; }
+  .ch h3 { font-size: 17px; }
+  .ch .fig { font-size: 26px; color: var(--violet); }
+  .ch .fig.f { font-size: 21px; }
+  .rule { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 8px; min-height: 40px; }
+  .sh { display: flex; align-items: baseline; column-gap: 10px; padding-top: 12px; }
+  .sh h3 { font-size: 15px; }
+  .note { font-family: var(--font-text); font-size: 13px; line-height: 20px; color: var(--ink-2); margin-top: 10px; }
+
+  /* Validity: three checks as a numbered list, then condition -> result leads. */
+  .gates { margin-top: 12px; border-top: 1px solid var(--rule); }
+  .gate { display: grid; grid-template-columns: 34px 1fr; padding: 8px 0 9px; border-bottom: 1px solid var(--rule); }
+  .gate .no { line-height: 21px; }
+  .gate b { display: block; font-size: 14.5px; font-weight: 700; line-height: 21px; }
+  .gate span { display: block; font-family: var(--font-text); font-size: 13px; line-height: 19px; color: var(--ink-2); }
+  .outs { display: grid; grid-template-columns: auto auto 1fr; align-items: center; row-gap: 8px; margin-top: 14px; }
+  .outs .lab { font-family: var(--font-text); font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+  .lead1 { position: relative; width: 44px; height: 9px; margin: 0 4px 0 12px; }
+  .lead1::before { content: ''; position: absolute; left: 0; right: 4px; top: 4px; height: 1px; background: var(--ink); }
+  .lead1 .star { position: absolute; right: -4px; top: 0; width: 9px; height: 9px; color: var(--ink); }
+  .box { justify-self: start; min-width: 58px; height: 38px; padding: 0 14px; display: flex; align-items: center; justify-content: center;
+         font-size: 15px; font-weight: 700; margin-left: 4px; }
+  .box.c-track { color: var(--ink-2); font-size: 20px; }
+
+  /* Tools: one row per verdict, one line per tool. */
+  .trows { margin-top: 8px; }
+  .trow { display: grid; grid-template-columns: 74px 1fr; padding: 7px 0; border-top: 1px solid var(--rule); }
+  .trow .k { display: flex; align-items: center; column-gap: 7px; height: 22px; font-size: 13px; color: var(--ink-2); }
+  .trow .k i { width: 14px; height: 10px; }
+  .trow .v div { font-family: var(--font-text); font-size: 13.5px; line-height: 22px; }
+  .trows + .note { border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 0; }
+
+  svg { display: block; overflow: visible; }
+  svg text { font-family: var(--font-ui); fill: var(--ink); }
+  svg .tk { font-size: 12px; fill: var(--ink-2); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+  svg .lb { font-family: var(--font-text); font-size: 12.5px; fill: var(--ink-2); }
+  svg .cl { font-size: 13px; font-weight: 600; }
+  svg .nb { font-size: 12px; font-weight: 700; font-stretch: 112%; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <header class="head">
+    <div class="pair"><span class="eyebrow slash">Drawing Interpretation &amp; Modeling</span><h2 class="title"><img class="icon" src="../../icon-drawing.svg" alt="">识图建模：读懂图纸，还原实体</h2></div>
+    <i class="lead"></i>
+  </header>
+  <p class="desc">先核对工具使用，再把建模描述生成实体，按与原设计零件的表面吻合度计分；接受任何合法的写法。</p>
+
+  <div class="part"><span class="eyebrow slash">Drawing to Model</span><h3>工程图纸三维还原</h3><span class="field">25 套图纸，三档分值</span></div>
+  <div class="cols top">
+    <section>
+      <div class="ch">
+        <div class="l"><span class="eyebrow slash">Read the Drawings</span><h3>读图写出零件</h3></div>
+        <span class="fig">25<span class="unit">套图纸</span></span>
+      </div>
+      <p class="rule">每个零件按自己零件图的坐标系，用一串特征写出形状；<br>装配题用 <code>placement</code> 定位，最多 26 件。</p>
+      <div class="gates">
+        <div class="gate"><span class="no field">01</span><div><b>只读图、手工推演</b><span>形状看 PNG，尺寸按编号查 JSON 目录；预览只给两张轴测着色图</span></div></div>
+        <div class="gate"><span class="no field">02</span><div><b>描述生成实体</b><span>逐个特征生成；某个特征失败，这个零件按失败前的实体比较</span></div></div>
+        <div class="gate"><span class="no field">03</span><div><b>与原设计零件比表面</b><span>P 按作答表面积，R 对参考面等权；两档共用一次平移，不旋转</span></div></div>
+      </div>
+      <div class="outs">
+        <span class="lab">生成出实体</span><i class="lead1"><span class="star"></span></i><span class="box solid">按吻合度计分</span>
+        <span class="lab">缺文件或生成不出实体</span><i class="lead1"><span class="star"></span></i><span class="box c-track num">0</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="ch">
+        <div class="l"><span class="eyebrow slash">Surface Match</span><h3>吻合越多，得分越高</h3></div>
+        <span class="fig f" style="font-size:16px;white-space:nowrap">w × min(1, F综合 ÷ 0.99)</span>
+      </div>
+      <p class="rule">0.2 毫米和 2 毫米两档各求 F，按 0.8 / 0.2 合成；<br>0.2 毫米档求平移，2 毫米档沿用，满分线 0.99。</p>
+      <svg id="curve2" width="416" height="282"></svg>
+    </section>
+  </div>
+
+  <div class="cols bottom">
+    <section>
+      <div class="sh"><span class="eyebrow slash">Tiers</span><h3>三档分值</h3><span class="field">题号从易到难，合计 100 分</span></div>
+      <svg id="tiers2" width="416" height="86"></svg>
+      <p class="note">每题提交一份 JSON 建模描述：零件按明细栏序号写成一串特征（草图拉伸、旋转、加料、除料、打孔、倒圆、倒角、阵列、镜像）；装配题另写各零件的位置和朝向。</p>
+    </section>
+    <section>
+      <div class="sh"><span class="eyebrow slash">Tools</span><h3>作答时能用的工具</h3></div>
+      <div class="trows">
+        <div class="trow"><span class="k"><i class="c-ink"></i>可以</span><div class="v"><div>看 PNG 读形状；用脚本显示、整理尺寸目录</div><div>预览工具 <code>preview.py</code>，一次可以预览多题</div></div></div>
+        <div class="trow"><span class="k"><i class="c-hatch"></i>不可以</span><div class="v"><div>用程序算尺寸、推导几何、重建或比对形状</div><div>CAD 软件、几何内核或其他建模工具</div><div>改动题目工具</div></div></div>
+      </div>
+      <p class="note">违反工具规定的作答记 0 分：评分员先读会话记录，再比较形状。</p>
+    </section>
+  </div>
+
+</div>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+};
+const txt = (parent, x, y, cls, s, anchor = 'start') => {
+  const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent);
+  t.innerHTML = s;
+  return t;
+};
+const line = (p, x1, y1, x2, y2, stroke = 'var(--ink-3)', w = 1) => el('line', { x1, y1, x2, y2, stroke, 'stroke-width': w }, p);
+// Anchor marks are small squares in the category colour with an ink edge.
+const sq = (p, x, y, r, fill, stroke = 'var(--paper)', sw = 1.5) =>
+  el('rect', { x: x - r, y: y - r, width: 2 * r, height: 2 * r, fill, stroke, 'stroke-width': sw }, p);
+
+/* Score as a share of w against the surface match F: F / 0.99, full from F = 0.99 on. Same marks as the step curve;
+   0.99, where full marks start, is the one cyan mark. */
+{
+  const g = document.getElementById('curve2');
+  const L = 44.5, R = 400.5, T = 26, B = 226.5;
+  const X = v => L + v * (R - L), Y = p => B - p / 100 * (B - T);
+  for (const p of [0, 50, 100]) {
+    if (p) line(g, L, Y(p), R, Y(p), 'var(--rule)');
+    txt(g, L - 10, Y(p) + 4, 'tk', `${p}%`, 'end');
+  }
+  for (const v of [0, 0.25, 0.5, 0.75]) {
+    line(g, X(v), B, X(v), B + 5);
+    txt(g, X(v), B + 19, 'tk', String(v), 'middle');
+  }
+  const pts = [];
+  for (let v = 0; v <= 0.99 + 1e-9; v += .02) pts.push([v, Math.min(100, v / 0.99 * 100)]);
+  pts.push([0.99, 100], [1, 100]);
+  const P = pts.map(([v, p]) => `${X(v)},${Y(p)}`).join(' ');
+  el('polygon', { points: `${L},${B} ${P} ${R},${B}`, fill: 'var(--lime-100)', stroke: 'var(--ink)', 'stroke-width': 1 }, g);
+  el('polyline', { points: P, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5, 'stroke-linejoin': 'round' }, g);
+  el('line', { x1: X(0.99), y1: B, x2: X(0.99), y2: T - 12, stroke: 'var(--cyan-800)', 'stroke-width': 1, 'stroke-dasharray': '4 3' }, g);
+  line(g, X(0.99), B, X(0.99), B + 5, 'var(--cyan-800)');
+  txt(g, X(0.99), B + 19, 'tk', '0.99', 'middle').setAttribute('style', 'fill: var(--cyan-800); font-weight: 700');
+  sq(g, X(0.49), Y(50), 4, 'var(--cat-drawing)', 'var(--ink)', 1);
+  txt(g, X(0.49) + 8, Y(50) + 4, 'tk', '50%');
+  sq(g, X(0.99), Y(100), 5, 'var(--cat-drawing)', 'var(--ink)', 1);
+  txt(g, X(0.99) - 12, T - 4, 'cl', 'F综合 ≥ 0.99 得满分 w', 'end');
+  txt(g, L - 44, B + 46, 'lb', 'F综合 = 0.8F(0.2 mm) + 0.2F(2 mm)，满分线 0.99');
+  txt(g, 416, B + 46, 'lb', 'F综合', 'end');
+}
+
+/* 25 cells sized by points, as for the locks; the category colour of 识图建模. */
+{
+  const g = document.getElementById('tiers2');
+  const w = [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4, 4, 4, 4, 4, 4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4], G = 3, P = (416 - G * 24) / 100, y = 40.5, H = 26;
+  const TIERS = [['简单', 0, 8], ['中档', 8, 15], ['困难', 15, 25]];
+  const xs = [];
+  w.reduce((x, v) => { xs.push(x); return x + v * P + G; }, .5);
+  for (const [name, a, b] of TIERS) {
+    const x0 = xs[a], x1 = xs[b - 1] + w[b - 1] * P - 1, pts = w.slice(a, b).reduce((s, v) => s + v, 0);
+    txt(g, (x0+x1)/2, y+H+18, 'tk', `${String(a + 1).padStart(2, '0')}–${String(b).padStart(2, '0')} · 每题 ${w[a]} 分`, 'middle');
+    el('polyline', { points: `${x0},${y - 5} ${x0},${y - 11} ${x1},${y - 11} ${x1},${y - 5}`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1 }, g);
+    txt(g, x0, y - 19, 'lb', `${name} <tspan class="nb" style="font-size:13px; fill: var(--ink)">${+pts.toFixed(2)}</tspan>`);
+  }
+  w.forEach((v, i) => {
+    el('rect', { x: xs[i], y, width: v * P - 1, height: H, fill: 'var(--cat-drawing)', stroke: 'var(--ink)', 'stroke-width': 1 }, g);
+  });
+}
+
+</script>
+</body>
+</html>

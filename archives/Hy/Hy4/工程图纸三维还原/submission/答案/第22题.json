@@ -1,0 +1,15 @@
+{
+  "problem": "22",
+  "parts": [
+    {"name": "1", "title": "三斜轴液压分配器总装壳体", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 140, 120]}], "depth": 10, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 100, 0], "loops": [{"circle": [70, 40], "d": 90}], "depth": 80, "name": "主圆柱"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [70, 40], "d": 50, "depth": 85, "name": "前接口沉台"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 100, 0],
+       "loops": [{"circle": [70, 40], "d": 68}, {"circle": [70, 40], "d": 54}], "depth": 20, "name": "环腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10],
+       "at": [[8, 8], [132, 8], [8, 112], [132, 112]], "d": 9, "through": true, "name": "地脚4孔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 20, 0], "loops": [{"circle": [70, 40], "d": 86}], "depth": 6, "name": "前法兰"}
+    ]}
+  ]
+}

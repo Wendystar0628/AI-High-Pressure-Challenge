@@ -1,25 +1,27 @@
 {
   "brief": [
-    "Engineering- or research-grade accuracy is not required; the focus is convincing physical behaviour and clean, refined images. The main motion must come from real simulation or sound physical driving, not canned animation.",
+    "There is more than one jelly on the table and the balls may differ in mass and size; the tank's shape, its floor, the camera and the demo choreography are the model's own. Engineering- or research-grade accuracy is not required, but the main motion is computed by simulation and changes with the parameters.",
     {
       "ul": [
-        "The jelly dents at the contact point first, deformation spreads through it and parts rebound in sequence, never a uniform squash; centred, off-centre and multi-ball impacts are all required.",
-        "The tank has 3–5 density groups: low density floats, neutral hovers, high density sinks; waves start 1 second after the last ball enters the water and stop 5 seconds later.",
-        "Ready-made physics and rendering libraries are allowed, and the model decides whether and which; libraries ship with the work and run offline, and the simulation runs in the browser.",
-        "Both scenes share one style, can be paused, slowed, reset and tuned, and have sound for impacts, water entry and waves."
+        "A heavy blow squashes the jelly, makes it bulge, wraps it round the ball and throws the ball back, with its volume kept; when the blow is heavy enough and the jelly not strong enough it cracks from the point of impact or is smashed apart, and the pieces are still springy jelly; a light blow or a stronger jelly only deforms and springs back.",
+        "Centred, off-centre and repeated impacts can each be triggered; an off-centre hit tilts, slides or even topples the jelly, and a ball landing on an unsettled oscillation reinforces or cancels it.",
+        "The tank holds 3–5 groups of equal-sized balls of different densities; entering the water they open cavities, throw up crowns and drag bubbles down, and waves from a visible wave maker grow steeper until they curl over and break into white water, with balls at the surface, in mid-water and on the bottom each responding.",
+        "The four demos give only a theme and an arc: the centred hit and the off-centre hit at most 8 seconds each, the combo ending in a crack at most 10, the waves at most 20; each starts with action, and key moments may be slowed down.",
+        "Both scenes must use the base technique the statement sets: the water is solved with a 3D particle–grid hybrid method (PIC/FLIP, APIC or the material point method) in WebGPU compute shaders, with the free surface, splashes and white water coming from the particle state rather than a height field, shallow-water equations or analytic waves; the jelly is a volumetric soft body discretized into tetrahedra or voxels and solved with finite elements, XPBD or the material point method, with cracks coming from a material fracture criterion rather than pre-cut pieces. It is only a base: how to build on it is the model's call, and grading does not check it separately.",
+        "Ready-made physics and rendering libraries may be used to build on that base, and the model decides whether and which; libraries ship with the work and run offline, the simulation runs in the browser, and impacts, cracks, water entry and waves have sound."
       ]
     }
   ],
   "points": [
-    "**Soft-body deformation**: local denting, overall bulging and staggered rebound, with the jelly's reaction changing the heavy ball's motion.",
-    "**Fluid and buoyancy**: density decides where balls settle, and waves set the surface, the water and the bottom moving differently at once.",
-    "**Three-way coupling**: soft bodies, rigid bodies and fluid act on one another, with deformation and waves clearly layered.",
-    "**Choosing and joining libraries**: whether and where to use a physics library is the model's call, and the parts must add up to one believable motion."
+    "**Large deformation and cracking**: the jelly is a volumetric soft body discretized into tetrahedra or voxels; it is squashed, bulges out, wraps the ball and throws it back while keeping its volume; when the blow is heavy enough and the jelly not strong enough it cracks from the point of impact by a material fracture criterion, the pieces are still springy jelly, and a light blow only deforms it and springs back.",
+    "**Breaking waves and splashes**: the water is solved with a 3D particle–grid hybrid method in WebGPU compute shaders; waves from the wave maker steepen as they travel, curl over and break into white water, then run up the far wall and fall back; balls entering the water open cavities, throw up crowns and drag bubbles down, and the water level rises.",
+    "**Two-way coupling**: soft bodies, rigid bodies and liquid act on one another, density decides floating and sinking, and balls at the surface, in mid-water and on the bottom each follow their own path in the waves; changing softness, mass, density or the wave settings changes the phenomena the way the statement says.",
+    "**Demo choreography**: the four demos give only a theme and an arc, start with action and slow down at key moments, staying within 8 seconds for the centred and off-centre hits, 10 for the combo and 20 for the waves."
   ],
   "scoring": [
-    "**Visual expression first**: phenomena and layers of motion 44 points plus materials and lighting 24, 68 in all, judged on how deformation, waves, layered motion and materials look.",
-    "**Interactions, 22 points**: ball contact, buoyancy, wave and flow push and rigid collisions must fit the contact and water state at the time.",
-    "**Demo and delivery, 10 points**: stage transitions, demo controls, parameter effects, video export and sound, 2 each; sound is checked for implementation, not for how it sounds.",
+    "**Phenomena dominate**: phenomena and layers of motion are worth 47, with wave growth and breaking (10) and large overall deformation (8) heaviest, and cracking and fragments and water-entry splash 5 each.",
+    "**Interactions, 24 points**: ball contact, buoyancy, wave and flow push and rigid collisions must fit the state at the time; response to parameters (4) checks that changed values move the phenomena the way the statement says.",
+    "**Materials and lighting 17, demo and delivery 12**: demo choreography (4) looks at theme, climax, pacing and the length limits; sound is checked for implementation, not for how it sounds.",
     "**Frame rate not scored**: smoothness and frame rate do not count."
   ]
 }

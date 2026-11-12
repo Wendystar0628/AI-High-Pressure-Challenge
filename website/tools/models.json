@@ -121,7 +121,8 @@
     "released": "2026-09-10",
     "tier": "均衡性价比型",
     "series": "FLASH",
-    "portrait": "deepseek.png"
+    "portrait": "deepseek.png",
+    "cover_name": "DeepSeek V4.1 Flash 1017"
   },
   {
     "id": "mimo-v2-6-pro",
@@ -165,6 +166,56 @@
     "logo": "openai",
     "agent": "Codex",
     "effort": "xhigh",
-    "tested": ""
+    "tested": "",
+    "audit": true,
+    "released": "2026-11-06",
+    "tier": "中高端性能主力",
+    "series": "SOL",
+    "portrait": "gpt.png"
+  },
+  {
+    "id": "kimi-k3-1-pro",
+    "key": "Kimi/K3.1Pro",
+    "name": "Kimi K3.1 Pro",
+    "short": "K3.1Pro",
+    "aliases": ["K3.1 Pro", "Kimi 3.1 Pro", "Kimi K3.1", "月之暗面", "Moonshot"],
+    "vendor": "Moonshot AI",
+    "logo": "kimi",
+    "agent": "Kimi Code",
+    "effort": "max",
+    "tested": "",
+    "audit": true
+  },
+  {
+    "id": "gemini-4-carbon",
+    "key": "Gemini/4Carbon",
+    "name": "Gemini 4 Carbon",
+    "short": "4Carbon",
+    "aliases": ["Carbon", "Gemini Carbon", "Gemini 4", "Google", "谷歌"],
+    "vendor": "Google",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "high",
+    "tested": "",
+    "released": "2026-11-10",
+    "tier": "顶级旗舰",
+    "series": "CARBON",
+    "portrait": "gemini.png"
+  },
+  {
+    "id": "gemini-4-hydrogen",
+    "key": "Gemini/4Hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "short": "4Hydrogen",
+    "aliases": ["Hydrogen", "Gemini Hydrogen", "Gemini 4", "Google", "谷歌"],
+    "vendor": "Google",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "xhigh",
+    "tested": "",
+    "released": "2026-11-12",
+    "tier": "均衡性价比型",
+    "series": "HYDROGEN",
+    "portrait": "gemini.png"
   }
 ]

@@ -1,0 +1,16 @@
+;; 显示示例：打开一个窗口，提交二维图形并随虚拟时间更新（可在任何一层运行）。
+(include "/System/lib/core.nest")
+(var wid (sys "win-open" {:title "图形示例" :w 360 :h 240 :app "program"}))
+(var W 360) (var H 240)
+(while true
+  (var t (now))
+  (var nodes [{:t "box" :x 0 :y 0 :w W :h H :fill "#101627"}])
+  (for (i 0 12)
+    (var a (+ (* t 1.2) (* i 0.52)))
+    (push! nodes {:t "box" :x (+ (/ W 2) (* 80 (cos a)) -10) :y (+ (/ H 2) (* 60 (sin a)) -10) :w 20 :h 20 :r 10
+                  :fill (str "hsl(" (* i 30) ",80%,60%)")}))
+  (push! nodes {:t "text" :x 10 :y 8 :w 300 :h 20 :text (str "虚拟时间 " (fmt t 2) " 秒") :size 12 :color "#cbd5e1"})
+  (sys "display" wid {:w W :h H :nodes nodes} nil)
+  (var m (sys "recv" 0.05))
+  (when (and m (= (get m "k") "resize")) (set! W (get m "w")) (set! H (get m "h")))
+  (when (and m (= (get m "k") "close")) (sys "exit" nil)))

@@ -1,85 +1,79 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>流形 · 动效设计编辑器</title>
+<meta charset="UTF-8">
+<title>锻炉 · 动效设计编辑器</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 <div id="app">
   <header id="topbar">
-    <div class="brand"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 17c4-10 8 4 12-6s4-4 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="3" cy="17" r="2" fill="currentColor"/></svg><span>流形</span><em>MOTION</em></div>
-    <nav id="menubar"></nav>
-    <div id="toolbar"></div>
+    <div class="brand"><span class="logo">锻</span><b>锻炉</b><i>动效设计</i></div>
+    <nav id="menus"></nav>
+    <div id="tools" class="toolgroup"></div>
     <div class="spacer"></div>
-    <div id="workspaces"></div>
+    <div id="transport" class="toolgroup"></div>
+    <div id="meter" title="音色图层电平"><div class="bar"></div></div>
+    <div id="histbtns" class="toolgroup"></div>
   </header>
-  <main id="main">
-    <section id="leftcol" class="panel">
-      <div class="phead"><span>项目</span><div class="pbtns" id="projBtns"></div></div>
-      <div id="project" class="pbody"></div>
+  <main id="mid">
+    <section id="projectPanel" class="panel">
+      <div class="phead"><span class="ptitle">项目</span><div class="pbtns" id="projBtns"></div></div>
+      <div class="pbody" id="projBody"></div>
     </section>
-    <div class="vsplit" data-split="left"></div>
-    <section id="centercol">
-      <div id="viewerWrap" class="panel">
-        <div class="phead" id="viewerHead"></div>
-        <div id="viewer">
-          <canvas id="glc"></canvas>
-          <canvas id="ovc"></canvas>
-          <div id="viewerInfo"></div>
-          <div id="viewerHint"></div>
-        </div>
-        <div id="viewerFoot"></div>
-      </div>
-      <div class="hsplit" data-split="bottom"></div>
-      <div id="bottomWrap" class="panel">
-        <div class="phead" id="bottomHead"></div>
-        <div id="bottom">
-          <div id="timelinePane" class="bpane"><canvas id="tlc"></canvas></div>
-          <div id="graphPane" class="bpane"><canvas id="grc"></canvas><div id="graphSide"></div></div>
-          <div id="nodesPane" class="bpane"><canvas id="ndc"></canvas><div id="nodeSide"></div></div>
-        </div>
-      </div>
+    <div class="splitter v" data-split="left"></div>
+    <section id="viewerPanel" class="panel">
+      <div class="phead"><div id="compTabs" class="tabs"></div><div class="spacer"></div><div id="viewBtns" class="pbtns"></div></div>
+      <div id="viewerWrap"><canvas id="glc"></canvas><canvas id="ovc"></canvas><div id="viewerHint"></div><div id="viewerEmpty" class="empty-state"></div></div>
     </section>
-    <div class="vsplit" data-split="right"></div>
-    <section id="rightcol" class="panel">
-      <div class="phead"><span id="propTitle">属性</span><div class="pbtns" id="propBtns"></div></div>
-      <div id="props" class="pbody"></div>
+    <div class="splitter v" data-split="right"></div>
+    <section id="inspector" class="panel">
+      <div class="phead"><span class="ptitle">属性</span><span id="inspTitle" class="dim"></span></div>
+      <div class="pbody" id="inspBody"></div>
     </section>
   </main>
-  <footer id="statusbar"><span id="status">就绪</span><span class="spacer"></span><span id="stats"></span></footer>
+  <div class="splitter h" data-split="bottom"></div>
+  <footer id="bottom">
+    <section id="timelinePanel" class="panel">
+      <div class="phead"><div class="tabs" id="tlTabs"></div><div id="tcode"></div><div class="spacer"></div><div class="pbtns" id="tlBtns"></div></div>
+      <div id="tlBody">
+        <div id="tlLeft"><div id="tlLeftHead"></div><div id="tlRows"></div></div>
+        <div id="tlRight"><canvas id="tlc"></canvas></div>
+      </div>
+    </section>
+    <div class="splitter v" data-split="nodes"></div>
+    <section id="nodePanel" class="panel">
+      <div class="phead"><span class="ptitle">节点</span><span id="nodeCrumb" class="dim"></span><div class="spacer"></div><div class="pbtns" id="nodeBtns"></div></div>
+      <div id="nodeWrap"><svg id="nodeSvg"></svg><div id="nodeLayer"></div><div id="nodeInfo"></div></div>
+    </section>
+  </footer>
+  <div id="status"><span id="stLeft"></span><span class="spacer"></span><span id="stRight"></span></div>
 </div>
-<div id="overlayLayer"></div>
-<input type="file" id="fileOpen" accept=".json,.motion" style="display:none">
-<input type="file" id="audioOpen" accept="audio/*" style="display:none">
-<script src="js/core/util.js"></script>
-<script src="js/geom/path.js"></script>
-<script src="js/geom/poly.js"></script>
-<script src="js/core/model.js"></script>
-<script src="js/core/anim.js"></script>
-<script src="js/core/expr.js"></script>
-<script src="js/core/eval.js"></script>
-<script src="js/geom/font.js"></script>
-<script src="js/geom/content.js"></script>
-<script src="js/geom/mesh.js"></script>
-<script src="js/geom/puppet.js"></script>
-<script src="js/sim/nodes.js"></script>
-<script src="js/sim/particles.js"></script>
-<script src="js/render/gl.js"></script>
-<script src="js/render/render2d.js"></script>
-<script src="js/render/render3d.js"></script>
-<script src="js/io/audio.js"></script>
-<script src="js/io/export.js"></script>
-<script src="js/ui/widgets.js"></script>
-<script src="js/ui/app.js"></script>
-<script src="js/ui/viewer.js"></script>
-<script src="js/ui/timeline.js"></script>
-<script src="js/ui/graph.js"></script>
-<script src="js/ui/nodeui.js"></script>
-<script src="js/ui/props.js"></script>
-<script src="js/ui/project.js"></script>
-<script src="js/demo/demo.js"></script>
+<div id="menuPop" class="pop"></div>
+<div id="toast"></div>
+<input type="file" id="fileIn" accept=".json,.dzae" style="display:none">
+<script src="js/util.js"></script>
+<script src="js/model.js"></script>
+<script src="js/anim.js"></script>
+<script src="js/geom2d.js"></script>
+<script src="js/font.js"></script>
+<script src="js/content.js"></script>
+<script src="js/geom3d.js"></script>
+<script src="js/nodes.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/gl.js"></script>
+<script src="js/render.js"></script>
+<script src="js/render3d.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/viewer.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/inspector.js"></script>
+<script src="js/nodeview.js"></script>
+<script src="js/demo.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

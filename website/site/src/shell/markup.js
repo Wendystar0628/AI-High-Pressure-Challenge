@@ -11,10 +11,11 @@ export const NAV = [
   { key: 'models', path: 'models/' },
   { key: 'tasks', path: 'tasks/' },
   { key: 'about', path: 'about/' },
+  { key: 'faq', path: 'faq/' },
 ];
 
 // which nav entry a page belongs to（模型得分：入口页 /models/ 和每个 /models/<id>/）
-const SECTION = { home: 'home', leaderboard: 'leaderboard', categories: 'categories', tasks: 'tasks', task: 'tasks', about: 'about', model: 'models' };
+const SECTION = { home: 'home', leaderboard: 'leaderboard', categories: 'categories', tasks: 'tasks', task: 'tasks', about: 'about', faq: 'faq', model: 'models' };
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 // Chinese 「·」 (间隔号) in the Chinese font (Saira draws it as a short bar, base.css .cjk)
@@ -76,7 +77,7 @@ export function topHTML(ctx) {
   return `<div class="st-tri site-tri" aria-hidden="true"><i></i><i></i><i></i></div>
   <a class="site-skip" href="#main">${esc(t('common.shell.skip'))}</a>
   <header class="st-cmdbar site-bar" data-shell="bar">
-    <a class="brand" href="${pageHref(base, lang, '')}" title="${esc(t('common.shell.homeTitle'))}"><span class="seal" aria-hidden="true">8</span>${name}</a>
+    <a class="brand" href="${pageHref(base, lang, '')}" title="${esc(t('common.shell.homeTitle'))}"><span class="seal" aria-hidden="true">${esc(t('common.site.seal'))}</span>${name}</a>
     <nav aria-label="${esc(t('common.nav.label'))}">${nav}</nav>
     <div class="util">
       <button type="button" class="site-search" data-shell="search" aria-haspopup="dialog" aria-keyshortcuts="/ Control+K" title="${esc(t('common.search.title'))}"><span class="site-search-ph">${esc(t('common.search.placeholder'))}</span><span class="site-search-short">${esc(t('common.search.short'))}</span><kbd>/</kbd></button>
@@ -93,7 +94,7 @@ export function bottomHTML(ctx) {
   const { t, lang, updated, modelCount, taskCount } = ctx;
   const facts = [
     updated ? `<li>${esc(t('common.footer.updated', { date: dateDots(updated) }))}</li>` : '',
-    `<li>${esc(t('common.footer.models', { n: modelCount }))}</li>`,
+    modelCount ? `<li>${esc(t('common.footer.models', { n: modelCount }))}</li>` : '',   // 暂停公示时没有模型，不写「0 个模型」
     `<li>${esc(t('common.footer.tasks', { n: taskCount }))}</li>`,
   ].join('');
   return `<footer class="site-foot" data-shell="foot">

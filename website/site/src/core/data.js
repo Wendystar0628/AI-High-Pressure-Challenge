@@ -28,11 +28,12 @@ let dataPromise = null;
  *   models: [model],                 // models.json order (export keeps total-rank order in scores.order)
  *   order: [id],                     // scores.order: official order (ranked by total, then testing)
  *   categories: [category],          // tasks.json: { key, name, en, short, short_en, icon, weight, kind, brief, tasks:[task] }
- *   tasks: [task],                   // flat, by no 1..12: { key, path, no, category, name, name_en, short, weight, minutes, kind, ... }
+ *   tasks: [task],                   // flat, by no 1..13: { key, path, no, category, name, name_en, short, weight, minutes, kind, ... }
  *   scores: { id: score },           // scores.json scores
  *   vendors: [{ vendor, logo, count }],  // by model count, then name
  *   kinds: { standard: { weight, categories:[key], tasks:[key] }, design: {...} },
  *   costSource: scores.cost_source { name, url, fetched, usd_cny } or null   // 测试开销的换算依据；各模型的 cost 在 scores[id].cost
+ *   notice: scores.notice { zh, en } or null   // 暂停公示（website/tools/site.json）：打开时没有任何模型，成绩页只显示这句
  *   model(id), category(key), task(key), score(id), categoryOf(taskKey)
  * }
  */
@@ -91,6 +92,7 @@ function derive(models, cats, sc) {
     vendors,
     kinds,
     costSource: sc?.cost_source ?? null,
+    notice: sc?.notice ?? null,
     model: (id) => byModel.get(id),
     category: (key) => byCat.get(key),
     task: (key) => byTask.get(key),

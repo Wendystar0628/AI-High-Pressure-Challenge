@@ -1,0 +1,95 @@
+/* Window manager styles — windows live inside a .windows-layer of a system desktop */
+
+.windows-layer {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.windows-layer > * { pointer-events: auto; }
+
+.app-window {
+  position: absolute; display: flex; flex-direction: column;
+  background: var(--window-bg); border: 1px solid var(--window-border);
+  border-radius: var(--radius); box-shadow: var(--window-shadow);
+  overflow: hidden; min-width: 220px; min-height: 140px;
+  animation: winOpen .16s ease;
+}
+.app-window.focused { border-color: rgba(122,162,255,0.45); }
+.app-window.maximized {
+  border-radius: 0; border: none;
+}
+.app-window.minimized { display: none !important; }
+.app-window.snap-left { border-radius: var(--radius); }
+.app-window.dragging { transition: none; opacity: 0.96; }
+.app-window.resizing { transition: none; }
+
+.window-titlebar {
+  height: var(--titlebar-h); flex-shrink: 0;
+  display: flex; align-items: center; gap: 8px; padding: 0 6px 0 12px;
+  background: var(--window-title); cursor: default;
+}
+.app-window.focused .window-titlebar { background: linear-gradient(180deg, rgba(79,124,255,0.22), rgba(79,124,255,0.10)), var(--window-title); }
+.window-title-icon {
+  width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+}
+.window-title-text {
+  flex: 1; font-size: 12px; color: var(--text); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.window-controls { display: flex; gap: 2px; }
+.window-ctrl {
+  width: 34px; height: 26px; border-radius: 5px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-dim); font-size: 11px;
+}
+.window-ctrl:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.window-ctrl.close:hover { background: rgba(255,70,70,0.75); color: #fff; }
+
+.window-body {
+  flex: 1; overflow: hidden; position: relative; display: flex; flex-direction: column;
+  background: var(--window-bg);
+}
+
+/* resize handles */
+.window-resize { position: absolute; z-index: 2; }
+.window-resize.n  { top: -3px; left: 8px; right: 8px; height: 7px; cursor: ns-resize; }
+.window-resize.s  { bottom: -3px; left: 8px; right: 8px; height: 7px; cursor: ns-resize; }
+.window-resize.w  { left: -3px; top: 8px; bottom: 8px; width: 7px; cursor: ew-resize; }
+.window-resize.e  { right: -3px; top: 8px; bottom: 8px; width: 7px; cursor: ew-resize; }
+.window-resize.nw { top: -3px; left: -3px; width: 12px; height: 12px; cursor: nwse-resize; }
+.window-resize.ne { top: -3px; right: -3px; width: 12px; height: 12px; cursor: nesw-resize; }
+.window-resize.sw { bottom: -3px; left: -3px; width: 12px; height: 12px; cursor: nesw-resize; }
+.window-resize.se { bottom: -3px; right: -3px; width: 12px; height: 12px; cursor: nwse-resize; }
+
+/* snap preview */
+.snap-preview {
+  position: absolute; z-index: 99990; pointer-events: none;
+  background: rgba(79,124,255,0.22); border: 2px solid rgba(122,162,255,0.6);
+  border-radius: var(--radius); transition: all .12s ease;
+}
+
+/* Projection window special chrome */
+.app-window.projection .window-titlebar {
+  background: linear-gradient(180deg, rgba(245,184,61,0.25), rgba(245,184,61,0.08)), var(--window-title);
+}
+.app-window.projection .window-title-icon { background: rgba(245,184,61,0.3); }
+
+/* system window (hosting a subsystem desktop) */
+.app-window.system-window .window-body {
+  background: #0a0f1c;
+}
+.app-window.system-window .window-titlebar {
+  background: linear-gradient(180deg, rgba(122,162,255,0.30), rgba(122,162,255,0.12)), var(--window-title);
+}
+
+/* inner canvas hosts (2D/3D display device) */
+.display-host {
+  position: absolute; inset: 0; overflow: hidden; background: #0c1222;
+}
+.display-host canvas { display: block; width: 100%; height: 100%; }
+
+/* error badge */
+.window-error-badge {
+  position: absolute; top: 8px; right: 8px; z-index: 5;
+  background: rgba(255,80,80,0.85); color: #fff; font-size: 10px;
+  padding: 3px 8px; border-radius: 4px;
+}

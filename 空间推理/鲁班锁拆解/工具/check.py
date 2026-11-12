@@ -2,7 +2,8 @@
 
 它只检查你写出的路线，不会替你找路线，也不含参考答案。用法（在作答目录运行）：
   python 鲁班锁拆解/工具/check.py 答案/第01题.json
-路线中途发生碰撞或没有完整拆开时，会指出出错的位置。
+路线中途发生碰撞、写错或没有拆完时，会指出断在哪里，并报告在此之前从初态起已经
+合法完成了几次分离。尚未拆开的分支写 null。
 """
 import bisect
 import json
@@ -62,7 +63,12 @@ def sweep(shapes, positions, component, moving, axis, sign, distance=None):
                 raise Invalid(f"零件 {key} 的移动路径发生碰撞")
 
 
-def validate(puzzle, answer):
+def walk(puzzle, answer, stages):
+    """从初态起按深度优先顺序（本组件、removed 分支、remaining 分支）逐步检查路线。
+
+    每合法完成一次分离，就把这一阶段追加到 stages；遇到第一处碰撞、记号错误或
+    没拆完的分支时抛出 Invalid，此前完成的分离仍留在 stages 里。返回总步数。
+    """
     require(isinstance(answer, dict), "答案应为 JSON 对象")
     require(answer.get("puzzle") == puzzle["id"], "答案的 puzzle 编号与题目不一致")
     shapes, positions, occupied = {}, {}, set()
@@ -75,13 +81,12 @@ def validate(puzzle, answer):
             world = tuple(cell[d] + positions[key][d] for d in range(3))
             require(world not in occupied, "题目初态存在重叠")
             occupied.add(world)
-    stages = []
 
     def visit(node, component, positions, path):
         if len(component) == 1:
             require(node is None, f"{path} 已是单个零件，分支应写 null")
             return 0
-        require(isinstance(node, dict), f"{path} 尚有 {len(component)} 件，不能结束")
+        require(isinstance(node, dict), f"{path} 尚有 {len(component)} 件未拆开")
         moves = node.get("moves")
         require(isinstance(moves, list) and len(moves) > 0, f"{path} 缺少移动步骤")
         positions = dict(positions)
@@ -115,16 +120,33 @@ def validate(puzzle, answer):
                 for key in moving:
                     positions[key] = tuple(positions[key][d] + delta[d] for d in range(3))
         require(split is not None, f"{path} 未完成组件分离")
-        require("removed" in node and "remaining" in node, f"{path} 缺少两个后续分支")
         stages.append({"path": path, "pieces": sorted(component), "moves": count,
                        "removed": sorted(split)})
+        require("removed" in node and "remaining" in node, f"{path} 缺少两个后续分支")
         return (count + visit(node["removed"], split, positions, path + ".removed")
                 + visit(node["remaining"], component - split, positions, path + ".remaining"))
 
-    total = visit(answer.get("plan"), set(shapes), positions, "plan")
+    return visit(answer.get("plan"), set(shapes), positions, "plan")
+
+
+def progress(puzzle, answer):
+    """检查写出的路线，不因路线出错而抛出：没拆完或出错时报告断点和此前合法完成的分离。"""
+    stages = []
+    try:
+        total = walk(puzzle, answer, stages)
+    except Invalid as exc:
+        return {"valid": False, "puzzle": puzzle["id"], "reason": str(exc),
+                "separations": len(stages), "stages": stages}
     return {"valid": True, "puzzle": puzzle["id"], "moves": total,
             "first_split_moves": stages[0]["moves"], "separations": len(stages),
             "stages": stages}
+
+
+def validate(puzzle, answer):
+    """整条路线须合法并完整拆开，否则抛出 Invalid。"""
+    result = progress(puzzle, answer)
+    require(result["valid"], result.get("reason", ""))
+    return result
 
 
 def main():
@@ -134,13 +156,20 @@ def main():
         answer = load(sys.argv[1])
         key = answer.get("puzzle") if isinstance(answer, dict) else None
         require(isinstance(key, str) and (HERE.parent / f"{key}.json").is_file(), "puzzle 应为题号字符串，如 \"01\"")
-        result = validate(load(HERE.parent / f"{key}.json"), answer)
+        puzzle = load(HERE.parent / f"{key}.json")
+        result = progress(puzzle, answer)
     except (Invalid, KeyError, TypeError, json.JSONDecodeError, OSError) as exc:
         print(f"路线不合法：{exc}")
         raise SystemExit(1)
-    print(f"第{result['puzzle']}题路线合法，已完整拆开，按题面规则共 {result['moves']} 步。")
+    if result["valid"]:
+        print(f"第{result['puzzle']}题路线合法，已完整拆开，按题面规则共 {result['moves']} 步。")
+    else:
+        print(f"第{result['puzzle']}题路线没有完整拆开，断在：{result['reason']}")
+        print(f"在此之前从初态起已合法完成 {result['separations']} 次分离"
+              f"（全部拆开共需 {len(puzzle['pieces']) - 1} 次）。")
     for s in result["stages"]:
         print(f"  {s['path']}：组件 {''.join(s['pieces'])}，{s['moves']} 步后分出 {''.join(s['removed'])}")
+    raise SystemExit(0 if result["valid"] else 1)
 
 
 if __name__ == "__main__":

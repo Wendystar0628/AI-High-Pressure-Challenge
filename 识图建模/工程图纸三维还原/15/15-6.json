@@ -1,0 +1,141 @@
+{
+  "format": "工程图纸三维还原·图纸",
+  "problem": "15",
+  "sheet": "15-6",
+  "sheet_index": 6,
+  "sheet_count": 6,
+  "title": "双轴错层传动箱体",
+  "frame": "part",
+  "part": "1",
+  "paper": {
+    "size": "A1",
+    "width": 841,
+    "height": 594
+  },
+  "dpi": 240,
+  "projection": "第一角画法",
+  "units": "毫米",
+  "scale": "1.25:1",
+  "title_block": {
+    "title": "双轴错层传动箱体",
+    "drawing_no": "JX-15-01-6",
+    "material": "HT250",
+    "quantity": 1,
+    "scale_text": "1.25:1"
+  },
+  "parts_list": [],
+  "notes": [
+    "技术要求",
+    "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+    "位置由尺寸链、定形与定位尺寸联合推算。",
+    "标注R、C须建模；未注锐边保持理论交线。",
+    "孔深沿轴线；斜孔从所标入口向体内加工。"
+  ],
+  "version": 2,
+  "conventions": {
+    "图纸": "形状、图线、遮挡关系和剖面边界仅见同名PNG；JSON不提供图线或标注图元坐标。",
+    "尺寸": "每个尺寸旁的〔D编号〕对应dimensions目录；编号在整题内唯一。value为尺寸数值，text为完整标注，参考尺寸保留括号。",
+    "坐标": "O是零件坐标原点，箭头X/Y/Z指向正向；单位毫米。装配图采用总坐标系，零件图采用各自坐标系。",
+    "投影": "第一角画法；主视沿+Y，俯视沿−Z，左视沿+X。其他视图以definition.direction为投射方向。",
+    "剖切": "definition.section只说明剖切平面与方式；剖切位置字母标在PNG上，不包含截面轮廓。",
+    "尺寸链": "线性尺寸由尺寸界线所指的轮廓、轴线或中心位置之间量取。局部定形与相对定位尺寸需结合PNG联立；不得将尺寸数值直接当成绝对坐标。"
+  },
+  "dimensions": [
+    {
+      "id": "D81",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 7,
+      "text": "7"
+    },
+    {
+      "id": "D82",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 10,
+      "text": "Φ10"
+    },
+    {
+      "id": "D83",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 16,
+      "text": "Φ16"
+    },
+    {
+      "id": "D84",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 10,
+      "text": "Φ10"
+    },
+    {
+      "id": "D85",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 16,
+      "text": "Φ16"
+    },
+    {
+      "id": "D86",
+      "view": "俯视图",
+      "type": "倒圆半径",
+      "value": 2,
+      "text": "R2 底板左前外竖棱"
+    },
+    {
+      "id": "D87",
+      "view": "主视图",
+      "type": "45度等距倒角",
+      "value": 1,
+      "text": "C1 所指前下直棱"
+    }
+  ],
+  "views": [
+    {
+      "name": "主视图",
+      "kind": "basic",
+      "position": "front",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "俯视图",
+      "kind": "basic",
+      "position": "top",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "左视图",
+      "kind": "basic",
+      "position": "left",
+      "frame": "part",
+      "projection_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "形式化证明题",
+  "tokens": 42125114,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.98,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [
+    "运行时长比例"
+  ],
+  "runs": [
+    "Claude/Opus5.5/形式化证明题/timer-1793699491.2902353"
+  ]
+}

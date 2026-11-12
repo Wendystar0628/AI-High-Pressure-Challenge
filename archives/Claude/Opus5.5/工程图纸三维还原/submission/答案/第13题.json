@@ -1,0 +1,28 @@
+{
+  "problem": "13",
+  "parts": [
+    {"name": "1", "title": "斜耳叉架减速箱体", "features": [
+      {"type": "extrude", "name": "底板", "plane": "XY", "loops": [{"rect": [0, 0, 188, 132]}], "depth": 16},
+      {"type": "fillet", "name": "底板四竖棱R6", "radius": 6, "edges": [[0, 0, 8], [188, 0, 8], [0, 132, 8], [188, 132, 8]]},
+      {"type": "extrude", "name": "箱体(带拔模侧壁与斜顶)", "plane": "XZ", "loops": [{"path": [[16, 16], [172, 16], [164, 96], [142, 116], [50, 116], [23.8, 94]]}], "depth": [-114, -18]},
+      {"type": "extrude", "name": "前凸台Φ66", "plane": "XZ", "loops": [{"circle": [66, 64], "d": 66}], "depth": [-18, -6]},
+      {"type": "extrude", "name": "后凸台Φ66", "plane": "XZ", "loops": [{"circle": [66, 64], "d": 66}], "depth": [-126, -114]},
+      {"type": "extrude", "name": "前三角肋", "plane": "XZ", "loops": [{"path": [[108, 16], [160, 16], [140, 94]]}], "depth": [-18, -8]},
+      {"type": "extrude", "name": "后三角肋", "plane": "XZ", "loops": [{"path": [[108, 16], [160, 16], [140, 94]]}], "depth": [-124, -114]},
+      {"type": "extrude", "name": "右凸台Φ54", "plane": "YZ", "origin": [160, 0, 0], "loops": [{"circle": [66, 82], "d": 54}], "depth": 26},
+      {"type": "extrude", "name": "斜耳(前)", "plane": "XZ", "loops": [{"path": [[26.1, 141.9], [48, 150], [58, 116], [45, 105], [32.2, 100.7]]}], "depth": [-40, -24]},
+      {"type": "extrude", "name": "斜耳(后)", "plane": "XZ", "loops": [{"path": [[26.1, 141.9], [48, 150], [58, 116], [45, 105], [32.2, 100.7]]}], "depth": [-108, -92]},
+      {"type": "hole", "name": "耳孔Φ16", "plane": "XZ", "origin": [0, 0, 0], "at": [40, 132], "d": 16, "through": true},
+      {"type": "extrude", "op": "cut", "name": "主腔", "plane": "XY", "origin": [0, 0, 30], "loops": [{"rect": [34, 30, 150, 102]}], "depth": 62},
+      {"type": "extrude", "op": "cut", "name": "顶部凹腔", "plane": "XY", "origin": [0, 0, 92], "loops": [{"rect": [58, 42, 132, 90]}], "depth": 14},
+      {"type": "extrude", "op": "cut", "name": "底部凹腔", "plane": "XY", "origin": [0, 0, 24], "loops": [{"rect": [54, 40, 144, 94]}], "depth": 6},
+      {"type": "hole", "name": "低速轴孔Φ30前沉孔Φ44", "plane": "XZ", "origin": [0, 6, 0], "at": [66, 64], "d": 30, "through": true, "cbore": {"d": 44, "depth": 8}},
+      {"type": "hole", "name": "低速轴后沉孔Φ44", "plane": "ZX", "origin": [0, 126, 0], "at": [64, 66], "d": 44, "depth": 8},
+      {"type": "hole", "name": "右孔Φ24沉孔Φ36", "plane": "YZ", "origin": [186, 0, 0], "at": [66, 82], "d": 24, "depth": 37, "cbore": {"d": 36, "depth": 8}},
+      {"type": "hole", "name": "底部竖孔Φ10", "plane": "XY", "origin": [0, 0, -1], "at": [120, 66], "d": 10, "depth": 26, "reverse": true},
+      {"type": "hole", "name": "斜孔Φ12", "plane": {"origin": [142, 100, 116], "normal": [-0.40557979, -0.40557979, 0.81915204], "x_dir": [1, -1, 0]}, "at": [0, 0], "d": 12, "depth": 76},
+      {"type": "hole", "name": "底板沉孔4-Φ9", "plane": "XY", "origin": [0, 0, 16], "at": [[10, 10], [178, 10], [10, 122], [178, 122]], "d": 9, "through": true, "cbore": {"d": 16, "depth": 6}},
+      {"type": "chamfer", "name": "低速前沉孔口C1.5", "distance": 1.5, "edges": [[66, 6, 86]]}
+    ]}
+  ]
+}

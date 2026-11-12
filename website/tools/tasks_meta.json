@@ -19,7 +19,10 @@
           "brief_en": "Write Lean 4 + Mathlib formal proofs for eight theorems, classic or taken from research papers; every proof that compiles counts.",
           "deliverable": "Problem1.lean–Problem8.lean",
           "deliverable_en": "Problem1.lean–Problem8.lean",
-          "terms": ["Lean", "Mathlib"]
+          "terms": [
+            "Lean",
+            "Mathlib"
+          ]
         },
         {
           "key": "math-olympiad",
@@ -27,58 +30,88 @@
           "name_en": "Original Math Olympiad Problems",
           "short": "数学竞赛",
           "short_en": "Math Olympiad",
-          "brief": "不借助任何计算工具，为十八道原创竞赛题写出符合数学竞赛作答规格的中文解答。",
-          "brief_en": "Without any computational tools, write competition-standard solutions, in Chinese, to eighteen original olympiad problems.",
-          "deliverable": "答案\\第01题.md–第18题.md：每题一个文件",
-          "deliverable_en": "答案\\第01题.md–第18题.md, one file per problem",
-          "terms": ["竞赛数学"]
+          "brief": "不借助任何计算工具，为二十四道原创竞赛题写出符合数学竞赛作答规格的中文解答。",
+          "brief_en": "Without any computational tools, write competition-standard solutions, in Chinese, to twenty-four original olympiad problems.",
+          "deliverable": "答案\\第01题.md–第24题.md：每题一个文件",
+          "deliverable_en": "答案\\第01题.md–第24题.md, one file per problem",
+          "terms": [
+            "竞赛数学"
+          ]
         }
       ]
     },
     {
       "key": "algo",
-      "name": "算法竞赛",
-      "en": "Algorithm Contests",
-      "short": "算法竞赛",
-      "short_en": "Algorithms",
-      "brief": "考硬指标下的搜索与优化工程。极值构造题比构造质量，以参考构造值为满分线；两道性能题比速度，与基线同场运行比加速比。",
-      "brief_en": "Search and optimization engineering against hard metrics: the extremal construction is judged by its quality against a reference value, the two performance tasks by their speedup over a baseline run side by side.",
+      "name": "性能优化",
+      "en": "Performance Optimization",
+      "short": "性能优化",
+      "short_en": "Performance",
+      "brief": "考硬指标下的性能工程。两道题比速度：与基线同场运行，结果正确的前提下按加速比计分。",
+      "brief_en": "Performance engineering against hard metrics: both tasks race a baseline run side by side and, with correct results, are scored by their speedup.",
       "tasks": [
         {
-          "key": "unit-square",
-          "source": "单位正方形内最小三角形面积最大化",
-          "name_en": "Maximizing the Smallest Triangle in a Unit Square",
-          "short": "最小三角形面积",
-          "short_en": "Smallest Triangle",
-          "brief": "在单位正方形内放一组点，让任意三点构成的最小三角形面积尽可能大。",
-          "brief_en": "Place a set of points in the unit square so that the smallest triangle formed by any three of them is as large as possible.",
-          "deliverable": "answer.md：30 个点的坐标",
-          "deliverable_en": "answer.md, the coordinates of 30 points",
-          "terms": ["极值构造", "Extremal Construction", "Heilbronn"]
-        },
-        {
-          "key": "transformer",
-          "source": "Transformer前向推理的GPU加速",
-          "name_en": "GPU-Accelerated Transformer Inference",
-          "short": "Transformer 加速",
-          "short_en": "Transformer Speedup",
-          "brief": "用 CUDA 在 RTX 4080 上实现 Transformer 的前向计算，结果在容差内，越快越好。",
-          "brief_en": "Implement a Transformer forward pass in CUDA on an RTX 4080, within tolerance and as fast as possible.",
+          "key": "raytracing",
+          "source": "光线追踪渲染加速",
+          "name_en": "Ray Tracing Render Acceleration",
+          "short": "光线追踪加速",
+          "short_en": "Ray Tracing Speedup",
+          "brief": "用 CUDA 在 RTX 4080 上渲染一座约 17.7 万个三角形的江南园林：按规定的采样、阴影、环境遮挡和镜面反射算出确定性图像，画面在容差内，越快越好，相对基线加速 10 倍起满分。",
+          "brief_en": "Render a Jiangnan garden of about 177,000 triangles in CUDA on an RTX 4080: compute a deterministic image by the given sampling, shadows, ambient occlusion and mirror reflections, within tolerance and as fast as possible; full marks from a 10× speedup over the baseline.",
           "deliverable": "solution.cu",
           "deliverable_en": "solution.cu",
-          "terms": ["性能工程", "Performance Engineering", "CUDA"]
+          "terms": [
+            "性能工程",
+            "Performance Engineering",
+            "CUDA",
+            "光追",
+            "Ray Tracing",
+            "江南园林",
+            "BVH"
+          ]
         },
         {
           "key": "circuit",
-          "source": "通用数字电路仿真器加速",
-          "name_en": "Accelerating a General Digital Circuit Simulator",
+          "source": "数字电路仿真器加速",
+          "name_en": "Digital Circuit Simulator Acceleration",
           "short": "电路仿真加速",
           "short_en": "Circuit Speedup",
-          "brief": "在 CPU 上仿真一个大规模同步时序电路，对大量随机激励逐周期算出输出摘要，越快越好。",
-          "brief_en": "Simulate a large synchronous sequential circuit on the CPU, computing cycle-by-cycle output digests for many random stimuli, as fast as possible.",
+          "brief": "在 CPU 上加速仿真深链、阵列乘法器和寄存器堆 3 类电路，共 9 个性能输入，对大量随机激励逐周期算出输出摘要；深链和阵列乘法器每个输入相对基线加速 12 倍起满分，寄存器堆每个输入 8 倍起满分。",
+          "brief_en": "Accelerate CPU simulation of 9 performance inputs across 3 circuit classes: deep chains, array multipliers and register files, computing cycle-by-cycle output digests for many random stimuli; full marks require a 12× baseline speedup on each deep-chain and array-multiplier input, and 8× on each register-file input.",
           "deliverable": "solution.cpp",
           "deliverable_en": "solution.cpp",
-          "terms": ["性能工程", "Performance Engineering", "C++", "AVX2"]
+          "terms": [
+            "性能工程",
+            "Performance Engineering",
+            "C++",
+            "AVX2"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "battle",
+      "name": "算法对抗",
+      "en": "Algorithm Battle",
+      "short": "算法对抗",
+      "short_en": "Battle",
+      "brief": "考对抗环境里的策略算法：写一个对战程序，在固定的规则和时限下与强弱不同的对手正面交锋，按胜负估出的实力值计分。",
+      "brief_en": "Strategy algorithms in an adversarial setting: write a game-playing program that meets opponents of different strength head-on under fixed rules and time limits, scored by the rating its results earn.",
+      "tasks": [
+        {
+          "key": "conquest",
+          "source": "攻城略地",
+          "name_en": "Siege & Conquest",
+          "short": "攻城略地",
+          "short_en": "Siege & Conquest",
+          "brief": "用 C++ 写一个双人同时行动的节点争夺程序：每回合从己方节点派兵，兵力随占有的节点增长；在 96 张隐藏地图上与五档固定对手各打一局、轮换座位，共 480 局，按胜负估出实力值：与最强一档相当得 80 分，比它高 200 实力值才满分。",
+          "brief_en": "Write a C++ program for a two-player, simultaneous-move node-capture game: each turn it sends troops from its own nodes, and troops grow with the nodes held. On each of 96 hidden maps it plays one game against each of five tiers of fixed opponents, alternating seats, 480 games in all; the results give it a rating: matching the strongest tier earns 80, and full marks take a rating 200 above it.",
+          "deliverable": "bot.cpp",
+          "deliverable_en": "bot.cpp",
+          "terms": [
+            "C++",
+            "博弈",
+            "Game AI"
+          ]
         }
       ]
     },
@@ -88,8 +121,8 @@
       "en": "Spatial Reasoning",
       "short": "空间推理",
       "short_en": "Spatial",
-      "brief": "考三维空间推理：只凭零件的精确结构推演平移和相互阻挡，写出完整的拆解路线，不借助程序搜索。",
-      "brief_en": "3D spatial reasoning: from the exact shapes of the pieces alone, work out their translations and blocking and write a complete disassembly route, without any program search.",
+      "brief": "考空间推理与手工推演：只凭零件的精确结构推演平移和相互阻挡，写出完整的鲁班锁拆解路线，不借助程序搜索或几何计算。",
+      "brief_en": "Spatial reasoning by hand: infer translations and interlocks from exact piece geometry and write a complete Luban lock disassembly route, without programmatic search or geometry calculations.",
       "tasks": [
         {
           "key": "luban",
@@ -101,7 +134,37 @@
           "brief_en": "Given eight assembled Luban locks with the exact shape and starting position of every piece, take each lock fully apart into single pieces in as few moves as possible.",
           "deliverable": "答案\\第01题.json–第08题.json：每题一棵拆解树",
           "deliverable_en": "答案\\第01题.json–第08题.json, one disassembly tree per puzzle",
-          "terms": ["Burr Puzzle"]
+          "terms": [
+            "Burr Puzzle"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "drawing",
+      "name": "识图建模",
+      "en": "Drawing Interpretation & Modeling",
+      "short": "识图建模",
+      "short_en": "Drawing",
+      "brief": "考读图与三维建模：只凭工程图纸的视图、剖视和尺寸，手工推出零件和装配体的形状，写成建模描述，由程序比对表面吻合度计分。",
+      "brief_en": "Reading drawings into 3D: work out the shapes of parts and assemblies by hand from the views, sections and dimensions of engineering drawings, write them as model descriptions, and be scored on how closely the surfaces match.",
+      "tasks": [
+        {
+          "key": "drawing",
+          "source": "工程图纸三维还原",
+          "name_en": "Reading Engineering Drawings into 3D Models",
+          "short": "图纸三维还原",
+          "short_en": "Drawing to 3D",
+          "brief": "读懂 25 套机械零件和装配体的工程图纸（共 446 张），手工推算形状，用规定的 JSON 建模描述写出每个零件，装配体还要写出各零件的位置和朝向。",
+          "brief_en": "Read the engineering drawings of 25 mechanical parts and assemblies (446 sheets), work out their shapes by hand, and write each part as a JSON model description, with every part's position and orientation for the assemblies.",
+          "deliverable": "答案\\第01题.json–第25题.json：每题一份建模描述",
+          "deliverable_en": "答案\\第01题.json–第25题.json, one model description per problem",
+          "terms": [
+            "工程图纸",
+            "三视图",
+            "Engineering Drawing",
+            "CAD"
+          ]
         }
       ]
     },
@@ -120,11 +183,13 @@
           "name_en": "AE-Style Motion Design Editor",
           "short": "AE 动效编辑器",
           "short_en": "AE Motion Editor",
-          "brief": "制作可编辑的三维动效设计工具，把程序几何、网格变形、光影、粒子和时间效果接成真实链路，再用它完成一段 15 秒、带配乐的专业视觉动效。",
-          "brief_en": "Build an editable 3D motion design tool that wires procedural geometry, mesh deformation, lighting, particles and time effects into real pipelines, then use it to make a professional 15-second motion piece with music.",
+          "brief": "制作以合成与图层为骨架的动效设计编辑器：关键帧、曲线、表达式、程序几何、变形、三维实体、材质灯光和粒子碰撞都在普通工程里真实工作，再用它做一段 15 秒、主题为「锻字」的示例动画：一个字从写成、成块、锻打到冷却。",
+          "brief_en": "Build a motion design editor built around compositions and layers, where keyframes, curves, expressions, procedural geometry, deformation, 3D solids, materials and lights, and particle collisions all really work in an ordinary project; then use it to make a 15-second showcase on the theme 「锻字」 (forging a character): one character is written, becomes a block, is forged and cools.",
           "deliverable": "网页项目，入口 index.html",
           "deliverable_en": "Web project, entry index.html",
-          "terms": ["After Effects"]
+          "terms": [
+            "After Effects"
+          ]
         }
       ]
     },
@@ -147,7 +212,9 @@
           "brief_en": "Make a 3D cybersecurity tower defense game: isolating network nodes forces enemies to reroute, some enemies attack towers, and a destroyed tower leaves its device in bypass, so the routes change again.",
           "deliverable": "网页项目，入口 index.html",
           "deliverable_en": "Web project, entry index.html",
-          "terms": ["网络安全攻防战"]
+          "terms": [
+            "网络安全攻防战"
+          ]
         }
       ]
     },
@@ -157,8 +224,8 @@
       "en": "Physics Simulation",
       "short": "物理模拟",
       "short_en": "Physics",
-      "brief": "考三维物理模拟作品：可以用现成物理库，选哪个由模型自己决定。软体、刚体和流体的相互作用要有说服力，动态连贯，画面清晰。",
-      "brief_en": "A 3D physics simulation piece: an existing physics library may be used, and the model picks which. Soft bodies, rigid bodies and fluid must interact convincingly, move coherently and read clearly on screen.",
+      "brief": "考三维物理模拟作品：水体用三维粒子流体、果冻用体积软体，是统一的基础技术路径，可以用现成物理库实现。软体、刚体和流体的相互作用要有说服力，动态连贯，画面清晰。",
+      "brief_en": "A 3D physics simulation piece: water as a 3D particle fluid and jelly as a volumetric soft body form a shared base method, and existing physics libraries may be used to build it. Soft bodies, rigid bodies and fluid must interact convincingly, move coherently and read clearly on screen.",
       "tasks": [
         {
           "key": "jelly-tank",
@@ -166,8 +233,8 @@
           "name_en": "Jelly Impact and Wave Tank",
           "short": "果冻水槽",
           "short_en": "Jelly & Wave Tank",
-          "brief": "在网页里做两个三维物理模拟场景：重球冲击果冻台，以及同尺寸多密度球在透明造浪水槽中的浮沉与运动。",
-          "brief_en": "Build two 3D physics scenes in the browser: a heavy ball striking a jelly block, and equal-sized balls of different densities floating, sinking and moving in a transparent wave tank.",
+          "brief": "在网页里做两个三维物理模拟场景：重球冲击台上的果冻，砸得它大幅变形、回弹，重击下开裂；同尺寸多密度球在透明造浪水槽中浮沉，浪越推越陡，直到翻卷破碎。",
+          "brief_en": "Build two 3D physics scenes in the browser: heavy balls strike jellies on a table, squashing them hard and letting them spring back, and a heavy enough blow cracks them; equal-sized balls of different densities float and sink in a transparent wave tank whose waves grow steeper until they curl over and break.",
           "deliverable": "网页项目，入口 index.html",
           "deliverable_en": "Web project, entry index.html",
           "terms": []
@@ -180,21 +247,9 @@
       "en": "Visual Design & Rendering",
       "short": "视觉渲染",
       "short_en": "Visual",
-      "brief": "考实时图形的技术与审美：一题是滚动驱动的网页艺术，一题是三渲二的微缩三维场景。两题的流畅度和帧率都不计分。",
-      "brief_en": "Technique and taste in real-time graphics: one task is scroll-driven web art, the other a toon-shaded 3D miniature. Smoothness and frame rate are not scored in either.",
+      "brief": "考实时图形的技术与审美：一件三渲二风格的微缩三维场景，一支体素搭成、会开火的星际战舰编队，造型、画风、光色和动态都要做足。流畅度和帧率不计分。",
+      "brief_en": "Technique and taste in real-time graphics: a toon-shaded 3D miniature and a voxel battle fleet that opens fire, where modeling, art style, light and color, and motion all count. Smoothness and frame rate are not scored.",
       "tasks": [
-        {
-          "key": "nvidia-b200",
-          "source": "NVIDIA_B200网页艺术",
-          "name_en": "NVIDIA B200 Web Art",
-          "short": "B200 网页艺术",
-          "short_en": "B200 Web Art",
-          "brief": "以 NVIDIA B200 为题材，制作一件可滚动、可交互的网页艺术作品。从完整封装进入结构、显存与数值，再拉远到多卡系统，最后回到整颗 GPU。",
-          "brief_en": "Create a scrollable, interactive piece of web art about the NVIDIA B200: from the full package into its structure, memory and number formats, out to multi-GPU systems, and back to the whole GPU.",
-          "deliverable": "网页，入口 index.html",
-          "deliverable_en": "Web page, entry index.html",
-          "terms": ["GPU"]
-        },
         {
           "key": "harbor",
           "source": "太阳雨渔港3D渲染",
@@ -205,7 +260,25 @@
           "brief_en": "Build a toon-shaded 3D miniature in Three.js: a small Japanese fishing-harbor embankment in a sunshower, with no people or UI, free to rotate and zoom in for detail.",
           "deliverable": "网页项目，入口 index.html",
           "deliverable_en": "Web project, entry index.html",
-          "terms": ["三渲二", "Three.js"]
+          "terms": [
+            "三渲二",
+            "Three.js"
+          ]
+        },
+        {
+          "key": "starship",
+          "source": "星际战舰编队",
+          "name_en": "Interstellar Battle Fleet",
+          "short": "星际战舰",
+          "short_en": "Battle Fleet",
+          "brief": "在网页中实时渲染数十艘同尺寸体素搭成的星际战舰：约1000–1200格长的旗舰居中，近卫舰环绕，前卫舰向外展开，护卫约为旗舰长度的1/5–1/7，小艇约1/30–1/50。镜头从舰阵掠入放大的舰桥、动力核心中庭、贯通式小艇机库与能量装填及导能长廊。四种武器在一次攻击中击碎附近体素陨石，随后全队依次开盾、加速前冲，接回继续航行的开头，护盾余辉渐薄，陨石不在眼前复原。一轮通常70–80秒、最长90秒，导出分块共用全局时间线，没有每块15秒的上限。",
+          "brief_en": "Render a fleet of dozens of shared-size voxel ships around a 1000–1200-voxel flagship. Tour four vast interiors, fire four weapon types at nearby voxel asteroids, then raise shields across the fleet and accelerate into a continuous loop. A cycle normally lasts 70–80 seconds, at most 90; export chunks share one global timeline.",
+          "deliverable": "网页项目，入口 index.html",
+          "deliverable_en": "Web project, entry index.html",
+          "terms": [
+            "体素",
+            "Voxel"
+          ]
         }
       ]
     },
@@ -224,32 +297,113 @@
           "name_en": "Nested Operating Systems",
           "short": "操作系统嵌套",
           "short_en": "Nested OS",
-          "brief": "做一个桌面端的嵌套图形操作系统：系统里还能启动系统，形成至少四层的系统树；子系统的内核是父系统里被调度、可修改的程序。根系统电子表格的数据实时画成子系统图表，子系统播放三维直升机起飞和坠机的演出，也能交互排演飞行，图表和播放器都能把可交互的窗口投送到祖先桌面。",
-          "brief_en": "Build a nested graphical desktop OS: systems launch systems, forming a tree at least four levels deep, and each child's kernel is a scheduled, editable program inside its parent. Spreadsheet data in the root system feeds live charts in child systems, a child plays a 3D helicopter takeoff-and-crash sequence and lets you rehearse flights interactively, and both the charts and the player can project interactive windows onto ancestor desktops.",
+          "brief": "做一个桌面端的嵌套图形操作系统：系统里还能启动系统，形成至少四层的系统树；子系统的内核、调度、窗口管理和应用都是存放在文件里、由系统自己运行的程序，改写后行为跟着变。根系统电子表格的数据实时画成子系统图表，子系统播放三维直升机起飞和坠机的演出，也能让飞控进程在调度下驾驶直升机排演飞行，图表和播放器都能把可交互的窗口投送到祖先桌面。",
+          "brief_en": "Build a nested graphical desktop OS: systems launch systems, forming a tree at least four levels deep, and a child system's kernel, scheduling, window management and apps are all programs stored in files and run by the system itself, so rewriting them changes how it behaves. Spreadsheet data in the root system feeds live charts in child systems, a child plays a 3D helicopter takeoff-and-crash sequence and can also rehearse flights with a flight-control process flying the helicopter under the scheduler, and both the charts and the player can project interactive windows onto ancestor desktops.",
           "deliverable": "Windows 桌面项目，单一启动入口",
           "deliverable_en": "Windows desktop project, single launch entry",
-          "terms": ["Electron"]
+          "terms": [
+            "Electron"
+          ]
         }
       ]
     }
   ],
   "sections": [
-    {"id": "intro", "name": "项目简介", "en": "Introduction"},
-    {"id": "overview", "name": "题目总览", "en": "Task Overview"},
-    {"id": "tasks", "name": "题目与考点", "en": "Tasks and What They Test"},
-    {"id": "format", "name": "测试形式", "en": "How Tests Run"},
-    {"id": "format-1", "parent": "format", "name": "谁在运转测评", "en": "Who Runs the Tests"},
-    {"id": "format-2", "parent": "format", "name": "一场作答怎样进行", "en": "How a Run Proceeds"},
-    {"id": "format-3", "parent": "format", "name": "提醒与立即续做", "en": "Reminders and Immediate Continuation"},
-    {"id": "format-4", "parent": "format", "name": "故障与续做", "en": "Failures and Resuming"},
-    {"id": "format-5", "parent": "format", "name": "隔离的作答环境", "en": "The Isolated Answering Environment"},
-    {"id": "format-6", "parent": "format", "name": "两个测试批次", "en": "The Two Test Batches"},
-    {"id": "format-7", "parent": "format", "name": "工具与联网规定", "en": "Tool and Network Rules"},
-    {"id": "format-8", "parent": "format", "name": "评分员怎么评", "en": "How the Graders Score"},
-    {"id": "scoring", "name": "打分机制", "en": "Scoring"},
-    {"id": "scoring-1", "parent": "scoring", "name": "总分怎样合成", "en": "How the Total Is Composed"},
-    {"id": "scoring-2", "parent": "scoring", "name": "各题型的计分方式", "en": "Scoring by Task Type"},
-    {"id": "scoring-3", "parent": "scoring", "name": "设计题计分", "en": "Scoring Design Tasks"},
-    {"id": "principles", "name": "设计原则", "en": "Design Principles"}
+    {
+      "id": "intro",
+      "name": "项目简介",
+      "en": "Introduction"
+    },
+    {
+      "id": "overview",
+      "name": "题目总览",
+      "en": "Task Overview"
+    },
+    {
+      "id": "tasks",
+      "name": "题目与考点",
+      "en": "Tasks and What They Test"
+    },
+    {
+      "id": "format",
+      "name": "测试形式",
+      "en": "How Tests Run"
+    },
+    {
+      "id": "format-1",
+      "parent": "format",
+      "name": "谁在运转测评",
+      "en": "Who Runs the Tests"
+    },
+    {
+      "id": "format-2",
+      "parent": "format",
+      "name": "一场作答怎样进行",
+      "en": "How a Run Proceeds"
+    },
+    {
+      "id": "format-3",
+      "parent": "format",
+      "name": "提醒与立即续做",
+      "en": "Reminders and Immediate Continuation"
+    },
+    {
+      "id": "format-4",
+      "parent": "format",
+      "name": "故障与续做",
+      "en": "Failures and Resuming"
+    },
+    {
+      "id": "format-5",
+      "parent": "format",
+      "name": "隔离的作答环境",
+      "en": "The Isolated Answering Environment"
+    },
+    {
+      "id": "format-6",
+      "parent": "format",
+      "name": "两个测试批次",
+      "en": "The Two Test Batches"
+    },
+    {
+      "id": "format-7",
+      "parent": "format",
+      "name": "工具与联网规定",
+      "en": "Tool and Network Rules"
+    },
+    {
+      "id": "format-8",
+      "parent": "format",
+      "name": "评分员怎么评",
+      "en": "How the Graders Score"
+    },
+    {
+      "id": "scoring",
+      "name": "打分机制",
+      "en": "Scoring"
+    },
+    {
+      "id": "scoring-1",
+      "parent": "scoring",
+      "name": "总分怎样合成",
+      "en": "How the Total Is Composed"
+    },
+    {
+      "id": "scoring-2",
+      "parent": "scoring",
+      "name": "各题型的计分方式",
+      "en": "Scoring by Task Type"
+    },
+    {
+      "id": "scoring-3",
+      "parent": "scoring",
+      "name": "设计题计分",
+      "en": "Scoring Design Tasks"
+    },
+    {
+      "id": "principles",
+      "name": "设计原则",
+      "en": "Design Principles"
+    }
   ]
 }

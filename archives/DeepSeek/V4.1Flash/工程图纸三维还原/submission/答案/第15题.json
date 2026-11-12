@@ -1,0 +1,22 @@
+{
+  "problem": "15",
+  "parts": [
+    {"name": "1", "title": "双轴错层传动箱体", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,130,100], "r": 2}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-92,0],
+       "loops": [{"path": [[8,8],[122,8],[122,42],[92,56],[8,56]]}], "name": "箱体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [16,16,70,84]}], "depth": [8,44], "name": "左腔"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [74,16,116,84]}], "depth": [10,36], "name": "右腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [36,38], "d": 60}], "depth": [0,8], "name": "左轴承凸台Φ60"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [36,38], "d": 40}], "depth": [0,8], "name": "左沉孔Φ40"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[36,38]], "d": 28, "through": true, "name": "左轴孔Φ28"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [84,26], "d": 50}], "depth": [0,8], "name": "右轴承凸台Φ50"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [84,26], "d": 32}], "depth": [0,8], "name": "右沉孔Φ32"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[84,26]], "d": 22, "through": true, "name": "右轴孔Φ22"},
+      {"type": "hole", "plane": "YZ", "origin": [130,0,0], "at": [[50,30]], "d": 20, "depth": 24, "name": "右侧孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,56], "at": [[30,50],[75,50]], "d": 12, "depth": 30, "name": "顶孔Φ12"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[120,10],[10,90],[120,90]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,0], "at": [[50,50]], "d": 16, "depth": 6, "reverse": true, "name": "底面孔"}
+    ]}
+  ]
+}

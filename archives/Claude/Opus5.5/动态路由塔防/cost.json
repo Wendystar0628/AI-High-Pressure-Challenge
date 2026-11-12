@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "动态路由塔防",
+  "tokens": 38270907,
+  "minutes": 90.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.8,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/动态路由塔防/20261101-055335"
+  ]
+}

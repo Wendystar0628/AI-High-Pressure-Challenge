@@ -1,0 +1,1638 @@
+{
+  "problem": "08",
+  "title": "交错隔板双层润滑箱",
+  "sheets": [
+    {
+      "paper": "A1",
+      "scale": [
+        1.5,
+        1.25,
+        1,
+        0.9,
+        0.8
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "交错隔板双层润滑箱",
+      "drawing_no": "JX-08-01-1",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "front",
+          "free": true,
+          "name": "A-A",
+          "section": {
+            "label": "A",
+            "point": [
+              0,
+              59,
+              0
+            ],
+            "mode": "full",
+            "parent": "俯视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1
+          ],
+          "from": [
+            169,
+            80
+          ],
+          "to": [
+            174,
+            96
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1,
+            13,
+            18
+          ],
+          "from": [
+            54,
+            108
+          ],
+          "to": [
+            174,
+            118
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 1,
+          "covers_features": [
+            1,
+            15,
+            16,
+            23,
+            24
+          ],
+          "from": [
+            54,
+            86
+          ],
+          "to": [
+            174,
+            96
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2
+          ],
+          "from": [
+            -6,
+            0
+          ],
+          "to": [
+            -12,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2
+          ],
+          "from": [
+            -6,
+            -6
+          ],
+          "to": [
+            -12,
+            -12
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2
+          ],
+          "from": [
+            180,
+            0
+          ],
+          "to": [
+            186,
+            12
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2
+          ],
+          "from": [
+            118,
+            126
+          ],
+          "to": [
+            186,
+            130
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 2,
+          "covers_features": [
+            2,
+            3,
+            4,
+            5,
+            7,
+            14,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            186,
+            12
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3
+          ],
+          "from": [
+            5,
+            80
+          ],
+          "to": [
+            10,
+            12
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            4,
+            5,
+            6,
+            8,
+            12,
+            17
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            10,
+            10
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "24",
+          "value": 24,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            6,
+            10,
+            18
+          ],
+          "from": [
+            30,
+            64
+          ],
+          "to": [
+            54,
+            86
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            4,
+            5,
+            8,
+            13
+          ],
+          "from": [
+            118,
+            100
+          ],
+          "to": [
+            54,
+            108
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 3,
+          "covers_features": [
+            3,
+            4,
+            5,
+            6,
+            15
+          ],
+          "from": [
+            5,
+            80
+          ],
+          "to": [
+            54,
+            86
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4,
+            6,
+            8,
+            10
+          ],
+          "from": [
+            54,
+            86
+          ],
+          "to": [
+            62,
+            12
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 4,
+          "covers_features": [
+            4,
+            7,
+            8,
+            11
+          ],
+          "from": [
+            104,
+            74
+          ],
+          "to": [
+            110,
+            86
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5,
+            7,
+            11,
+            18
+          ],
+          "from": [
+            110,
+            86
+          ],
+          "to": [
+            118,
+            12
+          ],
+          "dir": "h",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+        "位置由尺寸链、定形与定位尺寸联合推算。",
+        "标注R、C须建模；未注锐边保持理论交线。",
+        "孔深沿轴线；斜孔从所标入口向体内加工。"
+      ],
+      "id": "08-1"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.5,
+        1.25,
+        1,
+        0.9,
+        0.8
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "交错隔板双层润滑箱",
+      "drawing_no": "JX-08-01-2",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        },
+        {
+          "type": "left",
+          "free": true,
+          "name": "B-B",
+          "section": {
+            "label": "B",
+            "point": [
+              86,
+              0,
+              0
+            ],
+            "mode": "full",
+            "parent": "主视图"
+          }
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "22",
+          "value": 22,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 5,
+          "covers_features": [
+            5
+          ],
+          "from": [
+            142,
+            28
+          ],
+          "to": [
+            164,
+            86
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 6,
+          "covers_features": [
+            6
+          ],
+          "from": [
+            30,
+            64
+          ],
+          "to": [
+            54,
+            66
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 6,
+          "covers_features": [
+            6
+          ],
+          "from": [
+            86,
+            32
+          ],
+          "to": [
+            62,
+            52
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "14",
+          "value": 14,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 7,
+          "covers_features": [
+            7
+          ],
+          "from": [
+            62,
+            52
+          ],
+          "to": [
+            110,
+            66
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 7,
+          "covers_features": [
+            7
+          ],
+          "from": [
+            169,
+            88
+          ],
+          "to": [
+            118,
+            100
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 7,
+          "covers_features": [
+            7
+          ],
+          "from": [
+            54,
+            30
+          ],
+          "to": [
+            118,
+            34
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 8,
+          "covers_features": [
+            8,
+            9,
+            16
+          ],
+          "from": [
+            118,
+            40
+          ],
+          "to": [
+            62,
+            44
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "8",
+          "value": 8,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 8,
+          "covers_features": [
+            8,
+            9
+          ],
+          "from": [
+            62,
+            44
+          ],
+          "to": [
+            110,
+            52
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "18",
+          "value": 18,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 9,
+          "covers_features": [
+            9,
+            15,
+            16
+          ],
+          "from": [
+            68,
+            62
+          ],
+          "to": [
+            86,
+            44
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 9,
+          "covers_features": [
+            9,
+            11
+          ],
+          "from": [
+            5,
+            30
+          ],
+          "to": [
+            86,
+            32
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            86,
+            32
+          ],
+          "text": [
+            "Φ18"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 9,
+          "covers_features": [
+            9
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "12",
+          "value": 12,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 10,
+          "covers_features": [
+            10,
+            14,
+            15,
+            16
+          ],
+          "from": [
+            110,
+            66
+          ],
+          "to": [
+            54,
+            78
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 10,
+          "covers_features": [
+            10
+          ],
+          "from": [
+            142,
+            28
+          ],
+          "to": [
+            54,
+            30
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "左视图",
+          "type": "leader",
+          "at": [
+            -78,
+            30
+          ],
+          "text": [
+            "Φ20"
+          ],
+          "value": 20,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 10,
+          "covers_features": [
+            10
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 11,
+          "covers_features": [
+            11
+          ],
+          "from": [
+            54,
+            66
+          ],
+          "to": [
+            110,
+            70
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "左视图",
+          "type": "leader",
+          "at": [
+            -32,
+            70
+          ],
+          "text": [
+            "Φ16"
+          ],
+          "value": 16,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 11,
+          "covers_features": [
+            11
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+        "位置由尺寸链、定形与定位尺寸联合推算。",
+        "标注R、C须建模；未注锐边保持理论交线。",
+        "孔深沿轴线；斜孔从所标入口向体内加工。"
+      ],
+      "id": "08-2"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.5,
+        1.25,
+        1,
+        0.9,
+        0.8
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "交错隔板双层润滑箱",
+      "drawing_no": "JX-08-01-3",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 12,
+          "covers_features": [
+            12
+          ],
+          "from": [
+            10,
+            12
+          ],
+          "to": [
+            30,
+            64
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 12,
+          "covers_features": [
+            12
+          ],
+          "from": [
+            68,
+            62
+          ],
+          "to": [
+            30,
+            64
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            30,
+            64
+          ],
+          "text": [
+            "Φ24"
+          ],
+          "value": 24,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 12,
+          "covers_features": [
+            12
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ],
+          "from": [
+            140,
+            0
+          ],
+          "to": [
+            142,
+            28
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "16",
+          "value": 16,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ],
+          "from": [
+            186,
+            12
+          ],
+          "to": [
+            142,
+            28
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            142,
+            28
+          ],
+          "text": [
+            "Φ24"
+          ],
+          "value": 24,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 13,
+          "covers_features": [
+            13
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "22",
+          "value": 22,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ],
+          "from": [
+            118,
+            12
+          ],
+          "to": [
+            140,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            140,
+            78
+          ],
+          "text": [
+            "Φ12"
+          ],
+          "value": 12,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 14,
+          "covers_features": [
+            14
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            86,
+            78
+          ],
+          "text": [
+            "Φ30"
+          ],
+          "value": 30,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 15,
+          "covers_features": [
+            15
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            86,
+            78
+          ],
+          "text": [
+            "Φ18"
+          ],
+          "value": 18,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 16,
+          "covers_features": [
+            16
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            62,
+            12
+          ],
+          "to": [
+            68,
+            62
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            110,
+            52
+          ],
+          "to": [
+            68,
+            62
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "18",
+          "value": 18,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            86,
+            44
+          ],
+          "to": [
+            104,
+            74
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "4",
+          "value": 4,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 17,
+          "covers_features": [
+            17
+          ],
+          "from": [
+            110,
+            70
+          ],
+          "to": [
+            104,
+            74
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "2",
+          "value": 2,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 18,
+          "covers_features": [
+            18
+          ],
+          "from": [
+            -6,
+            124
+          ],
+          "to": [
+            118,
+            126
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 18,
+          "covers_features": [
+            18
+          ],
+          "from": [
+            118,
+            34
+          ],
+          "to": [
+            118,
+            40
+          ],
+          "dir": "v",
+          "snap": true
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+        "位置由尺寸链、定形与定位尺寸联合推算。",
+        "标注R、C须建模；未注锐边保持理论交线。",
+        "孔深沿轴线；斜孔从所标入口向体内加工。"
+      ],
+      "id": "08-3"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.5,
+        1.25,
+        1,
+        0.9,
+        0.8
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "交错隔板双层润滑箱",
+      "drawing_no": "JX-08-01-4",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19,
+            20
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            -6,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19,
+            21
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            -6,
+            -6
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            -6,
+            -6
+          ],
+          "text": [
+            "Φ8"
+          ],
+          "value": 8,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 19,
+          "covers_features": [
+            19
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 20,
+          "covers_features": [
+            20,
+            22
+          ],
+          "from": [
+            174,
+            118
+          ],
+          "to": [
+            -6,
+            124
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            -6,
+            124
+          ],
+          "text": [
+            "Φ8"
+          ],
+          "value": 8,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 20,
+          "covers_features": [
+            20
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21,
+            22
+          ],
+          "from": [
+            174,
+            96
+          ],
+          "to": [
+            180,
+            0
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            180,
+            -6
+          ],
+          "text": [
+            "Φ8"
+          ],
+          "value": 8,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 21,
+          "covers_features": [
+            21
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            180,
+            124
+          ],
+          "text": [
+            "Φ8"
+          ],
+          "value": 8,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 22,
+          "covers_features": [
+            22
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23
+          ],
+          "from": [
+            0,
+            0
+          ],
+          "to": [
+            5,
+            80
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "20",
+          "value": 20,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23
+          ],
+          "from": [
+            10,
+            10
+          ],
+          "to": [
+            5,
+            30
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "6",
+          "value": 6,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23,
+            24
+          ],
+          "from": [
+            104,
+            74
+          ],
+          "to": [
+            5,
+            80
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            5,
+            30
+          ],
+          "text": [
+            "Φ5"
+          ],
+          "value": 5,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 23,
+          "covers_features": [
+            23
+          ]
+        },
+        {
+          "view": "主视图",
+          "type": "linear",
+          "text": "5",
+          "value": 5,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 24,
+          "covers_features": [
+            24
+          ],
+          "from": [
+            164,
+            86
+          ],
+          "to": [
+            169,
+            80
+          ],
+          "dir": "h",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "linear",
+          "text": "10",
+          "value": 10,
+          "category": "链式或相对定位尺寸",
+          "angle": 45,
+          "source_feature": 24,
+          "covers_features": [
+            24
+          ],
+          "from": [
+            54,
+            78
+          ],
+          "to": [
+            169,
+            88
+          ],
+          "dir": "v",
+          "snap": true
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            169,
+            88
+          ],
+          "text": [
+            "Φ5"
+          ],
+          "value": 5,
+          "category": "孔径",
+          "angle": 45,
+          "source_feature": 24,
+          "covers_features": [
+            24
+          ]
+        },
+        {
+          "view": "俯视图",
+          "type": "leader",
+          "at": [
+            -12,
+            -12
+          ],
+          "text": [
+            "R2 底板左前外竖棱"
+          ],
+          "value": 2,
+          "category": "倒圆半径",
+          "angle": 45,
+          "source_feature": 25,
+          "covers_features": [
+            25
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+        "位置由尺寸链、定形与定位尺寸联合推算。",
+        "标注R、C须建模；未注锐边保持理论交线。",
+        "孔深沿轴线；斜孔从所标入口向体内加工。"
+      ],
+      "id": "08-4"
+    },
+    {
+      "paper": "A1",
+      "scale": [
+        1.5,
+        1.25,
+        1,
+        0.9,
+        0.8
+      ],
+      "frame": "part",
+      "part": "1",
+      "title": "交错隔板双层润滑箱",
+      "drawing_no": "JX-08-01-5",
+      "material": "HT250",
+      "views": [
+        {
+          "type": "front"
+        },
+        {
+          "type": "top"
+        },
+        {
+          "type": "left"
+        }
+      ],
+      "dimensions": [
+        {
+          "view": "主视图",
+          "type": "leader",
+          "at": [
+            37.5,
+            0
+          ],
+          "text": [
+            "C1 所指前下直棱"
+          ],
+          "value": 1,
+          "category": "45度等距倒角",
+          "angle": 45,
+          "source_feature": 26,
+          "covers_features": [
+            26
+          ]
+        }
+      ],
+      "notes": [
+        "技术要求",
+        "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+        "位置由尺寸链、定形与定位尺寸联合推算。",
+        "标注R、C须建模；未注锐边保持理论交线。",
+        "孔深沿轴线；斜孔从所标入口向体内加工。"
+      ],
+      "id": "08-5"
+    }
+  ]
+}

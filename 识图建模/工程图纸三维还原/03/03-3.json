@@ -1,0 +1,219 @@
+{
+  "format": "工程图纸三维还原·图纸",
+  "problem": "03",
+  "sheet": "03-3",
+  "sheet_index": 3,
+  "sheet_count": 4,
+  "title": "双腔斜顶分流阀壳",
+  "frame": "part",
+  "part": "1",
+  "paper": {
+    "size": "A1",
+    "width": 841,
+    "height": 594
+  },
+  "dpi": 240,
+  "projection": "第一角画法",
+  "units": "毫米",
+  "scale": "1.5:1",
+  "title_block": {
+    "title": "双腔斜顶分流阀壳",
+    "drawing_no": "JX-03-01-3",
+    "material": "HT250",
+    "quantity": 1,
+    "scale_text": "1.5:1"
+  },
+  "parts_list": [],
+  "notes": [
+    "技术要求",
+    "单位mm；尺寸由界线或引线指示，不是绝对坐标。",
+    "位置由尺寸链、定形与定位尺寸联合推算。",
+    "标注R、C须建模；未注锐边保持理论交线。",
+    "孔深沿轴线；斜孔从所标入口向体内加工。"
+  ],
+  "version": 2,
+  "conventions": {
+    "图纸": "形状、图线、遮挡关系和剖面边界仅见同名PNG；JSON不提供图线或标注图元坐标。",
+    "尺寸": "每个尺寸旁的〔D编号〕对应dimensions目录；编号在整题内唯一。value为尺寸数值，text为完整标注，参考尺寸保留括号。",
+    "坐标": "O是零件坐标原点，箭头X/Y/Z指向正向；单位毫米。装配图采用总坐标系，零件图采用各自坐标系。",
+    "投影": "第一角画法；主视沿+Y，俯视沿−Z，左视沿+X。其他视图以definition.direction为投射方向。",
+    "剖切": "definition.section只说明剖切平面与方式；剖切位置字母标在PNG上，不包含截面轮廓。",
+    "尺寸链": "线性尺寸由尺寸界线所指的轮廓、轴线或中心位置之间量取。局部定形与相对定位尺寸需结合PNG联立；不得将尺寸数值直接当成绝对坐标。"
+  },
+  "dimensions": [
+    {
+      "id": "D33",
+      "view": "主视图",
+      "type": "孔径",
+      "value": 12,
+      "text": "Φ12 斜孔"
+    },
+    {
+      "id": "D34",
+      "view": "主视图",
+      "type": "孔深",
+      "value": 42,
+      "text": "深42"
+    },
+    {
+      "id": "D35",
+      "view": "斜视1",
+      "type": "角度",
+      "value": 45,
+      "text": "倾角45°"
+    },
+    {
+      "id": "D36",
+      "view": "斜视1",
+      "type": "角度",
+      "value": 0,
+      "text": "方位0°"
+    },
+    {
+      "id": "D37",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 12,
+      "text": "12"
+    },
+    {
+      "id": "D38",
+      "view": "俯视图",
+      "type": "链式或相对定位尺寸",
+      "value": 16,
+      "text": "16"
+    },
+    {
+      "id": "D39",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 10,
+      "text": "10"
+    },
+    {
+      "id": "D40",
+      "view": "俯视图",
+      "type": "链式或相对定位尺寸",
+      "value": 7,
+      "text": "7"
+    },
+    {
+      "id": "D41",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 6,
+      "text": "6"
+    },
+    {
+      "id": "D42",
+      "view": "俯视图",
+      "type": "链式或相对定位尺寸",
+      "value": 8,
+      "text": "8"
+    },
+    {
+      "id": "D43",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 2,
+      "text": "2"
+    },
+    {
+      "id": "D44",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 5,
+      "text": "Φ5"
+    },
+    {
+      "id": "D45",
+      "view": "俯视图",
+      "type": "链式或相对定位尺寸",
+      "value": 16,
+      "text": "16"
+    },
+    {
+      "id": "D46",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 5,
+      "text": "Φ5"
+    },
+    {
+      "id": "D47",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 6,
+      "text": "6"
+    },
+    {
+      "id": "D48",
+      "view": "俯视图",
+      "type": "链式或相对定位尺寸",
+      "value": 4,
+      "text": "4"
+    }
+  ],
+  "views": [
+    {
+      "name": "主视图",
+      "kind": "basic",
+      "position": "front",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "俯视图",
+      "kind": "basic",
+      "position": "top",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "左视图",
+      "kind": "basic",
+      "position": "left",
+      "frame": "part",
+      "projection_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "斜视1",
+      "kind": "auxiliary",
+      "position": null,
+      "frame": "part",
+      "projection_direction": [
+        -0.707106781,
+        0.0,
+        -0.707106781
+      ],
+      "section": null,
+      "type": "斜视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    }
+  ]
+}

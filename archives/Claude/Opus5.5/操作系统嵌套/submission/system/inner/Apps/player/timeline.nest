@@ -1,0 +1,49 @@
+;; =====================================================================
+;; 时序进程（播放器的协作进程之一）：播放位置由本进程按所属系统的虚拟时间推进。
+;; 播放速率与系统时间速率共同生效；暂停期间不推进，继续时不补跑；调速不改变当前时刻。
+;; 每推进一帧，用消息驱动飞行场景进程（进而驱动特效进程）更新到同一时刻。
+;; 播放器帧率：60 帧/秒；逐帧前进 = 1/60 秒。
+;; =====================================================================
+(include "/System/lib/core.nest")
+
+(var A ARGS) (var UI A.ui) (var SCENE A.scene)
+(def FPS 60)
+(var POS 0) (var RATE 1) (var PLAYING false) (var LOOP false) (var DUR 15) (var ENDED false)
+(var LAST (sys "now")) (var N 0)
+
+(defn report () (send UI {:k "tl" :pos POS :playing PLAYING :rate RATE :loop LOOP :dur DUR :ended ENDED}))
+(defn push-scene (seek) (send SCENE {:k "advance" :t POS :seek seek}))
+
+(defn on-msg (m)
+  (case m.k
+    ("play" (when (or ENDED (>= POS DUR)) (set! POS 0) (set! ENDED false) (push-scene true)) (set! PLAYING true))
+    ("pause" (set! PLAYING false))
+    ("toggle" (if PLAYING (set! PLAYING false) (on-msg {:k "play"})))
+    ("stop" (set! PLAYING false) (set! POS 0) (set! ENDED false) (push-scene true))
+    ("replay" (set! POS 0) (set! ENDED false) (set! PLAYING true) (push-scene true))
+    ("seek" (set! POS (clamp m.t 0 DUR)) (set! ENDED (and (>= POS DUR) (not LOOP))) (push-scene true))
+    ("rate" (set! RATE (clamp m.rate 0.05 8)))
+    ("loop" (set! LOOP m.on))
+    ("step" (set! PLAYING false) (set! POS (min DUR (+ POS (/ 1 FPS)))) (set! ENDED (>= POS DUR)) (push-scene false))
+    ("step-back" (set! PLAYING false) (set! POS (max 0 (- POS (/ 1 FPS)))) (set! ENDED false) (push-scene true))
+    ("dur" (set! DUR m.dur) (when (> POS DUR) (set! POS DUR)))
+    ("reset" (set! POS (or m.t 0)) (set! PLAYING (get-or m "play" false)) (set! ENDED false) (push-scene true))
+    (else nil))
+  (report))
+
+(push-scene true)
+(report)
+(while true
+  (var m (sys "recv" (if PLAYING (/ 1 FPS) nil)))
+  (var now (sys "now"))
+  (when PLAYING
+    (inc! POS (* (- now LAST) RATE))
+    (when (>= POS DUR)
+      (if LOOP
+        (do (set! POS (- POS DUR)) (push-scene true))
+        (do (set! POS DUR) (set! PLAYING false) (set! ENDED true) (report))))
+    (push-scene false)
+    (inc! N)
+    (when (= (% N 6) 0) (report)))
+  (set! LAST now)
+  (when m (on-msg m)))

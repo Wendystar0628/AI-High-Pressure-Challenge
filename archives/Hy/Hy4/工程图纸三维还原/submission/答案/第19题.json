@@ -1,0 +1,16 @@
+{
+  "problem": "19",
+  "parts": [
+    {"name": "1", "title": "斜交三轴变速箱壳", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 130, 110]}], "depth": 10, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 90, 0], "loops": [{"circle": [65, 40], "d": 90}], "depth": 70, "name": "主圆柱Φ90"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [65, 40], "d": 50, "depth": 75, "name": "前接口Φ50"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 90, 0],
+       "loops": [{"circle": [65, 40], "d": 68}, {"circle": [65, 40], "d": 54}], "depth": 20, "name": "环腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10],
+       "at": [[8, 8], [122, 8], [8, 102], [122, 102]], "d": 9, "through": true, "name": "地脚4孔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 20, 0], "loops": [{"circle": [65, 40], "d": 86}], "depth": 6, "name": "前法兰Φ86"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10], "at": [[30, 55], [100, 55]], "d": 16, "depth": 12, "name": "斜轴座孔"}
+    ]}
+  ]
+}

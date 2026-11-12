@@ -24,11 +24,6 @@
     "taskList": "Tasks",
     "single": "One task: ",
     "sortLink": "Sort the leaderboard by this category",
-    "toggle": "Task scores",
-    "toggleTitle": "List this category's task scores under each model",
-    "sortLabel": "Sort this board by",
-    "sortCategory": "Category",
-    "sortTask": "Sort by {no} {name}",
     "rank": "Rank",
     "model": "Model",
     "score": "Score",
@@ -41,11 +36,24 @@
     "noScore": "Not scored",
     "progress": "{done} / {all} tasks scored",
     "ariaPending": "Being tested, {name}, {done} / {all} tasks of this category scored",
-    "ariaTask": "Rank {rank} on {task}, {name}, category score {score}",
-    "ariaTaskPending": "{task} not scored, {name}",
     "subsLabel": "Task scores of {name}",
     "subAria": "{no} {task}, {score}",
-    "exportTitle": "Categories │ {name}"
+    "exportTitle": "Categories │ {name} │ {view}"
+  },
+  "view": {
+    "label": "How to read this board",
+    "task": "By task",
+    "matrix": "Matrix",
+    "model": "By model",
+    "taskTitle": "One block per task, every model ranked by that task",
+    "matrixTitle": "Models × this category's tasks; click a column head to sort by that task",
+    "modelTitle": "One row per model, its task scores underneath",
+    "matrixLabel": "{name} score matrix"
+  },
+  "byTask": {
+    "category": "Category score",
+    "single": "Category score = its only task",
+    "score": "Score"
   },
   "keys": {
     "compare": "Compare the ticked models"

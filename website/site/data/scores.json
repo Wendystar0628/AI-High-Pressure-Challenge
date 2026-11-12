@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-13",
   "cost_source": {
     "name": "ModelDial 订阅额度",
     "name_en": "ModelDial subscription quotas",
@@ -9,53 +9,131 @@
   },
   "order": [
     "gpt-6-astra",
-    "claude-opus-5-5",
     "gpt-6-1-sol",
+    "claude-opus-5-5",
     "claude-sonnet-5-5",
     "gpt-6-1-terra",
-    "deepseek-v4-1-flash",
     "claude-haiku-5-5",
     "gpt-5-6-sol",
+    "deepseek-v4-1-flash",
     "hy4",
     "gpt-6-luna",
     "mimo-v2-6-pro",
-    "gpt-6-2-sol"
+    "gemini-4-carbon",
+    "gemini-4-hydrogen"
   ],
   "scores": {
     "gpt-6-astra": {
-      "total": 74.9,
+      "total": 70.3,
       "kinds": {
-        "standard": 72.6,
-        "design": 76.4
+        "standard": 67.2,
+        "design": 73.5
       },
       "categories": {
-        "reason": 78.0,
-        "algo": 71.3,
+        "reason": 75.0,
+        "algo": 55.1,
+        "battle": 68.0,
         "spatial": 66.7,
-        "interact": 68.3,
+        "drawing": 71.2,
+        "interact": 68.8,
         "game": 74.1,
-        "physics": 83.0,
-        "visual": 77.6,
-        "system": 78.3
+        "physics": 72.2,
+        "visual": 77.8,
+        "system": 74.4
       },
       "tasks": {
         "formal-proof": 75.0,
-        "math-olympiad": 81.0,
-        "unit-square": 71.2,
-        "transformer": 73.8,
-        "circuit": 68.8,
+        "math-olympiad": 75.0,
+        "raytracing": 59.7,
+        "circuit": 50.6,
+        "conquest": 68.0,
         "luban": 66.7,
-        "ae-editor": 68.3,
+        "drawing": 71.2,
+        "ae-editor": 68.8,
         "tower-defense": 74.1,
-        "jelly-tank": 83.0,
-        "nvidia-b200": 74.2,
+        "jelly-tank": 72.2,
         "harbor": 81.0,
-        "nested-os": 78.3
+        "starship": 74.7,
+        "nested-os": 74.4
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 59.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.0
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.7
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 88.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.4
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 69.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.3
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 73.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.4
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 45.1,
+        "cny": 57.5,
         "basis": "subscription",
         "plan": {
           "name": "OpenAI Pro 200",
@@ -63,29 +141,270 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 127589257,
+        "tokens": 162658630,
         "fitted": [
           "形式化证明题",
-          "数学竞赛原创试题",
-          "AE风味动效设计编辑器",
           "动态路由塔防",
-          "NVIDIA_B200网页艺术",
           "太阳雨渔港3D渲染",
-          "单位正方形内最小三角形面积最大化",
-          "Transformer前向推理的GPU加速",
-          "通用数字电路仿真器加速",
-          "果冻冲击与造浪水槽",
-          "操作系统嵌套",
+          "光线追踪渲染加速",
           "鲁班锁拆解"
         ],
         "method": "quota",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2,
+        "fit_basis": {
+          "method": "agent_elapsed_time",
+          "source": "GPT/6Astra",
+          "tokens_per_minute": 183687.5356107679,
+          "source_tokens": 94694242,
+          "source_minutes": 515.5180599768956,
+          "source_times": {
+            "果冻冲击与造浪水槽": {
+              "minutes": 51.30880782206853,
+              "fallback": false,
+              "label": "实际停止",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\session.log#agent_completed_at"
+              ]
+            },
+            "操作系统嵌套": {
+              "minutes": 81.70056068102518,
+              "fallback": false,
+              "label": "实际停止",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\session.log#agent_completed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\host.json"
+              ]
+            },
+            "AE风味动效设计编辑器": {
+              "minutes": 52.96179868777593,
+              "fallback": false,
+              "label": "实际停止",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\session.log#agent_completed_at"
+              ]
+            },
+            "数学竞赛原创试题": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json#closed_at"
+              ]
+            },
+            "星际战舰编队": {
+              "minutes": 90.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json#closed_at"
+              ]
+            },
+            "工程图纸三维还原": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json#closed_at"
+              ]
+            },
+            "数字电路仿真器加速": {
+              "minutes": 59.546892786026,
+              "fallback": false,
+              "label": "实际停止",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\session.log#agent_completed_at"
+              ]
+            },
+            "攻城略地": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json#closed_at"
+              ]
+            }
+          },
+          "tasks": {
+            "形式化证明题": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 11021252,
+              "segments": [
+                {
+                  "run": "GPT/6Astra/形式化证明题/timer-1793699493.1404154",
+                  "time": {
+                    "minutes": 60.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
+                      "前段计时归档原因：改为 8 题，七个模型重测"
+                    ]
+                  }
+                }
+              ]
+            },
+            "动态路由塔防": {
+              "minutes": 90.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 16531878,
+              "segments": [
+                {
+                  "run": "GPT/6Astra/动态路由塔防/timer-1793583558.0270402",
+                  "time": {
+                    "minutes": 90.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防"
+                    ]
+                  }
+                }
+              ]
+            },
+            "太阳雨渔港3D渲染": {
+              "minutes": 100.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 18368754,
+              "segments": [
+                {
+                  "run": "GPT/6Astra/太阳雨渔港3D渲染/timer-1793583560.5644612",
+                  "time": {
+                    "minutes": 100.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染"
+                    ]
+                  }
+                }
+              ]
+            },
+            "光线追踪渲染加速": {
+              "minutes": 60,
+              "fallback": true,
+              "label": "限时回退",
+              "sources": [
+                "题目限时（无完整作答时长记录）"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 11021252,
+              "segments": []
+            },
+            "鲁班锁拆解": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 11021252,
+              "segments": [
+                {
+                  "run": "GPT/6Astra/鲁班锁拆解/timer-1793742813.8459013",
+                  "time": {
+                    "minutes": 60.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
+                      "前段计时归档原因：换成新八题版（Handshake…Linear，档次 2/4/2，分值 8/12/18，材料文件夹沿用原名），旧八题版这轮不评分，七模型重测"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
       },
       "rank": 1,
       "category_ranks": {
         "reason": 1,
-        "algo": 3,
+        "algo": 4,
+        "battle": 1,
         "spatial": 2,
+        "drawing": 1,
         "interact": 3,
         "game": 4,
         "physics": 2,
@@ -94,133 +413,139 @@
       },
       "task_ranks": {
         "formal-proof": 1,
-        "math-olympiad": 3,
-        "unit-square": 2,
-        "transformer": 3,
-        "circuit": 2,
+        "math-olympiad": 2,
+        "raytracing": 2,
+        "circuit": 4,
+        "conquest": 1,
         "luban": 2,
+        "drawing": 1,
         "ae-editor": 3,
         "tower-defense": 4,
         "jelly-tank": 2,
-        "nvidia-b200": 4,
         "harbor": 3,
+        "starship": 3,
         "nested-os": 2
       }
     },
-    "claude-opus-5-5": {
-      "total": 74.2,
-      "kinds": {
-        "standard": 52.6,
-        "design": 88.6
-      },
-      "categories": {
-        "reason": 56.2,
-        "algo": 65.4,
-        "spatial": 28.0,
-        "interact": 82.2,
-        "game": 88.5,
-        "physics": 90.8,
-        "visual": 89.5,
-        "system": 91.1
-      },
-      "tasks": {
-        "formal-proof": 62.5,
-        "math-olympiad": 50.0,
-        "unit-square": 68.4,
-        "transformer": 47.9,
-        "circuit": 79.8,
-        "luban": 28.0,
-        "ae-editor": 82.2,
-        "tower-defense": 88.5,
-        "jelly-tank": 90.8,
-        "nvidia-b200": 87.9,
-        "harbor": 91.1,
-        "nested-os": 91.1
-      },
-      "status": "ranked",
-      "done": 12,
-      "cost": {
-        "cny": 16.5,
-        "basis": "subscription",
-        "plan": {
-          "name": "Claude Ultra",
-          "price": 200,
-          "currency": "USD",
-          "period": "month"
-        },
-        "tokens": 350842100,
-        "fitted": [
-          "形式化证明题",
-          "数学竞赛原创试题",
-          "AE风味动效设计编辑器",
-          "NVIDIA_B200网页艺术",
-          "通用数字电路仿真器加速",
-          "操作系统嵌套",
-          "鲁班锁拆解"
-        ],
-        "method": "quota",
-        "api_usd": null
-      },
-      "rank": 2,
-      "category_ranks": {
-        "reason": 4,
-        "algo": 4,
-        "spatial": 3,
-        "interact": 1,
-        "game": 1,
-        "physics": 1,
-        "visual": 1,
-        "system": 1
-      },
-      "task_ranks": {
-        "formal-proof": 2,
-        "math-olympiad": 5,
-        "unit-square": 4,
-        "transformer": 7,
-        "circuit": 1,
-        "luban": 3,
-        "ae-editor": 1,
-        "tower-defense": 1,
-        "jelly-tank": 1,
-        "nvidia-b200": 1,
-        "harbor": 1,
-        "nested-os": 1
-      }
-    },
     "gpt-6-1-sol": {
-      "total": 74.1,
+      "total": 68.7,
       "kinds": {
-        "standard": 73.1,
-        "design": 74.8
+        "standard": 65.4,
+        "design": 72.0
       },
       "categories": {
-        "reason": 75.7,
-        "algo": 72.9,
+        "reason": 69.3,
+        "algo": 57.7,
+        "battle": 65.7,
         "spatial": 69.4,
-        "interact": 59.3,
+        "drawing": 64.9,
+        "interact": 66.8,
         "game": 76.2,
-        "physics": 82.2,
-        "visual": 76.7,
-        "system": 77.9
+        "physics": 68.5,
+        "visual": 75.0,
+        "system": 73.6
       },
       "tasks": {
         "formal-proof": 62.5,
-        "math-olympiad": 88.9,
-        "unit-square": 71.0,
-        "transformer": 79.5,
-        "circuit": 68.1,
+        "math-olympiad": 76.2,
+        "raytracing": 59.6,
+        "circuit": 55.8,
+        "conquest": 65.7,
         "luban": 69.4,
-        "ae-editor": 59.3,
+        "drawing": 64.9,
+        "ae-editor": 66.8,
         "tower-defense": 76.2,
-        "jelly-tank": 82.2,
-        "nvidia-b200": 76.0,
+        "jelly-tank": 68.5,
         "harbor": 77.3,
-        "nested-os": 77.9
+        "starship": 72.8,
+        "nested-os": 73.6
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "第1、7、19题用全构型编码代替实际求值和分类。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.6
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.5
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 61.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.9
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.7
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 11.4,
+        "cny": 12.9,
         "basis": "subscription",
         "plan": {
           "name": "OpenAI Pro 200",
@@ -228,16 +553,19 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 172908961,
+        "tokens": 195399801,
         "fitted": [],
         "method": "quota",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2
       },
-      "rank": 3,
+      "rank": 2,
       "category_ranks": {
         "reason": 2,
-        "algo": 2,
+        "algo": 3,
+        "battle": 2,
         "spatial": 1,
+        "drawing": 2,
         "interact": 5,
         "game": 3,
         "physics": 3,
@@ -247,52 +575,130 @@
       "task_ranks": {
         "formal-proof": 2,
         "math-olympiad": 1,
-        "unit-square": 3,
-        "transformer": 2,
-        "circuit": 3,
+        "raytracing": 3,
+        "circuit": 2,
+        "conquest": 2,
         "luban": 1,
+        "drawing": 2,
         "ae-editor": 5,
         "tower-defense": 3,
         "jelly-tank": 3,
-        "nvidia-b200": 3,
         "harbor": 4,
+        "starship": 4,
         "nested-os": 3
       }
     },
-    "claude-sonnet-5-5": {
-      "total": 67.7,
+    "claude-opus-5-5": {
+      "total": 62.9,
       "kinds": {
-        "standard": 52.4,
-        "design": 78.0
+        "standard": 45.9,
+        "design": 79.8
       },
       "categories": {
-        "reason": 41.7,
-        "algo": 80.4,
-        "spatial": 26.5,
-        "interact": 74.8,
-        "game": 78.8,
-        "physics": 80.5,
-        "visual": 83.9,
-        "system": 70.5
+        "reason": 58.3,
+        "algo": 59.2,
+        "battle": 39.5,
+        "spatial": 28.0,
+        "drawing": 44.4,
+        "interact": 80.7,
+        "game": 88.5,
+        "physics": 76.2,
+        "visual": 85.2,
+        "system": 68.3
       },
       "tasks": {
-        "formal-proof": 50.0,
-        "math-olympiad": 33.3,
-        "unit-square": 83.8,
-        "transformer": 94.1,
-        "circuit": 63.4,
-        "luban": 26.5,
-        "ae-editor": 74.8,
-        "tower-defense": 78.8,
-        "jelly-tank": 80.5,
-        "nvidia-b200": 79.0,
-        "harbor": 88.8,
-        "nested-os": 70.5
+        "formal-proof": 62.5,
+        "math-olympiad": 54.2,
+        "raytracing": 57.0,
+        "circuit": 61.5,
+        "conquest": 39.5,
+        "luban": 28.0,
+        "drawing": 44.4,
+        "ae-editor": 80.7,
+        "tower-defense": 88.5,
+        "jelly-tank": 76.2,
+        "harbor": 91.1,
+        "starship": 79.4,
+        "nested-os": 68.3
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 76.6
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 85.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 92.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 89.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 93.1
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 76.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 82.9
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 61.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.0
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 28.3,
+        "cny": 27.4,
         "basis": "subscription",
         "plan": {
           "name": "Claude Ultra",
@@ -300,71 +706,547 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 890119549,
+        "tokens": 584318405,
+        "fitted": [
+          "形式化证明题",
+          "太阳雨渔港3D渲染",
+          "光线追踪渲染加速",
+          "鲁班锁拆解"
+        ],
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "fit_basis": {
+          "method": "agent_elapsed_time",
+          "source": "Claude/Opus5.5",
+          "tokens_per_minute": 626951.077027027,
+          "source_tokens": 463943797,
+          "source_minutes": 740.0,
+          "source_times": {
+            "动态路由塔防": {
+              "minutes": 90.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\deadline.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\session.log#agent_completed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\session.log#agent_stopped_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\host.json"
+              ]
+            },
+            "太阳雨渔港3D渲染": {
+              "minutes": 90.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\deadline.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\session.log#agent_completed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\session.log#agent_stopped_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\host.json"
+              ]
+            },
+            "果冻冲击与造浪水槽": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json#closed_at"
+              ]
+            },
+            "操作系统嵌套": {
+              "minutes": 110.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json#closed_at"
+              ]
+            },
+            "AE风味动效设计编辑器": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json#closed_at"
+              ]
+            },
+            "数学竞赛原创试题": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\host.json"
+              ]
+            },
+            "星际战舰编队": {
+              "minutes": 90.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json#closed_at",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\host.json"
+              ]
+            },
+            "工程图纸三维还原": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json#closed_at"
+              ]
+            },
+            "数字电路仿真器加速": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json#closed_at"
+              ]
+            },
+            "攻城略地": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json#stopped",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json#closed_at"
+              ]
+            }
+          },
+          "tasks": {
+            "形式化证明题": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 37617065,
+              "segments": [
+                {
+                  "run": "Claude/Opus5.5/形式化证明题/timer-1793699491.2902353",
+                  "time": {
+                    "minutes": 60.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题"
+                    ]
+                  }
+                }
+              ]
+            },
+            "太阳雨渔港3D渲染": {
+              "minutes": 12.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染#closed_at"
+              ],
+              "measured_tokens": 105607156,
+              "fitted_tokens": 7523413,
+              "segments": [
+                {
+                  "run": "Claude/Opus5.5/太阳雨渔港3D渲染/timer-1793376040.6203678",
+                  "time": {
+                    "minutes": 12.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "resume",
+                    "inferred": true,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
+                      "推定续做：缩短授权时长、继承半场提醒，且未见重测归档边界；会话 ID 无法补证",
+                      "前段归档目录 20261031-000037；本段在归档后 3.620 秒启动"
+                    ]
+                  }
+                }
+              ]
+            },
+            "光线追踪渲染加速": {
+              "minutes": 60,
+              "fallback": true,
+              "label": "限时回退",
+              "sources": [
+                "题目限时（无完整作答时长记录）"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 37617065,
+              "segments": []
+            },
+            "鲁班锁拆解": {
+              "minutes": 60.0,
+              "fallback": false,
+              "label": "开始→截止（实际停止未知）",
+              "sources": [
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
+                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解#closed_at"
+              ],
+              "measured_tokens": 0,
+              "fitted_tokens": 37617065,
+              "segments": [
+                {
+                  "run": "Claude/Opus5.5/鲁班锁拆解/timer-1793742810.494672",
+                  "time": {
+                    "minutes": 60.0,
+                    "fallback": false,
+                    "label": "开始→截止（实际停止未知）",
+                    "sources": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解#closed_at"
+                    ]
+                  },
+                  "lineage": {
+                    "kind": "new",
+                    "inferred": false,
+                    "evidence": [
+                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
+                      "前段计时归档原因：换成新八题版（Handshake…Linear，档次 2/4/2，分值 8/12/18，材料文件夹沿用原名），旧八题版这轮不评分，七模型重测"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "rank": 3,
+      "category_ranks": {
+        "reason": 3,
+        "algo": 2,
+        "battle": 3,
+        "spatial": 4,
+        "drawing": 4,
+        "interact": 1,
+        "game": 1,
+        "physics": 1,
+        "visual": 1,
+        "system": 4
+      },
+      "task_ranks": {
+        "formal-proof": 2,
+        "math-olympiad": 5,
+        "raytracing": 4,
+        "circuit": 1,
+        "conquest": 3,
+        "luban": 4,
+        "drawing": 4,
+        "ae-editor": 1,
+        "tower-defense": 1,
+        "jelly-tank": 1,
+        "harbor": 1,
+        "starship": 1,
+        "nested-os": 4
+      }
+    },
+    "claude-sonnet-5-5": {
+      "total": 57.3,
+      "kinds": {
+        "standard": 41.0,
+        "design": 73.7
+      },
+      "categories": {
+        "reason": 41.4,
+        "algo": 67.9,
+        "battle": 14.8,
+        "spatial": 26.5,
+        "drawing": 54.3,
+        "interact": 76.9,
+        "game": 78.8,
+        "physics": 52.0,
+        "visual": 83.1,
+        "system": 77.7
+      },
+      "tasks": {
+        "formal-proof": 50.0,
+        "math-olympiad": 32.7,
+        "raytracing": 83.4,
+        "circuit": 52.4,
+        "conquest": 14.8,
+        "luban": 26.5,
+        "drawing": 54.3,
+        "ae-editor": 76.9,
+        "tower-defense": 78.8,
+        "jelly-tank": 52.0,
+        "harbor": 88.8,
+        "starship": 77.5,
+        "nested-os": 77.7
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 73.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 80.4
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.4
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 87.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 90.5
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 70.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 47.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 57.0
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.2
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.1
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 23.8,
+        "basis": "subscription",
+        "plan": {
+          "name": "Claude Ultra",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        },
+        "tokens": 749100777,
         "fitted": [],
         "method": "quota",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2
       },
       "rank": 4,
       "category_ranks": {
-        "reason": 6,
+        "reason": 5,
         "algo": 1,
+        "battle": 6,
         "spatial": 6,
+        "drawing": 3,
         "interact": 2,
         "game": 2,
         "physics": 4,
         "visual": 2,
-        "system": 4
+        "system": 1
       },
       "task_ranks": {
         "formal-proof": 4,
-        "math-olympiad": 7,
-        "unit-square": 1,
-        "transformer": 1,
-        "circuit": 5,
+        "math-olympiad": 6,
+        "raytracing": 1,
+        "circuit": 3,
+        "conquest": 6,
         "luban": 6,
+        "drawing": 3,
         "ae-editor": 2,
         "tower-defense": 2,
         "jelly-tank": 4,
-        "nvidia-b200": 2,
         "harbor": 2,
-        "nested-os": 4
+        "starship": 2,
+        "nested-os": 1
       }
     },
     "gpt-6-1-terra": {
-      "total": 59.9,
+      "total": 45.0,
       "kinds": {
-        "standard": 52.7,
-        "design": 64.8
+        "standard": 36.1,
+        "design": 53.8
       },
       "categories": {
-        "reason": 63.2,
-        "algo": 59.4,
-        "spatial": 26.8,
-        "interact": 54.8,
+        "reason": 48.2,
+        "algo": 45.0,
+        "battle": 16.3,
+        "spatial": 28.1,
+        "drawing": 42.9,
+        "interact": 46.2,
         "game": 68.0,
-        "physics": 70.0,
-        "visual": 72.1,
-        "system": 56.6
+        "physics": 41.4,
+        "visual": 66.0,
+        "system": 47.4
       },
       "tasks": {
         "formal-proof": 37.5,
-        "math-olympiad": 88.9,
-        "unit-square": 61.6,
-        "transformer": 48.8,
-        "circuit": 67.7,
-        "luban": 26.8,
-        "ae-editor": 54.8,
+        "math-olympiad": 58.9,
+        "raytracing": 47.9,
+        "circuit": 42.2,
+        "conquest": 16.3,
+        "luban": 28.1,
+        "drawing": 42.9,
+        "ae-editor": 46.2,
         "tower-defense": 68.0,
-        "jelly-tank": 70.0,
-        "nvidia-b200": 72.7,
+        "jelly-tank": 41.4,
         "harbor": 71.6,
-        "nested-os": 56.6
+        "starship": 60.5,
+        "nested-os": 47.4
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 40.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 51.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 58.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.7
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 52.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 34.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 48.2
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 43.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 51.6
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 25.4,
+        "cny": 23.9,
         "basis": "subscription",
         "plan": {
           "name": "OpenAI Pro 200",
@@ -372,140 +1254,152 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 772223790,
+        "tokens": 724983279,
         "fitted": [],
         "method": "quota",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2
       },
       "rank": 5,
       "category_ranks": {
-        "reason": 3,
+        "reason": 4,
         "algo": 5,
-        "spatial": 4,
-        "interact": 6,
+        "battle": 5,
+        "spatial": 3,
+        "drawing": 5,
+        "interact": 7,
         "game": 5,
         "physics": 6,
-        "visual": 5,
-        "system": 6
-      },
-      "task_ranks": {
-        "formal-proof": 5,
-        "math-olympiad": 1,
-        "unit-square": 5,
-        "transformer": 6,
-        "circuit": 4,
-        "luban": 4,
-        "ae-editor": 6,
-        "tower-defense": 5,
-        "jelly-tank": 6,
-        "nvidia-b200": 5,
-        "harbor": 6,
-        "nested-os": 6
-      }
-    },
-    "deepseek-v4-1-flash": {
-      "total": 50.1,
-      "kinds": {
-        "standard": 29.8,
-        "design": 63.6
-      },
-      "categories": {
-        "reason": 17.0,
-        "algo": 57.2,
-        "spatial": 8.0,
-        "interact": 60.4,
-        "game": 65.0,
-        "physics": 75.5,
-        "visual": 70.1,
-        "system": 47.5
-      },
-      "tasks": {
-        "formal-proof": 12.5,
-        "math-olympiad": 21.4,
-        "unit-square": 53.8,
-        "transformer": 55.2,
-        "circuit": 62.5,
-        "luban": 8.0,
-        "ae-editor": 60.4,
-        "tower-defense": 65.0,
-        "jelly-tank": 75.5,
-        "nvidia-b200": 66.1,
-        "harbor": 74.1,
-        "nested-os": 47.5
-      },
-      "status": "ranked",
-      "done": 12,
-      "cost": {
-        "cny": 74,
-        "basis": "api",
-        "plan": {
-          "name": "DeepSeek API"
-        },
-        "tokens": 1714288958,
-        "fitted": [],
-        "method": "billed",
-        "api_usd": null
-      },
-      "rank": 6,
-      "category_ranks": {
-        "reason": 9,
-        "algo": 6,
-        "spatial": 7,
-        "interact": 4,
-        "game": 7,
-        "physics": 5,
         "visual": 6,
         "system": 8
       },
       "task_ranks": {
-        "formal-proof": 8,
-        "math-olympiad": 8,
-        "unit-square": 7,
-        "transformer": 5,
-        "circuit": 6,
-        "luban": 7,
-        "ae-editor": 4,
-        "tower-defense": 7,
-        "jelly-tank": 5,
-        "nvidia-b200": 6,
-        "harbor": 5,
+        "formal-proof": 5,
+        "math-olympiad": 3,
+        "raytracing": 5,
+        "circuit": 5,
+        "conquest": 5,
+        "luban": 3,
+        "drawing": 5,
+        "ae-editor": 7,
+        "tower-defense": 5,
+        "jelly-tank": 6,
+        "harbor": 6,
+        "starship": 6,
         "nested-os": 8
       }
     },
     "claude-haiku-5-5": {
-      "total": 49.1,
+      "total": 40.7,
       "kinds": {
-        "standard": 26.8,
-        "design": 63.9
+        "standard": 19.9,
+        "design": 61.6
       },
       "categories": {
-        "reason": 20.4,
-        "algo": 51.0,
+        "reason": 26.2,
+        "algo": 26.1,
+        "battle": 16.5,
         "spatial": 0.0,
-        "interact": 54.2,
+        "drawing": 30.5,
+        "interact": 67.3,
         "game": 66.8,
-        "physics": 64.0,
-        "visual": 66.1,
-        "system": 66.1
+        "physics": 50.5,
+        "visual": 62.0,
+        "system": 61.5
       },
       "tasks": {
         "formal-proof": 25.0,
-        "math-olympiad": 15.9,
-        "unit-square": 55.7,
-        "transformer": 64.4,
-        "circuit": 33.0,
+        "math-olympiad": 27.4,
+        "raytracing": 26.8,
+        "circuit": 25.5,
+        "conquest": 16.5,
         "luban": 0.0,
-        "ae-editor": 54.2,
+        "drawing": 30.5,
+        "ae-editor": 67.3,
         "tower-defense": 66.8,
-        "jelly-tank": 64.0,
-        "nvidia-b200": 61.2,
+        "jelly-tank": 50.5,
         "harbor": 71.0,
-        "nested-os": 66.1
+        "starship": 53.0,
+        "nested-os": 61.5
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.3
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 60.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 73.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 41.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 65.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 45.2
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 55.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 59.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 63.1
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 13.5,
+        "cny": 16.0,
         "basis": "subscription",
         "plan": {
           "name": "Claude Ultra",
@@ -513,71 +1407,152 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 2047401189,
+        "tokens": 2432439479,
         "fitted": [],
         "method": "api_price",
-        "api_usd": 122.2
+        "api_usd": 144.4,
+        "hours": 15.2
       },
-      "rank": 7,
+      "rank": 6,
       "category_ranks": {
-        "reason": 8,
+        "reason": 7,
         "algo": 7,
+        "battle": 4,
         "spatial": 10,
-        "interact": 7,
+        "drawing": 6,
+        "interact": 4,
         "game": 6,
-        "physics": 9,
-        "visual": 7,
+        "physics": 5,
+        "visual": 8,
         "system": 5
       },
       "task_ranks": {
         "formal-proof": 6,
-        "math-olympiad": 9,
-        "unit-square": 6,
-        "transformer": 4,
-        "circuit": 8,
+        "math-olympiad": 7,
+        "raytracing": 9,
+        "circuit": 7,
+        "conquest": 4,
         "luban": 10,
-        "ae-editor": 7,
+        "drawing": 6,
+        "ae-editor": 4,
         "tower-defense": 6,
-        "jelly-tank": 9,
-        "nvidia-b200": 7,
+        "jelly-tank": 5,
         "harbor": 8,
+        "starship": 8,
         "nested-os": 5
       }
     },
     "gpt-5-6-sol": {
-      "total": 45.0,
+      "total": 33.4,
       "kinds": {
-        "standard": 34.4,
-        "design": 52.1
+        "standard": 24.4,
+        "design": 42.4
       },
       "categories": {
-        "reason": 41.9,
-        "algo": 32.1,
+        "reason": 40.5,
+        "algo": 39.5,
+        "battle": 5.6,
         "spatial": 26.7,
-        "interact": 42.4,
+        "drawing": 9.8,
+        "interact": 25.1,
         "game": 54.5,
-        "physics": 65.2,
-        "visual": 59.1,
-        "system": 38.6
+        "physics": 37.8,
+        "visual": 53.8,
+        "system": 41.0
       },
       "tasks": {
         "formal-proof": 25.0,
-        "math-olympiad": 58.7,
-        "unit-square": 19.5,
-        "transformer": 41.0,
-        "circuit": 35.9,
+        "math-olympiad": 56.0,
+        "raytracing": 45.6,
+        "circuit": 33.4,
+        "conquest": 5.6,
         "luban": 26.7,
-        "ae-editor": 42.4,
+        "drawing": 9.8,
+        "ae-editor": 25.1,
         "tower-defense": 54.5,
-        "jelly-tank": 65.2,
-        "nvidia-b200": 57.0,
+        "jelly-tank": 37.8,
         "harbor": 61.3,
-        "nested-os": 38.6
+        "starship": 46.2,
+        "nested-os": 41.0
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 24.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 25.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 50.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 38.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 54.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 34.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 41.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 43.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 38.5
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 34.0,
+        "cny": 35.4,
         "basis": "subscription",
         "plan": {
           "name": "OpenAI Pro 200",
@@ -585,17 +1560,20 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 394446386,
+        "tokens": 409606369,
         "fitted": [],
         "method": "quota",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2
       },
-      "rank": 8,
+      "rank": 7,
       "category_ranks": {
-        "reason": 5,
-        "algo": 8,
+        "reason": 6,
+        "algo": 6,
+        "battle": 11,
         "spatial": 5,
-        "interact": 8,
+        "drawing": 7,
+        "interact": 9,
         "game": 9,
         "physics": 7,
         "visual": 9,
@@ -604,52 +1582,326 @@
       "task_ranks": {
         "formal-proof": 6,
         "math-olympiad": 4,
-        "unit-square": 11,
-        "transformer": 8,
-        "circuit": 7,
+        "raytracing": 6,
+        "circuit": 6,
+        "conquest": 11,
         "luban": 5,
-        "ae-editor": 8,
+        "drawing": 7,
+        "ae-editor": 9,
         "tower-defense": 9,
         "jelly-tank": 7,
-        "nvidia-b200": 8,
         "harbor": 9,
+        "starship": 10,
         "nested-os": 9
       }
     },
-    "hy4": {
-      "total": 36.6,
+    "deepseek-v4-1-flash": {
+      "total": 31.9,
       "kinds": {
-        "standard": 6.8,
+        "standard": 7.3,
         "design": 56.4
       },
       "categories": {
+        "reason": 10.1,
+        "algo": 0.0,
+        "battle": 8.8,
+        "spatial": 8.0,
+        "drawing": 9.5,
+        "interact": 60.0,
+        "game": 65.0,
+        "physics": 36.5,
+        "visual": 67.5,
+        "system": 53.1
+      },
+      "tasks": {
+        "formal-proof": 12.5,
+        "math-olympiad": 7.7,
+        "raytracing": 0.0,
+        "circuit": 0.0,
+        "conquest": 8.8,
+        "luban": 8.0,
+        "drawing": 9.5,
+        "ae-editor": 60.0,
+        "tower-defense": 65.0,
+        "jelly-tank": 36.5,
+        "harbor": 74.1,
+        "starship": 60.8,
+        "nested-os": 53.1
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 60.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.4
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 63.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 67.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.8
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 55.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.0
+            }
+          ]
+        },
+        "raytracing": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "最终GPU建树把三角形下界当上界，导致大量交点漏检。"
+            }
+          ]
+        },
+        "circuit": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "末段修改寄存器融合后自测仍有根值不一致，最终源码保留该缺陷。"
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 46.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 48.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 58.0
+            }
+          ]
+        },
+        "conquest": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "调优依赖额外编译宏，未把已测试参数写回最终源码。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 69.9,
+        "basis": "api",
+        "plan": {
+          "name": "DeepSeek API"
+        },
+        "tokens": 1465921352,
+        "fitted": [],
+        "method": "api_price",
+        "api_usd": 10.4,
+        "hours": 15.2
+      },
+      "rank": 8,
+      "category_ranks": {
+        "reason": 9,
+        "algo": 11,
+        "battle": 8,
+        "spatial": 7,
+        "drawing": 8,
+        "interact": 6,
+        "game": 7,
+        "physics": 8,
+        "visual": 5,
+        "system": 6
+      },
+      "task_ranks": {
+        "formal-proof": 8,
+        "math-olympiad": 9,
+        "raytracing": 11,
+        "circuit": 11,
+        "conquest": 8,
+        "luban": 7,
+        "drawing": 8,
+        "ae-editor": 6,
+        "tower-defense": 7,
+        "jelly-tank": 8,
+        "harbor": 5,
+        "starship": 5,
+        "nested-os": 6
+      }
+    },
+    "hy4": {
+      "total": 27.0,
+      "kinds": {
+        "standard": 7.3,
+        "design": 46.7
+      },
+      "categories": {
         "reason": 0.0,
-        "algo": 18.2,
+        "algo": 23.7,
+        "battle": 8.3,
         "spatial": 0.0,
-        "interact": 37.6,
+        "drawing": 4.7,
+        "interact": 28.3,
         "game": 61.3,
-        "physics": 65.0,
-        "visual": 61.1,
-        "system": 54.1
+        "physics": 31.4,
+        "visual": 62.8,
+        "system": 49.9
       },
       "tasks": {
         "formal-proof": 0.0,
         "math-olympiad": 0.0,
-        "unit-square": 38.6,
-        "transformer": 0.0,
-        "circuit": 16.1,
+        "raytracing": 35.0,
+        "circuit": 12.4,
+        "conquest": 8.3,
         "luban": 0.0,
-        "ae-editor": 37.6,
+        "drawing": 4.7,
+        "ae-editor": 28.3,
         "tower-defense": 61.3,
-        "jelly-tank": 65.0,
-        "nvidia-b200": 50.8,
+        "jelly-tank": 31.4,
         "harbor": 71.4,
-        "nested-os": 54.1
+        "starship": 54.2,
+        "nested-os": 49.9
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "formal-proof": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "只写了两份查符号用的探测脚本，八道题一个主定理都没有写出。"
+            }
+          ]
+        },
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "截止时仍在推敲首题，未创建答案目录或保存任何解答。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 20.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 36.2
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.5
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.3
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 48.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 60.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 25.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 37.0
+            }
+          ],
+          "anomaly": [
+            {
+              "grader": "Claude Opus 5.5",
+              "text": "只做到果冻阶段就停止，水体与音效仍是占位空文件"
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 50.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 49.9
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 60.6,
+        "cny": 60.9,
         "basis": "subscription",
         "plan": {
           "name": "CodeBuddy 140 元档",
@@ -659,71 +1911,183 @@
           "period": "month",
           "credits": 9000
         },
-        "tokens": 385712219,
+        "tokens": 341435710,
         "fitted": [],
         "method": "credits",
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2,
+        "usage_gaps": {
+          "形式化证明题": [
+            {
+              "at": 1793983084.121,
+              "request": "01a1b1b6184777128d70e9cf8617ed84",
+              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
+            }
+          ],
+          "数学竞赛原创试题": [
+            {
+              "at": 1794440715.112,
+              "request": "01a1ccf6dbac737a995e4c2d2a0acf60",
+              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
+            }
+          ],
+          "鲁班锁拆解": [
+            {
+              "at": 1793960876.581,
+              "request": "01a1b0668c31732bb5d69a963233b87a",
+              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
+            }
+          ]
+        }
       },
       "rank": 9,
       "category_ranks": {
         "reason": 10,
-        "algo": 10,
+        "algo": 8,
+        "battle": 10,
         "spatial": 10,
-        "interact": 9,
+        "drawing": 10,
+        "interact": 8,
         "game": 8,
-        "physics": 8,
-        "visual": 8,
+        "physics": 9,
+        "visual": 7,
         "system": 7
       },
       "task_ranks": {
         "formal-proof": 10,
         "math-olympiad": 10,
-        "unit-square": 10,
-        "transformer": 11,
-        "circuit": 10,
+        "raytracing": 7,
+        "circuit": 8,
+        "conquest": 10,
         "luban": 10,
-        "ae-editor": 9,
+        "drawing": 10,
+        "ae-editor": 8,
         "tower-defense": 8,
-        "jelly-tank": 8,
-        "nvidia-b200": 10,
+        "jelly-tank": 9,
         "harbor": 7,
+        "starship": 7,
         "nested-os": 7
       }
     },
     "gpt-6-luna": {
-      "total": 34.0,
+      "total": 22.2,
       "kinds": {
-        "standard": 22.3,
-        "design": 41.9
+        "standard": 12.4,
+        "design": 32.0
       },
       "categories": {
-        "reason": 25.7,
-        "algo": 28.4,
+        "reason": 18.5,
+        "algo": 21.7,
+        "battle": 8.5,
         "spatial": 8.0,
-        "interact": 27.8,
+        "drawing": 5.6,
+        "interact": 20.6,
         "game": 42.6,
-        "physics": 55.8,
-        "visual": 47.2,
-        "system": 35.0
+        "physics": 27.3,
+        "visual": 43.5,
+        "system": 26.0
       },
       "tasks": {
         "formal-proof": 12.5,
-        "math-olympiad": 38.9,
-        "unit-square": 44.3,
-        "transformer": 19.3,
-        "circuit": 21.6,
+        "math-olympiad": 24.4,
+        "raytracing": 34.3,
+        "circuit": 9.1,
+        "conquest": 8.5,
         "luban": 8.0,
-        "ae-editor": 27.8,
+        "drawing": 5.6,
+        "ae-editor": 20.6,
         "tower-defense": 42.6,
-        "jelly-tank": 55.8,
-        "nvidia-b200": 40.9,
+        "jelly-tank": 27.3,
         "harbor": 53.5,
-        "nested-os": 35.0
+        "starship": 33.3,
+        "nested-os": 26.0
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 21.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 19.3
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 39.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 46.2
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 49.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 57.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 40.2
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 20.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 33.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 25.9
+            }
+          ]
+        },
+        "conquest": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "仅合并等距来源的进攻兵力，救援安排在扩张之后，攻防协同薄弱。"
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 1.7,
+        "cny": 1.4,
         "basis": "subscription",
         "plan": {
           "name": "OpenAI Pro 200",
@@ -731,16 +2095,19 @@
           "currency": "USD",
           "period": "month"
         },
-        "tokens": 457911525,
+        "tokens": 401046274,
         "fitted": [],
         "method": "api_price",
-        "api_usd": 7.2
+        "api_usd": 5.9,
+        "hours": 15.2
       },
       "rank": 10,
       "category_ranks": {
-        "reason": 7,
+        "reason": 8,
         "algo": 9,
+        "battle": 9,
         "spatial": 7,
+        "drawing": 9,
         "interact": 10,
         "game": 11,
         "physics": 10,
@@ -749,67 +2116,186 @@
       },
       "task_ranks": {
         "formal-proof": 8,
-        "math-olympiad": 6,
-        "unit-square": 9,
-        "transformer": 9,
+        "math-olympiad": 8,
+        "raytracing": 8,
         "circuit": 9,
+        "conquest": 9,
         "luban": 7,
+        "drawing": 9,
         "ae-editor": 10,
         "tower-defense": 11,
         "jelly-tank": 10,
-        "nvidia-b200": 11,
         "harbor": 11,
+        "starship": 11,
         "nested-os": 10
       }
     },
     "mimo-v2-6-pro": {
-      "total": 24.1,
+      "total": 16.6,
       "kinds": {
-        "standard": 8.7,
-        "design": 34.4
+        "standard": 6.0,
+        "design": 27.2
       },
       "categories": {
         "reason": 0.0,
-        "algo": 17.9,
+        "algo": 11.6,
+        "battle": 10.3,
         "spatial": 8.0,
-        "interact": 26.1,
+        "drawing": 0.0,
+        "interact": 19.9,
         "game": 43.8,
-        "physics": 43.0,
-        "visual": 54.8,
-        "system": 0.1
+        "physics": 18.8,
+        "visual": 53.5,
+        "system": 0.0
       },
       "tasks": {
         "formal-proof": 0.0,
         "math-olympiad": 0.0,
-        "unit-square": 48.3,
-        "transformer": 2.1,
-        "circuit": 3.4,
+        "raytracing": 20.0,
+        "circuit": 3.2,
+        "conquest": 10.3,
         "luban": 8.0,
-        "ae-editor": 26.0,
+        "drawing": 0.0,
+        "ae-editor": 19.9,
         "tower-defense": 43.8,
-        "jelly-tank": 43.0,
-        "nvidia-b200": 52.9,
+        "jelly-tank": 18.8,
         "harbor": 56.8,
-        "nested-os": 0.1
+        "starship": 50.3,
+        "nested-os": 0.0
       },
       "status": "ranked",
-      "done": 12,
+      "done": 13,
+      "task_info": {
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "读完题后持续推理，始终未创建或写入任何答案文件。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 17.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 22.5
+            }
+          ],
+          "anomaly": [
+            {
+              "grader": "Claude Opus 5.5",
+              "text": "三维帧缓冲从未跑通，字块、锤子、火星全程不显示，模型未验证示例后段"
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 40.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 47.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 54.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 45.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 55.2
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 16.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 21.5
+            }
+          ],
+          "anomaly": [
+            {
+              "grader": "Claude Opus 5.5",
+              "text": "水体管线存储缓冲超限，模型诊断出问题后没修完就中止，场景二整体失效"
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 0.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 0.0
+            }
+          ],
+          "anomaly": [
+            {
+              "grader": "Claude Opus 5.5",
+              "text": "从未启动过作品，模块导入路径写错导致整站卡在启动画面"
+            },
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "播放器与图表模块使用错误相对导入，阻断整个桌面启动。"
+            }
+          ]
+        },
+        "drawing": {
+          "anomaly": [
+            {
+              "grader": "GPT 6.1 Sol",
+              "text": "陷入读写工具调用循环且未交答案，并搜索目录外跨题记忆。"
+            }
+          ]
+        }
+      },
       "cost": {
-        "cny": 55,
+        "cny": 60.1,
         "basis": "api",
         "plan": {
           "name": "MiMo API"
         },
-        "tokens": 250601031,
+        "tokens": 422066617,
         "fitted": [],
-        "method": "billed",
-        "api_usd": null
+        "method": "api_price",
+        "api_usd": 9.0,
+        "hours": 15.2
       },
       "rank": 11,
       "category_ranks": {
         "reason": 10,
-        "algo": 11,
+        "algo": 10,
+        "battle": 7,
         "spatial": 7,
+        "drawing": 11,
         "interact": 11,
         "game": 10,
         "physics": 11,
@@ -819,19 +2305,20 @@
       "task_ranks": {
         "formal-proof": 10,
         "math-olympiad": 10,
-        "unit-square": 8,
-        "transformer": 10,
-        "circuit": 11,
+        "raytracing": 10,
+        "circuit": 10,
+        "conquest": 7,
         "luban": 7,
+        "drawing": 11,
         "ae-editor": 11,
         "tower-defense": 10,
         "jelly-tank": 11,
-        "nvidia-b200": 9,
         "harbor": 10,
+        "starship": 9,
         "nested-os": 11
       }
     },
-    "gpt-6-2-sol": {
+    "gemini-4-carbon": {
       "total": null,
       "kinds": {
         "standard": null,
@@ -840,7 +2327,9 @@
       "categories": {
         "reason": null,
         "algo": null,
+        "battle": null,
         "spatial": null,
+        "drawing": null,
         "interact": null,
         "game": null,
         "physics": null,
@@ -850,38 +2339,84 @@
       "tasks": {
         "formal-proof": null,
         "math-olympiad": null,
-        "unit-square": null,
-        "transformer": null,
+        "raytracing": null,
         "circuit": null,
+        "conquest": null,
         "luban": null,
+        "drawing": null,
         "ae-editor": null,
         "tower-defense": null,
         "jelly-tank": null,
-        "nvidia-b200": null,
         "harbor": null,
+        "starship": null,
         "nested-os": null
       },
       "status": "testing",
       "done": 0,
+      "task_info": {
+        "formal-proof": {
+          "state": "testing"
+        },
+        "math-olympiad": {
+          "state": "testing"
+        },
+        "ae-editor": {
+          "state": "testing"
+        },
+        "tower-defense": {
+          "state": "testing"
+        },
+        "harbor": {
+          "state": "testing"
+        },
+        "starship": {
+          "state": "testing"
+        },
+        "raytracing": {
+          "state": "testing"
+        },
+        "circuit": {
+          "state": "testing"
+        },
+        "jelly-tank": {
+          "state": "testing"
+        },
+        "nested-os": {
+          "state": "testing"
+        },
+        "luban": {
+          "state": "testing"
+        },
+        "drawing": {
+          "state": "testing"
+        },
+        "conquest": {
+          "state": "testing"
+        }
+      },
       "cost": {
         "cny": null,
         "basis": "subscription",
         "plan": {
-          "name": "OpenAI Pro 200",
-          "price": 200,
+          "name": "Google AI Ultra",
+          "name_en": "Google AI Ultra",
+          "price": 199.99,
           "currency": "USD",
           "period": "month"
         },
         "tokens": null,
         "fitted": [],
         "method": null,
-        "api_usd": null
+        "api_usd": null,
+        "hours": 15.2
       },
       "rank": null,
       "category_ranks": {
         "reason": null,
         "algo": null,
+        "battle": null,
         "spatial": null,
+        "drawing": null,
         "interact": null,
         "game": null,
         "physics": null,
@@ -891,17 +2426,140 @@
       "task_ranks": {
         "formal-proof": null,
         "math-olympiad": null,
-        "unit-square": null,
-        "transformer": null,
+        "raytracing": null,
         "circuit": null,
+        "conquest": null,
         "luban": null,
+        "drawing": null,
         "ae-editor": null,
         "tower-defense": null,
         "jelly-tank": null,
-        "nvidia-b200": null,
         "harbor": null,
+        "starship": null,
+        "nested-os": null
+      }
+    },
+    "gemini-4-hydrogen": {
+      "total": null,
+      "kinds": {
+        "standard": null,
+        "design": null
+      },
+      "categories": {
+        "reason": null,
+        "algo": null,
+        "battle": null,
+        "spatial": null,
+        "drawing": null,
+        "interact": null,
+        "game": null,
+        "physics": null,
+        "visual": null,
+        "system": null
+      },
+      "tasks": {
+        "formal-proof": null,
+        "math-olympiad": null,
+        "raytracing": null,
+        "circuit": null,
+        "conquest": null,
+        "luban": null,
+        "drawing": null,
+        "ae-editor": null,
+        "tower-defense": null,
+        "jelly-tank": null,
+        "harbor": null,
+        "starship": null,
+        "nested-os": null
+      },
+      "status": "testing",
+      "done": 0,
+      "task_info": {
+        "formal-proof": {
+          "state": "testing"
+        },
+        "math-olympiad": {
+          "state": "testing"
+        },
+        "ae-editor": {
+          "state": "testing"
+        },
+        "tower-defense": {
+          "state": "testing"
+        },
+        "harbor": {
+          "state": "testing"
+        },
+        "starship": {
+          "state": "testing"
+        },
+        "raytracing": {
+          "state": "testing"
+        },
+        "circuit": {
+          "state": "testing"
+        },
+        "jelly-tank": {
+          "state": "testing"
+        },
+        "nested-os": {
+          "state": "testing"
+        },
+        "luban": {
+          "state": "testing"
+        },
+        "drawing": {
+          "state": "testing"
+        },
+        "conquest": {
+          "state": "testing"
+        }
+      },
+      "cost": {
+        "cny": null,
+        "basis": "subscription",
+        "plan": {
+          "name": "Google AI Ultra",
+          "name_en": "Google AI Ultra",
+          "price": 199.99,
+          "currency": "USD",
+          "period": "month"
+        },
+        "tokens": null,
+        "fitted": [],
+        "method": null,
+        "api_usd": null,
+        "hours": 15.2
+      },
+      "rank": null,
+      "category_ranks": {
+        "reason": null,
+        "algo": null,
+        "battle": null,
+        "spatial": null,
+        "drawing": null,
+        "interact": null,
+        "game": null,
+        "physics": null,
+        "visual": null,
+        "system": null
+      },
+      "task_ranks": {
+        "formal-proof": null,
+        "math-olympiad": null,
+        "raytracing": null,
+        "circuit": null,
+        "conquest": null,
+        "luban": null,
+        "drawing": null,
+        "ae-editor": null,
+        "tower-defense": null,
+        "jelly-tank": null,
+        "harbor": null,
+        "starship": null,
         "nested-os": null
       }
     }
-  }
+  },
+  "notice": null
 }

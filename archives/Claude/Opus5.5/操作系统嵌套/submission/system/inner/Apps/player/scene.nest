@@ -1,0 +1,436 @@
+;; =====================================================================
+;; 飞行场景进程（播放器的协作进程之一）
+;; 从本系统文件读取场景资源并提交给显示设备；按时序进程的消息推进到指定时刻：
+;;   - 飞行记录：按记录的控制时序运行飞行模型（结果不随预算变化）；
+;;   - 关键帧：按轨道插值部件变换；
+;;   - 排演：机体随虚拟时间连续演化，控制量来自飞控进程（经系统总线读取）。
+;; 每次提交都是同一时刻的完整场景状态（部件位姿、旋翼、碎片、相机）；特效由特效进程负责。
+;; =====================================================================
+(include "/System/lib/core.nest")
+(include "/System/lib/flight.nest")
+
+(var A ARGS)
+(var UI A.ui) (var FX A.fx) (var VIEWS [A.view])
+(var PATH nil) (var SC nil) (var P nil) (var RES nil) (var KIND "record")
+(var REC nil) (var S nil) (var T 0) (var CI 0) (var II 0) (var CTL nil)
+(var CAM {:mode "show" :yaw 210 :pitch 14 :dist 22})
+(var HIST []) (var NEXT-SAMPLE 0) (def SAMPLE-DT 0.07)
+(var REH nil)       ; 排演：{base-t base-step controls inputs fc-pid fc-path}
+(var FC-PATH "/Programs/flight/autopilot.nest")
+(var PICK-AT {})    ; 部件 -> 机体坐标中的拾取中心
+(var LAST-UI 0) (var STATUS "")
+(var DEFAULT-WIND [0 0])
+
+(defn fail (msg)
+  (send UI {:k "scene-error" :error msg})
+  (sys "log" (str "场景错误：" msg)))
+
+;; ---------------- 载入 ----------------
+(defn load-path (path)
+  (var txt (sys "read" path))
+  (when (nil? txt) (fail (str "找不到文件 " path)) (return false))
+  (var doc (try (parse-json txt) (catch e (fail (str "不是有效的场景/记录文件：" (to-str e))) nil)))
+  (when (nil? doc) (return false))
+  (cond
+    ((= doc.format "nest-record")
+     (var sp (or doc.scene "/Demo/helicopter-24.scene"))
+     (when (not (load-scene sp)) (return false))
+     (set! REC doc.record) (set! KIND "record"))
+    ((= doc.format "nest-scene")
+     (when (not (load-scene-doc doc path)) (return false))
+     (if (= (get SC.timeline "type") "keys")
+       (set! KIND "keys")
+       (do (set! KIND "record") (set! REC (get SC.records (get SC.timeline "record"))))))
+    (else (fail "未知的文件格式") (return false)))
+  (set! PATH path)
+  (reset-sim)
+  (send UI {:k "loaded" :path path :name SC.name :duration (duration) :kind KIND :fps (or SC.fps 60)
+            :rehearsal (not (nil? SC.physics)) :desc (or SC.description "")})
+  true)
+
+(defn load-scene (sp)
+  (var txt (sys "read" sp))
+  (when (nil? txt) (fail (str "记录引用的场景不存在：" sp)) (return false))
+  (load-scene-doc (parse-json txt) sp))
+
+(defn load-scene-doc (doc sp)
+  (when (!= doc.format "nest-scene") (fail "不是 nest-scene 场景") (return false))
+  (set! SC doc)
+  ;; 交给显示设备的资源：几何、材质与贴图、灯光、环境、部件层级（不含记录与物理）
+  (set! RES {})
+  (each (k ["name" "environment" "textures" "materials" "geometries" "terrain" "objects" "instances" "grass" "parts" "cameras" "fx"])
+    (when (has? doc k) (put! RES k (get doc k))))
+  (set! P (if doc.physics (resolve-physics doc) nil))
+  (compute-pick-centers)
+  (each (v VIEWS) (sys "scene" "load" v RES))
+  true)
+
+(defn resolve-physics (doc)
+  (var p doc.physics)
+  (when (str? p.trees)
+    (var ins (find (fn (i) (= i.id p.trees)) doc.instances))
+    (put! p "trees" (if ins ins.items [])))
+  p)
+
+(defn compute-pick-centers ()
+  ;; 部件在机体坐标中的位置（沿父链累加平移）
+  (set! PICK-AT {})
+  (var defs {})
+  (each (pd (or SC.parts [])) (put! defs pd.id pd))
+  (each (pd (or SC.parts []))
+    (when pd.pick
+      (var x 0) (var y 0) (var z 0) (var cur pd)
+      (while cur
+        (var pp (or cur.pos [0 0 0]))
+        (inc! x (nth pp 0)) (inc! y (nth pp 1)) (inc! z (nth pp 2))
+        (set! cur (if cur.parent (get defs cur.parent) nil))
+        (when (and cur (nil? cur.parent)) (set! cur nil)))
+      (var at (or pd.pick.at [0 0 0]))
+      (put! PICK-AT pd.id {:x (+ x (nth at 0)) :y (+ y (nth at 1)) :z (+ z (nth at 2)) :r pd.pick.r :label (or pd.label pd.id)}))))
+
+(defn duration () (if REH 600 (if REC (or REC.duration SC.duration) (or SC.duration 10))))
+
+(defn reset-sim ()
+  (set! T 0) (set! CI 0) (set! II 0) (set! CTL nil) (set! HIST []) (set! NEXT-SAMPLE 0)
+  (when (and P REC)
+    (set! S (new-state P REC.init))
+    (when REC.wind (put! S "wind-x" (nth REC.wind 0)) (put! S "wind-z" (nth REC.wind 1)))))
+
+;; ---------------- 推进 ----------------
+(defn control-at (k)
+  ;; 记录回放：取步号不大于 k 的最后一个控制量（控制量保持到下一次写入）
+  (var cs REC.controls)
+  (while (and (< CI (len cs)) (<= (nth (nth cs CI) 0) k))
+    (var c (nth cs CI))
+    (set! CTL {:c (to-num (nth c 1)) :p (to-num (nth c 2)) :r (to-num (nth c 3)) :y (to-num (nth c 4)) :throttle (nth c 5)})
+    (inc! CI))
+  CTL)
+
+(defn apply-inputs (t)
+  (var ins (or REC.inputs []))
+  (while (and (< II (len ins)) (<= (nth (nth ins II) 0) (+ t 0.000001)))
+    (apply-input (nth ins II))
+    (inc! II)))
+
+(defn apply-input (in)
+  (var kind (nth in 1)) (var v (nth in 2))
+  (case kind
+    ("wind" (put! S "wind-x" (nth v 0)) (put! S "wind-z" (nth v 1)))
+    ("fault-warn" (put! S "fault-warn" v))
+    ("fault" (put! S "fault-at" v) (when (nil? S.fault-warn) (put! S "fault-warn" (- v 1.2))))
+    ("heading" nil)
+    (else nil)))
+
+(defn sample-fx ()
+  ;; 按固定的场景时刻采样（与跳转无关），供特效进程生成尘土、故障烟等
+  (while (<= NEXT-SAMPLE S.t)
+    (var gh (ground-h P S.px S.pz))
+    (var alt (- S.py gh))
+    (var thrust (* S.c S.rpm S.rpm S.main))
+    (var tail (qrot S -6.0 0.95 0.2))
+    (push! HIST [NEXT-SAMPLE S.px gh S.pz (* thrust (max 0 (- 1 (/ alt 16)))) (+ S.px (nth tail 0)) (+ S.py (nth tail 1)) (+ S.pz (nth tail 2))
+                 S.vx S.vy S.vz (if (and (get S "warned") (not S.crashed)) 1 0) alt])
+    (inc! NEXT-SAMPLE SAMPLE-DT))
+  (while (and (> (len HIST) 0) (< (nth (first HIST) 0) (- S.t 3.2))) (shift! HIST)))
+
+(defn sim-to (t)
+  ;; 物理按固定步长推进到 t；预算不足时这段计算会被抢占，取得额度后从中途继续
+  (var n 0)
+  (while (< (+ S.t (* 0.5 DT)) t)
+    (if REH
+      (step S P CTL)
+      (do (apply-inputs S.t) (step S P (control-at S.step))))
+    (sample-fx)
+    (when (and REH (= (% S.step 50) 0)) (push! REH.checkpoints [S.t (copy S)]))
+    (inc! n)
+    (when (= (% n 200) 0) (sys "progress" (fmt S.t 2) (fmt t 2)))))
+
+(defn restore-to (t)
+  ;; 跳转：从不晚于 t 的检查点恢复，再推进到 t（只由该位置及之前的过程决定）
+  (var cks (if REH (concat REC.checkpoints REH.checkpoints) (or REC.checkpoints [])))
+  (var best nil)
+  (each (ck cks) (when (<= (nth ck 0) (+ t 0.000001)) (when (or (nil? best) (> (nth ck 0) (nth best 0))) (set! best ck))))
+  (if best
+    (do (set! S (copy (nth best 1))) (set! CI 0) (set! II 0) (set! CTL nil))
+    (reset-sim))
+  ;; 让控制与输入索引追上恢复点
+  (when (and (not REH) REC)
+    (control-at (- S.step 1))
+    (var ins (or REC.inputs []))
+    (while (and (< II (len ins)) (<= (nth (nth ins II) 0) S.t)) (inc! II)))
+  (set! HIST [])
+  (set! NEXT-SAMPLE (* SAMPLE-DT (ceil (/ (max 0 (- S.t 3.2)) SAMPLE-DT))))
+  (when (> S.t (+ NEXT-SAMPLE 0.001))
+    ;; 检查点之前的采样无法补回时，从检查点时刻开始采样
+    (set! NEXT-SAMPLE (* SAMPLE-DT (ceil (/ S.t SAMPLE-DT))))))
+
+(defn advance (t reset)
+  (when (nil? SC) (return nil))
+  (case KIND
+    ("keys" (set! T t) (submit t reset))
+    (else
+     (when (nil? P) (return nil))
+     (when (and REH (or reset (< t (- S.t 0.0005)))) (end-rehearsal))
+     (when (or reset (< t (- S.t 0.0005)))
+       (restore-to t)
+       (set! reset true))
+     (when REH (rehearsal-io))
+     (sim-to t)
+     (set! T t)
+     (submit t reset))))
+
+;; ---------------- 排演 ----------------
+(defn rehearsal-io ()
+  (sys "bus-write" "heli/sensors" (sensors S P))
+  (var c (sys "bus-read" "heli/controls"))
+  (when (and c (or (nil? CTL) (!= (get c.v "t") (get CTL "t"))))
+    (set! CTL c.v)
+    (push! REH.controls [S.step (fmt CTL.c 4) (fmt CTL.p 4) (fmt CTL.r 4) (fmt CTL.y 4) (get-or CTL "throttle" 1)])))
+
+(defn start-rehearsal (from-start fc)
+  (when (nil? P) (fail "该场景没有飞行模型，不能排演") (return nil))
+  (when REH (stop-fc))
+  (when from-start (reset-sim) (restore-to 0))
+  (when (and (not from-start) (< S.t (- T 0.001))) (sim-to T))
+  (var base (if REC REC {:controls [] :inputs [] :checkpoints [] :init {:x 0 :z 0 :yaw 0}}))
+  ;; 截取原记录在续演位置之前的部分（原记录文件不变）
+  (set! REC {:name (str (or base.name "记录") " 续演") :init base.init :wind (or base.wind [0 0])
+             :controls (filter (fn (c) (< (nth c 0) S.step)) (or base.controls []))
+             :inputs (filter (fn (i) (<= (nth i 0) S.t)) (or base.inputs []))
+             :checkpoints (filter (fn (c) (<= (nth c 0) S.t)) (or base.checkpoints []))
+             :duration S.t})
+  (set! REH {:base-t S.t :base-step S.step :controls [] :inputs [] :checkpoints [[S.t (copy S)]] :fc-path (or fc FC-PATH)})
+  ;; 续演时故障不再自动发生，由排演输入决定
+  (put! S "fault-at" nil) (put! S "fault-warn" nil) (del! S "warned")
+  (when (> S.tail 0) (put! S "tail" 1))
+  (sys "bus-write" "heli/command" {:mode "mission" :tx (get (nth P.pads 1) "x") :tz (get (nth P.pads 1) "z")})
+  (sys "bus-write" "heli/controls" nil)
+  (sys "bus-write" "heli/sensors" (sensors S P))
+  (set! CTL nil)
+  (var pid (try (sys "spawn" REH.fc-path nil) (catch e (fail (str "飞控程序启动失败：" (to-str e))) nil)))
+  (put! REH "fc-pid" pid)
+  (send UI {:k "rehearsal" :on true :base-t REH.base-t :fc REH.fc-path :fc-pid pid :duration (duration)})
+  (set! KIND "record"))
+
+(defn stop-fc () (when (and REH REH.fc-pid) (sys "kill" REH.fc-pid)))
+
+(defn end-rehearsal ()
+  ;; 结束排演：把已发生的过程并入当前记录，之后可以跳转回放
+  (when REH
+    (stop-fc)
+    (set! REC {:name REC.name :init REC.init :wind REC.wind :duration S.t
+               :controls (concat REC.controls REH.controls) :inputs (concat REC.inputs REH.inputs)
+               :checkpoints (concat REC.checkpoints REH.checkpoints)})
+    (set! REH nil)
+    (send UI {:k "rehearsal" :on false :duration S.t})))
+
+(defn rehearsal-input (kind v)
+  (when REH
+    (var in [S.t kind v])
+    (push! REH.inputs in)
+    (case kind
+      ("wind" (put! S "wind-x" (nth v 0)) (put! S "wind-z" (nth v 1)))
+      ("heading" (sys "bus-write" "heli/command" {:mode "heading" :heading v}))
+      ("target" (sys "bus-write" "heli/command" {:mode "mission" :tx (nth v 0) :tz (nth v 1)}))
+      ("fault" (put! S "fault-warn" (+ S.t 0.01)) (put! S "fault-at" (+ S.t v)))
+      (else nil))
+    (send UI {:k "input-ack" :kind kind :v v :t S.t})))
+
+(defn save-record (path)
+  (when (nil? REH) (send UI {:k "saved" :error "当前不是排演，没有新的过程可保存"}) (return nil))
+  (var rec {:name (str "排演 " (fmt S.t 1) "s") :duration S.t :init REC.init :wind REC.wind
+            :controls (concat REC.controls REH.controls) :inputs (concat REC.inputs REH.inputs)
+            :checkpoints (concat REC.checkpoints REH.checkpoints) :base-t REH.base-t :controller REH.fc-path})
+  (var doc {:format "nest-record" :v 1 :scene (if (ends-with? PATH ".rec") (or (get (parse-json (sys "read" PATH)) "scene") PATH) PATH)
+            :record rec :created (sys "now")})
+  (try (sys "write" path (to-json doc)) (send UI {:k "saved" :path path :size (len (to-json doc))})
+    (catch e (send UI {:k "saved" :error (to-str e)}))))
+
+;; ---------------- 相机 ----------------
+(defn lerp-keys (keys t)
+  (var a (first keys)) (var b (last keys))
+  (each-i (i k keys) (when (and (< i (- (len keys) 1)) (<= (nth k 0) t) (>= (nth (nth keys (+ i 1)) 0) t)) (set! a k) (set! b (nth keys (+ i 1)))))
+  (var span (- (nth b 0) (nth a 0)))
+  (var u (if (> span 0) (smooth01 (/ (- t (nth a 0)) span)) 0))
+  (var out [])
+  (for (j 1 (len a)) (push! out (+ (nth a j) (* u (- (nth b j) (nth a j))))))
+  out)
+
+(defn target-pos ()
+  (var hx S.px) (var hy S.py) (var hz S.pz)
+  (when S.impact
+    (var k (smooth01 (/ (- S.t S.impact.t) 1.2)))
+    (set! hx (+ hx (* k (- S.impact.x hx)))) (set! hz (+ hz (* k (- S.impact.z hz)))))
+  [hx (+ hy 0.6) hz])
+
+(defn compute-cam ()
+  (var C (or SC.cameras {}))
+  (when (= KIND "keys")
+    (var f (get (get C "show") "fixed"))
+    (if (= CAM.mode "orbit")
+      (return (orbit-cam [0 0.5 0]))
+      (return {:pos f.pos :look f.look :fov f.fov})))
+  (var tp (target-pos))
+  (case CAM.mode
+    ("follow"
+     (var h (heading-of S)) (var fc (or C.follow {:dist 16 :height 4.5 :fov 50}))
+     (when S.crashed (set! h (+ 0.6 (* 0.08 S.t))))
+     (var pos [(- (nth tp 0) (* fc.dist (cos h))) (+ (nth tp 1) fc.height) (+ (nth tp 2) (* fc.dist (sin h)))])
+     (clamp-cam {:pos pos :look tp :fov fc.fov}))
+    ("orbit" (orbit-cam tp))
+    (else
+     (var k (lerp-keys (get (get C "show") "keys") S.t))
+     (var az (* (nth k 0) 0.01745329)) (var el (* (nth k 1) 0.01745329)) (var d (nth k 2))
+     (clamp-cam {:pos [(+ (nth tp 0) (* d (cos el) (cos az))) (+ (nth tp 1) (* d (sin el))) (+ (nth tp 2) (* d (cos el) (sin az)))]
+                 :look tp :fov (nth k 3)}))))
+
+(defn orbit-cam (tp)
+  (var az (* CAM.yaw 0.01745329)) (var el (* CAM.pitch 0.01745329)) (var d CAM.dist)
+  (clamp-cam {:pos [(+ (nth tp 0) (* d (cos el) (cos az))) (+ (nth tp 1) (* d (sin el))) (+ (nth tp 2) (* d (cos el) (sin az)))] :look tp :fov 48}))
+
+(defn clamp-cam (c)
+  (when P
+    (var p c.pos)
+    (var g (+ (terrain-h P (nth p 0) (nth p 2)) 1.6))
+    (when (< (nth p 1) g) (put! p 1 g)))
+  c)
+
+;; ---------------- 提交 ----------------
+(defn frame-data (t)
+  (if (= KIND "keys") (key-frame t) (flight-frame t)))
+
+(defn flight-frame (t)
+  (var det {})
+  (each (d S.debris) (put! det d.id [d.px d.py d.pz d.qx d.qy d.qz d.qw]))
+  (var spins {})
+  (when (nil? (get det "blade1")) (put! spins "rotor" S.rot))
+  (when (nil? (get det "tailboom")) (put! spins "trotor" S.trot))
+  {:layer "scene" :t t :xf {"heli" [S.px S.py S.pz S.qx S.qy S.qz S.qw]} :spins spins :rpm S.rpm :trpm (* S.rpm S.tail)
+   :detached det :damage (if S.crashed (clamp (* 0.4 (- S.t S.impact.t)) 0 0.7) 0) :crashed S.crashed
+   :cam (compute-cam) :shadowAt [S.px (ground-h P S.px S.pz) S.pz]})
+
+(defn key-frame (t)
+  (var loc {})
+  (each (tr (get SC.timeline "tracks"))
+    (var e (get loc tr.part))
+    (when (nil? e) (set! e {}) (put! loc tr.part e))
+    (put! e tr.prop (lerp-vec-keys tr.keys t)))
+  {:layer "scene" :t t :local loc :cam (compute-cam) :rpm 0})
+
+(defn lerp-vec-keys (keys t)
+  (var a (first keys)) (var b (last keys))
+  (each-i (i k keys) (when (and (< i (- (len keys) 1)) (<= (nth k 0) t) (>= (nth (nth keys (+ i 1)) 0) t)) (set! a k) (set! b (nth keys (+ i 1)))))
+  (var span (- (nth b 0) (nth a 0)))
+  (var u (if (> span 0) (clamp (/ (- t (nth a 0)) span) 0 1) 0))
+  (var va (nth a 1)) (var vb (nth b 1))
+  [(+ (nth va 0) (* u (- (nth vb 0) (nth va 0)))) (+ (nth va 1) (* u (- (nth vb 1) (nth va 1)))) (+ (nth va 2) (* u (- (nth vb 2) (nth va 2))))])
+
+(defn submit (t reset)
+  (var fd (frame-data t))
+  (when reset (put! fd "reset" true))
+  (each (v VIEWS) (sys "scene" "frame" v fd))
+  ;; 把同一时刻的采样与事件交给特效进程
+  (when (and FX (!= KIND "keys"))
+    (send FX {:k "state" :t t :reset reset :samples (if reset HIST (filter (fn (h) (> (nth h 0) (- t 0.25))) HIST))
+              :events S.events :wind [S.wind-x S.wind-z] :rotor (rotor-pos) :rpm S.rpm :crashed S.crashed :impact S.impact :views VIEWS
+              :wreck (if S.crashed [S.px (ground-h P S.px S.pz) S.pz] nil)}))
+  (when (and FX (= KIND "keys")) (send FX {:k "state" :t t :reset reset :samples [] :events [] :wind [0 0] :rotor [0 -100 0 0] :views VIEWS :none true}))
+  (report))
+
+(defn rotor-pos ()
+  (var r (qrot S 0 1.7 0))
+  [(+ S.px (nth r 0)) (+ S.py (nth r 1)) (+ S.pz (nth r 2)) (* 9 S.c S.rpm S.rpm S.main)])
+
+(defn report ()
+  (when (or (> (abs (- T LAST-UI)) 0.1) (< T LAST-UI))
+    (set! LAST-UI T)
+    (send UI (if (= KIND "keys") {:k "status" :t T :mode "keys"}
+               {:k "status" :t T :alt (fmt (- S.py (ground-h P S.px S.pz)) 1) :speed (fmt (sqrt (+ (* S.vx S.vx) (* S.vz S.vz))) 1)
+                :rpm (fmt S.rpm 2) :crashed S.crashed :landed S.landed :impact S.impact :tail S.tail :warned (get S "warned")
+                :rehearsal (not (nil? REH)) :events (len S.events)}))))
+
+;; ---------------- 点选 ----------------
+(defn pick (x y w h)
+  (var cam (compute-cam))
+  (var p cam.pos) (var l cam.look)
+  (var fx (- (nth l 0) (nth p 0))) (var fy (- (nth l 1) (nth p 1))) (var fz (- (nth l 2) (nth p 2)))
+  (var fl (sqrt (+ (* fx fx) (* fy fy) (* fz fz)))) (set! fx (/ fx fl)) (set! fy (/ fy fl)) (set! fz (/ fz fl))
+  ;; right = f × up(0,1,0)，up' = right × f
+  (var rx (- fz)) (var ry 0) (var rz fx)
+  (var rl (sqrt (+ (* rx rx) (* rz rz)))) (set! rx (/ rx rl)) (set! rz (/ rz rl))
+  (var ux (- (* ry fz) (* rz fy))) (var uy (- (* rz fx) (* rx fz))) (var uz (- (* rx fy) (* ry fx)))
+  (var tf (tan (* 0.5 cam.fov 0.01745329))) (var asp (/ w (max 1 h)))
+  (var nx (- (/ (* 2 x) w) 1)) (var ny (- 1 (/ (* 2 y) h)))
+  (var dx (+ fx (* rx nx tf asp) (* ux ny tf))) (var dy (+ fy (* ry nx tf asp) (* uy ny tf))) (var dz (+ fz (* rz nx tf asp) (* uz ny tf)))
+  (var dl (sqrt (+ (* dx dx) (* dy dy) (* dz dz)))) (set! dx (/ dx dl)) (set! dy (/ dy dl)) (set! dz (/ dz dl))
+  (var best nil) (var bestT 1000000)
+  (var det {})
+  (when S (each (d S.debris) (put! det d.id d)))
+  (each-kv (id c PICK-AT)
+    (var cx 0) (var cy 0) (var cz 0)
+    (cond ((get det id) (var d (get det id)) (set! cx d.px) (set! cy d.py) (set! cz d.pz))
+          (S (var r (qrot S c.x c.y c.z)) (set! cx (+ S.px (nth r 0))) (set! cy (+ S.py (nth r 1))) (set! cz (+ S.pz (nth r 2))))
+          (else (set! cx c.x) (set! cy c.y) (set! cz c.z)))
+    (var ox (- cx (nth p 0))) (var oy (- cy (nth p 1))) (var oz (- cz (nth p 2)))
+    (var tt (+ (* ox dx) (* oy dy) (* oz dz)))
+    (when (> tt 0)
+      (var qx (- ox (* tt dx))) (var qy (- oy (* tt dy))) (var qz (- oz (* tt dz)))
+      (when (and (< (+ (* qx qx) (* qy qy) (* qz qz)) (* c.r c.r)) (< tt bestT)) (set! bestT tt) (set! best id))))
+  (if best
+    (send UI {:k "picked" :id best :label (get (get PICK-AT best) "label") :state (part-state best)})
+    (do (var g (ground-hit p dx dy dz))
+        (if g
+          (do (send UI {:k "picked" :id "ground" :label (str "地面 (" (fmt (nth g 0) 0) ", " (fmt (nth g 2) 0) ")") :state "—" :ground g})
+              (when REH (rehearsal-input "target" [(nth g 0) (nth g 2)])))
+          (send UI {:k "picked" :id nil :label "天空" :state "—"})))))
+
+(defn ground-hit (p dx dy dz)
+  (when (or (nil? P) (>= dy 0)) (return nil))
+  (var hit nil) (var tt 1)
+  (while (and (nil? hit) (< tt 900))
+    (var x (+ (nth p 0) (* dx tt))) (var y (+ (nth p 1) (* dy tt))) (var z (+ (nth p 2) (* dz tt)))
+    (when (< y (terrain-h P x z)) (set! hit [x y z]))
+    (inc! tt (max 0.5 (* tt 0.04))))
+  hit)
+
+(defn part-state (id)
+  (var det (any? (fn (d) (= d.id id)) (if S S.debris [])))
+  (cond ((nil? S) "正常")
+        (det "已脱落（碎片）")
+        ((and S.crashed (contains? ["fuselage" "canopy" "cowl" "door"] id)) "严重损坏")
+        (S.crashed "受损")
+        ((and (contains? ["trotor" "tblade1" "tblade2" "tailboom" "fin"] id) (= S.tail 0)) "尾桨失效")
+        ((and (get S "warned") (contains? ["trotor" "tblade1" "tblade2" "tailboom"] id)) "异常振动（故障征兆）")
+        (else "正常")))
+
+;; ---------------- 消息循环 ----------------
+(defn set-views (vs)
+  (each (v vs) (when (not (contains? VIEWS v)) (sys "scene" "load" v RES)))
+  (set! VIEWS vs)
+  (if REH (submit T true) (advance T true)))
+
+(load-path A.path)
+(while true
+  (var m (recv))
+  ;; 只处理积压中最新的推进请求：落后时直接补算到最新时刻
+  (var latest nil) (var others [])
+  (var cur m)
+  (while cur
+    (if (= cur.k "advance") (if (and latest (not cur.seek) (not latest.seek)) (set! latest cur) (do (when latest (push! others latest)) (set! latest cur))) (push! others cur))
+    (set! cur (sys "try-recv")))
+  (each (o others)
+    (case o.k
+      ("advance" (advance o.t (get o "seek")))
+      ("open" (when REH (stop-fc) (set! REH nil)) (load-path o.path) (advance 0 true))
+      ("cam" (when (has? o "mode") (put! CAM "mode" o.mode))
+             (when (has? o "dyaw") (put! CAM "yaw" (+ CAM.yaw o.dyaw)) (put! CAM "pitch" (clamp (+ CAM.pitch o.dpitch) -5 80)) (put! CAM "mode" "orbit"))
+             (when (has? o "zoom") (put! CAM "dist" (clamp (* CAM.dist o.zoom) 4 120)) (put! CAM "mode" "orbit"))
+             (when SC (submit T false)))
+      ("pick" (pick o.x o.y o.w o.h))
+      ("rehearse" (start-rehearsal o.from-start o.fc) (advance T true))
+      ("input" (rehearsal-input o.kind o.v))
+      ("save" (save-record o.path))
+      ("views" (set-views o.views))
+      ("stop-rehearsal" (end-rehearsal))
+      (else nil)))
+  (when latest (advance latest.t (get latest "seek"))))

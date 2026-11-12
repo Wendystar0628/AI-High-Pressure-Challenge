@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "星际战舰编队",
+  "tokens": 87421947,
+  "minutes": 90.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 4.1,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/星际战舰编队/run-54b53ece624e4b8eb5ca071adda8c650"
+  ]
+}

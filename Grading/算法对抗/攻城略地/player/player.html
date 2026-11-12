@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>攻城略地对局回放</title>
+<!-- 色值、字体取视频模板的 tokens.css（浅色纸底、紫和荧光绿一对主色、Saira + 思源黑体） -->
+<link rel="stylesheet" href="../../../../videos/template/scenes/lib/tokens.css">
+<style>
+#cv { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+#vx-bar output { min-width: 260px; }
+#vx-bar .hint { color: #B7B2C6; font: 600 13px/1 Saira, sans-serif; white-space: nowrap; }
+body.drag #stage { outline: 6px dashed #D1FF57; outline-offset: -6px; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="cv" width="1920" height="1080"></canvas></div>
+<div id="vx-bar">
+  <button id="open">打开日志</button>
+  <input type="file" id="file" accept=".jsonl,.json,.txt" hidden>
+  <button id="play">暂停</button>
+  <input type="range" id="seek" min="0" max="10000" step="1" value="0">
+  <output id="clock">—</output>
+  <span class="hint">空格 暂停 · ←/→ 一帧 · Shift 一秒 · 可把 .jsonl 拖进窗口</span>
+</div>
+<script src="plan.js"></script>
+<script src="player.js"></script>
+</body>
+</html>

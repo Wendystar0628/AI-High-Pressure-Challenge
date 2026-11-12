@@ -3,144 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>软物质实验室 · 果冻冲击与造浪水槽</title>
+<title>果冻冲击与造浪水槽 · JELLY / WAVE LAB</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<canvas id="stage"></canvas>
-<div class="vignette"></div>
-<div class="scanlines"></div>
+<div id="app">
+  <canvas id="view"></canvas>
+  <div class="bg-grain"></div>
+  <div class="bg-vignette"></div>
 
-<header class="topbar">
-  <div class="brand">
-    <div class="brand-mark"><i></i><i></i><i></i><i></i></div>
-    <div class="brand-text">
-      <strong>SOFT MATTER LAB</strong>
-      <span>软物质 · 交互实验室</span>
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-orb"><i></i><i></i><i></i></div>
+      <div class="loader-title">果冻冲击与造浪水槽</div>
+      <div class="loader-sub">正在准备体积软体与 WebGPU 流体求解器</div>
+      <div class="loader-bar"><span id="loaderBar"></span></div>
+      <div class="loader-status" id="loaderStatus">初始化渲染器</div>
     </div>
   </div>
 
-  <nav class="scene-tabs" aria-label="场景选择">
-    <button class="scene-tab active" data-scene="jelly">
-      <em>01</em>
-      <span class="tab-copy"><b>果冻冲击</b><small>HEAVY BALL IMPACT</small></span>
-    </button>
-    <button class="scene-tab" data-scene="tank">
-      <em>02</em>
-      <span class="tab-copy"><b>造浪水槽</b><small>DENSITY WAVE TANK</small></span>
-    </button>
-  </nav>
-
-  <div class="top-actions">
-    <div class="top-meta"><span class="live-dot"></span>WEBGL · 实时模拟</div>
-    <button id="soundBtn" class="chip-btn off" title="开启或关闭声音">
-      <span class="speaker" aria-hidden="true">
-        <i class="sp-cone"></i><i class="sp-arc a1"></i><i class="sp-arc a2"></i>
-      </span>
-      <span>声音</span><b id="soundState">关</b>
-    </button>
-    <button id="panelBtn" class="chip-btn" title="展开或收起参数面板">
-      <span class="sliders-ico" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span>参数</span>
-    </button>
-  </div>
-</header>
-
-<main>
-  <section class="hud" id="hud">
-    <div class="hud-head">
-      <div class="eyebrow"><span class="dot"></span><span id="sceneEyebrow">SCENE 01 / SOFT BODY</span></div>
-      <h1 id="sceneTitle">重球冲击果冻台</h1>
-      <p id="sceneSub">一颗重球落下，局部的凹陷如何扩散成整个果冻的呼吸。</p>
+  <header class="ui topbar">
+    <div class="brand">
+      <div class="brand-mark"><span></span></div>
+      <div class="brand-text">
+        <div class="brand-en">JELLY / WAVE LAB</div>
+        <div class="brand-cn">果冻冲击与造浪水槽</div>
+      </div>
     </div>
-
-    <div class="mode-switch" id="jellyModes">
-      <button data-mode="center" class="active">正中撞击</button>
-      <button data-mode="offset">偏心撞击</button>
-      <button data-mode="multi">多球连击</button>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-scene="jelly"><span class="tab-num">01</span><span>果冻冲击</span><em>SOFT BODY</em></button>
+      <button class="tab" data-scene="tank"><span class="tab-num">02</span><span>造浪水槽</span><em>FLUID TANK</em></button>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="soundBtn" title="声音开关">
+        <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave1" d="M16 8.5c1.2 1 1.9 2.2 1.9 3.5s-.7 2.5-1.9 3.5"/><path class="wave2" d="M18.5 6c2 1.7 3 3.8 3 6s-1 4.3-3 6"/></svg>
+        <span>声音</span>
+      </button>
+      <button class="icon-btn ghost" id="helpBtn" title="快捷键与说明">?</button>
     </div>
+  </header>
 
-    <div class="status-grid">
-      <div class="stat"><label>实验状态</label><b id="phaseText">准备</b></div>
-      <div class="stat"><label>仿真时间</label><b id="timeText">0.00<small>s</small></b></div>
-      <div class="stat"><label>当前模式</label><b id="modeText">单球 · 正中</b></div>
-    </div>
+  <main class="ui" id="workspace">
+    <!-- JELLY CONTROLS -->
+    <aside class="panel" id="panelJelly">
+      <div class="panel-head">
+        <div class="eyebrow">EXPERIMENT 01 · SOFT MATTER</div>
+        <h2>重球冲击果冻</h2>
+        <p>四面体有限元软体，冲击应力超过材料强度时从受击处起裂。</p>
+      </div>
 
-    <div class="timeline">
-      <div class="timeline-bar"><i id="timelineFill"></i></div>
-      <div class="timeline-labels"><span>准备</span><span>冲击</span><span>余波</span><span>稳定</span></div>
-    </div>
-
-    <div class="tank-only" id="tankOnly">
-      <div class="wave-panel">
-        <div class="wave-dial">
-          <svg viewBox="0 0 44 44" aria-hidden="true">
-            <circle cx="22" cy="22" r="18" class="dial-bg"></circle>
-            <circle cx="22" cy="22" r="18" class="dial-fg" id="waveDial"></circle>
-          </svg>
-          <b id="waveCount">--</b>
+      <section class="ctrl-group">
+        <div class="ctrl-head"><span>果冻对象</span><em id="jellySpec">软 · 高块</em></div>
+        <div class="seg" id="jellyPick">
+          <button class="seg-btn active" data-jelly="0"><i style="--c:#9dffd8"></i>青柠 A</button>
+          <button class="seg-btn" data-jelly="1"><i style="--c:#ff9f8f"></i>蜜桃 B</button>
+          <button class="seg-btn" data-jelly="2"><i style="--c:#aeb8ff"></i>蓝莓 C</button>
         </div>
-        <div class="wave-copy">
-          <label>造浪时序</label>
-          <p id="waveStatus">等待最后一颗小球入水</p>
-          <span id="waveSmall">t_last 未触发 · 启动 +1.0s · 持续 5.0s</span>
+      </section>
+
+      <section class="ctrl-group">
+        <div class="slider-row"><label for="softness">柔软度</label><div class="slider-val" id="softnessVal">62</div></div>
+        <input type="range" id="softness" min="0" max="100" value="62">
+        <div class="range-hint"><span>紧实弹韧</span><span>柔若凝脂</span></div>
+      </section>
+
+      <section class="ctrl-group">
+        <div class="slider-row"><label for="toughness">结实程度</label><div class="slider-val" id="toughnessVal">58</div></div>
+        <input type="range" id="toughness" min="0" max="100" value="58">
+        <div class="range-hint"><span>一触即裂</span><span>千锤不破</span></div>
+      </section>
+
+      <section class="ctrl-group">
+        <div class="slider-row"><label for="ballMass">重球质量</label><div class="slider-val" id="ballMassVal">12 <small>kg</small></div></div>
+        <input type="range" id="ballMass" min="2" max="40" value="12" step="1">
+        <div class="slider-row mt"><label for="dropHeight">下落高度</label><div class="slider-val" id="dropHeightVal">1.2 <small>m</small></div></div>
+        <input type="range" id="dropHeight" min="0.15" max="2.2" value="1.2" step="0.05">
+      </section>
+
+      <section class="ctrl-group">
+        <div class="ctrl-head"><span>冲击方式</span><em>IMPACT MODE</em></div>
+        <div class="impact-btns">
+          <button class="impact-btn" id="impactCenter" data-mode="center"><span class="ib-ico">↓</span><b>正中</b><small>1</small></button>
+          <button class="impact-btn" id="impactOffset" data-mode="offset"><span class="ib-ico">↘</span><b>偏心</b><small>2</small></button>
+          <button class="impact-btn" id="impactMulti" data-mode="multi"><span class="ib-ico">⇊</span><b>连续</b><small>3</small></button>
+        </div>
+      </section>
+
+      <div class="panel-note">
+        <span class="dot"></span> 点击场景中的果冻可切换目标
+      </div>
+    </aside>
+
+    <!-- TANK CONTROLS -->
+    <aside class="panel hidden" id="panelTank">
+      <div class="panel-head">
+        <div class="eyebrow">EXPERIMENT 02 · PARTICLE FLUID</div>
+        <h2>多密度球与造浪</h2>
+        <p>WebGPU 计算着色器上的 FLIP 粒子—网格流体，白水由粒子状态判定。</p>
+      </div>
+
+      <section class="ctrl-group">
+        <div class="ctrl-head"><span>造浪装置</span><em id="waveState">停</em></div>
+        <div class="wave-actions">
+          <button class="wide-btn accent" id="waveBtn"><span class="led"></span>开始造浪</button>
+          <button class="wide-btn" id="releaseBtn">释放小球</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <div class="slider-row"><label for="amplitude">造浪幅度</label><div class="slider-val" id="amplitudeVal">55</div></div>
+        <input type="range" id="amplitude" min="0" max="100" value="55">
+        <div class="range-hint"><span>平缓长波</span><span>陡立破碎</span></div>
+      </section>
+
+      <section class="ctrl-group">
+        <div class="slider-row"><label for="frequency">造浪频率</label><div class="slider-val" id="frequencyVal">0.9 <small>Hz</small></div></div>
+        <input type="range" id="frequency" min="0.35" max="1.8" value="0.9" step="0.05">
+      </section>
+
+      <section class="ctrl-group">
+        <div class="ctrl-head"><span>小球密度</span><em>g / cm³</em></div>
+        <div class="density-row" data-group="0"><i style="--c:#ffc35c"></i><label>轻质</label><input type="range" class="density" data-group="0" min="0.12" max="3.2" value="0.32" step="0.02"><b id="rho0">0.32</b></div>
+        <div class="density-row" data-group="1"><i style="--c:#72e6b0"></i><label>悬浮</label><input type="range" class="density" data-group="1" min="0.12" max="3.2" value="0.86" step="0.02"><b id="rho1">0.86</b></div>
+        <div class="density-row" data-group="2"><i style="--c:#6cc9ff"></i><label>中性</label><input type="range" class="density" data-group="2" min="0.12" max="3.2" value="1.00" step="0.02"><b id="rho2">1.00</b></div>
+        <div class="density-row" data-group="3"><i style="--c:#ff6f7d"></i><label>重沉</label><input type="range" class="density" data-group="3" min="0.12" max="3.2" value="2.30" step="0.02"><b id="rho3">2.30</b></div>
+      </section>
+
+      <div class="panel-note">
+        <span class="dot"></span> 拖动旋转视角 · 滚轮缩放 · 双击聚焦
+      </div>
+    </aside>
+
+    <!-- DEMO DOCK -->
+    <aside class="demo-dock" id="demoDock">
+      <div class="dock-head">
+        <span>预置演示</span><em>DEMO REELS</em>
+      </div>
+      <button class="demo-item" data-run="jelly-center">
+        <span class="di-num">01</span>
+        <span class="di-body"><b>正中单击</b><em>包球 · 压扁 · 弹起</em></span>
+        <span class="di-dur">7.6s</span>
+      </button>
+      <button class="demo-item" data-run="jelly-multi">
+        <span class="di-num">02</span>
+        <span class="di-body"><b>连击</b><em>叠加振荡 · 最终开裂</em></span>
+        <span class="di-dur">9.8s</span>
+      </button>
+      <button class="demo-item" data-run="jelly-offset">
+        <span class="di-num">03</span>
+        <span class="di-body"><b>偏心一击</b><em>倾斜 · 滑移 · 碰撞</em></span>
+        <span class="di-dur">7.8s</span>
+      </button>
+      <button class="demo-item" data-run="tank-full">
+        <span class="di-num">04</span>
+        <span class="di-body"><b>风浪</b><em>入水 · 分化 · 破碎拍壁</em></span>
+        <span class="di-dur">19.5s</span>
+      </button>
+      <button class="demo-stop hidden" id="demoStop">停止演示</button>
+    </aside>
+
+    <div class="transport" id="transport">
+      <button class="tr-btn" id="playBtn" title="暂停 / 继续 (空格)"><svg viewBox="0 0 24 24"><path class="pause" d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"/><path class="play hidden" d="M7 4.5l12 7.5-12 7.5z"/></svg></button>
+      <div class="tr-sep"></div>
+      <button class="tr-btn small" id="slowBtn" title="慢放">0.25×</button>
+      <button class="tr-btn small" id="resetBtn" title="重置 (R)"><svg viewBox="0 0 24 24"><path d="M12 5a7 7 0 1 1-6.7 9h2.2A5 5 0 1 0 12 7v3L7.5 5 12 0z" transform="translate(0 2)"/></svg></button>
+      <div class="tr-sep"></div>
+      <div class="tr-status"><span id="statusLed"></span><span id="statusText">实时模拟</span></div>
+    </div>
+
+    <div class="camera-hint ui" id="cameraHint">
+      <span>拖拽旋转</span><i></i><span>滚轮缩放</span><i></i><span>双击回到默认机位</span>
+    </div>
+
+    <div class="scene-caption" id="sceneCaption">
+      <div class="cap-run" id="capRun"></div>
+      <div class="cap-title" id="capTitle"></div>
+      <div class="cap-sub" id="capSub"></div>
+      <div class="cap-bar"><span id="capProgress"></span></div>
+      <div class="cap-time" id="capTime"></div>
+      <div class="cap-exit">点击画面或按 Esc 退出演示</div>
+    </div>
+    <button class="demo-exit" id="demoExit">退出演示</button>
+  </main>
+
+  <div class="letterbox top ui"></div>
+  <div class="letterbox bottom ui"></div>
+
+  <div class="export-badge ui" id="exportBadge">
+    <span class="rec"></span> EXPORT MODE
+  </div>
+
+  <div class="help-modal ui hidden" id="helpModal">
+    <div class="help-card">
+      <div class="help-head"><h3>操作与参数</h3><button id="helpClose">×</button></div>
+      <div class="help-cols">
+        <div>
+          <h4>视角与回放</h4>
+          <ul>
+            <li><b>拖拽</b> 旋转 · <b>滚轮</b> 缩放 · <b>双击</b> 复位机位</li>
+            <li><b>空格</b> 暂停 / 继续 · <b>R</b> 重置当前实验</li>
+            <li><b>1 / 2 / 3</b> 分别触发正中、偏心、连续冲击</li>
+            <li>左下 <b>0.25×</b> 进入慢放，便于观察接触瞬间</li>
+          </ul>
+        </div>
+        <div>
+          <h4>物理说明</h4>
+          <ul>
+            <li>果冻为四面体体积软体，采用 XPBD 求解；开裂由单元应变判据与连通分量分裂得到。</li>
+            <li>水体为三维 PIC/FLIP 粒子—网格方法，在 WebGPU 计算着色器中求解；自由液面由粒子密度场重建，白水来自粒子速度与破碎判据。</li>
+            <li>调高软度、质量或落高会加深凹陷与鼓出；降低结实程度会使同一击从回弹变为开裂。</li>
+          </ul>
         </div>
       </div>
-      <div class="density-legend" id="densityLegend"></div>
-    </div>
-
-    <div class="hud-actions">
-      <button id="primaryBtn" class="btn btn-primary"><span class="btn-glow"></span><b>释放重球</b></button>
-      <button id="pauseBtn" class="btn btn-ghost" title="暂停/继续（空格）">暂停</button>
-      <button id="resetBtn" class="btn btn-ghost" title="重置（R）">重置</button>
-      <div class="speed-switch" id="speedSwitch">
-        <button data-speed="1" class="active">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button>
+      <div class="help-foot">
+        <span>所有资源本地加载 · 无网络请求 · Chrome / WebGPU</span>
+        <button id="copyApi">复制逐帧导出接口</button>
       </div>
     </div>
-    <div class="tank-manual" id="tankManual">
-      <button id="waveStartBtn" class="mini-btn">手动开始造浪</button>
-      <button id="waveStopBtn" class="mini-btn">停止造浪</button>
-      <button id="releaseBtn" class="mini-btn">重新释放小球</button>
-    </div>
-  </section>
-
-  <aside class="panel" id="panel">
-    <div class="panel-head">
-      <div>
-        <span class="eyebrow-mini">PARAMETERS</span>
-        <h2>实验参数</h2>
-      </div>
-      <button id="panelClose" class="panel-close" title="收起">×</button>
-    </div>
-    <div id="jellyParams" class="param-groups"></div>
-    <div id="tankParams" class="param-groups hidden"></div>
-    <div class="panel-foot">
-      <span class="foot-dot"></span>
-      <p>参数改变后自动从初始状态重建实验。结构参数在重置时生效。</p>
-    </div>
-  </aside>
-</main>
-
-<div class="bottom-hint">
-  <span>拖动旋转视角</span><i></i><span>滚轮缩放</span><i></i><span>空格暂停</span><i></i><span>R 重置</span>
-</div>
-
-<div class="audio-hint" id="audioHint"><span class="pulse"></span>点击画面任意处，开启声音</div>
-
-<div class="loading" id="loading">
-  <div class="loading-inner">
-    <div class="loading-mark"><i></i><i></i><i></i><i></i></div>
-    <div class="loading-title">SOFT MATTER LAB</div>
-    <div class="loading-sub">正在准备软体与流体求解器</div>
-    <div class="loading-bar"><i></i></div>
   </div>
-</div>
 
-<script src="vendor/three.min.js"></script>
-<script src="js/util.js"></script>
+  <div class="toast" id="toast"></div>
+</div>
+<script src="js/math3d.js"></script>
+<script src="js/glutil.js"></script>
+<script src="js/renderer.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/fluid.js"></script>
 <script src="js/jelly.js"></script>
-<script src="js/tank.js"></script>
-<script src="js/main.js"></script>
+<script src="js/scene_jelly.js"></script>
+<script src="js/scene_tank.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

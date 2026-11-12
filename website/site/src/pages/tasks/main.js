@@ -1,4 +1,4 @@
-// /tasks/ 题目拆解: the entry to the 12 task pages, grouped by category
+// /tasks/ 题目拆解: the entry to the 13 task pages, grouped by category
 // (website/docs/tasks.md 一). Everything here comes from data/tasks.json.
 import '../../reading/reading.css';
 import './style.css';
@@ -81,7 +81,7 @@ boot(
         [t('common.kind.design'), t('tasks.ledger.kindN', { n: des.tasks.length, w: fmtPct(des.weight) })],
         [t('tasks.ledger.models'), t('tasks.ledger.modelsN', { n: data.models.length })],
         [t('tasks.ledger.updated'), fmtDate(data.updated)],
-      ],
+      ].slice(0, data.notice ? 2 : 4),   // 暂停公示时不写受测模型数和更新日期
     });
     side.append(a.el);
     wireAnchors(paper);

@@ -1,0 +1,19 @@
+{
+  "problem": "16",
+  "parts": [
+    {"name": "1", "title": "双蜗室异面三通泵壳", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,240,160], "r": 6}], "depth": [0,14], "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [80,80], "d": 132}], "depth": [14,105], "name": "左蜗室"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [175,80], "d": 112}], "depth": [14,95], "name": "右蜗室"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [80,80], "d": 100}], "depth": [14,84], "name": "左腔内"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [175,80], "d": 84}], "depth": [14,74], "name": "右腔内"},
+      {"type": "extrude", "plane": {"origin": [80,80,105], "normal": [0.5,0,0.8660254], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 66}], "depth": [0,55], "name": "左斜接口"},
+      {"type": "hole", "plane": {"origin": [80,80,105], "normal": [0.5,0,0.8660254], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 48, "depth": 70, "name": "左斜孔"},
+      {"type": "extrude", "plane": {"origin": [175,80,95], "normal": [0.5,0,0.8660254], "x_dir": [0,1,0]}, "loops": [{"circle": [0,0], "d": 56}], "depth": [0,50], "name": "右斜接口"},
+      {"type": "hole", "plane": {"origin": [175,80,95], "normal": [0.5,0,0.8660254], "x_dir": [0,1,0]}, "at": [[0,0]], "d": 40, "depth": 70, "name": "右斜孔"},
+      {"type": "hole", "plane": "YZ", "origin": [240,0,0], "at": [[80,60]], "d": 50, "depth": 40, "name": "右出口Φ50"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,14], "at": [[14,14],[226,14],[14,146],[226,146]], "d": 13, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,84], "at": [[80,80],[175,80]], "d": 40, "depth": 30, "name": "顶面通孔"}
+    ]}
+  ]
+}

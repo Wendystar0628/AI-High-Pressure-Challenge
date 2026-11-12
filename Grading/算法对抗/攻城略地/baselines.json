@@ -1,0 +1,60 @@
+{
+  "schema": "siege-baselines-v2",
+  "opponents": [
+    {
+      "id": "tier1",
+      "name": "第1档",
+      "rating": 0.0,
+      "score": 10,
+      "source": "opponents\\baseline.cpp",
+      "defines": {
+        "TIER": 1
+      }
+    },
+    {
+      "id": "tier2",
+      "name": "第2档",
+      "rating": 232.72971403075087,
+      "score": 20,
+      "source": "opponents\\baseline.cpp",
+      "defines": {
+        "TIER": 2
+      }
+    },
+    {
+      "id": "tier3",
+      "name": "第3档",
+      "rating": 374.02562493412154,
+      "score": 40,
+      "source": "opponents\\baseline.cpp",
+      "defines": {
+        "TIER": 3
+      }
+    },
+    {
+      "id": "tier4",
+      "name": "第4档",
+      "rating": 581.4837730581465,
+      "score": 60,
+      "source": "opponents\\baseline.cpp",
+      "defines": {
+        "TIER": 4
+      }
+    },
+    {
+      "id": "tier5",
+      "name": "第5档",
+      "rating": 825.1484030205629,
+      "score": 80,
+      "source": "opponents\\baseline.cpp",
+      "defines": {
+        "TIER": 5
+      }
+    }
+  ],
+  "maps": 96,
+  "games": 960,
+  "seat_schedule": "map_index_even_lower_A_odd_lower_B",
+  "score_rule": "R1-200=0; 10/20/40/60/80; R5+200=100",
+  "anchor": "tier1"
+}

@@ -3,8 +3,14 @@
   "eyebrow": "Overall ranking",
   "loading": "Loading the scores",
   "facts": {
-    "tasks": { "one": "{n} task", "other": "{n} tasks" },
-    "cats": { "one": "{n} category", "other": "{n} categories" },
+    "tasks": {
+      "one": "{n} task",
+      "other": "{n} tasks"
+    },
+    "cats": {
+      "one": "{n} category",
+      "other": "{n} categories"
+    },
     "updated": "Updated {date}"
   },
   "figs": {
@@ -115,5 +121,13 @@
   "foot": "Total = the {n} category scores added by weight; a category score is the mean of its tasks",
   "empty": {
     "noData": "Once the score data loads, the models will be ranked here by total."
+  },
+  "matrix": {
+    "eyebrow": "Score matrix",
+    "title": "Score matrix",
+    "q": "Who leads on each task",
+    "label": "Score matrix: models × 13 tasks",
+    "hint": "Click a task number to sort by it; click again for the total",
+    "exportTitle": "Leaderboard │ Score matrix"
   }
 }

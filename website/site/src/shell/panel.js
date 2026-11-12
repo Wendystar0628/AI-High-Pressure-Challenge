@@ -1,6 +1,6 @@
 // The model side panel (leaderboard.md「模型侧面板」): total, two kinds,
 // the test cost (when the data has costs: amount, tag, plan, token total, notes),
-// 8 category scores and 12 task scores of one model, with the primary button
+// 10 category scores and 13 task scores of one model, with the primary button
 // 「查看全部得分」(→ the model scores page), compare and previous / next.
 // Pushed in from the right; the address gets ?model=<id> while it is open.
 //
@@ -154,7 +154,7 @@ function render(id, { fresh }) {
     figs,
     costSec,
     h('section.site-panel-sec', h('h3.st-pair', h('span.st-eyebrow.slash', t('common.panel.categoriesEyebrow')), h('span', t('common.panel.categories'))), h('ul.site-panel-rows', catRows)),
-    h('section.site-panel-sec', h('h3.st-pair', h('span.st-eyebrow.slash', t('common.panel.tasksEyebrow')), h('span', t('common.panel.tasks'))), h('ul.site-panel-rows.tasks', taskRows)),
+    h('section.site-panel-sec', h('h3.st-pair', h('span.st-eyebrow.slash', t('common.panel.tasksEyebrow')), h('span', t('common.panel.tasks', { n: data.tasks.length }))), h('ul.site-panel-rows.tasks', taskRows)),
     h('p.st-actions.site-panel-actions'),
   );
   dlg.setAttribute('aria-label', `${t('common.panel.label')}：${modelLabel(m)}`);

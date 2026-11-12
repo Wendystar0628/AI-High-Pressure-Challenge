@@ -1,0 +1,19 @@
+{
+  "problem": "05",
+  "parts": [
+    {"name": "1", "title": "双层交汇混流阀箱", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 44, 38]}], "depth": 4, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 34, 0],
+       "loops": [{"path": [[4, 4], [40, 4], [40, 16], [28, 28], [4, 28]]}], "depth": 30, "name": "斜顶主体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 4],
+       "at": [[4, 4], [40, 4], [4, 34], [40, 34]], "d": 7, "through": true, "name": "底板4角孔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 4, 0],
+       "loops": [{"circle": [14, 16], "d": 20}], "depth": 3, "name": "前凸台"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 1, 0], "at": [14, 16], "d": 14, "through": true, "name": "大通孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 1, 0], "at": [28, 12], "d": 14, "through": true, "name": "中通孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 34, 0],
+       "loops": [{"rect": [20, 8, 36, 22]}], "depth": 7, "name": "后腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 28], "at": [[14, 19], [26, 19], [14, 30], [26, 30]], "d": 6, "depth": 6, "name": "顶面小孔"}
+    ]}
+  ]
+}

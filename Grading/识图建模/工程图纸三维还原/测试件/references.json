@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "tolerance_mm": 0.2,
+  "full_credit_f": 0.98,
+  "assembly_weighting": "precision_area_recall_faces",
+  "sampling": {
+    "density_per_mm2": 0.5,
+    "min_points": 5000,
+    "max_points": 30000,
+    "mesh_linear_mm": 0.02,
+    "mesh_angular_rad": 0.1,
+    "max_edge_mm": 2.0,
+    "min_points_per_face": 256,
+    "max_points_per_face": 5000,
+    "face_merge_linear_mm": 1e-07,
+    "face_merge_angular_rad": 1e-07
+  },
+  "note": "准确率按作答表面积；完整率对参考每个相连同曲面合并后的面单独按面积采样，再按面等权。装配按序号比较，准确率汇总全部作答面积，完整率汇总全部参考面，缺件的参考面全记0；不平均零件F。每题得分=max×min(1,F/0.98)，允许整题一次只平移不旋转的对齐。",
+  "records": [
+    {
+      "id": "T1",
+      "tier": "中档",
+      "name": "轴承座",
+      "kind": "part",
+      "max": 9,
+      "parts": [
+        "1"
+      ],
+      "reference": "测试件/参考答案/第T1题.json"
+    },
+    {
+      "id": "T2",
+      "tier": "困难档",
+      "name": "滑轮架",
+      "kind": "assembly",
+      "max": 10,
+      "parts": [
+        "1",
+        "2",
+        "3"
+      ],
+      "reference": "测试件/参考答案/第T2题.json"
+    },
+    {
+      "id": "T3",
+      "tier": "中档",
+      "name": "法兰盘",
+      "kind": "part",
+      "max": 9,
+      "parts": [
+        "1"
+      ],
+      "reference": "测试件/参考答案/第T3题.json"
+    }
+  ],
+  "precision_weighting": "answer_surface_area",
+  "recall_weighting": "reference_geometric_faces"
+}

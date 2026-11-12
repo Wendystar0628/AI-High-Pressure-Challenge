@@ -1,0 +1,170 @@
+{
+  "format": "工程图纸三维还原·图纸",
+  "problem": "24",
+  "sheet": "24-35",
+  "sheet_index": 35,
+  "sheet_count": 62,
+  "title": "1号偏心芯轴",
+  "frame": "part",
+  "part": "3",
+  "paper": {
+    "size": "A2",
+    "width": 594,
+    "height": 420
+  },
+  "dpi": 240,
+  "projection": "第一角画法",
+  "units": "毫米",
+  "scale": "2:1",
+  "title_block": {
+    "title": "1号偏心芯轴",
+    "drawing_no": "JX-24-03-2",
+    "material": "钢",
+    "quantity": 1,
+    "scale_text": "2:1"
+  },
+  "parts_list": [],
+  "notes": [
+    "技术要求",
+    "单位mm；链式和相对尺寸须结合剖视推算。",
+    "R/C均须建模；未注棱保持理论交线。",
+    "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+    "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。",
+    "序号1坐标系与总坐标系重合；其余零件由配合及键向定位。"
+  ],
+  "version": 2,
+  "conventions": {
+    "图纸": "形状、图线、遮挡关系和剖面边界仅见同名PNG；JSON不提供图线或标注图元坐标。",
+    "尺寸": "每个尺寸旁的〔D编号〕对应dimensions目录；编号在整题内唯一。value为尺寸数值，text为完整标注，参考尺寸保留括号。",
+    "坐标": "O是零件坐标原点，箭头X/Y/Z指向正向；单位毫米。装配图采用总坐标系，零件图采用各自坐标系。",
+    "投影": "第一角画法；主视沿+Y，俯视沿−Z，左视沿+X。其他视图以definition.direction为投射方向。",
+    "剖切": "definition.section只说明剖切平面与方式；剖切位置字母标在PNG上，不包含截面轮廓。",
+    "尺寸链": "线性尺寸由尺寸界线所指的轮廓、轴线或中心位置之间量取。局部定形与相对定位尺寸需结合PNG联立；不得将尺寸数值直接当成绝对坐标。"
+  },
+  "dimensions": [
+    {
+      "id": "D270",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 4,
+      "text": "4"
+    },
+    {
+      "id": "D271",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 1,
+      "text": "1"
+    },
+    {
+      "id": "D272",
+      "view": "左视图",
+      "type": "孔径",
+      "value": 5,
+      "text": "Φ5"
+    },
+    {
+      "id": "D273",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 7,
+      "text": "7"
+    },
+    {
+      "id": "D274",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 2,
+      "text": "2"
+    },
+    {
+      "id": "D275",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 2,
+      "text": "2"
+    },
+    {
+      "id": "D276",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 6,
+      "text": "6"
+    },
+    {
+      "id": "D277",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 2,
+      "text": "2"
+    },
+    {
+      "id": "D278",
+      "view": "俯视图",
+      "type": "直径",
+      "value": 24,
+      "text": "Φ24"
+    },
+    {
+      "id": "D279",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 5,
+      "text": "5"
+    },
+    {
+      "id": "D280",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 4,
+      "text": "Φ4"
+    }
+  ],
+  "views": [
+    {
+      "name": "主视图",
+      "kind": "basic",
+      "position": "front",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "俯视图",
+      "kind": "basic",
+      "position": "top",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "左视图",
+      "kind": "basic",
+      "position": "left",
+      "frame": "part",
+      "projection_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "title": "Questions you might ask",
+  "aside": {
+    "label": "Contents and figures of this page",
+    "toc": "Contents",
+    "tocEn": "Contents",
+    "ledger": "At a glance",
+    "ledgerEn": "Figures"
+  },
+  "fields": {
+    "questions": { "one": "{n} question", "other": "{n} questions" },
+    "sections": { "one": "{n} section", "other": "{n} sections" }
+  },
+  "ledger": {
+    "questions": "Questions",
+    "questionsN": "{n}",
+    "sections": "Sections",
+    "sectionsN": "{n}",
+    "updated": "Data updated"
+  },
+  "qa": {
+    "no": "Q{n}",
+    "link": "Link to question {n}",
+    "board": "See {name} on the category boards"
+  },
+  "weights": {
+    "aria": "{a} {wa}, {b} {wb}",
+    "open": "Adjust the weights",
+    "openTitle": "Open the weight sandbox on the leaderboard"
+  },
+  "export": {
+    "eyebrow": "Export",
+    "title": "Export images",
+    "button": "Make images",
+    "again": "Make again",
+    "hint": "1920×1080 PNG, light version; long content runs onto more pages, one image each",
+    "busy": "Making…",
+    "ready": { "one": "{n} image ready", "other": "{n} images ready" },
+    "saveAll": "Save all",
+    "save": "Save",
+    "saved": "Saved",
+    "page": "Image {n}",
+    "alt": "FAQ image {n} of {of}",
+    "failed": "The images were not made. Try again."
+  },
+  "sheet": {
+    "eyebrow": "Frequently asked",
+    "title": "Questions you **might ask**",
+    "foot": "AI Decathlon · Timed Challenge",
+    "page": "FAQ {n}/{of}",
+    "cont": " (cont.)"
+  },
+  "end": {
+    "leaderboard": "See the leaderboard",
+    "about": "About the challenge"
+  }
+}

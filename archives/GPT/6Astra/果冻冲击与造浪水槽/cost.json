@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "果冻冲击与造浪水槽",
+  "tokens": 8966080,
+  "minutes": 51.3,
+  "time": "实际停止",
+  "cny": 3.17,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "GPT/6Astra/果冻冲击与造浪水槽/run-048b736be57344af9eeaf7f9d5c5de0e"
+  ]
+}

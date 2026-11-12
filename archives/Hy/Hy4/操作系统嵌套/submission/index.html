@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: file: *; frame-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;" />
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://127.0.0.1:18106 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' http://127.0.0.1:18106 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http: https:; frame-src 'self' http: https:; connect-src 'self' http: https: ws: wss:">
   <title>Nested OS</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="os-root"></div>
-  <script>require('./src/boot.js');</script>
+  <div id="root"></div>
+  <div id="overlay-layer"></div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/compiler.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/runtime.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/ui-core.js"></script>
+  <script src="js/ui-root.js"></script>
+  <script src="js/ui-inner.js"></script>
+  <script src="js/help.js"></script>
+  <script src="js/bench.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

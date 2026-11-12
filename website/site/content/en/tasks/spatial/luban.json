@@ -5,7 +5,7 @@
       "ul": [
         "Pieces keep their starting orientation and only translate along x, y or z; several may move together, but never all of them at once.",
         "Nothing may collide anywhere along a move; a group separates from the rest only when moved infinitely far along an axis.",
-        "Both groups must then be taken down to single pieces, frame included; finding the first separation is not a full solution.",
+        "Both groups must then be taken down to single pieces, frame included; a lock not fully taken apart is submitted as the legal partial route worked out so far.",
         "Moving the same group along the same axis in the same direction counts as one step, whatever the distance.",
         "Only the route checker and position tracker provided may be run; no self-written programs to search routes, simulate moves or compute collisions, and no solvers."
       ]
@@ -13,14 +13,15 @@
   ],
   "points": [
     "**Spatial imagination**: work out every piece's shape, position and interlocks from the layer drawings and voxel data.",
-    "**Reasoning about blocking**: judge by hand whether each move collides; one collision voids the whole route.",
+    "**Reasoning about blocking**: judge by hand whether each move collides; at the first collision the route breaks off, and nothing after it counts.",
     "**Full disassembly**: after splitting into two groups, keep going until every group is a single piece.",
     "**Fewer steps**: among legal routes, find shorter ones with fewer changes of group, axis and direction."
   ],
   "scoring": [
     "**Tool use checked first**: the answering record is read first; self-written programs that search, simulate or compute collisions, any solver, or changes to the two tools score 0 for the whole answer.",
-    "**Then the whole tree**: a program checks the full disassembly tree and counts steps, accepting any legal route; a puzzle without a complete legal solution scores 0.",
-    "**Scored by steps**: each puzzle earns $w \\times \\min(1, B/N)$, where N is the route's total steps and B the reference solution's; fewer steps than B still earn only full marks.",
+    "**Then the whole tree**: a program checks the disassembly tree step by step from the starting state and counts steps, accepting any legal route.",
+    "**Full take-down scored by steps**: each puzzle earns $w \\times \\max(0.6, \\min(1, B/N))$, where N is the route's total steps and B the reference solution's; fewer steps than B still earn only full marks, and however long the route, it keeps 60%.",
+    "**Partial credit when unfinished**: checking stops at the first collision, notation error or branch not yet taken apart; with k separations completed legally before that, the puzzle earns $w \\times 0.5 \\times S_k/B$, where $S_k$ is the steps the reference solution spends on its first k separations. Every completed separation adds credit; partial credit tops out at 50%, below any full take-down; no completed separation scores 0.",
     "**Three tiers**: easy puzzles are worth 8 points each, medium 12 and hard 18, 100 in all."
   ]
 }

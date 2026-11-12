@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "操作系统嵌套",
+  "tokens": 21077998,
+  "minutes": 81.7,
+  "time": "实际停止",
+  "cny": 7.44,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "GPT/6Astra/操作系统嵌套/run-cfd22ee56e394a30aa0deaf32589a541"
+  ]
+}

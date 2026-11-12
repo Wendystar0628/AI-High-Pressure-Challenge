@@ -1,0 +1,88 @@
+;; =====================================================================
+;; 飞控程序（排演用）：直升机是不稳定的被控对象，没有控制输入就会失去姿态。
+;; 接口（见操作说明“飞控接口”）：
+;;   读 (sys "bus-read" "heli/sensors")  -> {v 传感器值 t 写入时刻}，传感器带时间戳 v.t
+;;   读 (sys "bus-read" "heli/command")  -> 排演输入：目标航向、目标点、任务
+;;   写 (sys "bus-write" "heli/controls" {:c 总距 :p 纵向周期变距 :r 横向周期变距 :y 尾桨脚蹬 :t 时刻})
+;; 控制量由飞行场景进程在每个物理步读取并保持到下一次写入；错过的控制周期不会补发。
+;; 任务：从停机坪 A 起飞，飞向停机坪 B（或排演中设定的航向/目标点），悬停并降落。
+;; =====================================================================
+(include "/System/lib/core.nest")
+
+(def PERIOD 0.02)          ; 控制周期（秒，虚拟时间）
+(def CRUISE-ALT 14)        ; 巡航离地高度
+(def CRUISE-SPEED 9)       ; 巡航速度
+(def G 9.81)
+
+(var PHASE "spinup") (var YI 0) (var LAST-T -1) (var HOME nil) (var CYCLES 0)
+
+(defn wrap (a) (- a (* 6.283185307 (floor (/ (+ a 3.14159265) 6.283185307)))))
+
+(defn control (s cmd)
+  (var dt (if (> LAST-T 0) (clamp (- s.t LAST-T) 0.001 1) PERIOD))
+  (set! LAST-T s.t)
+  (when (nil? HOME) (set! HOME [s.x s.z]))
+  (when s.crashed (return {:c 0 :p 0 :r 0 :y 0 :throttle 0}))
+  ;; ---- 目标 ----
+  (var tx (get-or cmd "tx" (nth HOME 0))) (var tz (get-or cmd "tz" (nth HOME 1)))
+  (var mode (get-or cmd "mode" "mission"))
+  (var dx (- tx s.x)) (var dz (- tz s.z))
+  (var dist (sqrt (+ (* dx dx) (* dz dz))))
+  (var alt-t CRUISE-ALT) (var vtx 0) (var vtz 0) (var head-t s.heading)
+  (case PHASE
+    ("spinup" (when (> s.rpm 0.9) (set! PHASE "climb")))
+    ("climb" (when (> s.alt 7) (set! PHASE "cruise")))
+    ("cruise" (when (and (= mode "mission") (< dist 30)) (set! PHASE "approach")))
+    ("approach" (when (and (< dist 1.8) (< (sqrt (+ (* s.vx s.vx) (* s.vz s.vz))) 0.8)) (set! PHASE "descend")))
+    ("descend" (when s.landed (set! PHASE "landed")))
+    (else nil))
+  (when (and (= mode "heading") (not (contains? ["spinup" "climb"] PHASE))) (set! PHASE "cruise"))
+  (case PHASE
+    ("spinup" (return {:c 0 :p 0 :r 0 :y 0 :throttle 1}))
+    ("climb" (set! alt-t CRUISE-ALT))
+    ("cruise"
+     (if (= mode "heading")
+       (do (set! head-t (get-or cmd "heading" s.heading))
+           (set! vtx (* CRUISE-SPEED (cos head-t))) (set! vtz (* CRUISE-SPEED (- (sin head-t)))))
+       (do (var sp (min CRUISE-SPEED (* 0.5 dist)))
+           (set! vtx (* sp (/ dx (max dist 0.01)))) (set! vtz (* sp (/ dz (max dist 0.01))))
+           (when (> dist 4) (set! head-t (atan2 (- dz) dx))))))
+    ("approach"
+     (set! alt-t (max 5 (* 0.25 dist)))
+     (var sp (min 5 (* 0.35 dist)))
+     (set! vtx (* sp (/ dx (max dist 0.01)))) (set! vtz (* sp (/ dz (max dist 0.01)))))
+    ("descend" (set! alt-t -1) (set! vtx (* 0.4 dx)) (set! vtz (* 0.4 dz)))
+    ("landed" (return {:c 0.05 :p 0 :r 0 :y 0 :throttle 0.3}))
+    (else nil))
+  ;; ---- 高度：总距 ----
+  (var tilt (max 0.5 (* (cos s.roll) (cos s.pitch))))
+  (var hover (/ G (* 21.5 (max 0.3 (* s.rpm s.rpm)) tilt)))
+  (var vyt (clamp (* 0.9 (- alt-t s.alt)) (if (= PHASE "descend") -0.9 -3) 3))
+  (var c (clamp (+ hover (* 0.06 (- vyt s.vy))) 0 1))
+  ;; ---- 水平：速度 -> 期望加速度 -> 期望姿态 ----
+  (var ax (clamp (* 0.9 (- vtx s.vx)) -4 4)) (var az (clamp (* 0.9 (- vtz s.vz)) -4 4))
+  (var h s.heading)
+  (var af (- (* ax (cos h)) (* az (sin h))))
+  (var ar (+ (* ax (sin h)) (* az (cos h))))
+  (var pitch-t (clamp (/ (- af) G) -0.32 0.32))
+  (var roll-t (clamp (/ ar G) -0.32 0.32))
+  ;; ---- 姿态：周期变距（比例 + 角速率阻尼） ----
+  (var p (clamp (- (* 2.8 (- pitch-t s.pitch)) (* 1.2 s.q)) -1 1))
+  (var r (clamp (- (* 2.8 (- roll-t s.roll)) (* 1.2 s.p)) -1 1))
+  ;; ---- 航向：尾桨（比例 + 阻尼 + 积分配平反扭矩） ----
+  (var e (wrap (- head-t s.heading)))
+  (set! YI (clamp (+ YI (* 0.6 e dt) (* 0.25 (- s.r) dt)) -0.6 0.6))
+  (var y (clamp (+ (* 1.1 e) (* -0.9 s.r) YI (* 0.234 c)) -1 1))
+  {:c c :p p :r r :y y :throttle 1})
+
+(sys "log" "飞控启动")
+(while true
+  (var sr (sys "bus-read" "heli/sensors"))
+  (when sr
+    (var cr (sys "bus-read" "heli/command"))
+    (var ctl (control sr.v (if cr cr.v {})))
+    (put! ctl "t" sr.v.t)
+    (sys "bus-write" "heli/controls" ctl)
+    (inc! CYCLES)
+    (when (= (% CYCLES 250) 0) (sys "log" (str "阶段 " PHASE "，离地 " (fmt sr.v.alt 1) " m"))))
+  (sys "sleep" PERIOD))

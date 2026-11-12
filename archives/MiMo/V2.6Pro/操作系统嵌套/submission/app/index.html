@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; frame-src 'self' https: http: blob:; connect-src 'self' https: http: ws:;">
+<title>Nested OS</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/desktop.css">
+<link rel="stylesheet" href="css/window.css">
+<link rel="stylesheet" href="css/apps.css">
+</head>
+<body>
+<div id="os-root" data-testid="os-desktop" data-system-id="outer">
+  <div id="boot-screen"><div class="boot-logo">Nested OS</div><div class="boot-hint">正在启动嵌套系统…</div></div>
+</div>
+<script type="module" src="js/boot.js"></script>
+</body>
+</html>

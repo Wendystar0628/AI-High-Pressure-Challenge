@@ -1,15 +1,17 @@
 {
   "name": "nested-os",
   "version": "1.0.0",
-  "description": "嵌套图形操作系统 - Nested OS Desktop",
+  "description": "嵌套图形操作系统 - 递归系统树桌面环境",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron . --remote-debugging-port=19106"
+  },
+  "author": "NestedOS",
+  "license": "MIT",
+  "dependencies": {
+    "three": "0.170.0"
   },
   "devDependencies": {
     "electron": "45.2.1"
-  },
-  "dependencies": {
-    "three": "0.180.0"
   }
 }

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x864">
+<meta name="size" content="960x914">
 <title>测试赛程</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -61,7 +61,7 @@
     <div class="pair"><span class="eyebrow slash">Schedule</span><h2 class="title">测试赛程</h2></div>
     <i class="lead"></i>
   </header>
-  <p class="desc">12 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批。条长按限时绘制，颜色分两类题，深浅分类别。</p>
+  <p class="desc">13 道题分两批测试。前一批全部到时、清理残留进程后，才开始下一批；第二批两题各占一组处理器。条长按限时绘制，颜色分两类题，深浅分类别。</p>
   <div class="legend">
     <span><i class="k std"></i>标准评判题</span>
     <span><span class="star k des"></span>主动设计题</span>
@@ -72,28 +72,29 @@
 <script>
 // Facts: README.md (两个测试批次, 评分员怎么评) and orchestrator/tasks.py. [name, category, start minute, time limit].
 // Rows in task-table order: standard tasks first, then design tasks.
-const STD = new Set(['reason', 'algo', 'spatial']);
+const STD = new Set(['reason', 'algo', 'battle', 'spatial', 'drawing']);
 const TASKS = [
   ['形式化证明题', 'reason', 0, 60],
   ['数学竞赛原创试题', 'reason', 0, 60],
-  ['单位正方形内最小三角形面积最大化', 'algo', 0, 60],
+  ['攻城略地', 'battle', 0, 60],
   ['鲁班锁拆解', 'spatial', 0, 60],
-  ['AE风味动效设计编辑器', 'interact', 0, 100],
+  ['工程图纸三维还原', 'drawing', 0, 60],
+  ['AE风味动效设计编辑器', 'interact', 0, 60],
   ['动态路由塔防', 'game', 0, 90],
   ['果冻冲击与造浪水槽', 'physics', 0, 60],
-  ['NVIDIA_B200网页艺术', 'visual', 0, 90],
   ['太阳雨渔港3D渲染', 'visual', 0, 100],
+  ['星际战舰编队', 'visual', 0, 90],
   ['操作系统嵌套', 'system', 0, 90],
-  ['Transformer前向推理的GPU加速', 'algo', 100, 60],
-  ['通用数字电路仿真器加速', 'algo', 160, 60],
+  ['光线追踪渲染加速', 'algo', 100, 60],
+  ['数字电路仿真器加速', 'algo', 100, 60],
 ];
 const BATCHES = [
-  { en: 'Batch 1', name: '第一批　并行批', facts: ['10 题同时开测', '单位正方形限 14 个逻辑处理器'], rows: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] },
-  { en: 'Batch 2', name: '第二批　串行独占', facts: ['两题依次独占', '中间清理'], rows: [10, 11] },
+  { en: 'Batch 1', name: '第一批　并行批', facts: ['11 题同时开测'], rows: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+  { en: 'Batch 2', name: '第二批　同时作答', facts: ['同一型号两题同时作答'], rows: [11, 12] },
 ];
 
 // Geometry, plot coordinates (the plot is 880 px wide).
-const X_ICON = 20, X_MIN = 312, X0 = 332, X1 = 830, END = 220;
+const X_ICON = 20, X_MIN = 312, X0 = 332, X1 = 830, END = 160;
 const S = (X1 - X0) / END, x = m => X0 + m * S;
 const AXIS_H = 30, GROUP_H = 40, ROW_H = 26;
 const plot = document.getElementById('plot');
@@ -109,8 +110,8 @@ const facts = list => `<span class="field facts">${list.map(t => `<span>${t}</sp
 const shape = c => STD.has(c) ? '<i class="k std"></i>' : '<span class="star k des"></span>';
 
 // Column heads and the minute scale: a tick every 10 minutes, a label every 30; the hand-over times
-// (100, 220) in cyan, each replacing a 30-minute label next to it.
-const KEY = [100, 220];
+// (100, 160) in cyan, each replacing a 30-minute label next to it.
+const KEY = [100, 160];
 put('colh', `left:${X_ICON}px;top:0`, '题目');
 put('colh', `left:${X_MIN}px;top:0;transform:translateX(-100%)`, '限时');
 for (let m = 0; m <= END; m += 10) {
@@ -142,18 +143,18 @@ BATCHES.forEach(b => {
   b.bottom = y;
 });
 
-// Hand-over lines: batch 1 -> batch 2 at 100 minutes, batch 2 -> scoring at 220.
+// Hand-over lines: batch 1 -> batch 2 at 100 minutes, batch 2 -> scoring at 160.
 const [b1, b2] = BATCHES;
 const yS = y;   // scoring head
 put('hand', `left:${x(100) - 0.5}px;top:24px;height:${b2.bottom - 24}px`);
-put('hand', `left:${x(220) - 0.5}px;top:24px;height:${yS + 20 - 24}px`);
-put('note', `left:${x(100) - 28}px;top:${b2.top + 9}px`, '10 题全部到时');
+put('hand', `left:${x(160) - 0.5}px;top:24px;height:${yS + 20 - 24}px`);
+put('note', `left:${x(100) - 28}px;top:${b2.top + 9}px`, '11 题全部到时');
 put('tag solid', `left:${x(100)}px;top:${b2.top + 9}px`, '清理');
-put('note', `left:${x(220) - 28}px;top:${yS + 9}px`, '12 题全部到时');
-put('tag solid', `left:${x(220)}px;top:${yS + 9}px`, '清理');
+put('note', `left:${x(160) - 28}px;top:${yS + 9}px`, '13 题全部到时');
+put('tag solid', `left:${x(160)}px;top:${yS + 9}px`, '清理');
 
 // Faint guides every 30 minutes behind the bars.
-for (const m of [30, 60, 90, 120, 150, 180, 210]) {
+for (const m of [30, 60, 90, 120, 150]) {
   const g = put('guide', `left:${x(m)}px;top:${b1.top}px;height:${b2.bottom - b1.top}px`);
   plot.insertBefore(g, plot.firstChild);
 }
@@ -161,17 +162,17 @@ for (const m of [30, 60, 90, 120, 150, 180, 210]) {
 // Scoring: not on the time axis.
 put('hr ink', `top:${yS}px`);
 put('ghead', `left:0;top:${yS + 9}px`,
-    `<span class="eyebrow slash">Scoring</span><h3>评分</h3>${facts(['18 个会话', '不限时', '主体全部评完后，再评性能'])}`);
+    `<span class="eyebrow slash">Scoring</span><h3>评分</h3>${facts(['19 个会话', '不限时', '主体全部评完后，再评性能'])}`);
 const judge = n => `<span class="judge">${n}</span>`;
 const A = put('stage panel', `left:0;top:${yS + 48}px`,
   `<div class="t"><h3>主体</h3><span class="field">16 个会话同时评</span></div>
    <div class="r"><span class="scope">${shape('game')}设计题</span>
      <span class="who">${judge('Claude Opus 5.5')}${judge('GPT 6.1 Sol')}<span class="then">取平均</span></span></div>
-   <div class="r"><span class="scope">${shape('reason')}形式化、数学竞赛、极值构造、鲁班锁</span>
+   <div class="r"><span class="scope">${shape('reason')}形式化、数学竞赛、鲁班锁、图纸建模</span>
      <span class="who">${judge('GPT 6.1 Sol')}</span></div>`);
 const B = put('stage panel', `left:0;top:${yS + 48 + 116}px`,
-  `<div class="t"><h3>性能</h3><span class="field">2 个会话依次评，独占机器</span></div>
-   <div class="r"><span class="scope">${shape('algo')}Transformer、电路</span>
+  `<div class="t"><h3>性能</h3><span class="field">3 个会话依次评，独占机器</span></div>
+   <div class="r"><span class="scope">${shape('algo')}光线追踪、电路、攻城略地</span>
      <span class="who">${judge('GPT 6.1 Sol')}</span></div>`);
 const T = put('total solid', `left:684px;top:0`, '<div class="s">合成每题得分</div><div class="t">按权重加权汇总</div>');
 plot.style.height = `${yS + 48 + 116 + 84}px`;

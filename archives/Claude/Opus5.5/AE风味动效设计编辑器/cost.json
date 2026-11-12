@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 13189248,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 0.62,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/AE风味动效设计编辑器/run-a6127b19ceac4bedbba8f83c4e0f1f48"
+  ]
+}

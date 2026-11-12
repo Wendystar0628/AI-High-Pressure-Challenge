@@ -1,18 +1,17 @@
 {
   "name": "nested-os",
   "version": "1.0.0",
-  "description": "嵌套图形操作系统 —— Nested OS",
+  "description": "NESTED OS — 可递归嵌套的桌面操作系统",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "serve": "node tools/serve.js"
+    "start": "electron ."
   },
-  "author": "Nested OS",
+  "author": "Nested OS Studio",
   "license": "MIT",
-  "dependencies": {
-    "three": "0.180.0"
-  },
   "devDependencies": {
     "electron": "45.2.1"
+  },
+  "dependencies": {
+    "three": "0.187.0"
   }
 }

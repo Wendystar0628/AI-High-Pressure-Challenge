@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "果冻冲击与造浪水槽",
+  "tokens": 28518169,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.34,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/果冻冲击与造浪水槽/run-80f6c3c384fb4514b4fd55f67be16f88"
+  ]
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "old": "12",
+    "name": "偏心滑阀驱动总成",
+    "head_mean_f": 0.9999800000000001,
+    "features": 44,
+    "parts": 10,
+    "new": "01",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "11",
+    "name": "双导柱楔紧夹具",
+    "head_mean_f": 0.9915200000000001,
+    "features": 41,
+    "parts": 8,
+    "new": "02",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "01",
+    "name": "双腔斜顶分流阀壳",
+    "head_mean_f": 0.98568,
+    "features": 19,
+    "parts": 1,
+    "new": "03",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "03",
+    "name": "偏心双级迷宫泵盖",
+    "head_mean_f": 0.97516,
+    "features": 23,
+    "parts": 1,
+    "new": "04",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "04",
+    "name": "双层交汇混流阀箱",
+    "head_mean_f": 0.9727600000000001,
+    "features": 25,
+    "parts": 1,
+    "new": "05",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "06",
+    "name": "双斜接口差压控制块",
+    "head_mean_f": 0.9617000000000001,
+    "features": 24,
+    "parts": 1,
+    "new": "06",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "02",
+    "name": "双轴错层回油支承座",
+    "head_mean_f": 0.9594799999999999,
+    "features": 25,
+    "parts": 1,
+    "new": "07",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "05",
+    "name": "交错隔板双层润滑箱",
+    "head_mean_f": 0.95924,
+    "features": 26,
+    "parts": 1,
+    "new": "08",
+    "tier": "简单档",
+    "max": 3.5
+  },
+  {
+    "old": "08",
+    "name": "跨腔三向斜流道歧管",
+    "head_mean_f": 0.9362400000000001,
+    "features": 26,
+    "parts": 1,
+    "new": "09",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "14",
+    "name": "双斜座多腔阀体铸件",
+    "head_mean_f": 0.9292400000000001,
+    "features": 27,
+    "parts": 1,
+    "new": "10",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "09",
+    "name": "三腔分层伺服分配箱",
+    "head_mean_f": 0.9071999999999999,
+    "features": 32,
+    "parts": 1,
+    "new": "11",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "07",
+    "name": "偏轴阶梯双腔泵座",
+    "head_mean_f": 0.8914199999999999,
+    "features": 27,
+    "parts": 1,
+    "new": "12",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "15",
+    "name": "斜耳叉架减速箱体",
+    "head_mean_f": 0.8748400000000001,
+    "features": 31,
+    "parts": 1,
+    "new": "13",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "13",
+    "name": "偏置双出口泵体铸件",
+    "head_mean_f": 0.86144,
+    "features": 31,
+    "parts": 1,
+    "new": "14",
+    "tier": "中档",
+    "max": 4
+  },
+  {
+    "old": "10",
+    "name": "双轴错层传动箱体",
+    "head_mean_f": 0.8364800000000001,
+    "features": 34,
+    "parts": 1,
+    "new": "15",
+    "tier": "中档",
+    "max": 4
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 65443763,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.36,
+  "api_usd": 0.5,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/AE风味动效设计编辑器/run-6c97f7e85b9c45f28d94cb7649ba14a5"
+  ]
+}

@@ -1,551 +1,896 @@
-/* PRISM timeline: layers, properties, keyframes, ruler, zoom, snapping */
-(function () {
-  const AE = window.AE, U = AE.U, P = AE.P, E = AE.Eval;
-  const TL = (AE.Timeline = {});
-  const $ = U.$, $$ = U.$$;
-  TL.expanded = new Set();
-  TL.collapsedGroups = new Set();
-  TL.pxPerSec = 60;
-  TL.initialized = false;
-  TL.drag = null;
-  TL.snapInfo = '';
+/* ============================================================
+   timeline.js — 时间轴、关键帧选择/拖动/复制、图层入出点与时间轴缩放
+   ============================================================ */
+(function (global) {
+  'use strict';
+  const AE = global.AE;
+  const U = AE.util;
+  const A = AE.anim;
+  const M = AE.model;
+  const UI = AE.ui;
+  const $ = (s) => document.querySelector(s);
+
+  const TL = AE.timeline = {
+    zoom: 72,
+    filter: 'all',
+    selected: new Set(),
+    keyMeta: new Map(),
+    propRows: [],
+    rows: [],
+    collapsed: new Set(),
+    lastClipboard: null,
+    _drag: null
+  };
 
   TL.init = function () {
-    if (this.initialized) return;
-    this.initialized = true;
-    const app = AE.App;
-    const scroll = $('#tlScroll');
-    scroll.addEventListener('wheel', (e) => {
-      if ((e.ctrlKey || e.metaKey) && app.comp) {
+    TL.selected = new Set();
+    AE.app.selectedKeys = TL.selected;
+    // 移动播放头与工作区到右侧面板，避免纵向滚动
+    const right = document.getElementById('timelineRight');
+    const ph = document.getElementById('playhead');
+    const wa = document.getElementById('workArea');
+    const mq = document.getElementById('marquee');
+    if (right) {
+      if (ph) { right.appendChild(ph); ph.style.top = '25px'; ph.style.bottom = '25px'; ph.style.height = 'auto'; }
+      if (wa) { right.appendChild(wa); wa.style.top = '25px'; wa.style.bottom = '25px'; }
+      if (mq) { right.appendChild(mq); }
+    }
+    TL.bindRuler();
+    TL.bindTracks();
+    TL.bindScrollSync();
+    TL.setZoom(TL.zoom);
+    TL.refresh();
+  };
+
+  TL.bindScrollSync = function () {
+    const l = document.getElementById('layerRows');
+    const t = document.getElementById('timelineScroll');
+    let lock = false;
+    l.addEventListener('scroll', () => {
+      if (lock) return; lock = true;
+      t.scrollTop = l.scrollTop; lock = false;
+    });
+    t.addEventListener('scroll', () => {
+      if (lock) return; lock = true;
+      l.scrollTop = t.scrollTop; lock = false;
+    });
+  };
+
+  TL.bindRuler = function () {
+    const ruler = document.getElementById('timelineRuler');
+    let down = false;
+    const seek = (e) => {
+      const r = ruler.getBoundingClientRect();
+      const x = U.clamp(e.clientX - r.left, 0, r.width);
+      let t = x / TL.zoom;
+      if (!e.altKey) { const f = 1 / AE.app.comp.fps; t = Math.round(t / f) * f; }
+      AE.app.setTime(t, { raw: true });
+    };
+    ruler.addEventListener('pointerdown', (e) => {
+      down = true;
+      ruler.setPointerCapture(e.pointerId);
+      seek(e); e.preventDefault();
+    });
+    ruler.addEventListener('pointermove', (e) => { if (down) seek(e); });
+    ruler.addEventListener('pointerup', () => { down = false; });
+    ruler.addEventListener('pointercancel', () => { down = false; });
+  };
+
+  TL.bindTracks = function () {
+    const tracks = document.getElementById('timelineTracks');
+    tracks.addEventListener('contextmenu', (e) => {
+      const kf = e.target.closest('.keyframe');
+      if (kf) {
         e.preventDefault();
-        const rect = scroll.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left + scroll.scrollLeft - this.labelW();
-        const timeAt = mouseX / this.pxPerSec;
-        this.zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12, timeAt);
+        TL.keyframeMenu(kf, e.clientX, e.clientY);
       }
-    }, { passive: false });
-    // drag keyframes or box select across tracks
-    $('#tlRows').addEventListener('mousedown', (e) => {
-      if (e.target.closest('.layer-row') || e.target.closest('.property-row') || e.target.closest('.keyframe')) return;
-      if (!app.comp) return;
-      const rect = $('#tlRows').getBoundingClientRect();
-      const x = e.clientX - rect.left + $('#tlScroll').scrollLeft - this.labelW();
-      if (x < 0) return;
-      const t = U.clamp(x / this.pxPerSec, 0, app.comp.duration);
-      app.setTime(t);
     });
-    window.addEventListener('mousemove', (e) => this.onDragMove(e));
-    window.addEventListener('mouseup', (e) => this.onDragUp(e));
-  };
-
-  TL.labelW = function () { const c = $('#tlRulerCorner'); return c ? c.offsetWidth : 342; };
-  TL.initZoom = function () {
-    const app = AE.App;
-    if (!app.comp) return;
-    const w = $('#tlScroll').clientWidth - this.labelW() - 24;
-    this.pxPerSec = U.clamp(w / Math.max(1, app.comp.duration), 18, 160);
-    if (!isFinite(this.pxPerSec) || this.pxPerSec < 18) this.pxPerSec = 60;
-  };
-  TL.zoom = function (f, anchorTime) {
-    const app = AE.App; if (!app.comp) return;
-    const scroll = $('#tlScroll');
-    const old = this.pxPerSec;
-    const timeAt = anchorTime != null ? anchorTime : (scroll.scrollLeft + scroll.clientWidth / 2 - this.labelW()) / old;
-    this.pxPerSec = U.clamp(old * f, 8, 600);
-    this.render();
-    const newX = this.labelW() + timeAt * this.pxPerSec;
-    const target = Math.max(0, newX - (anchorTime != null ? (anchorTime != null ? 0 : scroll.clientWidth / 2) : scroll.clientWidth / 2));
-    if (anchorTime != null) {
-      // keep time under cursor: adjust scroll so cursor stays put; no cursor x stored, approximate center
-      scroll.scrollLeft = Math.max(0, this.labelW() + timeAt * this.pxPerSec - 220);
-    } else scroll.scrollLeft = Math.max(0, this.labelW() + timeAt * this.pxPerSec - scroll.clientWidth / 2);
-    this.updatePlayhead();
-  };
-  TL.collapseAll = function () { this.expanded.clear(); this.render(); };
-
-  TL.render = function () {
-    const app = AE.App, comp = app.comp;
-    const rows = $('#tlRows'), ruler = $('#tlRuler');
-    if (!rows || !ruler) return;
-    if (!comp) {
-      rows.innerHTML = ''; ruler.innerHTML = ''; return;
-    }
-    if (!this._compId || this._compId !== comp.id) {
-      this._compId = comp.id;
-      this.initZoom();
-      this.expanded.clear();
-      if (app.selection.length === 1) this.expanded.add(app.selection[0]);
-      $('#tlScroll').scrollLeft = 0;
-    }
-    if (!this.pxPerSec) this.initZoom();
-    app.onlyAnimated = $('#onlyAnimatedBtn').classList.contains('active');
-    const labelW = this.labelW();
-    const dur = comp.duration;
-    const trackW = Math.max(500, dur * this.pxPerSec + 80);
-    const lw = Math.round(labelW);
-    $('#tlContent').style.setProperty('--tl-left', lw + 'px');
-    $('#tlRuler').style.width = trackW + 'px';
-    this._trackW = trackW;
-    // ruler
-    ruler.innerHTML = '';
-    const step = this.tickStep();
-    const minor = step / 4;
-    for (let t = 0; t <= dur + 1e-6; t += minor) {
-      const x = t * this.pxPerSec;
-      const major = Math.abs(t / step - Math.round(t / step)) < 1e-4;
-      const tick = U.el('div', 'ruler-tick' + (major ? ' major' : ''));
-      tick.style.left = x + 'px';
-      ruler.appendChild(tick);
-      if (major) {
-        const lab = U.el('div', 'ruler-label' + (major ? ' major' : ''), this.tickLabel(t, step));
-        lab.style.left = x + 'px';
-        ruler.appendChild(lab);
-      }
-    }
-    // work bar
-    const ws = Math.min(comp.workStart, comp.workEnd), we = Math.max(comp.workStart, comp.workEnd);
-    const workbar = U.el('div', 'work-bar');
-    workbar.style.left = (ws * this.pxPerSec) + 'px';
-    workbar.style.width = Math.max(2, (we - ws) * this.pxPerSec) + 'px';
-    workbar.title = '工作区 · 拖动调整';
-    ruler.appendChild(workbar);
-    // markers
-    for (const m of (comp.markers || [])) {
-      const flag = U.el('div', 'marker-flag'); flag.dataset.label = m.label || '';
-      flag.style.left = (m.t * this.pxPerSec) + 'px';
-      flag.title = `${m.label || '标记'} · ${m.t.toFixed(2)}s`;
-      flag.onmousedown = (e) => { e.stopPropagation(); app.setTime(m.t); };
-      flag.oncontextmenu = (e) => {
-        e.preventDefault(); e.stopPropagation();
-        app.showMenu(e.clientX, e.clientY, [
-          { label: '跳到标记', action: () => app.setTime(m.t) },
-          { label: '删除标记', action: () => app.edit('删除标记', () => { comp.markers = comp.markers.filter(x => x !== m); }) }
-        ]);
-      };
-      ruler.appendChild(flag);
-    }
-    // ruler interactions
-    ruler.onmousedown = (e) => {
-      if (e.target.closest('.marker-flag')) return;
-      const x = e.clientX - ruler.getBoundingClientRect().left;
-      const t = U.clamp(x / this.pxPerSec, 0, dur);
-      app.setTime(t);
-      this._scrubbing = true;
-      const move = (ev) => {
-        const xx = ev.clientX - ruler.getBoundingClientRect().left;
-        let tt = U.clamp(xx / this.pxPerSec, 0, dur);
-        if (app.snap) {
-          const sn = this.snapTime(tt);
-          if (sn != null) { tt = sn; $('#snapHint').textContent = '吸附 ' + tt.toFixed(2) + 's'; }
-          else $('#snapHint').textContent = '';
-        }
-        app.setTime(tt);
-      };
-      const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); this._scrubbing = false; $('#snapHint').textContent = ''; };
-      window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
-    };
-    // rows
-    rows.innerHTML = '';
-    const ordered = comp.layers.slice().reverse();
-    ordered.forEach((layer, idx) => {
-      const expanded = this.expanded.has(layer.id);
-      const row = U.el('div', 'layer-row' + (app.selection.includes(layer.id) ? ' selected' : '') + (!layer.visible ? ' hidden-layer' : ''));
-      row.dataset.id = layer.id;
-      const cell = U.el('div', 'layer-cell');
-      const exp = U.el('button', 'lexpand' + (expanded ? ' open' : ''), '<svg><use href="#i-caret"/></svg>');
-      exp.onmousedown = (e) => e.stopPropagation();
-      exp.onclick = (e) => { e.stopPropagation(); if (expanded) this.expanded.delete(layer.id); else this.expanded.add(layer.id); this.render(); };
-      cell.appendChild(exp);
-      const ti = U.el('span', 'ltype-icon');
-      const info = P.TYPE_INFO[layer.type] || { icon: 'i-layer', label: layer.type };
-      ti.innerHTML = `<svg><use href="#${info.icon}"/></svg>`;
-      cell.appendChild(ti);
-      const nw = U.el('div', 'lname-wrap');
-      const dot = U.el('span'); dot.style.cssText = `width:4px;height:4px;border-radius:50%;background:${layer.color || '#7fe7d4'};flex:none`;
-      const nm = U.el('span', 'lname', escapeHtml(layer.name));
-      nm.ondblclick = (e) => {
-        e.stopPropagation();
-        const inp = document.createElement('input'); inp.value = layer.name; inp.className = 'num-input'; inp.style.cssText = 'width:100%;height:17px;font-size:9px;text-align:left';
-        nw.replaceChild(inp, nm); inp.focus(); inp.select();
-        const finish = () => { const v = inp.value.trim(); if (v && v !== layer.name) app.edit('重命名图层', () => { layer.name = v; }); else this.render(); };
-        inp.onblur = finish; inp.onkeydown = (ev) => { if (ev.key === 'Enter') inp.blur(); if (ev.key === 'Escape') { inp.onblur = null; this.render(); } };
-      };
-      nw.append(dot, nm);
-      cell.appendChild(nw);
-      const parent = comp.layers.find(l => l.id === layer.parent);
-      const pc = U.el('div', 'lparent', parent ? escapeHtml (parent.name) : '<span class="pdash">—</span>');
-      pc.title = '父级：' + (parent ? parent.name : '无');
-      pc.onclick = (e) => { e.stopPropagation(); app.selectLayers([layer.id]); app.parentMenu(pc); };
-      cell.appendChild(pc);
-      const blend = U.el('div', 'lblend', P.BLEND_KEYS[layer.blendMode] || '正常');
-      blend.title = '混合模式';
-      blend.onclick = (e) => {
-        e.stopPropagation();
-        const keys = Object.keys(P.BLEND_KEYS);
-        app.showMenu(e.clientX, e.clientY, keys.map(k => ({ label: P.BLEND_KEYS[k], action: () => app.edit('混合模式', () => layer.blendMode = k) })));
-      };
-      cell.appendChild(blend);
-      const io = U.el('div', 'linout', `${layer.inPoint.toFixed(1)} / ${layer.outPoint.toFixed(1)}`);
-      cell.appendChild(io);
-      const btns = U.el('div', 'lbtns');
-      const eye = U.el('button', 'ltoggle'); eye.title = '显示 / 隐藏'; eye.innerHTML = `<svg><use href="#${layer.visible ? 'i-eye' : 'i-eye-off'}"/></svg>`;
-      eye.onclick = (e) => { e.stopPropagation(); app.edit('图层可见性', () => layer.visible = !layer.visible); };
-      const lock = U.el('button', 'ltoggle'); lock.title = '锁定 / 解锁'; lock.innerHTML = `<svg><use href="#${layer.locked ? 'i-lock' : 'i-unlock'}"/></svg>`;
-      lock.onclick = (e) => { e.stopPropagation(); app.edit('锁定图层', () => layer.locked = !layer.locked); };
-      btns.append(eye, lock); cell.appendChild(btns);
-      cell.onclick = (e) => {
-        if (e.target.closest('.lbtns') || e.target.closest('.lexpand') || e.target.closest('.lname') && e.target.isContentEditable) return;
-        if (e.metaKey || e.ctrlKey) app.toggleLayerSelected(layer.id);
-        else { app.selectLayers([layer.id]); if (!this.expanded.has(layer.id)) this.expanded.add(layer.id); this.render(); }
-      };
-      cell.ondblclick = (e) => { if (layer.type === 'precomp') { app.enterPrecomp(layer); } };
-      cell.oncontextmenu = (e) => {
-        e.preventDefault(); if (!app.selection.includes(layer.id)) app.selectLayers([layer.id]);
-        app.showMenu(e.clientX, e.clientY, [
-          { label: '重命名', action: () => { const v = prompt('图层名称', layer.name); if (v) app.edit('重命名图层', () => layer.name = v); } },
-          { label: '复制图层', key: 'Ctrl+D', action: () => app.duplicateSelected() },
-          { label: '设置父级…', action: () => app.parentMenu(cell) },
-          { label: '锁定', action: () => app.edit('锁定图层', () => layer.locked = !layer.locked) },
-          { label: '隐藏', action: () => app.edit('图层可见性', () => layer.visible = !layer.visible) },
-          '-',
-          { label: '上移一层', action: () => app.moveLayer(layer, 1) },
-          { label: '下移一层', action: () => app.moveLayer(layer, -1) },
-          { label: '删除图层', action: () => app.deleteSelected() },
-          '-',
-          { label: '预合成所选', action: () => app.precomposeSelected() },
-          { label: layer.type === 'precomp' ? '进入预合成' : '转换为预合成…', disabled: layer.type !== 'precomp', action: () => app.enterPrecomp(layer) }
-        ]);
-      };
-      row.appendChild(cell);
-      const track = U.el('div', 'layer-track');
-      track.style.width = trackW + 'px';
-      const bar = U.el('div', 'layer-bar');
-      bar.style.left = (layer.inPoint * this.pxPerSec) + 'px';
-      bar.style.width = Math.max(4, (layer.outPoint - layer.inPoint) * this.pxPerSec) + 'px';
-      bar.innerHTML = `<span class="bar-label">${layer.locked ? '🔒 ' : ''}${layer.inPoint.toFixed(1)}s → ${layer.outPoint.toFixed(1)}s</span>`;
-      bar.onmousedown = (e) => this.startLayerDrag(e, layer, bar, track);
-      track.appendChild(bar);
-      row.appendChild(track);
-      rows.appendChild(row);
-      if (expanded) this.buildPropertyRows(rows, layer, app, trackW);
+    // 空白处拖动框选
+    tracks.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest('.keyframe') || e.target.closest('.layer-span') || e.target.closest('.span-handle')) return;
+      TL.startMarquee(e);
     });
-    // summary
-    const keyCount = comp.layers.reduce((a, l) => a + P.countKeys(l), 0);
-    if ($('#keySummary')) $('#keySummary').textContent = keyCount + ' 个关键帧';
-    if ($('#layerCount')) $('#layerCount').textContent = comp.layers.length + ' 图层';
-    if ($('#workLabel')) $('#workLabel').textContent = '工作区 ' + ws.toFixed(2) + ' – ' + we.toFixed(2) + 's';
-    if ($('#tlHint')) $('#tlHint').textContent = '单击图层展开属性 · 拖动关键帧改时间 · Alt 拖动按比例拉伸 · Shift 拖动框选';
-    // keep the selected layer in view
-    if (app.selection.length === 1 && this._lastScrolledSel !== app.selection[0]) {
-      this._lastScrolledSel = app.selection[0];
-      const row = rows.querySelector(`.layer-row[data-id="${app.selection[0]}"]`);
-      const sc = $('#tlScroll');
-      if (row && sc) {
-        const top = row.offsetTop, h = row.offsetHeight, viewH = sc.clientHeight;
-        if (top < sc.scrollTop + 36 || top + h > sc.scrollTop + viewH - 8) sc.scrollTop = Math.max(0, top - 90);
-      }
-    }
-    this.updatePlayhead();
   };
 
-  TL.buildPropertyRows = function (rows, layer, app, trackW) {
-    const groups = P.propGroups(layer);
-    const onlyAnim = app.onlyAnimated;
-    for (const g of groups) {
-      const tracks = g.tracks.filter(tr => {
-        if (!onlyAnim) return true;
-        const p = layer.props[tr.key];
-        return p && (p.keys.length || p.expr || p.animated);
+  TL.setZoom = function (z) {
+    TL.zoom = U.clamp(Math.round(z), 20, 260);
+    const slider = document.getElementById('timelineZoom');
+    if (slider) slider.value = TL.zoom;
+    const lab = document.getElementById('tlZoomLabel');
+    if (lab) lab.textContent = TL.zoom + ' px/s';
+    TL.refresh();
+  };
+
+  // ---------------- 属性收集 ----------------
+  function addProp(rows, layer, prop, path, label, group) {
+    if (!prop) return;
+    rows.push({ type: 'prop', layer, prop, path, label, group: group || '' });
+  }
+
+  TL.collect = function (layer) {
+    const groups = [];
+    const T = layer.transform;
+    const tr = [];
+    addProp(tr, layer, T.anchor, 'transform.anchor', '锚点', '变换');
+    addProp(tr, layer, T.position, 'transform.position', '位置', '变换');
+    addProp(tr, layer, T.scale, 'transform.scale', '缩放', '变换');
+    addProp(tr, layer, T.rotation, 'transform.rotation', '旋转', '变换');
+    if (A.is3D(layer) || layer.transform.rotationX.keyframes) addProp(tr, layer, T.rotationX, 'transform.rotationX', 'X 旋转', '变换');
+    if (A.is3D(layer) || layer.transform.rotationY.keyframes) addProp(tr, layer, T.rotationY, 'transform.rotationY', 'Y 旋转', '变换');
+    addProp(tr, layer, T.opacity, 'transform.opacity', '不透明度', '变换');
+    groups.push({ name: '变换', key: 'transform', rows: tr });
+
+    const extras = [];
+    for (const fx of layer.effects || []) {
+      const gr = { name: fx.name, key: 'fx:' + fx.id, rows: [] };
+      for (const k in fx.params) addProp(gr.rows, layer, fx.params[k], 'fx.' + fx.id + '.' + k, fx.params[k].label || k, fx.name);
+      if (gr.rows.length) groups.push(gr);
+    }
+    for (const m of layer.masks || []) {
+      const gr = { name: m.name, key: 'mask:' + m.id, rows: [] };
+      for (const k of ['x', 'y', 'w', 'h', 'rotation', 'feather', 'opacity']) addProp(gr.rows, layer, m[k], 'mask.' + m.id + '.' + k, ({ x: '中心 X', y: '中心 Y', w: '宽度', h: '高度', rotation: '旋转', feather: '羽化', opacity: '不透明度' })[k], m.name);
+      groups.push(gr);
+    }
+    if (layer.shape) {
+      const gr = { name: '形状操作', key: 'shapeops', rows: [] };
+      layer.shape.ops.forEach((op) => {
+        for (const k in op) if (op[k] && op[k]._id) addProp(gr.rows, layer, op[k], 'op.' + op.id + '.' + k, (op.name || '操作') + ' · ' + (op[k].label || k), '形状操作');
+        if (op.source) for (const k in op.source) if (op.source[k] && op.source[k]._id) addProp(gr.rows, layer, op.source[k], 'op.' + op.id + '.source.' + k, '布尔 B · ' + (op.source[k].label || k), '形状操作');
+        if (op.target) for (const k in op.target) if (op.target[k] && op.target[k]._id) addProp(gr.rows, layer, op.target[k], 'op.' + op.id + '.target.' + k, '形变目标 · ' + (op.target[k].label || k), '形状操作');
       });
-      if (!tracks.length) continue;
-      const groupKey = layer.id + '|' + g.id;
-      const collapsed = this.collapsedGroups.has(groupKey);
-      const grow = U.el('div', 'property-row group-row');
-      const gcell = U.el('div', 'prop-cell');
-      gcell.style.paddingLeft = '24px';
-      gcell.innerHTML = `<button class="pstop" style="width:12px">${collapsed ? '<svg><use href="#i-caret"/></svg>' : '<svg style="transform:rotate(90deg)"><use href="#i-caret"/></svg>'}</button><span class="pname" style="color:#7c8b9d;letter-spacing:.3px">${escapeHtml(g.title)}</span><span class="pexpr-badge" style="opacity:.7">${tracks.length}</span>`;
-      gcell.onclick = () => { if (collapsed) this.collapsedGroups.delete(groupKey); else this.collapsedGroups.add(groupKey); this.render(); };
-      grow.appendChild(gcell);
-      const gtrack = U.el('div', 'prop-track'); gtrack.style.width = trackW + 'px';
-      grow.appendChild(gtrack);
-      rows.appendChild(grow);
-      if (collapsed) continue;
-      for (const tr of tracks) {
-        const p = layer.props[tr.key]; if (!p) continue;
-        const row = U.el('div', 'property-row');
-        const cell = U.el('div', 'prop-cell');
-        const stop = U.el('button', 'pstop' + (p.animated || p.keys.length ? ' on' : ''));
-        stop.title = p.keys.length ? '关闭动画' : '开启动画';
-        stop.innerHTML = '<svg><use href="#i-stopwatch"/></svg>';
-        stop.onclick = (e) => { e.stopPropagation(); app.toggleAnimation(layer, tr.key); };
-        cell.appendChild(stop);
-        const nm = U.el('span', 'pname', escapeHtml(tr.label));
-        nm.onclick = (e) => { e.stopPropagation(); app.activeTrack = { layerId: layer.id, key: tr.key }; app.selectedTrackKey = tr.key; };
-        nm.ondblclick = (e) => { e.stopPropagation(); app.activeTrack = { layerId: layer.id, key: tr.key }; app.setWorkspace('curves'); };
-        cell.appendChild(nm);
-        if (p.expr) { const b = U.el('span', 'pexpr-badge', 'fx'); b.title = '表达式'; cell.appendChild(b); }
-        const nav = U.el('div', 'pnav');
-        const prev = U.el('button', '', '<svg><use href="#i-kf-prev"/></svg>'); prev.title = '上一个关键帧'; prev.onclick = (e) => { e.stopPropagation(); this.jumpKey(p, -1); };
-        const next = U.el('button', '', '<svg><use href="#i-kf-next"/></svg>'); next.title = '下一个关键帧'; next.onclick = (e) => { e.stopPropagation(); this.jumpKey(p, 1); };
-        nav.append(prev, next); cell.appendChild(nav);
-        row.appendChild(cell);
-        const track = U.el('div', 'prop-track'); track.style.width = trackW + 'px';
-        // segments
-        for (let i = 0; i < p.keys.length - 1; i++) {
-          const a = p.keys[i], b = p.keys[i + 1];
-          if (b.t - a.t < 1e-5) continue;
-          const seg = U.el('div', 'kf-segment');
-          seg.style.left = (a.t * this.pxPerSec) + 'px';
-          seg.style.width = ((b.t - a.t) * this.pxPerSec) + 'px';
-          seg.style.background = p.keys[i].out === 'hold' ? '#5a4a35' : '#39465a';
-          track.appendChild(seg);
+      for (const k of ['color', 'opacity']) if (layer.shape.fill[k] && layer.shape.fill[k]._id) addProp(gr.rows, layer, layer.shape.fill[k], 'fill.' + k, '填充 · ' + layer.shape.fill[k].label, '填充描边');
+      for (const k of ['color', 'width', 'opacity']) if (layer.shape.stroke[k] && layer.shape.stroke[k]._id) addProp(gr.rows, layer, layer.shape.stroke[k], 'stroke.' + k, '描边 · ' + layer.shape.stroke[k].label, '填充描边');
+      if (gr.rows.length) groups.push(gr);
+    }
+    if (layer.extrude) {
+      const gr = { name: '挤出与材质', key: 'extrude', rows: [] };
+      addProp(gr.rows, layer, layer.extrude.depth, 'extrude.depth', '挤出深度', '挤出与材质');
+      addProp(gr.rows, layer, layer.extrude.bevel, 'extrude.bevel', '倒角', '挤出与材质');
+      for (const k of ['baseColor', 'metalness', 'roughness', 'emissive', 'emissiveColor', 'opacity']) if (layer.material && layer.material[k]) addProp(gr.rows, layer, layer.material[k], 'material.' + k, layer.material[k].label, '挤出与材质');
+      groups.push(gr);
+    }
+    for (const pin of layer.pins || []) {
+      const gr = { name: pin.name, key: 'pin:' + pin.id, rows: [] };
+      for (const k of ['position', 'target', 'rotation', 'scale', 'radius', 'strength']) addProp(gr.rows, layer, pin[k], 'pin.' + pin.id + '.' + k, pin[k] && pin[k].label || k, pin.name);
+      groups.push(gr);
+    }
+    if (layer.text) {
+      const gr = { name: '文字动画器', key: 'textanim', rows: [] };
+      (layer.text.animators || []).forEach((an) => {
+        for (const k of ['start', 'end', 'offset', 'soft']) if (an.selector && an.selector[k]) addProp(gr.rows, layer, an.selector[k], 'text.animator.' + an.id + '.selector.' + k, an.name + ' · ' + (an.selector[k].label || k), '文字动画器');
+        for (const k of ['position', 'rotation', 'scale', 'opacity']) if (an[k] && an[k]._id) addProp(gr.rows, layer, an[k], 'text.animator.' + an.id + '.' + k, an.name + ' · ' + (an[k].label || k), '文字动画器');
+      });
+      groups.push(gr);
+    }
+    if (layer.camera) {
+      const gr = { name: '摄像机', key: 'camera', rows: [] };
+      for (const k of ['target', 'focalLength', 'focusDistance', 'aperture']) addProp(gr.rows, layer, layer.camera[k], 'camera.' + k, layer.camera[k].label, '摄像机');
+      groups.push(gr);
+    }
+    if (layer.light) {
+      const gr = { name: '灯光', key: 'light', rows: [] };
+      for (const k of ['color', 'intensity', 'direction', 'radius', 'shadowSoftness']) addProp(gr.rows, layer, layer.light[k], 'light.' + k, layer.light[k] && layer.light[k].label || k, '灯光');
+      groups.push(gr);
+    }
+    if (layer.field) {
+      const gr = { name: '场', key: 'field', rows: [] };
+      for (const k of ['position', 'radius', 'strength', 'falloff', 'frequency', 'evolution', 'spin']) addProp(gr.rows, layer, layer.field[k], 'field.' + k, layer.field[k].label, '场');
+      groups.push(gr);
+    }
+    if (layer.particle) {
+      const p = layer.particle;
+      const gr = { name: '粒子', key: 'particle', rows: [] };
+      for (const k of ['lifetime', 'gravity', 'wind', 'drag', 'size', 'sizeEnd', 'sizeRandom', 'colorStart', 'colorMid', 'colorEnd', 'opacityStart', 'opacityEnd']) addProp(gr.rows, layer, p[k], 'particle.' + k, p[k] && p[k].label || k, '粒子');
+      p.emitters.forEach((em) => {
+        for (const k of ['position', 'direction', 'rate', 'speed', 'spread', 'radius']) addProp(gr.rows, layer, em[k], 'particle.emitter.' + em.id + '.' + k, em.name + ' · ' + (em[k] && em[k].label || k), '粒子');
+      });
+      if (p.collisions) for (const k of ['restitution', 'friction', 'colorOnHit']) addProp(gr.rows, layer, p.collisions[k], 'particle.collisions.' + k, p.collisions[k] && p.collisions[k].label || k, '粒子');
+      if (p.trails) for (const k of ['length', 'width', 'color', 'opacity']) addProp(gr.rows, layer, p.trails[k], 'particle.trails.' + k, p.trails[k] && p.trails[k].label || k, '粒子');
+      groups.push(gr);
+    }
+    if (layer.precomp) {
+      const gr = { name: '时间重映射', key: 'precomp', rows: [] };
+      for (const k of ['speed', 'offset']) addProp(gr.rows, layer, layer.precomp.timeRemap[k], 'precomp.remap.' + k, layer.precomp.timeRemap[k].label, '时间重映射');
+      groups.push(gr);
+    }
+    if (layer.sound) {
+      const gr = { name: '音色', key: 'sound', rows: [] };
+      for (const k of ['gain', 'pitch', 'repeat', 'density', 'metal']) addProp(gr.rows, layer, layer.sound[k], 'sound.' + k, layer.sound[k] && layer.sound[k].label || k, '音色');
+      groups.push(gr);
+    }
+    // 只显示动画的附加属性
+    for (const g of groups) {
+      if (g.key === 'transform') continue;
+      g.rows = g.rows.filter(r => A.isAnimated(r.prop) || A.hasExpr(r.prop));
+    }
+    return groups.filter(g => g.rows.length > 0 || g.key === 'transform');
+  };
+
+  // ---------------- 渲染 ----------------
+  TL.contentWidth = function () {
+    return Math.max(200, Math.round((AE.app.comp ? AE.app.comp.duration : 15) * TL.zoom) + 40);
+  };
+
+  TL.refresh = function () {
+    if (!AE.app.comp) return;
+    const comp = AE.app.comp;
+    const left = document.getElementById('layerRows');
+    const tracks = document.getElementById('timelineTracks');
+    if (!left || !tracks) return;
+    left.innerHTML = '';
+    tracks.innerHTML = '';
+    TL.keyMeta.clear();
+    TL.propRows = [];
+    TL.rows = [];
+    const cw = TL.contentWidth();
+    tracks.style.width = cw + 'px';
+    const filter = TL.filter;
+    const app = AE.app;
+    comp.layers.forEach((layer, li) => {
+      const selected = app.selection.includes(layer.id);
+      const isPrimary = app.primaryId === layer.id;
+      // ---- 左侧图层头 ----
+      const row = document.createElement('div');
+      row.className = 'layer-row' + (selected ? ' active' : '');
+      const head = document.createElement('div');
+      head.className = 'layer-row-head';
+      head.dataset.layerId = layer.id;
+      const flags = layer.type === 'sound' ? '' : `
+        <span class="flag eye ${layer.enabled ? 'on' : ''}" title="显示 / 隐藏">${layer.enabled ? '◉' : '○'}</span>
+        <span class="flag lock ${layer.locked ? 'on' : ''}" title="锁定">${layer.locked ? '◈' : '◇'}</span>
+        <span class="flag d3 ${(layer.extrude && layer.extrude.enabled) || layer.threeD ? 'on' : ''}" title="三维 / 挤出">3D</span>
+        <span class="flag mb ${layer.motionBlur ? 'on' : ''}" title="运动模糊">MB</span>`;
+      head.innerHTML = `<span class="layer-num">${li + 1}</span><span class="l-color" style="background:${M.TYPE_COLOR[layer.type]}"></span>
+        ${UI.icon(layer.type)}<span class="l-name" title="${UI.esc(layer.name)}">${UI.esc(layer.name)}</span><span class="l-flags">${flags}</span>`;
+      head.addEventListener('click', (e) => {
+        if (e.target.closest('.flag')) return;
+        AE.app.selectLayer(layer, e.shiftKey, { keepProp: false });
+      });
+      head.addEventListener('dblclick', (e) => { if (!e.target.closest('.flag')) TL.renameLayer(layer); });
+      head.addEventListener('contextmenu', (e) => { e.preventDefault(); AE.app.selectLayer(layer, false); TL.layerMenu(layer, e.clientX, e.clientY); });
+      head.querySelectorAll('.flag').forEach(fl => fl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cls = fl.classList;
+        AE.app.snapshot('图层开关');
+        if (cls.contains('eye')) layer.enabled = !layer.enabled;
+        else if (cls.contains('lock')) layer.locked = !layer.locked;
+        else if (cls.contains('d3')) {
+          if (layer.type === 'shape' || layer.type === 'text') { if (layer.extrude) layer.extrude.enabled = !layer.extrude.enabled; }
+          else layer.threeD = !layer.threeD;
+        } else if (cls.contains('mb')) layer.motionBlur = !layer.motionBlur;
+        M.bump(AE.app.project);
+        AE.app.refreshAll();
+        AE.app.requestRender();
+      }));
+      row.appendChild(head);
+      // 属性行
+      const groups = TL.collect(layer);
+      const rendered = [];
+      if (selected) {
+        for (const g of groups) {
+          const collapsed = TL.collapsed.has(layer.id + ':' + g.key);
+          const rows = g.rows;
+          let show = rows;
+          if (filter === 'animated') show = rows.filter(r => A.isAnimated(r.prop) || A.hasExpr(r.prop));
+          else if (filter === 'keyed') show = rows.filter(r => A.isAnimated(r.prop));
+          if (!show.length && g.key !== 'transform') continue;
+          if (g.key === 'transform' && !show.length) continue;
+          const gr = document.createElement('div');
+          gr.className = 'prop-group-row';
+          gr.innerHTML = `<span class="pg-arrow">${collapsed ? '▸' : '▾'}</span><span class="pg-name">${UI.esc(g.name)}</span><span class="pg-badge">${show.filter(r => A.isAnimated(r.prop)).length}</span>`;
+          gr.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const k = layer.id + ':' + g.key;
+            if (TL.collapsed.has(k)) TL.collapsed.delete(k); else TL.collapsed.add(k);
+            TL.refresh();
+          });
+          row.appendChild(gr);
+          rendered.push({ type: 'group', g });
+          if (!collapsed) for (const pr of show) {
+            rendered.push(pr);
+            row.appendChild(TL.makePropRow(layer, pr, isPrimary));
+          }
         }
-        for (const k of p.keys) {
-          const id = app.keyId(layer, tr.key, k.t);
-          const sel = app.selectedKeys.has(id);
-          let cls = 'keyframe';
-          if (k.out === 'hold') cls += ' hold';
-          else if (k.out === 'ease' || k.in === 'ease' || k.inH || k.outH) cls += ' ease';
-          if (sel) cls += ' selected';
-          const el = U.el('div', cls);
-          el.style.left = (k.t * this.pxPerSec) + 'px';
-          el.dataset.id = id; el.dataset.layer = layer.id; el.dataset.key = tr.key; el.dataset.t = k.t;
-          el.title = `${tr.label} · ${k.t.toFixed(2)}s · ${P.INTERP[k.out] || k.out}`;
-          el.onmousedown = (e) => this.startKeyDrag(e, layer, tr.key, p, k, el);
-          el.ondblclick = (e) => { e.stopPropagation(); this.keyMenu(e, layer, tr.key, k); };
-          el.oncontextmenu = (e) => { e.preventDefault(); e.stopPropagation(); this.keyMenu(e, layer, tr.key, k); };
-          track.appendChild(el);
-        }
-        track.onmousedown = (e) => {
-          if (e.target.closest('.keyframe')) return;
-          const rect = track.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const t = U.clamp(x / this.pxPerSec, 0, app.comp.duration);
-          app.activeTrack = { layerId: layer.id, key: tr.key };
-          app.selectedTrackKey = tr.key;
-          if (e.shiftKey) { this.startBoxSelect(e, track); return; }
-          app.setTime(t);
-          this.render();
-        };
-        row.appendChild(track);
-        rows.appendChild(row);
       }
+      left.appendChild(row);
+      // ---- 右侧轨道 ----
+      const trow = document.createElement('div');
+      trow.className = 'track-row' + (selected ? ' selected' : '');
+      trow.dataset.layerId = layer.id;
+      const span = document.createElement('div');
+      span.className = 'layer-span';
+      const leftPx = layer.inPoint * TL.zoom;
+      const wPx = Math.max(8, (layer.outPoint - layer.inPoint) * TL.zoom);
+      span.style.left = leftPx + 'px';
+      span.style.width = wPx + 'px';
+      span.innerHTML = `<span class="span-handle l"></span><span class="span-name">${UI.esc(layer.name)}</span><span class="span-handle r"></span>`;
+      span.title = `${U.fmtTime(layer.inPoint)} – ${U.fmtTime(layer.outPoint)}`;
+      trow.appendChild(span);
+      TL.bindSpan(span, layer);
+      trow.addEventListener('click', (e) => {
+        if (e.target.closest('.keyframe') || e.target.closest('.layer-span')) return;
+        AE.app.selectLayer(layer, e.shiftKey);
+      });
+      trow.addEventListener('dblclick', () => { AE.app.selectLayer(layer, false); });
+      TL.rows.push({ layer, type: 'layer' });
+      rendered.forEach(r => {
+        if (r.type === 'group') {
+          const g = document.createElement('div');
+          g.className = 'prop-group-row';
+          g.innerHTML = `<span class="pg-arrow"></span><span class="pg-name" style="color:#65707d">${UI.esc(r.g.name)}</span>`;
+          g.style.background = 'transparent';
+          trow.appendChild(g);
+          // 注意：属性行已包含在 layer-row 中，这里只为对齐放置组占位
+          TL.rows.push({ layer, type: 'group', group: r.g.name });
+        } else {
+          const pr = document.createElement('div');
+          pr.className = 'prop-kf-track';
+          pr.dataset.propPath = r.path;
+          if (app.selectedProp && app.selectedProp.layerId === layer.id && app.selectedProp.path === r.path) pr.classList.add('selected');
+          if (A.hasExpr(r.prop)) pr.innerHTML += `<div class="expr-line"></div>`;
+          const cw2 = TL.contentWidth();
+          for (const k of (r.prop.keyframes || [])) {
+            const kel = document.createElement('div');
+            kel.className = 'keyframe' + (TL.selected.has(k) ? ' selected' : '');
+            if (k.outType === 'hold' || k.inType === 'hold') kel.classList.add('hold');
+            else if (k.inType === 'bezier' || k.outType === 'bezier') kel.classList.add('ease');
+            if (A.hasExpr(r.prop)) kel.classList.add('expr');
+            kel.style.left = (k.t * TL.zoom) + 'px';
+            kel.title = k.t.toFixed(3) + 's · ' + TL.valueText(r.prop, k.v);
+            kel.addEventListener('pointerdown', (e) => TL.startKeyDrag(e, layer, r, k, kel));
+            kel.addEventListener('dblclick', (e) => { e.stopPropagation(); TL.cycleKey(k); TL.refresh(); });
+            TL.keyMeta.set(k, { layer, prop: r.prop, path: r.path, el: kel });
+            pr.appendChild(kel);
+          }
+          pr.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('.keyframe')) return;
+            AE.app.selectedProp = { layerId: layer.id, path: r.path, prop: r.prop, label: r.label };
+            TL.selectPropRow(layer, r);
+          });
+          trow.appendChild(pr);
+          TL.rows.push({ layer, type: 'prop', prop: r.prop, path: r.path, layerId: layer.id });
+        }
+      });
+      tracks.appendChild(trow);
+    });
+    // 过滤掉已不存在的选中关键帧
+    for (const k of Array.from(TL.selected)) if (!TL.keyMeta.has(k)) TL.selected.delete(k);
+    TL.updateRuler();
+    TL.onTime(AE.app.time);
+    TL.updateSelectionInfo();
+    // 选中变化时自动滚动到该图层
+    const selKey = AE.app.selection.join(',');
+    if (TL._lastSelKey !== selKey) {
+      TL._lastSelKey = selKey;
+      requestAnimationFrame(() => {
+        const active = left.querySelector('.layer-row.active');
+        if (!active) return;
+        const viewH = left.clientHeight;
+        const top = active.getBoundingClientRect().top - left.getBoundingClientRect().top + left.scrollTop;
+        if (top < left.scrollTop + 4 || top + 120 > left.scrollTop + viewH) {
+          left.scrollTop = Math.max(0, top - 4);
+          const ts = document.getElementById('timelineScroll');
+          if (ts) ts.scrollTop = left.scrollTop;
+        }
+      });
     }
   };
-  TL.jumpKey = function (prop, dir) {
-    const app = AE.App;
-    const times = prop.keys.map(k => k.t).sort((a, b) => a - b);
-    const t = app.time;
-    const target = dir > 0 ? times.find(x => x > t + 1e-4) : times.slice().reverse().find(x => x < t - 1e-4);
-    if (target == null) { app.toast('没有更多关键帧', '', 'warn'); return; }
-    app.setTime(target);
-  };
-  TL.keyMenu = function (e, layer, key, k) {
-    const app = AE.App;
-    e.preventDefault(); e.stopPropagation();
-    if (!app.selectedKeys.has(app.keyId(layer, key, k.t))) { app.selectedKeys.clear(); app.selectedKeys.add(app.keyId(layer, key, k.t)); this.render(); }
-    app.showMenu(e.clientX, e.clientY, [
-      { label: '插值 · 线性', action: () => app.setSelectedKeyInterp('linear') },
-      { label: '插值 · 贝塞尔 / 缓动', action: () => app.setSelectedKeyInterp('ease') },
-      { label: '插值 · 定格', action: () => app.setSelectedKeyInterp('hold') },
-      '-',
-      { label: '跳到该关键帧', action: () => app.setTime(k.t) },
-      { label: '删除关键帧', action: () => app.deleteSelected() },
-      { label: '选择该属性全部关键帧', action: () => { app.selectedKeys.clear(); for (const kk of layer.props[key].keys) app.selectedKeys.add(app.keyId(layer, key, kk.t)); this.render(); } }
-    ]);
-  };
-  TL.startKeyDrag = function (e, layer, key, prop, k, el) {
-    const app = AE.App;
-    e.preventDefault(); e.stopPropagation();
-    const id = app.keyId(layer, key, k.t);
-    if (e.shiftKey || e.metaKey || e.ctrlKey) {
-      if (app.selectedKeys.has(id)) app.selectedKeys.delete(id); else app.selectedKeys.add(id);
-    } else if (!app.selectedKeys.has(id)) {
-      app.selectedKeys.clear(); app.selectedKeys.add(id);
-    }
-    app.activeTrack = { layerId: layer.id, key };
-    app.selectedTrackKey = key;
-    const items = [];
-    for (const sid of app.selectedKeys) {
-      const [lid, kk, t] = sid.split('|');
-      const l = app.comp.layers.find(x => x.id === lid); if (!l) continue;
-      const p = l.props[kk]; if (!p) continue;
-      const kx = P.findKey(p, +t); if (!kx) continue;
-      items.push({ layer: l, key: kk, prop: p, k: kx, orig: kx.t, el: $(`.keyframe[data-id="${cssEscape(sid)}"]`) });
-    }
-    if (!items.length) return;
-    app.beginEdit(e.altKey && items.length > 1 ? '拉伸关键帧时间' : '移动关键帧');
-    const base = Math.min(...items.map(it => it.orig));
-    const maxT = Math.max(...items.map(it => it.orig));
-    this.drag = {
-      type: 'keys', startX: e.clientX, items, base, maxT, alt: e.altKey,
-      origMouse: e.clientX, moved: false
+
+  TL.makePropRow = function (layer, pr, isPrimary) {
+    const row = document.createElement('div');
+    row.className = 'prop-track-row';
+    if (AE.app.selectedProp && AE.app.selectedProp.layerId === layer.id && AE.app.selectedProp.path === pr.path) row.classList.add('selected');
+    const animated = A.isAnimated(pr.prop);
+    row.innerHTML = `<span class="pt-sw ${animated ? 'on' : ''}"></span><span class="pt-name">${UI.esc(pr.label)}</span>
+      <span class="pt-expr">${pr.prop.expression && pr.prop.expression.trim() ? 'ƒ' : ''}</span><span class="pt-value"></span>`;
+    const val = row.querySelector('.pt-value');
+    const update = () => {
+      const v = A.sample(pr.prop, AE.app.time, layer, A.newCtx(AE.app.comp, layer, AE.app.time));
+      val.textContent = TL.valueText(pr.prop, v);
     };
-    this.render();
+    update();
+    TL.propRows.push({ layer, prop: pr.prop, path: pr.path, el: row, val, update, label: pr.label });
+    row.addEventListener('click', (e) => {
+      if (e.target.closest('.pt-sw')) return;
+      AE.app.selectedProp = { layerId: layer.id, path: pr.path, prop: pr.prop, label: pr.label };
+      TL.selectPropRow(layer, pr);
+    });
+    row.addEventListener('dblclick', () => {
+      AE.app.selectedProp = { layerId: layer.id, path: pr.path, prop: pr.prop, label: pr.label };
+      UI.setTab('curves');
+      AE.curve.setProperty(layer, pr.prop, pr.path, pr.label);
+    });
+    row.querySelector('.pt-sw').addEventListener('click', (e) => {
+      e.stopPropagation();
+      AE.app.snapshot('切换属性动画');
+      const cur = A.sample(pr.prop, AE.app.time, layer, A.newCtx(AE.app.comp, layer, AE.app.time));
+      A.toggleStopwatch(pr.prop, AE.app.time, cur);
+      M.bump(AE.app.project);
+      TL.refresh();
+      AE.props.refresh();
+      AE.app.requestRender();
+    });
+    return row;
   };
-  TL.startBoxSelect = function (e, track) {
-    const app = AE.App;
-    e.preventDefault();
-    const content = $('#tlContent');
-    const rect = content.getBoundingClientRect();
-    const box = U.el('div', 'box-select');
-    box.style.cssText = 'position:absolute;z-index:30;border:1px solid #7fe7d4;background:rgba(127,231,212,.08);pointer-events:none;';
-    content.appendChild(box);
-    const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
-    const selectedAtStart = e.shiftKey ? new Set(app.selectedKeys) : new Set();
-    app.selectedKeys = selectedAtStart;
-    const move = (ev) => {
-      const x = ev.clientX - rect.left, y = ev.clientY - rect.top;
-      const l = Math.min(sx, x), t = Math.min(sy, y), w = Math.abs(x - sx), h = Math.abs(y - sy);
-      box.style.left = l + 'px'; box.style.top = t + 'px'; box.style.width = w + 'px'; box.style.height = h + 'px';
-      const keys = $$('.keyframe', content);
-      for (const kel of keys) {
-        const kr = kel.getBoundingClientRect();
-        const kx = kr.left - rect.left + kr.width / 2, ky = kr.top - rect.top + kr.height / 2;
-        if (kx >= l && kx <= l + w && ky >= t && ky <= t + h) { if (kel.dataset.id) app.selectedKeys.add(kel.dataset.id); }
-        else if (kel.dataset.id && !selectedAtStart.has(kel.dataset.id)) app.selectedKeys.delete(kel.dataset.id);
-      }
-      this.render();
-      // re-append box because render cleared content
-      $('#tlContent').appendChild(box);
-    };
-    const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); box.remove(); this.drag = null; this.render(); };
-    window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
-    this.drag = { type: 'box' };
+
+  TL.selectPropRow = function (layer, pr) {
+    AE.app.selectedProp = { layerId: layer.id, path: pr.path, prop: pr.prop, label: pr.label };
+    document.querySelectorAll('.prop-track-row.selected,.prop-kf-track.selected').forEach(e => e.classList.remove('selected'));
+    document.querySelectorAll('.prop-track-row').forEach(e => { if (e.querySelector('.pt-name') && e.querySelector('.pt-name').textContent === pr.label) { /* ambiguous */ } });
+    const rows = document.querySelectorAll('#layerRows .prop-track-row');
+    // 简化：重新刷新以标出选中
+    if (AE.curve) AE.curve.setProperty(layer, pr.prop, pr.path, pr.label);
+    if (AE.app.view.tab === 'curves') AE.curve.refresh();
+    document.querySelectorAll('.prop-kf-track').forEach(e => e.classList.toggle('selected', e.dataset.propPath === pr.path));
   };
-  TL.startLayerDrag = function (e, layer, bar, track) {
-    const app = AE.App;
-    e.preventDefault(); e.stopPropagation();
-    const rect = bar.getBoundingClientRect();
-    const edge = e.clientX - rect.left < 6 ? 'left' : e.clientX - rect.right > -6 ? 'right' : 'move';
-    app.beginEdit(edge === 'move' ? '移动图层时间' : edge === 'left' ? '裁剪入点' : '裁剪出点');
-    this.drag = {
-      type: 'layer', mode: edge, layer, startX: e.clientX,
-      origIn: layer.inPoint, origOut: layer.outPoint, origStart: layer.startTime, keys: this.collectKeys(layer),
-      moved: false
-    };
-  };
-  TL.collectKeys = function (layer) {
-    const out = [];
-    for (const key in layer.props) { const p = layer.props[key]; if (!p.keys) continue; for (const k of p.keys) out.push({ key, k, prop: p, t: k.t }); }
-    return out;
-  };
-  TL._scheduleRender = function () {
-    if (this._pendingRender) return;
-    this._pendingRender = true;
-    requestAnimationFrame(() => { this._pendingRender = false; this.render(); });
-  };
-  TL.onDragMove = function (e) {
-    const d = this.drag; if (!d) return;
-    const app = AE.App; if (!app.comp) return;
-    if (d.type === 'keys') {
-      let dt = (e.clientX - d.startX) / this.pxPerSec;
-      let snap = null;
-      if (app.snap && !e.altKey) {
-        const anchorTimes = d.items.map(it => it.orig + dt);
-        for (const t of anchorTimes) {
-          const sn = this.snapTime(t, e.altKey ? [] : undefined);
-          if (sn != null) { dt += sn - t; snap = sn; break; }
-        }
-      }
-      if (e.altKey && d.maxT > d.base) {
-        const f = Math.max(.02, (e.clientX - d.startX) / this.pxPerSec / (d.maxT - d.base) + 1);
-        for (const it of d.items) it.k.t = d.base + (it.orig - d.base) * f;
-      } else {
-        let minT = Math.min(...d.items.map(it => it.orig));
-        if (minT + dt < 0) dt = -minT;
-        for (const it of d.items) {
-          let nt = Math.max(0, it.orig + dt);
-          if (app.snap) { const sn = this.snapTime(nt); if (sn != null) nt = sn; }
-          it.k.t = nt;
-        }
-      }
-      $('#snapHint').textContent = app.snap ? (snap != null ? '吸附 ' + snap.toFixed(2) + 's' : '') : '';
-      d.moved = true;
-      // live update key positions
-      for (const it of d.items) {
-        const el = $(`.keyframe[data-id="${cssEscape(app.keyId(it.layer, it.key, it.orig))}"]`);
-        if (el) { el.style.left = (it.k.t * this.pxPerSec) + 'px'; el.dataset.t = it.k.t; el.dataset.id = app.keyId(it.layer, it.key, it.k.t); }
-      }
-      if (AE.CanvasView) AE.CanvasView.draw();
-      return;
+
+  TL.valueText = function (prop, v) {
+    if (prop.type === 'vec') {
+      const p = A.vec3(v);
+      return `${U.round(p.x, 1)}, ${U.round(p.y, 1)}${Math.abs(p.z) > .01 ? ', ' + U.round(p.z, 1) : ''}`;
     }
-    if (d.type === 'layer') {
-      let dt = (e.clientX - d.startX) / this.pxPerSec;
-      dt = Math.round(dt * app.comp.fps) / app.comp.fps;
-      if (d.mode === 'move') {
-        const ni = Math.max(-d.keys.length ? 0 : 0, Math.min(app.comp.duration - (d.origOut - d.origIn), d.origIn + dt));
-        dt = ni - d.origIn;
-        d.layer.inPoint = d.origIn + dt; d.layer.outPoint = d.origOut + dt; d.layer.startTime = d.origStart + dt;
-        for (const it of d.keys) it.k.t = it.t + dt;
-      } else if (d.mode === 'left') {
-        d.layer.inPoint = U.clamp(d.origIn + dt, 0, d.layer.outPoint - .02);
-      } else {
-        d.layer.outPoint = U.clamp(d.origOut + dt, d.layer.inPoint + .02, app.comp.duration);
+    if (prop.type === 'color') return String(v);
+    if (typeof v === 'string') return v.length > 18 ? v.slice(0, 18) + '…' : v;
+    return U.round(A.n(v), 2).toString();
+  };
+
+  TL.updateSelectionInfo = function () {
+    const el = document.getElementById('selectionInfo');
+    if (!el) return;
+    const sel = AE.app.selectedLayers();
+    const nk = TL.selected.size;
+    if (!sel.length) el.textContent = '未选择图层';
+    else el.textContent = `${sel.length === 1 ? sel[0].name : sel.length + ' 个图层'}${nk ? ' · 已选 ' + nk + ' 个关键帧' : ''}`;
+  };
+
+  TL.updateRuler = function () {
+    const ruler = document.getElementById('timelineRuler');
+    if (!ruler) return;
+    let inner = ruler.querySelector('.ruler-inner');
+    if (!inner) { inner = document.createElement('div'); inner.className = 'ruler-inner'; ruler.appendChild(inner); }
+    const cw = TL.contentWidth();
+    inner.style.width = cw + 'px';
+    inner.innerHTML = '';
+    const comp = AE.app.comp;
+    const steps = [0.1, 0.2, 0.5, 1, 2, 5, 10, 30];
+    let major = 1;
+    for (const s of steps) { if (s * TL.zoom >= 58) { major = s; break; } major = s; }
+    const minor = major / 5;
+    const total = comp.duration + 1;
+    for (let t = 0; t <= total + 1e-6; t += minor) {
+      const x = t * TL.zoom;
+      const isMajor = Math.abs(t / major - Math.round(t / major)) < 1e-6;
+      const d = document.createElement('div');
+      d.className = 'ruler-tick' + (isMajor ? ' sec' : ' minor');
+      d.style.left = x + 'px';
+      if (isMajor) {
+        const sec = Math.round(t * 10) / 10;
+        d.textContent = Number.isInteger(sec) ? sec + 's' : sec.toFixed(1) + 's';
       }
-      const bar = $(`.layer-row[data-id="${d.layer.id}"] .layer-bar`);
-      if (bar) { bar.style.left = (d.layer.inPoint * this.pxPerSec) + 'px'; bar.style.width = Math.max(4, (d.layer.outPoint - d.layer.inPoint) * this.pxPerSec) + 'px'; }
-      d.moved = true;
-      this._scheduleRender();
-      return;
+      inner.appendChild(d);
     }
-  };
-  TL.onDragUp = function (e) {
-    const d = this.drag; if (!d) return;
-    if (d.type === 'keys') {
-      for (const it of d.items) { P.sortKeys(it.prop); }
-      AE.App.endEdit(d.moved);
-      this.drag = null; $('#snapHint').textContent = ''; this.render();
-    } else if (d.type === 'layer') {
-      for (const it of d.keys) P.sortKeys(it.prop);
-      AE.App.endEdit(d.moved);
-      this.drag = null; this.render();
-    } else if (d.type === 'box') { this.drag = null; }
-  };
-  TL.snapTime = function (t, extra) {
-    const app = AE.App, comp = app.comp; if (!comp) return null;
-    const targets = [comp.workStart, comp.workEnd, app.time];
-    for (const m of comp.markers || []) targets.push(m.t);
-    for (const l of comp.layers) { targets.push(l.inPoint, l.outPoint); }
-    if (extra) targets.push(...extra);
-    const tol = 7 / this.pxPerSec;
-    let best = null, bd = tol;
-    for (const x of targets) { const d = Math.abs(x - t); if (d < bd) { bd = d; best = x; } }
-    return best;
-  };
-  TL.updatePlayhead = function () {
-    const app = AE.App, comp = app.comp;
-    if (!comp) return;
-    const line = $('#playheadLine'), head = $('#playheadHead'), wa = $('#tlWorkArea');
-    const x = this.labelW() + app.time * this.pxPerSec;
-    if (line) line.style.left = x + 'px';
-    if (head) { head.style.left = (x - 6) + 'px'; }
+    // 工作区
+    const wa = document.getElementById('workArea');
     if (wa) {
-      const ws = Math.min(comp.workStart, comp.workEnd), we = Math.max(comp.workStart, comp.workEnd);
-      wa.style.left = (this.labelW() + ws * this.pxPerSec) + 'px';
-      wa.style.width = Math.max(2, (we - ws) * this.pxPerSec) + 'px';
+      const left = comp.workStart * TL.zoom;
+      const right = comp.workEnd * TL.zoom;
+      wa.style.left = '0px';
+      wa.style.width = cw + 'px';
+      wa.innerHTML = `<div class="workarea-shade" style="left:0;width:${left}px"></div>
+        <div class="workarea-shade" style="left:${right}px;right:0"></div>
+        <div class="workarea-bar" style="left:${left}px;width:${Math.max(2, right - left)}px"></div>`;
     }
-    const tc = $('#timecodeInput'); if (tc && document.activeElement !== tc) tc.value = U.timecode(app.time, comp.fps);
-    const fr = $('#frameLabel'); if (fr) fr.textContent = 'F ' + Math.round(app.time * comp.fps);
-    // keep playhead visible while playing
-    if (app.playing && line) {
-      const sc = $('#tlScroll');
-      const sx = x - sc.scrollLeft;
-      if (sx > sc.clientWidth - 80) sc.scrollLeft = x - sc.clientWidth + 90;
-      else if (sx < this.labelW() + 20) sc.scrollLeft = Math.max(0, x - this.labelW() - 40);
+    TL.onTime(AE.app.time);
+  };
+
+  TL.onTime = function (t) {
+    const ph = document.getElementById('playhead');
+    if (ph) ph.style.left = (t * TL.zoom) + 'px';
+    for (const r of TL.propRows) { try { r.update(); } catch (e) {} }
+  };
+
+  // ---------------- 图层入出点 ----------------
+  TL.bindSpan = function (span, layer) {
+    const startDrag = (e, mode) => {
+      if (e.button !== 0) return;
+      e.stopPropagation();
+      e.preventDefault();
+      AE.app.selectLayer(layer, e.shiftKey);
+      AE.app.snapshot('修剪图层入出点');
+      const start = { x: e.clientX, inP: layer.inPoint, outP: layer.outPoint };
+      const move = (ev) => {
+        const dt = (ev.clientX - start.x) / TL.zoom;
+        const snap = ev.altKey ? dt : Math.round(dt * AE.app.comp.fps) / AE.app.comp.fps;
+        if (mode === 'body') {
+          const len = start.outP - start.inP;
+          let ni = U.clamp(start.inP + snap, 0, AE.app.comp.duration - len);
+          layer.inPoint = ni; layer.outPoint = ni + len;
+        } else if (mode === 'left') {
+          layer.inPoint = U.clamp(start.inP + snap, 0, layer.outPoint - 1 / AE.app.comp.fps);
+        } else {
+          layer.outPoint = U.clamp(start.outP + snap, layer.inPoint + 1 / AE.app.comp.fps, AE.app.comp.duration);
+        }
+        const l = layer.inPoint * TL.zoom, w = (layer.outPoint - layer.inPoint) * TL.zoom;
+        span.style.left = l + 'px'; span.style.width = Math.max(8, w) + 'px';
+        span.title = `${U.fmtTime(layer.inPoint)} – ${U.fmtTime(layer.outPoint)}`;
+        AE.app.requestRender();
+      };
+      const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        M.bump(AE.app.project);
+        TL.refresh();
+        AE.app.requestRender();
+      };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    };
+    span.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.span-handle.l')) startDrag(e, 'left');
+      else if (e.target.closest('.span-handle.r')) startDrag(e, 'right');
+      else startDrag(e, 'body');
+    });
+    span.addEventListener('contextmenu', (e) => { e.preventDefault(); TL.layerMenu(layer, e.clientX, e.clientY); });
+  };
+
+  TL.renameLayer = function (layer) {
+    UI.modal({
+      title: '重命名图层', width: 360, okText: '重命名',
+      body: `<div class="modal-field"><label>名称</label><input id="renameInput" value="${UI.esc(layer.name)}"></div>`,
+      onOk: (body) => {
+        const v = body.querySelector('#renameInput').value.trim();
+        if (!v) return false;
+        AE.app.snapshot('重命名图层');
+        layer.name = v;
+        M.bump(AE.app.project);
+        AE.app.refreshAll();
+        AE.app.requestRender();
+        return true;
+      }
+    });
+  };
+
+  TL.layerMenu = function (layer, x, y) {
+    UI.showContext([
+      { label: '重命名', action: () => TL.renameLayer(layer) },
+      { label: '复制图层', shortcut: 'Ctrl+D', action: () => { AE.app.selectLayer(layer, false); AE.app.duplicateSelection(); } },
+      { label: '删除图层', danger: true, action: () => { AE.app.selectLayer(layer, false); AE.app.deleteSelection(); } },
+      { sep: true },
+      { label: layer.enabled ? '隐藏图层' : '显示图层', action: () => { AE.app.snapshot('图层显示'); layer.enabled = !layer.enabled; AE.app.changed(); } },
+      { label: layer.locked ? '解锁图层' : '锁定图层', action: () => { AE.app.snapshot('图层锁定'); layer.locked = !layer.locked; AE.app.changed(); } },
+      { label: layer.motionBlur ? '关闭运动模糊' : '开启运动模糊', action: () => { AE.app.snapshot('运动模糊'); layer.motionBlur = !layer.motionBlur; AE.app.changed(); } },
+      { sep: true },
+      { label: '预合成所选', action: () => { AE.app.selectLayer(layer, false); AE.app.precomposeSelection(); } },
+      { label: '转化为节点几何', action: () => TL.convertToNode(layer) }
+    ], x, y);
+  };
+
+  TL.convertToNode = function (layer) {
+    if (!layer || (layer.type !== 'shape' && layer.type !== 'text')) { UI.toast('请选择形状或文字图层'); return; }
+    AE.app.snapshot('转化为节点几何');
+    const nl = M.newLayer(AE.app.comp, 'node3d', { name: layer.name + ' · 节点几何' });
+    const g = AE.nodes.newGraph();
+    const out = g.nodes.find(n => n.type === 'output');
+    const scatter = g.nodes.find(n => n.type === 'scatter');
+    scatter.enabled = false;
+    const src = AE.nodes.makeNode('path', -360, -40);
+    src.params.layer = layer.id;
+    g.nodes.push(src);
+    g.edges.push({ id: 'e' + Date.now(), from: { node: src.id, port: 'geo' }, to: { node: out.id, port: 'geo' } });
+    nl.nodes = g;
+    M.addLayer(AE.app.comp, nl, AE.app.comp.layers.indexOf(layer));
+    AE.app.selection = [nl.id]; AE.app.primaryId = nl.id;
+    M.bump(AE.app.project);
+    AE.app.refreshAll();
+    AE.app.requestRender();
+    UI.toast('已创建节点几何图层');
+  };
+
+  // ---------------- 关键帧交互 ----------------
+  TL.startKeyDrag = function (e, layer, r, k, el) {
+    if (e.button !== 0) return;
+    e.stopPropagation();
+    e.preventDefault();
+    if (!TL.selected.has(k)) {
+      if (e.shiftKey || e.ctrlKey) TL.selected.add(k);
+      else { TL.selected.clear(); TL.selected.add(k); }
+    } else if (e.shiftKey || e.ctrlKey) {
+      TL.selected.delete(k);
     }
+    if (!TL.selected.has(k)) { TL.refresh(); return; }
+    const startX = e.clientX;
+    const items = [];
+    for (const kk of TL.selected) {
+      const meta = TL.keyMeta.get(kk);
+      if (!meta) continue;
+      items.push({ k: kk, prop: meta.prop, start: kk.t });
+    }
+    AE.app.snapshot('移动关键帧');
+    let moved = false;
+    const move = (ev) => {
+      let dt = (ev.clientX - startX) / TL.zoom;
+      if (!ev.altKey) {
+        const f = 1 / AE.app.comp.fps;
+        dt = Math.round(dt / f) * f;
+      }
+      if (!moved && Math.abs(dt) < 1e-6) return;
+      moved = true;
+      for (const it of items) {
+        it.k.t = U.clamp(it.start + dt, 0, AE.app.comp.duration);
+      }
+      for (const it of items) {
+        const meta = TL.keyMeta.get(it.k);
+        if (meta && meta.el) meta.el.style.left = (it.k.t * TL.zoom) + 'px';
+      }
+      A.clearCache();
+      AE.app.requestRender();
+      TL.onTime(AE.app.time);
+      for (const r2 of TL.propRows) r2.update();
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      for (const it of items) { A.sortKeys(it.prop); }
+      A.clearCache();
+      TL.refresh();
+      AE.props.refresh();
+      if (AE.curve) AE.curve.refresh();
+      AE.app.requestRender();
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    TL.refresh();
   };
-  TL.tickStep = function () {
-    const candidates = [.1, .25, .5, 1, 2, 5, 10, 15, 30, 60];
-    for (const c of candidates) if (c * this.pxPerSec >= 58) return c;
-    return 60;
+
+  TL.startMarquee = function (e) {
+    const right = document.getElementById('timelineRight');
+    const mq = document.getElementById('marquee');
+    if (!right || !mq) return;
+    const rr = right.getBoundingClientRect();
+    const start = { x: e.clientX, y: e.clientY };
+    if (!e.shiftKey && !e.ctrlKey) { TL.selected.clear(); document.querySelectorAll('.keyframe.selected').forEach(el => el.classList.remove('selected')); }
+    mq.classList.remove('hidden');
+    const setRect = (ev) => {
+      const x0 = Math.min(start.x, ev.clientX) - rr.left;
+      const y0 = Math.min(start.y, ev.clientY) - rr.top;
+      const w = Math.abs(ev.clientX - start.x), h = Math.abs(ev.clientY - start.y);
+      mq.style.left = x0 + 'px'; mq.style.top = y0 + 'px'; mq.style.width = w + 'px'; mq.style.height = h + 'px';
+    };
+    mq.style.left = (start.x - rr.left) + 'px'; mq.style.top = (start.y - rr.top) + 'px'; mq.style.width = '0px'; mq.style.height = '0px';
+    const move = (ev) => {
+      setRect(ev);
+      const rect = { l: Math.min(start.x, ev.clientX), r: Math.max(start.x, ev.clientX), t: Math.min(start.y, ev.clientY), b: Math.max(start.y, ev.clientY) };
+      for (const [k, meta] of TL.keyMeta) {
+        const kr = meta.el.getBoundingClientRect();
+        const cx = kr.left + kr.width / 2, cy = kr.top + kr.height / 2;
+        if (cx >= rect.l && cx <= rect.r && cy >= rect.t && cy <= rect.b) {
+          TL.selected.add(k); meta.el.classList.add('selected');
+        } else if (!e.shiftKey && !e.ctrlKey) {
+          if (TL.selected.has(k)) { TL.selected.delete(k); meta.el.classList.remove('selected'); }
+        }
+      }
+      TL.updateSelectionInfo();
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      mq.classList.add('hidden');
+      TL.refresh();
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
   };
-  TL.tickLabel = function (t, step) {
-    const f = AE.App.comp ? AE.App.comp.fps : 60;
-    if (step >= 1) return Math.round(t) + 's';
-    return t.toFixed(2) + 's';
+
+  TL.cycleKey = function (k) {
+    AE.app.snapshot('切换关键帧插值');
+    if (k.outType === 'linear') { k.outType = 'bezier'; k.inType = 'bezier'; k.in = { x: .5, y: 0 }; k.out = { x: .5, y: 0 }; }
+    else if (k.outType === 'bezier') { k.outType = 'hold'; }
+    else { k.outType = 'linear'; k.inType = 'linear'; k.in = { x: 1/3, y: 1/3 }; k.out = { x: 1/3, y: 1/3 }; }
+    A.clearCache();
+    AE.app.requestRender();
   };
-  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
-  function cssEscape(s) { return String(s).replace(/["\\]/g, '\\$&'); }
-  AE.Timeline = TL;
-})();
+
+  TL.keyframeMenu = function (el, x, y) {
+    const meta = Array.from(TL.keyMeta.entries()).find(([k, m]) => m.el === el);
+    const k = meta ? meta[0] : null;
+    if (k && !TL.selected.has(k)) { TL.selected.clear(); TL.selected.add(k); TL.refresh(); }
+    UI.showContext([
+      { label: '缓入缓出（贝塞尔）', shortcut: 'F9', action: () => TL.applyInterp('ease') },
+      { label: '线性', action: () => TL.applyInterp('linear') },
+      { label: '定格', action: () => TL.applyInterp('hold') },
+      { sep: true },
+      { label: '仅设置进入插值', action: () => TL.applyInterp('in') },
+      { label: '仅设置离开插值', action: () => TL.applyInterp('out') },
+      { sep: true },
+      { label: '复制关键帧', shortcut: 'Ctrl+C', action: () => TL.copyKeys() },
+      { label: '粘贴到当前时刻', shortcut: 'Ctrl+V', action: () => TL.pasteKeys() },
+      { label: '删除关键帧', danger: true, action: () => TL.deleteSelectedKeys() }
+    ], x, y);
+  };
+
+  TL.cycleInterp = function () {
+    if (!TL.selected.size) { UI.toast('请先选择关键帧'); return; }
+    AE.app.snapshot('切换插值');
+    for (const k of TL.selected) {
+      if (k.outType === 'linear') { k.inType = 'bezier'; k.outType = 'bezier'; k.in = { x: .5, y: 0 }; k.out = { x: .5, y: 0 }; }
+      else if (k.outType === 'bezier') k.outType = 'hold';
+      else { k.inType = 'linear'; k.outType = 'linear'; k.in = { x: 1/3, y: 1/3 }; k.out = { x: 1/3, y: 1/3 }; }
+    }
+    A.clearCache();
+    TL.refresh(); AE.app.requestRender();
+  };
+
+  TL.applyInterp = function (mode) {
+    if (!TL.selected.size) { UI.toast('请先选择关键帧'); return; }
+    AE.app.snapshot('设置关键帧插值');
+    for (const k of TL.selected) {
+      if (mode === 'ease') {
+        k.inType = 'bezier'; k.outType = 'bezier';
+        k.in = { x: .5, y: 0 }; k.out = { x: .5, y: 0 };
+      } else if (mode === 'linear') {
+        k.inType = 'linear'; k.outType = 'linear';
+        k.in = { x: 1/3, y: 1/3 }; k.out = { x: 1/3, y: 1/3 };
+      } else if (mode === 'hold') {
+        k.outType = 'hold';
+      } else if (mode === 'in') {
+        k.inType = 'bezier'; k.in = { x: .5, y: 0 };
+      } else if (mode === 'out') {
+        k.outType = 'bezier'; k.out = { x: .5, y: 0 };
+      }
+    }
+    A.clearCache();
+    TL.refresh(); AE.props.refresh();
+    AE.app.requestRender();
+  };
+
+  TL.applyEase = function () {
+    if (TL.selected.size) { TL.applyInterp('ease'); return; }
+    // 未选关键帧：对所选图层当前时刻附近的关键帧执行
+    const layers = AE.app.selectedLayers();
+    if (!layers.length) { UI.toast('请先选择图层或关键帧'); return; }
+    AE.app.snapshot('缓入缓出');
+    for (const layer of layers) {
+      M.walkProps(layer, (p) => {
+        if (!p.keyframes) return;
+        for (const k of p.keyframes) {
+          k.inType = 'bezier'; k.outType = 'bezier';
+          k.in = { x: .5, y: 0 }; k.out = { x: .5, y: 0 };
+        }
+      });
+    }
+    A.clearCache();
+    TL.refresh(); AE.props.refresh(); AE.app.requestRender();
+  };
+
+  TL.nudgeKeys = function (frames) {
+    if (!TL.selected.size) { UI.toast('请先选择关键帧'); return; }
+    AE.app.snapshot('移动关键帧');
+    const dt = frames / AE.app.comp.fps;
+    for (const k of TL.selected) k.t = U.clamp(k.t + dt, 0, AE.app.comp.duration);
+    TL.refresh(); AE.app.requestRender();
+  };
+
+  TL.deleteSelectedKeys = function () {
+    if (!TL.selected.size) return;
+    AE.app.snapshot('删除关键帧');
+    for (const k of Array.from(TL.selected)) {
+      const meta = TL.keyMeta.get(k);
+      if (meta) {
+        const prop = meta.prop;
+        const idx = prop.keyframes ? prop.keyframes.indexOf(k) : -1;
+        if (idx >= 0) prop.keyframes.splice(idx, 1);
+        if (prop.keyframes && prop.keyframes.length === 0) prop.keyframes = null;
+      }
+    }
+    TL.selected.clear();
+    A.clearCache();
+    M.bump(AE.app.project);
+    TL.refresh(); AE.props.refresh(); AE.app.requestRender();
+  };
+
+  TL.copyKeys = function () {
+    if (!TL.selected.size) { UI.toast('请先选择关键帧'); return; }
+    const arr = [];
+    for (const k of TL.selected) {
+      const meta = TL.keyMeta.get(k);
+      if (!meta) continue;
+      arr.push({ layerId: meta.layer.id, path: meta.path, t: k.t, key: U.deepClone(k) });
+    }
+    TL.lastClipboard = arr;
+    UI.toast('已复制 ' + arr.length + ' 个关键帧');
+  };
+
+  TL.pasteKeys = function () {
+    if (!TL.lastClipboard || !TL.lastClipboard.length) { UI.toast('剪贴板里没有关键帧'); return; }
+    AE.app.snapshot('粘贴关键帧');
+    const minT = Math.min(...TL.lastClipboard.map(a => a.t));
+    TL.selected.clear();
+    let added = 0;
+    for (const item of TL.lastClipboard) {
+      const layer = AE.app.getLayer(item.layerId);
+      if (!layer) continue;
+      const prop = TL.resolveProp(layer, item.path);
+      if (!prop) continue;
+      if (!prop.keyframes) prop.keyframes = [];
+      const nt = U.clamp(AE.app.time + (item.t - minT), 0, AE.app.comp.duration);
+      const k = A.addKey(prop, nt, item.key.v);
+      k.in = U.deepClone(item.key.in); k.out = U.deepClone(item.key.out);
+      k.inType = item.key.inType; k.outType = item.key.outType;
+      k.sIn = U.deepClone(item.key.sIn || { x: 0, y: 0, z: 0 });
+      k.sOut = U.deepClone(item.key.sOut || { x: 0, y: 0, z: 0 });
+      TL.selected.add(k);
+      added++;
+    }
+    A.clearCache();
+    M.bump(AE.app.project);
+    TL.refresh(); AE.props.refresh(); AE.app.requestRender();
+    UI.toast('已粘贴 ' + added + ' 个关键帧');
+  };
+
+  TL.resolveProp = function (layer, path) {
+    if (!layer || !path) return null;
+    const parts = path.split('.');
+    if (parts[0] === 'transform') return layer.transform[parts[1]] || null;
+    if (parts[0] === 'fx') { const fx = layer.effects.find(f => f.id === parts[1]); return fx ? fx.params[parts[2]] : null; }
+    if (parts[0] === 'mask') { const m = layer.masks.find(f => f.id === parts[1]); return m ? m[parts[2]] : null; }
+    if (parts[0] === 'op') {
+      const op = layer.shape && layer.shape.ops.find(o => o.id === parts[1]);
+      if (!op) return null;
+      if (parts[2] === 'source') return op.source ? op.source[parts[3]] : null;
+      if (parts[2] === 'target') return op.target ? op.target[parts[3]] : null;
+      return op[parts[2]] || null;
+    }
+    if (parts[0] === 'fill') return layer.shape ? layer.shape.fill[parts[1]] : null;
+    if (parts[0] === 'stroke') return layer.shape ? layer.shape.stroke[parts[1]] : null;
+    if (parts[0] === 'extrude') return layer.extrude ? layer.extrude[parts[1]] : null;
+    if (parts[0] === 'material') return layer.material ? layer.material[parts[1]] : null;
+    if (parts[0] === 'pin') { const p = (layer.pins || []).find(x => x.id === parts[1]); return p ? p[parts[2]] : null; }
+    if (parts[0] === 'text' && parts[1] === 'animator') { const a = (layer.text.animators || []).find(x => x.id === parts[2]); if (!a) return null; return parts[3] === 'selector' ? a.selector[parts[4]] : a[parts[3]]; }
+    if (parts[0] === 'camera') return layer.camera ? layer.camera[parts[1]] : null;
+    if (parts[0] === 'light') return layer.light ? layer.light[parts[1]] : null;
+    if (parts[0] === 'field') return layer.field ? layer.field[parts[1]] : null;
+    if (parts[0] === 'text' && parts[1] !== 'animator') return layer.text ? layer.text[parts[1]] : null;
+    if (parts[0] === 'deform') return layer.deform ? layer.deform[parts[1]] : null;
+    if (parts[0] === 'particle') {
+      const p = layer.particle; if (!p) return null;
+      if (parts[1] === 'emitter') { const em = p.emitters.find(x => x.id === parts[2]); return em ? em[parts[3]] : null; }
+      if (parts[1] === 'collisions' && parts[2] === 'secondary') return p.collisions && p.collisions.secondary ? p.collisions.secondary[parts[3]] : null;
+      if (parts[1] === 'collisions') return p.collisions ? p.collisions[parts[2]] : null;
+      if (parts[1] === 'trails') return p.trails ? p.trails[parts[2]] : null;
+      if (parts[1] === 'secondary') return p.collisions && p.collisions.secondary ? p.collisions.secondary[parts[2]] : null;
+      return p[parts[1]] || null;
+    }
+    if (parts[0] === 'precomp') return layer.precomp ? layer.precomp.timeRemap[parts[2]] : null;
+    if (parts[0] === 'sound') return layer.sound ? layer.sound[parts[1]] : null;
+    return null;
+  };
+
+  TL.stretchDialog = function () {
+    if (!TL.selected.size && !AE.app.selectedLayers().length) { UI.toast('请选择关键帧或图层'); return; }
+    UI.modal({
+      title: '按比例拉伸关键帧', width: 380, okText: '拉伸',
+      body: `<div class="modal-note">以所选关键帧中最早的时刻为基准，按比例缩放时间间隔。${TL.selected.size ? '' : '未选关键帧时，将作用于所选图层的全部关键帧。'}</div>
+        <div class="modal-field"><label>拉伸倍数</label><input id="stretchFactor" type="number" step="0.1" value="1.5"></div>`,
+      onOk: (body) => {
+        const f = parseFloat(body.querySelector('#stretchFactor').value);
+        if (!isFinite(f) || f <= 0) return false;
+        AE.app.snapshot('拉伸关键帧');
+        let keys = Array.from(TL.selected);
+        if (!keys.length) {
+          for (const layer of AE.app.selectedLayers()) M.walkProps(layer, (p) => { if (p.keyframes) keys.push(...p.keyframes); });
+        }
+        if (!keys.length) return false;
+        const minT = Math.min(...keys.map(k => k.t));
+        for (const k of keys) k.t = U.clamp(minT + (k.t - minT) * f, 0, AE.app.comp.duration);
+        A.clearCache();
+        TL.refresh(); AE.props.refresh(); AE.app.requestRender();
+        return true;
+      }
+    });
+  };
+
+  // 兼容：刷新选中样式
+  TL.refreshSelection = function () { TL.refresh(); };
+
+})(window);

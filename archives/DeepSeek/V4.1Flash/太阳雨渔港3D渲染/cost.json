@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "太阳雨渔港3D渲染",
+  "tokens": 300489972,
+  "minutes": 90.6,
+  "time": "实际停止",
+  "cny": 15.43,
+  "api_usd": 2.31,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/太阳雨渔港3D渲染/20261106-113243"
+  ]
+}

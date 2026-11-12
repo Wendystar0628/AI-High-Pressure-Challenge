@@ -1,0 +1,21 @@
+{
+  "problem": "11",
+  "parts": [
+    {"name": "1", "title": "三腔分层伺服分配箱", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 44, 40]}], "depth": 4, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 36, 0],
+       "loops": [{"path": [[4, 4], [40, 4], [40, 17], [29, 28], [4, 28]]}], "depth": 32, "name": "斜顶主体"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 4],
+       "at": [[4, 4], [40, 4], [4, 36], [40, 36]], "d": 5, "through": true, "name": "底板4角孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 4, 0], "at": [12, 20], "d": 12, "through": true, "name": "左上孔"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 4, 0], "at": [30, 12], "d": 14, "through": true, "name": "右下孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 36, 0],
+       "loops": [{"rect": [7, 8, 17, 24]}], "depth": 8, "name": "左腔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 36, 0],
+       "loops": [{"rect": [20, 8, 37, 15]}], "depth": 8, "name": "中下腔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0, 36, 0],
+       "loops": [{"rect": [20, 17, 37, 24]}], "depth": 8, "name": "中上腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 28], "at": [[14, 20], [26, 12], [26, 28]], "d": 6, "depth": 6, "name": "顶孔"}
+    ]}
+  ]
+}

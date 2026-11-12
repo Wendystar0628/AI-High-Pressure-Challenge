@@ -243,7 +243,7 @@ export function tex(src, display = false) {
     }
     if (n === 'text' || n === 'textrm' || n === 'mbox' || n === 'textup') {
       const v = rawArg().replace(/^ | $/g, ' ');
-      return node(`<mtext>${esc(v)}</mtext>`);
+      return node(`<mtext>${esc(v.replace(/\\([&%$#_{}])/g, '$1'))}</mtext>`); // text-mode escapes such as \&
     }
     if (n === 'mathrm' || n === 'operatorname' || n === 'mathup') {
       const v = rawArg();

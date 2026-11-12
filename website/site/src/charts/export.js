@@ -9,6 +9,7 @@
 //   exportButton({ build: () => ({ svg, width, height }), title })   same, for composed charts
 //   rowsToSVG([head, ...rows])                        HTML rows (and their sub rows) as one SVG, for build
 //                                                     (ui/modelRow.js listToSVG() calls it for a list of model rows)
+//   svgToPNG(svg, w, h, { scale }) / saveBlob(blob, name) / fontCSS()   the pieces underneath (faq/sheet.js uses them)
 import { t } from '../core/i18n.js';
 import { BASE } from '../core/route.js';
 import { fmtDate } from '../core/format.js';
@@ -26,7 +27,8 @@ export const STYLE_PROPS = [
 ];
 
 let fontData = null;
-function fontCSS() {
+/** @font-face for Saira as a data URL (an SVG drawn as an image loads nothing from outside). */
+export function fontCSS() {
   if (!fontData) {
     fontData = fetch(`${BASE}fonts/Saira.ttf`)
       .then((r) => r.arrayBuffer())
@@ -92,7 +94,14 @@ export async function exportPrepared(chart, W, H, { title = '', filename, scale 
   const parts = [t('common.site.name'), title, updated ? t('common.export.data', { date: fmtDate(updated) }) : '', location.origin + location.pathname].filter(Boolean);
   out.append(el('text', { x: pad, y: fy + 24, fill: ink2, 'font-family': "Saira, 'Microsoft YaHei', 'PingFang SC', sans-serif", 'font-size': 12, 'font-stretch': '112%' }, parts.join('  │  ')));
 
-  const text = new XMLSerializer().serializeToString(out);
+  const blob = await svgToPNG(out, TW, TH, { scale });
+  saveBlob(blob, `${filename || `ai-decathlon-${slug(title)}`}${updated ? `-${updated}` : ''}.png`);
+  return blob;
+}
+
+/** Rasterise a self-contained SVG (styles inline, fonts embedded) of W×H to a PNG blob at `scale`. */
+export async function svgToPNG(svgEl, W, H, { scale = 1 } = {}) {
+  const text = new XMLSerializer().serializeToString(svgEl);
   const src = URL.createObjectURL(new Blob([text], { type: 'image/svg+xml;charset=utf-8' }));
   try {
     const img = new Image();
@@ -100,22 +109,24 @@ export async function exportPrepared(chart, W, H, { title = '', filename, scale 
     await img.decode();
     await new Promise((r) => setTimeout(r, 60)); // let the embedded font settle
     const canvas = document.createElement('canvas');
-    canvas.width = TW * scale;
-    canvas.height = TH * scale;
+    canvas.width = Math.round(W * scale);
+    canvas.height = Math.round(H * scale);
     const g = canvas.getContext('2d');
     g.scale(scale, scale);
-    g.drawImage(img, 0, 0, TW, TH);
-    const blob = await new Promise((r) => canvas.toBlob(r, 'image/png'));
-    const name = `${filename || `ai-octathlon-${slug(title)}`}${updated ? `-${updated}` : ''}.png`;
-    const a = h('a', { href: URL.createObjectURL(blob), download: name });
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    return blob;
+    g.drawImage(img, 0, 0, W, H);
+    return await new Promise((r, x) => canvas.toBlob((b) => (b ? r(b) : x(new Error('canvas.toBlob gave nothing'))), 'image/png'));
   } finally {
     URL.revokeObjectURL(src);
   }
+}
+
+/** Download a blob under a file name. */
+export function saveBlob(blob, name) {
+  const a = h('a', { href: URL.createObjectURL(blob), download: name });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
 }
 
 /** Export a live <svg> chart: clone, inline its computed styles, frame, download. */
@@ -157,9 +168,10 @@ function cloneStyled(live) {
  * 原样带上并内联样式；荧光绿高光、虚线「评测中」框、柱尾的四角星、厂商和类别图标、
  * 勾选行的紫条都保留。每行（和每个子行 `sub`）下沿画它自己的细线。
  *   rowsToSVG([head, ...ol.children])            → Promise<{ svg, width, height }>
- *   opts: { sub: '.mrow-sub' 子行选择器, skip: '.sr-only' 不导出的部分 }
+ *   opts: { sub: '.mrow-sub' 子行选择器, skip: '.sr-only' 不导出的部分,
+ *           span: true 行的细线横贯整张图（false：每行只画自己那么宽，几块并排时用） }
  */
-export async function rowsToSVG(rows, { sub = '.mrow-sub', skip = '.sr-only' } = {}) {
+export async function rowsToSVG(rows, { sub = '.mrow-sub', skip = '.sr-only', span = true } = {}) {
   const parts = rows.filter((r) => r && visible(r));
   const box = parts.reduce(
     (b, r) => {
@@ -181,7 +193,7 @@ export async function rowsToSVG(rows, { sub = '.mrow-sub', skip = '.sr-only' } =
     if (!parseFloat(cs.borderBottomWidth)) return;
     const r = node.getBoundingClientRect();
     const y = Y(r.bottom) - 0.5;
-    const whole = parts.includes(node); // a row spans the image; a sub row keeps its own width
+    const whole = span && parts.includes(node); // a row spans the image; a sub row keeps its own width
     out.append(el('line', { x1: whole ? 0 : X(r.left), x2: whole ? W : X(r.right), y1: y, y2: y, style: `stroke:${cs.borderBottomColor};stroke-width:${cs.borderBottomWidth}` }));
   };
 

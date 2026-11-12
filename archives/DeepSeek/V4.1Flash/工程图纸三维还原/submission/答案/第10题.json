@@ -1,0 +1,22 @@
+{
+  "problem": "10",
+  "parts": [
+    {"name": "1", "title": "双斜座多腔阀体铸件", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,160,110], "r": 6}], "depth": [0,10], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-100,0],
+       "loops": [{"path": [[15,10],[145,10],[145,42],[115,58],[45,58],[15,42]]}], "name": "阀体主体"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-70,-20],
+       "loops": [{"path": [[45,55],[115,55],[115,70],[45,70]]}], "name": "中部凸台"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [28,18,76,92]}], "depth": [10,42], "name": "左腔"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [84,18,132,92]}], "depth": [10,38], "name": "右腔"},
+      {"type": "extrude", "plane": "YZ", "origin": [0,0,0], "loops": [{"circle": [55,35], "d": 45}], "depth": [-10,16], "name": "左法兰"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[55,35]], "d": 25, "reverse": true, "depth": 120, "name": "左孔Φ25"},
+      {"type": "extrude", "plane": "YZ", "origin": [160,0,0], "loops": [{"circle": [55,35], "d": 45}], "depth": [-16,12], "name": "右法兰"},
+      {"type": "hole", "plane": "YZ", "origin": [160,0,0], "at": [[55,35]], "d": 25, "depth": 60, "name": "右孔Φ25"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,70], "at": [[80,45]], "d": 30, "through": true, "name": "中心孔Φ30"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,10], "at": [[10,10],[150,10],[10,100],[150,100]], "d": 11, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,58], "at": [[30,30],[30,80],[130,30],[130,80]], "d": 8, "depth": 30, "name": "顶面小孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,0], "at": [[55,55],[105,55]], "d": 20, "depth": 8, "reverse": true, "name": "底面孔"}
+    ]}
+  ]
+}

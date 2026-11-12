@@ -1,207 +1,457 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Reverse
-import Mathlib.Algebra.Polynomial.Inductions
-import Mathlib.Tactic.GCongr
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.LinearAlgebra.Matrix.SchurComplement
+import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+import Mathlib.Topology.Instances.Matrix
+import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
+import Mathlib.Data.Matrix.Basis
 
-open Polynomial
+open Matrix Module
+open scoped ComplexOrder
 
-private lemma digit_sum_bound (a : ℕ → ℂ) (ha : ∀ i, ‖a i‖ ≤ 9)
-    (w : ℂ) (hw : ‖w‖ ≤ 1 / 9) (n : ℕ) :
-    ‖∑ i ∈ Finset.range n, a i * w ^ i‖ ≤ 11 := by
-  induction n generalizing a with
-  | zero => simp
-  | succ n ih =>
-    rw [Finset.sum_range_succ']
-    have heq : (∑ i ∈ Finset.range n, a (i + 1) * w ^ (i + 1)) =
-        w * ∑ i ∈ Finset.range n, a (i + 1) * w ^ i := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro i hi
-      ring
-    rw [heq]
-    simp only [pow_zero, mul_one]
-    calc
-      ‖w * (∑ i ∈ Finset.range n, a (i + 1) * w ^ i) + a 0‖
-          ≤ ‖w‖ * ‖∑ i ∈ Finset.range n, a (i + 1) * w ^ i‖ + ‖a 0‖ := by
-            simpa only [norm_mul] using norm_add_le
-              (w * ∑ i ∈ Finset.range n, a (i + 1) * w ^ i) (a 0)
-      _ ≤ (1 / 9 : ℝ) * 11 + 9 := by
-        gcongr
-        exact ih (fun i => a (i + 1)) (fun i => ha (i + 1))
-        exact ha 0
-      _ ≤ 11 := by norm_num
+namespace Flanders
 
-private lemma digit_eval_bound (p : ℤ[X])
-    (hd : ∀ n, 0 ≤ p.coeff n ∧ p.coeff n ≤ 9)
-    (w : ℂ) (hw : ‖w‖ ≤ 1 / 9) :
-    ‖p.eval₂ (Int.castRingHom ℂ) w‖ ≤ 11 := by
-  rw [eval₂_eq_sum_range]
-  apply digit_sum_bound _ _ w hw
-  intro i
-  change ‖(p.coeff i : ℂ)‖ ≤ 9
-  rw [Complex.norm_intCast, abs_of_nonneg (show (0 : ℝ) ≤ p.coeff i by exact_mod_cast (hd i).1)]
-  exact_mod_cast (hd i).2
+def prodSubmoduleEquiv {K V V' : Type*} [Field K]
+    [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V']
+    (P : Submodule K V) (Q : Submodule K V') : P.prod Q ≃ₗ[K] P × Q where
+  toFun x := (⟨x.1.1, x.2.1⟩, ⟨x.1.2, x.2.2⟩)
+  invFun x := ⟨(x.1.1, x.2.1), x.1.2, x.2.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
 
--- The constant and linear terms have nonnegative real parts, while the tail has norm < 1.
-private lemma digit_eval_ne_zero (p : ℤ[X])
-    (hd : ∀ n, 0 ≤ p.coeff n ∧ p.coeff n ≤ 9) (h0 : 1 ≤ p.coeff 0)
-    (w : ℂ) (hw : ‖w‖ ≤ 1 / 9) (hr : 0 ≤ w.re) :
-    p.eval₂ (Int.castRingHom ℂ) w ≠ 0 := by
-  have htail := digit_eval_bound (p.divX.divX)
-    (fun n => by simpa only [coeff_divX] using hd (n + 1 + 1)) w hw
-  have heq : p.eval₂ (Int.castRingHom ℂ) w =
-      (p.coeff 0 : ℂ) + w * (p.coeff 1 : ℂ) +
-        w ^ 2 * p.divX.divX.eval₂ (Int.castRingHom ℂ) w := by
-    have h1 := congrArg (eval₂ (Int.castRingHom ℂ) w) (X_mul_divX_add p)
-    have h2 := congrArg (eval₂ (Int.castRingHom ℂ) w) (X_mul_divX_add p.divX)
-    simp only [eval₂_add, eval₂_mul, eval₂_X, eval₂_C, coeff_divX] at h1 h2
-    rw [← h1, ← h2]
-    norm_num
-    ring
-  have hnorm : ‖w ^ 2 * p.divX.divX.eval₂ (Int.castRingHom ℂ) w‖ ≤
-      (1 / 9 : ℝ) ^ 2 * 11 := by
-    rw [norm_mul, norm_pow]
-    gcongr
-  have hc0 : (1 : ℝ) ≤ p.coeff 0 := by exact_mod_cast h0
-  have hc1 : (0 : ℝ) ≤ p.coeff 1 := by exact_mod_cast (hd 1).1
-  have hre := (abs_le.mp (Complex.abs_re_le_norm (w ^ 2 * p.divX.divX.eval₂ (Int.castRingHom ℂ) w))).1
-  intro hz
-  rw [heq] at hz
-  have hzre := congrArg Complex.re hz
-  simp only [Complex.add_re, Complex.intCast_re, Complex.zero_re] at hzre
-  have hmid : 0 ≤ (w * (p.coeff 1 : ℂ)).re := by
-    simpa using mul_nonneg hr hc1
-  linarith
+theorem rank_eq_zero_iff {m n : Type*} [Fintype m] [Fintype n]
+    (A : Matrix m n ℂ) : A.rank = 0 ↔ A = 0 := by
+  classical
+  rw [Matrix.rank, Submodule.finrank_eq_zero, LinearMap.range_eq_bot]
+  constructor
+  · intro h
+    apply Matrix.toLin'.injective
+    change A.mulVecLin = (0 : Matrix m n ℂ).mulVecLin
+    simpa only [Matrix.mulVecLin_zero] using h
+  · intro h
+    simp [h]
 
--- Reverse the polynomial and evaluate at the reciprocal of a hypothetical nearby root.
-private lemma digit_root_far (f : ℤ[X])
-    (hd : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤ 9) (hf : f ≠ 0)
-    (z : ℂ) (hz : f.eval₂ (Int.castRingHom ℂ) z = 0) :
-    1 < ‖(10 : ℂ) - z‖ := by
-  by_contra! hdist
-  have hr : 9 ≤ z.re := by
-    have := Complex.re_le_norm ((10 : ℂ) - z)
-    norm_num at this
-    linarith
-  have hn : 9 ≤ ‖z‖ := hr.trans (Complex.re_le_norm z)
-  have hz0 : z ≠ 0 := by
-    intro he
-    norm_num [he] at hn
-  have hi : ‖z⁻¹‖ ≤ 1 / 9 := by
-    rw [norm_inv]
-    simpa only [one_div] using
-      (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 9) hn)
-  have hir : 0 ≤ (z⁻¹).re := by
-    have hzre : 0 ≤ z.re := by linarith
-    rw [Complex.inv_re]
-    exact div_nonneg hzre (Complex.normSq_nonneg z)
-  have hrev : ∀ n, 0 ≤ f.reverse.coeff n ∧ f.reverse.coeff n ≤ 9 := by
-    intro n
-    rw [coeff_reverse]
-    exact hd _
-  have hlc : 1 ≤ f.reverse.coeff 0 := by
-    rw [coeff_zero_reverse]
-    have := (hd f.natDegree).1
-    have := leadingCoeff_ne_zero.mpr hf
-    rw [leadingCoeff] at *
-    omega
-  have hne := digit_eval_ne_zero f.reverse hrev hlc z⁻¹ hi hir
-  let : Invertible z := invertibleOfNonzero hz0
-  apply hne
-  simpa only [invOf_eq_inv] using
-    (eval₂_reverse_eq_zero_iff (Int.castRingHom ℂ) z f).mpr hz
+theorem rank_block_diagonal {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n] (A : Matrix m m ℂ) (D : Matrix n n ℂ) :
+    (Matrix.fromBlocks A 0 0 D).rank = A.rank + D.rank := by
+  let e := LinearEquiv.sumArrowLequivProdArrow m n ℂ ℂ
+  have he : e.toLinearMap.comp (Matrix.fromBlocks A 0 0 D).mulVecLin =
+      (A.mulVecLin.prodMap D.mulVecLin).comp e.toLinearMap := by
+    apply LinearMap.ext
+    intro x
+    apply Prod.ext <;> ext i <;>
+      simp [e, Matrix.fromBlocks_mulVec] <;> rfl
+  have h := congrArg (fun f => finrank ℂ (LinearMap.range f)) he
+  rw [LinearMap.range_comp, LinearEquiv.finrank_map_eq,
+    LinearMap.range_comp_of_range_eq_top _ e.range,
+    LinearMap.range_prodMap] at h
+  exact h.trans (by
+    simpa only [Module.finrank_prod, Matrix.rank] using
+      (prodSubmoduleEquiv A.mulVecLin.range D.mulVecLin.range).finrank_eq)
 
-private lemma complex_prod_norm_gt_one (s : Multiset ℂ) (hs : s ≠ 0)
-    (h : ∀ z ∈ s, 1 < ‖z‖) : 1 < ‖s.prod‖ := by
-  have hle : ∀ t : Multiset ℂ, (∀ z ∈ t, 1 ≤ ‖z‖) → 1 ≤ ‖t.prod‖ := by
+theorem schur_eq_zero {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n]
+    (A : Matrix m m ℂ) (B : Matrix m n ℂ) (C : Matrix n m ℂ)
+    (D : Matrix n n ℂ) (hA : IsUnit A)
+    (h : (Matrix.fromBlocks A B C D).rank ≤ Fintype.card m) :
+    D = C * A⁻¹ * B := by
+  letI := hA.nonempty_invertible.some
+  have hL : IsUnit (Matrix.fromBlocks (1 : Matrix m m ℂ) 0 (C * ⅟A)
+      (1 : Matrix n n ℂ)).det := by
+    rw [← Matrix.isUnit_iff_isUnit_det, Matrix.isUnit_fromBlocks_zero₁₂]
+    exact ⟨isUnit_one, isUnit_one⟩
+  have hR : IsUnit (Matrix.fromBlocks (1 : Matrix m m ℂ) (⅟A * B) 0
+      (1 : Matrix n n ℂ)).det := by
+    rw [← Matrix.isUnit_iff_isUnit_det, Matrix.isUnit_fromBlocks_zero₂₁]
+    exact ⟨isUnit_one, isUnit_one⟩
+  rw [Matrix.fromBlocks_eq_of_invertible₁₁,
+    Matrix.rank_mul_eq_left_of_isUnit_det _ _ hR,
+    Matrix.rank_mul_eq_right_of_isUnit_det _ _ hL, rank_block_diagonal] at h
+  have hAr : A.rank = Fintype.card m := by
+    have hh := Matrix.rank_mul_eq_right_of_isUnit_det A (1 : Matrix m m ℂ)
+      (Matrix.isUnit_det_of_invertible A)
+    simpa using hh
+  rw [hAr] at h
+  have hz : (D - C * ⅟A * B).rank = 0 := by omega
+  have hz' := (rank_eq_zero_iff _).mp hz
+  rw [Matrix.invOf_eq_nonsing_inv] at hz'
+  exact sub_eq_zero.mp hz'
+
+open Filter Topology
+
+theorem pencil_blocks {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n]
+    (P : Matrix m m ℂ) (Q : Matrix m n ℂ) (R : Matrix n m ℂ)
+    (D : Matrix n n ℂ)
+    (h : ∀ t : ℂ, (Matrix.fromBlocks (1 + t • P) (t • Q) (t • R) (t • D)).rank ≤
+      Fintype.card m) :
+    D = 0 ∧ R * Q = 0 ∧ R * P * Q = 0 := by
+  have hp : Continuous (fun t : ℂ => (1 : Matrix m m ℂ) + t • P) := by fun_prop
+  have hi : ContinuousAt (fun t : ℂ => ((1 : Matrix m m ℂ) + t • P)⁻¹) 0 := by
+    apply ContinuousAt.comp (g := Inv.inv) (by simpa using
+      (continuousAt_matrix_inv (1 : Matrix m m ℂ) (by
+        simpa only [Matrix.det_one, Ring.inverse_eq_inv'] using
+          (continuousAt_inv₀ (one_ne_zero : (1 : ℂ) ≠ 0)))))
+    exact hp.continuousAt
+  have hu : ∀ᶠ t : ℂ in 𝓝 0, IsUnit ((1 : Matrix m m ℂ) + t • P) := by
+    have hc : ContinuousAt (fun t : ℂ => ((1 : Matrix m m ℂ) + t • P).det) 0 :=
+      hp.matrix_det.continuousAt
+    have hh : ∀ᶠ t : ℂ in 𝓝 0, ((1 : Matrix m m ℂ) + t • P).det ≠ 0 :=
+      hc.eventually_ne (by simp)
+    filter_upwards [hh] with t ht
+    exact (Matrix.isUnit_iff_isUnit_det _).mpr (isUnit_iff_ne_zero.mpr ht)
+  have he : ∀ᶠ t : ℂ in 𝓝[≠] 0,
+      D = t • (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) := by
+    filter_upwards [hu.filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with t ht ht0
+    have hh := schur_eq_zero _ _ _ _ ht (h t)
+    have ht' : t ≠ 0 := ht0
+    simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul] at hh
+    apply (smul_right_injective _ ht')
+    simpa only [smul_smul] using hh
+  have hlim : Tendsto (fun t : ℂ => t •
+      (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q)) (𝓝[≠] 0) (𝓝 0) := by
+    have hc : ContinuousAt (fun t : ℂ => t •
+      (R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q)) 0 := by
+      fun_prop
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hD : D = 0 := tendsto_nhds_unique
+    (tendsto_const_nhds.congr' he) hlim
+  have he' : ∀ᶠ t : ℂ in 𝓝[≠] 0,
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q = 0 := by
+    filter_upwards [he, self_mem_nhdsWithin] with t ht ht0
+    rw [hD, eq_comm, smul_eq_zero] at ht
+    exact ht.resolve_left ht0
+  have hlim' : Tendsto (fun t : ℂ =>
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) (𝓝[≠] 0) (𝓝 (R * Q)) := by
+    have hc : ContinuousAt (fun t : ℂ =>
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * Q) 0 := by fun_prop
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  have hRQ : R * Q = 0 := tendsto_nhds_unique hlim'
+    (tendsto_const_nhds.congr' (he'.mono fun _ ht => ht.symm))
+  have he'' : ∀ᶠ t : ℂ in 𝓝[≠] 0,
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q = 0 := by
+    filter_upwards [hu.filter_mono nhdsWithin_le_nhds, he', self_mem_nhdsWithin]
+      with t ht ht' ht0
+    have hinv := Matrix.nonsing_inv_mul ((1 : Matrix m m ℂ) + t • P)
+      ((Matrix.isUnit_iff_isUnit_det _).mp ht)
+    have hx := congrArg (fun M => R * M * Q) hinv
+    simp only [Matrix.mul_add, Matrix.mul_one, Matrix.mul_smul, Matrix.mul_assoc,
+      Matrix.add_mul, Matrix.smul_mul] at hx
+    rw [← Matrix.mul_assoc R _ Q, ht', zero_add, hRQ] at hx
+    have hz := (smul_eq_zero.mp hx).resolve_left ht0
+    simpa only [Matrix.mul_assoc] using hz
+  have hlim'' : Tendsto (fun t : ℂ =>
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q)
+      (𝓝[≠] 0) (𝓝 (R * P * Q)) := by
+    have hc : ContinuousAt (fun t : ℂ =>
+      R * ((1 : Matrix m m ℂ) + t • P)⁻¹ * P * Q) 0 := by fun_prop
+    simpa using hc.tendsto.mono_left nhdsWithin_le_nhds
+  exact ⟨hD, hRQ, tendsto_nhds_unique hlim''
+    (tendsto_const_nhds.congr' (he''.mono fun _ ht => ht.symm))⟩
+
+def blend {m n : Type*} :
+    Matrix (m ⊕ n) (m ⊕ n) ℂ →ₗ[ℝ] Matrix m m ℂ × Matrix m n ℂ where
+  toFun A := (A.toBlocks₁₁, A.toBlocks₁₂ + A.toBlocks₂₁ᴴ)
+  map_add' A B := by
+    apply Prod.ext <;> ext i j <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
+      Matrix.toBlocks₂₁, Matrix.conjTranspose, add_add_add_comm]
+  map_smul' c A := by
+    apply Prod.ext <;> ext i j <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
+      Matrix.toBlocks₂₁, Matrix.conjTranspose, smul_add]
+
+theorem blocks11_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    (A + B).toBlocks₁₁ = A.toBlocks₁₁ + B.toBlocks₁₁ := rfl
+
+theorem blocks12_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    (A + B).toBlocks₁₂ = A.toBlocks₁₂ + B.toBlocks₁₂ := rfl
+
+theorem blocks21_add {m n : Type*} (A B : Matrix (m ⊕ n) (m ⊕ n) ℂ) :
+    (A + B).toBlocks₂₁ = A.toBlocks₂₁ + B.toBlocks₂₁ := rfl
+
+theorem normalized {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n]
+    (S : Submodule ℂ (Matrix (m ⊕ n) (m ⊕ n) ℂ))
+    (hA : Matrix.fromBlocks (1 : Matrix m m ℂ) 0 0 (0 : Matrix n n ℂ) ∈ S)
+    (hS : ∀ A ∈ S, A.rank ≤ Fintype.card m) :
+    finrank ℂ S ≤ (Fintype.card m + Fintype.card n) * Fintype.card m ∧
+    (finrank ℂ S = (Fintype.card m + Fintype.card n) * Fintype.card m →
+      (∀ A ∈ S, A.toBlocks₁₂ = 0) ∨ (∀ A ∈ S, A.toBlocks₂₁ = 0)) := by
+  have hb (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (hAS : A ∈ S) :
+      A.toBlocks₂₂ = 0 ∧ A.toBlocks₂₁ * A.toBlocks₁₂ = 0 ∧
+        A.toBlocks₂₁ * A.toBlocks₁₁ * A.toBlocks₁₂ = 0 := by
+    apply pencil_blocks
     intro t
-    induction t using Multiset.induction_on with
-    | empty => simp
-    | cons a t ih =>
-      intro ht
-      have ha := ht a (by simp)
-      have hb := ih (fun z hz => ht z (by simp [hz]))
-      simp only [Multiset.prod_cons, norm_mul]
-      nlinarith [norm_nonneg a, norm_nonneg t.prod]
-  induction s using Multiset.induction_on with
-  | empty => exact (hs rfl).elim
-  | cons a t ih =>
-    have ha := h a (by simp)
-    have hb := hle t (fun z hz => (h z (by simp [hz])).le)
-    simp only [Multiset.prod_cons, norm_mul]
-    nlinarith [norm_nonneg a, norm_nonneg t.prod]
+    have hm := hS _ (S.add_mem hA (S.smul_mem t hAS))
+    convert hm using 1
+    congr 1
+    ext (i | i) (j | j) <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
+      Matrix.toBlocks₂₁, Matrix.toBlocks₂₂]
+  let f : S →ₗ[ℝ] Matrix m m ℂ × Matrix m n ℂ :=
+    blend.comp (S.subtype.restrictScalars ℝ)
+  have hf0 (A : S) (h : f A = 0) : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) = 0 := by
+    have hp : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₁ = 0 := congrArg Prod.fst h
+    have hq : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ =
+        -(A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₂₁ᴴ :=
+      eq_neg_of_add_eq_zero_left (congrArg Prod.snd h)
+    obtain ⟨hd, hrq, _⟩ := hb A A.2
+    rw [hq, Matrix.mul_neg, neg_eq_zero] at hrq
+    have hr := Matrix.self_mul_conjTranspose_eq_zero.mp hrq
+    have hq' : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ = 0 := by simp [hq, hr]
+    rw [← Matrix.fromBlocks_toBlocks (A : Matrix (m ⊕ n) (m ⊕ n) ℂ), hp, hq', hr, hd]
+    simp
+  have hf : Function.Injective f := by
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro A h
+    apply Subtype.ext
+    exact hf0 A h
+  have hdimS : finrank ℝ S = 2 * finrank ℂ S := by
+    rw [← Module.finrank_mul_finrank ℝ ℂ S, Complex.finrank_real_complex]
+  have hdimT : finrank ℝ (Matrix m m ℂ × Matrix m n ℂ) =
+      2 * ((Fintype.card m + Fintype.card n) * Fintype.card m) := by
+    simp only [Module.finrank_prod, Module.finrank_matrix, Complex.finrank_real_complex]
+    ring
+  have hdim := LinearMap.finrank_le_finrank_of_injective hf
+  rw [hdimS, hdimT] at hdim
+  refine ⟨by omega, ?_⟩
+  intro heq
+  have hsurj : Function.Surjective f :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (by
+      rw [hdimS, hdimT, heq])).mp hf
+  have hfull (P : Matrix m m ℂ) :
+      Matrix.fromBlocks P 0 0 (0 : Matrix n n ℂ) ∈ S := by
+    obtain ⟨A, ha⟩ := hsurj (P, 0)
+    have hp : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₁ = P := congrArg Prod.fst ha
+    have hq : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ =
+        -(A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₂₁ᴴ :=
+      eq_neg_of_add_eq_zero_left (congrArg Prod.snd ha)
+    obtain ⟨hd, hrq, _⟩ := hb A A.2
+    rw [hq, Matrix.mul_neg, neg_eq_zero] at hrq
+    have hr := Matrix.self_mul_conjTranspose_eq_zero.mp hrq
+    have hq' : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ).toBlocks₁₂ = 0 := by simp [hq, hr]
+    have hh : (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) = Matrix.fromBlocks P 0 0 0 := by
+      rw [← Matrix.fromBlocks_toBlocks (A : Matrix (m ⊕ n) (m ⊕ n) ℂ), hp, hq', hr, hd]
+    exact hh ▸ A.2
+  have hRPQ (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) (P : Matrix m m ℂ) :
+      A.toBlocks₂₁ * P * A.toBlocks₁₂ = 0 := by
+    have h := (hb (A + Matrix.fromBlocks P 0 0 0) (S.add_mem ha (hfull P))).2.2
+    have h' := (hb A ha).2.2
+    simp only [blocks11_add, blocks12_add, blocks21_add, Matrix.toBlocks_fromBlocks₁₁,
+      Matrix.toBlocks_fromBlocks₁₂, Matrix.toBlocks_fromBlocks₂₁, add_zero,
+      Matrix.mul_add, Matrix.add_mul, h', zero_add] at h
+    exact h
+  have hor (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) :
+      A.toBlocks₁₂ = 0 ∨ A.toBlocks₂₁ = 0 := by
+    by_cases hq : A.toBlocks₁₂ = 0
+    · exact Or.inl hq
+    right
+    obtain ⟨i, j, hij⟩ : ∃ i j, A.toBlocks₁₂ i j ≠ 0 := by
+      by_contra h
+      apply hq
+      ext i j
+      by_contra hij
+      exact h ⟨i, j, hij⟩
+    ext a b
+    have hh := congrArg (fun M => M a j) (hRPQ A ha (Matrix.single b i 1))
+    have hh' : A.toBlocks₂₁ a b * A.toBlocks₁₂ i j = 0 := by
+      simpa [Matrix.mul_apply, Matrix.single, ite_and] using hh
+    exact (mul_eq_zero.mp hh').resolve_right hij
+  by_cases hq : ∀ A ∈ S, A.toBlocks₁₂ = 0
+  · exact Or.inl hq
+  right
+  push Not at hq
+  obtain ⟨A, ha, hq⟩ := hq
+  have hr := (hor A ha).resolve_left hq
+  intro B hbS
+  rcases hor B hbS with hB | hB
+  · have hAB := hor (A + B) (S.add_mem ha hbS)
+    simp only [blocks12_add, blocks21_add, hB, hr, add_zero, zero_add] at hAB
+    exact hAB.resolve_left hq
+  · exact hB
 
--- A nonconstant divisor would contribute a product of root distances strictly greater than 1.
-private lemma digit_factor_unit (f g h : ℤ[X])
-    (hd : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤ 9) (hf : f ≠ 0)
-    (hfg : f = g * h) (hu : IsUnit (g.eval 10)) : IsUnit g := by
-  have hg0 : g ≠ 0 := by
-    intro hg
-    apply hf
-    simp [hfg, hg]
-  have hinj : Function.Injective (Int.castRingHom ℂ) := Int.cast_injective
-  let G : ℂ[X] := g.map (Int.castRingHom ℂ)
-  have hG0 : G ≠ 0 := (Polynomial.map_ne_zero_iff hinj).mpr hg0
-  have hdeg : G.natDegree = g.natDegree := natDegree_map_eq_of_injective hinj g
-  have hlead : G.leadingCoeff = (g.leadingCoeff : ℂ) :=
-    leadingCoeff_map_of_injective hinj g
-  have heval : G.eval 10 = ((g.eval (10 : ℤ) : ℤ) : ℂ) := by
-    simp [G, eval_map]
-  have hu_norm : ‖G.eval 10‖ = 1 := by
-    rw [heval]
-    rcases Int.isUnit_iff.mp hu with he | he <;> rw [he] <;> norm_num
-  have hlead_norm : 1 ≤ ‖G.leadingCoeff‖ := by
-    rw [hlead, Complex.norm_intCast]
-    have habs : (1 : ℤ) ≤ |g.leadingCoeff| := by
-      have := abs_pos.mpr (leadingCoeff_ne_zero.mpr hg0)
-      omega
-    exact_mod_cast habs
-  have hs : G.Splits := IsAlgClosed.splits G
-  have hzfar : ∀ z ∈ G.roots, 1 < ‖(10 : ℂ) - z‖ := by
-    intro z hz
-    apply digit_root_far f hd hf z
-    have hgz : g.eval₂ (Int.castRingHom ℂ) z = 0 := by
-      simpa only [G, IsRoot.def, eval_map] using (mem_roots hG0).mp hz
-    rw [hfg, eval₂_mul, hgz, zero_mul]
-  have hd0 : g.natDegree = 0 := by
-    by_contra hn
-    have hr0 : G.roots ≠ 0 := by
-      intro he
-      have hc := hs.natDegree_eq_card_roots
-      rw [he, Multiset.card_zero] at hc
-      exact hn (hdeg.symm.trans hc)
-    have hprod : 1 < ‖(G.roots.map ((10 : ℂ) - ·)).prod‖ := by
-      apply complex_prod_norm_gt_one
-      · simpa using hr0
-      · intro z hz
-        obtain ⟨w, hw, rfl⟩ := Multiset.mem_map.mp hz
-        exact hzfar w hw
-    have hev := hs.eval_eq_prod_roots (10 : ℂ)
-    have hevnorm := congrArg norm hev
-    rw [norm_mul, hu_norm] at hevnorm
-    nlinarith
-  have hgC : g = C (g.coeff 0) := eq_C_of_natDegree_eq_zero hd0
-  rw [hgC, eval_C] at hu
-  rw [hgC]
-  exact isUnit_C.mpr hu
+def leftEmbedding (m n : Type*) : (m → ℂ) →ₗ[ℂ] (m ⊕ n → ℂ) where
+  toFun x := Sum.elim x 0
+  map_add' _ _ := by ext (i | i) <;> simp
+  map_smul' _ _ := by ext (i | i) <;> simp
 
-open Polynomial in
-theorem problem6 (f : ℤ[X]) (hdigit : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤ 9)
-    (hp : Prime (f.eval 10)) : Irreducible f := by
-  have hf : f ≠ 0 := by
-    intro he
-    apply hp.ne_zero
-    simp [he]
-  refine ⟨?_, ?_⟩
-  · intro hu
-    exact hp.not_isUnit (hu.map (evalRingHom (10 : ℤ)))
-  · intro g h hfg
-    have he : f.eval 10 = g.eval 10 * h.eval 10 := by rw [hfg, eval_mul]
-    rcases hp.irreducible.isUnit_or_isUnit he with hg | hh
-    · exact Or.inl (digit_factor_unit f g h hdigit hf hfg hg)
-    · exact Or.inr (digit_factor_unit f h g hdigit hf (hfg.trans (mul_comm g h)) hh)
+def rightEmbedding (m n : Type*) : (n → ℂ) →ₗ[ℂ] (m ⊕ n → ℂ) where
+  toFun x := Sum.elim 0 x
+  map_add' _ _ := by ext (i | i) <;> simp
+  map_smul' _ _ := by ext (i | i) <;> simp
 
-#print axioms problem6
+theorem leftEmbedding_injective (m n : Type*) : Function.Injective (leftEmbedding m n) := by
+  intro x y h
+  exact funext fun i => congrFun h (Sum.inl i)
+
+theorem rightEmbedding_injective (m n : Type*) : Function.Injective (rightEmbedding m n) := by
+  intro x y h
+  exact funext fun i => congrFun h (Sum.inr i)
+
+theorem normalized_result {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n]
+    (S : Submodule ℂ (Matrix (m ⊕ n) (m ⊕ n) ℂ))
+    (hA : Matrix.fromBlocks (1 : Matrix m m ℂ) 0 0 (0 : Matrix n n ℂ) ∈ S)
+    (hS : ∀ A ∈ S, A.rank ≤ Fintype.card m) :
+    finrank ℂ S ≤ (Fintype.card m + Fintype.card n) * Fintype.card m ∧
+    (finrank ℂ S = (Fintype.card m + Fintype.card n) * Fintype.card m →
+      (∃ U : Submodule ℂ (m ⊕ n → ℂ), finrank ℂ U = Fintype.card m ∧
+        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
+      (∃ W : Submodule ℂ (m ⊕ n → ℂ), finrank ℂ W = Fintype.card n ∧
+        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
+  obtain ⟨hdim, heq⟩ := normalized S hA hS
+  refine ⟨hdim, fun hh => ?_⟩
+  have hD (A : Matrix (m ⊕ n) (m ⊕ n) ℂ) (ha : A ∈ S) : A.toBlocks₂₂ = 0 := by
+    apply (pencil_blocks A.toBlocks₁₁ A.toBlocks₁₂ A.toBlocks₂₁ A.toBlocks₂₂ _).1
+    intro t
+    have hm := hS _ (S.add_mem hA (S.smul_mem t ha))
+    convert hm using 1
+    congr 1
+    ext (i | i) (j | j) <;> simp [Matrix.toBlocks₁₁, Matrix.toBlocks₁₂,
+      Matrix.toBlocks₂₁, Matrix.toBlocks₂₂]
+  rcases heq hh with hQ | hR
+  · right
+    refine ⟨(rightEmbedding m n).range, ?_, ?_⟩
+    · rw [LinearMap.finrank_range_of_inj (rightEmbedding_injective m n)]
+      simp
+    · intro A ha x hx
+      obtain ⟨v, rfl⟩ := hx
+      rw [LinearMap.mem_ker, ← Matrix.fromBlocks_toBlocks A, hQ A ha, hD A ha]
+      ext (i | i) <;> simp [Matrix.fromBlocks_mulVec, rightEmbedding,
+        Function.comp_def, Matrix.mulVec, dotProduct]
+  · left
+    refine ⟨(leftEmbedding m n).range, ?_, ?_⟩
+    · rw [LinearMap.finrank_range_of_inj (leftEmbedding_injective m n)]
+      simp
+    · intro A ha x hx
+      obtain ⟨v, rfl⟩ := hx
+      refine ⟨(A.mulVecLin v) ∘ Sum.inl, ?_⟩
+      rw [← Matrix.fromBlocks_toBlocks A, hR A ha, hD A ha]
+      ext (i | i) <;> simp [Matrix.fromBlocks_mulVec, leftEmbedding,
+        Function.comp_def]
+
+theorem transport_result {a b : Type*} [Fintype a] [Fintype b]
+    (S : Submodule ℂ (Matrix a a ℂ))
+    (E : Matrix a a ℂ ≃ₗ[ℂ] Matrix b b ℂ)
+    (L : (a → ℂ) ≃ₗ[ℂ] (b → ℂ))
+    (R : (b → ℂ) ≃ₗ[ℂ] (a → ℂ))
+    (hE : ∀ A, (E A).mulVecLin = L.toLinearMap.comp (A.mulVecLin.comp R.toLinearMap))
+    (u w : ℕ)
+    (h : (∃ U : Submodule ℂ (b → ℂ), finrank ℂ U = u ∧
+          ∀ A ∈ S.map E.toLinearMap, LinearMap.range A.mulVecLin ≤ U) ∨
+        (∃ W : Submodule ℂ (b → ℂ), finrank ℂ W = w ∧
+          ∀ A ∈ S.map E.toLinearMap, W ≤ LinearMap.ker A.mulVecLin)) :
+    (∃ U : Submodule ℂ (a → ℂ), finrank ℂ U = u ∧
+        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
+    (∃ W : Submodule ℂ (a → ℂ), finrank ℂ W = w ∧
+        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin) := by
+  have hmem (A : Matrix a a ℂ) (ha : A ∈ S) : E A ∈ S.map E.toLinearMap :=
+    Submodule.mem_map.mpr ⟨A, ha, rfl⟩
+  rcases h with ⟨U, hu, hU⟩ | ⟨W, hw, hW⟩
+  · left
+    refine ⟨U.map L.symm.toLinearMap, ?_, ?_⟩
+    · rw [LinearEquiv.finrank_map_eq, hu]
+    · intro A ha y hy
+      obtain ⟨x, rfl⟩ := hy
+      have hx : L (A.mulVecLin x) ∈ U := by
+        apply hU _ (hmem A ha)
+        refine ⟨R.symm x, ?_⟩
+        simp [hE]
+      exact Submodule.mem_map.mpr ⟨L (A.mulVecLin x), hx, by simp⟩
+  · right
+    refine ⟨W.map R.toLinearMap, ?_, ?_⟩
+    · rw [LinearEquiv.finrank_map_eq, hw]
+    · intro A ha y hy
+      obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp hy
+      have hz := hW _ (hmem A ha) hx
+      rw [LinearMap.mem_ker, hE] at hz
+      rw [LinearMap.mem_ker]
+      apply L.injective
+      simpa using hz
+
+theorem max_rank_result (n : ℕ)
+    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))
+    (M : Matrix (Fin n) (Fin n) ℂ) (hM : M ∈ S)
+    (hS : ∀ A ∈ S, A.rank ≤ M.rank) :
+    finrank ℂ S ≤ n * M.rank ∧ (finrank ℂ S = n * M.rank →
+      (∃ U : Submodule ℂ (Fin n → ℂ), finrank ℂ U = M.rank ∧
+        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
+      (∃ W : Submodule ℂ (Fin n → ℂ), finrank ℂ W = n - M.rank ∧
+        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
+  classical
+  obtain ⟨V, U, e, hV, hU, hform⟩ := Matrix.exists_rank_normal_form M
+  let E : Matrix (Fin n) (Fin n) ℂ ≃ₗ[ℂ]
+      Matrix (Fin M.rank ⊕ Fin (Fintype.card (Fin n) - M.rank))
+        (Fin M.rank ⊕ Fin (Fintype.card (Fin n) - M.rank)) ℂ :=
+    ((hV.unit.mulLeftLinearEquiv ℂ _).trans (hU.unit.mulRightLinearEquiv ℂ)).trans
+      (Matrix.reindexLinearEquiv ℂ ℂ e e)
+  have hEa (A : Matrix (Fin n) (Fin n) ℂ) :
+      E A = (V * A * U).reindex e e := by simp [E]
+  have hEr (A : Matrix (Fin n) (Fin n) ℂ) : (E A).rank = A.rank := by
+    rw [hEa, Matrix.rank_reindex,
+      Matrix.rank_mul_eq_left_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hU),
+      Matrix.rank_mul_eq_right_of_isUnit_det _ _ ((Matrix.isUnit_iff_isUnit_det _).mp hV)]
+  let T := S.map E.toLinearMap
+  have hT : ∀ A ∈ T, A.rank ≤ Fintype.card (Fin M.rank) := by
+    intro A ha
+    obtain ⟨B, hb, rfl⟩ := Submodule.mem_map.mp ha
+    simpa only [LinearEquiv.coe_coe, hEr, Fintype.card_fin] using hS B hb
+  have hN : Matrix.fromBlocks (1 : Matrix (Fin M.rank) (Fin M.rank) ℂ) 0 0
+      (0 : Matrix (Fin (Fintype.card (Fin n) - M.rank))
+        (Fin (Fintype.card (Fin n) - M.rank)) ℂ) ∈ T := by
+    refine Submodule.mem_map.mpr ⟨M, hM, ?_⟩
+    rw [LinearEquiv.coe_coe, hEa, hform]
+    ext i j
+    simp [Matrix.reindex_apply]
+  have hd : finrank ℂ T = finrank ℂ S := E.finrank_map_eq S
+  have hn : M.rank + (n - M.rank) = n := Nat.add_sub_of_le M.rank_le_width
+  obtain ⟨hbound, heq⟩ := normalized_result T hN hT
+  simp only [Fintype.card_fin, hn, hd] at hbound heq
+  refine ⟨hbound, fun hh => ?_⟩
+  let L0 : (Fin n → ℂ) ≃ₗ[ℂ] (Fin n → ℂ) :=
+    LinearEquiv.ofBijective V.mulVecLin
+      ⟨Matrix.mulVec_injective_iff_isUnit.mpr hV, Matrix.mulVec_surjective_iff_isUnit.mpr hV⟩
+  let R0 : (Fin n → ℂ) ≃ₗ[ℂ] (Fin n → ℂ) :=
+    LinearEquiv.ofBijective U.mulVecLin
+      ⟨Matrix.mulVec_injective_iff_isUnit.mpr hU, Matrix.mulVec_surjective_iff_isUnit.mpr hU⟩
+  let L := L0.trans (LinearEquiv.funCongrLeft ℂ ℂ e.symm)
+  let R := (LinearEquiv.funCongrLeft ℂ ℂ e).trans R0
+  apply transport_result S E L R _ M.rank (n - M.rank) (heq hh)
+  intro A
+  rw [hEa, Matrix.mulVecLin_reindex, Matrix.mulVecLin_mul, Matrix.mulVecLin_mul]
+  rfl
+
+end Flanders
+
+theorem problem6 (n r : ℕ) (hr : r ≤ n)
+    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))
+    (hS : ∀ A ∈ S, A.rank ≤ r) :
+    Module.finrank ℂ S ≤ n * r ∧ (Module.finrank ℂ S = n * r →
+      (∃ U : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ U = r ∧
+        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨
+      (∃ W : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ W = n - r ∧
+        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by
+  classical
+  let P : ℕ → Prop := fun k => ∃ A ∈ S, A.rank = k
+  have h0 : P 0 := ⟨0, S.zero_mem, Matrix.rank_zero⟩
+  let k := Nat.findGreatest P r
+  have hkr : k ≤ r := Nat.findGreatest_le _
+  obtain ⟨M, hM, hMk⟩ := Nat.findGreatest_spec (Nat.zero_le r) h0
+  have hmax : ∀ A ∈ S, A.rank ≤ M.rank := by
+    intro A ha
+    rw [hMk]
+    exact Nat.le_findGreatest (hS A ha) ⟨A, ha, rfl⟩
+  obtain ⟨hbound, heq⟩ := Flanders.max_rank_result n S M hM hmax
+  have hMr : M.rank ≤ r := hS M hM
+  refine ⟨hbound.trans (Nat.mul_le_mul_left n hMr), fun hh => ?_⟩
+  by_cases hn : n = 0
+  · have hr0 : r = 0 := by omega
+    left
+    refine ⟨⊤, ?_, fun _ _ => le_top⟩
+    simp [hn, hr0]
+  have hrank : M.rank = r := by nlinarith
+  rw [hrank] at heq
+  exact heq hh

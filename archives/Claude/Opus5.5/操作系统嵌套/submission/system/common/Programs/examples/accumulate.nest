@@ -1,0 +1,14 @@
+;; 累加计算：求 1 + 2 + ... + N，并每隔一段报告进度。
+;; 运行：在编辑器打开本文件点“运行”；可把 N 改成别的数再运行。
+(include "/System/lib/core.nest")
+
+(var N (or (get ARGS "n") 100000))
+(var sum 0)
+(var t0 (now))
+(for (i 1 (+ N 1))
+  (inc! sum i)
+  (when (= (% i 20000) 0)
+    (sys "progress" i N)
+    (log "已累加到" i "，当前和" sum)))
+(log "完成：1 到" N "的和 =" sum "，用时" (fmt (- (now) t0) 3) "秒（虚拟时间）")
+sum

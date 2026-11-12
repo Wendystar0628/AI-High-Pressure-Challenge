@@ -1,4 +1,4 @@
-// FIG 八类十二题 (page head), 一道题怎么测 (01), 权重条 (02 and /tasks/).
+// FIG 十类十三题 (page head), 一道题怎么测 (01), 权重条 (02 and /tasks/).
 import { t, pick, links, fmtNo, fmtPct } from '../../core/index.js';
 import { createFigure, W, text, line, rect, path, star, kindMark, icon, measure, wrap, lines, bracket, eyebrow, ellipsis } from './common.js';
 
@@ -11,7 +11,7 @@ export function taskParts(task) {
 }
 
 // ---------------------------------------------------------------------------
-// 八类十二题: 8 category rows, one cell per task, cell length by minutes; the
+// 十类十三题: 10 category rows, one cell per task, cell length by minutes; the
 // two task kinds in two groups split by an ink line. Cells link to task pages.
 export function heroFigure({ data, c, vars }) {
   const fc = c.fig.hero;
@@ -184,7 +184,7 @@ export function howtoFigure({ data, c, vars }) {
 }
 
 // ---------------------------------------------------------------------------
-// 权重条: 0–100% split into the 8 categories, thin seams to the tasks;
+// 权重条: 0–100% split into the 10 categories, thin seams to the tasks;
 // category name + weight above, task number inside, task weight below,
 // brackets for the two kinds, a tick scale at the bottom.
 // opts: { href(category) -> link of a segment, onHot(task|null) }

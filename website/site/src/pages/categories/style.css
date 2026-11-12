@@ -246,29 +246,14 @@
   color: var(--st-ink-2);
 }
 
-/* the switch "各题得分": a chevron that turns 90° */
-.cat-toggle {
-  gap: 0.45rem;
-}
-.cat-chev {
-  display: inline-block;
-  width: 0.45rem;
-  height: 0.45rem;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
-  transition: transform 200ms var(--st-mech);
-}
-.cat-toggle[aria-expanded='true'] .cat-chev {
-  transform: rotate(45deg);
-}
-.cat-sort label {
+/* the view switch 按题 │ 矩阵 │ 按型号 */
+.cat-views label {
   min-height: 2rem;
-  padding: 0 0.7rem;
-  font-family: var(--st-font-ui);
-  font-size: 0.8rem;
-  font-stretch: var(--st-wide);
-  font-variant-numeric: tabular-nums;
+  padding: 0 0.85rem;
+  font-size: 0.82rem;
+}
+.cat-pane[hidden] {
+  display: none;
 }
 
 /* ---------- the rows of a board ---------- */
@@ -446,6 +431,106 @@
   margin: 1rem 0 0.5rem;
 }
 
+/* ---------- 按题: one block per measure (bytask.js) ---------- */
+.cbt {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: 1.1rem 1.5rem;
+  padding-bottom: 0.4rem;
+}
+.cbt.n-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cbt-block {
+  min-width: 0;
+}
+.cbt-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0 0.4rem;
+}
+.cbt-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.6rem;
+  min-width: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.cbt-kicker {
+  color: var(--st-ink-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+a.cbt-name {
+  color: var(--st-ink);
+  text-decoration: underline 1px var(--st-orbit);
+  text-underline-offset: 4px;
+}
+a.cbt-name:is(:hover, :focus-visible) {
+  text-decoration-thickness: 2px;
+}
+.cbt-no {
+  color: var(--st-ink-2);
+  font-size: 0.85em;
+}
+.cbt-sub {
+  flex: none;
+}
+/* compact rows: every block shows all the models; the scale is the same 0–100 in each */
+.cbt .mrows > .mrow,
+.cbt .mrow.mrow-head {
+  --mrow-name: 10.5rem;
+  grid-template-columns: 2.9rem 1.1rem minmax(6.5rem, var(--mrow-name)) minmax(4rem, 1fr) 2.9rem;
+  gap: 0 0.45rem;
+  padding: 0 0.4rem 0 0.5rem;
+}
+/* the scale of a block: 0 and 100 at the ends (the grid lines mark 20–80) */
+.cbt .cat-tick:not(.is-first, .is-last) {
+  display: none;
+}
+.cbt .mrows > .mrow {
+  height: 2.15rem;
+  min-height: 2.15rem;
+  grid-template-rows: 2.15rem;
+}
+.cbt .mrow.mrow-head {
+  height: 1.9rem;
+}
+.cbt .mrow-rank {
+  font-size: 0.82rem;
+}
+.cbt .mrow-open {
+  min-height: 1.75rem;
+  font-size: 0.86rem;
+}
+.cbt .mrow-score {
+  font-size: 0.98rem;
+}
+.cbt .mrow-note {
+  max-width: calc(100% - 0.5rem);
+  overflow: hidden;
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+}
+/* one model pointed at in a block: lit up in every block */
+.cbt .mrows > .mrow.is-linked {
+  background: var(--st-paper);
+}
+.cbt .mrows > .mrow.is-linked::before {
+  transform: none;
+}
+.cbt .mrows > .mrow.is-linked > .mrow-plot > .bar-svg .bar-fill {
+  fill: var(--bar-deep);
+}
+.cbt .mrows > .mrow.is-linked .mrow-open {
+  font-weight: 800;
+}
+
 /* ---------- phone width: the boards stay inside the window ---------- */
 @media (max-width: 599px) {
   .cat-jump.m-wrap .cat-jump-group {
@@ -477,5 +562,34 @@
   }
   .cat-tick:not(.is-first, .is-last) {
     display: none;
+  }
+  .cbt .mrows > .mrow,
+  .cbt .mrow.mrow-head {
+    grid-template-columns: 1.5rem 1rem minmax(6rem, 2.2fr) minmax(2.75rem, 1fr) 2.5rem;
+    gap: 0 0.4rem;
+    padding: 0 0.3rem 0 0.25rem;
+  }
+  .cbt .mrow-open {
+    font-size: 0.8rem;
+  }
+  .cbt .mrow-head .mrow-rank {
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .cbt .mrow-score {
+    font-size: 0.9rem;
+  }
+  /* no room for the 评测中 box: a dash, the bar area says why */
+  .cbt .mrow-rank .st-state {
+    padding: 0;
+    border: 0;
+    font-size: 0;
+  }
+  .cbt .mrow-rank .st-state::after {
+    content: '—';
+    font-size: 0.8rem;
+  }
+  .cat-views {
+    width: 100%;
   }
 }

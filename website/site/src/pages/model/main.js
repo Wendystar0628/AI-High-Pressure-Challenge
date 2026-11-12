@@ -1,7 +1,7 @@
 // 模型得分 /models/<id>/ and the entry page /models/ (the top model; website/docs/models.md),
 // a console page: the side column (every model, grouped by vendor) beside
 // head (fields, three big figures, compare, download) → the star dial fixed to
-// this model beside the 8-category bars → the 12-task bars grouped by
+// this model beside the 10-category bars → the 13-task bars grouped by
 // category → strengths and weaknesses. Narrow windows fold the column into a
 // selector above the head.
 // Picking a model (column, ← →) switches it in place: stars settle, bars morph,
@@ -37,12 +37,12 @@ boot(({ data }) => {
   const head = createHead(header, { data });
   const picker = createPicker(side, { data, onPick: (next) => go(next) });
 
-  // ---------- star dial + 8 categories ----------
+  // ---------- star dial + 10 categories ----------
   const pair = (eyebrow, title) => h('span.st-pair', h('span.st-eyebrow', eyebrow), h('span', title));
   const dialBox = h('div.md-dial-box');
   const dialPanel = h(
     'section.st-panel.md-dial-panel',
-    h('h2', pair(t('model.dial.eyebrow'), t('model.dial.title')), exportButton({ getSvg: () => dial.svg, title: () => `${t('common.dial.title')} │ ${nameOf()}`, filename: () => `ai-octathlon-dial-${id}` })),
+    h('h2', pair(t('model.dial.eyebrow'), t('model.dial.title')), exportButton({ getSvg: () => dial.svg, title: () => `${t('common.dial.title')} │ ${nameOf()}`, filename: () => `ai-decathlon-dial-${id}` })),
     dialBox,
     h('p.st-field.md-dial-note', t('model.dial.note')),
   );
@@ -52,7 +52,7 @@ boot(({ data }) => {
     h(
       'h2',
       pair(t('model.cats.eyebrow'), t('common.unit.categoriesShort', { n: data.categories.length })),
-      exportButton({ getSvg: () => cats.svg, title: () => t('model.cats.exportTitle', { name: nameOf() }), filename: () => `ai-octathlon-categories-${id}` }),
+      exportButton({ getSvg: () => cats.svg, title: () => t('model.cats.exportTitle', { name: nameOf() }), filename: () => `ai-decathlon-categories-${id}` }),
     ),
     catBox,
   );
@@ -62,7 +62,7 @@ boot(({ data }) => {
     h(
       'h2',
       pair(t('model.tasks.eyebrow'), t('common.unit.tasksShort', { n: data.tasks.length })),
-      exportButton({ getSvg: () => tasks.svg, title: () => t('model.tasks.exportTitle', { name: nameOf() }), filename: () => `ai-octathlon-tasks-${id}` }),
+      exportButton({ getSvg: () => tasks.svg, title: () => t('model.tasks.exportTitle', { name: nameOf() }), filename: () => `ai-decathlon-tasks-${id}` }),
     ),
     taskBox,
   );

@@ -1,0 +1,14 @@
+{
+  "problem": "16",
+  "parts": [
+    {"name": "1", "title": "双蜗室异面三通泵壳", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 180, 130]}], "depth": 10, "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 100, 0], "loops": [{"circle": [52, 55], "d": 132}], "depth": 80, "name": "左蜗室"},
+      {"type": "extrude", "plane": "XZ", "origin": [0, 100, 0], "loops": [{"circle": [128, 55], "d": 112}], "depth": 80, "name": "右蜗室"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [52, 55], "d": 90, "depth": 85, "name": "左主腔Φ90"},
+      {"type": "hole", "plane": "XZ", "origin": [0, 20, 0], "at": [128, 55], "d": 70, "depth": 85, "name": "右主腔Φ70"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10],
+       "at": [[8, 8], [172, 8], [8, 122], [172, 122]], "d": 10, "through": true, "name": "地脚4孔"}
+    ]}
+  ]
+}

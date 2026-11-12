@@ -1,0 +1,23 @@
+{
+  "model": "Hy/Hy4",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 33248059,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 5.65,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "credits",
+  "plan": {
+    "name": "CodeBuddy 140 元档",
+    "name_en": "CodeBuddy",
+    "price": 140,
+    "currency": "CNY",
+    "period": "month",
+    "credits": 9000
+  },
+  "fitted": [],
+  "runs": [
+    "Hy/Hy4/AE风味动效设计编辑器/run-d54dd0acd8344747b57da1fbf35ba33e"
+  ]
+}

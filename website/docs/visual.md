@@ -23,7 +23,8 @@
 | 400 | `#B083FF` 分段 | — | — |
 | 500 主值 | `#9859FF` | `#D1FF57` | `#62D4F5` |
 | 600 深一档 | `#7A3CF0` 强调柱、选中 | `#A9D932` 深分段 | — |
-| 800 写字 | `#4A22B8` 浅色底上的紫色小字 | `#4F6A00` 浅色底上的绿色小字 | `#0B7FA3` 浅色底上的青色线和字 |
+| 700 | — | `#7FA318` 只给算法对抗的类别色 | — |
+| 800 写字 | `#4A22B8` 浅色底上的紫色小字 | `#4F6A00` 浅色底上的绿色小字；识图建模的类别色 | `#0B7FA3` 浅色底上的青色线和字 |
 
 - 深色主题：紫色字用紫 300；荧光绿 500 可以直接做线和字；青用 500。
 - 对比度：正文 ≥ 4.5:1，图形 ≥ 3:1。浅色底上，荧光绿 500 和青 500 只做填充，并加 1px 墨边或贴着墨色元素；要写这两种颜色的字或细线时用 800。
@@ -47,10 +48,10 @@
   | 标准评判题 | 颜色 | 主动设计题 | 颜色 |
   |---|---|---|---|
   | 数学推理 | 绿 600 | 复杂交互应用 | 紫 800 |
-  | 算法竞赛 | 绿 300 | 游戏设计与开发 | 紫 400 |
-  | 空间推理 | 绿 500 | 物理模拟 | 紫 600 |
-  | | | 视觉设计与渲染 | 紫 300 |
-  | | | 系统架构与实现 | 紫 500 |
+  | 性能优化 | 绿 300 | 游戏设计与开发 | 紫 400 |
+  | 算法对抗 | 绿 700 | 物理模拟 | 紫 600 |
+  | 空间推理 | 绿 500 | 视觉设计与渲染 | 紫 300 |
+  | 识图建模 | 绿 800 | 系统架构与实现 | 紫 500 |
 
 - 同一张图里一种颜色只表示一件事。
 - 厂商图标：`website/logos/mark/` 里有彩色版 `<名>-color.svg` 的用彩色版，深色主题也不反色；没有的（OpenAI 等）用单色版，跟随文字颜色。都不染紫、不染荧光绿。
@@ -90,7 +91,7 @@
 | 首页首屏 | `orbit/orbit-corner-br` 从右下伸出，衬在星盘后面；星盘外圈刻度照 `dial/dial-ring` 的画法 | 0.2 |
 | 第一名徽记 | `rays/rays-burst-light`（深色用 `-dark`），首页前五名和模型得分页的第一名 | 1 |
 | 段落分隔 | `constellation/constellation-strip`（首页）、`orbit/orbit-divider`（说明页）、`rays/rays-divider`（榜单页的两组之间）；同一页只用一种 | 1 |
-| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；题目类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目拆解 `constellation/constellation-pair`；模型得分 `rays/rays-fan-up` | 0.5 |
+| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；题目类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目拆解 `constellation/constellation-pair`；模型得分 `rays/rays-fan-up`；猜你想问 `star/star-cluster`（紫 300） | 0.5 |
 | 看板角 | `starfield/starfield-panel`，每页只给最重要的一块看板 | 0.5 |
 | 空状态 | 没有数据 `orbit/orbit-nested`；未出分 `star/star-outline`；评测中 `trails/trails-center` | 1 |
 | 页脚 | `sphere/sphere-horizon` 从页脚下沿升起 | 0.5 |

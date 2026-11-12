@@ -1,0 +1,21 @@
+{
+  "problem": "14",
+  "parts": [
+    {"name": "1", "title": "偏置双出口泵体铸件", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,140,110], "r": 5}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-100,0],
+       "loops": [{"path": [[10,8],[130,8],[130,40],[100,52],[30,52],[10,32]]}], "name": "泵体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [30,18,110,92]}], "depth": [10,42], "name": "内腔"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [70,32], "d": 62}], "depth": [0,8], "name": "前凸台Φ62"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,0,0], "loops": [{"circle": [70,32], "d": 45}], "depth": [0,8], "name": "沉孔Φ45"},
+      {"type": "hole", "plane": "XZ", "origin": [0,0,0], "at": [[70,32]], "d": 30, "through": true, "name": "中心孔Φ30"},
+      {"type": "extrude", "plane": "YZ", "origin": [130,0,0], "loops": [{"circle": [55,34], "d": 44}], "depth": [0,26], "name": "右出口管"},
+      {"type": "extrude", "plane": "YZ", "origin": [156,0,0], "loops": [{"circle": [55,34], "d": 62}], "depth": [-6,0], "name": "右出口法兰"},
+      {"type": "hole", "plane": "YZ", "origin": [156,0,0], "at": [[55,34]], "d": 30, "through": true, "name": "出口孔Φ30"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,52], "loops": [{"rect": [38,38,58,70]}], "depth": [0,14], "name": "顶凸台"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,66], "at": [[48,54]], "d": 20, "through": true, "name": "顶孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[130,10],[10,100],[130,100]], "d": 11, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[55,34]], "d": 24, "reverse": true, "depth": 30, "name": "左入口Φ24"}
+    ]}
+  ]
+}

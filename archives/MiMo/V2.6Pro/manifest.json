@@ -3,44 +3,44 @@
   "model": "MiMo/V2.6Pro",
   "files": [
     {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "AE风味动效设计编辑器/cost.json",
+      "role": "cost",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 421,
+      "sha256": "3bac1f2d4e03564960a24e294946ae36f6a2d5ceb4a96e9578e73a2fc6af0a43"
+    },
+    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\claude\\main\\result.json",
       "path": "AE风味动效设计编辑器/grading/claude/main/result.json",
       "role": "result",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7395,
-      "sha256": "dc206e6d3d176ddf67470117c38fd9c9855555e5fae74b981977f9e4c93ca7cc"
+      "bytes": 6885,
+      "sha256": "8f36da8c357a2e9fd3b6e1be13a206e912b622e5c4c263db014c57be6bf79d9f"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\codex\\main\\result.json",
       "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
       "role": "result",
       "task": "AE风味动效设计编辑器",
-      "bytes": 11334,
-      "sha256": "09f49d98ef2a2a5431173caf79eb6ae924d45eb393a1344ed3c7b9ea154f2c5b"
+      "bytes": 9537,
+      "sha256": "bbf8da4a24b1b5a31d5147343974550794b8849ec9d2d6135b4822dbc2481dd1"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
       "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7898,
-      "sha256": "0ac8462257e0820e7dca081d70bfec682cbd9fb9e3d2c1de033497994c40ab72"
+      "bytes": 6094,
+      "sha256": "ca64c818a0594805e686538de392429dc5db20ecfbd29879795e47a4850be3ed"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\评分表_Opus5.5.md",
       "path": "AE风味动效设计编辑器/scores/评分表_Opus5.5.md",
       "role": "score_sheet",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7935,
-      "sha256": "8ab00769f19eb5f1b2db8e2489f641124dbfc8b5c54008a8a06a52709c0ef5f6"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.gitignore",
-      "path": "AE风味动效设计编辑器/submission/.gitignore.txt",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 35,
-      "sha256": "b4d1001b84d401e4de7c164ada900067258d2234ff65c0a634fc992274e9ce2d"
+      "bytes": 6183,
+      "sha256": "b1406bf63f8c6299d53e15b88200f33b8b41f82dc56f7accd363d5683b1bfa85"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.mimocode\\.cron-lock",
@@ -48,7 +48,7 @@
       "role": "submission",
       "task": "AE风味动效设计编辑器",
       "bytes": 39,
-      "sha256": "bd3aba5d93f074ed50a81fca1512ce71ce2f0a3e29570ef95b5468b46e049a2a"
+      "sha256": "e1106e00f8213a27ccd387623162b5085f4353fd1524c93b32c4bb96a561479b"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.mimocode\\.gitignore",
@@ -59,460 +59,164 @@
       "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\build.js",
-      "path": "AE风味动效设计编辑器/submission/build.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\css\\app.css",
+      "path": "AE风味动效设计编辑器/submission/css/app.css",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 913,
-      "sha256": "2a0124192188ddc6765498fee32c608e83cdb3e937bc20bc3cf6f7f275c67aaa"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\fix-imports.js",
-      "path": "AE风味动效设计编辑器/submission/fix-imports.js",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 226,
-      "sha256": "c761f56ba217964ed9d57b7b6db5ffc01896d32e094e03c38e6dceb13c219377"
+      "bytes": 10275,
+      "sha256": "41fb9ef31fbc978b5bc9734c37cd0856f8e6e3bb005f0c6ffac4f6ba79c586c8"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\index.html",
       "path": "AE风味动效设计编辑器/submission/index.html",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 963,
-      "sha256": "5a44b9b48e8ffb52223c93222d1c82e89c02ff2dfefe26c1b18fe51f97acf659"
+      "bytes": 8760,
+      "sha256": "7d1b7b16c07313a1d667064ed8da8bffd3e3efb2b09ecd5cf2ac3c849c5e41b9"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\package-lock.json",
-      "path": "AE风味动效设计编辑器/submission/package-lock.json",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\app.js",
+      "path": "AE风味动效设计编辑器/submission/js/app.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 13731,
-      "sha256": "823c9c1d0546a3a0ec9f9a10998134486c930de877afa6659211ee7d7cd36576"
+      "bytes": 23424,
+      "sha256": "13ff10d4dbebd8bb76ac77b7f425e35e89a1afc27bf1d476f3e01ca9e0f14f26"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\package.json",
-      "path": "AE风味动效设计编辑器/submission/package.json",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/js/audio.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 200,
-      "sha256": "4dc230d8f36d9dda6f7b9942612011e8ad39c8caabbc7ee792ad91e17b5d072d"
+      "bytes": 6439,
+      "sha256": "1663539f35daaf269ff89145c6cf52380890b368e20a292d96d533e31d52e766"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\app.js",
-      "path": "AE风味动效设计编辑器/submission/src/app.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\curves.js",
+      "path": "AE风味动效设计编辑器/submission/js/curves.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 34919,
-      "sha256": "038006a8fc291b5980fe74974c156980f5ffeb41fe8d911804a9efbe8eaf5fd6"
+      "bytes": 7416,
+      "sha256": "d4a06ab66cf71f76b3d20dff0ca0ded8bb027c15b565e19b4e64140f2400f043"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\anim.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/anim.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\demo.js",
+      "path": "AE风味动效设计编辑器/submission/js/demo.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7937,
-      "sha256": "98a68c161d5c05c70ed993691e29f145b3b8fe8655ba08f5f38b144e65eb6b67"
+      "bytes": 23664,
+      "sha256": "2cf86fb9dbda854335841b9dac4921d9e1331f4348207bc261b435fb9248dab7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\audio.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/audio.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\engine.js",
+      "path": "AE风味动效设计编辑器/submission/js/engine.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7107,
-      "sha256": "3f0b2ebe5a3120e5c5a03a1d385473aff9efde1463136558408b18419713c2cf"
+      "bytes": 13205,
+      "sha256": "27d5b947973879f288f47ad65c35402ad3975a69b94f6cf242b99bdaa877431c"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\compositor.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/compositor.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\expr.js",
+      "path": "AE风味动效设计编辑器/submission/js/expr.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 23916,
-      "sha256": "d98ed9afb3aa0a2787e29eff745ce18bf88611298c83115fb6d8675db1bd7b23"
+      "bytes": 9791,
+      "sha256": "0693766eabd970d08d6b540826ffbf530be791a50924ece70925d1986c21438d"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\expression.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/expression.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\fields.js",
+      "path": "AE风味动效设计编辑器/submission/js/fields.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 20605,
-      "sha256": "14a823e53f4ced4439731f42350d7e8d22e11252e903be6ebd388d458c4db6e7"
+      "bytes": 6834,
+      "sha256": "b8a04c74a906e52dfb5ab5266976de5706d7f10bbb55472cc813fcfdf296c602"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\fields.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/fields.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\geom.js",
+      "path": "AE风味动效设计编辑器/submission/js/geom.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 5051,
-      "sha256": "4428ae6f97ce4d158178c5af6a20411abafd90ed70d0eda53d11625ac428fad3"
+      "bytes": 19439,
+      "sha256": "8bfd64eca1d242aa2979d537e82e568a03d2f55ff83c0f5b28ffa70477be5e08"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\geometry.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/geometry.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\interp.js",
+      "path": "AE风味动效设计编辑器/submission/js/interp.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 18116,
-      "sha256": "1cde258f72220e14db762427a57da576d2b7a6a1a00ad74e94f080ebfe80d46f"
+      "bytes": 8301,
+      "sha256": "ce4ea85256261418ac4d1dfb0b73c7e6972182cc1bef6e898fbd186b5a59d85e"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\math.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/math.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\model.js",
+      "path": "AE风味动效设计编辑器/submission/js/model.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 7961,
-      "sha256": "cc0f6251e1d04ecd81ead44547d751cf079ef7d92f376d5a375cc45aac57f7db"
+      "bytes": 9934,
+      "sha256": "842b9058d8146bd9bc7f52dc02b4a2e6c0b8c1412e17f07575ec541b7e19bbf0"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\model.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/model.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\nodes.js",
+      "path": "AE风味动效设计编辑器/submission/js/nodes.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 19533,
-      "sha256": "c8988887cc6dceb0dd9f3c96532522401cd2d66da1d7719144dcc988b4a7ba1e"
+      "bytes": 15684,
+      "sha256": "74f51cacfbad2ee1ffea46bacd83a305cae7062ab0e3861cddc4ddb9d63f4d21"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\particles.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/particles.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\particles.js",
+      "path": "AE风味动效设计编辑器/submission/js/particles.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 10698,
-      "sha256": "e022202546e509f5bce5a5fe0544b9b14c60bf0018c66e0e20a84cf40b6bfbe2"
+      "bytes": 14033,
+      "sha256": "836b7eb3f42b97289651532c8b20af36df1da5b45583e50d58f96716ac8b8e58"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\path.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/path.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\render.js",
+      "path": "AE风味动效设计编辑器/submission/js/render.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 16790,
-      "sha256": "eda6edca2db81e98a43342f72adecf3725680b56eca0819093c66ec5970e6390"
+      "bytes": 26615,
+      "sha256": "6eb38d81c1208c9fa43fd64435973d96b6badfa50ca44b7cad01118d24332df5"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\core\\textlayout.js",
-      "path": "AE风味动效设计编辑器/submission/src/core/textlayout.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\textgeom.js",
+      "path": "AE风味动效设计编辑器/submission/js/textgeom.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 10813,
-      "sha256": "ac1bb39f7b6c3b095782778bad49c2b6543cae5dc85e587dd590365b97e8da25"
+      "bytes": 9051,
+      "sha256": "87855c6f154a6441359288d55c8449c778d28d6a41b2d6cdfd817447e187b5af"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\demo\\demo.js",
-      "path": "AE风味动效设计编辑器/submission/src/demo/demo.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\timeline.js",
+      "path": "AE风味动效设计编辑器/submission/js/timeline.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 33530,
-      "sha256": "815bc5e120cbd9f532a8618f8fca2559c33be50ddc11cb99c8a6a4a7bc5733cc"
+      "bytes": 11185,
+      "sha256": "90f844ebc69f25047f0fd19f4870e4e7a115a50a68dcad05114398754aeecec6"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\export\\videoExport.js",
-      "path": "AE风味动效设计编辑器/submission/src/export/videoExport.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\ui.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 1494,
-      "sha256": "d3dd6eedfcf2b523e5f8283b2a4cb2a7f16996f5cd5854d517c29bce34cfaa60"
+      "bytes": 71228,
+      "sha256": "734f4debc345532fc1bbdd56b23bfe0f4e55b1961ee308d75649a4d6922f65fe"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\main.js",
-      "path": "AE风味动效设计编辑器/submission/src/main.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\js\\util.js",
+      "path": "AE风味动效设计编辑器/submission/js/util.js",
       "role": "submission",
       "task": "AE风味动效设计编辑器",
-      "bytes": 658,
-      "sha256": "dac23c60d62cd2c73acacf9d269913ca7bfad3758b16cd35d6538240ca97eb0e"
+      "bytes": 15558,
+      "sha256": "df05b421dd65a6a5ea23f62189e151fe04d2532b461b7e7fc263665464feeaa2"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\render\\engine.js",
-      "path": "AE风味动效设计编辑器/submission/src/render/engine.js",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 23497,
-      "sha256": "ffdbe66c41e2e9416a8c7526da6a2b858c6d15928c0f097cb23b1eb30b24aace"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\app.js",
-      "path": "AE风味动效设计编辑器/submission/src/ui/app.js",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 55648,
-      "sha256": "c430933714ff3370224bdfbd8b1ba13f456f4efa464bb94c8d24d7a4111eeb6a"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\graph.js",
-      "path": "AE风味动效设计编辑器/submission/src/ui/graph.js",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 8475,
-      "sha256": "306154832ee498bd0ab7bf3ce06c3e1afb6b65f5d543516f067f2383901e8b25"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\nodes.js",
-      "path": "AE风味动效设计编辑器/submission/src/ui/nodes.js",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 18356,
-      "sha256": "779f4244002c5a3f9e6e38849673b3d4852edc8cea029db46db1c3157ac20604"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\src\\ui\\style.css",
-      "path": "AE风味动效设计编辑器/submission/src/ui/style.css",
-      "role": "submission",
-      "task": "AE风味动效设计编辑器",
-      "bytes": 27258,
-      "sha256": "48d435206d115bfc9f981e2d9d7c5deffd67c1bedc33909da36e0f77f963ff2c"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\claude\\main\\result.json",
-      "path": "NVIDIA_B200网页艺术/grading/claude/main/result.json",
-      "role": "result",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 6382,
-      "sha256": "8ef984aa742110ae4ae51e9f99dfbb66ade0fb995b8a189c358d917d135eee2a"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\codex\\main\\result.json",
-      "path": "NVIDIA_B200网页艺术/grading/codex/main/result.json",
-      "role": "result",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 9418,
-      "sha256": "807b4121341897c3524ae38baf24b2cf379b08610f2b3a4826654c18ba0f2528"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\评分表_6.1Sol.md",
-      "path": "NVIDIA_B200网页艺术/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 6412,
-      "sha256": "9e67eff9d3192fd0b132b4255e377fbaffcc3ebdad983b6000ac02d0467356c4"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\评分表_Opus5.5.md",
-      "path": "NVIDIA_B200网页艺术/scores/评分表_Opus5.5.md",
-      "role": "score_sheet",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 6601,
-      "sha256": "ff4c58dd55d4961186c0f85493a00be3b305dcd669bf31f3cf71649996da5051"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.gitignore",
-      "path": "NVIDIA_B200网页艺术/submission/.gitignore.txt",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 42,
-      "sha256": "18b2fdb37774adecee70698f2b46115f2e4b4c521db4fc5e6c0cbcdecd0c0d66"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\.cron-lock",
-      "path": "NVIDIA_B200网页艺术/submission/.mimocode/.cron-lock",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 39,
-      "sha256": "813711ddce02555a03f4a7f8e6ec6ef58881c42c2232404e06ece0b42cd55009"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\.gitignore",
-      "path": "NVIDIA_B200网页艺术/submission/.mimocode/.gitignore.txt",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 95,
-      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.mimocode\\shot_p0.png",
-      "path": "NVIDIA_B200网页艺术/submission/.mimocode/shot_p0.png",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 489973,
-      "sha256": "d77b9a9e9b7066af3c5f6af755c43fe2f633f3a6c891e29f493b72a27c061e13"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\app\\bundle.js",
-      "path": "NVIDIA_B200网页艺术/submission/app/bundle.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 667846,
-      "sha256": "677148ec03d660b95914e0a5559e006d1269a7f2b21c5c2c000a8648e6171478"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\build.mjs",
-      "path": "NVIDIA_B200网页艺术/submission/build.mjs",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 620,
-      "sha256": "8ef4b45a8b89e491d2f0272161926e06b8c759d7ad94ce4b7a730f4557c9afb0"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\index.html",
-      "path": "NVIDIA_B200网页艺术/submission/index.html",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 2977,
-      "sha256": "0332ce26e3d6cb47d890c7cf491b6b78f269eb5facd0600cc8007ac698768bb0"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\package-lock.json",
-      "path": "NVIDIA_B200网页艺术/submission/package-lock.json",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 51481,
-      "sha256": "11674663cc06d356710d17654d19c588fd2b6ebae0713bcc0dbbd5772165bb11"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\package.json",
-      "path": "NVIDIA_B200网页艺术/submission/package.json",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 355,
-      "sha256": "11b6218e0e3034ae338f1e0dde3ee00283f112ceb80d6c7ba51c598921507da4"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\export.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/export.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 1984,
-      "sha256": "986ed0a0a1aed8af9768c4e728dc614d454ef40895dc92d74dce47eec5bd48b0"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\main.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/main.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 11486,
-      "sha256": "d41e652cb5f01ad3b14c79d66317ea50bdfc87141c77f00e5de45d7ad0681947"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\numerics.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/numerics.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 10867,
-      "sha256": "fd9af7622a6ec68f257ff3772f2c0a831bb52e400282286b1b24f7f97e77d28b"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\state.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/state.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 6187,
-      "sha256": "c95540f2e6b9b2108ebe5308a731ff3ce5396db631d3b28751886e2bb9bd882a"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\runtime.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/svg/runtime.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 7863,
-      "sha256": "a4101f0049f68ba066b458283162adaffec039dc748f59eb2da4af101f537c58"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\scenes-a.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/svg/scenes-a.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 25901,
-      "sha256": "7d19127e658f0b66dca22aa07c72a362b0bd7928da3a2132018778835c49e72c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\scenes-b.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/svg/scenes-b.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 36535,
-      "sha256": "2c4d75a4f85aa3eb6a3aaa49c3076a67717048b07a5e12f52f4877aa3bb4b669"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\svg\\transitions.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/svg/transitions.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 12138,
-      "sha256": "12195ac2d3dccb351bb2ea04335fb1324293da77d44e0e9cd72efbba9daba16d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\materials.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/three/materials.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 12904,
-      "sha256": "8a91e9ed7dc7825507045f896721f3996e1ee72ccb72a3a2c94630420afb408f"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\models.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/three/models.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 22203,
-      "sha256": "5c40e2b7f883cdbcc102aa88508475213353e5cf5a251fd59e87c7d40ee5e305"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\pipeline.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/three/pipeline.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 7681,
-      "sha256": "f53ce970bfed3252904d77afb1ec7b00540ca0203d94b7e26c421c1273b44167"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\three\\scene-ctrl.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/three/scene-ctrl.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 18297,
-      "sha256": "d0df0052c6e2dc81ff4f50bce273bc9aeeacb237895d0befc7ae83f4639245cf"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\timeline.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/timeline.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 9472,
-      "sha256": "59381b605bbd9efb2fa21559b656ee92f1824f7a50a9148c8431ee046a34933e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\ui\\beats.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/ui/beats.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 11273,
-      "sha256": "2904793863c419ea454d0c7e16ac5fb05ae652af8af2942c14bec23f269ce2fb"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\src\\ui\\labs.js",
-      "path": "NVIDIA_B200网页艺术/submission/src/ui/labs.js",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 32577,
-      "sha256": "9252127b7b2512c9971ac90dae5d61ca41cff1e9123d9c49aab3d48685fcedab"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\styles\\main.css",
-      "path": "NVIDIA_B200网页艺术/submission/styles/main.css",
-      "role": "submission",
-      "task": "NVIDIA_B200网页艺术",
-      "bytes": 22196,
-      "sha256": "e725bf02f87bc15025f3bfd019b908d5f1f6933de7bb9a0248988169bff7ffd7"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\codex\\performance\\result.json",
-      "path": "Transformer前向推理的GPU加速/grading/codex/performance/result.json",
-      "role": "result",
-      "task": "Transformer前向推理的GPU加速",
-      "bytes": 5634,
-      "sha256": "20581abb6b7cf1666a4b920d7e80970f9b490698dfa3cb1a011cfe79198ad3b2"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\评分表_6.1Sol.md",
-      "path": "Transformer前向推理的GPU加速/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "Transformer前向推理的GPU加速",
-      "bytes": 1451,
-      "sha256": "0f4a6eb2ae52516fffafd94538b06cedcf2a355dcce25b8535b4dd3f79cfcc32"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\solution.cu",
-      "path": "Transformer前向推理的GPU加速/submission/solution.cu",
-      "role": "submission",
-      "task": "Transformer前向推理的GPU加速",
-      "bytes": 16950,
-      "sha256": "f19b22da5e0b987e633625895ca62f2897a27d03f0f6ea7a34ca0e309a951db8"
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "动态路由塔防/cost.json",
+      "role": "cost",
+      "task": "动态路由塔防",
+      "bytes": 378,
+      "sha256": "d33a21926073db1c2ed65769dfed2533b32e68e652b0d4d4522c773b7418dd10"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\动态路由塔防\\claude\\main\\result.json",
@@ -731,28 +435,12 @@
       "sha256": "170c6789f43217c96b3170f4b42fafe135de7f7cd48497a4218f9757ee1d49fa"
     },
     {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\codex\\main\\result.json",
-      "path": "单位正方形内最小三角形面积最大化/grading/codex/main/result.json",
-      "role": "result",
-      "task": "单位正方形内最小三角形面积最大化",
-      "bytes": 1304,
-      "sha256": "f89b0b3ac8d06afa65a3a2469346190a2279cb7d78e6109d79f30ef91c461666"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\评分表_6.1Sol.md",
-      "path": "单位正方形内最小三角形面积最大化/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "单位正方形内最小三角形面积最大化",
-      "bytes": 1090,
-      "sha256": "7eaf6df04c83821f7cd23ee375be3b66439b9f215287bd63851cf5c3527a8b8d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\answer.md",
-      "path": "单位正方形内最小三角形面积最大化/submission/answer.md",
-      "role": "submission",
-      "task": "单位正方形内最小三角形面积最大化",
-      "bytes": 1080,
-      "sha256": "1c5ced73bb137936a2c607ab6018948ffc4e284bd30f4c1664ac2ee0646eb98a"
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "太阳雨渔港3D渲染/cost.json",
+      "role": "cost",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 388,
+      "sha256": "137edd045a3e1510b5292a4d1486d9e76b88c7935d0b064cf40adcdab8d948c5"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\claude\\main\\result.json",
@@ -931,6 +619,38 @@
       "sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2"
     },
     {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "工程图纸三维还原/cost.json",
+      "role": "cost",
+      "task": "工程图纸三维还原",
+      "bytes": 411,
+      "sha256": "a2e4bab123c71a4b53befdeb86a039a2afeb2df3d3d78139255f13bf25efb446"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\工程图纸三维还原\\codex\\main\\result.json",
+      "path": "工程图纸三维还原/grading/codex/main/result.json",
+      "role": "result",
+      "task": "工程图纸三维还原",
+      "bytes": 8465,
+      "sha256": "30ea5b7688ba86d37d54f72933745ba2ef8b1ebd859341889da1a24f40731c4d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\评分表_6.1Sol.md",
+      "path": "工程图纸三维还原/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "工程图纸三维还原",
+      "bytes": 3221,
+      "sha256": "e5d35313b230f0ad9173b5d68aaf92ab07c548ee8d3ca4fbee73e3bbca5a47d3"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "形式化证明题/cost.json",
+      "role": "cost",
+      "task": "形式化证明题",
+      "bytes": 377,
+      "sha256": "6036c1f9372156b9d4e9f0d393a000f4ebd67521c88432f79abf9bc085c04dc6"
+    },
+    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\形式化证明题\\codex\\main\\result.json",
       "path": "形式化证明题/grading/codex/main/result.json",
       "role": "result",
@@ -1011,36 +731,44 @@
       "sha256": "981c10e4ad96d79fc63379c730e7153a9a8e5ed1d704b8d08797d8f421f7d6cb"
     },
     {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "操作系统嵌套/cost.json",
+      "role": "cost",
+      "task": "操作系统嵌套",
+      "bytes": 399,
+      "sha256": "1550d3da90fd694b0dc9bca90be3c55ad21f5c92cf00c7c87b1421382d93dcae"
+    },
+    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\操作系统嵌套\\claude\\main\\result.json",
       "path": "操作系统嵌套/grading/claude/main/result.json",
       "role": "result",
       "task": "操作系统嵌套",
-      "bytes": 11667,
-      "sha256": "d1c54bd3f5e8f2d11db92545b575dc91099ac30b42f22ab6718c17692689a185"
+      "bytes": 11394,
+      "sha256": "2db7987d65a1131c165806d95129792dafc8e9c44ffe493c026561d27dc2df36"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\操作系统嵌套\\codex\\main\\result.json",
       "path": "操作系统嵌套/grading/codex/main/result.json",
       "role": "result",
       "task": "操作系统嵌套",
-      "bytes": 11051,
-      "sha256": "f6e81cc56b3d1ff9cfc8aa7643d362563daeec78afa3849a3ecd3071412ed037"
+      "bytes": 8197,
+      "sha256": "8235edc5d09d2b0ced2d4fa0f829a3025cf919794c8fe8939dd15bef46e6a731"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\评分表_6.1Sol.md",
       "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "操作系统嵌套",
-      "bytes": 12314,
-      "sha256": "59a93970a9d602ef84f345d05e1bc8c362e2127170d7d51fe47d0fd00b161cfa"
+      "bytes": 10484,
+      "sha256": "bbba5c0826c5e4c3c795ce80e178f5ede76cf3027f5af54c0285fe57db177cbd"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\评分表_Opus5.5.md",
       "path": "操作系统嵌套/scores/评分表_Opus5.5.md",
       "role": "score_sheet",
       "task": "操作系统嵌套",
-      "bytes": 12536,
-      "sha256": "4681742a47c50bb72731892247c224918e635947ceff8b16a3e1785fa1aaedfa"
+      "bytes": 10565,
+      "sha256": "323511928ab251469c99c0fe5b730547cc2d47c29a025faed7c7053cb16135a9"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.mimocode\\.cron-lock",
@@ -1048,7 +776,7 @@
       "role": "submission",
       "task": "操作系统嵌套",
       "bytes": 39,
-      "sha256": "0ca900f5403f57cfe4e33267d7e4eb10e4cd7d2a9db730e8c454170cf3ad19f5"
+      "sha256": "fd1d1422f7ca40d43f7a1d732d80b7a3d0b98092785d183133921a2310eee069"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.mimocode\\.gitignore",
@@ -1059,252 +787,348 @@
       "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpaper.png",
-      "path": "操作系统嵌套/submission/assets/wallpaper.png",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 714424,
-      "sha256": "f32d4e1d1893f54e00dafb41eed72d60444bc4b243194cc495f7331bf45f5c3a"
+      "bytes": 4158,
+      "sha256": "46f91b5c17d9bbbc57efcc64e1cb9035929a40beaa92e1ff1ae93d3e470600e7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\dusk-lake.png",
-      "path": "操作系统嵌套/submission/assets/wallpapers/dusk-lake.png",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\css\\apps.css",
+      "path": "操作系统嵌套/submission/app/css/apps.css",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 467187,
-      "sha256": "796f3b947c10f769dff01958d3160ab4ac47cb07e52d0b41a9eeb986c9ebf4ec"
+      "bytes": 17113,
+      "sha256": "bc4dcf873e007b33a230779e29091e91d72021ee40811e47d2e0c1ba134f0632"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\green-valley.png",
-      "path": "操作系统嵌套/submission/assets/wallpapers/green-valley.png",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\css\\base.css",
+      "path": "操作系统嵌套/submission/app/css/base.css",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 260999,
-      "sha256": "c68f4b7cdafbfc6a0d1e721ac692953cbc2d4fca0a3f0be5cf4597796b7e8a0e"
+      "bytes": 5418,
+      "sha256": "1f2f523e63d899302d980a857d0d38ac5aaa7a4fd44bd2651fa4e7c8411ca30b"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\assets\\wallpapers\\star-night.png",
-      "path": "操作系统嵌套/submission/assets/wallpapers/star-night.png",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\css\\desktop.css",
+      "path": "操作系统嵌套/submission/app/css/desktop.css",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 161586,
-      "sha256": "2047fe95de32f2e8baf55576cddff0608036b9139805dbd509cd6e20f4a6c9e9"
+      "bytes": 7469,
+      "sha256": "f6427b82f8409ab4e0c9c5041181e883abec5d938d334afbad2ab3181bc79206"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\css\\window.css",
+      "path": "操作系统嵌套/submission/app/css/window.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4027,
+      "sha256": "6d794a792c3d5ab2819f0debddf231eb4eb6b84f80b75db8dd1b1848e228d2db"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\index.html",
+      "path": "操作系统嵌套/submission/app/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 820,
+      "sha256": "e286a67203a0f65045e79da9fc46d01a8667069ea3a0ca61ea4ec3631c7eb39e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\boot.js",
+      "path": "操作系统嵌套/submission/app/js/boot.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 818,
+      "sha256": "0d04f1f921c9853eead58e7cf5e068dc109e489344550aa5ce2f70c27e5b014e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\bench.js",
+      "path": "操作系统嵌套/submission/app/js/host/bench.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2946,
+      "sha256": "b56b7a6dff71d56d7ee72a3f59d26262e786382b5b8345f819b76f365df65b9e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\data-connection.js",
+      "path": "操作系统嵌套/submission/app/js/host/data-connection.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4824,
+      "sha256": "e04a1eb64594e7104637e2690d7ff1bdee487328b9d091e6a4c262ad4c4bf714"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\display.js",
+      "path": "操作系统嵌套/submission/app/js/host/display.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6945,
+      "sha256": "b133fe7a5a20e5b6363fcd93af9a946cdd15d40f264d6d57c7955522bc52adfd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\dragdrop.js",
+      "path": "操作系统嵌套/submission/app/js/host/dragdrop.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5146,
+      "sha256": "f36e7b4648a48d30c03aa51dd64372dcfbd945835103ced0efb86905f348c281"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\scheduler.js",
+      "path": "操作系统嵌套/submission/app/js/host/scheduler.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6868,
+      "sha256": "2a5c2161ca0910c591b80cbfd42775a8d47b9b5673feb55ddb8537c8671236f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\host\\wallpaper.js",
+      "path": "操作系统嵌套/submission/app/js/host/wallpaper.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11175,
+      "sha256": "d69a8ffb77ce8bd5abb9336d4a24865e1fb83ab3d71f6eca4f3d54cc7c8b1246"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\browser.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/browser.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8653,
+      "sha256": "a16e1728e72ab19220eeec3bc014e0b1dc8f1bf44970a5c9fd48f80558ba672c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\charts.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/charts.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 15248,
+      "sha256": "488985cad1141e04c582f20219b9fb41ebe273eed068c8528be75f9de3d69973"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\editor.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/editor.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8403,
+      "sha256": "ec2cf29e8cc229b3c106d8695c49d86b0dc007758f5d56307de6f544291dae78"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\files.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/files.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10967,
+      "sha256": "5884ded0ad36829e226280c093a505b7059dd626d0c4cca21a835a62fba38e63"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\help.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/help.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7737,
+      "sha256": "a7efa278e19fbf52a4573ad96c8f0bfaf53aba74b5b1a41521d2f1a366d8bd72"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\index.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/index.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1539,
+      "sha256": "7c93d9b72982a91715ee6d5a81c15a7e75bf2451e486bb9ad08328a422e33c98"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\player.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/player.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 25006,
+      "sha256": "0a7f87154519d349e874366b559d8304b131add1e4dc9d09e16aae751512557b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\settings.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/settings.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4205,
+      "sha256": "7f5999e8f937a89699a69290f13cead28fe846a49dbd51d9a8be3ec0d79d318d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\spreadsheet.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/spreadsheet.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 15674,
+      "sha256": "52b8351f7f224a42aa335e6eb5dadbc444959df273b985bc6d0063b83121e63a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\apps\\tasks.js",
+      "path": "操作系统嵌套/submission/app/js/root/apps/tasks.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9547,
+      "sha256": "808b91a779be4894b71e48a11af0662159dcd628edd2ec8cdeb0ba66ae6fe249"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\projection.js",
+      "path": "操作系统嵌套/submission/app/js/root/projection.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3997,
+      "sha256": "83af22231eff0c9f87372f86e59c87d64b84e5d1f20b4639d3246628c841f7c8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\root.js",
+      "path": "操作系统嵌套/submission/app/js/root/root.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 40079,
+      "sha256": "150e5e50c5daa47542429509c58bd842bb5151d358a718ff6d0b360e8e052992"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\root\\window.js",
+      "path": "操作系统嵌套/submission/app/js/root/window.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 9701,
+      "sha256": "38eb7138acc4f23fa02c3a7e6496f2bf3afad29044322c1f838897486098d722"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\scene\\flight.js",
+      "path": "操作系统嵌套/submission/app/js/scene/flight.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8573,
+      "sha256": "ef7d3d1c54122396fbf3a9cdae7b550aec5cf3aa2534ebc20e5ccd874ce98ea0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\scene\\heli-scene.js",
+      "path": "操作系统嵌套/submission/app/js/scene/heli-scene.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 22502,
+      "sha256": "108bc368d3e6e29ef7940b8884a7986a1918f5409cc92c164ec16e567af037b0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\scene\\scene3d.js",
+      "path": "操作系统嵌套/submission/app/js/scene/scene3d.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 8754,
+      "sha256": "937e8ebc57006f4910aed2d97a05584e7729fca5501073717e1462a3b297de56"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\sub\\instance.js",
+      "path": "操作系统嵌套/submission/app/js/sub/instance.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 25192,
+      "sha256": "efd19d3a5a1c22d65539360f9c2599bd73277dfdc5332707ffd9b89429411d85"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\sub\\kernel-src.js",
+      "path": "操作系统嵌套/submission/app/js/sub/kernel-src.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 36284,
+      "sha256": "60d0fa7b63511237c69b1133ee7685d223b1576390e0af9c0185a036d27ab361"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\utils.js",
+      "path": "操作系统嵌套/submission/app/js/utils.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1988,
+      "sha256": "177393b66360e339bc7fb4567d9a7185d313f5cbd02635e52284b13526ed531a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\vfs.js",
+      "path": "操作系统嵌套/submission/app/js/vfs.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 6270,
+      "sha256": "ce0d200fda77a092ca1fac0410f91c0654019b8f91397bc51f3996753f75c623"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\app\\js\\vm\\ks.js",
+      "path": "操作系统嵌套/submission/app/js/vm/ks.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 23840,
+      "sha256": "5c655c0476fe710e02fd7b3492eaa9a27f412083a2682d53f87d27b7fed56c01"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1534,
+      "sha256": "ccfc8c786d661eac84cf990ff81991ad2a9ec8eb8b484b7657c3c7f42cc0a3dc"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\main.js",
       "path": "操作系统嵌套/submission/main.js",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 5187,
-      "sha256": "4a1f48611cd73ff8d556c02c6693095af44f126e06653b51972d7485f0b184e6"
+      "bytes": 2646,
+      "sha256": "f087d4f4072fe90850bf2efd33fae7cc629ed18e9913d53db09005e93a7e7323"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\package-lock.json",
       "path": "操作系统嵌套/submission/package-lock.json",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 6084,
-      "sha256": "2a21cb04ee05f85c74b152a84dcfc7f7d27a0dde51f395fc3acdc749c2795500"
+      "bytes": 6020,
+      "sha256": "836fa616ddd3532c80292cf9c51591bc965c622fdf87f330551f9d3fcd624b10"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\package.json",
       "path": "操作系统嵌套/submission/package.json",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 281,
-      "sha256": "428ee239157bfdc80aae58fc590d5994cd041f2c7f0894b6f902bf17d88b25f3"
+      "bytes": 365,
+      "sha256": "e32efb9a4e26d9bdf75335a5c7a16d7fffe96da402681f920f618aeeec8da458"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\preload.js",
       "path": "操作系统嵌套/submission/preload.js",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 632,
-      "sha256": "6404887c8176c270686d225723f9180ef495cc35489efeebf4966095f77dded5"
+      "bytes": 304,
+      "sha256": "bb158844273e809522f2b4d1fbcb5729969e160a0e49a4440e82fa91429ad9f9"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\scripts\\cdp.js",
-      "path": "操作系统嵌套/submission/scripts/cdp.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\test\\commit.bat",
+      "path": "操作系统嵌套/submission/test/commit.bat",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 2864,
-      "sha256": "0efaacd1961ea24399942a6eaf32b6ff35965098cf16b5bb262bea7b1d1538f7"
+      "bytes": 174,
+      "sha256": "5209e6398735f3fe77bc34ed8d5df7ca73d8916856b2c933064bca269d984c4e"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\scripts\\gen-wallpaper.js",
-      "path": "操作系统嵌套/submission/scripts/gen-wallpaper.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\test\\do-commit.mjs",
+      "path": "操作系统嵌套/submission/test/do-commit.mjs",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 11425,
-      "sha256": "51e3f9e94d55b1da291eeaaa3810822b81f1c8ccb3ff20be63366d41d0b9485e"
+      "bytes": 414,
+      "sha256": "1b2b78807be11bdbbcf348fcb7c16a5425259c71accdf4f2c6e4dfb3fd0eb452"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\app.js",
-      "path": "操作系统嵌套/submission/src/app.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\test\\ks-test.mjs",
+      "path": "操作系统嵌套/submission/test/ks-test.mjs",
       "role": "submission",
       "task": "操作系统嵌套",
-      "bytes": 5313,
-      "sha256": "d207f8e44839891415f9e95ed7bd02e8556ab2056095d7558a60642e85940b69"
+      "bytes": 994,
+      "sha256": "583295286a234b9f68f87883751cee547b168b1242572085a278a4c1095a7226"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\browser.js",
-      "path": "操作系统嵌套/submission/src/apps/browser.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 11024,
-      "sha256": "5e78c585b38e1e34ddc732c6c05d21b292976de126a38e10f3f7a26fc359b1d2"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\editor.js",
-      "path": "操作系统嵌套/submission/src/apps/editor.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 4972,
-      "sha256": "aeb7580ed6c298e2b002e4d5ba99d9a47513ae00f534898daaa2216b885eb72e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\files.js",
-      "path": "操作系统嵌套/submission/src/apps/files.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 10833,
-      "sha256": "77ddd2e5db8647e1457d33321bcd4c8ea8d001ae6ca67bbe9cbef4dd276018f5"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\help.js",
-      "path": "操作系统嵌套/submission/src/apps/help.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 13952,
-      "sha256": "b4332bba6165149d720d7e5e20223e1744a87a4c3c15be5110c8226519f228c8"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\settings.js",
-      "path": "操作系统嵌套/submission/src/apps/settings.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 10944,
-      "sha256": "d800e54d1c8ef6b4bf1fb0c3d2f4a7c2ac46f8a255065fb40697ebc4d353af18"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\spreadsheet.js",
-      "path": "操作系统嵌套/submission/src/apps/spreadsheet.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 25381,
-      "sha256": "bf95d35ed4aaf4e1329ef130988f5a928fcdefbc86c4df1928186a7d2aaefcaf"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\tasks.js",
-      "path": "操作系统嵌套/submission/src/apps/tasks.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 8758,
-      "sha256": "92965eb2d4b76ab0e3a13202d718fb93fce21ad52bd0bee2c218335adb0e8e71"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\apps\\widgets.js",
-      "path": "操作系统嵌套/submission/src/apps/widgets.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 20859,
-      "sha256": "928f1876370e77f75f8f8ea94da7b0459e8a097a618dd99a3cd9b6818c5ec50a"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\core\\fs.js",
-      "path": "操作系统嵌套/submission/src/core/fs.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 9019,
-      "sha256": "e86924daa3e0cf8f35304e0d3c7e169c1d4dee7e2eff84841451a9fe6fcb87ed"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\core\\util.js",
-      "path": "操作系统嵌套/submission/src/core/util.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 2563,
-      "sha256": "e9232cda07339017329af065c15bb112d19272ade07597961b938360ba10f9e1"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\desktop\\desktop.js",
-      "path": "操作系统嵌套/submission/src/desktop/desktop.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 9422,
-      "sha256": "b7d2299682985facf7e689c5f1bb0f92f385807eedcd3796e1a39b68e13c4b93"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\desktop\\window-manager.js",
-      "path": "操作系统嵌套/submission/src/desktop/window-manager.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 15723,
-      "sha256": "e03afe3833a7429af44db18e5cb59a81765d2b59c3070f6b7e3b4cb926a4d0cc"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\host\\bench.js",
-      "path": "操作系统嵌套/submission/src/host/bench.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 3993,
-      "sha256": "babf7af190a00b283bed018b4927ac65c4f37e780b5d79fde17867f7a0a8d91e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\host\\system-manager.js",
-      "path": "操作系统嵌套/submission/src/host/system-manager.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 27802,
-      "sha256": "cf92e69327fbc49883e1537b048c34964297330024940dbd02ff968da21426c4"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\index.html",
-      "path": "操作系统嵌套/submission/src/index.html",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 2341,
-      "sha256": "397ca9adfa0a1b88ad8ad25288e56fa57e30d45186d64723b2502e81b90336a6"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\kernel\\kernel-source.js",
-      "path": "操作系统嵌套/submission/src/kernel/kernel-source.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 19489,
-      "sha256": "9f885fef8b7b7b27118cca83d4aeab3c92a3f2875c32db6e2da8a810fb05195c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\scenes\\scene-data.js",
-      "path": "操作系统嵌套/submission/src/scenes/scene-data.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 10266,
-      "sha256": "ea3e656f60f0fbf93b21a90be03dd851f147de226f8d71f03ebe1778f5342239"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\styles\\apps.css",
-      "path": "操作系统嵌套/submission/src/styles/apps.css",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 16512,
-      "sha256": "d717c6a64a6b28cef3367aa0efc939b270739c8be0e595318a339d0ce32141be"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\styles\\base.css",
-      "path": "操作系统嵌套/submission/src/styles/base.css",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 13862,
-      "sha256": "0146c6d7748695877d8ad93360d1ef1bcbfada0f2e20798b5c135a6e2938e3cd"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\src\\vm\\vm.js",
-      "path": "操作系统嵌套/submission/src/vm/vm.js",
-      "role": "submission",
-      "task": "操作系统嵌套",
-      "bytes": 30494,
-      "sha256": "263a7cca7b4ddf0e5e098983b06415bf936e2ce71e1750a23f8cdfe271373ef0"
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数学竞赛原创试题/cost.json",
+      "role": "cost",
+      "task": "数学竞赛原创试题",
+      "bytes": 388,
+      "sha256": "e7ad11318291a7d8a6e0af34f79056b9886e4fea7883d4acf9683f3c6fe59df4"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数学竞赛原创试题\\codex\\main\\result.json",
@@ -1323,44 +1147,180 @@
       "sha256": "2c81f43e1917b3724d136d694254790565098c3369c0c33aa070e11c1767637e"
     },
     {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "星际战舰编队/cost.json",
+      "role": "cost",
+      "task": "星际战舰编队",
+      "bytes": 399,
+      "sha256": "d570d710ed3b7ef9fd9d1623abdf7af9f3bbc8ef14046f60a727b9a6775b37f5"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\星际战舰编队\\claude\\main\\result.json",
+      "path": "星际战舰编队/grading/claude/main/result.json",
+      "role": "result",
+      "task": "星际战舰编队",
+      "bytes": 6927,
+      "sha256": "e1124c43adb2d1ae4afb88e7b0e505aaa17ae508a779e82e0ca692d4e1d67690"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\星际战舰编队\\codex\\main\\result.json",
+      "path": "星际战舰编队/grading/codex/main/result.json",
+      "role": "result",
+      "task": "星际战舰编队",
+      "bytes": 7820,
+      "sha256": "900e2ca6c03ec1a7feec9cff2fc3203e7b7c905dff9a512623ee6fcb01513862"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\评分表_6.1Sol.md",
+      "path": "星际战舰编队/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "星际战舰编队",
+      "bytes": 7227,
+      "sha256": "50443358075950226e140c4f0095732087a6325b7024315a5cab1abdbde44da5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\评分表_Opus5.5.md",
+      "path": "星际战舰编队/scores/评分表_Opus5.5.md",
+      "role": "score_sheet",
+      "task": "星际战舰编队",
+      "bytes": 7274,
+      "sha256": "8a49c2d732c05231ae4c614269059295874cc71e5f861726fafb13c349bb7d66"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\.mimocode\\.cron-lock",
+      "path": "星际战舰编队/submission/.mimocode/.cron-lock",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 39,
+      "sha256": "4a1c5227f9defa0487328426990e5d9fd3af04daa2feecff6ae6ac515bb3c73a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\.mimocode\\.gitignore",
+      "path": "星际战舰编队/submission/.mimocode/.gitignore.txt",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 95,
+      "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\index.html",
+      "path": "星际战舰编队/submission/index.html",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 972,
+      "sha256": "94f86a4a78d83686a64c014734399a2698c264c15b7b8bfe87b1d6b0b0656ec9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\effects.js",
+      "path": "星际战舰编队/submission/js/effects.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 20503,
+      "sha256": "58e836a0b5baedc85abc9d40bc73e755db7127585c91ebff50de781d9cd94cf3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\gl.js",
+      "path": "星际战舰编队/submission/js/gl.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 18137,
+      "sha256": "1ce0f9f1bcd0bfc94043bf97ac2a2c2561eb526a7e567f36ce743aeabf189f52"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\main.js",
+      "path": "星际战舰编队/submission/js/main.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 21045,
+      "sha256": "ed15c231fbef0c4f89af04cb21980c3172002d9137ff2b970583de327100ce61"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\math.js",
+      "path": "星际战舰编队/submission/js/math.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 8112,
+      "sha256": "88f8194d9a13d75f78450b889786b118af260c4f440d6315749ba0ba234600d9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\models.js",
+      "path": "星际战舰编队/submission/js/models.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 23241,
+      "sha256": "e0ae723305750b9d6e6436f211270cc151980a05d31ea735c0b87a66729fb78c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\timeline.js",
+      "path": "星际战舰编队/submission/js/timeline.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 7308,
+      "sha256": "74768737892cf5a3f2a16823cb8fa98b2ecddeada8ead0270b9fc34942c7b419"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\voxel.js",
+      "path": "星际战舰编队/submission/js/voxel.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 6891,
+      "sha256": "97a13b4d8e9d03f55cdbf3e993e2450f33f25da1da27ce5435256226c06ca757"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\js\\world.js",
+      "path": "星际战舰编队/submission/js/world.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 23340,
+      "sha256": "3c79fb71165efd5cba44cb55e9bd6ec48831a1f373c7f8b9caf431e0c668daa2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\设计说明.md",
+      "path": "星际战舰编队/submission/设计说明.md",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 3005,
+      "sha256": "0bc558bc9ff9c56ed1f29d7c04d63029db43088add65c51b768203a702214959"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "果冻冲击与造浪水槽/cost.json",
+      "role": "cost",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 417,
+      "sha256": "820e4ef8b118c0c40c70bb1392afb117579a7bc8e162cd9f813a0d35dd6e77c7"
+    },
+    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\claude\\main\\result.json",
       "path": "果冻冲击与造浪水槽/grading/claude/main/result.json",
       "role": "result",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 5200,
-      "sha256": "b771ac5debf50f62246d18f519da7cd25d71e797f3e8b9e1991dbd6aba6ff79c"
+      "bytes": 5109,
+      "sha256": "77dee981ff670feb28f22451dadb9f52147ca1b8e01685db6ad87c4e737e0351"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\codex\\main\\result.json",
       "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
       "role": "result",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 6436,
-      "sha256": "7db5089111ccb5606cb266a6e8203ae8400fb59982c32440c0b5a793bfd96667"
+      "bytes": 6681,
+      "sha256": "6c3924a2b7838744b90b20b1be39a116aa0cf996fa8ea06e77f5281cd6403052"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
       "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 4657,
-      "sha256": "1ba4460b93612979b1daef9b38eae7f60bd2230e9a56fdb5a60c08e1e27b0c95"
+      "bytes": 4783,
+      "sha256": "16354ffa466f14105fb7d3597b9c80a3b1786f13297709c486cce9f0da418714"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\评分表_Opus5.5.md",
       "path": "果冻冲击与造浪水槽/scores/评分表_Opus5.5.md",
       "role": "score_sheet",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 4709,
-      "sha256": "6eb70976f1f4990a824ae331d59847554d5f51e4d13190571646ff2bc4a4f01e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.gitignore",
-      "path": "果冻冲击与造浪水槽/submission/.gitignore.txt",
-      "role": "submission",
-      "task": "果冻冲击与造浪水槽",
-      "bytes": 30,
-      "sha256": "2f9aebd7a15d0a9e62d69bff1c888bb93ec5eab506a9db272de622defda4735c"
+      "bytes": 4925,
+      "sha256": "d372cc5f27b5b357e248956dd5e131f4d9aa9e764ec99878f765d05cc91d7602"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.mimocode\\.cron-lock",
@@ -1368,7 +1328,7 @@
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
       "bytes": 39,
-      "sha256": "201277f670a12d273d687eabb827acff77da2049c872e0517b4fa42b284c74bc"
+      "sha256": "7f13098537efa9c76a45cf76a2e4cede96624d5195f831452a7b4a28efaff0b8"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.mimocode\\.gitignore",
@@ -1379,132 +1339,132 @@
       "sha256": "dbfd8d907f161a49210f67138898ab6b98f57947ec654e3d3d52aecf9fc180d7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\build.mjs",
-      "path": "果冻冲击与造浪水槽/submission/build.mjs",
-      "role": "submission",
-      "task": "果冻冲击与造浪水槽",
-      "bytes": 298,
-      "sha256": "8452eb67072b4627346faa56659ad4465029f323936e9c3a0c1dbc648cdb7152"
-    },
-    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\css\\style.css",
       "path": "果冻冲击与造浪水槽/submission/css/style.css",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 5426,
-      "sha256": "b43f1814a25827e0e5b0bf8c0ab62af4d7668cdcc821ded7bef0c0a46c8ffeb3"
+      "bytes": 8921,
+      "sha256": "6f45ca0c3311e988bd5bbc7c4c03c52f311cf73d73bfead27b6eb89348990942"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\index.html",
       "path": "果冻冲击与造浪水槽/submission/index.html",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 8736,
-      "sha256": "d7837cfbfd93b4fc79d227891ff8d2b20a440b087ede876a0f02ec6486a46855"
+      "bytes": 7252,
+      "sha256": "3ecbb6b764d30fe54678c6952d281c6940f294a0349daead8a61a51631ed4b79"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\package-lock.json",
-      "path": "果冻冲击与造浪水槽/submission/package-lock.json",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\audio.js",
+      "path": "果冻冲击与造浪水槽/submission/js/audio.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 13147,
-      "sha256": "dba8c52dd55f5a5a35f9a88d35e544fd923c01e3d0b8a046c61e4be9357e87a0"
+      "bytes": 8745,
+      "sha256": "8569e3a54f3876a2dc4cb47ff23e571472330a66109661b38049158246a2abcb"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\package.json",
-      "path": "果冻冲击与造浪水槽/submission/package.json",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\demo.js",
+      "path": "果冻冲击与造浪水槽/submission/js/demo.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 285,
-      "sha256": "ea82ff0faf61adabc63c6d3e042abe0adbc4da0c6f31eb6636dbd8a5cf803f5a"
+      "bytes": 15971,
+      "sha256": "8ae871662219333d3ec72edf5a8156e15ee7bef35d05557bb8b0e2680e03eadb"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\audio.js",
-      "path": "果冻冲击与造浪水槽/submission/src/audio.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\gpu.js",
+      "path": "果冻冲击与造浪水槽/submission/js/gpu.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 5503,
-      "sha256": "939a1c8a1010027e6c94e75187c168ce48a7fe243eb411f291a0f691ca239822"
+      "bytes": 47505,
+      "sha256": "8ffb227917882a42703f308724b4e0a1cefd31349c2892470408ad7846a1dc1e"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\env.js",
-      "path": "果冻冲击与造浪水槽/submission/src/env.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\jelly.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 3993,
-      "sha256": "7685fe2dfce702f1826ca721a110ea87d957ae306b6fab1a8e2b261bb9f141ec"
+      "bytes": 15295,
+      "sha256": "ccccd541cf3fb7dfdafaf3676fdc2dd2a5b0e44c2632736298de3c7ee5543eb0"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\jellySim.js",
-      "path": "果冻冲击与造浪水槽/submission/src/jellySim.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\main.js",
+      "path": "果冻冲击与造浪水槽/submission/js/main.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 13043,
-      "sha256": "d4193748f775dfae424e1fa2be16f3f1698e7e8f7f4eddb6702849c2a00482bd"
+      "bytes": 3855,
+      "sha256": "65940b8c677f050bbac877ae582117482e018cc6fd030460af13430edcc13066"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\main.js",
-      "path": "果冻冲击与造浪水槽/submission/src/main.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\math3d.js",
+      "path": "果冻冲击与造浪水槽/submission/js/math3d.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 11116,
-      "sha256": "b6923fca330a360b130d01164b1ee83c424b328dced8d817a2ce4cec1f3c5525"
+      "bytes": 7166,
+      "sha256": "de0d0e9d4be874b6198c2787149bfae9a80e543ae1514c12c3680cfe0c6d063e"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\scene1.js",
-      "path": "果冻冲击与造浪水槽/submission/src/scene1.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\rigid.js",
+      "path": "果冻冲击与造浪水槽/submission/js/rigid.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 12554,
-      "sha256": "746fc413ee5f481f6386db83b9c5133ba579a5e7fb3b260a59131929b12fa2c6"
+      "bytes": 4246,
+      "sha256": "1276d0c616abc34cfb0b893dcde4c484cf5e6b3bae0590d9a283fa0b3dad3bab"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\scene2.js",
-      "path": "果冻冲击与造浪水槽/submission/src/scene2.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\scene.js",
+      "path": "果冻冲击与造浪水槽/submission/js/scene.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 16668,
-      "sha256": "8157f55cbf374e0f3fb18787c9a29881853d0b94318f1f93ff2f9550bbeb4bdd"
+      "bytes": 14956,
+      "sha256": "90627d84bf887a9a69ce15717dcd319408dcb4c6c01b035100ceec76c4963729"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\videoExport.js",
-      "path": "果冻冲击与造浪水槽/submission/src/videoExport.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\ui.js",
+      "path": "果冻冲击与造浪水槽/submission/js/ui.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 2563,
-      "sha256": "a7f973f244fd29a1c6ce7d4ef0bc01f39b1d640934e08bcea429f01a8335db74"
+      "bytes": 7413,
+      "sha256": "8cea6f0d5411198b65c2df5f8f2e66e7d7df216c4822a45d45651304483b8a24"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\src\\waterSim.js",
-      "path": "果冻冲击与造浪水槽/submission/src/waterSim.js",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\water.js",
+      "path": "果冻冲击与造浪水槽/submission/js/water.js",
       "role": "submission",
       "task": "果冻冲击与造浪水槽",
-      "bytes": 9114,
-      "sha256": "2c7cd191f85985e1a69973d6875d5f6aa3c24121c6fb1b459601d1f3ab3e7932"
+      "bytes": 44128,
+      "sha256": "efeaa76deb41dc6c8e4e755412856a16c85fc5735ebcd32749f2dea191c89689"
     },
     {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\codex\\performance\\result.json",
-      "path": "通用数字电路仿真器加速/grading/codex/performance/result.json",
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
       "role": "result",
-      "task": "通用数字电路仿真器加速",
+      "task": "数字电路仿真器加速",
       "bytes": 1570,
       "sha256": "fa1eed6bcded658f0e867b1a62c7b8bfcd27940007994889c1c8c45996060323"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\评分表_6.1Sol.md",
-      "path": "通用数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
-      "task": "通用数字电路仿真器加速",
+      "task": "数字电路仿真器加速",
       "bytes": 1457,
       "sha256": "37fc1b535082a82b7e6e223a28945f10159d0e94df6106e5ed61a351cd0f47a7"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\solution.cpp",
-      "path": "通用数字电路仿真器加速/submission/solution.cpp",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
       "role": "submission",
-      "task": "通用数字电路仿真器加速",
+      "task": "数字电路仿真器加速",
       "bytes": 12895,
       "sha256": "54728be31f3557e8377be3e43cba30bfa15739018c59da7998aaab8c62f7a8ac"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "鲁班锁拆解/cost.json",
+      "role": "cost",
+      "task": "鲁班锁拆解",
+      "bytes": 371,
+      "sha256": "2dfa42f98d00abe1e609f9ffb101117376ca21e3b059ba42ca62919681324e9f"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\鲁班锁拆解\\codex\\main\\result.json",
@@ -1541,56 +1501,8 @@
   ],
   "excluded": [
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\.git",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\dist",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\AE风味动效设计编辑器\\node_modules",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\.git",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\NVIDIA_B200网页艺术.md",
-      "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\NVIDIA_B200网页艺术\\node_modules",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\.mimocode",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\Transformer前向推理的GPU加速.md",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\dev",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\grader.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\Transformer前向推理的GPU加速\\数据",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\.git",
@@ -1601,64 +1513,1960 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\.mimocode",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\__pycache__",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\analyze.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\best.txt",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\best_lp.txt",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\lp_polish.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\mkanswer.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\search_log.txt",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\verify.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\单位正方形内最小三角形面积最大化\\单位正方形内最小三角形面积最大化.md",
-      "reason": "标准题只取交付答案"
-    },
-    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\.git",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
       "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\all_dims.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\dump_all.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\dump_dims.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\make_views.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\read_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\resize_all.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-1.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-10.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-11.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-12.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-13.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-14.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-15.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-16.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-2.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-3.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-4.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-5.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-6.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-7.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-8.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-9.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-52.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-53.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-54.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-55.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-56.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-57.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-58.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-59.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-60.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-61.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-62.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-52.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-53.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-54.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-55.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-56.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-57.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-58.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-59.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-60.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-61.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-62.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-63.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-64.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-65.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-66.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-67.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-68.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-69.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-70.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-71.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-72.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\工程图纸三维还原",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\工程图纸三维还原.md",
+      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\.git",
@@ -1673,15 +3481,7 @@
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\.git",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\node_modules",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\操作系统嵌套\\vendor",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
     {
@@ -1705,55 +3505,47 @@
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\.git",
-      "reason": "依赖、缓存、编译产物或题目数据"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\js\\bundle.js",
-      "reason": "构建输出；生成入口 build.mjs"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\node_modules",
-      "reason": "依赖、缓存、编译产物或题目数据"
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\星际战舰编队\\星际战舰编队.md",
+      "reason": "题面"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\.git",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\.git",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\.mimocode",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\.mimocode",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\analyze.cpp",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze.cpp",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\analyze.exe",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze.exe",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\grader.exe",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\grader.exe",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\test_transpose.cpp",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\test_transpose.cpp",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\test_transpose.exe",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\test_transpose.exe",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\数据",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数据",
       "reason": "标准题只取交付答案"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\通用数字电路仿真器加速.md",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数字电路仿真器加速.md",
       "reason": "标准题只取交付答案"
     },
     {
@@ -1774,7 +3566,7 @@
     }
   ],
   "missing_answers": [
-    "数学竞赛原创试题"
-  ],
-  "created": "2026-11-07T01:22:19"
+    "数学竞赛原创试题",
+    "工程图纸三维还原"
+  ]
 }

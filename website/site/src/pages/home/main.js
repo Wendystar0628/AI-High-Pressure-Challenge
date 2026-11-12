@@ -1,4 +1,4 @@
-// 首页 (website/docs/home.md): first screen (top 5 + 八项星盘) → task ticker →
+// 首页 (website/docs/home.md): first screen (top 5 + 十项星盘) → task ticker →
 // how the total is made → how a task is run → where to next. Everything is
 // drawn from site/data; the top 5 come from the scores, any number of models works.
 import './style.css';

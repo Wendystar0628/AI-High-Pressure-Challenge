@@ -1,0 +1,19 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "操作系统嵌套",
+  "tokens": 160399578,
+  "minutes": 90.1,
+  "time": "实际停止、开始→截止（实际停止未知）",
+  "cny": 8.24,
+  "api_usd": 1.23,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/操作系统嵌套/run-68ace0777d7e42bb8fc0c9bc26c15dfb",
+    "DeepSeek/V4.1Flash/操作系统嵌套/run-d34d588f585e43a38230ab709f8403d8"
+  ]
+}

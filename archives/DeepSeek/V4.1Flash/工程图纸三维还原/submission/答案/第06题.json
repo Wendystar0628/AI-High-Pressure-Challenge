@@ -1,0 +1,17 @@
+{
+  "problem": "06",
+  "parts": [
+    {"name": "1", "title": "双斜接口差压控制块", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,150,100], "r": 2}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,0,0], "depth": [-90,0],
+       "loops": [{"path": [[10,8],[140,8],[140,28],[122,46],[28,46],[10,28]]}], "name": "主体双斜顶"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [22,16,128,84]}], "depth": [0,34], "name": "内腔"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,46], "loops": [{"circle": [75,50], "d": 28}], "depth": [0,10], "name": "顶凸台Φ28"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,56], "at": [[75,50]], "d": 14, "through": true, "name": "顶孔Φ14"},
+      {"type": "hole", "plane": "YZ", "origin": [150,0,0], "at": [[50,26]], "d": 20, "depth": 60, "name": "右孔Φ20"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[50,26]], "d": 20, "depth": 60, "reverse": true, "name": "左孔Φ20"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[140,10],[10,90],[140,90]], "d": 9, "through": true, "name": "底板四角Φ9"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,46], "at": [[45,30],[105,30],[45,70],[105,70]], "d": 6, "depth": 24, "name": "顶面Φ6"}
+    ]}
+  ]
+}

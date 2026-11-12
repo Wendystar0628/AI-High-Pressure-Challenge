@@ -1,0 +1,18 @@
+{
+  "model": "MiMo/V2.6Pro",
+  "task": "工程图纸三维还原",
+  "tokens": 40049346,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 5.42,
+  "api_usd": 0.81,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "MiMo API"
+  },
+  "fitted": [],
+  "runs": [
+    "MiMo/V2.6Pro/工程图纸三维还原/run-9036a6a330544ca8902b83742306c55e"
+  ]
+}

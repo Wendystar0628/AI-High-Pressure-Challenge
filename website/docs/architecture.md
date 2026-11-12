@@ -29,7 +29,7 @@
 ## 三、页面与路由
 
 - 每种页面一个 HTML 模板，放在 `site/pages/<类型>.html`；对应一个脚本入口 `site/src/pages/<类型>/main.js`。
-  - 页面类型：`home`、`leaderboard`、`categories`、`about`、`tasks`、`task`、`model`。
+  - 页面类型：`home`、`leaderboard`、`categories`、`about`、`faq`、`tasks`、`task`、`model`。
 - 构建时由 `vite.config.js` 里的路由插件，按模板和 `site/data/*.json` 生成每个路由的 HTML：
   - 中文版和 `/en/` 下的英文版各一份；
   - 每道题一页 `/tasks/<类别>/<题目>/`；
@@ -55,7 +55,7 @@ site/
     motion.js            动效档位和曲线（骨架方，按 motion.md）
     i18n/zh/<命名空间>.json、i18n/en/<命名空间>.json   common 归骨架方，每页一个命名空间归该页
     pages/<类型>/         各页自己的脚本、样式和部件（各页负责人）
-  content/               说明页和题目页的长文，中英各一份（阅读页负责人）
+  content/               说明页、猜你想问和题目页的长文，中英各一份（阅读页负责人）
 tools/
   models.json  tasks_meta.json  export_data.py   （数据方）
   publish.py  publish.json                       发布（README.md）

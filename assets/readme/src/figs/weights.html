@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x462">
+<meta name="size" content="960x492">
 <title>权重分配</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
@@ -13,7 +13,7 @@
   .ch { display: flex; align-items: center; column-gap: 6px; }
   .ch .field { font-size: 12px; }
   .cn { font-size: 13.5px; font-weight: 700; line-height: 20px; }
-  .cw { font-size: 26px; }
+  .cw { font-size: 22px; }
   .cell { height: 44px; }
   .tw { font-size: 13px; font-weight: 700; line-height: 18px; }
   .tw .cnx { font-family: var(--font-text); font-weight: 400; color: var(--ink-2); margin-right: 4px; }
@@ -40,30 +40,32 @@
     <div class="pair"><span class="eyebrow slash">Weights</span><h2 class="title">权重分配</h2></div>
     <i class="lead"></i>
   </header>
-  <p class="desc">先分到 8 个类别，类别内各题平分；条长按权重精确绘制，顺序同题目总表。</p>
+  <p class="desc">10 个类别各占 10 分，类别内各题平分；条长按权重精确绘制，顺序同题目总表，类别用简称。</p>
   <div class="plot" id="plot"></div>
 </div>
 <script>
 // Weights in percent, exact. Category weight = sum of its tasks.
-// Cells take the category colour --cat-<key>; the first three (standard, lime) add the ink edge.
+// Cells take the category colour --cat-<key>; the first five (standard, lime) add the ink edge.
 const CATS = [
-  ['reason',   '数学推理',       '15%',   [['形式化<br>证明题', 7.5], ['数学竞赛<br>原创试题', 7.5]]],
-  ['algo',     '算法竞赛',       '15%',   [[null, 5], [null, 5], [null, 5]]],
-  ['spatial',  '空间推理',       '10%',   [['鲁班锁拆解', 10]]],
-  ['interact', '复杂交互应用',   '10%',   [['AE风味动效<br>设计编辑器', 10]]],
-  ['game',     '游戏设计与开发', '12.5%', [['动态路由塔防', 12.5]]],
-  ['physics',  '物理模拟',       '10%',   [['果冻冲击与<br>造浪水槽', 10]]],
-  ['visual',   '视觉设计与渲染', '15%',   [['NVIDIA<br>网页艺术', 7.5], ['太阳雨<br>渔港3D渲染', 7.5]]],
-  ['system',   '系统架构与实现', '12.5%', [['操作系统嵌套', 12.5]]],
+  ['reason',   '数学推理',       '10%',  [['形式化<br>证明题', 5], ['数学竞赛<br>原创试题', 5]]],
+  ['algo',     '性能优化',       '10%',  [[null, 5], [null, 5]]],
+  ['battle',   '算法对抗',       '10%',    [['攻城略地', 10]]],
+  ['spatial',  '空间推理',       '10%',    [['鲁班锁<br>拆解', 10]]],
+  ['drawing',  '识图建模',       '10%',    [['工程图纸<br>三维还原', 10]]],
+  ['interact', '交互应用',       '10%',    [['AE动效<br>编辑器', 10]]],
+  ['game',     '游戏开发',       '10%',    [['动态路由塔防', 10]]],
+  ['physics',  '物理模拟',       '10%',    [['果冻冲击与<br>造浪水槽', 10]]],
+  ['visual',   '视觉渲染',       '10%',  [['太阳雨<br>渔港', 5], ['星际<br>战舰<br>编队', 5]]],
+  ['system',   '系统架构',       '10%',  [['操作系统<br>嵌套', 10]]],
 ];
-const STD = 3;
+const STD = 5;
 // The two kinds of task: contiguous in this order (standard first, as in the task table).
-const KINDS = [['std', '标准评判题', ['6 题', '程序校验生成分数'], 0, 40], ['des', '主动设计题', ['6 题', '由 Opus 5.5 与 6.1Sol 各评取平均'], 40, 100]];
+const KINDS = [['std', '标准评判题', ['7 题', '程序校验生成分数'], 0, 50], ['des', '主动设计题', ['6 题', '两位评分员各评取平均'], 50, 100]];
 const MARK = { std: '<i class="k std"></i>', des: '<span class="star k des"></span>' };
 const W = 880, P = W / 100;               // px per percentage point
 const GAP = 4, TGAP = 2;                  // paper gap between categories / between tasks, centred on the exact boundary
 const NO_Y = 0, CN_Y = 22, CW_Y = 46, BAR_Y = 82, BAR_H = 44, TW_Y = BAR_Y + BAR_H + 10, TN_Y = TW_Y + 20,
-      KIND_Y = TN_Y + 50, RULER_Y = KIND_Y + 70;
+      KIND_Y = TN_Y + 62, RULER_Y = KIND_Y + 86;
 const plot = document.getElementById('plot');
 function put(cls, css, html = '') {
   const d = document.createElement('div');
@@ -91,7 +93,7 @@ CATS.forEach(([k, name, w, tasks], ci) => {
     }
     t0 += tw;
   });
-  if (k === 'algo') put('tw num', `left:${l}px;top:${TW_Y}px`, `<span class="cnx">三题各</span>5%`);
+  if (k === 'algo') put('tw num', `left:${l}px;top:${TW_Y}px`, `<span class="cnx">两题各</span>5%`);
   at += total;
 });
 

@@ -7,7 +7,7 @@
 // (bar, search, shortcuts, side panel) → load data → render(ctx) → restore
 // the reading position after a language switch → open ?model= panel →
 // <html class="is-ready"> and document event 'octa:ready' { detail: ctx }.
-import { route } from '../core/route.js';
+import { route, links } from '../core/route.js';
 import { loadNamespaces, t, lang, applyI18n } from '../core/i18n.js';
 import { loadData } from '../core/data.js';
 import { h } from '../core/dom.js';
@@ -37,6 +37,27 @@ function wireShell() {
   wirePanel();
 }
 
+// 暂停公示（website/tools/site.json 的 notice）：这些页面只画成绩和模型，打开时换成一条提示，页面自己的脚本不运行；
+// 题目页、说明页和猜你想问照常。
+const HOLD_PAGES = new Set(['home', 'leaderboard', 'categories', 'model']);
+
+function showHold(notice) {
+  const main = document.querySelector('main') ?? document.body;
+  for (const el of main.querySelectorAll('.md-side, .md-head, [data-slot="facts"], [data-slot="figs"]')) el.hidden = true;
+  const slot = main.querySelector('[data-slot="page"]') ?? main;
+  slot.replaceChildren(
+    h(
+      'section.site-hold',
+      h('p.st-notice', { 'data-flag': t('common.hold.flag'), role: 'status' }, (lang === 'en' ? notice.en : notice.zh) || notice.zh),
+      h(
+        'p.st-actions',
+        h('a.st-btn.go', { href: links.tasks() }, t('common.pages.tasks.title')),
+        h('a.st-btn', { href: links.about() }, t('common.pages.about.title')),
+      ),
+    ),
+  );
+}
+
 function showLoadError() {
   const main = document.querySelector('main') ?? document.body;
   if (main.querySelector('.site-load-error')) return;
@@ -64,7 +85,8 @@ export async function boot(render, { ns = [], data: wantData = true } = {}) {
   }
   const ctx = { route, data, t, lang };
   try {
-    if (render) await render(ctx);
+    if (data?.notice && HOLD_PAGES.has(route.page)) showHold(data.notice);
+    else if (render) await render(ctx);
   } catch (e) {
     console.error(e);
   }

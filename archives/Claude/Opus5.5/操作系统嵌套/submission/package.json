@@ -1,19 +1,15 @@
 {
   "name": "nested-os",
   "version": "1.0.0",
-  "description": "Nest OS - 嵌套图形操作系统",
-  "type": "module",
-  "main": "main.cjs",
-  "scripts": {
-    "start": "electron . ",
-    "build:fixtures": "node tools/build-fixtures.mjs"
-  },
-  "license": "UNLICENSED",
   "private": true,
-  "dependencies": {
-    "three": "0.187.0"
+  "description": "嵌套图形操作系统",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
   },
-  "devDependencies": {
-    "electron": "45.2.1"
-  }
+  "dependencies": {
+    "electron": "45.2.1",
+    "three": "^0.187.0"
+  },
+  "type": "module"
 }

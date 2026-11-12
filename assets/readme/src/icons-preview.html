@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="size" content="960x420">
+<meta name="size" content="960x720">
 <title>类别图标</title>
 <link rel="stylesheet" href="tokens.css">
 <style>
   .grid { position: absolute; left: 40px; right: 40px; top: 104px; bottom: 32px; display: grid;
-          grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; border-top: 1px solid var(--ink); }
+          grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); border-top: 1px solid var(--ink); }
   .cell { border-bottom: 1px solid var(--rule); padding: 16px 0 0; display: grid; grid-template-columns: 76px 1fr; column-gap: 14px; }
-  .cell:nth-child(4n+2), .cell:nth-child(4n+3), .cell:nth-child(4n+4) { padding-left: 16px; border-left: 1px solid var(--rule); }
+  .cell:nth-child(3n+2), .cell:nth-child(3n+3) { padding-left: 16px; border-left: 1px solid var(--rule); }
   .big { width: 72px; height: 72px; }
   .no { font-size: 12px; }
   .name { font-size: 15px; font-weight: 700; line-height: 1.3; margin-top: 2px; white-space: nowrap; }
@@ -24,14 +24,14 @@
 <body>
 <div class="frame">
   <header class="head">
-    <div class="pair"><span class="eyebrow slash">Categories</span><h2 class="title">8 个类别图标</h2></div>
+    <div class="pair"><span class="eyebrow slash">Categories</span><h2 class="title">10 个类别图标</h2></div>
     <i class="lead"></i>
   </header>
   <div class="grid" id="g"></div>
 </div>
 <script>
-const CATS = [['reason', '数学推理'], ['algo', '算法竞赛'], ['spatial', '空间推理'], ['interact', '复杂交互应用'],
-              ['game', '游戏设计与开发'], ['physics', '物理模拟'], ['visual', '视觉设计与渲染'], ['system', '系统架构与实现']];
+const CATS = [['reason', '数学推理'], ['algo', '性能优化'], ['battle', '算法对抗'], ['spatial', '空间推理'], ['drawing', '识图建模'],
+              ['interact', '复杂交互应用'], ['game', '游戏设计与开发'], ['physics', '物理模拟'], ['visual', '视觉设计与渲染'], ['system', '系统架构与实现']];
 document.getElementById('g').innerHTML = CATS.map(([k, n], i) => `
   <div class="cell">
     <img class="big" src="../icon-${k}.svg" alt="">

@@ -1,34 +1,77 @@
-/* PRISM core utilities */
-(function () {
-  const AE = (window.AE = window.AE || {});
+/* ============================================================
+   util.js — 基础数学、矩阵、贝塞尔、噪声与通用工具
+   ============================================================ */
+(function (global) {
+  'use strict';
+  const AE = global.AE = global.AE || {};
+  const U = AE.util = {};
 
-  const U = (AE.U = {});
-  U.$ = (s, r = document) => r.querySelector(s);
-  U.$$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  U.el = (tag, cls, html) => {
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (html != null) e.innerHTML = html;
-    return e;
-  };
-  U.clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  U.EPS = 1e-7;
+  U.TAU = Math.PI * 2;
+  U.DEG = Math.PI / 180;
+  U.RAD = 180 / Math.PI;
+
+  U.clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
   U.lerp = (a, b, t) => a + (b - a) * t;
-  U.invLerp = (a, b, v) => (b - a === 0 ? 0 : (v - a) / (b - a));
-  U.smoothstep = (a, b, x) => { const t = U.clamp((x - a) / (b - a || 1)); return t * t * (3 - 2 * t); };
-  U.easeOut = t => 1 - Math.pow(1 - t, 3);
-  U.easeIn = t => t * t * t;
-  U.easeInOut = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  U.rad = d => d * Math.PI / 180;
-  U.deg = r => r * 180 / Math.PI;
-  U.round = (v, p = 0) => { const m = Math.pow(10, p); return Math.round(v * m) / m; };
-  U.map = (v, a, b, c, d) => c + (d - c) * U.clamp((v - a) / (b - a || 1));
-  U.mod = (v, n) => ((v % n) + n) % n;
   U.mix = U.lerp;
+  U.smoothstep = (a, b, x) => {
+    const t = U.clamp((x - a) / (b - a || 1e-9), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+  U.smootherstep = (a, b, x) => {
+    const t = U.clamp((x - a) / (b - a || 1e-9), 0, 1);
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  };
+  U.approx = (a, b, e = 1e-4) => Math.abs(a - b) < e;
+  U.sign = v => v < 0 ? -1 : (v > 0 ? 1 : 0);
+  U.mod = (a, n) => ((a % n) + n) % n;
+  U.round = (v, d = 2) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
+  U.num = (v, d = 1) => {
+    if (v === null || v === undefined || Number.isNaN(v)) return '—';
+    if (Math.abs(v) >= 1000) return (v / 1000).toFixed(2) + 'k';
+    return (+v.toFixed(d)).toString();
+  };
+  U.pad = (n, l = 2) => String(n).padStart(l, '0');
+  U.fmtTC = (t, fps) => {
+    t = Math.max(0, t);
+    const f = Math.floor(t * fps + 1e-6);
+    const ff = f % fps;
+    const sec = Math.floor(f / fps);
+    return `${U.pad(Math.floor(sec / 3600))}:${U.pad(Math.floor(sec / 60) % 60)}:${U.pad(sec % 60)}:${U.pad(ff)}`;
+  };
+  U.fmtTime = (t) => {
+    t = Math.max(0, t);
+    const m = Math.floor(t / 60), s = t - m * 60;
+    return `${m}:${s.toFixed(2).padStart(5, '0')}`;
+  };
+  U.fmtClock = (t) => {
+    t = Math.max(0, t);
+    const m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return `${U.pad(m)}:${U.pad(s)}:${U.pad(Math.floor((t % 1) * 100))}`;
+  };
 
-  U.uid = (p = 'id') => p + '_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
-  U.hash = (str) => { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
-  U.seedRand = (seed) => {
-    let a = (seed ^ 0x9e3779b9) >>> 0;
+  U.hexToRgb = (hex) => {
+    hex = String(hex).replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const n = parseInt(hex, 16) || 0;
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  };
+  U.rgbToHex = (r, g, b) => '#' + [r, g, b].map(v => U.clamp(Math.round(v), 0, 255).toString(16).padStart(2, '0')).join('');
+  U.rgb01 = (hex) => { const c = U.hexToRgb(hex); return [c.r / 255, c.g / 255, c.b / 255]; };
+  U.mixColor = (a, b, t) => {
+    const ca = U.hexToRgb(a), cb = U.hexToRgb(b);
+    return U.rgbToHex(U.lerp(ca.r, cb.r, t), U.lerp(ca.g, cb.g, t), U.lerp(ca.b, cb.b, t));
+  };
+
+  // ---------- 随机与噪声 ----------
+  U.hashStr = (str) => {
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  };
+  U.rng = (seed) => {
+    let a = (typeof seed === 'number' ? seed : U.hashStr(String(seed))) >>> 0;
+    if (a === 0) a = 0x9e3779b9;
     return function () {
       a |= 0; a = (a + 0x6D2B79F5) | 0;
       let t = Math.imul(a ^ (a >>> 15), 1 | a);
@@ -36,273 +79,320 @@
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   };
-  const perm = new Uint8Array(512);
-  (() => {
-    const r = U.seedRand(1337); const p = new Uint8Array(256);
-    for (let i = 0; i < 256; i++) p[i] = i;
-    for (let i = 255; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const t = p[i]; p[i] = p[j]; p[j] = t; }
-    for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
-  })();
-  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
-  const grad2 = (h, x, y) => { const u = (h & 1) ? x : -x, v = (h & 2) ? y : -y; return u + v; };
+  U.hash1 = (n) => {
+    let x = Math.sin(n * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  };
+  U.noise1 = (x) => {
+    const i = Math.floor(x), f = x - i;
+    const u = f * f * (3 - 2 * f);
+    return U.lerp(U.hash1(i), U.hash1(i + 1), u) * 2 - 1;
+  };
+  U.fbm1 = (x, oct = 3) => {
+    let s = 0, a = .5, f = 1;
+    for (let i = 0; i < oct; i++) { s += a * U.noise1(x * f + i * 13.7); a *= .5; f *= 2.03; }
+    return s;
+  };
   U.noise2 = (x, y) => {
-    const X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
-    const xf = x - Math.floor(x), yf = y - Math.floor(y);
-    const u = fade(xf), v = fade(yf);
-    const aa = perm[perm[X] + Y], ab = perm[perm[X] + Y + 1];
-    const ba = perm[perm[X + 1] + Y], bb = perm[perm[X + 1] + Y + 1];
-    return U.lerp(U.lerp(grad2(aa, xf, yf), grad2(ba, xf - 1, yf), u), U.lerp(grad2(ab, xf, yf - 1), grad2(bb, xf - 1, yf - 1), u), v);
+    const ix = Math.floor(x), iy = Math.floor(y);
+    const fx = x - ix, fy = y - iy;
+    const ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+    const h = (a, b) => U.hash1(a * 127.1 + b * 311.7 + 74.7);
+    const a = h(ix, iy), b = h(ix + 1, iy), c = h(ix, iy + 1), d = h(ix + 1, iy + 1);
+    return U.lerp(U.lerp(a, b, ux), U.lerp(c, d, ux), uy) * 2 - 1;
   };
-  U.fbm2 = (x, y, oct = 3, lac = 2, gain = .5) => {
-    let a = 0, amp = .5, f = 1;
-    for (let i = 0; i < oct; i++) { a += amp * U.noise2(x * f, y * f); f *= lac; amp *= gain; }
-    return a;
+  U.fbm2 = (x, y, oct = 4) => {
+    let s = 0, a = .5, f = 1;
+    for (let i = 0; i < oct; i++) { s += a * U.noise2(x * f, y * f); a *= .5; f *= 2.01; }
+    return s;
   };
-  U.noise3 = (x, y, z) => (U.noise2(x + z * .71, y - z * .37) + U.noise2(x - z * .43 + 17.3, y + z * .83 + 9.1)) * .5;
+  U.noise3 = (x, y, z) => {
+    // 由三层 2D 噪声近似，足够视觉使用且确定性良好
+    return (U.noise2(x + z * 1.31, y - z * .73) * .6 + U.noise2(y * 1.7 + z, x * 1.3 - z * .4) * .4);
+  };
 
-  // ---------- easing ----------
-  U.cubicBezier = (p1x, p1y, p2x, p2y) => {
-    const A = (a, b) => 3 * a * (1 - b) * (1 - b) + 3 * b * (1 - b) * 0 ; // unused
-    const cx = 3 * p1x, bx = 3 * (p2x - p1x) - cx, ax = 1 - cx - bx;
-    const cy = 3 * p1y, by = 3 * (p2y - p1y) - cy, ay = 1 - cy - by;
-    const sx = t => ((ax * t + bx) * t + cx) * t;
-    const sy = t => ((ay * t + by) * t + cy) * t;
-    const dx = t => (3 * ax * t + 2 * bx) * t + cx;
+  // ---------- 标量/向量 ----------
+  U.toVec3 = (v, d = 0) => {
+    if (v == null) return { x: d, y: d, z: d };
+    if (typeof v === 'number') return { x: v, y: v, z: v };
+    if (Array.isArray(v)) return { x: +v[0] || 0, y: +v[1] || 0, z: +(v[2] || 0) };
+    return { x: +v.x || 0, y: +v.y || 0, z: +v.z || 0 };
+  };
+  U.toVec2 = (v) => { const p = U.toVec3(v); return { x: p.x, y: p.y }; };
+  U.vadd = (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: (a.z || 0) + (b.z || 0) });
+  U.vsub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: (a.z || 0) - (b.z || 0) });
+  U.vmul = (a, s) => ({ x: a.x * s, y: a.y * s, z: (a.z || 0) * s });
+  U.vlen = (a) => Math.hypot(a.x, a.y, a.z || 0);
+  U.vnorm = (a) => { const l = U.vlen(a) || 1; return { x: a.x / l, y: a.y / l, z: (a.z || 0) / l }; };
+  U.vdot = (a, b) => a.x * b.x + a.y * b.y + (a.z || 0) * (b.z || 0);
+  U.vcross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x });
+  U.vlerp = (a, b, t) => ({ x: U.lerp(a.x, b.x, t), y: U.lerp(a.y, b.y, t), z: U.lerp(a.z || 0, b.z || 0, t) });
+  U.dist2 = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+  // ---------- 矩阵（列主序，WebGL 风格） ----------
+  const M4 = U.m4 = {};
+  M4.identity = () => new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]);
+  M4.clone = (m) => new Float32Array(m);
+  M4.mul = (a, b) => {
+    const o = new Float32Array(16);
+    for (let c = 0; c < 4; c++) {
+      const b0 = b[c*4], b1 = b[c*4+1], b2 = b[c*4+2], b3 = b[c*4+3];
+      o[c*4]   = a[0]*b0 + a[4]*b1 + a[8]*b2  + a[12]*b3;
+      o[c*4+1] = a[1]*b0 + a[5]*b1 + a[9]*b2  + a[13]*b3;
+      o[c*4+2] = a[2]*b0 + a[6]*b1 + a[10]*b2 + a[14]*b3;
+      o[c*4+3] = a[3]*b0 + a[7]*b1 + a[11]*b2 + a[15]*b3;
+    }
+    return o;
+  };
+  M4.translation = (x, y, z = 0) => new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, x,y,z,1]);
+  M4.scaling = (x, y, z = 1) => new Float32Array([x,0,0,0, 0,y,0,0, 0,0,z,0, 0,0,0,1]);
+  M4.rotationX = (a) => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1]); };
+  M4.rotationY = (a) => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1]); };
+  M4.rotationZ = (a) => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([c,s,0,0, -s,c,0,0, 0,0,1,0, 0,0,0,1]); };
+  M4.euler = (rx, ry, rz) => M4.mul(M4.rotationZ(rz), M4.mul(M4.rotationY(ry), M4.rotationX(rx)));
+  M4.applyPoint = (m, p) => {
+    const x = p.x, y = p.y, z = p.z || 0;
+    const w = m[3]*x + m[7]*y + m[11]*z + m[15] || 1;
+    return {
+      x: (m[0]*x + m[4]*y + m[8]*z + m[12]) / w,
+      y: (m[1]*x + m[5]*y + m[9]*z + m[13]) / w,
+      z: (m[2]*x + m[6]*y + m[10]*z + m[14]) / w,
+      w
+    };
+  };
+  M4.applyDir = (m, p) => ({
+    x: m[0]*p.x + m[4]*p.y + m[8]*(p.z||0),
+    y: m[1]*p.x + m[5]*p.y + m[9]*(p.z||0),
+    z: m[2]*p.x + m[6]*p.y + m[10]*(p.z||0)
+  });
+  M4.invert = (a) => {
+    const a00=a[0],a01=a[1],a02=a[2],a03=a[3], a10=a[4],a11=a[5],a12=a[6],a13=a[7];
+    const a20=a[8],a21=a[9],a22=a[10],a23=a[11], a30=a[12],a31=a[13],a32=a[14],a33=a[15];
+    const b00=a00*a11-a01*a10, b01=a00*a12-a02*a10, b02=a00*a13-a03*a10;
+    const b03=a01*a12-a02*a11, b04=a01*a13-a03*a11, b05=a02*a13-a03*a12;
+    const b06=a20*a31-a21*a30, b07=a20*a32-a22*a30, b08=a20*a33-a23*a30;
+    const b09=a21*a32-a22*a31, b10=a21*a33-a23*a31, b11=a22*a33-a23*a32;
+    let det = b00*b11 - b01*b10 + b02*b09 + b03*b08 - b04*b07 + b05*b06;
+    if (!det) return M4.identity();
+    det = 1 / det;
+    const o = new Float32Array(16);
+    o[0]=(a11*b11-a12*b10+a13*b09)*det; o[1]=(a02*b10-a01*b11-a03*b09)*det;
+    o[2]=(a31*b05-a32*b04+a33*b03)*det; o[3]=(a22*b04-a21*b05-a23*b03)*det;
+    o[4]=(a12*b08-a10*b11-a13*b07)*det; o[5]=(a00*b11-a02*b08+a03*b07)*det;
+    o[6]=(a32*b02-a30*b05-a33*b01)*det; o[7]=(a20*b05-a22*b02+a23*b01)*det;
+    o[8]=(a10*b10-a11*b08+a13*b06)*det; o[9]=(a01*b08-a00*b10-a03*b06)*det;
+    o[10]=(a30*b04-a31*b02+a33*b00)*det; o[11]=(a21*b02-a20*b04-a23*b00)*det;
+    o[12]=(a11*b07-a10*b09-a12*b06)*det; o[13]=(a00*b09-a01*b07+a02*b06)*det;
+    o[14]=(a31*b01-a30*b03-a32*b00)*det; o[15]=(a20*b03-a21*b01+a22*b00)*det;
+    return o;
+  };
+  // 摄像机：世界 y 向下；屏幕上方为世界 -y
+  M4.view = (eye, target, roll = 0) => {
+    const F = U.vnorm(U.vsub(target, eye));
+    const up = { x: 0, y: -1, z: 0 };
+    let R = U.vnorm(U.vcross(up, F));
+    if (!isFinite(R.x) || U.vlen(R) < 1e-5) R = { x: 1, y: 0, z: 0 };
+    let Up = U.vcross(F, R);
+    if (roll) {
+      const ca = Math.cos(roll), sa = Math.sin(roll);
+      const R2 = { x: R.x*ca + Up.x*sa, y: R.y*ca + Up.y*sa, z: R.z*ca + Up.z*sa };
+      const U2 = { x: -R.x*sa + Up.x*ca, y: -R.y*sa + Up.y*ca, z: -R.z*sa + Up.z*ca };
+      R = R2; Up = U2;
+    }
+    const o = new Float32Array(16);
+    o[0]=R.x; o[1]=Up.x; o[2]=-F.x; o[3]=0;
+    o[4]=R.y; o[5]=Up.y; o[6]=-F.y; o[7]=0;
+    o[8]=R.z; o[9]=Up.z; o[10]=-F.z; o[11]=0;
+    o[12]=-U.vdot(R,eye); o[13]=-U.vdot(Up,eye); o[14]=U.vdot(F,eye); o[15]=1;
+    return o;
+  };
+  M4.perspective = (fovy, aspect, near, far) => {
+    const f = 1 / Math.tan(fovy / 2);
+    const nf = 1 / (near - far);
+    return new Float32Array([
+      f/aspect,0,0,0,
+      0,f,0,0,
+      0,0,(far+near)*nf,-1,
+      0,0,2*far*near*nf,0
+    ]);
+  };
+  M4.ortho = (l,r,b,t,n,f) => new Float32Array([
+    2/(r-l),0,0,0, 0,2/(t-b),0,0, 0,0,-2/(f-n),0,
+    -(r+l)/(r-l), -(t+b)/(t-b), -(f+n)/(f-n), 1
+  ]);
+  M4.project = (vp, p, w, h) => {
+    const c = M4.applyPoint(vp, p);
+    return { x: (c.x * .5 + .5) * w, y: (.5 - c.y * .5) * h, z: c.z, w: c.w, visible: c.w > 0 };
+  };
+  // 分解 3D 仿射矩阵的旋转（欧拉 ZYX）与缩放
+  M4.decompose = (m) => {
+    const sx = Math.hypot(m[0], m[1], m[2]) || 1e-9;
+    const sy = Math.hypot(m[4], m[5], m[6]) || 1e-9;
+    const sz = Math.hypot(m[8], m[9], m[10]) || 1e-9;
+    let d = (m[0]*m[5]*m[10] + m[4]*m[9]*m[2] + m[8]*m[1]*m[6]
+           - m[8]*m[5]*m[2] - m[4]*m[1]*m[10] - m[0]*m[9]*m[6]);
+    const flip = d < 0 ? -1 : 1;
+    let r00 = m[0]/sx, r01 = m[4]/sy, r02 = m[8]/sz;
+    let r10 = m[1]/sx, r11 = m[5]/sy, r12 = m[9]/sz;
+    let r20 = m[2]/sx, r21 = m[6]/sy, r22 = m[10]/sz;
+    if (flip < 0) { r00 = -r00; r01 = -r02; r10 = -r10; r20 = -r20; }
+    let ry = Math.asin(U.clamp(-r20, -1, 1));
+    let rx, rz;
+    if (Math.abs(r20) < 0.99999) {
+      rx = Math.atan2(r21, r22);
+      rz = Math.atan2(r10, r00);
+    } else {
+      rx = Math.atan2(-r12, r11);
+      rz = 0;
+    }
+    return {
+      position: { x: m[12], y: m[13], z: m[14] },
+      scale: { x: sx, y: sy * flip, z: sz },
+      rotation: { x: rx, y: ry, z: rz }
+    };
+  };
+  M4.decompose2D = (m) => ({
+    x: m[12], y: m[13],
+    rotation: Math.atan2(m[1], m[0]),
+    sx: Math.hypot(m[0], m[1]),
+    sy: Math.hypot(m[4], m[5]) * ((m[0]*m[5] - m[1]*m[4]) < 0 ? -1 : 1)
+  });
+  M4.mat3RotZ = (a) => { const c=Math.cos(a), s=Math.sin(a); return { a:c, b:s, c:-s, d:c }; };
+
+  // 单轴旋转（用于 3D 面朝向）
+  U.rot2 = (p, a) => ({ x: p.x * Math.cos(a) - p.y * Math.sin(a), y: p.x * Math.sin(a) + p.y * Math.cos(a) });
+
+  // ---------- 贝塞尔 ----------
+  U.bezierPoint = (p0, p1, p2, p3, t) => {
+    const mt = 1 - t, a = mt*mt*mt, b = 3*mt*mt*t, c = 3*mt*t*t, d = t*t*t;
+    return { x: a*p0.x + b*p1.x + c*p2.x + d*p3.x,
+             y: a*p0.y + b*p1.y + c*p2.y + d*p3.y,
+             z: a*(p0.z||0) + b*(p1.z||0) + c*(p2.z||0) + d*(p3.z||0) };
+  };
+  U.bezierDeriv = (p0, p1, p2, p3, t) => {
+    const mt = 1 - t;
+    return {
+      x: 3*mt*mt*(p1.x-p0.x) + 6*mt*t*(p2.x-p1.x) + 3*t*t*(p3.x-p2.x),
+      y: 3*mt*mt*(p1.y-p0.y) + 6*mt*t*(p2.y-p1.y) + 3*t*t*(p3.y-p2.y),
+      z: 3*mt*mt*((p1.z||0)-(p0.z||0)) + 6*mt*t*((p2.z||0)-(p1.z||0)) + 3*t*t*((p3.z||0)-(p2.z||0))
+    };
+  };
+  U.arcLengthLUT = (p0, p1, p2, p3, n = 24) => {
+    let len = 0, prev = p0, lut = [0];
+    for (let i = 1; i <= n; i++) {
+      const p = U.bezierPoint(p0, p1, p2, p3, i / n);
+      len += Math.hypot(p.x-prev.x, p.y-prev.y, (p.z||0)-(prev.z||0));
+      lut.push(len); prev = p;
+    }
+    return { lut, length: len };
+  };
+  U.bezierAtLength = (p0, p1, p2, p3, lut, target) => {
+    target = U.clamp(target, 0, lut.length);
+    let lo = 0, hi = lut.lut.length - 1;
+    while (lo < hi - 1) { const mid = (lo + hi) >> 1; if (lut.lut[mid] < target) lo = mid; else hi = mid; }
+    const a = lut.lut[lo], b = lut.lut[hi];
+    const f = (target - a) / (b - a || 1e-9);
+    return U.bezierPoint(p0, p1, p2, p3, (lo + f) / (lut.lut.length - 1));
+  };
+
+  // 三次 ease 曲线（handle 为归一化的相对偏移）
+  U.easeCurve = (x1, y1, x2, y2) => {
+    const cx = 3*x1, bx = 3*(x2-x1)-cx, ax = 1-cx-bx;
+    const cy = 3*y1, by = 3*(y2-y1)-cy, ay = 1-cy-by;
+    const sampleX = t => ((ax*t + bx)*t + cx)*t;
+    const sampleY = t => ((ay*t + by)*t + cy)*t;
+    const sampleDX = t => (3*ax*t + 2*bx)*t + cx;
     return function (x) {
-      if (x <= 0) return 0; if (x >= 1) return 1;
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
       let t = x;
-      for (let i = 0; i < 6; i++) { const e = sx(t) - x; if (Math.abs(e) < 1e-6) return sy(t); const d = dx(t); if (Math.abs(d) < 1e-8) break; t -= e / d; }
-      let lo = 0, hi = 1; t = x;
-      for (let i = 0; i < 24; i++) { const v = sx(t); if (Math.abs(v - x) < 1e-5) return sy(t); if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
-      return sy(t);
+      for (let i = 0; i < 6; i++) {
+        const dx = sampleX(t) - x;
+        if (Math.abs(dx) < 1e-5) return sampleY(t);
+        const d = sampleDX(t);
+        if (Math.abs(d) < 1e-6) break;
+        t -= dx / d;
+      }
+      let lo = 0, hi = 1;
+      t = x;
+      for (let i = 0; i < 20; i++) {
+        const v = sampleX(t);
+        if (Math.abs(v - x) < 1e-6) break;
+        if (v < x) lo = t; else hi = t;
+        t = (lo + hi) / 2;
+      }
+      return sampleY(t);
     };
   };
-  U.EASE_PRESETS = {
-    linear: [1 / 3, 1 / 3, 2 / 3, 2 / 3],
-    ease: [.33, 0, .67, 1],
-    easeIn: [.42, 0, 1, 1],
-    easeOut: [0, 0, .58, 1],
-    snappy: [.2, .9, .25, 1],
-    slow: [.7, 0, .9, 1]
-  };
+  U.LINEAR_EASE = U.easeCurve(1/3, 1/3, 2/3, 2/3);
+  U.EASE_INOUT = U.easeCurve(.42, 0, .58, 1);
 
-  // ---------- colors ----------
-  U.hexToRgb = (hex) => {
-    hex = String(hex || '#ffffff').replace('#', '');
-    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-    const n = parseInt(hex, 16);
-    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+  // ---------- 杂项 ----------
+  U.uid = (() => { let n = 1; return (p = 'id') => p + '_' + (n++) + '_' + Math.floor(Math.random()*9999); })();
+  U.deepClone = (o) => {
+    if (o === null || typeof o !== 'object') return o;
+    if (Array.isArray(o)) return o.map(U.deepClone);
+    const c = {};
+    for (const k in o) if (Object.prototype.hasOwnProperty.call(o, k)) c[k] = U.deepClone(o[k]);
+    return c;
   };
-  U.rgbToHex = (rgb) => {
-    const c = v => Math.round(U.clamp(v) * 255).toString(16).padStart(2, '0');
-    return '#' + c(rgb[0]) + c(rgb[1]) + c(rgb[2]);
-  };
-  U.rgbaStr = (c, a) => `rgba(${Math.round(U.clamp(c[0]) * 255)},${Math.round(U.clamp(c[1]) * 255)},${Math.round(U.clamp(c[2]) * 255)},${a == null ? (c[3] == null ? 1 : c[3]) : a})`;
-  U.lerpColor = (a, b, t) => [U.lerp(a[0], b[0], t), U.lerp(a[1], b[1], t), U.lerp(a[2], b[2], t), U.lerp(a[3] == null ? 1 : a[3], b[3] == null ? 1 : b[3], t)];
-  U.colorArr = (v) => {
-    if (!v) return [1, 1, 1, 1];
-    if (Array.isArray(v)) return v.length === 4 ? v : [v[0], v[1], v[2], 1];
-    return U.hexToRgb(v).concat([1]);
-  };
-  U.cssColor = (v) => Array.isArray(v) ? U.rgbaStr(v) : (v || '#fff');
-  U.hsv2rgb = (h, s, v) => {
-    h = U.mod(h, 1) * 6; const i = Math.floor(h), f = h - i;
-    const p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s);
-    return [[v, t, p], [q, v, p], [p, v, t], [p, q, v], [t, p, v], [v, p, q]][i % 6];
-  };
-
-  // ---------- time ----------
-  U.pad = (n, l = 2) => String(Math.floor(n)).padStart(l, '0');
-  U.timecode = (t, fps = 60) => {
-    t = Math.max(0, t);
-    const f = Math.floor(t * fps + 1e-6);
-    const ff = f % fps, s = Math.floor(f / fps), ss = s % 60, m = Math.floor(s / 60) % 60, h = Math.floor(s / 3600);
-    return `${U.pad(h)}:${U.pad(m)}:${U.pad(ss)}:${U.pad(ff)}`;
-  };
-  U.parseTime = (str, fps = 60) => {
-    str = String(str).trim();
-    if (!str) return null;
-    if (str.includes(':')) {
-      const p = str.split(':').map(Number).reverse();
-      let t = 0;
-      if (p[0] != null) t += p[0] / fps;
-      if (p[1] != null) t += p[1];
-      if (p[2] != null) t += p[2] * 60;
-      if (p[3] != null) t += p[3] * 3600;
-      return t;
-    }
-    const m = str.match(/^(-?[\d.]+)\s*(s|f|帧|秒)?$/);
-    if (!m) return null;
-    const v = parseFloat(m[1]); if (isNaN(v)) return null;
-    return m[2] === 'f' || m[2] === '帧' ? v / fps : v;
-  };
-
-  // ---------- math / mat4 ----------
-  const M = (AE.M = {});
-  M.add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + (b[2] || 0)];
-  M.sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] + (a[2] ? 0 : 0) - (b[2] || 0)];
-  M.mul = (a, s) => [a[0] * s, a[1] * s, (a[2] || 0) * s];
-  M.len = a => Math.hypot(a[0], a[1], a[2] || 0);
-  M.norm = a => { const l = M.len(a) || 1; return [a[0] / l, a[1] / l, (a[2] || 0) / l]; };
-  M.dot = (a, b) => a[0] * b[0] + a[1] * b[1] + (a[2] || 0) * (b[2] || 0);
-  M.cross = (a, b) => [a[1] * (b[2] || 0) - (a[2] || 0) * b[1], (a[2] || 0) * b[0] - a[0] * (b[2] || 0), a[0] * b[1] - a[1] * b[0]];
-  M.lerp = (a, b, t) => [U.lerp(a[0], b[0], t), U.lerp(a[1], b[1], t), U.lerp(a[2] || 0, b[2] || 0, t)];
-  M.dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], (a[2] || 0) - (b[2] || 0));
-
-  M.identity = () => new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
-  M.clone = m => new Float32Array(m);
-  M.mult = (a, b) => {
-    const o = new Float32Array(16);
-    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) {
-      o[i * 4 + j] = a[j] * b[i * 4] + a[4 + j] * b[i * 4 + 1] + a[8 + j] * b[i * 4 + 2] + a[12 + j] * b[i * 4 + 3];
-    }
-    return o;
-  };
-  M.translate = (x, y, z = 0) => new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1]);
-  M.scale = (x, y = x, z = 1) => new Float32Array([x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1]);
-  M.rotateX = a => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]); };
-  M.rotateY = a => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); };
-  M.rotateZ = a => { const c = Math.cos(a), s = Math.sin(a); return new Float32Array([c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); };
-  M.fromTRS = (pos, rot, scl, anchor) => {
-    let m = M.translate(pos[0] - (anchor ? anchor[0] : 0), pos[1] - (anchor ? anchor[1] : 0), (pos[2] || 0) - (anchor ? (anchor[2] || 0) : 0));
-    m = M.mult(m, M.rotateZ(U.rad(rot[2] || 0)));
-    m = M.mult(m, M.rotateY(U.rad(rot[1] || 0)));
-    m = M.mult(m, M.rotateX(U.rad(rot[0] || 0)));
-    m = M.mult(m, M.scale(scl[0] / 100, scl[1] / 100, (scl[2] == null ? 100 : scl[2]) / 100));
-    return m;
-  };
-  M.transformPoint = (m, p) => {
-    const x = p[0], y = p[1], z = p[2] || 0;
-    const w = m[3] * x + m[7] * y + m[11] * z + m[15] || 1;
-    return [(m[0] * x + m[4] * y + m[8] * z + m[12]) / w, (m[1] * x + m[5] * y + m[9] * z + m[13]) / w, (m[2] * x + m[6] * y + m[10] * z + m[14]) / w];
-  };
-  M.transformDir = (m, p) => {
-    const x = p[0], y = p[1], z = p[2] || 0;
-    return [m[0] * x + m[4] * y + m[8] * z, m[1] * x + m[5] * y + m[9] * z, m[2] * x + m[6] * y + m[10] * z];
-  };
-  M.invert = (m) => {
-    const o = new Float32Array(16);
-    const a00 = m[0], a01 = m[1], a02 = m[2], a03 = m[3], a10 = m[4], a11 = m[5], a12 = m[6], a13 = m[7],
-      a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11], a30 = m[12], a31 = m[13], a32 = m[14], a33 = m[15];
-    const b00 = a00 * a11 - a01 * a10, b01 = a00 * a12 - a02 * a10, b02 = a00 * a13 - a03 * a10,
-      b03 = a01 * a12 - a02 * a11, b04 = a01 * a13 - a03 * a11, b05 = a02 * a13 - a03 * a12,
-      b06 = a20 * a31 - a21 * a30, b07 = a20 * a32 - a22 * a30, b08 = a20 * a33 - a23 * a30,
-      b09 = a21 * a32 - a22 * a31, b10 = a21 * a33 - a23 * a31, b11 = a22 * a33 - a23 * a32;
-    let det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-    if (!det) return M.identity(); det = 1 / det;
-    o[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-    o[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-    o[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-    o[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
-    o[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-    o[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-    o[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-    o[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
-    o[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-    o[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-    o[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-    o[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
-    o[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
-    o[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
-    o[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
-    o[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
-    return o;
-  };
-  M.perspective = (fovy, aspect, near, far) => {
-    const f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
-    return new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0]);
-  };
-  M.ortho = (l, r, b, t, n, f) => {
-    const lr = 1 / (l - r), bt = 1 / (b - t), nf = 1 / (n - f);
-    return new Float32Array([-2 * lr, 0, 0, 0, 0, -2 * bt, 0, 0, 0, 0, 2 * nf, 0, (l + r) * lr, (t + b) * bt, (f + n) * nf, 1]);
-  };
-  M.lookAt = (eye, center, up = [0, 1, 0]) => {
-    let z = M.norm(M.sub(eye, center)); if (M.len(z) < 1e-6) z = [0, 0, 1];
-    let x = M.cross(up, z); if (M.len(x) < 1e-6) { x = M.cross([1, 0, 0], z); } x = M.norm(x);
-    const y = M.cross(z, x);
-    return new Float32Array([x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -M.dot(x, eye), -M.dot(y, eye), -M.dot(z, eye), 1]);
-  };
-  M.invertRotScale = (m) => {
-    const o = new Float32Array(16);
-    const bx = [m[0], m[1], m[2]], by = [m[4], m[5], m[6]], bz = [m[8], m[9], m[10]];
-    const sx = M.len(bx) || 1, sy = M.len(by) || 1, sz = M.len(bz) || 1;
-    const ix = M.mul(bx, 1 / (sx * sx)), iy = M.mul(by, 1 / (sy * sy)), iz = M.mul(bz, 1 / (sz * sz));
-    o[0] = ix[0]; o[1] = iy[0]; o[2] = iz[0]; o[3] = 0;
-    o[4] = ix[1]; o[5] = iy[1]; o[6] = iz[1]; o[7] = 0;
-    o[8] = ix[2]; o[9] = iy[2]; o[10] = iz[2]; o[11] = 0;
-    const t = [-m[12], -m[13], -m[14]];
-    o[12] = M.dot(ix, t); o[13] = M.dot(iy, t); o[14] = M.dot(iz, t); o[15] = 1;
-    return o;
-  };
-  M.decompose = (m) => {
-    const pos = [m[12], m[13], m[14]];
-    const sx = M.len([m[0], m[1], m[2]]), sy = M.len([m[4], m[5], m[6]]), sz = M.len([m[8], m[9], m[10]]);
-    const r = [0, 0, 0];
-    const r20 = -m[8] / (sz || 1);
-    r[1] = Math.asin(U.clamp(r20, -1, 1));
-    if (Math.abs(r20) < .9999) { r[0] = Math.atan2(m[9] / sy, m[10] / sz); r[2] = Math.atan2(m[1] / sx, m[0] / sx); }
-    else { r[0] = Math.atan2(-m[6] / sy, m[5] / sy); }
-    return { pos, rot: r.map(U.deg), scale: [sx * 100, sy * 100, sz * 100] };
-  };
-  // 2D affine [a,b,c,d,e,f]
-  U.affine = (() => {
-    const id = () => [1, 0, 0, 1, 0, 0];
-    const mul = (A, B) => [A[0] * B[0] + A[2] * B[1], A[1] * B[0] + A[3] * B[1], A[0] * B[2] + A[2] * B[3], A[1] * B[2] + A[3] * B[3], A[0] * B[4] + A[2] * B[5] + A[4], A[1] * B[4] + A[3] * B[5] + A[5]];
-    const trs = (x, y, rot, sx, sy, ax = 0, ay = 0) => {
-      const c = Math.cos(rot), s = Math.sin(rot);
-      return [c * sx, s * sx, -s * sy, c * sy, x - (c * sx * ax - s * sy * ay), y - (s * sx * ax + c * sy * ay)];
+  U.deepEq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  U.escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  U.throttle = (fn, ms) => {
+    let last = 0, timer = null, lastArgs;
+    return function (...args) {
+      lastArgs = args;
+      const now = performance.now();
+      const run = () => { last = now; timer = null; fn.apply(null, lastArgs); };
+      if (now - last >= ms) run();
+      else if (!timer) timer = setTimeout(run, ms - (now - last));
     };
-    const apply = (A, x, y) => [A[0] * x + A[2] * y + A[4], A[1] * x + A[3] * y + A[5]];
-    const inv = (A) => { const d = A[0] * A[3] - A[1] * A[2] || 1e-9; return [A[3] / d, -A[1] / d, -A[2] / d, A[0] / d, (A[2] * A[5] - A[3] * A[4]) / d, (A[1] * A[4] - A[0] * A[5]) / d]; };
-    return { id, mul, trs, apply, inv };
-  })();
+  };
+  U.debounce = (fn, ms) => {
+    let timer = null;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(null, args), ms);
+    };
+  };
+  U.download = (filename, text, mime = 'application/json') => {
+    const blob = new Blob([text], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+  };
+  U.readFile = (accept) => new Promise((resolve) => {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = accept || '.json';
+    inp.onchange = () => { const f = inp.files[0]; if (!f) return resolve(null); const r = new FileReader(); r.onload = () => resolve({ name: f.name, text: String(r.result) }); r.readAsText(f); };
+    inp.click();
+  });
 
-  // ---------- geometry helpers ----------
-  U.rayPlane = (origin, dir, planePoint, planeNormal) => {
-    const denom = M.dot(planeNormal, dir);
-    if (Math.abs(denom) < 1e-7) return null;
-    const t = M.dot(M.sub(planePoint, origin), planeNormal) / denom;
-    return t < 0 ? null : M.add(origin, M.mul(dir, t));
+  // 点到线段距离
+  U.distToSeg = (p, a, b) => {
+    const vx = b.x-a.x, vy = b.y-a.y, wx = p.x-a.x, wy = p.y-a.y;
+    const c1 = vx*wx + vy*wy, c2 = vx*vx + vy*vy;
+    const t = c2 ? U.clamp(c1/c2, 0, 1) : 0;
+    return Math.hypot(p.x - (a.x + vx*t), p.y - (a.y + vy*t));
   };
 
-  // ---------- arrays ----------
-  U.range = (n, f) => Array.from({ length: n }, (_, i) => f ? f(i) : i);
-  U.sum = a => a.reduce((x, y) => x + y, 0);
-  U.last = a => a[a.length - 1];
-  U.uniq = a => Array.from(new Set(a));
-  U.deepClone = (o) => { try { return JSON.parse(JSON.stringify(o)); } catch (e) { return o; } };
-  U.deepMerge = (a, b) => {
-    if (Array.isArray(a) || Array.isArray(b)) return b === undefined ? a : b;
-    if (typeof a !== 'object' || a === null) return b === undefined ? a : b;
-    const o = Object.assign({}, a);
-    if (b && typeof b === 'object') for (const k of Object.keys(b)) o[k] = U.deepMerge(a[k], b[k]);
-    return o;
+  // 简易迷你图（曲线/直方图）绘制
+  U.drawSparkline = (ctx, data, x, y, w, h, color, fill) => {
+    if (!data.length) return;
+    let min = Infinity, max = -Infinity;
+    for (const v of data) { if (v < min) min = v; if (v > max) max = v; }
+    if (max - min < 1e-6) { max = min + 1; min -= 1; }
+    const X = i => x + (i / (data.length - 1 || 1)) * w;
+    const Y = v => y + h - ((v - min) / (max - min)) * h;
+    ctx.beginPath();
+    data.forEach((v, i) => { const px = X(i), py = Y(v); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+    if (fill) { ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); }
+    ctx.beginPath();
+    data.forEach((v, i) => { const px = X(i), py = Y(v); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+    ctx.strokeStyle = color; ctx.lineWidth = 1.2; ctx.stroke();
   };
-  U.equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-  // ---------- download ----------
-  U.download = (blob, name) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = name;
-    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-  };
-  U.readFileAsText = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsText(file); });
-  U.readFileAsArrayBuffer = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsArrayBuffer(file); });
-  U.blobToBase64 = (blob) => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(blob); });
-
-  // ---------- tiny event bus ----------
-  class Bus {
-    constructor() { this.m = new Map(); }
-    on(k, f) { if (!this.m.has(k)) this.m.set(k, new Set()); this.m.get(k).add(f); return () => this.off(k, f); }
-    off(k, f) { const s = this.m.get(k); if (s) s.delete(f); }
-    emit(k, ...a) { const s = this.m.get(k); if (s) for (const f of Array.from(s)) { try { f(...a); } catch (e) { console.error(e); } } }
-  }
-  AE.Bus = Bus;
-  AE.bus = new Bus();
-
-  U.nextFrame = () => new Promise(r => requestAnimationFrame(r));
-  U.wait = ms => new Promise(r => setTimeout(r, ms));
-
-  U.roman = (n) => ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][n - 1] || String(n);
-  U.ordinal = (n) => n + ['', 'st', 'nd', 'rd'][n % 10 > 3 || n % 100 > 13 ? 0 : n % 10] || n + 'th';
-})();
+})(window);

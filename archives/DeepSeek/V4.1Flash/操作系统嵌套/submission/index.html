@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob: https: http: ws: wss:; img-src 'self' data: blob: https: http:; media-src 'self' data: blob: https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; style-src 'self' 'unsafe-inline' https: http:; connect-src 'self' data: blob: https: http: ws: wss:; frame-src *; child-src *;" />
+  <title>NESTED OS</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles-systems.css" />
+  <link rel="stylesheet" href="./styles-player.css" />
+  <script type="importmap">
+    { "imports": { "three": "./node_modules/three/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div id="stage">
+    <div id="root-mount"></div>
+  </div>
+  <div id="boot-fatal" hidden></div>
+  <script type="module" src="./src/renderer.js"></script>
+</body>
+</html>

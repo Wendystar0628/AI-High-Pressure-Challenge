@@ -2,46 +2,98 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>果冻冲击与造浪水槽</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="app">
-  <main id="stage">
-    <canvas id="view"></canvas>
-    <div id="hud" class="ui">
-      <div id="title"><b id="sceneTitle">重球冲击果冻台</b><span id="sceneSub"></span></div>
-      <div id="readout"></div>
+<canvas id="view"></canvas>
+
+<div id="ui">
+  <header id="topbar" class="panel">
+    <div class="brand">
+      <div class="logo"><span></span><span></span></div>
+      <div>
+        <div class="title">果冻冲击与造浪水槽</div>
+        <div class="subtitle">软体 · 刚体 · 液体 双向作用实验台</div>
+      </div>
     </div>
-    <div id="loading">
-      <div class="ld-title">果冻冲击与造浪水槽</div>
-      <div class="ld-sub" id="loadingMsg">正在初始化 WebGPU…</div>
-    </div>
-    <div id="fatal"></div>
-  </main>
-  <footer id="transport" class="ui">
-    <div class="phases" id="phases"></div>
-    <div class="ctrl" id="ctrl"></div>
-  </footer>
-  <aside id="panel" class="ui">
-    <nav id="sceneTabs">
-      <button data-scene="jelly" class="tab"><i>场景一</i>重球冲击果冻台</button>
-      <button data-scene="tank" class="tab"><i>场景二</i>多密度球与造浪水槽</button>
+    <nav class="tabs" id="sceneTabs">
+      <button data-scene="jelly" class="tab active"><b>场景一</b>重球冲击果冻</button>
+      <button data-scene="tank" class="tab"><b>场景二</b>多密度球与造浪水槽</button>
     </nav>
-    <div id="params"></div>
-    <div id="keys"></div>
+    <div class="transport">
+      <button id="btnPause" class="tbtn" title="暂停 / 继续（空格）"><i class="ico-pause"></i><span>暂停</span></button>
+      <div class="seg" id="speedSeg" title="慢放">
+        <button data-speed="1" class="active">1×</button>
+        <button data-speed="0.5">0.5×</button>
+        <button data-speed="0.25">0.25×</button>
+        <button data-speed="0.1">0.1×</button>
+      </div>
+      <button id="btnReset" class="tbtn" title="重置（R）"><i class="ico-reset"></i><span>重置</span></button>
+      <button id="btnRerun" class="tbtn" title="重置并重新运行上一次操作（T）"><i class="ico-rerun"></i><span>重新运行</span></button>
+      <button id="btnSound" class="tbtn" title="音效开关（M）"><i class="ico-sound"></i><span>音效开</span></button>
+    </div>
+  </header>
+
+  <aside id="sidePanel" class="panel">
+    <section class="scene-ctl" data-for="jelly">
+      <h3>触发冲击</h3>
+      <div class="btnrow">
+        <button class="action" data-act="center"><b>正中</b><small>正对落下</small><kbd>1</kbd></button>
+        <button class="action" data-act="offset"><b>偏心</b><small>偏离 / 斜撞</small><kbd>2</kbd></button>
+        <button class="action" data-act="multi"><b>连续</b><small>三球连砸</small><kbd>3</kbd></button>
+      </div>
+      <h3>目标果冻</h3>
+      <div class="seg wide" id="targetSeg"></div>
+      <div class="ctl" data-key="mu"><label>果冻软硬<span class="val"></span></label><input type="range" min="0" max="100" step="1"><div class="hint"><span>软</span><span>硬</span></div></div>
+      <div class="ctl" data-key="tough"><label>结实程度<span class="val"></span></label><input type="range" min="0" max="100" step="1"><div class="hint"><span>易碎</span><span>结实</span></div></div>
+      <h3>重球</h3>
+      <div class="seg wide" id="ballMatSeg"></div>
+      <div class="ctl" data-key="mass"><label>质量<span class="val"></span></label><input type="range" min="10" max="320" step="1"></div>
+      <div class="ctl" data-key="radius"><label>半径<span class="val"></span></label><input type="range" min="10" max="22" step="0.5"></div>
+      <div class="ctl" data-key="height"><label>下落高度<span class="val"></span></label><input type="range" min="0.2" max="3.5" step="0.05"></div>
+    </section>
+
+    <section class="scene-ctl" data-for="tank" hidden>
+      <h3>操作</h3>
+      <div class="btnrow">
+        <button class="action" data-act="release"><b>释放小球</b><small>从水面上方落下</small><kbd>B</kbd></button>
+        <button class="action" data-act="wave" id="btnWave"><b>开始造浪</b><small>推板往复运动</small><kbd>W</kbd></button>
+      </div>
+      <div class="ctl" data-key="amp"><label>造浪幅度<span class="val"></span></label><input type="range" min="0" max="100" step="1"><div class="hint"><span>平缓长波</span><span>破碎浪</span></div></div>
+      <div class="ctl" data-key="freq"><label>造浪频率<span class="val"></span></label><input type="range" min="0.35" max="1.3" step="0.01"><div class="hint"><span>浪距长</span><span>浪距短</span></div></div>
+      <h3>各组小球密度 <small class="muted">（同尺寸 Ø10 cm）</small></h3>
+      <div id="densityCtl"></div>
+    </section>
   </aside>
+
+  <aside id="infoPanel" class="panel">
+    <h3>实时读数</h3>
+    <div id="readout"></div>
+  </aside>
+
+  <footer id="demoBar" class="panel">
+    <div class="demo-label">预置演示</div>
+    <div class="demos" id="demoBtns"></div>
+    <div class="demo-progress"><div id="demoProg"></div></div>
+    <div id="demoTitle" class="demo-title"></div>
+  </footer>
+
+  <div id="hintAudio">点击页面任意位置即可启用声音</div>
+  <div id="loading"><div class="spinner"></div><div id="loadingText">正在初始化 WebGPU…</div></div>
+  <div id="help">拖动：旋转视角　右键/Shift+拖动：平移　滚轮：缩放　空格：暂停</div>
 </div>
-<script src="js/core.js"></script>
-<script src="js/shaders-common.js"></script>
-<script src="js/post.js"></script>
-<script src="js/jelly-sim.js"></script>
-<script src="js/jelly-view.js"></script>
-<script src="js/tank-sim.js"></script>
-<script src="js/tank-view.js"></script>
+
+<script src="js/util.js"></script>
+<script src="js/gpu.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/jellysim.js"></script>
+<script src="js/scene_jelly.js"></script>
+<script src="js/fluid.js"></script>
+<script src="js/scene_tank.js"></script>
 <script src="js/audio.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/app.js"></script>
+<script src="js/demos.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

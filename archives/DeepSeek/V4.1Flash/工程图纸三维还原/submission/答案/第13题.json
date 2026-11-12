@@ -1,0 +1,21 @@
+{
+  "problem": "13",
+  "parts": [
+    {"name": "1", "title": "斜耳叉架减速箱体", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,120,90], "r": 6}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [8,8,112,82]}], "depth": [8,52], "name": "箱体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [16,16,104,74]}], "depth": [8,46], "name": "内腔"},
+      {"type": "hole", "plane": "XZ", "origin": [0,8,0], "at": [[45,32]], "d": 50, "depth": 10, "name": "前轴承孔Φ50"},
+      {"type": "hole", "plane": "XZ", "origin": [0,8,0], "at": [[45,32]], "d": 30, "through": true, "name": "前轴孔Φ30"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,8,0], "depth": [-12,0],
+       "loops": [{"path": [[12,52],[30,52],[24,72],[8,72]]}], "name": "左斜耳"},
+      {"type": "extrude", "plane": "XZ", "origin": [0,8,0], "depth": [-12,0],
+       "loops": [{"path": [[108,52],[90,52],[96,72],[112,72]]}], "name": "右斜耳"},
+      {"type": "hole", "plane": {"origin": [21,20,70], "normal": [0,1,0], "x_dir": [1,0,0.3]}, "at": [[0,0]], "d": 12, "depth": 12, "name": "左耳孔Φ12"},
+      {"type": "hole", "plane": {"origin": [99,20,70], "normal": [0,1,0], "x_dir": [1,0,-0.3]}, "at": [[0,0]], "d": 12, "depth": 12, "name": "右耳孔Φ12"},
+      {"type": "hole", "plane": "YZ", "origin": [112,0,0], "at": [[45,30]], "d": 30, "depth": 20, "name": "右侧孔Φ30"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,52], "at": [[30,45],[80,45]], "d": 10, "depth": 30, "name": "顶孔Φ10"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[110,10],[10,80],[110,80]], "d": 9, "through": true, "name": "底板四角孔"}
+    ]}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "problem": "20",
+  "parts": [
+    {"name": "1", "title": "双级迷宫旋流分离壳", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 200, 200]}], "depth": 10, "name": "底板"},
+      {"type": "revolve", "plane": "XZ", "axis": "y", "origin": [100, 100, 0],
+       "loops": [{"path": [[0, 10], [92, 10], [92, 70], [46, 110], [0, 110]]}], "name": "Φ184圆锥收束壳"},
+      {"type": "hole", "plane": "XY", "origin": [100, 100, 110], "at": [0, 0], "d": 60, "depth": 100, "name": "内锥主腔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 10],
+       "at": [[8, 8], [192, 8], [8, 192], [192, 192]], "d": 10, "through": true, "name": "地脚4孔"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [100, 100, 0],
+       "loops": [{"circle": [0, 60], "d": 152}, {"circle": [0, 60], "d": 90}], "depth": 30, "name": "内环腔"}
+    ]}
+  ]
+}

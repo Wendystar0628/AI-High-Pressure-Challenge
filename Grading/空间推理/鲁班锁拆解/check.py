@@ -53,7 +53,12 @@ def sweep(shapes, positions, component, moving, axis, sign, distance=None):
                 raise Invalid(f"零件 {key} 的移动路径发生碰撞")
 
 
-def validate(puzzle, answer):
+def walk(puzzle, answer, stages):
+    """从初态起按深度优先顺序（本组件、removed 分支、remaining 分支）逐步检查路线。
+
+    每合法完成一次分离，就把这一阶段追加到 stages；遇到第一处碰撞、记号错误或
+    没拆完的分支时抛出 Invalid，此前完成的分离仍留在 stages 里。返回总步数。
+    """
     require(isinstance(answer, dict), "答案应为 JSON 对象")
     require(answer.get("puzzle") == puzzle["id"], "答案的 puzzle 编号与题目不一致")
     shapes, positions, occupied = {}, {}, set()
@@ -66,13 +71,12 @@ def validate(puzzle, answer):
             world = tuple(cell[d] + positions[key][d] for d in range(3))
             require(world not in occupied, "题目初态存在重叠")
             occupied.add(world)
-    stages = []
 
     def visit(node, component, positions, path):
         if len(component) == 1:
             require(node is None, f"{path} 已是单个零件，分支应写 null")
             return 0
-        require(isinstance(node, dict), f"{path} 尚有 {len(component)} 件，不能结束")
+        require(isinstance(node, dict), f"{path} 尚有 {len(component)} 件未拆开")
         moves = node.get("moves")
         require(isinstance(moves, list) and len(moves) > 0, f"{path} 缺少移动步骤")
         positions = dict(positions)
@@ -106,16 +110,33 @@ def validate(puzzle, answer):
                 for key in moving:
                     positions[key] = tuple(positions[key][d] + delta[d] for d in range(3))
         require(split is not None, f"{path} 未完成组件分离")
-        require("removed" in node and "remaining" in node, f"{path} 缺少两个后续分支")
         stages.append({"path": path, "pieces": sorted(component), "moves": count,
                        "removed": sorted(split)})
+        require("removed" in node and "remaining" in node, f"{path} 缺少两个后续分支")
         return (count + visit(node["removed"], split, positions, path + ".removed")
                 + visit(node["remaining"], component - split, positions, path + ".remaining"))
 
-    total = visit(answer.get("plan"), set(shapes), positions, "plan")
+    return visit(answer.get("plan"), set(shapes), positions, "plan")
+
+
+def progress(puzzle, answer):
+    """检查写出的路线，不因路线出错而抛出：没拆完或出错时报告断点和此前合法完成的分离。"""
+    stages = []
+    try:
+        total = walk(puzzle, answer, stages)
+    except Invalid as exc:
+        return {"valid": False, "puzzle": puzzle["id"], "reason": str(exc),
+                "separations": len(stages), "stages": stages}
     return {"valid": True, "puzzle": puzzle["id"], "moves": total,
             "first_split_moves": stages[0]["moves"], "separations": len(stages),
             "stages": stages}
+
+
+def validate(puzzle, answer):
+    """整条路线须合法并完整拆开，否则抛出 Invalid。"""
+    result = progress(puzzle, answer)
+    require(result["valid"], result.get("reason", ""))
+    return result
 
 
 def main():

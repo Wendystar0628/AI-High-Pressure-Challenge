@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import hashlib
+import json
 import unittest
 import tempfile
 from unittest.mock import patch
@@ -23,6 +24,38 @@ def puzzle(points):
 def answer(moves, removed=None, remaining=None):
     return {"puzzle": "test", "plan": {
         "moves": moves, "removed": removed, "remaining": remaining}}
+
+
+def reference(key):
+    return check.load(HERE / "标准解答" / f"第{key}题.json")
+
+
+def truncate(plan, keep):
+    """保留前 keep 次分离：按深度优先顺序把其后的拆解节点都改成 null（未拆开）。"""
+    count = 0
+
+    def cut(node):
+        nonlocal count
+        if not isinstance(node, dict):
+            return node
+        if count == keep:
+            return None
+        count += 1
+        node["removed"] = cut(node["removed"])
+        node["remaining"] = cut(node["remaining"])
+        return node
+
+    return cut(plan)
+
+
+def grade_one(key, content):
+    """把一份答案（对象或原始文本）放进临时作答目录评分，返回该题分项。"""
+    with tempfile.TemporaryDirectory() as folder:
+        (Path(folder) / "答案").mkdir()
+        text = content if isinstance(content, str) else json.dumps(content)
+        (Path(folder) / "答案" / f"第{key}题.json").write_text(text, encoding="utf-8")
+        result = grader.grade([folder])
+    return next(item for item in result["results"][0]["items"] if item["id"] == key)
 
 
 class JudgeTests(unittest.TestCase):
@@ -141,6 +174,108 @@ class JudgeTests(unittest.TestCase):
         result = grader.grade([HERE])
         self.assertEqual(result["results"][0]["total"], 0)
         self.assertTrue(all(not item["valid"] for item in result["results"][0]["items"]))
+
+
+class PartialCreditTests(unittest.TestCase):
+    """完整拆开有 60% 保底；没拆完按参考解阶段步数线性计部分分，最高 50%。"""
+
+    def test_complete_references_score_full(self):
+        with tempfile.TemporaryDirectory() as folder:
+            (Path(folder) / "答案").mkdir()
+            for source in (HERE / "标准解答").glob("*.json"):
+                (Path(folder) / "答案" / source.name).write_bytes(source.read_bytes())
+            result = grader.grade([folder])
+        self.assertEqual(result["results"][0]["total"], 100)
+        self.assertTrue(all(item["valid"] for item in result["results"][0]["items"]))
+
+    def test_long_complete_route_keeps_floor(self):
+        self.assertLess(grader.PARTIAL_SHARE, grader.FULL_FLOOR)
+        for detours, moves, score in [(1, 10, 6.4), (2, 12, 5.33), (10, 28, 4.8)]:
+            with self.subTest(detours=detours):
+                route = reference("01")
+                first = route["plan"]["moves"][0]
+                undo = dict(first, delta=[-x for x in first["delta"]])
+                route["plan"]["moves"] = [first, undo] * detours + route["plan"]["moves"]
+                item = grade_one("01", route)
+                self.assertTrue(item["valid"])
+                self.assertEqual(item["moves"], moves)
+                self.assertEqual(item["score"], score)
+
+    def test_partial_separations_follow_reference_stages(self):
+        route = reference("07")
+        route["plan"] = truncate(route["plan"], 1)
+        item = grade_one("07", route)
+        self.assertFalse(item["valid"])
+        self.assertEqual(item["separations"], 1)
+        self.assertEqual(item["partial_ratio"], round(19 / 42, 4))
+        self.assertEqual(item["score"], round(18 * 0.5 * 19 / 42, 2))
+        self.assertIn("未拆开", item["reason"])
+
+    def test_each_separation_adds_credit_up_to_half(self):
+        # 07 参考分段 19+12+5+6：每多完成一次分离都加分
+        for keep, done in ((2, 31), (3, 36)):
+            with self.subTest(keep=keep):
+                route = reference("07")
+                route["plan"] = truncate(route["plan"], keep)
+                item = grade_one("07", route)
+                self.assertEqual(item["separations"], keep)
+                self.assertEqual(item["score"], round(18 * 0.5 * done / 42, 2))
+        # 首拆完成后单件分支写错记号：只计首拆
+        route = reference("07")
+        route["plan"]["removed"] = {"moves": []}
+        item = grade_one("07", route)
+        self.assertFalse(item["valid"])
+        self.assertEqual(item["separations"], 1)
+        # 全部分离都已完成、只在单件分支写错记号，仍按没拆完计，正好 50%
+        route = reference("07")
+        route["plan"]["remaining"]["remaining"]["remaining"]["removed"] = {"moves": []}
+        item = grade_one("07", route)
+        self.assertEqual(item["separations"], 4)
+        self.assertEqual(item["score"], 9)
+
+    def test_first_move_collision_scores_zero(self):
+        route = reference("01")
+        route["plan"]["moves"][0] = {"pieces": ["C"], "delta": [1, 0, 0]}
+        item = grade_one("01", route)
+        self.assertEqual(item["separations"], 0)
+        self.assertEqual(item["score"], 0)
+        self.assertIn("碰撞", item["reason"])
+
+    def test_broken_routes_count_only_finished_separations(self):
+        # 第二阶段写到一半，没有 out
+        route = reference("07")
+        route["plan"]["remaining"]["moves"] = route["plan"]["remaining"]["moves"][:3]
+        route["plan"]["remaining"]["removed"] = route["plan"]["remaining"]["remaining"] = None
+        self.assertEqual(grade_one("07", route)["separations"], 1)
+        # 第二阶段中途碰撞：此前完成的分离照计，后面的不再检查
+        route = reference("07")
+        route["plan"]["remaining"]["moves"].insert(0, {"pieces": ["A"], "delta": [0, 0, 100]})
+        item = grade_one("07", route)
+        self.assertEqual(item["separations"], 1)
+        self.assertIn("plan.remaining.moves[0]", item["reason"])
+        # 记号错误：两轴同时移动
+        route = reference("07")
+        route["plan"]["remaining"]["moves"][0]["delta"] = [1, 1, 0]
+        self.assertEqual(grade_one("07", route)["separations"], 1)
+        # 文件写断、无法解析：0 分
+        text = (HERE / "标准解答" / "第07题.json").read_text(encoding="utf-8")
+        item = grade_one("07", text[:len(text) // 2])
+        self.assertEqual((item["separations"], item["score"]), (0, 0))
+
+    def test_depth_first_order_stops_at_first_unfinished_branch(self):
+        p = puzzle([(0, 0, 0), (1, 0, 0), (2, 0, 0), (3, 0, 0)])
+        left = {"moves": [{"pieces": ["A"], "out": [-1, 0, 0]}], "removed": None, "remaining": None}
+        right = {"moves": [{"pieces": ["D"], "out": [1, 0, 0]}], "removed": None, "remaining": None}
+        split = [{"pieces": ["A", "B"], "out": [0, 1, 0]}]
+        self.assertTrue(check.progress(p, answer(split, left, right))["valid"])
+        # removed 分支没拆完时停在那里，remaining 分支不再计入
+        result = check.progress(p, answer(split, None, right))
+        self.assertEqual((result["valid"], result["separations"]), (False, 1))
+        self.assertIn("plan.removed", result["reason"])
+        result = check.progress(p, answer(split, left, None))
+        self.assertEqual((result["valid"], result["separations"]), (False, 2))
+        with self.assertRaises(check.Invalid):
+            check.validate(p, answer(split, left, None))
 
 
 if __name__ == "__main__":

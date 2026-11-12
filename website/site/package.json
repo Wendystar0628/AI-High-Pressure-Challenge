@@ -2,7 +2,7 @@
   "name": "ai-octathlon-site",
   "private": true,
   "version": "0.1.0",
-  "description": "AI八项全能·定时挑战赛 成绩网站（Vite 多页静态站）",
+  "description": "AI十项全能·定时挑战赛 成绩网站（Vite 多页静态站）",
   "type": "module",
   "scripts": {
     "sync": "node scripts/sync-assets.mjs",

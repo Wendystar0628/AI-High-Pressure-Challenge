@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "工程图纸三维还原",
+  "tokens": 14986311,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 5.29,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "GPT/6Astra/工程图纸三维还原/run-5ebf605d6ae94c66921ef5e7934dd7f0"
+  ]
+}

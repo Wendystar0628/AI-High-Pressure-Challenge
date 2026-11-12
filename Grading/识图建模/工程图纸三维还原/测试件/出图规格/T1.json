@@ -1,0 +1,45 @@
+{
+  "problem": "T1",
+  "title": "轴承座",
+  "sheets": [
+    {
+      "paper": "A3",
+      "scale": "auto",
+      "frame": "part",
+      "part": "1",
+      "material": "HT200",
+      "views": [
+        {"type": "front", "hidden": true,
+         "section": {"mode": "local", "point": [0, 40, 0], "region": [[36, -6], [66, -6], [66, 24], [36, 24]]}},
+        {"type": "left",
+         "section": {"label": "A", "mode": "full", "point": [0, 0, 0], "parent": "主视图",
+                     "no_hatch": [[[-65, 15], [-22, 15], [-22, 35], [-65, 35]]]}},
+        {"type": "top", "hidden": true},
+        {"type": "auxiliary", "name": "B", "direction": [-0.5, 0, -0.8660254038], "up": [0, 1, 0],
+         "keep": {"shape": "circle", "center": [-32.5, 40], "r": 17}, "parent": "主视图", "arrow_at": [27, 112]},
+        {"type": "detail", "parent": "主视图", "center": [50, 13], "r": 7, "scale": 4},
+        {"type": "removed_section", "label": "C", "point": [0, 0, 25], "normal": [0, 0, -1], "up": [0, 1, 0],
+         "parent": "主视图"}
+      ],
+      "dimensions": [
+        {"view": "主视图", "from": [-70, 0], "to": [70, 0], "side": "bottom"},
+        {"view": "主视图", "from": [-30, 4], "to": [30, 4], "side": "bottom"},
+        {"view": "主视图", "from": [70, 0], "to": [70, 15], "side": "right"},
+        {"view": "主视图", "from": [-70, 0], "to": [0, 65], "side": "left"},
+        {"view": "主视图", "type": "diameter", "center": [0, 65], "d": 60, "angle": 135},
+        {"view": "主视图", "type": "diameter", "center": [0, 65], "d": 35, "angle": 210},
+        {"view": "主视图", "type": "angle", "vertex": [0, 65], "from": [24, 106.5692193], "to": [0, 112.069], "radius": 30},
+        {"view": "俯视图", "from": [-60, 80], "to": [-60, 0], "side": "left"},
+        {"view": "俯视图", "from": [-50, 40], "to": [50, 40], "side": "top"},
+        {"view": "俯视图", "type": "radius", "center": [60, 10], "r": 10, "angle": -45},
+        {"view": "俯视图", "type": "leader", "at": [-54.5, 40], "angle": 225, "text": ["2×Φ11", "锪平Φ22 深2"]},
+        {"view": "A-A", "from": [-10, 15], "to": [-22, 15], "side": "bottom"},
+        {"view": "A-A", "from": [-10, 65], "to": [-70, 65], "side": "top"},
+        {"view": "A-A", "from": [-65, 15], "to": [-65, 35], "side": "left"},
+        {"view": "B", "type": "diameter", "center": [-32.5, 40], "d": 22, "angle": 30},
+        {"view": "C-C", "from": [-6, 22], "to": [6, 22], "side": "top"}
+      ],
+      "notes": ["技术要求", "1. 未注铸造圆角 R2～R3。", "2. 坐标原点在底板底面前边线中点，X 向右、Y 向后、Z 向上。"]
+    }
+  ]
+}

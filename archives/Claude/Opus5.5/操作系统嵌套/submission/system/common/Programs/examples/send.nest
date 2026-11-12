@@ -1,0 +1,23 @@
+;; 消息发送：启动一个接收进程，按顺序发送 COUNT 条消息，然后等待它的回执。
+;; 可修改 COUNT 与 TEXT 后重新运行；接收方收到的是发送时的值。
+(include "/System/lib/core.nest")
+
+(var COUNT (or (get ARGS "count") 5))
+(var TEXT (or (get ARGS "text") "你好"))
+(var me (self-pid))
+(var rx (spawn "/Programs/examples/receive.nest" {:reply me}))
+(log "已启动接收进程" rx)
+(var payload {:text TEXT :seq 0})
+(for (i 1 (+ COUNT 1))
+  (put! payload "seq" i)
+  (var r (send rx {:from me :seq i :text (str TEXT " #" i) :data payload}))
+  (log "发送第" i "条 →" rx "结果：" r)
+  ;; 发送后修改 payload 不影响已发出的消息（消息按值复制）
+  (put! payload "text" "（已被发送方修改）"))
+(send rx {:from me :done true})
+(var ack (recv-timeout 5))
+(log "收到回执：" (to-json ack))
+;; 目标已不存在时，发送方得到明确结果
+(sleep 0.5)
+(log "向已结束的进程发送：" (send rx {:late true}))
+ack

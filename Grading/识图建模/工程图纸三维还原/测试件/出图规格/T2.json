@@ -1,0 +1,37 @@
+{
+  "problem": "T2",
+  "title": "滑轮架",
+  "sheets": [
+    {"paper": "A3", "scale": 1, "frame": "assembly", "title": "滑轮架（装配图）", "drawing_no": "JX-T2-00",
+     "views": [
+       {"type": "front", "section": {"label": "A", "mode": "full", "point": [0, 30, 0], "parent": "俯视图", "unsectioned": ["2"]}},
+       {"type": "left", "hidden": false},
+       {"type": "top", "hidden": false}
+     ],
+     "dimensions": [
+       {"view": "A-A", "from": [-50, 0], "to": [50, 0], "side": "bottom"},
+       {"view": "A-A", "from": [50, 0], "to": [50, 45], "side": "right"},
+       {"view": "俯视图", "from": [50, 0], "to": [50, 60], "side": "right"}
+     ],
+     "balloons": [{"part": "1", "view": "A-A", "at": [-45, 5]}, {"part": "2", "view": "A-A", "at": [-33, 50]},
+                  {"part": "3", "view": "A-A", "at": [10, 62]}],
+     "parts_list": [{"no": "1", "name": "支架", "qty": 1, "material": "HT150"},
+                    {"no": "2", "name": "轴", "qty": 1, "material": "45"},
+                    {"no": "3", "name": "滑轮", "qty": 1, "material": "尼龙"}],
+     "phantom": [{"view": "A-A", "center": [0, 45], "r": 26, "start": 30, "end": 150}],
+     "notes": ["技术要求", "1. 装配坐标原点在支架底面前边线中点。", "2. 滑轮转动灵活。"]},
+    {"paper": "A3", "scale": 1, "frame": "part", "part": "1", "title": "支架", "material": "HT150", "drawing_no": "JX-T2-01",
+     "views": [{"type": "front"}, {"type": "left", "section": {"label": "A", "mode": "full", "point": [-25, 0, 0], "parent": "主视图"}}, {"type": "top"}],
+     "dimensions": [{"view": "主视图", "from": [-50, 0], "to": [50, 0], "side": "bottom"},
+                    {"view": "主视图", "from": [-30, 10], "to": [-20, 10], "side": "top"},
+                    {"view": "俯视图", "from": [-40, 12], "to": [40, 12], "side": "bottom"}]},
+    {"paper": "A4", "scale": 2, "frame": "part", "part": "2", "title": "轴", "material": "45", "drawing_no": "JX-T2-02",
+     "views": [{"type": "front"}],
+     "dimensions": [{"view": "主视图", "from": [0, 0], "to": [0, 75], "side": "right"},
+                    {"view": "主视图", "from": [-6, 40], "to": [6, 40], "side": "top", "prefix": "Φ", "offset": -2}]},
+    {"paper": "A4", "scale": 2, "frame": "part", "part": "3", "title": "滑轮", "material": "尼龙", "drawing_no": "JX-T2-03",
+     "views": [{"type": "front", "section": {"mode": "half", "point": [0, 0, 0], "half": {"axis": "u", "at": 0, "side": "+"}}}],
+     "dimensions": [{"view": "主视图", "from": [-20, 0], "to": [-20, 36], "side": "left"},
+                    {"view": "主视图", "from": [-20, 36], "to": [20, 36], "side": "top", "prefix": "Φ"}]}
+  ]
+}

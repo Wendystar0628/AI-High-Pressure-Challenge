@@ -1,0 +1,27 @@
+{
+  "brief": [
+    "Implement `init()` and `render()`: a scene of two-sided triangles with a diffuse color and a mirror coefficient, a camera and one directional light. Every pixel takes a fixed number of samples with shadow queries, ambient-occlusion queries and mirror reflections, and the result must be the linear RGB image of exactly that process. There is one timed input: a Jiangnan garden of 176,522 triangles at 1920×1080, 56 samples per pixel, 1 ambient-occlusion ray and up to 4 reflection bounces.",
+    {
+      "ul": [
+        "The full rendering definition is the provided `render_math.cuh`: the sample sequence, shading formulas and reflection cut-off must stay the same, while the intersection formula, acceleration structure and kernel layout are free; only the output image is judged.",
+        "The performance input, a reference image computed in double precision, viewable pictures, a checker, the baseline source and the compiled baseline come with the task. The checker interleaves 5 runs each of the baseline and submission and takes each minimum; official scoring remeasures both in the same evaluation.",
+        "Every run's image is judged by its count of exception pixels, mean bias and RMS error; 12 more correctness inputs stay hidden, with other camera positions, seeds and extreme settings (`spp` of 1 or 256, `max_depth` of 1 or 8, very few or over 500,000 triangles); they are not timed, only judged.",
+        "Only the CUDA Runtime, the C++ standard library and header-only libraries shipped with the CUDA Toolkit that need no extra linking; no ready-made ray tracing libraries such as OptiX or Embree, and no hardware ray tracing APIs such as DXR or Vulkan ray tracing. Intersection, sampling, occlusion, reflection and per-pixel shading all run on the GPU.",
+        "Building the tree, preprocessing the scene, allocating GPU memory and uploading are all timed inside `render()`, and nothing scene-specific may be kept across calls; the graded process is limited to the 12 efficient cores, and GPU work still running after about 2 seconds is reset by the driver."
+      ]
+    }
+  ],
+  "points": [
+    "**Acceleration structure**: with 177,000 triangles and over a hundred rays per pixel, the quality of the tree and the way it is traversed decide how fast queries run, and building the tree is timed too.",
+    "**GPU organization**: how rays, samples and threads map onto each other and how nodes are laid out change the GPU's throughput; familiar recipes are not always faster, so measurements decide.",
+    "**Measure, then change**: the costs trade off against each other and the bottleneck moves after every step; there is no ready-made stage timer, so the model has to find out for itself where the time goes.",
+    "**An exact image**: no fewer samples, no other sequence and no early cut-off of reflections, and every timed run is judged; the hidden inputs change the camera, seed and extreme settings, so tuning to the public image alone does not hold."
+  ],
+  "scoring": [
+    "**Speed score**: speedup s = baseline time ÷ submission time, looked up on a log scale: 1×, 2×, 4×, 6×, 8× and 10× score 0, 22, 50, 70, 87 and 100; matching the baseline or slower is 0, and 10× or more is full marks.",
+    "**Image factor**: each of the 5 timed runs is judged once, a pass counting 1, slightly out of tolerance 0.5, and a fail or crashed run 0; their average is c.",
+    "**Hidden factor**: the 12 hidden correctness inputs each run once in their own process and count 1, 0.5 or 0 the same way; their average is h, and the task score is speed score × c × h.",
+    "**Timed side by side**: the baseline is a GPU renderer whose full source comes with the task; it and the submission run interleaved, 5 times each in the same evaluation on the same processors and priority, taking each minimum.",
+    "**Rules come first**: a compile failure or a confirmed broken rule, such as using a ready-made ray tracing library, keeping scene results across calls or writing in pre-rendered images, scores 0 for the whole task."
+  ]
+}

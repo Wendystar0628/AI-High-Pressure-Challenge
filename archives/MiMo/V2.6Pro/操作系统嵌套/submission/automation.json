@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": ["start", "--", "--data-dir", "{dataDir}", "--width", "{width}", "--height", "{height}", "--remote-debugging-port={port}"],
+    "cwd": "."
+  },
+  "mainWindow": { "title": "Nested OS" },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "kernelSource": "/System/Programs/kernel.ks",
+      "programs": "/System/Programs",
+      "flightController": "/System/Programs/flightctl.ks",
+      "compiler": "/System/Programs/compiler.ks",
+      "editor": "/Documents"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents",
+      "kernelSource": "/System/kernel.ks",
+      "programs": "/System/Programs",
+      "flightController": "/System/Programs/flightctl.ks",
+      "compiler": "/System/Programs/compiler.ks"
+    }
+  },
+  "bench": {
+    "global": "window.bench",
+    "methods": {
+      "ready": "await window.bench.ready()",
+      "reset": "await window.bench.reset()",
+      "inspect": "await window.bench.inspect()"
+    }
+  },
+  "testIds": {
+    "desktop": "os-desktop",
+    "start": "start-toggle",
+    "startMenu": "start-menu",
+    "files": "files-list",
+    "spreadsheet": "sheet-grid",
+    "editor": "editor-text",
+    "player": "player-view",
+    "charts": "chart-connect",
+    "browser": "browser-address",
+    "systemNew": "system-new",
+    "projection": "window-project"
+  }
+}

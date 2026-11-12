@@ -1,3 +1,19 @@
 {
-  "name": "nest-desktop", "version": "1.0.0", "private": true, "description": "层界 NEST · 递归桌面与飞行工作室", "main": "electron.cjs", "scripts": {"start": "node scripts/start.cjs", "build": "vite build", "test": "node --test tests/*.test.mjs"}, "dependencies": {"electron": "45.2.1", "react": "19.1.0", "react-dom": "19.1.0", "three": "0.180.0", "lucide-react": "0.468.0", "acorn": "8.14.1"}, "devDependencies": {"vite": "6.1.0", "@vitejs/plugin-react": "4.3.4", "playwright-core": "1.51.1"}, "type": "module"
+  "name": "nest-os",
+  "version": "1.0.0",
+  "description": "栖境 · 可递归桌面实验室",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node tests/runtime.test.cjs && node tests/services.test.cjs && node tests/compiler.test.cjs && node tests/vfs.test.cjs && node tests/isolation.test.cjs && node tests/application-programs.test.cjs && node tests/playback.test.cjs && node tests/snapshot-budget.test.cjs && node tests/files-program.test.cjs && node tests/window-hit.test.cjs && node tests/desktop-flight.test.cjs && node tests/presentation.test.cjs",
+    "test:ui": "node tests/quality-ui.cjs && node tests/desktop-ui.cjs && node tests/ui-smoke.cjs && node tests/lifecycle-ui.cjs && node tests/record-ui.cjs && node tests/browser-graphics-ui.cjs"
+  },
+  "dependencies": {
+    "electron": "45.2.1",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "type": "module"
 }

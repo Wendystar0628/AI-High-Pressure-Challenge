@@ -1,0 +1,27 @@
+{
+  "problem": "T3",
+  "title": "法兰盘",
+  "sheets": [
+    {"paper": "A3", "scale": 1, "frame": "part", "part": "1", "material": "HT150",
+     "views": [
+       {"type": "front", "section": {"mode": "half", "point": [0, 0, 0], "half": {"axis": "v", "at": 0, "side": "+"}}},
+       {"type": "left", "hidden": false},
+       {"type": "detail", "parent": "主视图", "center": [39, 29], "r": 4, "scale": 5}
+     ],
+     "dimensions": [
+       {"view": "主视图", "from": [0, 60], "to": [0, -60], "side": "left", "prefix": "Φ"},
+       {"view": "主视图", "from": [3, 40], "to": [3, -40], "side": "left", "prefix": "Φ"},
+       {"view": "主视图", "from": [40, 28], "to": [40, -28], "side": "right", "prefix": "Φ"},
+       {"view": "主视图", "from": [12, 30], "to": [12, -30], "side": "right", "prefix": "Φ"},
+       {"view": "主视图", "from": [0, -60], "to": [12, -60], "side": "bottom"},
+       {"view": "主视图", "from": [0, -60], "to": [40, -28], "side": "bottom"},
+       {"view": "主视图", "from": [0, 40], "to": [3, 40], "side": "top"},
+       {"view": "左视图", "type": "diameter", "center": [0, 48], "d": 11, "angle": 60, "prefix": "6×Φ", "suffix": " 均布"},
+       {"view": "左视图", "type": "diameter", "center": [0, 0], "d": 96, "angle": -60},
+       {"view": "左视图", "from": [-5, 19.3], "to": [5, 19.3], "side": "top"},
+       {"view": "左视图", "type": "leader", "at": [0, -16], "angle": -110, "text": "Φ32"},
+       {"view": "Ⅰ", "type": "leader", "at": [39, 29], "angle": 30, "length": 6, "text": "C2"}
+     ],
+     "notes": ["技术要求", "1. 坐标原点在法兰前端面中心，X 沿轴线向右，Z 向上。", "2. 未注倒角 C1（不建模）。"]}
+  ]
+}

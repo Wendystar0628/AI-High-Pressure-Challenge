@@ -1,0 +1,18 @@
+{
+  "problem": "20",
+  "parts": [
+    {"name": "1", "title": "双级迷宫旋流分离壳", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,230,220], "r": 6}], "depth": [0,12], "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [115,110], "d": 184}], "depth": [12,32], "name": "锥形底座"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [115,110], "d": 150}], "depth": [32,110], "name": "筒体"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [115,110], "d": 150}], "depth": [110,112], "name": "法兰环"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"circle": [115,110], "d": 120}], "depth": [32,112], "name": "内腔"},
+      {"type": "revolve", "plane": "XZ", "origin": [115,110,0], "axis": "y", "loops": [{"path": [[0,112],[75,112],[46,140],[0,140]]}], "name": "锥顶"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,140], "at": [[115,110]], "d": 92, "depth": 60, "name": "顶部出口Φ92"},
+      {"type": "extrude", "plane": "YZ", "origin": [0,0,0], "loops": [{"circle": [110,90], "d": 50}], "depth": [0,75], "name": "侧入口管"},
+      {"type": "hole", "plane": "YZ", "origin": [0,0,0], "at": [[110,90]], "d": 34, "depth": 60, "reverse": true, "name": "侧入口Φ34"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,12], "at": [[15,15],[215,15],[15,205],[215,205]], "d": 13, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,0], "at": [[115,110]], "d": 40, "depth": 12, "reverse": true, "name": "底部排口"}
+    ]}
+  ]
+}

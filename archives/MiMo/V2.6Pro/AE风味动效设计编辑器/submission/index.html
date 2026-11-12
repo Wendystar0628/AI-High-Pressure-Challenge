@@ -1,35 +1,201 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AE 风味动效设计编辑器</title>
-<link rel="stylesheet" href="dist/bundle.css" />
-<style>
-  /* 文件直开时的兜底加载提示 */
-  #boot-loading {
-    position: fixed; inset: 0;
-    background: #0a0c10; color: #8a93a6;
-    display: flex; align-items: center; justify-content: center;
-    font-family: "Microsoft YaHei", sans-serif; font-size: 13px;
-    z-index: 9999; letter-spacing: 1px;
-  }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AE风味动效设计编辑器 · 锻字</title>
+<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div id="boot-loading">正在载入动效编辑器…</div>
-<div id="app"></div>
-<script src="dist/bundle.js"></script>
-<script>
-  // 隐藏加载提示
-  (function wait() {
-    if (window.__app && window.__app.project) {
-      var el = document.getElementById('boot-loading');
-      if (el) el.remove();
-    } else {
-      setTimeout(wait, 80);
-    }
-  })();
-</script>
+<div id="app">
+  <!-- 顶部工具栏 -->
+  <div id="toolbar">
+    <div class="tb-left">
+      <div class="logo">锻<span>效</span></div>
+      <div class="tool-group" id="tools">
+        <button class="tool active" data-tool="select" title="选择 (V)">选择</button>
+        <button class="tool" data-tool="hand" title="抓手 (H)">抓手</button>
+        <button class="tool" data-tool="zoom" title="缩放 (Z)">缩放</button>
+        <div class="sep"></div>
+        <button class="tool" data-tool="rect" title="矩形 (Q)">矩形</button>
+        <button class="tool" data-tool="ellipse" title="椭圆 (Q)">椭圆</button>
+        <button class="tool" data-tool="pen" title="钢笔 (G)">钢笔</button>
+        <button class="tool" data-tool="text" title="文字 (T)">文字</button>
+        <div class="sep"></div>
+        <button class="tool" data-tool="camera" title="摄像机工具 (C)">摄像机</button>
+        <button class="tool" data-tool="orbit" title="环绕观察">环绕</button>
+      </div>
+    </div>
+    <div class="tb-center">
+      <button id="btn-first" title="跳到开头">⏮</button>
+      <button id="btn-prev" title="上一帧 (PgUp)">◀</button>
+      <button id="btn-play" title="播放/暂停 (空格)">▶</button>
+      <button id="btn-next" title="下一帧 (PgDn)">▶</button>
+      <button id="btn-last" title="跳到结尾">⏭</button>
+      <div class="time-display"><span id="time-cur">00:00:00</span><span class="dim">/</span><span id="time-total">00:15:00</span></div>
+      <div class="fps-display"><span id="fps-cur">60</span> fps</div>
+    </div>
+    <div class="tb-right">
+      <button id="btn-undo" title="撤销 (Ctrl+Z)">撤销</button>
+      <button id="btn-redo" title="重做 (Ctrl+Y)">重做</button>
+      <div class="sep"></div>
+      <button id="btn-save" title="保存工程">保存</button>
+      <button id="btn-load" title="打开工程">打开</button>
+      <button id="btn-export" title="导出接口测试">导出</button>
+    </div>
+  </div>
+
+  <!-- 主区域 -->
+  <div id="main">
+    <!-- 左：项目面板 -->
+    <div id="left-panel">
+      <div class="panel-title">项目 <button class="mini" id="btn-new-comp">+ 合成</button></div>
+      <div id="project-list"></div>
+      <div class="panel-title" style="margin-top:6px">图层类型</div>
+      <div id="layer-types">
+        <button data-type="shape">形状</button>
+        <button data-type="text">文字</button>
+        <button data-type="null">空对象</button>
+        <button data-type="adjustment">调整</button>
+        <button data-type="precomp">预合成</button>
+        <button data-type="camera">摄像机</button>
+        <button data-type="light">灯光</button>
+        <button data-type="solid3d">三维几何</button>
+        <button data-type="particle">粒子</button>
+        <button data-type="audio">音色</button>
+      </div>
+      <div class="hint" id="empty-hint">双击合成打开 · 空工程可直接创建图层</div>
+    </div>
+
+    <!-- 中：画布 -->
+    <div id="center">
+      <div id="viewer-bar">
+        <select id="comp-select"></select>
+        <select id="zoom-select">
+          <option value="fit">适应</option>
+          <option value="0.25">25%</option>
+          <option value="0.5">50%</option>
+          <option value="1">100%</option>
+          <option value="2">200%</option>
+        </select>
+        <label class="chk"><input type="checkbox" id="chk-grid"> 网格</label>
+        <label class="chk"><input type="checkbox" id="chk-paths" checked> 运动路径</label>
+        <label class="chk"><input type="checkbox" id="chk-fields" checked> 场范围</label>
+        <label class="chk"><input type="checkbox" id="chk-mb"> 运动模糊</label>
+        <span class="spacer"></span>
+        <span id="viewer-status" class="dim">就绪</span>
+      </div>
+      <div id="viewer-wrap">
+        <canvas id="glcanvas"></canvas>
+        <canvas id="overlay"></canvas>
+        <div id="viewer-empty">空合成 — 从左侧添加图层开始创作</div>
+      </div>
+    </div>
+
+    <!-- 右：属性面板 -->
+    <div id="right-panel">
+      <div class="panel-tabs">
+        <button class="ptab active" data-tab="props">属性</button>
+        <button class="ptab" data-tab="effects">效果</button>
+        <button class="ptab" data-tab="chars">字符</button>
+      </div>
+      <div id="props-tab" class="tab-body"></div>
+      <div id="effects-tab" class="tab-body" style="display:none"></div>
+      <div id="chars-tab" class="tab-body" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- 底部：时间轴 / 曲线 / 节点 -->
+  <div id="bottom">
+    <div class="panel-tabs">
+      <button class="btab active" data-btab="timeline">时间轴</button>
+      <button class="btab" data-btab="curves">曲线</button>
+      <button class="btab" data-btab="nodes">节点</button>
+      <span class="spacer"></span>
+      <span class="dim" id="sel-info">未选择图层</span>
+    </div>
+    <!-- 时间轴 -->
+    <div id="timeline-wrap" class="btab-body">
+      <div id="tl-controls">
+        <button id="btn-workarea" title="循环工作区">循环</button>
+        <button id="btn-snap" title="吸附">吸附</button>
+        <button id="btn-add-kf" title="添加关键帧">◆</button>
+        <button id="btn-del-kf" title="删除关键帧">✕</button>
+        <button id="btn-f9" title="缓入缓出 (F9)">F9</button>
+        <button id="btn-ease-easy" title="缓动">缓动</button>
+        <div class="sep"></div>
+        <label class="chk"><input type="checkbox" id="chk-expr"> 表达式</label>
+        <input id="expr-input" class="expr-input" placeholder="选择带表达式的属性…" disabled>
+        <span class="spacer"></span>
+        <label class="dim">缩放</label>
+        <input type="range" id="tl-zoom" min="10" max="400" value="100">
+      </div>
+      <div id="timeline-body">
+        <div id="tl-layers"></div>
+        <div id="tl-tracks-wrap">
+          <div id="tl-ruler"></div>
+          <div id="tl-tracks"></div>
+          <div id="tl-playhead"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 曲线 -->
+    <div id="curves-wrap" class="btab-body" style="display:none">
+      <div id="curve-controls">
+        <button class="curve-mode active" data-mode="value">值曲线</button>
+        <button class="curve-mode" data-mode="speed">速度曲线</button>
+        <span class="spacer"></span>
+        <span class="dim">拖动关键帧与手柄编辑 · 位置速度为沿路径实际速度</span>
+      </div>
+      <canvas id="curve-canvas"></canvas>
+    </div>
+    <!-- 节点 -->
+    <div id="nodes-wrap" class="btab-body" style="display:none">
+      <div id="node-controls">
+        <select id="node-add">
+          <option value="">+ 添加节点…</option>
+          <option value="rect">矩形</option>
+          <option value="ellipse">椭圆</option>
+          <option value="path">路径</option>
+          <option value="text">文字</option>
+          <option value="transform">变换</option>
+          <option value="noise">噪声位移</option>
+          <option value="vortex">旋涡</option>
+          <option value="extrude">挤出</option>
+          <option value="boolean">布尔</option>
+          <option value="merge">合并</option>
+          <option value="distribute">分布</option>
+          <option value="group">编组</option>
+          <option value="output">输出</option>
+        </select>
+        <button id="node-run">计算</button>
+        <span class="spacer"></span>
+        <span class="dim" id="node-status">节点图就绪 · 拖动端口连线，点击端口类型可查看含义</span>
+      </div>
+      <canvas id="node-canvas"></canvas>
+    </div>
+  </div>
+</div>
+<input type="file" id="file-input" accept=".json" style="display:none">
+<div id="tooltip"></div>
+<div id="toast"></div>
+
+<script src="js/util.js"></script>
+<script src="js/model.js"></script>
+<script src="js/interp.js"></script>
+<script src="js/expr.js"></script>
+<script src="js/geom.js"></script>
+<script src="js/textgeom.js"></script>
+<script src="js/fields.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/curves.js"></script>
+<script src="js/nodes.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

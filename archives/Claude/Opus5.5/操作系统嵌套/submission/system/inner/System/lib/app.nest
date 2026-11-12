@@ -1,0 +1,69 @@
+;; 应用框架：打开窗口、消息循环、重绘与投送视图（各子系统应用共用）
+;; 应用通过 (app-run 处理表) 运行；处理表里放 render / input / key / text / msg / tick 等函数。
+
+(var APP-WID nil) (var APP-W 600) (var APP-H 400) (var APP-DIRTY true) (var APP-FOCUSED true)
+(var APP-TIMEOUT nil) (var APP-H-TABLE {}) (var APP-META nil) (var APP-QUIT false)
+;; 投送：投送窗口在祖先桌面上的标识与尺寸（为 nil 表示未投送）
+(var PROJ nil)
+
+(defn app-open (o)
+  (set! APP-W (or o.w 600)) (set! APP-H (or o.h 400))
+  (set! APP-WID (sys "win-open" o))
+  APP-WID)
+
+(defn dirty! () (set! APP-DIRTY true))
+
+(defn app-display (nodes meta)
+  (sys "display" APP-WID {:w APP-W :h APP-H :nodes nodes :bg C-BG} meta))
+
+(defn app-call (name & args)
+  (var f (get APP-H-TABLE name))
+  (if f (apply f args) nil))
+
+(defn app-dispatch (m)
+  (case m.k
+    ("input"
+     (var ev m.ev)
+     (when (= ev.type "move")
+       (var hv (ui-hit ev.x ev.y))
+       (when (!= hv UI-HOVER) (set! UI-HOVER hv) (dirty!)))
+     (when (= ev.type "leave") (set! UI-HOVER nil) (dirty!))
+     (app-call "input" ev "main"))
+    ("key" (app-call "key" m.ev "main"))
+    ("text" (app-call "text" m.ev "main"))
+    ("resize" (set! APP-W m.w) (set! APP-H m.h) (app-call "resize") (dirty!))
+    ("focus" (set! APP-FOCUSED m.on) (dirty!))
+    ("close" (if (get APP-H-TABLE "close") (app-call "close") (sys "exit" nil)))
+    ("proj-opened" (set! PROJ {:id m.proj :w (or m.w 640) :h (or m.h 420) :target m.target}) (app-call "proj" true) (dirty!))
+    ("proj-resize" (when PROJ (put! PROJ "w" m.w) (put! PROJ "h" m.h)) (app-call "proj-resize") (dirty!))
+    ("proj-closed" (set! PROJ nil) (app-call "proj" false) (dirty!))
+    ("proj-input"
+     (var ev m.ev)
+     (case ev.type
+       ("key" (app-call "key" ev "proj"))
+       ("text" (app-call "text" ev "proj"))
+       (else (app-call "input" ev "proj"))))
+    ("restored" (set! PROJ nil) (app-call "restored" m.mode) (dirty!))
+    (else (app-call "msg" m))))
+
+(defn app-run (handlers)
+  (set! APP-H-TABLE handlers)
+  (app-call "render")
+  (set! APP-DIRTY false)
+  (while (not APP-QUIT)
+    (var m (sys "recv" APP-TIMEOUT))
+    (if m (app-dispatch m) (app-call "tick"))
+    (var more (sys "try-recv"))
+    (var guard 0)
+    (while (and more (< guard 300)) (app-dispatch more) (set! more (sys "try-recv")) (inc! guard))
+    (app-call "after")
+    (when APP-DIRTY (set! APP-DIRTY false) (app-call "render")))
+  (sys "exit" nil))
+
+(defn project-to (target)
+  (sys "project" APP-WID target 640 420))
+
+;; 选择投送目标：祖先桌面列表（跨过中间层可直接投送到根系统）
+(defn ancestors-list ()
+  (var anc (sys "ancestors"))
+  (slice anc 0 (- (len anc) 1)))

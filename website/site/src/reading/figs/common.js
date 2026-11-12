@@ -14,7 +14,7 @@ export { d3 };
 export const W = 720;
 
 /** Fixed figure numbers: the order of the about page (task pages reuse them). */
-export const ORDER = ['hero', 'howto', 'weights', 'reason', 'algo', 'spatial', 'interact', 'game', 'physics', 'visual', 'system', 'timeline', 'isolation', 'schedule', 'rules', 'pipeline', 'types', 'designscore'];
+export const ORDER = ['hero', 'howto', 'weights', 'reason', 'algo', 'battle', 'spatial', 'drawing', 'interact', 'game', 'physics', 'visual', 'system', 'timeline', 'isolation', 'schedule', 'rules', 'pipeline', 'types', 'designscore'];
 export const figNo = (key) => `FIG.${String(ORDER.indexOf(key) + 1).padStart(2, '0')}`;
 
 let seq = 0;

@@ -11,21 +11,42 @@
   "intro": [
     {
       "defs": [
-        ["What", "A timed benchmark for AI coding agents. The tasks run from Lean formal proofs, olympiad mathematics, extremal constructions, performance optimization and Luban lock disassembly all the way to designing and building complete web works and a desktop system."],
-        ["Who", "Each model is tested together with its own agent harness, such as Claude Code or Codex, at reasoning effort `xhigh` by default."],
-        ["How", "Every task starts in a fresh session and is worked on alone, with nobody answering questions; reminders, resuming and isolation are under [How Tests Run](#format)."],
-        ["Two kinds", "Standard tasks deliver proofs, constructions, source code or disassembly routes and are scored by programs that check the answers; design tasks deliver web works or desktop projects that run as they are, graded once each by Claude Opus 5.5 and GPT 6.1 Sol and averaged."],
-        ["Total", "Each task is converted to a 0–100 score, and the weighted sum is the model's total; see [Scoring](#scoring)."]
+        [
+          "What",
+          "A timed benchmark for AI coding agents. The tasks run from Lean formal proofs, olympiad mathematics, performance optimization, game-playing programs, Luban lock disassembly and reading engineering drawings into 3D models all the way to designing and building complete web works and a desktop system."
+        ],
+        [
+          "Who",
+          "Each model is tested together with its own agent harness, such as Claude Code or Codex, at reasoning effort `xhigh` by default."
+        ],
+        [
+          "How",
+          "Every task starts in a fresh session and is worked on alone, with nobody answering questions; reminders, resuming and isolation are under [How Tests Run](#format)."
+        ],
+        [
+          "Two kinds",
+          "Standard tasks deliver proofs, source code or disassembly routes and are scored by programs that check the answers; design tasks deliver web works or desktop projects that run as they are, graded once each by Claude Opus 5.5 and GPT 6.1 Sol and averaged."
+        ],
+        [
+          "Total",
+          "Each task is converted to a 0–100 score, and the weighted sum is the model's total; see [Scoring](#scoring)."
+        ]
       ]
     },
-    { "fig": "howto" }
+    {
+      "fig": "howto"
+    }
   ],
   "overview": [
-    "The 6 tasks in Math Reasoning, Algorithm Contests and Spatial Reasoning are standard tasks; the 6 in the other 5 categories are design tasks. Click a task name to open its page.",
-    { "fig": "weights" },
-    { "slot": "overview-table" },
+    "The 7 tasks in Math Reasoning, Performance Optimization, Algorithm Battle, Spatial Reasoning, and Drawing Interpretation & Modeling are standard tasks; the other 5 categories contain 6 design tasks. Select a task name to open its page.",
+    {
+      "fig": "weights"
+    },
+    {
+      "slot": "overview-table"
+    },
     "All five web tasks must run completely in Chrome by double-clicking `index.html`, with no web server; Nested Operating Systems uses Electron 45.2.1 or another host that can embed Chromium, launched from a single entry point.",
-    "Weights go to categories first and are split evenly among the tasks inside each category (5% each for the three Algorithm Contests tasks)."
+    "Each of the ten categories contributes 10 points. Tasks split their category equally: the two tasks in Math Reasoning, Performance Optimization, and Visual Design & Rendering contribute 5 points each; every other category has one task worth 10 points."
   ],
   "tasks": {
     "lead": "Scoring rules for standard tasks are drawn in each category's figure; design tasks keep their scoring directions and points in a fold.",
@@ -39,7 +60,7 @@
         ]
       },
       "math-olympiad": {
-        "scoring": "0–7 per problem, 126 in all, scaled to 100",
+        "scoring": "24 problems, 0–7 each, 168 in all, scaled to 100",
         "points": [
           "**Original, so nothing to look up**: the problems are new and unpublished, with no known solutions to recall.",
           "**Find, then prove**: after the answer, argue both directions: it is attained, and nothing does better or no other solution exists.",
@@ -47,58 +68,211 @@
           "**One problem at a time**: write each solution into its file as soon as it is done; if a problem resists, write down the progress and move on."
         ]
       },
-      "unit-square": {
-        "scoring": "Ratio to the reference construction, looked up on an anchor table",
+      "raytracing": {
+        "scoring": "One performance input, the Jiangnan garden: the speedup looked up on an anchor table gives a speed score, multiplied by an image factor and a hidden-input factor; full marks from 10×",
         "points": [
-          "**Search strategy**: maximizing a minimum is not smooth and has many local optima; standard methods soon hit a plateau.",
-          "**Exactness**: if rounding puts even one point outside, the whole answer is invalid, so results must be rechecked from the written values.",
-          "**Using the compute**: organize a parallel search across the 14 logical processors and one GPU.",
-          "**Knowing when to turn**: when one direction stalls, judge when to switch ideas."
-        ]
-      },
-      "transformer": {
-        "scoring": "The 8 public shapes each scored by speedup on an anchor table, then averaged",
-        "points": [
-          "**Matrix work on the GPU**: matrix multiplication, softmax and layer normalization are all hand-written; kernel throughput sets the ceiling.",
-          "**Precision and tolerance**: internal precision is free to choose, but results must stay within tolerance.",
-          "**Memory and platform limits**: very long sequences cannot hold an $S\\times S$ intermediate, and work must be split into batches; running it all at once can reset the driver or even crash the machine.",
-          "**Tuning per shape**: the 8 shapes range from ten thousand short sequences to a single sequence of 100,000 tokens, and tiling, layout and precision can be chosen per shape."
+          "**Acceleration structure**: with 177,000 triangles and over a hundred rays per pixel, the quality of the tree and the way it is traversed decide how fast queries run, and building the tree is timed too.",
+          "**GPU organization**: how rays, samples and threads map onto each other and how nodes are laid out change the GPU's throughput; familiar recipes are not always faster, so measurements decide.",
+          "**Measure, then change**: the costs trade off against each other and the bottleneck moves after every step; there is no ready-made stage timer, so the model has to find out for itself where the time goes.",
+          "**An exact image**: no fewer samples, no other sequence and no early cut-off of reflections, and every timed run is judged; the hidden inputs change the camera, seed and extreme settings, so tuning to the public image alone does not hold."
         ]
       },
       "circuit": {
-        "scoring": "The 24 public circuits each scored by speedup on an anchor table, averaged, then times a correctness factor",
+        "scoring": "The 9 public circuits each scored by speedup on an anchor table, averaged, then times a correctness factor",
         "points": [
           "**Bit-level parallelism**: pack many independent stimuli into 64-bit words and AVX2 vectors and compute them together.",
           "**Circuit preprocessing**: gates are not given in dependency order; sorting, simplification and layout decide how fast evaluation is.",
           "**Threads and caches**: with many stimuli and large circuits, batching, layout and division of work set the ceiling.",
-          "**Tuning per class**: the 8 classes, from deep chains and wide grids to multipliers, cipher rounds and register files, differ in topology, and strategy can be chosen per class."
+          "**Tuning per class**: the 3 classes, deep chains, array multipliers and register files, differ in topology, and strategy can be chosen per class."
+        ]
+      },
+      "conquest": {
+        "scoring": "480 games at 1 for a win, 0.5 for a draw and 0 for a loss give a rating; the five tiers anchor 10/20/40/60/80 and 200 below the weakest scores 0; full marks take a rating 200 above the strongest tier",
+        "points": [
+          "**Simultaneous moves and foresight**: both sides order in the same turn and troops cannot turn back once sent, so the bot must work out each node's future troops and owner from the troops on the way.",
+          "**Expansion and defense**: taking neutral nodes raises growth, but the troops sent out leave its own nodes bare; attack and defense must be weighed together.",
+          "**Search under a time limit**: the engine can simulate turns directly, but each turn has only 50 ms of CPU time, so how deep and how wide to look is the program's own trade-off.",
+          "**Strength, not tricks**: the score comes from a rating estimated over all games against the five tiers, so the bot must hold up on every kind of map; matching the strongest tier earns 80, and full marks need a clearly stronger bot."
         ]
       },
       "luban": {
-        "scoring": "8 puzzles in three tiers, each scoring $w \\times \\min(1, B/N)$ by step count, 100 in all",
+        "scoring": "8 puzzles in three tiers; a full take-down scores $w \\times \\max(0.6, \\min(1, B/N))$ by step count, an unfinished one earns partial credit for its completed separations, 100 in all",
         "points": [
           "**Spatial imagination**: work out every piece's shape, position and interlocks from the layer drawings and voxel data.",
-          "**Reasoning about blocking**: judge by hand whether each move collides; one collision voids the whole route.",
+          "**Reasoning about blocking**: judge by hand whether each move collides; at the first collision the route breaks off, and nothing after it counts.",
           "**Full disassembly**: after splitting into two groups, keep going until every group is a single piece.",
           "**Fewer steps**: among legal routes, find shorter ones with fewer changes of group, axis and direction."
         ]
       },
+      "drawing": {
+        "scoring": "25 problems in three tiers; the surface match at 0.2 mm and 2 mm combines into $F^*$, and each problem earns $w \\times \\min(1, F^*/0.99)$, 100 in all",
+        "points": [
+          "**Reading across views**: match the principal views, sections, auxiliary views and details to trace nested cavities and skew passages.",
+          "**Dimension chains by hand**: add up chain dimensions, find coordinates and convert the tilt and bearing of inclined holes, all by hand.",
+          "**Feature modeling**: break each shape read from the sheets into extrusions, revolutions, holes, fillets and chamfers with the right parameters and positions.",
+          "**Complex assemblies**: up to 26 parts, each placed and oriented from fits, coaxial features, mating faces and locating features."
+        ]
+      },
       "ae-editor": {
         "points": [
-          "**Coupling**: dozens of features pull on one another, and any change must flow down the dependency chain in real time.",
-          "**Procedural geometry**: output from paths, text, operators and node groups feeds on into solids, deformation, emission and collision.",
-          "**3D and particles**: real extrusion, holes, bevels and deformation with materials, shadows and depth of field; deformed geometry drives particles, collision events and trails.",
-          "**The 15-second piece**: an opening, development, build-up and close, with the main elements carried through rather than a reel of unrelated feature clips."
+          "**Coupling**: dozens of features share one set of project data; expressions are really evaluated, nodes compute along their wires, and any change regenerates everything down the dependency chain.",
+          "**Procedural geometry and deformation**: geometry from paths, text and nodes feeds on into extrusion, field and pin deformation, particle emission and collision, and normals, shadows and picking follow the deformed shape.",
+          "**3D, particles and compositing**: real extrusion with holes and bevels, plus materials, cast shadows and depth of field, and particles that collide with the actual surfaces; precomps, time remapping and motion blur sample the actual motion, and any moment gives the same result every time.",
+          "**The 「锻字」 (forging a character) piece**: in 15 seconds one character is written, becomes a block, is forged and cools, with the forging as the single climax; it is judged on theme and watchability, not on how many features it uses."
         ],
         "directions": [
-          ["Timeline, curves and expressions", 14, [["Keyframes and property writes", 3], ["Curves, paths and timeline", 5], ["Expressions and cross-time references", 4], ["Preview and playback", 2]]],
-          ["Vectors, text and procedural graphics", 14, [["Vector paths and operators", 4], ["Node evaluation and geometry output", 5], ["Text and per-character animation", 3], ["Parametric instances", 2]]],
-          ["Mesh deformation and spatial fields", 12, [["Meshes and deformation controls", 5], ["Local rigidity and layering", 3], ["Spatial fields and geometry transfer", 4]]],
-          ["3D scenes and rendering", 22, [["Solids, holes and bevels", 6], ["Materials and environment reflections", 4], ["Lights and shadows", 4], ["Camera and depth of field", 4], ["Spatial compositing and editing", 4]]],
-          ["Particle dynamics and time compositing", 14, [["Emission and life cycle", 3], ["Force fields, collisions and events", 5], ["Trails and particle rendering", 2], ["Time effects and motion sampling", 4]]],
-          ["Editing, project and export", 6, [["Transforms, hierarchy and precomps", 3], ["Undo, redo and file recovery", 2], ["Final and frame-by-frame export", 1]]],
-          ["Interface design", 6, [["Interface concept and visual hierarchy", 2], ["Workspace and visual feedback", 2], ["Interaction states and legibility", 2]]],
-          ["Showcase animation design", 12, [["Technique coverage and editability", 4], ["Visual design and render quality", 4], ["Motion, camera and audio-visual rhythm", 4]]]
+          [
+            "Timeline, curves and expressions",
+            14,
+            [
+              [
+                "Keyframes and timeline",
+                4
+              ],
+              [
+                "Curves and motion paths",
+                5
+              ],
+              [
+                "Expressions and references",
+                5
+              ]
+            ]
+          ],
+          [
+            "Graphics, text and procedural geometry",
+            19,
+            [
+              [
+                "Paths and shape operations",
+                5
+              ],
+              [
+                "Text and per-character animation",
+                4
+              ],
+              [
+                "Nodes and geometry output",
+                5
+              ],
+              [
+                "Fields and geometry deformation",
+                5
+              ]
+            ]
+          ],
+          [
+            "Compositing, precomps and motion blur",
+            14,
+            [
+              [
+                "Masks, mattes, effects and blending",
+                6
+              ],
+              [
+                "Precomps and time remapping",
+                5
+              ],
+              [
+                "Motion blur",
+                3
+              ]
+            ]
+          ],
+          [
+            "3D scenes and rendering",
+            17,
+            [
+              [
+                "Extruded solids",
+                4
+              ],
+              [
+                "Materials, lights and shadows",
+                5
+              ],
+              [
+                "Camera and depth of field",
+                4
+              ],
+              [
+                "3D space and editing",
+                4
+              ]
+            ]
+          ],
+          [
+            "Particles and collisions",
+            12,
+            [
+              [
+                "Emission and force fields",
+                4
+              ],
+              [
+                "Collisions and events",
+                6
+              ],
+              [
+                "Trails",
+                2
+              ]
+            ]
+          ],
+          [
+            "Editing and project",
+            5,
+            [
+              [
+                "Layer and transform editing",
+                2
+              ],
+              [
+                "Consistent sampling",
+                2
+              ],
+              [
+                "Undo, redo and saving",
+                1
+              ]
+            ]
+          ],
+          [
+            "Interface design",
+            5,
+            [
+              [
+                "Interface concept and visual hierarchy",
+                2
+              ],
+              [
+                "Workspace and feedback",
+                3
+              ]
+            ]
+          ],
+          [
+            "Showcase animation",
+            14,
+            [
+              [
+                "Theme and structure of the stages",
+                4
+              ],
+              [
+                "Visual design and rendering",
+                4
+              ],
+              [
+                "Motion, camera and sound",
+                4
+              ],
+              [
+                "Built as an editable project",
+                2
+              ]
+            ]
+          ]
         ]
       },
       "tower-defense": {
@@ -109,41 +283,242 @@
           "**Readable information**: with many enemies and effects on screen, routes, node states and health stay clear."
         ],
         "directions": [
-          ["Map and scene art", 20, [["Map colour and layering", 6], ["Scene modelling, materials and lighting", 6], ["Telling ground types apart", 4], ["Ambient motion and backdrop", 4]]],
-          ["Tower and enemy models and animation", 20, [["Tower modelling", 6], ["Enemy and boss modelling", 6], ["Telling towers, enemies and map apart", 3], ["Continuous animation", 5]]],
-          ["Effects and sound", 12, [["Effects", 10], ["Sound", 2]]],
-          ["Interface and information", 13, [["Interface art", 5], ["Battle information", 4], ["Controls and help", 4]]],
-          ["Gameplay and design thinking", 35, [["Pathfinding and rerouting", 3], ["Towers and enemies in combat", 9], ["Levels and flow", 5], ["Live demo", 7], ["Video export", 1], ["Design thinking", 10]]]
+          [
+            "Map and scene art",
+            20,
+            [
+              [
+                "Map colour and layering",
+                6
+              ],
+              [
+                "Scene modelling, materials and lighting",
+                6
+              ],
+              [
+                "Telling ground types apart",
+                4
+              ],
+              [
+                "Ambient motion and backdrop",
+                4
+              ]
+            ]
+          ],
+          [
+            "Tower and enemy models and animation",
+            20,
+            [
+              [
+                "Tower modelling",
+                6
+              ],
+              [
+                "Enemy and boss modelling",
+                6
+              ],
+              [
+                "Telling towers, enemies and map apart",
+                3
+              ],
+              [
+                "Continuous animation",
+                5
+              ]
+            ]
+          ],
+          [
+            "Effects and sound",
+            12,
+            [
+              [
+                "Effects",
+                10
+              ],
+              [
+                "Sound",
+                2
+              ]
+            ]
+          ],
+          [
+            "Interface and information",
+            13,
+            [
+              [
+                "Interface art",
+                5
+              ],
+              [
+                "Battle information",
+                4
+              ],
+              [
+                "Controls and help",
+                4
+              ]
+            ]
+          ],
+          [
+            "Gameplay and design thinking",
+            35,
+            [
+              [
+                "Pathfinding and rerouting",
+                3
+              ],
+              [
+                "Towers and enemies in combat",
+                9
+              ],
+              [
+                "Levels and flow",
+                5
+              ],
+              [
+                "Live demo",
+                7
+              ],
+              [
+                "Video export",
+                1
+              ],
+              [
+                "Design thinking",
+                10
+              ]
+            ]
+          ]
         ]
       },
       "jelly-tank": {
         "points": [
-          "**Soft-body deformation**: local denting, overall bulging and staggered rebound, with the jelly's reaction changing the heavy ball's motion.",
-          "**Fluid and buoyancy**: density decides where balls settle, and waves set the surface, the water and the bottom moving differently at once.",
-          "**Three-way coupling**: soft bodies, rigid bodies and fluid act on one another, with deformation and waves clearly layered.",
-          "**Choosing and joining libraries**: whether and where to use a physics library is the model's call, and the parts must add up to one believable motion."
+          "**Large deformation and cracking**: the jelly is a volumetric soft body discretized into tetrahedra or voxels; it is squashed, bulges out, wraps the ball and throws it back while keeping its volume; when the blow is heavy enough and the jelly not strong enough it cracks from the point of impact by a material fracture criterion, the pieces are still springy jelly, and a light blow only deforms it and springs back.",
+          "**Breaking waves and splashes**: the water is solved with a 3D particle–grid hybrid method in WebGPU compute shaders; waves from the wave maker steepen as they travel, curl over and break into white water, then run up the far wall and fall back; balls entering the water open cavities, throw up crowns and drag bubbles down, and the water level rises.",
+          "**Two-way coupling**: soft bodies, rigid bodies and liquid act on one another, density decides floating and sinking, and balls at the surface, in mid-water and on the bottom each follow their own path in the waves; changing softness, mass, density or the wave settings changes the phenomena the way the statement says.",
+          "**Demo choreography**: the four demos give only a theme and an arc, start with action and slow down at key moments, staying within 8 seconds for the centred and off-centre hits, 10 for the combo and 20 for the waves."
         ],
         "directions": [
-          ["Phenomena and layers of motion", 44, [["Local indentation", 6], ["Overall deformation", 6], ["Deformation spreading", 5], ["Layers of rebound", 5], ["Entry disturbance", 4], ["Wave shape", 7], ["Contrast between layers of motion", 6], ["Settling of the aftermath", 5]]],
-          ["Materials and lighting", 24, [["Light through the jelly", 6], ["Heavy ball material", 3], ["Glass appearance", 3], ["Water quality", 4], ["Modelling with light", 4], ["Consistent style", 2], ["Framing and legibility", 2]]],
-          ["Interactions", 22, [["Heavy ball contact response", 5], ["Density and buoyancy", 5], ["Response to the wave maker", 3], ["Response to the flow", 4], ["Rigid contact response", 5]]],
-          ["Demo and delivery", 10, [["Transitions between stages", 2], ["Demo controls", 2], ["Effect of parameters", 2], ["Video export", 2], ["Sound effects", 2]]]
-        ]
-      },
-      "nvidia-b200": {
-        "points": [
-          "**Continuous transitions**: the same B200 changes form between package, floor plan, data and system, and transitions can stop and run backwards.",
-          "**Multi-scale modelling**: from solder balls, microbumps and TSVs up to racks, every scale holds up close.",
-          "**SVG motion graphics**: bit fields, number lines, multiply-accumulate and link topologies deform themselves and stay aligned with the 3D.",
-          "**Linked state**: precision, inputs and selections persist across chapters and map to the same part, data or device."
-        ],
-        "directions": [
-          ["Art direction", 10, [["Whole-page concept and identity", 5], ["Colour and information contrast", 3], ["Motion style and detail", 2]]],
-          ["Graphic design", 20, [["Layout", 4], ["Text and figure hierarchy", 4], ["Infographics and spec comparisons", 5], ["Labels and state feedback", 4], ["Combining 3D and 2D", 3]]],
-          ["SVG animation and motion graphics", 20, [["Structure and process graphics", 6], ["Data flow and computation", 6], ["Value changes and linked states", 4], ["Choreography and detail", 4]]],
-          ["3D modelling and rendering", 20, [["Package model and layered breakdown", 7], ["Local structure and visible detail", 4], ["System models", 3], ["Materials, lights and image quality", 6]]],
-          ["Transitions, scrolling and navigation", 15, [["The seven chapter links", 7], ["Camera and viewing scale", 3], ["Vertical, horizontal scrolling and hand-off", 2], ["Navigation and state restore", 3]]],
-          ["Interaction", 15, [["Model exploration", 5], ["Precision and data experiments", 3], ["Multi-GPU coordination and linking", 4], ["Feedback and interruptibility", 3]]]
+          [
+            "Phenomena and layers of motion",
+            47,
+            [
+              [
+                "Contact denting and wrapping",
+                5
+              ],
+              [
+                "Large overall deformation",
+                8
+              ],
+              [
+                "Oscillation spreading and layers of rebound",
+                5
+              ],
+              [
+                "Cracking and fragments",
+                5
+              ],
+              [
+                "Water-entry splash",
+                5
+              ],
+              [
+                "Wave growth and breaking",
+                10
+              ],
+              [
+                "Contrast between layers of motion",
+                6
+              ],
+              [
+                "Settling of the aftermath",
+                3
+              ]
+            ]
+          ],
+          [
+            "Materials and lighting",
+            17,
+            [
+              [
+                "Light through the jelly",
+                5
+              ],
+              [
+                "Heavy ball material",
+                2
+              ],
+              [
+                "Water quality",
+                5
+              ],
+              [
+                "Glass appearance",
+                1
+              ],
+              [
+                "Modelling with light",
+                4
+              ]
+            ]
+          ],
+          [
+            "Interactions",
+            24,
+            [
+              [
+                "Heavy ball contact response",
+                5
+              ],
+              [
+                "Density and buoyancy",
+                4
+              ],
+              [
+                "Response to the wave maker",
+                2
+              ],
+              [
+                "Response to the flow",
+                5
+              ],
+              [
+                "Rigid contact response",
+                4
+              ],
+              [
+                "Response to parameters",
+                4
+              ]
+            ]
+          ],
+          [
+            "Demo and delivery",
+            12,
+            [
+              [
+                "Demo choreography",
+                4
+              ],
+              [
+                "Demo camera and framing",
+                2
+              ],
+              [
+                "Demo controls",
+                2
+              ],
+              [
+                "Video export",
+                2
+              ],
+              [
+                "Sound effects",
+                2
+              ]
+            ]
+          ]
         ]
       },
       "harbor": {
@@ -154,30 +529,429 @@
           "**Choreographed motion**: changes travel along the path of wind, cloud and waves, restrained in size and staggered in rhythm."
         ],
         "directions": [
-          ["Composition and depth", 8, [["Base and layout", 3], ["Depth layers and opening view", 5]]],
-          ["Models and set dressing", 34, [["Quay wall, underwater and breakwater blocks", 6], ["Embankment, mooring and signs of life", 5], ["Boats and wheelhouses", 9], ["Pier props", 6], ["Harbour buildings and interiors", 8]]],
-          ["Toon style", 15, [["Consistent shading and style", 6], ["Outlines and image clarity", 3], ["Materials and water treatment", 6]]],
-          ["Colour and lighting", 17, [["Palette and warm/cool balance", 5], ["Lighting and sky", 7], ["Light shafts and sparkles", 5]]],
-          ["Motion", 20, [["Constant small motion", 7], ["Gusts of wind", 3], ["Clouds, light and rain", 4], ["Gulls, cat and boats", 6]]],
-          ["Camera and running", 6, [["Camera controls", 4], ["Loading and errors", 2]]]
+          [
+            "Composition and depth",
+            8,
+            [
+              [
+                "Base and layout",
+                3
+              ],
+              [
+                "Depth layers and opening view",
+                5
+              ]
+            ]
+          ],
+          [
+            "Models and set dressing",
+            34,
+            [
+              [
+                "Quay wall, underwater and breakwater blocks",
+                6
+              ],
+              [
+                "Embankment, mooring and signs of life",
+                5
+              ],
+              [
+                "Boats and wheelhouses",
+                9
+              ],
+              [
+                "Pier props",
+                6
+              ],
+              [
+                "Harbour buildings and interiors",
+                8
+              ]
+            ]
+          ],
+          [
+            "Toon style",
+            15,
+            [
+              [
+                "Consistent shading and style",
+                6
+              ],
+              [
+                "Outlines and image clarity",
+                3
+              ],
+              [
+                "Materials and water treatment",
+                6
+              ]
+            ]
+          ],
+          [
+            "Colour and lighting",
+            17,
+            [
+              [
+                "Palette and warm/cool balance",
+                5
+              ],
+              [
+                "Lighting and sky",
+                7
+              ],
+              [
+                "Light shafts and sparkles",
+                5
+              ]
+            ]
+          ],
+          [
+            "Motion",
+            20,
+            [
+              [
+                "Constant small motion",
+                7
+              ],
+              [
+                "Gusts of wind",
+                3
+              ],
+              [
+                "Clouds, light and rain",
+                4
+              ],
+              [
+                "Gulls, cat and boats",
+                6
+              ]
+            ]
+          ],
+          [
+            "Camera and running",
+            6,
+            [
+              [
+                "Camera controls",
+                4
+              ],
+              [
+                "Loading and errors",
+                2
+              ]
+            ]
+          ]
+        ]
+      },
+      "starship": {
+        "points": [
+          "**舰队与尺度**：二三十艘至四十余艘组成前中后与高低错层的舰列，旗舰约1000–1200格长，护卫约其1/5–1/7，小艇约其1/30–1/50；所有实体保持同一尺寸体素，舰体内部看不到的地方不用填满。",
+          "**造型与配色**：共同形态母题贯穿舰船、炮台与四处舱内，主色、深层构件与少量发光色分层，金属边缘保留锐利高光；旗舰有成片装甲、深槽、腹部肋架与深腔喷口，近卫紧凑厚实、前卫舒展延伸，具体造型和色彩自由发展。",
+          "**四处舰内**：舰桥约130格宽、130格纵深、60格挑高，以指挥中枢为中心；动力中庭约250格宽、250格高，核心跨越多层；贯通机库约占旗舰长度三分之一，以小艇、停泊位和桥架衬出跨度；能量装填与导能长廊由装置、槽列与流光延伸出长空间。乘员不出镜。",
+          "**攻击与航行**：持续光束、错开半拍的分组脉冲、密集近防弹流与长尾导弹在一次攻击中接续命中附近陨石，裂口、翻滚体块与飞散体素碎片保持可见；全队依次展开通透护盾、增强尾焰并加速，接回继续航行。",
+          "**镜头与导出**：由局部掠行揭示巨舰尺度，四处内景在运动中展开纵深，发射—弹道—目标结果衔接；一轮通常70–80秒、合计不超过90秒。runs可单块或多块，begin重建分块全局起态，frame按起点加i/fps推进，3/60fps同速，边界不重复不漏帧。"
+        ],
+        "directions": [
+          [
+            "舰队造型与规模",
+            32,
+            [
+              [
+                "统一的舰队设计语言",
+                4
+              ],
+              [
+                "旗舰大形与体量级差",
+                8
+              ],
+              [
+                "旗舰壳层与近景结构",
+                7
+              ],
+              [
+                "两类护卫设计",
+                5
+              ],
+              [
+                "舰阵规模与空间层次",
+                5
+              ],
+              [
+                "共同体素媒介",
+                3
+              ]
+            ]
+          ],
+          [
+            "武器、命中与航行动效",
+            25,
+            [
+              [
+                "四种武器实体",
+                4
+              ],
+              [
+                "四类发射光效",
+                7
+              ],
+              [
+                "陨石命中与体素碎裂",
+                5
+              ],
+              [
+                "全队护盾",
+                5
+              ],
+              [
+                "航行、推进与小艇动作",
+                4
+              ]
+            ]
+          ],
+          [
+            "舰内空间设计",
+            20,
+            [
+              [
+                "舰桥",
+                5
+              ],
+              [
+                "动力核心中庭",
+                6
+              ],
+              [
+                "贯通式机库",
+                5
+              ],
+              [
+                "能量装填与导能长廊",
+                4
+              ]
+            ]
+          ],
+          [
+            "环境、基础光与材质",
+            8,
+            [
+              [
+                "宇宙与未受击陨石",
+                3
+              ],
+              [
+                "舰外基础光照",
+                3
+              ],
+              [
+                "表面材质与成像",
+                2
+              ]
+            ]
+          ],
+          [
+            "镜头、剪辑与循环",
+            15,
+            [
+              [
+                "尺度揭示与景别变化",
+                4
+              ],
+              [
+                "路径、转场与运动承接",
+                4
+              ],
+              [
+                "攻击段的观看组织",
+                3
+              ],
+              [
+                "结尾加速与循环衔接",
+                3
+              ],
+              [
+                "本地运行与确定性导出",
+                1
+              ]
+            ]
+          ]
         ]
       },
       "nested-os": {
         "points": [
-          "**The kernel is a program**: scheduling, messages, files and window management really run as programs inside the system, not as calls back to the host.",
-          "**Competition and isolation**: under a shared multi-level budget every process keeps getting time, and a runaway program only hurts its own quota.",
-          "**State and causality**: after snapshots, restores and forks, processes, messages, files and images still match the same moment.",
-          "**Closed-loop flight**: the flight is decided by the flight-control program, scheduling budget and inputs together, and recordings can be replayed and branched."
+          "**The kernel is a program**: a child system's kernel, scheduling, messages, files, window management and apps are all programs stored in files and run by the system itself; rewrite one and restart, and the system follows the new rules.",
+          "**Competition and isolation**: kernels, programs, app services and descendant systems compete for one budget handed down level by level, work is billed by size, and a runaway program only hurts its own quota.",
+          "**State and causality**: after pauses, snapshots, restores and forks, processes, messages, files, projections and images still match the same moment, and systems outside the scope are untouched.",
+          "**Closed-loop flight**: the helicopter stays airborne through a scheduled flight-control process, with budget, scheduling and inputs deciding the flight together; rehearsal recordings can be replayed and continued from one point into different outcomes."
         ],
         "directions": [
-          ["The kernel is a program", 28, [["Scheduling and process table", 7], ["System calls and messages", 5], ["Kernel overhead in the budget", 4], ["File system", 3], ["Window management", 4], ["Apps as programs", 3], ["Self-hosting compiler", 2]]],
-          ["Shared resources and isolation", 12, [["Shared budget handed down", 4], ["Metering by size and resuming", 3], ["Memory and storage quotas", 3], ["Isolating runaway programs", 2]]],
-          ["Recursive system tree", 8, [["Recursive creation and direct management", 2], ["Ancestor run state and fault scope", 2], ["Instance context and local time", 2], ["Multi-level ownership and file passing", 2]]],
-          ["Cross-level projection and live data", 10, [["Copyable cross-level display boundary", 3], ["Input round trips through messages", 2], ["Projection life cycle and multiple views", 1], ["Consistent workbook versions", 2], ["Data links and backlog while paused", 1], ["Chart mapping and interaction", 1]]],
-          ["Subtree snapshots, restore and forks", 6, [["Complete subtree state and deterministic resume", 3], ["Restore scope and cross-boundary relations", 2], ["Independent forks and reopening snapshot files", 1]]],
-          ["Closed-loop flight and replay", 14, [["Flight control is a scheduled program", 4], ["Budget and timing change the flight", 4], ["Recording, seeking and branching replays", 4], ["Contacts and part outcomes", 2]]],
-          ["Desktop apps", 5, [["Spreadsheet", 1], ["Chromium browser", 1], ["3D scene player", 1], ["Common tools, widgets and settings", 1], ["Launch and entry points", 1]]],
-          ["Interface design and graphics", 17, [["Look and information of each desktop", 8], ["Regular windows and web page occlusion", 3], ["Helicopter model and 3D image", 3], ["Motion and flow of the default show", 3]]]
+          [
+            "The kernel is a program",
+            28,
+            [
+              [
+                "Scheduling and process table",
+                7
+              ],
+              [
+                "System calls and messages",
+                5
+              ],
+              [
+                "Kernel overhead in the budget",
+                4
+              ],
+              [
+                "File system",
+                3
+              ],
+              [
+                "Window management and apps as programs",
+                7
+              ],
+              [
+                "Self-hosting compiler",
+                2
+              ]
+            ]
+          ],
+          [
+            "Shared resources and isolation",
+            12,
+            [
+              [
+                "Shared budget handed down",
+                4
+              ],
+              [
+                "Metering by size and resuming",
+                3
+              ],
+              [
+                "Memory and storage quotas",
+                3
+              ],
+              [
+                "Isolating runaway programs",
+                2
+              ]
+            ]
+          ],
+          [
+            "Recursive system tree",
+            8,
+            [
+              [
+                "Recursive creation and direct management",
+                2
+              ],
+              [
+                "Ancestor run state and fault scope",
+                2
+              ],
+              [
+                "Instance context and local time",
+                2
+              ],
+              [
+                "Multi-level ownership and file passing",
+                2
+              ]
+            ]
+          ],
+          [
+            "Cross-level projection and live data",
+            10,
+            [
+              [
+                "Copyable cross-level display boundary",
+                3
+              ],
+              [
+                "Projection input and life cycle",
+                3
+              ],
+              [
+                "Consistent workbook versions",
+                2
+              ],
+              [
+                "Data processing and charts in the child system",
+                2
+              ]
+            ]
+          ],
+          [
+            "Subtree snapshots, restore and forks",
+            6,
+            [
+              [
+                "Complete subtree state and deterministic resume",
+                3
+              ],
+              [
+                "Scope of restores and forks",
+                3
+              ]
+            ]
+          ],
+          [
+            "Closed-loop flight and replay",
+            14,
+            [
+              [
+                "Flight control is a scheduled program",
+                4
+              ],
+              [
+                "Budget and timing change the flight",
+                4
+              ],
+              [
+                "Scene playback, recording and continued runs",
+                4
+              ],
+              [
+                "Contacts and part outcomes",
+                2
+              ]
+            ]
+          ],
+          [
+            "Desktop apps",
+            5,
+            [
+              [
+                "Spreadsheet",
+                2
+              ],
+              [
+                "Browser, common tools and entry points",
+                3
+              ]
+            ]
+          ],
+          [
+            "Interface design and graphics",
+            17,
+            [
+              [
+                "Look and information of each desktop",
+                8
+              ],
+              [
+                "Regular windows and web page occlusion",
+                3
+              ],
+              [
+                "Helicopter model and 3D image",
+                3
+              ],
+              [
+                "Arc and watchability of the default show",
+                3
+              ]
+            ]
+          ]
         ]
       }
     }
@@ -189,13 +963,33 @@
       "blocks": [
         {
           "table": {
-            "head": ["Role", "What it is", "What it does"],
+            "head": [
+              "Role",
+              "What it is",
+              "What it does"
+            ],
             "bold0": true,
             "rows": [
-              ["Host", "One resident process per tested session", "Starts the agent, sends the opening prompt, delivers reminders, starts the next round right after one ends, stops at time"],
-              ["Supervisor", "A resident process with no AI in it", "Checks deadlines and reminder times every 2 seconds, enforces time as a fallback and dispatches grading; tells the commander about timeouts, failures and new anomalies"],
-              ["Commander", "An AI session that follows an operations manual", "Acts only when notified: prepares work folders, launches batch by batch, handles failures and resumes, reports at the end"],
-              ["Graders", "Claude Opus 5.5 (headless Claude Code) and GPT 6.1 Sol (headless Codex)", "Score by the grading guide; see [How the Graders Score](#format-8)"]
+              [
+                "Host",
+                "One resident process per tested session",
+                "Starts the agent, sends the opening prompt, delivers reminders, starts the next round right after one ends, stops at time"
+              ],
+              [
+                "Supervisor",
+                "A resident process with no AI in it",
+                "Checks deadlines and reminder times every 2 seconds, enforces time as a fallback and dispatches grading; tells the commander about timeouts, failures and new anomalies"
+              ],
+              [
+                "Commander",
+                "An AI session that follows an operations manual",
+                "Acts only when notified: prepares work folders, launches batch by batch, handles failures and resumes, reports at the end"
+              ],
+              [
+                "Graders",
+                "Claude Opus 5.5 (headless Claude Code) and GPT 6.1 Sol (headless Codex)",
+                "Score by the grading guide; see [How the Graders Score](#format-8)"
+              ]
             ]
           }
         }
@@ -207,16 +1001,40 @@
       "blocks": [
         {
           "table": {
-            "head": ["Item", "Practice"],
+            "head": [
+              "Item",
+              "Practice"
+            ],
             "bold0": true,
             "rows": [
-              ["Session", "Every task opens a new session, timed from the moment it starts"],
-              ["Time information", "The statement, opening prompt, resume prompt and reminders never mention the time limit or the time left"],
-              ["Opening prompt", "Gives the statement's location, the deliverable, git commits, which version is graded and the rules for ending processes, and says nobody answers questions and formats are judged leniently; design tasks are also told web works can be checked with the browser MCP and desktop projects through the debugging port"],
-              ["Questions", "Apart from notices about system failures, the host only sends [a few fixed messages](#format-3)"],
-              ["Saving progress", "The work folder is a git repository whose only commit at the start is the statement; the model commits each time it reaches a usable stage"],
-              ["Stop at time", "The host interrupts the current round and ends the commands, servers and browsers the model started; what is left in the work folder is the submission"],
-              ["Fallback", "If the host still reports the model running 60 seconds after time, the supervisor ends the session's whole process tree"]
+              [
+                "Session",
+                "Every task opens a new session, timed from the moment it starts"
+              ],
+              [
+                "Time information",
+                "The statement, opening prompt, resume prompt and reminders never mention the time limit or the time left"
+              ],
+              [
+                "Opening prompt",
+                "Gives the statement's location, the deliverable, the rule that grading uses the work folder and the rules for ending processes, and says nobody answers questions, formats are judged leniently; design tasks are also told web works can be checked with the browser MCP and desktop projects through the debugging port"
+              ],
+              [
+                "Questions",
+                "Apart from notices about system failures, the host only sends [a few fixed messages](#format-3)"
+              ],
+              [
+                "Saving progress",
+                "Every task is graded from the contents of the work folder when answering ends; save work promptly"
+              ],
+              [
+                "Stop at time",
+                "The host interrupts the current round and ends the commands, servers and browsers the model started; what is left in the work folder is the submission"
+              ],
+              [
+                "Fallback",
+                "If the host still reports the model running 60 seconds after time, the supervisor ends the session's whole process tree"
+              ]
             ]
           }
         }
@@ -226,15 +1044,41 @@
       "id": "format-3",
       "title": "Reminders and Immediate Continuation",
       "blocks": [
-        { "fig": "timeline" },
+        {
+          "fig": "timeline"
+        },
         {
           "table": {
-            "head": ["Message", "Sent to", "When", "Original text"],
+            "head": [
+              "Message",
+              "Sent to",
+              "When",
+              "Original text"
+            ],
             "bold0": true,
             "rows": [
-              ["Continue at once", "Both kinds", "When a round ends normally with more than 10 minutes left, the next round starts within seconds", ["Design tasks:", "> 对照完整设计内容逐一检查，提升作品质量。 (Check against the full design, item by item, and raise the quality of the work.)", "Standard tasks:", "> 继续按照题面解题。 (Keep solving according to the statement.)"]],
-              ["Overall-progress hint", "The six design tasks", "Halfway through the full limit: minute 30 for physics, minute 45 for tower defense, NVIDIA and nested OS, minute 50 for AE and the harbor", ["One hint written for each task, opening with the line below, asking for the whole work to run end to end before details are deepened:", "> 【提醒】优先推进整体进度和能拿到分数的内容，兼顾题面评分标准的各个方向 (Reminder: put overall progress and scoring content first, covering every direction of the statement's scoring criteria)"]],
-              ["Submit reminder", "Both kinds", "Once per stretch of work, with 10 minutes left", ["Design tasks:", "> 【提醒】建议完成收尾，把可用的版本用 git 提交。 (Reminder: wrap up and commit a working version with git.)", "Standard tasks:", "> 【提醒】推荐立刻用 git 提交可用版本，然后继续推进。 (Reminder: commit a working version with git now, then keep going.)", "The Transformer task gets instead:", "> 【提醒】建议优先跑通已有策略，立刻用 git 提交可用版本，然后继续推进。 (Reminder: get the current approach running first, commit a working version with git now, then keep going.)"]]
+              [
+                "Continue at once",
+                "Both kinds",
+                "When a round ends normally with more than 1 minute left, the next round starts within seconds",
+                [
+                  "Design tasks:",
+                  "> 对照完整设计内容逐一检查，提升作品质量。 (Check against the full design, item by item, and raise the quality of the work.)",
+                  "Standard tasks:",
+                  "> 继续按照题面解题。 (Keep solving according to the statement.)"
+                ]
+              ],
+              [
+                "Overall-progress hint",
+                "Physics, AE, tower defense and nested OS",
+                "Halfway through the full limit: minute 30 for physics and AE, minute 45 for tower defense and nested OS; none for the harbor and the battle fleet",
+                [
+                  "One hint written for each task. Tower defense, physics and nested OS open with the line below, then ask for the whole work to run end to end before details are deepened (nested OS also asks for the child systems' kernels, window management and apps to really run as programs in the child systems' files):",
+                  "> 【提醒】优先推进整体进度和能拿到分数的内容，兼顾题面评分标准的各个方向 (Reminder: put overall progress and scoring content first, covering every direction of the statement's scoring criteria)",
+                  "AE opens with the line below, then asks for every feature to behave for real as the statement describes and notes that the 「锻字」 piece is judged on theme and watchability, not on how many features it uses:",
+                  "> 【提醒】优先推进作品整体的完成度和质量，兼顾各个评分方向 (Reminder: put the overall completeness and quality of the work first, covering every scoring direction)"
+                ]
+              ]
             ]
           }
         },
@@ -246,7 +1090,7 @@
               {
                 "ul": [
                   "Each reminder is sent once per stretch; the overall-progress hint counts total time on the task, so a resumed session does not get it again.",
-                  "An overall-progress hint missed during an interruption is sent when work resumes; if the resumed stretch starts with 10 minutes or less, it is skipped and the submit reminder is sent at once.",
+                  "An overall-progress hint missed during an interruption is sent when work resumes, unless the resumed stretch starts with 10 minutes or less. All standard tasks receive no timed reminders, only their usual wake-up.",
                   "When several timed reminders pile up, only the latest is delivered."
                 ]
               }
@@ -261,16 +1105,40 @@
       "blocks": [
         {
           "table": {
-            "head": ["Situation", "Handling"],
+            "head": [
+              "Situation",
+              "Handling"
+            ],
             "bold0": true,
             "rows": [
-              ["API error, quota exhausted, host crash", "Close the session; time left = this stretch's limit − time used, rounded up to the minute; reconnect to the original session with that time, never restarting from scratch"],
-              ["First message after reconnecting", "Says the session was interrupted by a system failure, that progress is kept, and restates the opening rules, without giving the time left"],
-              ["The original session cannot be reconnected", "Open a new session in the same work folder and mention the system failure and the latest commit"],
-              ["A third failure on the same task", "No more extra time; recorded as “anomaly (time already extended)”"],
-              ["Failures after time is up, or a forced fallback stop", "No extra time"],
-              ["Another batch has the machine to itself", "Wait until that batch is out of time and cleaned up, then resume, without breaking its exclusive use"],
-              ["Launch failure", "Investigate and launch once more; a second failure is recorded as a launch failure"]
+              [
+                "API error, quota exhausted, host crash",
+                "Close the session; time left = this stretch's limit − time used, rounded up to the minute; reconnect to the original session with that time, never restarting from scratch"
+              ],
+              [
+                "First message after reconnecting",
+                "Says the session was interrupted by a system failure, that progress is kept, and restates the opening rules, without giving the time left"
+              ],
+              [
+                "The original session cannot be reconnected",
+                "Open a new session in the same work folder and mention the system failure and existing progress in that folder"
+              ],
+              [
+                "A third failure on the same task",
+                "No more extra time; recorded as “anomaly (time already extended)”"
+              ],
+              [
+                "Failures after time is up, or a forced fallback stop",
+                "No extra time"
+              ],
+              [
+                "Another batch has the machine to itself",
+                "Wait until that batch is out of time and cleaned up, then resume, without breaking its exclusive use"
+              ],
+              [
+                "Launch failure",
+                "Investigate and launch once more; a second failure is recorded as a launch failure"
+              ]
             ]
           }
         }
@@ -280,7 +1148,9 @@
       "id": "format-5",
       "title": "The Isolated Answering Environment",
       "blocks": [
-        { "fig": "isolation" },
+        {
+          "fig": "isolation"
+        },
         {
           "ul": [
             "**Account**: the tested account is an ordinary one outside the administrators group; agents run with `bypassPermissions` (Claude Code) or `approvalPolicy=never` (Codex).",
@@ -295,38 +1165,82 @@
       "id": "format-6",
       "title": "The Two Test Batches",
       "blocks": [
-        { "fig": "schedule" },
+        {
+          "fig": "schedule"
+        },
         {
           "table": {
-            "head": ["Batch", "How", "Why"],
+            "head": [
+              "Batch",
+              "How",
+              "Why"
+            ],
             "bold0": true,
             "rows": [
-              ["① Parallel", "10 tasks at once; the unit square task is pinned to 14 logical processors (8 threads of 4 performance cores + 6 efficiency cores)", "None needs the machine to itself while answering. AE, tower defense, physics, nested OS and the two visual tasks are not scored on smoothness or frame rate; the unit square task uses all its compute for search, and every model gets the same processors"],
-              ["② Serial, exclusive", "Transformer and circuit simulation one after the other, each with the whole machine", "Answering means timing over and over, and other load would disturb the timings"]
+              [
+                "① Parallel",
+                "11 tasks at once",
+                "None needs the machine to itself while answering. AE, tower defense, physics, nested OS, the harbor and the battle fleet are not scored on smoothness or frame rate; Siege & Conquest's games are measured at grading time"
+              ],
+              [
+                "② Together",
+                "One model's ray tracing and circuit simulation tasks at the same time: ray tracing on logical processors 16–27 (the 12 efficient cores), circuits on 0–15 (the 8 performance cores)",
+                "Answering means timing over and over; each task has its own processors, so neither disturbs the other. Different models never run at the same time"
+              ]
             ]
           }
         },
-        "Once a whole batch is out of time, leftover processes of the tested account are ended (keeping each session's host) before the next batch starts; during the serial batch, nothing that loads the CPU or GPU runs."
+        "Once a whole batch is out of time, leftover processes of the tested account are ended (keeping each session's host) before the next batch starts; during the second batch, nothing else that loads the CPU or GPU runs."
       ]
     },
     {
       "id": "format-7",
       "title": "Tool and Network Rules",
       "blocks": [
-        { "fig": "rules" },
+        {
+          "fig": "rules"
+        },
         "What the works themselves must also meet, as each statement says:",
         {
           "table": {
-            "head": ["Task", "Requirements on the work or final submission"],
+            "head": [
+              "Task",
+              "Requirements on the work or final submission"
+            ],
             "bold0": true,
             "rows": [
-              ["Performance engineering", "Only the libraries the statement allows; Transformer computes entirely on the GPU, circuits on the CPU only; no file I/O, network or new processes; no interfering with timing"],
-              ["AE, tower defense, NVIDIA, harbor", "All assets made by the work itself"],
-              ["AE editor", "Canvas preview and export render on the GPU with WebGL 2"],
-              ["Physics", "Ready-made physics and rendering libraries are allowed, chosen by the model; libraries ship with the project and run offline"],
-              ["NVIDIA", "No official NVIDIA logos, images or videos"],
-              ["Harbor", "Built with Three.js"],
-              ["Nested OS", "Ready-made Chromium engines and libraries are allowed, but not a ready-made full desktop system or a finished browser interface; graphics are self-made, with no copied Windows icons, wallpapers or UI textures; with the network off, every level and local app still runs, and only the root system's browser goes online"]
+              [
+                "Performance engineering",
+                "Only the libraries the statement allows; ray tracing does intersection, sampling, occlusion, reflection and shading on the GPU, with no ready-made ray tracing library or hardware ray tracing API; circuits on the CPU only; no file I/O, network or new processes; no interfering with timing"
+              ],
+              [
+                "Siege & Conquest",
+                "A single `bot.cpp` using only the C++ standard library and the official `engine.hpp`; single-threaded; no file I/O, network or new processes; no interfering with timing or the opponent's process"
+              ],
+              [
+                "AE, tower defense, harbor, battle fleet",
+                "All assets made by the work itself"
+              ],
+              [
+                "AE editor",
+                "Canvas preview and export render on the GPU with WebGL 2"
+              ],
+              [
+                "Physics",
+                "Both scenes must use the statement's base technique: water as a 3D particle–grid hybrid solved in WebGPU compute shaders, jelly as a volumetric soft body of tetrahedra or voxels whose cracks come from a fracture criterion; on top of that, ready-made physics and rendering libraries are allowed, chosen by the model; libraries ship with the project and run offline"
+              ],
+              [
+                "Harbor",
+                "Built with Three.js"
+              ],
+              [
+                "Battle fleet",
+                "Rendered live on the GPU with WebGL 2 or WebGPU; the fleet's setting and ship design are original, not copied from existing settings or ships in film or games; an unscored `设计说明.md` (design note) sits at the root"
+              ],
+              [
+                "Nested OS",
+                "Ready-made Chromium engines and libraries are allowed, but not a ready-made full desktop system or a finished browser interface; graphics are self-made, with no copied Windows icons, wallpapers or UI textures; with the network off, every level and local app still runs, and only the root system's browser goes online"
+              ]
             ]
           }
         }
@@ -338,16 +1252,40 @@
       "blocks": [
         {
           "table": {
-            "head": ["Item", "Practice"],
+            "head": [
+              "Item",
+              "Practice"
+            ],
             "bold0": true,
             "rows": [
-              ["Reasoning effort", "`xhigh` for the original olympiad problems and formal proofs, `high` for everything else"],
-              ["Tested model", "Graders know which model they are grading"],
-              ["Graded version", "If the work folder is complete and usable, it is graded; if work stopped halfway, the latest commit; if nothing was ever committed, the work folder"],
-              ["Web works", "Opened from `file:///` as `index.html` in the machine's headless Chrome, operated and captured over the DevTools protocol; a work that cannot fully run as local files is served from a local web server and graded as usual"],
-              ["Desktop works", "Nested OS is launched by its instructions and `automation.json`, with its data folder in the grader's own folder, operated and captured over the DevTools protocol; only the work's own windows are opened, and the desktop is never controlled or captured"],
-              ["Submission format", "When file names, locations or formats differ slightly, the matching content is found and graded as usual"],
-              ["Scoring", "Score by what the work actually does against the guide's points; the main pass does not measure performance"]
+              [
+                "Reasoning effort",
+                "`xhigh` for the original olympiad problems and formal proofs, `high` for everything else"
+              ],
+              [
+                "Tested model",
+                "Graders know which model they are grading"
+              ],
+              [
+                "Graded version",
+                "Always grade the contents of the work folder when answering ends, regardless of git commits"
+              ],
+              [
+                "Web works",
+                "Opened from `file:///` as `index.html` in the machine's headless Chrome, operated and captured over the DevTools protocol; a work that cannot fully run as local files is served from a local web server and graded as usual"
+              ],
+              [
+                "Desktop works",
+                "Nested OS is launched by its instructions and `automation.json`, with its data folder in the grader's own folder, operated and captured over the DevTools protocol; only the work's own windows are opened, and the desktop is never controlled or captured"
+              ],
+              [
+                "Submission format",
+                "When file names, locations or formats differ slightly, the matching content is found and graded as usual"
+              ],
+              [
+                "Scoring",
+                "Score by what the work actually does against the guide's points; the main pass does not measure performance"
+              ]
             ]
           }
         }
@@ -362,8 +1300,12 @@
       "id": "scoring-1",
       "title": "How the Total Is Composed",
       "blocks": [
-        { "fig": "pipeline" },
-        { "math": "\\text{Total}=\\sum_{t=1}^{12} w_t\\,S_t,\\qquad \\sum_{t=1}^{12} w_t=100\\%" },
+        {
+          "fig": "pipeline"
+        },
+        {
+          "math": "\\text{Total}=\\sum_{t=1}^{13} w_t\\,S_t,\\qquad \\sum_{t=1}^{13} w_t=100\\%"
+        },
         {
           "ul": [
             "$S_t$ is task $t$'s score scaled to 0–100, and $w_t$ is its weight.",
@@ -389,20 +1331,112 @@
       "id": "scoring-2",
       "title": "Scoring by Task Type",
       "blocks": [
-        { "fig": "types" },
+        {
+          "fig": "types"
+        },
         {
           "details": {
-            "title": "Extremal construction: anchor table",
+            "title": "Performance engineering: speedup and anchors",
             "blocks": [
-              "Maximizing the smallest triangle in a unit square: $r=\\Delta/\\Delta^*$, where $\\Delta^*$ is the fixed reference construction for $n=30$ (the best known value as of September 2026):",
+              {
+                "ul": [
+                  "Ray tracing: the baseline is a GPU renderer whose full source comes with the task; it and the submission run interleaved in the same evaluation, 5 times each, taking each minimum, on logical processors 16–27 at high priority. Timing runs from the start of `render()` to the synchronization after it, including scene preprocessing, tree building, GPU memory allocation, transfers and rendering.",
+                  "Circuits: the baseline is a general optimized solution written by the task setter, its code not public; it and the submission run interleaved, 3 times each, taking the median, on logical processors 0–15 at high priority; only the wall-clock time of the single call to `simulate()` counts.",
+                  "Ray tracing has one performance input, $s=R/C$; $c$ is the average image verdict of the 5 timed runs and $h$ that of the 12 hidden correctness inputs (pass 1, slightly out of tolerance 0.5, fail or crash 0). For circuits, $R_i$ and $C_i$ are the baseline and submission times on input $i$, $s_i=R_i/C_i$, and $k$ is the number of correctness inputs passed. Both tasks interpolate the anchors $(a_m,p_m)$ on a log scale, written $f$."
+                ]
+              },
+              {
+                "math": "f(v)=p_m+(p_{m+1}-p_m)\\,\\frac{\\ln(v/a_m)}{\\ln(a_{m+1}/a_m)}"
+              },
+              {
+                "math": "\\text{Ray tracing}=f(s)\\cdot c\\cdot h,\\qquad \\text{Circuit}=\\frac{k}{7}\\cdot\\frac{1}{9}\\sum_{i=1}^{9}f(s_i)"
+              },
               {
                 "table": {
                   "cls": "is-anchor",
                   "rowhead": true,
                   "num": "rest",
-                  "head": ["$r$", "0.05", "0.20", "0.35", "0.50", "0.65", "0.80", "0.90", "0.95", "0.99", "1.00"],
+                  "head": [
+                    "Ray tracing $s$",
+                    "1",
+                    "2",
+                    "4",
+                    "6",
+                    "8",
+                    "10"
+                  ],
                   "rows": [
-                    ["Score", "0", "4", "10", "20", "36", "60", "81", "90", "98", "100"]
+                    [
+                      "Score",
+                      "0",
+                      "22",
+                      "50",
+                      "70",
+                      "87",
+                      "100"
+                    ]
+                  ]
+                }
+              },
+              {
+                "table": {
+                  "cls": "is-anchor",
+                  "rowhead": true,
+                  "num": "rest",
+                  "head": [
+                    "Circuit inputs 1–6 $s_i$",
+                    "0.1",
+                    "0.5",
+                    "1",
+                    "2",
+                    "4",
+                    "6",
+                    "8",
+                    "10",
+                    "12"
+                  ],
+                  "rows": [
+                    [
+                      "Score",
+                      "0",
+                      "5",
+                      "12",
+                      "27",
+                      "47",
+                      "62",
+                      "76",
+                      "89",
+                      "100"
+                    ]
+                  ]
+                }
+              },
+              {
+                "table": {
+                  "cls": "is-anchor",
+                  "rowhead": true,
+                  "num": "rest",
+                  "head": [
+                    "Circuit inputs 7–9 $s_i$",
+                    "0.1",
+                    "0.5",
+                    "1",
+                    "2",
+                    "4",
+                    "6",
+                    "8"
+                  ],
+                  "rows": [
+                    [
+                      "Score",
+                      "0",
+                      "5",
+                      "15",
+                      "35",
+                      "65",
+                      "85",
+                      "100"
+                    ]
                   ]
                 }
               }
@@ -411,40 +1445,21 @@
         },
         {
           "details": {
-            "title": "Performance engineering: speedup and anchors",
+            "title": "Algorithm battle: a rating anchored on Elo",
             "blocks": [
               {
                 "ul": [
-                  "The baseline is a general optimized solution written by the task setter, its code not public; it and the submission run interleaved in the same evaluation, 3 times each, taking the median.",
-                  "Both run under the same conditions: the same set of 16 logical processors, high priority and the same environment variables; only the wall-clock time of the single call to the core function counts.",
-                  "$R_i$ and $C_i$ are the baseline's and the submission's times on input $i$, $s_i=R_i/C_i$; $k$ is the number of correctness inputs the circuit task passes."
+                  "The submission plays five tiers of opponents, one all-round program per tier with a fixed amount of computation. On each of 96 hidden maps it plays one game against each tier, seats alternating by map order (the submission is player A on odd maps and B on even ones): 96 games per tier, 480 in all.",
+                  "A win scores 1, a draw 0.5 and a loss 0. A game is lost if the program crashes, exits abnormally or gives no orders within 5 seconds of wall time in some turn; a turn over 50 ms of CPU time only counts as a turn with no orders.",
+                  "Before testing the five opponents play a round robin on the same 96 maps, and a Bradley–Terry fit gives their Elo-scale ratings $R_1<\\dots<R_5$, which are then frozen. The submission's rating $r$ is the value at which its expected total score over the 480 games equals its actual total, clamped to $[R_1-200,\\ R_5+200]$; $R_{(j)}$ and $s_j$ are game $j$'s opponent rating and score.",
+                  "Let $R_0=R_1-200$ and $R_6=R_5+200$. $r$ equal to $R_0$–$R_6$ scores 0, 10, 20, 40, 60, 80 and 100 (written $P_0$–$P_6$), interpolated linearly in rating between neighbouring anchors; $r\\le R_0$ scores 0 and $r\\ge R_6$ scores 100. Matching the strongest tier is 80; full marks take a rating 200 above it."
                 ]
               },
-              { "math": "\\text{score}_i=p_m+(p_{m+1}-p_m)\\,\\frac{\\ln(s_i/a_m)}{\\ln(a_{m+1}/a_m)}" },
               {
-                "math": "\\text{Transformer}=\\frac{1}{8}\\sum_{i=1}^{8}\\text{score}_i,\\qquad \\text{Circuit}=\\frac{k}{7}\\cdot\\frac{1}{24}\\sum_{i=1}^{24}\\text{score}_i"
+                "math": "\\sum_{j=1}^{480}\\frac{1}{1+10^{(R_{(j)}-r)/400}}=\\sum_{j=1}^{480}s_j"
               },
               {
-                "table": {
-                  "cls": "is-anchor",
-                  "rowhead": true,
-                  "num": "rest",
-                  "head": ["Transformer $s_i$", "0.2", "0.6", "1.2", "2", "4", "8", "12", "16"],
-                  "rows": [
-                    ["Score", "0", "5", "15", "25", "45", "70", "86", "100"]
-                  ]
-                }
-              },
-              {
-                "table": {
-                  "cls": "is-anchor",
-                  "rowhead": true,
-                  "num": "rest",
-                  "head": ["Circuit $s_i$", "0.1", "0.5", "1", "2", "4", "6", "8"],
-                  "rows": [
-                    ["Score", "0", "5", "15", "35", "65", "85", "100"]
-                  ]
-                }
+                "math": "\\text{Siege \\& Conquest}=P_k+(P_{k+1}-P_k)\\cdot\\frac{r-R_k}{R_{k+1}-R_k}\\quad(R_k\\le r\\le R_{k+1},\\ k=0,\\dots,5)"
               }
             ]
           }
@@ -453,10 +1468,26 @@
           "details": {
             "title": "Luban lock disassembly: scoring by steps",
             "blocks": [
-              "$N_i$ is the total steps of puzzle $i$'s legal complete route, $B_i$ that puzzle's fixed baseline (the step count of the reference solution), and $w_i$ its points (8 easy, 12 medium, 18 hard):",
+              "$N_i$ is the total steps of puzzle $i$'s legal complete route, $B_i$ that puzzle's fixed baseline (the step count of the reference solution), and $w_i$ its points (8 easy, 12 medium, 18 hard). A full take-down keeps at least 60% however long it is:",
               {
-                "math": "\\text{score}_i=w_i\\cdot\\min\\left(1,\\ \\frac{B_i}{N_i}\\right),\\qquad \\text{Luban lock}=\\sum_{i=1}^{8}\\text{score}_i"
+                "math": "\\text{score}_i=w_i\\cdot\\max\\left(0.6,\\ \\min\\left(1,\\ \\frac{B_i}{N_i}\\right)\\right)"
+              },
+              "An unfinished route is checked step by step from the starting state in the checker's depth-first order, up to the first collision, notation error or branch not yet taken apart; $k$ separations were completed legally before that, and $S_{i,k}$ is the steps the reference solution spends on its first $k$ separations (all its separations together make $B_i$). Every completed separation adds credit; partial credit tops out at 50%; no completed separation scores 0:",
+              {
+                "math": "\\text{score}_i=w_i\\cdot 0.5\\cdot\\frac{S_{i,k}}{B_i},\\qquad \\text{Luban lock}=\\sum_{i=1}^{8}\\text{score}_i"
               }
+            ]
+          }
+        },
+        {
+          "details": {
+            "title": "Reading engineering drawings into 3D models: scoring by surface match",
+            "blocks": [
+              "Problem $i$ compares the answer's surfaces with the reference at a 0.2 mm and a 2 mm tolerance. At each, $F = 2PR/(P+R)$: $P$ is weighted by answer surface area, and $R$ samples each reference geometric face (adjacent fragments of one surface merged) by area, then weights the faces equally. One translation for the whole problem is found at 0.2 mm and reused at 2 mm; neither rotates. $w_i$ is its points (3.5 each for 01–08, 4 each for 09–15, 4.4 each for 16–25). A near-perfect match earns full marks:",
+              {
+                "math": "F_i^*=0.8F_{i,0.2}+0.2F_{i,2},\\quad \\text{score}_i=w_i\\min(1,F_i^*/0.99),\\quad \\sum_{i=1}^{25}\\text{score}_i"
+              },
+              "Assemblies (01, 02 and 22–25) match parts by their parts-list number under the same translation; each tolerance pools all answer surface area and all reference faces, a missing part's faces counting 0, and computes one $F$ from the pooled $P$ and $R$ instead of averaging the parts. When a feature fails to build, that part is compared as built up to the failure. A missing file, unreadable JSON or no solid at all scores 0."
             ]
           }
         }
@@ -466,8 +1497,10 @@
       "id": "scoring-3",
       "title": "Scoring Design Tasks",
       "blocks": [
-        { "fig": "designscore" },
-        "The guide gives each task 4–8 directions and 19–37 items, listing only the points and a one-line scoring note; graders score directly within the points, full marks meaning that point is done excellently, and decimals are allowed."
+        {
+          "fig": "designscore"
+        },
+        "The guide gives each task 4–8 directions and 19–30 items, listing only the points and a one-line scoring note; graders score directly within the points, full marks meaning that point is done excellently, and decimals are allowed."
       ]
     }
   ],
@@ -488,7 +1521,7 @@
       "items": [
         "**Plain statements, no pressure**: statements and injected prompts are plain instructions, never phrases like “capability contest” or “compared with other models”. Zero-score and deduction rules live only in the grading guides; statements only tell the model that grading is lenient about submission format.",
         "**The two kinds are treated differently**: design tasks are asked to push completeness against the statement, and the odd small bug barely affects the score; standard tasks are only asked to solve as the statement says.",
-        "**Use all the time**: committed versions are a safety net, so big changes are safe; a round that ends early with time to spare is picked up by [immediate continuation](#format-3)."
+        "**Use all the time**: a round that ends early with more than 1 minute left is picked up by [immediate continuation](#format-3)."
       ]
     },
     {
@@ -496,37 +1529,77 @@
       "en": "Grading",
       "items": [
         "**Grading follows the statement**: grading guides list directions and items according to the statement's scoring criteria. Design-task directions are independent, and each thing counts in one item only.",
-        "**What can be computed goes to tools**: Lean compilation, the extremal objective, performance speedups, and the legality and step count of Luban lock routes are all computed exactly by tools. Graders only judge what needs judging.",
-        "**Discrimination where strong models are**: extremal construction and performance tasks interpolate on anchor tables whose slope grows from the low range to the upper-middle range. Standard methods only reach the low range; works at an upper-middle level pull clearly ahead."
+        "**What can be computed goes to tools**: Lean compilation, performance speedups, the results of the battle games, the legality and step counts of Luban lock routes, and the surface match of the drawing models are all computed exactly by tools. Graders only judge what needs judging.",
+        "**Discrimination where strong models are**: performance tasks interpolate on anchor tables whose slope grows from the low range to the upper-middle range. Standard methods only reach the low range; works at an upper-middle level pull clearly ahead."
       ]
     }
   ],
   "end": "The original statements, grading guides and evaluation scripts are in the [GitHub repository](gh:). Each task's statement is linked from its task page.",
   "fig": {
-    "hero": { "title": "Eight categories, twelve tasks" },
+    "hero": {
+      "title": "Ten categories, thirteen tasks"
+    },
     "howto": {
       "title": "How one task is run",
       "steps": [
-        { "title": "Get the statement", "lines": ["The work folder holds only this task's statement and materials", "The folder is a git repository"] },
-        { "title": "Work alone", "lines": ["A new session, timed from receiving the statement", "No one answers questions; the model never sees the limit"] },
-        { "title": "Stop at time", "lines": ["Ends the moment time is up, no extensions", "The model commits usable stages with git itself"] },
-        { "title": "Grade and combine", "lines": ["The complete work folder or the latest commit is graded", "Each task scaled to 0–100, weighted and summed"] }
+        {
+          "title": "Get the statement",
+          "lines": [
+            "The work folder holds only this task's statement and materials",
+            "Save all work in the work folder"
+          ]
+        },
+        {
+          "title": "Work alone",
+          "lines": [
+            "A new session, timed from receiving the statement",
+            "No one answers questions; the model never sees the limit"
+          ]
+        },
+        {
+          "title": "Stop at time",
+          "lines": [
+            "Ends the moment time is up, no extensions",
+            "Keep all work in the folder when answering ends"
+          ]
+        },
+        {
+          "title": "Grade and combine",
+          "lines": [
+            "Every task is graded from the work folder at the end",
+            "Each task scaled to 0–100, weighted and summed"
+          ]
+        }
       ],
-      "rows": { "cats": "Categories", "deliver": "Delivers", "time": "Time", "grader": "Graded by", "scoring": "Scoring", "weight": "Total weight" },
+      "rows": {
+        "cats": "Categories",
+        "deliver": "Delivers",
+        "time": "Time",
+        "grader": "Graded by",
+        "scoring": "Scoring",
+        "weight": "Total weight"
+      },
       "std": {
-        "deliver": "Lean proofs, olympiad solutions, an extremal construction, CUDA or C++ source, Luban lock routes",
+        "deliver": "Lean proofs, olympiad solutions, CUDA or C++ source, a C++ game-playing program, Luban lock routes, part model descriptions",
         "time": "60 minutes",
-        "grader": ["Programs that check the answers", "Compilers, checkers and evaluation scripts give the scores"],
-        "scoring": "Compile checks, IMO-style marking, anchor tables, speedups, disassembly steps"
+        "grader": [
+          "Programs that check the answers",
+          "Compilers, checkers and evaluation scripts give the scores"
+        ],
+        "scoring": "Compile checks, IMO-style marking, anchor tables, speedups, game ratings, disassembly steps, surface match"
       },
       "des": {
         "deliver": "Web works (run by double-clicking index.html) or a Windows desktop project",
-        "time": "90 or 100 minutes, physics 60 minutes",
-        "grader": ["Claude Opus 5.5 and GPT 6.1 Sol each grade; items are averaged"],
+        "time": "90 or 100 minutes, physics and AE 60 minutes",
+        "grader": [
+          "Claude Opus 5.5 and GPT 6.1 Sol each grade; items are averaged"
+        ],
         "scoring": "Every item scored directly within its points, adding up to 100"
       }
     },
-    "weights": { "title": "Weights" },
+    "weights": {
+      "title": "Weights"
+    },
     "reason": {
       "title": "Math Reasoning: two ways of judging",
       "readout": "Formal proofs are judged only by Lean compiling them, all or nothing; olympiad problems are marked one by one by GPT 6.1 Sol following IMO practice",
@@ -537,9 +1610,18 @@
         "unit": "pts",
         "note": "One .lean file per problem, compiled on its own. Passing all three checks earns 12.5 points; there is no partial credit.",
         "steps": [
-          ["Compiles without errors", "Lean compiles this file on its own with no errors"],
-          ["No sorry warning", "The compiler output has no sorry warning"],
-          ["Has the main theorem", "The file contains the main theorem the statement asks for; the proof's length and style do not matter"]
+          [
+            "Compiles without errors",
+            "Lean compiles this file on its own with no errors"
+          ],
+          [
+            "No sorry warning",
+            "The compiler output has no sorry warning"
+          ],
+          [
+            "Has the main theorem",
+            "The file contains the main theorem the statement asks for; the proof's length and style do not matter"
+          ]
         ],
         "pass": "All three pass",
         "fail": "Any check fails"
@@ -547,9 +1629,9 @@
       "olympiad": {
         "eyebrow": "Olympiad",
         "name": "Original Olympiad Problems",
-        "big": "18 × 7",
+        "big": "24 × 7",
         "unit": "pts",
-        "note": "6.1Sol marks against the reference solutions and each problem's marking points; 126 in all, scaled by 100/126.",
+        "note": "6.1Sol marks against the reference solutions and each problem's marking points; 168 in all, scaled by 100/168.",
         "full": "Complete and correct (the method may differ from the reference)",
         "part": "Incomplete: partial credit by how far it gets",
         "partSub": "Following each problem's marking points",
@@ -560,70 +1642,243 @@
         "title": "Tools allowed while answering",
         "yes": "Allowed",
         "no": "Not allowed",
-        "formal": { "yes": ["Lean compile checks, run any time", "Reading and searching the Mathlib source"] },
-        "olympiad": { "yes": ["Reasoning only; write each answer as soon as it is solved"], "no": ["Writing or running programs to check", "Computer algebra systems, numerical libraries", "Theorem provers"] }
+        "formal": {
+          "yes": [
+            "Lean compile checks, run any time",
+            "Reading and searching the Mathlib source"
+          ]
+        },
+        "olympiad": {
+          "yes": [
+            "Reasoning only; write each answer as soon as it is solved"
+          ],
+          "no": [
+            "Writing or running programs to check",
+            "Computer algebra systems, numerical libraries",
+            "Theorem provers"
+          ]
+        }
       }
     },
     "algo": {
-      "title": "Algorithm Contests: scoring curves",
-      "readout": "The extremal construction is measured against a reference value as full marks; performance tasks run 3 times alongside the baseline in the same evaluation, taking the median, and are scored by speedup",
+      "title": "Performance Optimization: scoring curves",
+      "readout": "Both tasks run interleaved with their baseline in the same evaluation: ray tracing 5 times each taking the minimum, circuits 3 times each taking the median; scored by speedup",
       "score": "Score",
       "axisS": "Speedup s (log scale)",
-      "ext": {
-        "eyebrow": "Extremal construction",
-        "name": "Maximizing the Smallest Triangle in a Unit Square",
-        "sub": "A larger smallest area Δ is better │ Answering: 14 logical processors │ Piecewise linear on the anchor table; an invalid submission scores 0",
-        "axis": "r = Δ ÷ reference",
-        "ref": "Reference = 100 pts",
-        "steep": "Steepest at 0.8–0.9"
-      },
       "perf": {
         "eyebrow": "Performance engineering",
-        "sub": "Speedup s = baseline time ÷ submission time, looked up on a log scale; Transformer simply averages its 8 inputs"
+        "sub": "Speedup s = baseline time ÷ submission time, looked up on a log scale. Ray tracing has a single performance input, the Jiangnan garden, full marks at 10×, and its speed score is then multiplied by an image factor and a hidden-input factor; the circuit task looks up each of its 9 inputs by its own s, averages, then multiplies by the correctness pass rate, with deep chains and array multipliers (inputs 1–6) full at 12× and register files (inputs 7–9) at 8×."
       },
-      "tr": { "name": "GPU-Accelerated Transformer Inference", "sub": "GPU: RTX 4080, CUDA │ Answering: the whole machine", "flat": "Matching the baseline: {v} pts", "full": "Full marks from 16×" },
-      "ci": { "name": "Accelerating a General Digital Circuit Simulator", "sub": "CPU only: evaluated on 16 logical processors │ Answering: the whole machine", "flat": "Matching the baseline: {v} pts", "full": "Full marks from 8×" },
+      "rt": {
+        "name": "Ray Tracing Render Acceleration",
+        "sub": "GPU: RTX 4080, CUDA │ logical processors 16–27",
+        "flat": "s = 1: {v} pts",
+        "full": "Full marks at 10×",
+        "axis": "Speedup s (log scale)",
+        "var": "s"
+      },
+      "ci": {
+        "name": "Digital Circuit Simulator Acceleration",
+        "sub": "CPU only │ logical processors 0–15",
+        "flat": "1–6 baseline: {v} pts",
+        "full": "Inputs 1–6: 12×",
+        "axis": "Speedup s of one input (log scale)",
+        "var": "s",
+        "regfileFull": "Inputs 7–9: 8×",
+        "regfileLabel": "Register files (inputs 7–9)"
+      },
       "circuit": {
         "eyebrow": "Circuit score",
         "title": "The circuit task's score",
-        "inputs": "Each of 24 performance inputs looked up\nFailed inputs score 0; averaged",
+        "inputs": "Each of 9 performance inputs looked up\nFailed inputs score 0; averaged",
         "checks": "7 correctness inputs\nPassed ÷ 7, here 6/7",
+        "result": "Task score",
+        "fail": "Compile failure or broken rule\n0 for the whole task"
+      },
+      "rtScore": {
+        "eyebrow": "Ray tracing score",
+        "title": "The ray tracing task's score",
+        "speed": "Speed score q\nby the anchors",
+        "runs": "5 timed runs judged\nmean c; one slightly off",
+        "hidden": "12 hidden correctness inputs\nmean h; one fails",
         "result": "Task score",
         "fail": "Compile failure or broken rule\n0 for the whole task"
       }
     },
+    "battle": {
+      "title": "Algorithm Battle: 480 games and a rating",
+      "readout": "5 opponent tiers × 96 hidden maps, one game per map = 480 games; the results give the bot an Elo-scale rating, the five tiers' frozen ratings map to 10–80, 200 below tier 1 scores 0, and full marks take 200 above tier 5",
+      "games": {
+        "eyebrow": "Games",
+        "title": "What the 480 games are",
+        "sub": "Each cell is one game: on every map the bot plays each tier once, seats alternating by map order; each column holds two neighbouring maps, the odd map on top with the bot as player A and the even map below as player B. Every submission plays the same 96 maps, generated by the same rules as the generator handed out.",
+        "count": "96 games"
+      },
+      "low": {
+        "name": "Floor",
+        "r": "R₁ − 200",
+        "pts": 0,
+        "read": "rating R₁ − 200 │ 0 points │ 200 below the weakest tier, also the lowest rating given"
+      },
+      "tiers": [
+        {
+          "name": "Tier 1",
+          "r": "R₁",
+          "pts": 10,
+          "read": "rating R₁ │ 10 points"
+        },
+        {
+          "name": "Tier 2",
+          "r": "R₂",
+          "pts": 20,
+          "read": "rating R₂ │ 20 points │ about the weak sparring bot"
+        },
+        {
+          "name": "Tier 3",
+          "r": "R₃",
+          "pts": 40,
+          "read": "rating R₃ │ 40 points"
+        },
+        {
+          "name": "Tier 4",
+          "r": "R₄",
+          "pts": 60,
+          "read": "rating R₄ │ 60 points"
+        },
+        {
+          "name": "Tier 5",
+          "r": "R₅",
+          "pts": 80,
+          "read": "rating R₅ │ 80 points │ a strong program carefully written by the task setters"
+        }
+      ],
+      "full": {
+        "name": "Full marks",
+        "r": "R₅ + 200",
+        "pts": 100,
+        "read": "rating R₅ + 200 │ 100 points │ clearly stronger than the top tier"
+      },
+      "legend": {
+        "a": "Bot as player A",
+        "b": "as player B",
+        "game": "Each game",
+        "win": "Win 1",
+        "draw": "Draw 0.5",
+        "loss": "Loss 0"
+      },
+      "score": {
+        "eyebrow": "Task score",
+        "title": "From rating to score",
+        "axis": "Rating r (Elo scale: 10 times stronger is 400 higher)",
+        "unit": "points",
+        "note": "The five tiers' ratings R₁–R₅ come from a Bradley–Terry fit of their round robin on the same 96 maps and are frozen before testing. The bot's rating r is the value at which its expected total score over the 480 games, Σ 1 / (1 + 10^((R − r)/400)), equals its actual total, clamped to R₁ − 200 … R₅ + 200. R₁ − 200 scores 0; between neighbouring anchors the score is interpolated linearly in rating, to one decimal; matching tier 5 scores 80, and full marks take 200 more. A crash, an abnormal exit or no orders within 5 seconds of wall time in a turn loses that game."
+      },
+      "tools": {
+        "eyebrow": "Rules",
+        "title": "Rules for the submission and its run",
+        "yes": "Allowed",
+        "no": "Not allowed",
+        "conquest": {
+          "head": "A single bot.cpp │ 50 ms of CPU time per turn, 1 s for turn 1",
+          "yes": [
+            "Compiling and playing games locally while developing, writing helper programs and sparring bots",
+            "The local arena arena.py, the map generator mapgen.py and the sample bot"
+          ],
+          "no": [
+            "Libraries beyond the C++ standard library and engine.hpp",
+            "Threads, OpenMP",
+            "File I/O, network, starting other processes",
+            "Interfering with timing, the opponent or the referee"
+          ]
+        }
+      }
+    },
     "spatial": {
-      "title": "Spatial Reasoning: take it apart, then count steps",
-      "readout": "Luban lock disassembly is scored by a program: it checks the whole disassembly tree and scores legal complete routes by total steps, accepting any legal route",
-      "left": {
-        "eyebrow": "Full disassembly",
-        "name": "Only a full take-down counts",
-        "big": "8",
-        "unit": "locks",
-        "note": "Pieces keep their starting orientation and move only along x, y or z; several may move together, but not the whole assembly at once.",
-        "steps": [
-          ["No collision at any step", "The whole stretch of every move is checked; colliding positions cannot be skipped"],
-          ["Separation means infinitely far", "A group only splits off once it moves out along an axis without touching the rest"],
-          ["Down to one piece per group", "Both groups must be taken further, frame included; finding the first separation is not enough"]
+      "title": "Spatial Reasoning: worked out by hand, scored by program",
+      "readout": "Check tool use, then validate Luban lock routes and score by steps",
+      "luban": {
+        "head": {
+          "eyebrow": "Burr puzzle",
+          "name": "Luban Lock Disassembly",
+          "note": "8 locks, three tiers"
+        },
+        "left": {
+          "eyebrow": "Full disassembly",
+          "name": "Only a full take-down counts",
+          "big": "8",
+          "unit": "locks",
+          "note": "Pieces keep their starting orientation and move only along x, y or z; several may move together, but not the whole assembly at once.",
+          "steps": [
+            [
+              "No collision at any step",
+              "The whole stretch of every move is checked; colliding positions cannot be skipped"
+            ],
+            [
+              "Separation means infinitely far",
+              "A group only splits off once it moves out along an axis without touching the rest"
+            ],
+            [
+              "Down to one piece per group",
+              "Both groups must be taken further, frame included; an unfinished route earns partial credit for the separations completed legally from the start"
+            ]
+          ],
+          "pass": "All three hold",
+          "partial": "Unfinished, some splits",
+          "partialBox": "Partial ≤ 50%",
+          "fail": "No split completed",
+          "passBox": "Scored by steps"
+        },
+        "right": {
+          "eyebrow": "Fewer steps",
+          "name": "Fewer steps, higher score",
+          "note": "Moving the same group along the same axis in the same direction is one step, whatever the distance; switching group, axis or direction starts a new step, and separated groups are counted separately.",
+          "formula": "w × max(0.6, min(1, B ÷ N))",
+          "full": "N ≤ B earns the full w",
+          "axisB": "B: each puzzle's fixed baseline, the step count of the reference solution; across the bottom is N, the total steps of the legal complete route, with a 60% floor beyond about 1.67B"
+        },
+        "tiers": {
+          "eyebrow": "Tiers",
+          "title": "Three tiers",
+          "note": "Numbered easy to hard, 100 points in all",
+          "groups": [
+            [
+              "Easy",
+              0,
+              1
+            ],
+            [
+              "Medium",
+              2,
+              5
+            ],
+            [
+              "Hard",
+              6,
+              7
+            ]
+          ],
+          "json": "Each puzzle is one JSON disassembly tree: first the moves of this group before it separates, ending with out; then the group moved out and the group left behind each get their own disassembly."
+        },
+        "w": [
+          8,
+          8,
+          12,
+          12,
+          12,
+          12,
+          18,
+          18
         ],
-        "pass": "All three hold",
-        "fail": "Any fails, or nothing submitted",
-        "passBox": "Scored by steps"
-      },
-      "right": {
-        "eyebrow": "Fewer steps",
-        "name": "Fewer steps, higher score",
-        "note": "Moving the same group along the same axis in the same direction is one step, whatever the distance; switching group, axis or direction starts a new step, and separated groups are counted separately.",
-        "formula": "w × min(1, B ÷ N)",
-        "full": "N ≤ B earns the full w",
-        "axisB": "B: each puzzle's fixed baseline, the step count of the reference solution; across the bottom is N, the total steps of the legal complete route"
-      },
-      "tiers": {
-        "eyebrow": "Tiers",
-        "title": "Three tiers",
-        "note": "Numbered easy to hard, 100 points in all",
-        "groups": [["Easy", 0, 1], ["Medium", 2, 5], ["Hard", 6, 7]],
-        "json": "Each puzzle is one JSON disassembly tree: first the moves of this group before it separates, ending with out; then the group moved out and the group left behind each get their own disassembly."
+        "B": [
+          8,
+          10,
+          14,
+          12,
+          14,
+          15,
+          42,
+          27
+        ]
       },
       "tools": {
         "eyebrow": "Tools",
@@ -631,8 +1886,16 @@
         "yes": "Allowed",
         "no": "Not allowed",
         "luban": {
-          "yes": ["Reading the layer drawings and voxel data, reasoning by hand", "The route checker check.py", "The position tracker positions.py"],
-          "no": ["Self-written programs that search routes, simulate moves or compute collisions", "Solvers", "Changing either tool (breaking the tool rules scores 0: graders read the session log first, then check routes)"]
+          "yes": [
+            "Reading the layer drawings and voxel data, reasoning by hand",
+            "The route checker check.py",
+            "The position tracker positions.py"
+          ],
+          "no": [
+            "Self-written programs that search routes, simulate moves or compute collisions",
+            "Solvers",
+            "Changing either tool (breaking the tool rules scores 0: graders read the session log first, then check routes)"
+          ]
         }
       }
     },
@@ -643,8 +1906,6 @@
         "open": "Opening",
         "cont": "Continue",
         "progress": "Progress hint",
-        "submit": "Submit reminder",
-        "submitSeg": "Submit reminder",
         "stop": "Time up",
         "resume": "Resume",
         "noMore": "No more rounds"
@@ -652,74 +1913,333 @@
       "lanes": [
         {
           "name": "Design task",
-          "sub": ["A 100-minute task, for example"],
+          "sub": [
+            "A 100-minute task, for example"
+          ],
           "kind": "design",
           "end": 100,
-          "bars": [[0, 24], [24.6, 47], [47.6, 71], [71.6, 94]],
-          "marks": [[0, "round", "open"], [24.3, "round", "cont"], [47.3, "round", "cont"], [71.3, "round", "cont"], [50, "progress", "progress"], [90, "submit", "submit"]]
+          "bars": [
+            [
+              0,
+              24
+            ],
+            [
+              24.6,
+              47
+            ],
+            [
+              47.6,
+              71
+            ],
+            [
+              71.6,
+              99.4
+            ]
+          ],
+          "marks": [
+            [
+              0,
+              "round",
+              "open"
+            ],
+            [
+              24.3,
+              "round",
+              "cont"
+            ],
+            [
+              47.3,
+              "round",
+              "cont"
+            ],
+            [
+              71.3,
+              "round",
+              "cont"
+            ],
+            [
+              50,
+              "progress",
+              "progress"
+            ]
+          ]
         },
         {
-          "name": "Standard task",
-          "sub": ["A 60-minute task, for example", "No progress hint"],
+          "name": "Proof / performance",
+          "sub": [
+            "60-minute example",
+            "All standard tasks: no timed reminders"
+          ],
           "kind": "standard",
           "end": 60,
-          "bars": [[0, 26], [26.6, 41], [41.6, 56]],
-          "marks": [[0, "round", "open"], [26.3, "round", "cont"], [41.3, "round", "cont"], [50, "submit", "submit"]]
+          "bars": [
+            [
+              0,
+              26
+            ],
+            [
+              26.6,
+              41
+            ],
+            [
+              41.6,
+              59.4
+            ]
+          ],
+          "marks": [
+            [
+              0,
+              "round",
+              "open"
+            ],
+            [
+              26.3,
+              "round",
+              "cont"
+            ],
+            [
+              41.3,
+              "round",
+              "cont"
+            ]
+          ]
         },
         {
           "name": "Resumed after a break",
-          "sub": ["The same 100-minute task"],
+          "sub": [
+            "The same 100-minute task"
+          ],
           "kind": "design",
           "end": 100,
           "cut": 28,
-          "bars": [[0, 27.4], [28.6, 66], [66.6, 92]],
-          "marks": [[0, "round", "open"], [28, "round", "resume"], [66.3, "round", "cont"], [50, "progress", "progress"], [90, "submit", "submitSeg"]],
-          "spans": [[0, 28, "Quota ran out, interrupted"], [28, 100, "Back in the original session with the remaining 72 minutes; time spent fixing the failure does not count"]]
+          "bars": [
+            [
+              0,
+              27.4
+            ],
+            [
+              28.6,
+              66
+            ],
+            [
+              66.6,
+              99.4
+            ]
+          ],
+          "marks": [
+            [
+              0,
+              "round",
+              "open"
+            ],
+            [
+              28,
+              "round",
+              "resume"
+            ],
+            [
+              66.3,
+              "round",
+              "cont"
+            ],
+            [
+              50,
+              "progress",
+              "progress"
+            ]
+          ],
+          "spans": [
+            [
+              0,
+              28,
+              "Quota ran out, interrupted"
+            ],
+            [
+              28,
+              100,
+              "Back in the original session with the remaining 72 minutes; time spent fixing the failure does not count"
+            ]
+          ]
         }
       ],
       "legend": [
-        ["A new round", "Triangle below the bar: the opening, reconnecting to the session, or continuing at once after a round ends normally"],
-        ["Overall-progress hint", "Diamond above the bar: design tasks only, when total time reaches half the limit"],
-        ["Submit reminder", "Square above the bar: both kinds, once per stretch with 10 minutes left"],
-        ["The last 10 minutes", "Cyan ground: no new round after one ends; the session sits idle (hatched) until time"]
+        [
+          "A new round",
+          "Triangle below the bar: the opening, reconnecting to the session, or continuing at once after a round ends normally"
+        ],
+        [
+          "Overall-progress hint",
+          "Diamond above the bar: design tasks only, when total time reaches half the limit"
+        ],
+        [
+          "The last minute",
+          "Cyan ground: no new round after one ends; the session sits idle (hatched) until time"
+        ]
       ],
       "notes": {
         "round": "A new round",
-        "progress": "Design tasks only",
-        "submit": "Once per stretch, 10 minutes left"
+        "progress": "Design tasks only"
       }
     },
     "isolation": {
       "title": "Who sees what",
       "readout": "Tested sessions and graders run on the same machine under two Windows accounts; grading starts only after all answering is over",
-      "legend": { "rw": "Read-write", "ro": "Read-only", "deny": "Denied by the system", "ban": "Forbidden by rule", "blank": "Starts empty", "na": "Not applicable" },
-      "cols": [["Tested session", "A dedicated ordinary account, one logon per session"], ["Graders", "Administrator account, a new session per grading job"]],
+      "legend": {
+        "rw": "Read-write",
+        "ro": "Read-only",
+        "deny": "Denied by the system",
+        "ban": "Forbidden by rule",
+        "blank": "Starts empty",
+        "na": "Not applicable"
+      },
+      "cols": [
+        [
+          "Tested session",
+          "A dedicated ordinary account, one logon per session"
+        ],
+        [
+          "Graders",
+          "Administrator account, a new session per grading job"
+        ]
+      ],
       "rows": [
-        { "name": "Task repository", "sub": "Original statements, grading guides, reference answers, test programs", "cells": [["deny", "The whole repository is denied (Windows rights)"], ["ro", "Read statements, guides, answers and evaluation scripts"]] },
-        { "name": "This task's work folder", "sub": "A git repository whose only commit at the start is the statement", "cells": [["rw", "Read-write, a commit at each usable stage"], ["ro", "The original is read-only; copied or cloned to the grader's own folder; only its own score sheet is written"]] },
-        { "name": "The same model's other work folders", "cells": [["ban", "Not to be accessed (the statement or prompt forbids it)"], ["na", "Not applicable"]] },
-        { "name": "Test tools", "sub": "Launch scripts, prompt templates, reminder hooks", "cells": [["ro", "Read-only, except the mailbox folder the host writes logs to"], ["na", "Not applicable"]] },
-        { "name": "Other tested sessions' processes", "sub": "Sessions answering at the same time", "cells": [["deny", "Visible, but cannot be ended"], ["na", "Not applicable"]] },
-        { "name": "Session history and memory", "cells": [["blank", "Cleared before testing; automatic memory off while answering"], ["blank", "A new session for each grading job"]] },
-        { "name": "The other grader's folder and results", "sub": "Only design tasks have two main graders", "cells": [["na", "Not applicable"], ["ban", "Not to be looked at; each grades alone"]] }
+        {
+          "name": "Task repository",
+          "sub": "Original statements, grading guides, reference answers, test programs",
+          "cells": [
+            [
+              "deny",
+              "The whole repository is denied (Windows rights)"
+            ],
+            [
+              "ro",
+              "Read statements, guides, answers and evaluation scripts"
+            ]
+          ]
+        },
+        {
+          "name": "This task's work folder",
+          "sub": "The work folder for answer files and projects",
+          "cells": [
+            [
+              "rw",
+              "Read-write; save work promptly"
+            ],
+            [
+              "ro",
+              "The original is read-only; copied or cloned to the grader's own folder; only its own score sheet is written"
+            ]
+          ]
+        },
+        {
+          "name": "The same model's other work folders",
+          "cells": [
+            [
+              "ban",
+              "Not to be accessed (the statement or prompt forbids it)"
+            ],
+            [
+              "na",
+              "Not applicable"
+            ]
+          ]
+        },
+        {
+          "name": "Test tools",
+          "sub": "Launch scripts, prompt templates, reminder hooks",
+          "cells": [
+            [
+              "ro",
+              "Read-only, except the mailbox folder the host writes logs to"
+            ],
+            [
+              "na",
+              "Not applicable"
+            ]
+          ]
+        },
+        {
+          "name": "Other tested sessions' processes",
+          "sub": "Sessions answering at the same time",
+          "cells": [
+            [
+              "deny",
+              "Visible, but cannot be ended"
+            ],
+            [
+              "na",
+              "Not applicable"
+            ]
+          ]
+        },
+        {
+          "name": "Sessions and memory",
+          "cells": [
+            [
+              "blank",
+              "Memory cleared before testing; automatic memory off while answering"
+            ],
+            [
+              "blank",
+              "A new session for each grading job"
+            ]
+          ]
+        },
+        {
+          "name": "The other grader's folder and results",
+          "sub": "Only design tasks have two main graders",
+          "cells": [
+            [
+              "na",
+              "Not applicable"
+            ],
+            [
+              "ban",
+              "Not to be looked at; each grades alone"
+            ]
+          ]
+        }
       ],
       "shell": {
         "eyebrow": "Shell",
         "title": "The shell around each tested session",
         "items": [
-          ["Own logon", "Each session is a separate logon of the tested account"],
-          ["Process protection", "Other sessions cannot end these processes, not even by name"],
-          ["Job object", "Ends what the model started at time; pins the extremal task's processors"],
-          ["No sandbox", "No sandbox or approvals; the account's rights decide what the agent can do"]
+          [
+            "Own logon",
+            "Each session is a separate logon of the tested account"
+          ],
+          [
+            "Process protection",
+            "Other sessions cannot end these processes, not even by name"
+          ],
+          [
+            "Job object",
+            "Ends what the model started at time"
+          ],
+          [
+            "No sandbox",
+            "No sandbox or approvals; the account's rights decide what the agent can do"
+          ]
         ]
       }
     },
     "schedule": {
       "title": "Test schedule",
-      "readout": "The 12 tasks run in two batches; the next batch starts only after the previous one is out of time and its leftover processes are cleaned up; bar length is the time limit",
-      "head": { "task": "Task", "limit": "Time" },
-      "batch1": { "eyebrow": "Batch 1", "title": "Parallel", "note": "{n} tasks at once │ unit square limited to 14 logical processors" },
-      "batch2": { "eyebrow": "Batch 2", "title": "Serial, exclusive", "note": "Two tasks in turn, each alone │ cleanup between" },
+      "readout": "The 13 tasks run in two batches; the next batch starts only after the previous one is out of time and its leftover processes are cleaned up; bar length is the time limit",
+      "head": {
+        "task": "Task",
+        "limit": "Time"
+      },
+      "batch1": {
+        "eyebrow": "Batch 1",
+        "title": "Parallel",
+        "note": "{n} tasks at once"
+      },
+      "batch2": {
+        "eyebrow": "Batch 2",
+        "title": "Together",
+        "note": "One model's two tasks at once │ separate processor sets"
+      },
       "clean": "Cleanup",
       "wait": "Out of time, waiting for the rest of the batch",
       "done1": "All {n} out of time",
@@ -727,17 +2247,42 @@
       "grading": {
         "eyebrow": "Scoring",
         "title": "Grading",
-        "note": "18 sessions │ no time limit │ performance graded after all main grading",
+        "note": "19 sessions │ no time limit │ performance graded after all main grading",
         "parts": [
           {
             "title": "Main",
             "note": "16 sessions at once",
             "rows": [
-              ["Design tasks", ["Claude Opus 5.5", "GPT 6.1 Sol"], "averaged"],
-              ["Formal proofs, olympiad, extremal, Luban lock", ["GPT 6.1 Sol"], ""]
+              [
+                "Design tasks",
+                [
+                  "Claude Opus 5.5",
+                  "GPT 6.1 Sol"
+                ],
+                "averaged"
+              ],
+              [
+                "Formal proofs, olympiad, Luban lock, drawing models",
+                [
+                  "GPT 6.1 Sol"
+                ],
+                ""
+              ]
             ]
           },
-          { "title": "Performance", "note": "2 sessions in turn, machine to themselves", "rows": [["Transformer, circuit", ["GPT 6.1 Sol"], ""]] }
+          {
+            "title": "Performance",
+            "note": "3 sessions in turn, machine to themselves",
+            "rows": [
+              [
+                "Ray tracing, circuit, Siege & Conquest",
+                [
+                  "GPT 6.1 Sol"
+                ],
+                ""
+              ]
+            ]
+          }
         ],
         "sum": "Combine each task's score, then the weighted sum"
       }
@@ -746,120 +2291,708 @@
       "title": "What each task may use",
       "readout": "Each statement's rules section is what counts; point at a column to see all the rules for that kind of task",
       "cols": [
-        { "name": "Formal", "sub": "Lean 4", "icons": ["reason"] },
-        { "name": "Olympiad", "sub": "Paper proofs", "icons": ["reason"] },
-        { "name": "Extremal", "sub": "1 task", "icons": ["algo"] },
-        { "name": "Perf.", "sub": "2 tasks", "icons": ["algo"] },
-        { "name": "Luban", "sub": "By hand", "icons": ["spatial"] },
-        { "name": "Web", "sub": "5 tasks", "icons": ["interact", "game", "physics", "visual"] },
-        { "name": "Nested OS", "sub": "Desktop", "icons": ["system"] }
+        {
+          "name": "Formal",
+          "sub": "Lean 4",
+          "icons": [
+            "reason"
+          ]
+        },
+        {
+          "name": "Olympiad",
+          "sub": "Paper proofs",
+          "icons": [
+            "reason"
+          ]
+        },
+        {
+          "name": "Perf.",
+          "sub": "2 tasks",
+          "icons": [
+            "algo"
+          ]
+        },
+        {
+          "name": "Siege & Conquest",
+          "sub": "Game bot",
+          "icons": [
+            "battle"
+          ]
+        },
+        {
+          "name": "Luban lock",
+          "sub": "By hand",
+          "icons": [
+            "spatial"
+          ]
+        },
+        {
+          "name": "Drawing to 3D",
+          "sub": "By hand",
+          "icons": [
+            "drawing"
+          ]
+        },
+        {
+          "name": "Web",
+          "sub": "5 tasks",
+          "icons": [
+            "interact",
+            "game",
+            "physics",
+            "visual"
+          ]
+        },
+        {
+          "name": "Nested OS",
+          "sub": "Desktop",
+          "icons": [
+            "system"
+          ]
+        }
       ],
       "all": {
         "eyebrow": "All tasks",
         "title": "Forbidden for every task",
         "rows": [
-          ["Subagents or multi-agent work", "Answer alone from start to finish"],
-          ["Paths outside the work folder", "Except install paths of required tools and temp folders"],
-          ["Switching accounts, ending processes by name", "runas, taskkill /IM and the like"]
+          [
+            "Subagents or multi-agent work",
+            "Answer alone from start to finish"
+          ],
+          [
+            "Paths outside the work folder",
+            "Except install paths of required tools and temp folders"
+          ],
+          [
+            "Switching accounts, ending processes by name",
+            "runas, taskkill /IM and the like"
+          ]
         ]
       },
       "by": {
         "eyebrow": "By task group",
         "title": "Varies by group",
         "rows": [
-          { "name": "Network, other AI, installing software", "short": "Network", "sub": "Web search and fetching, calling other models or services, downloading or installing packages", "cells": [["ban", ""], ["ban", ""], ["ban", ""], ["ban", ""], ["ban", ""], ["ban", "Only GitHub is blocked"], ["ban", "Only GitHub is blocked"]] },
-          { "name": "Writing and running programs", "short": "Programs", "cells": [["yes", "Lean and installed programs"], ["ban", "Reasoning only; answers and drafts"], ["yes", "Installed software and libraries"], ["yes", "Free while building; rules for the submission"], ["ban", "Only the two given tools"], ["yes", "Local servers allowed"], ["yes", "Local servers allowed"]] },
-          { "name": "Browser MCP", "short": "Browser MCP", "sub": "Opening, operating and capturing the work", "cells": [["na", ""], ["na", ""], ["na", ""], ["na", ""], ["na", ""], ["yes", "Named in the statement"], ["yes", "Statement allows automation tools"]] },
-          { "name": "Processors and GPU", "short": "Processors", "sub": "Allocation while answering", "cells": [["", "Shared with the parallel batch"], ["", "Shared with the parallel batch"], ["", "Parallel batch, 14 logical processors"], ["", "The whole machine"], ["", "Shared with the parallel batch"], ["", "Shared with the parallel batch"], ["", "Shared with the parallel batch"]] }
+          {
+            "name": "Network, other AI, installing software",
+            "short": "Network",
+            "sub": "Web search and fetching, calling other models or services, downloading or installing packages",
+            "cells": [
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                ""
+              ],
+              [
+                "ban",
+                "Only GitHub is blocked"
+              ],
+              [
+                "ban",
+                "Only GitHub is blocked"
+              ]
+            ]
+          },
+          {
+            "name": "Writing and running programs",
+            "short": "Programs",
+            "cells": [
+              [
+                "yes",
+                "Lean and installed programs"
+              ],
+              [
+                "ban",
+                "Reasoning only; answers and drafts"
+              ],
+              [
+                "yes",
+                "Free while building; rules for the submission"
+              ],
+              [
+                "yes",
+                "Free while building; rules for the submission"
+              ],
+              [
+                "ban",
+                "Only the two given tools"
+              ],
+              [
+                "ban",
+                "Preview only; scripts just list the catalog"
+              ],
+              [
+                "yes",
+                "Local servers allowed"
+              ],
+              [
+                "yes",
+                "Local servers allowed"
+              ]
+            ]
+          },
+          {
+            "name": "Browser MCP",
+            "short": "Browser MCP",
+            "sub": "Opening, operating and capturing the work",
+            "cells": [
+              [
+                "na",
+                ""
+              ],
+              [
+                "na",
+                ""
+              ],
+              [
+                "na",
+                ""
+              ],
+              [
+                "na",
+                ""
+              ],
+              [
+                "na",
+                ""
+              ],
+              [
+                "na",
+                ""
+              ],
+              [
+                "yes",
+                "Named in the statement"
+              ],
+              [
+                "yes",
+                "Statement allows automation tools"
+              ]
+            ]
+          },
+          {
+            "name": "Processors and GPU",
+            "short": "Processors",
+            "sub": "Allocation while answering",
+            "cells": [
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Both at once, own sets"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ],
+              [
+                "",
+                "Shared with the parallel batch"
+              ]
+            ]
+          }
         ]
       },
-      "legend": { "yes": "Allowed", "ban": "Forbidden by rule", "na": "Not in the statement" },
+      "legend": {
+        "yes": "Allowed",
+        "ban": "Forbidden by rule",
+        "na": "Not in the statement"
+      },
       "foot": "Every tested session connects to the same browser MCP (the machine's headless Chrome, using the GPU); only the web tasks' statements mention it."
     },
     "pipeline": {
       "title": "How task scores reach the total",
       "readout": "The two kinds are combined separately, each scaled to 0–100, then weighted; grey figures are an example",
-      "std": { "eyebrow": "Standard", "box": "Checked by program", "gen": ["Score produced", "Luban lock 66.68 / 100"], "conv": ["Scaled", "Raw ÷ maximum × 100", "66.68 ÷ 100 × 100 = 66.7"] },
-      "des": { "eyebrow": "Design", "graders": [["Claude Opus 5.5", "All items", "52.0"], ["GPT 6.1 Sol", "All items", "48.0"]], "avg": ["Average item by item, then add", "(52.0 + 48.0) ÷ 2 = 50.0"] },
-      "st": { "title": "Task score", "ex1": "66.7", "ex2": "50.0" },
-      "weights": { "title": "Weight", "note": "To categories first, then evenly among their tasks; 100% over 12 tasks" },
+      "std": {
+        "eyebrow": "Standard",
+        "box": "Checked by program",
+        "gen": [
+          "Score produced",
+          "Luban lock 66.68 / 100"
+        ],
+        "conv": [
+          "Scaled",
+          "Raw ÷ maximum × 100",
+          "66.68 ÷ 100 × 100 = 66.7"
+        ]
+      },
+      "des": {
+        "eyebrow": "Design",
+        "graders": [
+          [
+            "Claude Opus 5.5",
+            "All items",
+            "52.0"
+          ],
+          [
+            "GPT 6.1 Sol",
+            "All items",
+            "48.0"
+          ]
+        ],
+        "avg": [
+          "Average item by item, then add",
+          "(52.0 + 48.0) ÷ 2 = 50.0"
+        ]
+      },
+      "st": {
+        "title": "Task score",
+        "ex1": "66.7",
+        "ex2": "50.0"
+      },
+      "weights": {
+        "title": "Weight",
+        "note": "To categories first, then evenly among their tasks; 100% over 13 tasks"
+      },
       "total": "Model total",
-      "special": { "tag": "Special cases", "cases": [["Only one grader's result is valid", "use that one"], ["No valid result", "no task score; counts as 0 in the total for now"]] }
+      "special": {
+        "tag": "Special cases",
+        "cases": [
+          [
+            "Only one grader's result is valid",
+            "use that one"
+          ],
+          [
+            "No valid result",
+            "no task score; counts as 0 in the total for now"
+          ]
+        ]
+      }
     },
     "types": {
-      "title": "How the six task types are scored",
+      "title": "How the seven task types are scored",
       "readout": "Each type first produces a raw score, then is scaled to 0–100; the last line of each block is the case that needs a word of its own",
       "blocks": {
         "formal": {
           "eyebrow": "Formal proof",
           "name": "Formal Proofs",
           "note": "8 problems, each worth exactly 0 or 12.5. 12.5 only when it compiles alone with no errors or sorry warnings and has the main theorem.",
-          "tags": ["pass", "pass", "sorry", "pass", "error", "pass", "error", "error"],
+          "tags": [
+            "pass",
+            "pass",
+            "sorry",
+            "pass",
+            "error",
+            "pass",
+            "error",
+            "error"
+          ],
           "ex": "Example: 4 problems compile, 50 points; the rest score 0.",
-          "foot": ["Missing file", "that problem scores 0, the others are unaffected"]
+          "foot": [
+            "Missing file",
+            "that problem scores 0, the others are unaffected"
+          ]
         },
         "olympiad": {
           "eyebrow": "Olympiad",
           "name": "Original Olympiad Problems",
-          "note": "18 problems, 0–7 whole points each, 126 in all, then scaled by 100/126.",
+          "note": "24 problems, 0–7 whole points each, 168 in all, then scaled by 100/168.",
           "ex": "Example: total",
           "conv": "scaled",
-          "foot": ["Several methods, none chosen", "the lowest-scoring one is graded"]
-        },
-        "extremal": {
-          "eyebrow": "Extremal construction",
-          "name": "Extremal Construction",
-          "note": "Looked up on an anchor table with a fixed reference as full marks. The slope grows from the low to the upper-middle range; the last stretch to the reference carries no extra weight.",
-          "axis": "r = value ÷ reference",
-          "foot": ["Scores 0", "an invalid submission, such as the wrong number of points or a point outside the square"]
+          "foot": [
+            "Several methods, none chosen",
+            "the lowest-scoring one is graded"
+          ]
         },
         "perf": {
           "eyebrow": "Performance engineering",
           "name": "Performance Engineering",
-          "note": "Each input's speedup s = baseline time ÷ submission time is looked up on a log scale and averaged; the circuit task is then multiplied by its correctness pass rate k/7.",
-          "legend": ["Transformer: full at 16×", "Circuit: full at 8×"],
+          "note": "Speedup s = baseline time ÷ submission time, looked up on ln s. Ray tracing has one performance input, and its speed score is multiplied by the image factor c and the hidden-input factor h; the circuit task looks up each of its 9 inputs by its own s, averages, then multiplies by the pass rate k/7.",
+          "legend": [
+            "Ray tracing: full at 10×",
+            "Circuit inputs 1–6: full at 12×",
+            "Circuit inputs 7–9: full at 8×"
+          ],
           "base": "Baseline",
-          "foot": ["Scores 0", "a compile failure or a broken rule; a single failed input only loses that input"]
+          "foot": [
+            "Scores 0",
+            "a compile failure or a broken rule; a failed ray tracing run only zeroes that verdict, a failing circuit input only loses that input"
+          ]
+        },
+        "battle": {
+          "eyebrow": "Algorithm battle",
+          "name": "Algorithm Battle",
+          "note": "480 games against five tiers of opponents, each scoring 1 for a win, 0.5 for a draw and 0 for a loss, give the bot an Elo-scale rating r; 200 below tier 1 scores 0, matching the frozen rating of tier 1–5 scores 10, 20, 40, 60 or 80, 200 above tier 5 scores 100, interpolated linearly in between.",
+          "axis": "rating r",
+          "games": "96 games against each tier",
+          "foot": [
+            "Scores 0",
+            "a compile failure or a broken submission rule; a crash or no orders within 5 s loses only that game"
+          ]
         },
         "luban": {
           "eyebrow": "Burr puzzle",
           "name": "Luban Lock Disassembly",
-          "note": "8 puzzles in three tiers worth w = 8, 12 or 18, 100 in all. A legal complete disassembly with N total steps earns w × min(1, B/N).",
-          "exText": "Example: puzzle 06 takes twice B and earns 12 × ½ = 6; the 8 puzzles total 40.6.",
-          "foot": ["Scores 0", "puzzles not fully taken apart; a whole submission that searched, simulated or used a solver by program"]
+          "note": "8 puzzles in three tiers worth w = 8, 12 or 18, 100 in all. A legal complete disassembly with N total steps earns w × max(0.6, min(1, B/N)); an unfinished one earns partial credit for its legal separations, at most 50%.",
+          "exText": "Example: puzzle 06 takes twice B and keeps the floor, 12 × 0.6 = 7.2; puzzle 07 completes only its first separation, which takes the reference 19 of its 42 steps, and earns 18 × 0.5 × 19/42 ≈ 4.07; the 8 puzzles total 45.87.",
+          "foot": [
+            "Scores 0",
+            "puzzles with no separation completed; a whole submission that searched, simulated or used a solver by program"
+          ]
+        },
+        "drawing": {
+          "eyebrow": "Drawing to 3D",
+          "name": "Drawing to 3D",
+          "note": "25 problems in three tiers, each worth w = 3.5, 4 or 4.4 points, 100 in all. The surface match F is found at 0.2 mm and at 2 mm and combined as F* = 0.8 × F(0.2 mm) + 0.2 × F(2 mm); each problem earns w × min(1, F*/0.99).",
+          "ex": [
+            3.5,
+            3.45,
+            3.4,
+            3.34,
+            3.25,
+            3.24,
+            3.19,
+            3.13,
+            3.52,
+            3.46,
+            3.4,
+            3.34,
+            3.28,
+            3.22,
+            3.16,
+            2.84,
+            3.34,
+            3.28,
+            3.21,
+            3.15,
+            3.08,
+            3.01,
+            2.95,
+            2.88,
+            2.82
+          ],
+          "exText": "Example: question 05 has F=0.9/0.99, combined 0.918, earning 3.25; question 16 has 0.6/0.8, combined 0.64, earning 2.84.",
+          "foot": [
+            "Zero credit",
+            "Missing/unbuildable files score zero for that question; prohibited dimensional/geometric computation, bulk previews or tool edits invalidate the entire submission. Merely displaying or organizing JSON is allowed."
+          ],
+          "w": [
+            3.5,
+            3.5,
+            3.5,
+            3.5,
+            3.5,
+            3.5,
+            3.5,
+            3.5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4,
+            4.4
+          ]
         },
         "design": {
           "eyebrow": "Design",
           "name": "Design Tasks",
-          "note": "19–37 items per task, 100 points in all. Graders score each item directly within its points, and the items add up to the total.",
-          "rows": [[3.5, 4, "cells = points"], [3.0, 3, "filled = awarded"], [2.6, 3, "decimals allowed"]],
+          "note": "19–30 items per task, 100 points in all. Graders score each item directly within its points, and the items add up to the total.",
+          "rows": [
+            [
+              3.5,
+              4,
+              "cells = points"
+            ],
+            [
+              3.0,
+              3,
+              "filled = awarded"
+            ],
+            [
+              2.6,
+              3,
+              "decimals allowed"
+            ]
+          ],
           "sum": "sum",
           "sumLabel": "items add up to the total",
-          "foot": ["No tiers, no deductions"]
+          "foot": [
+            "No tiers, no deductions"
+          ]
         }
       }
     },
     "designscore": {
       "title": "Scoring the items, a sketch",
       "readout": "The guide lists only directions, items, points and a one-line note, with no grading standards; the example takes one direction of the physics task, with made-up scores",
-      "guide": "Grading guide (physics: 4 directions, 25 items)",
-      "graders": ["Claude Opus 5.5", "GPT 6.1 Sol"],
+      "guide": "Grading guide (physics: 4 directions, 24 items)",
+      "graders": [
+        "Claude Opus 5.5",
+        "GPT 6.1 Sol"
+      ],
       "avg": "Per-item mean",
       "cellNote": "One cell per point, so cells show the points; the filled part is the score awarded",
       "dir": {
         "name": "Interactions",
-        "total": "22 points",
-        "pts": 22,
-        "items": [["Heavy ball contact response", 5, 4.0, 4.5, 4.3], ["Density and buoyancy", 5, 4.0, 4.5, 4.3], ["Response to the wave maker", 3, 2.0, 2.5, 2.3], ["Response to the flow", 4, 3.0, 3.5, 3.3], ["Rigid contact response", 5, 3.5, 4.0, 3.8]]
+        "total": "24 points",
+        "pts": 24,
+        "items": [
+          [
+            "Heavy ball contact response",
+            5,
+            4.0,
+            4.5,
+            4.3
+          ],
+          [
+            "Density and buoyancy",
+            4,
+            3.0,
+            3.5,
+            3.3
+          ],
+          [
+            "Response to the wave maker",
+            2,
+            1.5,
+            2.0,
+            1.8
+          ],
+          [
+            "Response to the flow",
+            5,
+            3.5,
+            4.0,
+            3.8
+          ],
+          [
+            "Rigid contact response",
+            4,
+            3.0,
+            3.5,
+            3.3
+          ],
+          [
+            "Response to parameters",
+            4,
+            2.5,
+            3.0,
+            2.8
+          ]
+        ]
       },
       "sum": "Sum",
-      "sums": ["16.5", "19.0", "17.8"],
+      "sums": [
+        "17.5",
+        "20.5",
+        "19.0"
+      ],
       "bottom": {
         "title": "The four directions' means add up to the task score",
-        "dirs": [["Phenomena and motion", 34.5, 44], ["Materials and lighting", 18.5, 24], ["Interactions", 17.8, 22], ["Demo and delivery", 8.5, 10]],
+        "dirs": [
+          [
+            "Phenomena and motion",
+            37.5,
+            47
+          ],
+          [
+            "Materials and lighting",
+            13.5,
+            17
+          ],
+          [
+            "Interactions",
+            19.0,
+            24
+          ],
+          [
+            "Demo and delivery",
+            9.5,
+            12
+          ]
+        ],
         "current": 2
       },
-      "foot": ["No tiers, no deductions, no zeroing", "an item's score is simply what the grader gave within its points."]
+      "foot": [
+        "No tiers, no deductions, no zeroing",
+        "an item's score is simply what the grader gave within its points."
+      ]
+    },
+    "drawing": {
+      "title": "Drawing Interpretation & Modeling: from drawings to solids",
+      "readout": "Check tool use, build solids, then score by surface match",
+      "drawing": {
+        "head": {
+          "eyebrow": "Drawing to 3D",
+          "name": "Drawings to 3D models",
+          "note": "25 sets, three tiers of points"
+        },
+        "left": {
+          "eyebrow": "Read the drawings",
+          "name": "Read and describe the parts",
+          "big": "25",
+          "unit": "sets",
+          "note": "446 sheets in first-angle projection, in millimetres, with holes at any angle, nested cavities, fillets and chamfers, and assemblies of up to 26 parts. A set is read as a whole, working along the dimension chains.",
+          "steps": [
+            [
+              "Read and reason manually",
+              "The dimension catalog may be displayed and sorted; dimensions and geometry are worked out by hand; the preview shows two shaded isometric views only"
+            ],
+            [
+              "Build the description",
+              "Feature by feature; if a feature fails, the part is compared as the solid before it"
+            ],
+            [
+              "Compare the surfaces",
+              "F at 0.2 mm and at 2 mm, translation only and no rotation, combined 0.8 to 0.2"
+            ]
+          ],
+          "pass": "A solid is generated",
+          "fail": "Missing file or no valid solid",
+          "passBox": "Score by surface match"
+        },
+        "right": {
+          "eyebrow": "Surface match",
+          "name": "More matching surface, more points",
+          "note": "At each tolerance F = 2PR/(P+R): P weighted by submitted surface area, R giving every reference face equal weight. One translation for the whole problem is found at 0.2 mm and reused at 2 mm; neither rotates.",
+          "formula": "w × min(1, F* ÷ 0.99)",
+          "full": "F* ≥ 0.99 earns full w",
+          "axisB": "The axis is F* = 0.8 × F(0.2 mm) + 0.2 × F(2 mm); the loose tolerance counts for only 20%"
+        },
+        "tiers": {
+          "eyebrow": "Tiers",
+          "title": "Three tiers",
+          "note": "Ordered by difficulty; total 100 points",
+          "groups": [
+            [
+              "Easy",
+              0,
+              7
+            ],
+            [
+              "Medium",
+              8,
+              14
+            ],
+            [
+              "Hard",
+              15,
+              24
+            ]
+          ],
+          "tags": [
+            "10 parts",
+            "8 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "1 parts",
+            "14 parts",
+            "18 parts",
+            "22 parts",
+            "26 parts"
+          ],
+          "json": "Submit one JSON description per question. List each numbered part’s features and, for assemblies, its position and orientation."
+        },
+        "w": [
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          3.5,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4,
+          4.4
+        ]
+      },
+      "tools": {
+        "eyebrow": "Tools",
+        "title": "Tools allowed while answering",
+        "yes": "Allowed",
+        "no": "Not allowed",
+        "drawing": {
+          "yes": [
+            "Viewing the sheets, reading files, notes and working by hand",
+            "Displaying, listing and sorting the existing fields of the JSON dimension catalog",
+            "The isometric preview preview.py, several problems at once if wanted"
+          ],
+          "no": [
+            "Programs that compute dimensions, derive geometry, or rebuild or compare shapes",
+            "CAD software, geometry kernels and other modeling tools",
+            "Editing the supplied tools (an answer that breaks the tool rules scores 0)"
+          ]
+        }
+      }
     }
   }
 }

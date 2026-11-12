@@ -3,76 +3,259 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>果冻冲击与造浪水槽 · 软体 / 刚体 / 流体交互模拟</title>
-<link rel="stylesheet" href="css/style.css">
+<title>果冻冲击与造浪水槽 · 三维物理模拟</title>
+<style>
+  :root{
+    --bg:#05090e; --panel:rgba(11,20,29,.78); --panel2:rgba(16,28,40,.82);
+    --line:rgba(120,205,225,.16); --line2:rgba(120,205,225,.30);
+    --txt:#dcecf2; --muted:#7f9aa8; --accent:#57dbe4; --accent2:#9af0e6;
+    --warn:#ffb072;
+    --c0:#ff7d63; --c1:#ffd36b; --c2:#7ee8a4; --c3:#5aa9ff; --c4:#c58bff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--txt);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC","Source Han Sans SC","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;user-select:none}
+  #gpu{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
+  #ui{position:fixed;inset:0;z-index:5;pointer-events:none}
+  #ui .pane{pointer-events:auto}
+  body.exporting #ui{display:none}
+  body.exporting #loading{display:none}
+
+  .glass{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:0 10px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)}
+
+  /* ---------- top bar ---------- */
+  .topbar{position:absolute;top:0;left:0;right:0;height:66px;display:flex;align-items:center;
+    gap:18px;padding:0 20px;
+    background:linear-gradient(180deg,rgba(4,9,14,.86),rgba(4,9,14,0));}
+  .brand{display:flex;flex-direction:column;gap:2px;min-width:230px}
+  .brand h1{font-size:16px;margin:0;font-weight:700;letter-spacing:2px;
+    background:linear-gradient(90deg,#eafcff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand small{font-size:10.5px;color:var(--muted);letter-spacing:1.5px}
+  .tabs{display:flex;gap:6px;background:rgba(8,16,24,.6);padding:5px;border-radius:12px;border:1px solid var(--line)}
+  .tab{pointer-events:auto;cursor:pointer;border:0;background:transparent;color:var(--muted);
+    font-size:13px;padding:8px 18px;border-radius:9px;transition:.18s;font-family:inherit;letter-spacing:.5px}
+  .tab:hover{color:var(--txt)}
+  .tab.active{background:linear-gradient(135deg,rgba(87,219,228,.22),rgba(87,219,228,.08));
+    color:#eafcff;box-shadow:inset 0 0 0 1px var(--line2)}
+  .top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .iconbtn{pointer-events:auto;cursor:pointer;width:38px;height:38px;border-radius:10px;
+    border:1px solid var(--line);background:rgba(10,20,30,.7);color:var(--txt);
+    font-size:15px;display:grid;place-items:center;transition:.18s;font-family:inherit}
+  .iconbtn:hover{border-color:var(--line2);background:rgba(20,40,55,.8)}
+  .iconbtn.off{color:var(--muted);opacity:.65}
+
+  /* ---------- side panels ---------- */
+  .panel{position:absolute;width:264px;padding:14px 14px 16px;max-height:calc(100vh - 150px);overflow-y:auto}
+  .panel::-webkit-scrollbar{width:6px}
+  .panel::-webkit-scrollbar-thumb{background:rgba(120,205,225,.2);border-radius:3px}
+  .left{left:18px;top:78px}
+  .right{right:18px;top:78px;width:276px}
+  .sec-title{font-size:11px;letter-spacing:2px;color:var(--accent);margin:2px 0 10px;
+    display:flex;align-items:center;gap:8px;font-weight:700}
+  .sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+  .group{margin-bottom:16px}
+  .btn{cursor:pointer;border:1px solid var(--line);background:rgba(14,26,38,.8);color:var(--txt);
+    border-radius:9px;padding:9px 10px;font-size:12.5px;font-family:inherit;transition:.16s;
+    display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.3px}
+  .btn:hover{border-color:var(--line2);background:rgba(24,46,62,.9);transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .btn.primary{background:linear-gradient(135deg,rgba(87,219,228,.28),rgba(87,219,228,.10));
+    border-color:var(--line2);color:#eafcff}
+  .btn.small{font-size:11.5px;padding:7px 8px}
+  .btn.toggled{background:linear-gradient(135deg,rgba(87,219,228,.30),rgba(87,219,228,.12));border-color:var(--line2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .grid1{display:grid;grid-template-columns:1fr;gap:7px}
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .demo-btn{flex-direction:column;gap:3px;padding:9px 6px;text-align:center;line-height:1.35}
+  .demo-btn b{font-size:12px;font-weight:600}
+  .demo-btn span{font-size:10px;color:var(--muted)}
+  .demo-btn.active{box-shadow:0 0 0 1px var(--accent),0 0 18px rgba(87,219,228,.25)}
+
+  .row{display:flex;align-items:center;gap:8px;margin:9px 0}
+  .row label{font-size:11.5px;color:var(--muted);flex:0 0 78px;line-height:1.3}
+  .row .val{flex:0 0 46px;text-align:right;font-size:11.5px;color:var(--accent2);
+    font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:3px;
+    background:linear-gradient(90deg,var(--accent) 0%,var(--accent) 50%,rgba(120,205,225,.16) 50%);
+    outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+    background:#eafcff;border:2px solid var(--accent);box-shadow:0 0 8px rgba(87,219,228,.6)}
+  .densrow label{flex:0 0 96px}
+  .swatch{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;
+    box-shadow:0 0 6px currentColor}
+  .hint{font-size:10.5px;color:var(--muted);line-height:1.6;margin-top:8px}
+  .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:6px;
+    background:rgba(87,219,228,.14);color:var(--accent2);border:1px solid var(--line2);margin-left:6px}
+
+  /* ---------- bottom bar ---------- */
+  .bottombar{position:absolute;left:0;right:0;bottom:0;padding:10px 20px 12px;
+    display:flex;align-items:flex-end;gap:16px;
+    background:linear-gradient(0deg,rgba(4,9,14,.86),rgba(4,9,14,0))}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;pointer-events:auto}
+  .legend .item{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .legend .dot{width:11px;height:11px;border-radius:50%;box-shadow:0 0 8px currentColor}
+  .status{margin-left:auto;text-align:right;font-size:10.5px;color:var(--muted);line-height:1.6;pointer-events:auto}
+  .status b{color:var(--accent2);font-weight:600}
+  .keyhint{font-size:10.5px;color:var(--muted);pointer-events:auto}
+  .keyhint kbd{background:rgba(20,36,50,.9);border:1px solid var(--line);border-radius:4px;
+    padding:1px 5px;font-size:10px;color:var(--txt);font-family:inherit}
+
+  /* ---------- loading / help ---------- */
+  #loading{position:fixed;inset:0;z-index:50;display:grid;place-items:center;
+    background:radial-gradient(circle at 50% 45%,#0b1a26,#04080d 70%)}
+  .loadbox{text-align:center}
+  .spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(87,219,228,.15);
+    border-top-color:var(--accent);margin:0 auto 18px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loadingText{font-size:13px;letter-spacing:2px;color:var(--accent2)}
+  #loadingSub{font-size:11px;color:var(--muted);margin-top:8px;max-width:520px;line-height:1.7}
+  #helpModal{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(2,6,10,.72)}
+  #helpModal.show{display:grid}
+  .helpcard{max-width:620px;padding:26px 30px;line-height:1.85;font-size:12.5px;color:var(--txt)}
+  .helpcard h2{margin:0 0 12px;font-size:17px;color:var(--accent2);letter-spacing:1px}
+  .helpcard p{margin:8px 0;color:#b9d2dc}
+  .helpcard b{color:var(--accent)}
+  .closebtn{margin-top:16px}
+
+  .tag{font-size:9.5px;color:var(--muted);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+  .sep{height:1px;background:var(--line);margin:12px 0}
+</style>
 </head>
 <body>
-<canvas id="gl"></canvas>
+<canvas id="gpu"></canvas>
 
 <div id="ui">
-  <header id="topbar">
+  <div class="topbar">
     <div class="brand">
-      <div class="brand-mark"><span class="bm-core"></span></div>
-      <div class="brand-text">
-        <h1>果冻冲击与造浪水槽</h1>
-        <p>软体形变 · 刚体碰撞 · 流体浮沉 &nbsp;/&nbsp; 三维物理交互实验</p>
-      </div>
+      <h1>果冻冲击 · 造浪水槽</h1>
+      <small>SOFT BODY × FLUID × WAVE — 三维物理模拟</small>
     </div>
-    <nav id="scene-tabs">
-      <button class="tab active" data-scene="jelly"><em>01</em> 果冻冲击</button>
-      <button class="tab" data-scene="tank"><em>02</em> 造浪水槽</button>
-    </nav>
+    <div class="tabs pane">
+      <button class="tab active" id="tabJelly">场景一 · 果冻冲击</button>
+      <button class="tab" id="tabTank">场景二 · 造浪水槽</button>
+    </div>
     <div class="top-actions">
-      <button id="sound-toggle" class="ghost" aria-pressed="true"><span class="ico-sound"></span><span id="sound-label">声音 开</span></button>
-      <button id="panel-toggle" class="ghost"><span class="ico-panel"></span>参数</button>
+      <button class="iconbtn" id="btnSound" title="音效开关">🔊</button>
+      <button class="iconbtn" id="btnHelp" title="操作说明">?</button>
     </div>
-  </header>
+  </div>
 
-  <aside id="panel">
-    <div class="panel-head">
-      <div>
-        <div class="ph-kicker">CONTROL PANEL</div>
-        <div class="ph-title" id="panel-title">场景参数</div>
+  <!-- LEFT: demos + playback + scene1 triggers -->
+  <div class="panel glass left pane">
+    <div class="sec-title">预置演示 DEMOS</div>
+    <div class="demo-grid" id="demoGrid">
+      <button class="btn demo-btn" data-run="jelly-center"><b>正中单击</b><span>包球·回弹</span></button>
+      <button class="btn demo-btn" data-run="jelly-offset"><b>偏心斜击</b><span>倾斜·滚落</span></button>
+      <button class="btn demo-btn" data-run="jelly-multi"><b>连击</b><span>叠加·开裂</span></button>
+      <button class="btn demo-btn" data-run="tank-full"><b>风浪</b><span>浮沉·破碎</span></button>
+    </div>
+    <div class="sep"></div>
+    <div class="sec-title">播放控制 PLAYBACK</div>
+    <div class="grid2">
+      <button class="btn" id="btnPlay">⏸ 暂停</button>
+      <button class="btn" id="btnStep">⏭ 步进</button>
+      <button class="btn" id="btnSlow">▶ 速度 1×</button>
+      <button class="btn" id="btnRerun">↻ 重新运行</button>
+      <button class="btn" id="btnReset" style="grid-column:1/3">⟲ 重置场景</button>
+    </div>
+
+    <div id="jellyTriggers">
+      <div class="sep"></div>
+      <div class="sec-title">触发冲击 IMPACT</div>
+      <div class="grid1">
+        <button class="btn primary small" id="btnCenter">◎ 正中 · 重球正对果冻落下</button>
+        <button class="btn small" id="btnOffset">◢ 偏心 · 斜向撞上果冻</button>
+        <button class="btn small" id="btnMulti">≋ 连续 · 多球赶在余振上</button>
       </div>
-      <button id="panel-close" title="收起">&#10005;</button>
+      <div class="hint">冲击轻重与果冻结实程度共同决定：仅变形回弹 / 开裂 / 被砸开。</div>
     </div>
-    <div id="panel-body"></div>
-    <div class="panel-foot">调节参数后重新触发即可观察差异</div>
-  </aside>
 
-  <div id="status">
-    <div class="st-row">
-      <span class="st-dot"></span>
-      <span id="st-phase">准备就绪</span>
-      <span class="st-time" id="st-time">0.00 s</span>
+    <div id="tankTriggers" style="display:none">
+      <div class="sep"></div>
+      <div class="sec-title">触发操作 ACTIONS</div>
+      <div class="grid1">
+        <button class="btn primary small" id="btnRelease">⬇ 再次释放小球</button>
+        <button class="btn small" id="btnWave">≈ 开始造浪</button>
+      </div>
+      <div class="hint">小球按密度分化浮沉；造浪幅度从平缓长波到翻卷破碎。</div>
     </div>
-    <div class="st-bar"><div id="st-fill"></div></div>
-    <div class="st-phases" id="st-phases"></div>
   </div>
 
-  <div id="transport">
-    <button id="btn-trigger" class="btn primary"><span class="tri"></span><span id="trigger-label">触发冲击</span></button>
-    <span class="sep"></span>
-    <button id="btn-pause" class="btn">暂停</button>
-    <button id="btn-reset" class="btn">重置</button>
-    <span class="sep"></span>
-    <label class="speed-wrap" for="speed">速度</label>
-    <select id="speed" class="sel">
-      <option value="0.25">0.25×</option>
-      <option value="0.5">0.5×</option>
-      <option value="1" selected>1×</option>
-      <option value="2">2×</option>
-    </select>
+  <!-- RIGHT: parameters -->
+  <div class="panel glass right pane">
+    <div id="jellyParams">
+      <div class="sec-title">果冻与重球 JELLY</div>
+      <div class="row"><label>果冻软硬</label><input type="range" id="sSoft" min="0" max="1" step="0.01" value="0.55"><span class="val" id="vSoft"></span></div>
+      <div class="row"><label>结实程度</label><input type="range" id="sTough" min="0" max="1" step="0.01" value="0.6"><span class="val" id="vTough"></span></div>
+      <div class="row"><label>重球质量</label><input type="range" id="sMass" min="0" max="1" step="0.01" value="0.62"><span class="val" id="vMass"></span></div>
+      <div class="row"><label>下落高度</label><input type="range" id="sHeight" min="0" max="1" step="0.01" value="0.6"><span class="val" id="vHeight"></span></div>
+      <div class="hint">调软果冻或加重重球 → 凹陷更深、鼓出更大、振荡更慢。降低结实程度或加重冲击 → 由变形回弹转为开裂、砸开。</div>
+      <div class="sep"></div>
+      <div class="sec-title">台上果冻 JELLIES</div>
+      <div class="hint" style="margin-top:0">
+        <span class="swatch" style="background:#ff6f8b;color:#ff6f8b"></span>软质桃红（易裂）　
+        <span class="swatch" style="background:#67e0c0;color:#67e0c0"></span>韧性青绿<br>
+        <span class="swatch" style="background:#c79bff;color:#c79bff"></span>高弹紫（矮胖）　
+        三块果冻软硬 / 结实 / 形状各异，可在其间弹跳。
+      </div>
+    </div>
+
+    <div id="tankParams" style="display:none">
+      <div class="sec-title">造浪 WAVE MAKER</div>
+      <div class="row"><label>造浪幅度</label><input type="range" id="sAmp" min="0" max="1" step="0.01" value="0.55"><span class="val" id="vAmp"></span></div>
+      <div class="row"><label>造浪频率</label><input type="range" id="sFreq" min="0" max="1" step="0.01" value="0.45"><span class="val" id="vFreq"></span></div>
+      <div class="hint">幅度调低为平缓长波，调高后浪变陡、翻卷、破碎，浮球被抛得更远；频率改变浪的间距。</div>
+      <div class="sep"></div>
+      <div class="sec-title">各组密度 DENSITY</div>
+      <div id="densSliders"></div>
+      <div class="hint">相对水的密度：&lt;1 上浮、=1 悬浮、&gt;1 下沉。改变某组密度，该组浮沉方向与浸入深度随之改变。</div>
+    </div>
+
+    <div class="sep"></div>
+    <div class="sec-title">说明 TIPS</div>
+    <div class="hint" style="margin-top:0">
+      <b>动态由模拟算出</b>：果冻为体积软体（XPBD + 断裂判据），水体为 WebGPU 计算着色器上的三维粒子—网格混合（FLIP/PIC）。改参数后现象随 2.2 / 3.2 的方向变化。<br>
+      <span class="tag">空格</span> 暂停/继续　<span class="tag">1 / 2</span> 切场景　<span class="tag">R</span> 重置
+    </div>
   </div>
 
-  <div id="hint">拖拽旋转视角 · 滚轮缩放 · 空格暂停 / 继续 · R 重置</div>
-  <div id="toast"></div>
+  <div class="bottombar">
+    <div class="legend" id="legend"></div>
+    <div class="keyhint" id="keyhint">鼠标拖动 · 旋转视角　|　滚轮 · 推拉镜头</div>
+    <div class="status" id="status">初始化中…</div>
+  </div>
 </div>
 
-<script src="lib/three.min.js"></script>
-<script src="js/engine.js"></script>
+<div id="loading">
+  <div class="loadbox">
+    <div class="spinner"></div>
+    <div id="loadingText">正在启动 WebGPU 模拟</div>
+    <div id="loadingSub">果冻冲击与造浪水槽 · 首次编译着色器需要片刻</div>
+  </div>
+</div>
+
+<div id="helpModal">
+  <div class="glass helpcard">
+    <h2>操作说明</h2>
+    <p>本作品包含两个可独立演示的三维物理模拟场景，点击顶部标签切换。左侧可播放四段预置演示，或手动触发冲击 / 释放小球 / 造浪。</p>
+    <p><b>场景一 · 果冻冲击</b>：三种冲击（正中 / 偏心 / 连续）可分别触发。右侧调节果冻软硬、结实程度、重球质量与下落高度。重击而果冻不够结实时开裂，碎块仍是有弹性的果冻。</p>
+    <p><b>场景二 · 造浪水槽</b>：五组同尺寸、不同密度的小球（颜色区分）在透明水槽中浮沉。调节各组密度、造浪幅度与频率；幅度调高后浪翻卷破碎成白水。</p>
+    <p><b>镜头</b>：按住鼠标左键拖动旋转，滚轮推拉，右键拖动平移。<b>快捷键</b>：空格暂停/继续，1 / 2 切换场景，R 重置，S 音效开关。</p>
+    <p style="color:var(--muted)">声音需先与页面交互后才会播放（浏览器策略）。演示导出接口 <b>window.videoExport</b> 供自动评测逐帧调用。</p>
+    <button class="btn primary closebtn" id="helpClose">知道了</button>
+  </div>
+</div>
+
+<script src="js/math.js"></script>
+<script src="js/gpu.js"></script>
+<script src="js/shaders.js"></script>
+<script src="js/render.js"></script>
 <script src="js/jelly.js"></script>
-<script src="js/tank.js"></script>
+<script src="js/water.js"></script>
+<script src="js/audio.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,1013 @@
+{
+  "problem": "01",
+  "parts": [
+    {
+      "name": "1",
+      "title": "滑阀驱动底座",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "底板",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                180,
+                120
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            16
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "滑阀导轨",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                90,
+                36,
+                170,
+                84
+              ]
+            }
+          ],
+          "depth": [
+            16,
+            32
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "滑阀导槽",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                98,
+                44,
+                170,
+                76
+              ]
+            }
+          ],
+          "depth": [
+            24,
+            32
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "地脚孔1",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                10,
+                10
+              ],
+              "d": 9
+            }
+          ],
+          "depth": [
+            0,
+            16
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "地脚孔2",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                10,
+                110
+              ],
+              "d": 9
+            }
+          ],
+          "depth": [
+            0,
+            16
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "地脚孔3",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                170,
+                10
+              ],
+              "d": 9
+            }
+          ],
+          "depth": [
+            0,
+            16
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "地脚孔4",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                170,
+                110
+              ],
+              "d": 9
+            }
+          ],
+          "depth": [
+            0,
+            16
+          ]
+        },
+        {
+          "type": "fillet",
+          "name": "底板左前外竖棱",
+          "edges": [
+            [
+              0,
+              0,
+              8.0
+            ]
+          ],
+          "radius": 2
+        },
+        {
+          "type": "chamfer",
+          "name": "所指前下直棱",
+          "edges": [
+            [
+              45.0,
+              0,
+              0
+            ]
+          ],
+          "distance": 1
+        }
+      ],
+      "placement": {
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "2",
+      "title": "前轴承架",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "支架",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "path": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  52,
+                  0
+                ],
+                [
+                  52,
+                  42
+                ],
+                [
+                  42,
+                  56
+                ],
+                [
+                  10,
+                  56
+                ],
+                [
+                  0,
+                  42
+                ]
+              ]
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "轴承座孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                26,
+                38
+              ],
+              "d": 26
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "定位沉台",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                26,
+                38
+              ],
+              "d": 34
+            }
+          ],
+          "depth": [
+            -6,
+            0
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          24,
+          16,
+          16
+        ]
+      }
+    },
+    {
+      "name": "3",
+      "title": "后轴承架",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "支架",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "path": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  52,
+                  0
+                ],
+                [
+                  52,
+                  42
+                ],
+                [
+                  42,
+                  56
+                ],
+                [
+                  10,
+                  56
+                ],
+                [
+                  0,
+                  42
+                ]
+              ]
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "轴承座孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                26,
+                38
+              ],
+              "d": 26
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "定位沉台",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                26,
+                38
+              ],
+              "d": 34
+            }
+          ],
+          "depth": [
+            -18,
+            -12
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          24,
+          86,
+          16
+        ]
+      }
+    },
+    {
+      "name": "4",
+      "title": "前法兰轴套",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "套筒",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 26
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "法兰",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 34
+            }
+          ],
+          "depth": [
+            -6,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "轴孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 16
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "润滑孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                0,
+                10
+              ],
+              "d": 4
+            }
+          ],
+          "depth": [
+            0,
+            13
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          50,
+          16,
+          54
+        ]
+      }
+    },
+    {
+      "name": "5",
+      "title": "后法兰轴套",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "套筒",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 26
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "法兰",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 34
+            }
+          ],
+          "depth": [
+            -18,
+            -12
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "轴孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 16
+            }
+          ],
+          "depth": [
+            -18,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "润滑孔",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                0,
+                8
+              ],
+              "d": 4
+            }
+          ],
+          "depth": [
+            0,
+            13
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          50,
+          86,
+          54
+        ]
+      }
+    },
+    {
+      "name": "6",
+      "title": "偏心轴",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "主轴",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 16
+            }
+          ],
+          "depth": [
+            -100,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "偏心轮",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                10,
+                0
+              ],
+              "d": 44
+            }
+          ],
+          "depth": [
+            -68,
+            -32
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "前挡肩",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 24
+            }
+          ],
+          "depth": [
+            -30,
+            -24
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "后挡肩",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 24
+            }
+          ],
+          "depth": [
+            -76,
+            -70
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "端部扁位",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                -12,
+                90,
+                12,
+                100
+              ]
+            }
+          ],
+          "depth": [
+            5,
+            12
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          50,
+          10,
+          54
+        ]
+      }
+    },
+    {
+      "name": "7",
+      "title": "槽形从动框",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "外框",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                60,
+                40
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            56
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "偏心轮滑窗",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                8,
+                0,
+                52,
+                40
+              ]
+            }
+          ],
+          "depth": [
+            6,
+            50
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "推杆连接耳",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                60,
+                12,
+                102,
+                28
+              ]
+            }
+          ],
+          "depth": [
+            20,
+            30
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "销孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                93,
+                25
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            -28,
+            -12
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          30,
+          40,
+          26
+        ]
+      }
+    },
+    {
+      "name": "8",
+      "title": "滑阀阀芯",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "阀芯",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                54,
+                32
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            8
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "前挡肩",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                10,
+                32
+              ]
+            }
+          ],
+          "depth": [
+            8,
+            22
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "连接叉左",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                20,
+                8
+              ]
+            }
+          ],
+          "depth": [
+            22,
+            34
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "连接叉右",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                24,
+                20,
+                32
+              ]
+            }
+          ],
+          "depth": [
+            22,
+            34
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "连接销孔",
+          "op": "cut",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                11,
+                27
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            -32,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "下流槽",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                22,
+                6,
+                42,
+                26
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            4
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          112,
+          44,
+          24
+        ]
+      }
+    },
+    {
+      "name": "9",
+      "title": "连接销",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "销体",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 8
+            }
+          ],
+          "depth": [
+            -40,
+            0
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "挡头",
+          "op": "add",
+          "plane": "XZ",
+          "loops": [
+            {
+              "circle": [
+                0,
+                0
+              ],
+              "d": 12
+            }
+          ],
+          "depth": [
+            -4,
+            0
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          123,
+          40,
+          51
+        ]
+      }
+    },
+    {
+      "name": "10",
+      "title": "导轨压板",
+      "features": [
+        {
+          "type": "extrude",
+          "name": "压板",
+          "op": "add",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                0,
+                42,
+                48
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            8
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "中间导向缺口",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "rect": [
+                0,
+                8,
+                42,
+                40
+              ]
+            }
+          ],
+          "depth": [
+            0,
+            4
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "固定孔左",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                32,
+                4
+              ],
+              "d": 5
+            }
+          ],
+          "depth": [
+            0,
+            8
+          ]
+        },
+        {
+          "type": "extrude",
+          "name": "固定孔右",
+          "op": "cut",
+          "plane": "XY",
+          "loops": [
+            {
+              "circle": [
+                32,
+                44
+              ],
+              "d": 5
+            }
+          ],
+          "depth": [
+            0,
+            8
+          ]
+        }
+      ],
+      "placement": {
+        "translate": [
+          128,
+          36,
+          32
+        ]
+      }
+    }
+  ]
+}

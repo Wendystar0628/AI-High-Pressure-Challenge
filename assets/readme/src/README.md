@@ -15,18 +15,18 @@
 - **中性色占大头**：纸 `--paper`、白板 `--panel`、墨 `--ink`、次要字 `--ink-2`、细线 `--rule`、浅填充 `--chip`；`--ink-3` 只画刻度，不写字。
 - **有色部分紫 6、荧光绿 3、星光青 1**（整套图合起来看）。色阶和依据见 `website/docs/visual.md`。
 - **紫族**（`--violet` 即 500，`--violet-100/300/600/800`）：`//` 标记、页签、空心大字、主动设计题的数据；普通量用 `--violet-300`（`.c-soft` 还是旧的 `--violet-soft`）。紫 500 只写大字（≥ 24px，或 ≥ 18.66px 粗体），小字用 `--violet-800`。一张图至多一整块紫 500。
-- **荧光绿族**（`--lime` 即 500，`--lime-100/300/600/800`）：标准评判题的数据、高亮（`.hi`、`.marker`，一张图一两处）、星光。可以有一条整宽的 `--lime-100` 色带标出一组。
+- **荧光绿族**（`--lime` 即 500，`--lime-100/300/600/700/800`）：标准评判题的数据、高亮（`.hi`、`.marker`，一张图一两处）、星光。可以有一条整宽的 `--lime-100` 色带标出一组。
 - **星光青**（`--cyan`、`--cyan-100`、`--cyan-800`）：只给参考和基准（及格线、参考步数、平均、全场最高刻线）和首图光谱条，一张图至多一两处；线和字用 `--cyan-800`，区间底用 `--cyan-100`。
-- **浅底上的亮色**：荧光绿 300/500/600 和青 500 只做填充，加 1px 墨边（`.edge`）或贴着墨色元素；写字、画细线改用 `--lime-800`、`--cyan-800`。紫和荧光绿不细线相贴、不等面积并排，相邻处隔纸色缝或墨线；不做紫绿渐变。
+- **浅底上的亮色**：荧光绿 300/500/600/700 和青 500 只做填充，加 1px 墨边（`.edge`）或贴着墨色元素；写字、画细线改用 `--lime-800`、`--cyan-800`。紫和荧光绿不细线相贴、不等面积并排，相邻处隔纸色缝或墨线；不做紫绿渐变。
 - **两类题**：标准评判题用荧光绿族，主动设计题用紫族。按类别上色时一律用 `var(--cat-<key>)`，各图一致；深浅交替，最浅到 300，不会像空条：
 
   | 标准评判题（加 `.edge` 墨边） | 色阶 | 主动设计题 | 色阶 |
   | --- | --- | --- | --- |
   | `--cat-reason` 数学推理 | 绿 600 | `--cat-interact` 复杂交互应用 | 紫 800 |
-  | `--cat-algo` 算法竞赛 | 绿 300 | `--cat-game` 游戏设计与开发 | 紫 400 |
-  | `--cat-spatial` 空间推理 | 绿 500 | `--cat-physics` 物理模拟 | 紫 600 |
-  | | | `--cat-visual` 视觉设计与渲染 | 紫 300 |
-  | | | `--cat-system` 系统架构与实现 | 紫 500 |
+  | `--cat-algo` 性能优化 | 绿 300 | `--cat-game` 游戏设计与开发 | 紫 400 |
+  | `--cat-battle` 算法对抗 | 绿 700 | `--cat-physics` 物理模拟 | 紫 600 |
+  | `--cat-spatial` 空间推理 | 绿 500 | `--cat-visual` 视觉设计与渲染 | 紫 300 |
+  | `--cat-drawing` 识图建模 | 绿 800 | `--cat-system` 系统架构与实现 | 紫 500 |
 
   段间留纸色缝。不分类别时标准评判题用 `--lime` 加 `.edge`，主动设计题用 `--violet`。
 - **两类同图加形状**：标题或图例前，标准评判题放方块 `<i class="k std"></i>`，主动设计题放四角星 `<span class="star k des"></span>`。
@@ -49,6 +49,6 @@
 | `fonts/` | Saira 可变字体和许可证 |
 | `decor/` | 首图用的星图和轨道 |
 | `figs/` | 每张图一个 html；`tasks-design-strip.css/js` 是 5 张设计题分值图共用的 |
-| `icons-preview.html` | 8 个类别图标的预览，渲染成同目录的 `icons-preview.png` |
+| `icons-preview.html` | 10 个类别图标的预览，渲染成同目录的 `icons-preview.png` |
 
-类别图标两份，图形相同：`assets/readme/icon-<key>.svg` 颜色写死为紫 `#9859FF`（README 和配图用），`website/icons/categories/<key>.svg` 用 `currentColor`（网页用）。改一份要同步另一份。key：reason、algo、spatial、interact、game、physics、visual、system。
+类别图标两份，图形相同：`assets/readme/icon-<key>.svg` 颜色写死为紫 `#9859FF`（README 和配图用），`website/icons/categories/<key>.svg` 用 `currentColor`（网页用）。改一份要同步另一份。key：reason、algo、battle、spatial、drawing、interact、game、physics、visual、system。

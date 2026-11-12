@@ -7,7 +7,8 @@ import { createFigure, d3, W, text, line, rect, path, star, eyebrow, wrap, lines
 // ---------------------------------------------------------------------------
 // 作答时间线: three lanes on one minute scale. Triangle = a new round,
 // diamond = overall-progress hint, solid square = submit reminder, thick ink
-// line = time is up; the last 10 minutes are a cyan band, idle time hatched.
+// line = time is up; the last minute (no immediate continuation) is a cyan band, idle time hatched.
+const LAST_MINUTES = 1;
 export function timelineFigure({ c }) {
   const fc = c.fig.timeline;
   const fig = createFigure({ key: 'timeline', title: fc.title, sketch: true, readout: [fc.readout] });
@@ -34,15 +35,15 @@ export function timelineFigure({ c }) {
     else star(g, 5.5, top + 29.5, 6.5, 'f-orbit');
     text(g, 18, top + 34, lane.name, 'tx');
     lines(g, 18, top + 56, lane.sub.flatMap((s) => wrap(s, X0 - 34, 13)), 19, 't2');
-    // the last 10 minutes
-    rect(g, x(end - 10), top + 12, x(end) - x(end - 10), 74, 'f-ref-band');
+    // the last minute
+    rect(g, x(end - LAST_MINUTES), top + 12, x(end) - x(end - LAST_MINUTES), 74, 'f-ref-band');
     // work rounds and idle time
     for (const [a, b] of lane.bars) rect(g, x(a), barY, x(b) - x(a), 14, lane.kind === 'standard' ? 'f-std' : 'f-des', true);
     const last = lane.bars[lane.bars.length - 1][1];
     rect(g, x(last), barY, x(end) - x(last), 14, 'f-ban').attr('fill', fig.hatch);
     // "no more rounds" under the band, one line lower if a round's label is in the way
     const nmW = measure(L.noMore, 13);
-    const nmX = Math.min(x(end - 5), x(end) - nmW / 2 + 4);
+    const nmX = Math.min(x(end - LAST_MINUTES / 2), x(end) - nmW / 2 + 4);
     const clash = lane.marks.some(([m, type, key]) => type === 'round' && Math.abs(x(m) - nmX) < (measure(L[key], 13) + nmW) / 2 + 8);
     text(g, nmX, barY + (clash ? 58 : 38), L.noMore, 't2', 'middle');
     const extra = clash ? 20 : 0;
@@ -191,11 +192,13 @@ export function scheduleFigure({ data, c }) {
   const b1 = data.tasks.filter((x) => !serial.has(x.key)).sort((a, b) => (a.kind === b.kind ? a.no - b.no : a.kind === 'standard' ? -1 : 1));
   const b2 = fc.serial.map((k) => data.task(k)).filter(Boolean);
   const end1 = Math.max(...b1.map((x) => x.minutes));
+  // batch 2: fc.together — the tasks run at the same time (one model's performance tasks, each on its own
+  // processors); otherwise one after another
   let tEnd = end1;
   const starts = new Map();
   for (const task of b2) {
-    starts.set(task.key, tEnd);
-    tEnd += task.minutes;
+    starts.set(task.key, fc.together ? end1 : tEnd);
+    tEnd = fc.together ? Math.max(tEnd, end1 + task.minutes) : tEnd + task.minutes;
   }
   const X0 = 300;
   const X1 = W - 10;
@@ -203,7 +206,11 @@ export function scheduleFigure({ data, c }) {
   // head + axis
   text(g, 18, 16, fc.head.task, 't2');
   text(g, X0 - 22, 16, fc.head.limit, 't2', 'end');
-  const ticks = [...new Set([0, 30, 60, end1, 120, 150, 180, tEnd])].filter((m) => m <= tEnd).sort((a, b) => a - b);
+  // every 30 minutes, plus the two batch ends; a 30-minute label too close to a batch end gives way to it
+  const refs = [end1, tEnd];
+  const ticks = [...new Set([0, 30, 60, 90, 120, 150, 180, ...refs])]
+    .filter((m) => m <= tEnd && (refs.includes(m) || refs.every((r) => Math.abs(r - m) > 12)))
+    .sort((a, b) => a - b);
   line(g, X0, 28, X1, 28, 'l-ink', false);
   for (const m of ticks) {
     const ref = m === end1 || m === tEnd;
@@ -305,7 +312,7 @@ export function scheduleFigure({ data, c }) {
 }
 
 // ---------------------------------------------------------------------------
-// 各类题能用什么: 7 task types × 7 rules. Solid ink = allowed, hatch =
+// 各类题能用什么: 6 task types × 7 rules. Solid ink = allowed, hatch =
 // forbidden, dash = the statement says nothing. Pointing at a column tints it.
 export function rulesFigure({ c }) {
   const fc = c.fig.rules;

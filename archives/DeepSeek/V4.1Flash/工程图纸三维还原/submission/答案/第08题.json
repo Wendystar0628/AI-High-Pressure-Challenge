@@ -1,0 +1,17 @@
+{
+  "problem": "08",
+  "parts": [
+    {"name": "1", "title": "交错隔板双层润滑箱", "features": [
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [0,0,150,100], "r": 2}], "depth": [0,8], "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [8,8,142,92]}], "depth": [8,58], "name": "箱体"},
+      {"type": "extrude", "op": "cut", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [16,16,134,84]}], "depth": [8,50], "name": "内腔"},
+      {"type": "extrude", "plane": "XY", "origin": [0,0,0], "loops": [{"rect": [16,16,84,84]}], "depth": [27,33], "name": "交错隔板"},
+      {"type": "extrude", "op": "cut", "plane": "XZ", "origin": [0,8,0], "loops": [{"rect": [40,20,80,34]}], "depth": [-8,0], "name": "前壁窗口"},
+      {"type": "hole", "plane": "YZ", "origin": [8,0,0], "at": [[42,30]], "d": 20, "reverse": true, "depth": 12, "name": "左壁孔"},
+      {"type": "hole", "plane": "YZ", "origin": [142,0,0], "at": [[60,38]], "d": 20, "depth": 12, "name": "右壁孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,58], "at": [[50,50],[75,50],[100,50]], "d": 12, "depth": 20, "name": "顶面孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,8], "at": [[10,10],[140,10],[10,90],[140,90]], "d": 9, "through": true, "name": "底板四角孔"},
+      {"type": "hole", "plane": "XY", "origin": [0,0,58], "at": [[20,20],[130,75]], "d": 8, "depth": 12, "name": "顶面小孔"}
+    ]}
+  ]
+}

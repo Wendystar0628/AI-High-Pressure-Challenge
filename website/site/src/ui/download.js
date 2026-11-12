@@ -1,11 +1,11 @@
 // Data download (README 数据下载): CSV of the table on screen (current sort
 // and filter), UTF-8 with BOM so Excel opens it cleanly; JSON of models,
-// tasks and scores together. File name ai-octathlon-scores-<updated>.<ext>.
+// tasks and scores together. File name ai-decathlon-scores-<updated>.<ext>.
 //
 //   downloadCSV({ columns, rows, preface, filename })
 //   downloadJSON(obj, filename)
 //   downloadBundle()                          // the merged JSON
-//   scoreTable(data, entries, { weights })    // the standard table (rank, model, vendor, total, kinds, 8 categories, 12 tasks, test cost)
+//   scoreTable(data, entries, { weights })    // the standard table (rank, model, vendor, total, kinds, 10 categories, 13 tasks, test cost)
 import { bundle } from '../core/data.js';
 import { t, pick } from '../core/i18n.js';
 import { modelLabel } from '../core/names.js';
@@ -14,8 +14,8 @@ import { customTotal, modelStatus } from '../core/rank.js';
 import { h } from '../core/dom.js';
 import { hasCosts, costOf, costTag } from './cost.js';
 
-/** ai-octathlon-scores-2026-11-04.csv */
-export const dataFilename = (updated, ext) => `ai-octathlon-scores-${updated || 'data'}.${ext}`;
+/** ai-decathlon-scores-2026-11-04.csv */
+export const dataFilename = (updated, ext) => `ai-decathlon-scores-${updated || 'data'}.${ext}`;
 
 function save(blob, name) {
   const a = h('a', { href: URL.createObjectURL(blob), download: name });
@@ -69,7 +69,7 @@ export async function downloadBundle(filename) {
 /**
  * The standard score table for a list of entries (from rankBy, already sorted
  * and filtered the way the page shows them):
- * 名次, 模型, 厂商, 总分 (+ 自定义总分), 标准评判题, 主动设计题, 8 categories, 12 tasks,
+ * 名次, 模型, 厂商, 总分 (+ 自定义总分), 标准评判题, 主动设计题, 10 categories, 13 tasks,
  * and, when the data carries costs, 测试开销（元）, 开销依据, Token 合计.
  * With weights { reason: 15, … } adds the custom total column and a preface
  * line naming the weights.
@@ -108,7 +108,7 @@ export function scoreTable(data, entries, { weights } = {}) {
     for (const c of data.categories) r[`c:${c.key}`] = s.categories?.[c.key];
     for (const k of data.tasks) r[`t:${k.key}`] = s.tasks?.[k.key];
     if (withCost) {
-      // amount as in the data (null: empty cell), its tag (按订阅折算 / API 实付 / 数据暂缺), the 12-task token total
+      // amount as in the data (null: empty cell), its tag (按订阅折算 / 按 API 标价折算 / 数据暂缺), the 13-task token total
       const cost = costOf(data, e.id);
       r.cost = cost?.cny;
       r.costBasis = costTag(cost);

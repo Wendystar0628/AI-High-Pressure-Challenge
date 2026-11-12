@@ -1,0 +1,13 @@
+{
+  "problem": "T3",
+  "parts": [
+    {"name": "1", "title": "法兰盘",
+     "features": [
+       {"type": "revolve", "name": "盘体", "plane": "XZ", "axis": "x",
+        "loops": [{"path": [[3, 16], [3, 40], [0, 40], [0, 60], [12, 60], [12, 30], [38, 30], [40, 28], [40, 16]]}]},
+       {"type": "hole", "name": "螺栓孔", "plane": "YZ", "origin": [12, 0, 0], "at": [0, 48], "d": 11, "through": true},
+       {"type": "pattern_circular", "features": [2], "axis": {"point": [0, 0, 0], "dir": "X"}, "count": 6},
+       {"type": "extrude", "op": "cut", "name": "键槽", "plane": "YZ", "loops": [{"rect": [-5, 0, 5, 19.3]}], "through": true}
+     ]}
+  ]
+}

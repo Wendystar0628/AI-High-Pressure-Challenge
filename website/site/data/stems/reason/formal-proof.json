@@ -10,7 +10,7 @@
   ],
   "blocks": [
     "共 8 题，每题都要用 Lean 4 和 Mathlib 写出能通过编译检查的形式化证明。每题先给出中文表述，再给出对应的 Lean 命题；中文表述只帮助理解，两者有出入时以 Lean 命题为准。",
-    "每道题都值得尝试，能证出几道就拿几道的分。请尽可能多证出几道题。"
+    "每道题都值得尝试，能证出几道就拿几道的分。请尽可能多证出几道题。题目按题号大致从简单到困难排列。"
   ],
   "sections": [
     {
@@ -39,13 +39,9 @@
     {
       "title": "第 3 题",
       "blocks": [
-        "设 $\\mathcal A$ 是由有限集组成的非空有限集族，并且对并运算封闭（$a,b\\in\\mathcal A$ 时 $a\\cup b\\in\\mathcal A$）。证明：",
+        "设 $f$ 是整系数多项式，各项系数都是 $0$ 到 $9$ 之间的整数，且 $f(10)$ 是素数（即 $f$ 的系数恰好是某个素数的十进制各位数字）。证明：$f$ 在 $\\mathbb{Z}[x]$ 中不可约。",
         {
-          "math": "|\\mathcal A|^{|\\mathcal A|}\\le 2^{2\\sum_{a\\in\\mathcal A}|a|},"
-        },
-        "也就是 $\\mathcal A$ 中集合的平均大小至少为 $\\frac12\\log_2|\\mathcal A|$。",
-        {
-          "code": "theorem problem3 {α : Type*} [DecidableEq α]\n    (A : Finset (Finset α)) (hA : A.Nonempty)\n    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A) :\n    A.card ^ A.card ≤ 2 ^ (2 * ∑ a ∈ A, a.card) := by\n  sorry",
+          "code": "open Polynomial in\ntheorem problem3 (f : ℤ[X]) (hdigit : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤ 9)\n    (hp : Prime (f.eval 10)) : Irreducible f := by\n  sorry",
           "lang": "lean"
         }
       ]
@@ -53,9 +49,13 @@
     {
       "title": "第 4 题",
       "blocks": [
-        "设自然数 $r\\le n$，$S$ 是 $n$ 阶复矩阵空间的复线性子空间，其中每个矩阵的秩都不超过 $r$。把 $n$ 阶复矩阵 $A$ 看成 $\\mathbb{C}^n$ 上的线性映射 $x\\mapsto Ax$。证明：$\\dim S\\le nr$；并且当 $\\dim S=nr$ 时，或者存在 $\\mathbb{C}^n$ 的 $r$ 维子空间 $U$，包含 $S$ 中所有矩阵的像，或者存在 $\\mathbb{C}^n$ 的 $n-r$ 维子空间 $W$，含于 $S$ 中所有矩阵的核。",
+        "设 $\\mathcal A$ 是由有限集组成的非空有限集族，并且对并运算封闭（$a,b\\in\\mathcal A$ 时 $a\\cup b\\in\\mathcal A$）。证明：",
         {
-          "code": "theorem problem4 (n r : ℕ) (hr : r ≤ n)\n    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))\n    (hS : ∀ A ∈ S, A.rank ≤ r) :\n    Module.finrank ℂ S ≤ n * r ∧ (Module.finrank ℂ S = n * r →\n      (∃ U : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ U = r ∧\n        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨\n      (∃ W : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ W = n - r ∧\n        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by\n  sorry",
+          "math": "|\\mathcal A|^{|\\mathcal A|}\\le 2^{2\\sum_{a\\in\\mathcal A}|a|},"
+        },
+        "也就是 $\\mathcal A$ 中集合的平均大小至少为 $\\frac12\\log_2|\\mathcal A|$。",
+        {
+          "code": "theorem problem4 {α : Type*} [DecidableEq α]\n    (A : Finset (Finset α)) (hA : A.Nonempty)\n    (hunion : ∀ a ∈ A, ∀ b ∈ A, a ∪ b ∈ A) :\n    A.card ^ A.card ≤ 2 ^ (2 * ∑ a ∈ A, a.card) := by\n  sorry",
           "lang": "lean"
         }
       ]
@@ -63,9 +63,13 @@
     {
       "title": "第 5 题",
       "blocks": [
-        "记 $\\mathbb{D}=\\{z\\in\\mathbb{C}:|z|<1\\}$ 为单位开圆盘。设函数 $f\\colon\\mathbb{C}\\to\\mathbb{C}$ 在 $\\mathbb{D}$ 上全纯（$\\mathbb{D}$ 外的取值任意），$f(\\mathbb{D})\\subseteq\\mathbb{D}$，且 $f$ 在 $\\mathbb{D}$ 内没有不动点。证明：存在模为 $1$ 的复数 $w$，使得当 $n\\to\\infty$ 时，$f$ 的 $n$ 次迭代 $f^{\\circ n}$ 在 $\\mathbb{D}$ 上局部一致收敛到常数 $w$（等价地，在 $\\mathbb{D}$ 的每个紧子集上一致收敛到 $w$）。",
+        "设 $n$ 是无平方因子的正整数，$d_1,d_2,\\dots,d_k$ 是 $n$ 的全部正约数，并且对所有整数 $x$，",
         {
-          "code": "theorem problem5 (f : ℂ → ℂ)\n    (hf : DifferentiableOn ℂ f (Metric.ball 0 1))\n    (hm : Set.MapsTo f (Metric.ball 0 1) (Metric.ball 0 1))\n    (hfix : ∀ z ∈ Metric.ball (0 : ℂ) 1, f z ≠ z) :\n    ∃ w : ℂ, ‖w‖ = 1 ∧\n      TendstoLocallyUniformlyOn (fun n : ℕ => f^[n]) (fun _ => w)\n        Filter.atTop (Metric.ball 0 1) := by\n  sorry",
+          "math": "n \\mid x^{d_1}+x^{d_2}+\\cdots+x^{d_k}-kx."
+        },
+        "设 $r=2^{2^m}+1$（$m\\ge0$ 是整数）是素数，$p$ 是 $n$ 的素因子，且 $p\\equiv1\\pmod r$。证明：$n$ 的每个正约数 $d$ 都满足 $d\\equiv1\\pmod r$。",
+        {
+          "code": "theorem problem5 (n p r m : ℕ) (hn : 0 < n) (hs : Squarefree n)\n    (hr : r.Prime) (hf : r = 2 ^ (2 ^ m) + 1)\n    (hp : p.Prime) (hpn : p ∣ n) (hpr : Nat.ModEq r p 1)\n    (ha : ∀ x : ℤ, (n : ℤ) ∣ (∑ d ∈ n.divisors, x ^ d) - (n.divisors.card : ℤ) * x) :\n    ∀ d ∈ n.divisors, Nat.ModEq r d 1 := by\n  sorry",
           "lang": "lean"
         }
       ]
@@ -73,9 +77,9 @@
     {
       "title": "第 6 题",
       "blocks": [
-        "设 $f$ 是整系数多项式，各项系数都是 $0$ 到 $9$ 之间的整数，且 $f(10)$ 是素数（即 $f$ 的系数恰好是某个素数的十进制各位数字）。证明：$f$ 在 $\\mathbb{Z}[x]$ 中不可约。",
+        "设自然数 $r\\le n$，$S$ 是 $n$ 阶复矩阵空间的复线性子空间，其中每个矩阵的秩都不超过 $r$。把 $n$ 阶复矩阵 $A$ 看成 $\\mathbb{C}^n$ 上的线性映射 $x\\mapsto Ax$。证明：$\\dim S\\le nr$；并且当 $\\dim S=nr$ 时，或者存在 $\\mathbb{C}^n$ 的 $r$ 维子空间 $U$，包含 $S$ 中所有矩阵的像，或者存在 $\\mathbb{C}^n$ 的 $n-r$ 维子空间 $W$，含于 $S$ 中所有矩阵的核。",
         {
-          "code": "open Polynomial in\ntheorem problem6 (f : ℤ[X]) (hdigit : ∀ n, 0 ≤ f.coeff n ∧ f.coeff n ≤ 9)\n    (hp : Prime (f.eval 10)) : Irreducible f := by\n  sorry",
+          "code": "theorem problem6 (n r : ℕ) (hr : r ≤ n)\n    (S : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ))\n    (hS : ∀ A ∈ S, A.rank ≤ r) :\n    Module.finrank ℂ S ≤ n * r ∧ (Module.finrank ℂ S = n * r →\n      (∃ U : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ U = r ∧\n        ∀ A ∈ S, LinearMap.range A.mulVecLin ≤ U) ∨\n      (∃ W : Submodule ℂ (Fin n → ℂ), Module.finrank ℂ W = n - r ∧\n        ∀ A ∈ S, W ≤ LinearMap.ker A.mulVecLin)) := by\n  sorry",
           "lang": "lean"
         }
       ]
@@ -83,13 +87,9 @@
     {
       "title": "第 7 题",
       "blocks": [
-        "设 $n$ 是无平方因子的正整数，$d_1,d_2,\\dots,d_k$ 是 $n$ 的全部正约数，并且对所有整数 $x$，",
+        "记 $\\mathbb{D}=\\{z\\in\\mathbb{C}:|z|<1\\}$ 为单位开圆盘。设函数 $f\\colon\\mathbb{C}\\to\\mathbb{C}$ 在 $\\mathbb{D}$ 上全纯（$\\mathbb{D}$ 外的取值任意），$f(\\mathbb{D})\\subseteq\\mathbb{D}$，且 $f$ 在 $\\mathbb{D}$ 内没有不动点。证明：存在模为 $1$ 的复数 $w$，使得当 $n\\to\\infty$ 时，$f$ 的 $n$ 次迭代 $f^{\\circ n}$ 在 $\\mathbb{D}$ 上局部一致收敛到常数 $w$（等价地，在 $\\mathbb{D}$ 的每个紧子集上一致收敛到 $w$）。",
         {
-          "math": "n \\mid x^{d_1}+x^{d_2}+\\cdots+x^{d_k}-kx."
-        },
-        "设 $r=2^{2^m}+1$（$m\\ge0$ 是整数）是素数，$p$ 是 $n$ 的素因子，且 $p\\equiv1\\pmod r$。证明：$n$ 的每个正约数 $d$ 都满足 $d\\equiv1\\pmod r$。",
-        {
-          "code": "theorem problem7 (n p r m : ℕ) (hn : 0 < n) (hs : Squarefree n)\n    (hr : r.Prime) (hf : r = 2 ^ (2 ^ m) + 1)\n    (hp : p.Prime) (hpn : p ∣ n) (hpr : Nat.ModEq r p 1)\n    (ha : ∀ x : ℤ, (n : ℤ) ∣ (∑ d ∈ n.divisors, x ^ d) - (n.divisors.card : ℤ) * x) :\n    ∀ d ∈ n.divisors, Nat.ModEq r d 1 := by\n  sorry",
+          "code": "theorem problem7 (f : ℂ → ℂ)\n    (hf : DifferentiableOn ℂ f (Metric.ball 0 1))\n    (hm : Set.MapsTo f (Metric.ball 0 1) (Metric.ball 0 1))\n    (hfix : ∀ z ∈ Metric.ball (0 : ℂ) 1, f z ≠ z) :\n    ∃ w : ℂ, ‖w‖ = 1 ∧\n      TendstoLocallyUniformlyOn (fun n : ℕ => f^[n]) (fun _ => w)\n        Filter.atTop (Metric.ball 0 1) := by\n  sorry",
           "lang": "lean"
         }
       ]

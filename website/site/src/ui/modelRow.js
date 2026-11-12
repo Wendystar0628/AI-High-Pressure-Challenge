@@ -17,7 +17,7 @@
 // 每行（entry）除 rankBy 的 { id, model, value, rank, ranked } 外还可以带：
 //   best   true / false：全场最佳标记（分数垫荧光绿、柱尾荧光绿四角星），不写时“名次 1 即最佳”
 //   note   行内备注：画在图区里（没出分的行在斜线纹上，有分的行跟在柱尾后）；
-//          没出分又没写时是「已出 8 / 12 题」，写 '' 就不显示
+//          没出分又没写时是「已出 8 / 13 题」，写 '' 就不显示
 // 列表选项里的 best / note 可以是函数 (entry) => 值，按行算；note 写成字符串时只给没出分的行。
 //
 // A plot function draws into the row's plot cell: plot(cell, entry, ctx)
@@ -28,7 +28,7 @@
 // 它在本行的读屏句（ctx.sr）写好之后跑，需要时可以改写那一句。
 //
 // 测试开销列（cost: true，排行总榜用）：分数后面多两格，同一行、竖直居中——.mrow-cost 金额 ¥23.4 后跟依据小记号
-// （○ 按订阅折算、◆ API 实付，形状区分；金额为 null 写「数据暂缺」），.mrow-tok 12 题合计 Token（有拟合的题时后跟 *）；
+// （○ 按订阅折算、◆ 按 API 标价折算，形状区分；金额为 null 写「数据暂缺」），.mrow-tok 13 题合计 Token（有拟合的题时后跟 *）；
 // 记号的意思由页面写一次图例（ui/cost.js costLegend）；
 // 取 scores.<id>.cost（ui/cost.js），读屏句末尾接一句开销。表头 createRowHead({ cost: '测试开销', tokens: 'Token' }) 同列。
 import { h } from '../core/dom.js';
@@ -47,7 +47,7 @@ import { costOf, fillCost, fillTokens, costSr } from './cost.js';
 /**
  * Default plot: a bar from 0 to the value on the fixed 0–100 scale, faint grid
  * (ctx.grid, default 20/40/80) and a dashed pass line at 60 when ctx.pass.
- * 0 points: a zero-length mark; no score: hatch and "已出 8 / 12 题" (or ctx.note).
+ * 0 points: a zero-length mark; no score: hatch and "已出 8 / 13 题" (or ctx.note).
  */
 export function barPlot(cell, entry, ctx) {
   let svg = cell.querySelector(':scope > svg.bar-svg');

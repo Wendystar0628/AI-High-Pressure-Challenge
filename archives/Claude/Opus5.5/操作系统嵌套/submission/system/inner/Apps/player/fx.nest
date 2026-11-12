@@ -1,0 +1,60 @@
+;; =====================================================================
+;; 环境特效进程（播放器的协作进程之一）
+;; 根据飞行场景进程送来的同一时刻采样与事件，生成尘土、故障烟、撞击闪光与火花、
+;; 残骸的火焰与烟柱、下洗气流（压倒草叶）等发射器数据，作为特效层提交给显示设备。
+;; 发射器只是数据：设备按发射器和时刻确定性地展开粒子，不推进任何状态。
+;; =====================================================================
+(include "/System/lib/core.nest")
+
+(var BURSTS []) (var LAST-SAMPLE -1) (var EMITTERS []) (var SEEN-EVENTS 0)
+(var DUST-MIN 0.04) (var FRAMES 0)
+
+(defn seed-of (t k) (+ (floor (* t 1000)) (* k 7919)))
+
+(defn add-sample (s)
+  ;; s = [t 地面x 地面y 地面z 强度 尾部x 尾部y 尾部z vx vy vz 故障征兆 离地高度]
+  (var t (nth s 0))
+  (when (> (nth s 4) DUST-MIN)
+    (push! BURSTS ["dust" t (nth s 1) (nth s 2) (nth s 3) (clamp (* 1.4 (nth s 4)) 0 1.6) (seed-of t 1)]))
+  (when (= (nth s 11) 1)
+    (push! BURSTS ["fsmoke" t (nth s 5) (nth s 6) (nth s 7) 1 (seed-of t 2) (nth s 8) (nth s 9) (nth s 10)])))
+
+(defn rebuild-events (events wreck)
+  (set! EMITTERS [])
+  (each (e events)
+    (when (= (first e) "impact")
+      (var ti (nth e 1)) (var x (nth e 2)) (var y (nth e 3)) (var z (nth e 4))
+      (push! BURSTS ["flash" ti x y z 1 (seed-of ti 3)])
+      (push! BURSTS ["sparks" ti x y z 1 (seed-of ti 4)])
+      (var bx (if wreck (nth wreck 0) x)) (var by (if wreck (nth wreck 1) y)) (var bz (if wreck (nth wreck 2) z))
+      (push! EMITTERS ["fire" ti nil bx (- by 0.3) bz 28 (seed-of ti 5) 1.2])
+      (push! EMITTERS ["fire" (+ ti 0.4) nil (+ bx 1.4) (- by 0.5) (- bz 0.8) 16 (seed-of ti 6) 0.8])
+      (push! EMITTERS ["smoke" (+ ti 0.3) nil bx by bz 12 (seed-of ti 7) 1.2]))))
+
+(defn on-state (m)
+  (var t m.t)
+  (when (or m.reset (< t LAST-SAMPLE))
+    (set! BURSTS []) (set! LAST-SAMPLE -1))
+  (each (s m.samples) (when (> (nth s 0) (+ LAST-SAMPLE 0.000001)) (add-sample s) (set! LAST-SAMPLE (nth s 0))))
+  ;; 只保留仍可能可见的爆发
+  (set! BURSTS (filter (fn (b) (and (<= (nth b 1) (+ t 0.0001)) (> (nth b 1) (- t 7)))) BURSTS))
+  (var wreck (if m.crashed m.wreck nil))
+  (var ev (or m.events []))
+  (set! BURSTS (filter (fn (b) (not (contains? ["flash" "sparks"] (first b)))) BURSTS))
+  (rebuild-events (filter (fn (e) (<= (nth e 1) t)) ev) wreck)
+  (inc! FRAMES)
+  (var layer {:layer "fx" :t t :wind m.wind :downwash m.rotor :bursts BURSTS :emitters EMITTERS})
+  (when m.reset (put! layer "reset" false))
+  (each (v m.views) (sys "scene" "frame" v layer))
+  (when (= (% FRAMES 120) 0) (sys "progress" (len BURSTS) (+ (len BURSTS) (len EMITTERS)))))
+
+(while true
+  (var m (recv))
+  ;; 积压时只处理最新的状态（每个状态都包含所需的完整近期采样）
+  (var latest m) (var resets false)
+  (var more (sys "try-recv"))
+  (while more
+    (when (= more.k "state") (when latest.reset (set! resets true)) (set! latest more))
+    (set! more (sys "try-recv")))
+  (when (and resets (not latest.reset)) (put! latest "reset" false))
+  (when (= latest.k "state") (on-state latest)))

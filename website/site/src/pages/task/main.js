@@ -1,4 +1,4 @@
-// /tasks/<category>/<task>/: one template for the 12 task pages
+// /tasks/<category>/<task>/: one template for the 13 task pages
 // (website/docs/tasks.md 二). Head, scores, the scoring figure and the 题干
 // come from data (the 题干 from data/stems/<category>/<task>.json, cut from the
 // statement by export_data.py); 题面要点、考点 and the scoring list are
@@ -165,6 +165,9 @@ function scoresBlock(data, task, L) {
   const entries = rankBy(data, task.key);
   const graded = entries.filter((e) => e.value != null);
   const facts = h('ul.st-facts.st-field.tk-scorefacts', tv('task.blocks.scores.facts').map((_, i) => h('li', t(`task.blocks.scores.facts.${i}`, { n: graded.length, date: fmtDate(data.updated) }))));
+  if (data.notice) {   // 暂停公示（website/tools/site.json）：没有任何模型，这里只写那句提示
+    return { el: [emptyState((lang === 'en' ? data.notice.en : data.notice.zh) || data.notice.zh, { decor: 'orbit/orbit-nested' })], arm() {} };
+  }
   if (!graded.length) {
     return { el: [facts, emptyState(L.empty, { decor: 'orbit/orbit-nested' })], arm() {} };
   }

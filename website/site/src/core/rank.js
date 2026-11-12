@@ -1,7 +1,7 @@
 // Rankings, computed the same way as the export: values rounded to one
 // decimal, equal values share a rank and the next rank skips (1, 1, 3),
 // ties are listed by full name. A model takes part in a ranking only when
-// that measure is complete for it (a whole category, all 12 tasks for the
+// that measure is complete for it (a whole category, all 13 tasks for the
 // total). The others are listed after the ranked ones, rank null.
 //
 // `by` is one of: 'total' | 'standard' | 'design' | a category key | a task key.

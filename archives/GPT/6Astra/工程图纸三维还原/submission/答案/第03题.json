@@ -1,0 +1,16 @@
+﻿{"problem":"03","parts":[{"name":"1","features":[
+{"type":"extrude","plane":"XY","loops":[{"rect":[-12,-10,144,96]}],"depth":12},
+{"type":"extrude","plane":"XZ","loops":[{"path":[[0,12],[132,12],[132,42],[96,78],[0,78]]}],"depth":-86},
+{"type":"extrude","op":"cut","plane":"XY","origin":[0,0,12],"loops":[{"rect":[10,12,56,74]}],"depth":56},
+{"type":"extrude","op":"cut","plane":"XY","origin":[0,0,12],"loops":[{"rect":[64,12,112,74]}],"depth":36},
+{"type":"extrude","op":"cut","plane":"XY","loops":[{"rect":[22,36,42,50]}],"depth":12},
+{"type":"extrude","plane":"XZ","loops":[{"circle":[32,38],"d":34}],"depth":6},
+{"type":"hole","plane":"XZ","origin":[0,-6,0],"at":[32,38],"d":22,"depth":18},
+{"type":"hole","plane":"XZ","origin":[0,86,0],"at":[84,30],"d":18,"reverse":true,"depth":12},
+{"type":"hole","plane":"YZ","origin":[0,0,0],"at":[43,34],"d":18,"reverse":true,"depth":64},
+{"type":"hole","plane":{"origin":[114,43,60],"normal":[0.70710678,0,0.70710678],"x_dir":[0,1,0]},"at":[0,0],"d":12,"depth":42},
+{"type":"hole","plane":"XY","origin":[0,0,78],"at":[[6,20],[6,66]],"d":5,"depth":16},
+{"type":"hole","plane":"XY","origin":[0,0,12],"at":[[-6,-4],[-6,90],[138,-4],[138,90]],"d":7,"through":true},
+{"type":"fillet","radius":2,"edges":[[-12,-10,6]]},
+{"type":"chamfer","distance":1,"edges":[[60,-10,0]]}
+]}]}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#04060f"/><stop offset="0.55" stop-color="#0a1636"/><stop offset="1" stop-color="#1b2b55"/>
+    </linearGradient>
+    <radialGradient id="g" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#8fa8ff" stop-opacity="0.5"/><stop offset="1" stop-color="#4a6cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <g fill="#dfe8ff">
+    <circle cx="180" cy="140" r="1.6"/><circle cx="420" cy="90" r="1.1"/><circle cx="640" cy="200" r="1.8"/><circle cx="880" cy="120" r="1.2"/>
+    <circle cx="1120" cy="180" r="1.6"/><circle cx="1360" cy="80" r="1.3"/><circle cx="1580" cy="160" r="1.9"/><circle cx="1760" cy="100" r="1.2"/>
+    <circle cx="300" cy="300" r="1.1"/><circle cx="760" cy="340" r="1.4"/><circle cx="1240" cy="300" r="1"/><circle cx="1680" cy="280" r="1.5"/>
+  </g>
+  <circle cx="1440" cy="300" r="220" fill="url(#g)"/>
+  <circle cx="1440" cy="300" r="56" fill="#e8eeff"/><circle cx="1440" cy="300" r="56" fill="#0a1636" opacity="0.15"/>
+  <path d="M0 700 L280 560 L520 660 L760 520 L1020 670 L1280 540 L1540 660 L1800 560 L1920 640 L1920 1080 L0 1080 Z" fill="#0d1c3c"/>
+  <path d="M0 780 L300 660 L600 770 L880 650 L1180 780 L1480 660 L1760 770 L1920 690 L1920 1080 L0 1080 Z" fill="#081430"/>
+  <rect x="0" y="820" width="1920" height="260" fill="#060f26"/>
+  <g stroke="#7f9cff" stroke-width="2" opacity="0.12"><line x1="1280" y1="850" x2="1600" y2="850"/><line x1="1240" y1="890" x2="1640" y2="890"/></g>
+  <path d="M0 890 L260 820 L540 900 L840 820 L1140 900 L1440 820 L1740 900 L1920 840 L1920 1080 L0 1080 Z" fill="#03070f"/>
+  <radialGradient id="v" cx="0.5" cy="0.45" r="0.75"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.5"/></radialGradient>
+  <rect width="1920" height="1080" fill="url(#v)"/>
+</svg>

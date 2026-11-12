@@ -1,0 +1,6196 @@
+{
+  "games": [
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier2"
+      ],
+      "display_names": [
+        "第1档",
+        "第2档"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 110,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1878
+      ],
+      "max_turn_cpu_ms": [
+        14.912616789359793,
+        13.428636060443157
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00000_seed100300_tier1-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier1"
+      ],
+      "display_names": [
+        "第2档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 110,
+      "failure_turn": null,
+      "totals": [
+        1878,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.766989614641787,
+        14.752970787610856
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00001_seed100300_tier2-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier4"
+      ],
+      "display_names": [
+        "第3档",
+        "第4档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 121,
+      "failure_turn": null,
+      "totals": [
+        1453,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.662386593158415,
+        16.18808728076019
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00002_seed100300_tier3-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier3"
+      ],
+      "display_names": [
+        "第4档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 121,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1453
+      ],
+      "max_turn_cpu_ms": [
+        15.238382753348239,
+        12.35718848011134
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00003_seed100300_tier4-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier3"
+      ],
+      "display_names": [
+        "第1档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 72,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1788
+      ],
+      "max_turn_cpu_ms": [
+        14.42027888654535,
+        16.54730743772253
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00004_seed100300_tier1-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier1"
+      ],
+      "display_names": [
+        "第3档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 62,
+      "failure_turn": null,
+      "totals": [
+        1340,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.406211476094649,
+        13.441820868998176
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00005_seed100300_tier3-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier4"
+      ],
+      "display_names": [
+        "第2档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 63,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1122
+      ],
+      "max_turn_cpu_ms": [
+        13.182627602590642,
+        14.645572548574085
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00006_seed100300_tier2-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier2"
+      ],
+      "display_names": [
+        "第4档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 63,
+      "failure_turn": null,
+      "totals": [
+        1122,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.976120022548605,
+        11.544240235532488
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00007_seed100300_tier4-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier4"
+      ],
+      "display_names": [
+        "第1档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 54,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1310
+      ],
+      "max_turn_cpu_ms": [
+        15.532784400097775,
+        14.385645570015694
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00008_seed100300_tier1-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier1"
+      ],
+      "display_names": [
+        "第4档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 54,
+      "failure_turn": null,
+      "totals": [
+        1310,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.206197741510687,
+        12.16402520862063
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00009_seed100300_tier4-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier3"
+      ],
+      "display_names": [
+        "第2档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 86,
+      "failure_turn": null,
+      "totals": [
+        0,
+        2105
+      ],
+      "max_turn_cpu_ms": [
+        12.892226136444197,
+        12.938010610103632
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00010_seed100300_tier2-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100300,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier2"
+      ],
+      "display_names": [
+        "第3档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 86,
+      "failure_turn": null,
+      "totals": [
+        2105,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.20781371057759,
+        11.343414866203808
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00011_seed100300_tier3-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier2"
+      ],
+      "display_names": [
+        "第1档",
+        "第2档"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 130,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1486
+      ],
+      "max_turn_cpu_ms": [
+        13.511197414796012,
+        13.630788201316733
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00012_seed100301_tier1-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier1"
+      ],
+      "display_names": [
+        "第2档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 130,
+      "failure_turn": null,
+      "totals": [
+        1486,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.568798915547971,
+        12.878947903890094
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00013_seed100301_tier2-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier4"
+      ],
+      "display_names": [
+        "第3档",
+        "第4档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 151,
+      "failure_turn": null,
+      "totals": [
+        753,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.908529263832499,
+        13.710362641480279
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00014_seed100301_tier3-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier3"
+      ],
+      "display_names": [
+        "第4档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 155,
+      "failure_turn": null,
+      "totals": [
+        0,
+        885
+      ],
+      "max_turn_cpu_ms": [
+        13.579414255066318,
+        11.56729829660783
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00015_seed100301_tier4-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier3"
+      ],
+      "display_names": [
+        "第1档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 61,
+      "failure_turn": null,
+      "totals": [
+        0,
+        642
+      ],
+      "max_turn_cpu_ms": [
+        15.155585342746042,
+        15.091847738101114
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00016_seed100301_tier1-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier1"
+      ],
+      "display_names": [
+        "第3档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 61,
+      "failure_turn": null,
+      "totals": [
+        642,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.344818955453425,
+        12.581467573639841
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00017_seed100301_tier3-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier4"
+      ],
+      "display_names": [
+        "第2档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 104,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1043
+      ],
+      "max_turn_cpu_ms": [
+        13.376681897751476,
+        14.278158597367899
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00018_seed100301_tier2-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier2"
+      ],
+      "display_names": [
+        "第4档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 104,
+      "failure_turn": null,
+      "totals": [
+        1043,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.870534236527936,
+        12.066606595027999
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00019_seed100301_tier4-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier4"
+      ],
+      "display_names": [
+        "第1档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 87,
+      "failure_turn": null,
+      "totals": [
+        0,
+        726
+      ],
+      "max_turn_cpu_ms": [
+        13.524843359245072,
+        14.136956349759005
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00020_seed100301_tier1-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier1"
+      ],
+      "display_names": [
+        "第4档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 85,
+      "failure_turn": null,
+      "totals": [
+        733,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        47.84946769331653,
+        13.460759585534936
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00021_seed100301_tier4-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier3"
+      ],
+      "display_names": [
+        "第2档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 88,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1069
+      ],
+      "max_turn_cpu_ms": [
+        13.664369870951663,
+        13.703779664836988
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00022_seed100301_tier2-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100301,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier2"
+      ],
+      "display_names": [
+        "第3档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 130,
+      "failure_turn": null,
+      "totals": [
+        1148,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.319862131238642,
+        11.204142435617179
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00023_seed100301_tier3-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier2"
+      ],
+      "display_names": [
+        "第1档",
+        "第2档"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 71,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1458
+      ],
+      "max_turn_cpu_ms": [
+        13.603520655362258,
+        13.587306675836015
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00024_seed100302_tier1-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier1"
+      ],
+      "display_names": [
+        "第2档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 83,
+      "failure_turn": null,
+      "totals": [
+        2263,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.499003419420387,
+        13.196424780022646
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00025_seed100302_tier2-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier4"
+      ],
+      "display_names": [
+        "第3档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 67,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1178
+      ],
+      "max_turn_cpu_ms": [
+        13.026986106056105,
+        15.122741717629237
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00026_seed100302_tier3-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier3"
+      ],
+      "display_names": [
+        "第4档",
+        "第3档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 72,
+      "failure_turn": null,
+      "totals": [
+        1718,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.11926715728433,
+        12.15902671624329
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00027_seed100302_tier4-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier3"
+      ],
+      "display_names": [
+        "第1档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 88,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1745
+      ],
+      "max_turn_cpu_ms": [
+        13.983701302761503,
+        13.787977617380422
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00028_seed100302_tier1-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier1"
+      ],
+      "display_names": [
+        "第3档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 92,
+      "failure_turn": null,
+      "totals": [
+        1931,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.911448357651325,
+        13.364474948701622
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00029_seed100302_tier3-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier4"
+      ],
+      "display_names": [
+        "第2档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 103,
+      "failure_turn": null,
+      "totals": [
+        0,
+        2109
+      ],
+      "max_turn_cpu_ms": [
+        13.37730827637081,
+        17.963695533777937
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00030_seed100302_tier2-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier2"
+      ],
+      "display_names": [
+        "第4档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 83,
+      "failure_turn": null,
+      "totals": [
+        1596,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.906847608889521,
+        11.610570730991261
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00031_seed100302_tier4-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier4"
+      ],
+      "display_names": [
+        "第1档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 60,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1283
+      ],
+      "max_turn_cpu_ms": [
+        14.44586616307715,
+        19.431884638448558
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00032_seed100302_tier1-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier1"
+      ],
+      "display_names": [
+        "第4档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 74,
+      "failure_turn": null,
+      "totals": [
+        1689,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.948443188492309,
+        15.869759341573088
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00033_seed100302_tier4-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier3"
+      ],
+      "display_names": [
+        "第2档",
+        "第3档"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        8169,
+        636
+      ],
+      "max_turn_cpu_ms": [
+        13.721260075344375,
+        14.46683094044608
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00034_seed100302_tier2-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100302,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier2"
+      ],
+      "display_names": [
+        "第3档",
+        "第2档"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        636,
+        8169
+      ],
+      "max_turn_cpu_ms": [
+        17.160871022491104,
+        13.205781195100592
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00035_seed100302_tier3-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier2"
+      ],
+      "display_names": [
+        "第1档",
+        "第2档"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 132,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1448
+      ],
+      "max_turn_cpu_ms": [
+        15.532778161809151,
+        15.304154110063278
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00036_seed100303_tier1-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier1"
+      ],
+      "display_names": [
+        "第2档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 132,
+      "failure_turn": null,
+      "totals": [
+        1411,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.96390122349475,
+        14.832099562895777
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00037_seed100303_tier2-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier4"
+      ],
+      "display_names": [
+        "第3档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 118,
+      "failure_turn": null,
+      "totals": [
+        0,
+        724
+      ],
+      "max_turn_cpu_ms": [
+        16.013478737024073,
+        57.98470814986093
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00038_seed100303_tier3-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier3"
+      ],
+      "display_names": [
+        "第4档",
+        "第3档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 123,
+      "failure_turn": null,
+      "totals": [
+        921,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.270488092393084,
+        15.514628543380228
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00039_seed100303_tier4-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier3"
+      ],
+      "display_names": [
+        "第1档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 91,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1334
+      ],
+      "max_turn_cpu_ms": [
+        17.542102543164074,
+        13.741223897894837
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00040_seed100303_tier1-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier1"
+      ],
+      "display_names": [
+        "第3档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 86,
+      "failure_turn": null,
+      "totals": [
+        1056,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        17.03498036471806,
+        18.077670849608037
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00041_seed100303_tier3-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier4"
+      ],
+      "display_names": [
+        "第2档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        0,
+        722
+      ],
+      "max_turn_cpu_ms": [
+        13.17479710634505,
+        17.72641785023917
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00042_seed100303_tier2-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier2"
+      ],
+      "display_names": [
+        "第4档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        668,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        19.350727930837376,
+        10.85017157860293
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00043_seed100303_tier4-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier1",
+        "tier4"
+      ],
+      "display_names": [
+        "第1档",
+        "第4档"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 68,
+      "failure_turn": null,
+      "totals": [
+        0,
+        765
+      ],
+      "max_turn_cpu_ms": [
+        18.094037000598014,
+        15.843012321510558
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00044_seed100303_tier1-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier4",
+        "tier1"
+      ],
+      "display_names": [
+        "第4档",
+        "第1档"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 71,
+      "failure_turn": null,
+      "totals": [
+        828,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.99980471642276,
+        14.10654962339502
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00045_seed100303_tier4-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier2",
+        "tier3"
+      ],
+      "display_names": [
+        "第2档",
+        "第3档"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 104,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1274
+      ],
+      "max_turn_cpu_ms": [
+        12.903810934185385,
+        16.566059193762943
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00046_seed100303_tier2-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100303,
+      "name": "",
+      "labels": [
+        "tier3",
+        "tier2"
+      ],
+      "display_names": [
+        "第3档",
+        "第2档"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 104,
+      "failure_turn": null,
+      "totals": [
+        1302,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.625653944916879,
+        13.89736847911264
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00047_seed100303_tier3-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "sample"
+      ],
+      "display_names": [
+        "tier1",
+        "sample"
+      ],
+      "winner": 2,
+      "winner_label": "sample",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 132,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1382
+      ],
+      "max_turn_cpu_ms": [
+        15.26433056619872,
+        13.451801696086042
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00048_seed100500_tier1-sample.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "sample",
+        "tier1"
+      ],
+      "display_names": [
+        "sample",
+        "tier1"
+      ],
+      "winner": 1,
+      "winner_label": "sample",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 179,
+      "failure_turn": null,
+      "totals": [
+        2444,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.805364117809647,
+        16.068749787143076
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00049_seed100500_sample-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test1"
+      ],
+      "display_names": [
+        "tier1",
+        "test1"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        8484,
+        1100
+      ],
+      "max_turn_cpu_ms": [
+        14.153940497747291,
+        14.577943671689061
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00050_seed100500_tier1-test1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test1",
+        "tier1"
+      ],
+      "display_names": [
+        "test1",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1100,
+        8484
+      ],
+      "max_turn_cpu_ms": [
+        13.722954385402792,
+        12.489661594114963
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00051_seed100500_test1-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test2"
+      ],
+      "display_names": [
+        "tier1",
+        "test2"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 72,
+      "failure_turn": null,
+      "totals": [
+        1817,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.990253076737794,
+        18.05332660445819
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00052_seed100500_tier1-test2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test2",
+        "tier1"
+      ],
+      "display_names": [
+        "test2",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 62,
+      "failure_turn": null,
+      "totals": [
+        0,
+        931
+      ],
+      "max_turn_cpu_ms": [
+        55.52254523416644,
+        15.606373996393058
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00053_seed100500_test2-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test3"
+      ],
+      "display_names": [
+        "tier1",
+        "test3"
+      ],
+      "winner": 2,
+      "winner_label": "test3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 102,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1079
+      ],
+      "max_turn_cpu_ms": [
+        15.624744684287782,
+        17.682204015148727
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00054_seed100500_tier1-test3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test3",
+        "tier1"
+      ],
+      "display_names": [
+        "test3",
+        "tier1"
+      ],
+      "winner": 1,
+      "winner_label": "test3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 113,
+      "failure_turn": null,
+      "totals": [
+        1135,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        47.03026717825353,
+        12.106202393781158
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00055_seed100500_test3-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test4"
+      ],
+      "display_names": [
+        "tier1",
+        "test4"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        7561,
+        1985
+      ],
+      "max_turn_cpu_ms": [
+        17.3345281679399,
+        14.489631581257433
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00056_seed100500_tier1-test4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test4",
+        "tier1"
+      ],
+      "display_names": [
+        "test4",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1985,
+        7561
+      ],
+      "max_turn_cpu_ms": [
+        13.973303549838008,
+        14.71845525688114
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00057_seed100500_test4-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test5"
+      ],
+      "display_names": [
+        "tier1",
+        "test5"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        7482,
+        1886
+      ],
+      "max_turn_cpu_ms": [
+        14.91784022228387,
+        13.398977693190119
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00058_seed100500_tier1-test5.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test5",
+        "tier1"
+      ],
+      "display_names": [
+        "test5",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1886,
+        7482
+      ],
+      "max_turn_cpu_ms": [
+        16.958948501721277,
+        14.800900274158801
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00059_seed100500_test5-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test6"
+      ],
+      "display_names": [
+        "tier1",
+        "test6"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 82,
+      "failure_turn": null,
+      "totals": [
+        2087,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        19.479783922653453,
+        18.67162983633951
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00060_seed100500_tier1-test6.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test6",
+        "tier1"
+      ],
+      "display_names": [
+        "test6",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 82,
+      "failure_turn": null,
+      "totals": [
+        0,
+        2087
+      ],
+      "max_turn_cpu_ms": [
+        13.12701733999025,
+        12.959765942742823
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00061_seed100500_test6-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test7"
+      ],
+      "display_names": [
+        "tier1",
+        "test7"
+      ],
+      "winner": 2,
+      "winner_label": "test7",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 126,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1911
+      ],
+      "max_turn_cpu_ms": [
+        15.597185246643383,
+        15.70360270780816
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00062_seed100500_tier1-test7.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test7",
+        "tier1"
+      ],
+      "display_names": [
+        "test7",
+        "tier1"
+      ],
+      "winner": 1,
+      "winner_label": "test7",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 126,
+      "failure_turn": null,
+      "totals": [
+        1911,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.088920917184925,
+        11.479839577329752
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00063_seed100500_test7-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test8"
+      ],
+      "display_names": [
+        "tier1",
+        "test8"
+      ],
+      "winner": 2,
+      "winner_label": "test8",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 125,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1877
+      ],
+      "max_turn_cpu_ms": [
+        13.50096319039504,
+        13.2782129337513
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00064_seed100500_tier1-test8.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test8",
+        "tier1"
+      ],
+      "display_names": [
+        "test8",
+        "tier1"
+      ],
+      "winner": 1,
+      "winner_label": "test8",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 125,
+      "failure_turn": null,
+      "totals": [
+        1877,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.843333359898823,
+        13.648805376496666
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00065_seed100500_test8-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test9"
+      ],
+      "display_names": [
+        "tier1",
+        "test9"
+      ],
+      "winner": 2,
+      "winner_label": "test9",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 150,
+      "failure_turn": null,
+      "totals": [
+        0,
+        2431
+      ],
+      "max_turn_cpu_ms": [
+        13.47605529289066,
+        13.172151241965038
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00066_seed100500_tier1-test9.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test9",
+        "tier1"
+      ],
+      "display_names": [
+        "test9",
+        "tier1"
+      ],
+      "winner": 1,
+      "winner_label": "test9",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 139,
+      "failure_turn": null,
+      "totals": [
+        1937,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.356926723974533,
+        11.09757348947221
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00067_seed100500_test9-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test10"
+      ],
+      "display_names": [
+        "tier1",
+        "test10"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 43,
+      "failure_turn": null,
+      "totals": [
+        630,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.587340879706456,
+        46.703717093018774
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00068_seed100500_tier1-test10.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test10",
+        "tier1"
+      ],
+      "display_names": [
+        "test10",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 44,
+      "failure_turn": null,
+      "totals": [
+        0,
+        641
+      ],
+      "max_turn_cpu_ms": [
+        13.616513186976759,
+        13.646066903845737
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00069_seed100500_test10-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier1",
+        "test11"
+      ],
+      "display_names": [
+        "tier1",
+        "test11"
+      ],
+      "winner": 1,
+      "winner_label": "tier1",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 111,
+      "failure_turn": null,
+      "totals": [
+        1778,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.703181037828612,
+        12.872157907535446
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00070_seed100500_tier1-test11.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test11",
+        "tier1"
+      ],
+      "display_names": [
+        "test11",
+        "tier1"
+      ],
+      "winner": 2,
+      "winner_label": "tier1",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 111,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1778
+      ],
+      "max_turn_cpu_ms": [
+        13.863604338729724,
+        11.644927747299098
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00071_seed100500_test11-tier1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "sample"
+      ],
+      "display_names": [
+        "tier2",
+        "sample"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 189,
+      "failure_turn": null,
+      "totals": [
+        1323,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.499361821705437,
+        13.381135551575777
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00072_seed100500_tier2-sample.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "sample",
+        "tier2"
+      ],
+      "display_names": [
+        "sample",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 190,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1625
+      ],
+      "max_turn_cpu_ms": [
+        12.890681283393647,
+        13.32353855393506
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00073_seed100500_sample-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test1"
+      ],
+      "display_names": [
+        "tier2",
+        "test1"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        8535,
+        1100
+      ],
+      "max_turn_cpu_ms": [
+        13.857901624026843,
+        12.953272926155693
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00074_seed100500_tier2-test1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test1",
+        "tier2"
+      ],
+      "display_names": [
+        "test1",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1100,
+        8535
+      ],
+      "max_turn_cpu_ms": [
+        47.08961358782388,
+        11.77639374428345
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00075_seed100500_test1-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test2"
+      ],
+      "display_names": [
+        "tier2",
+        "test2"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 53,
+      "failure_turn": null,
+      "totals": [
+        1099,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.636255451084216,
+        14.415692314284719
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00076_seed100500_tier2-test2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test2",
+        "tier2"
+      ],
+      "display_names": [
+        "test2",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 46,
+      "failure_turn": null,
+      "totals": [
+        0,
+        752
+      ],
+      "max_turn_cpu_ms": [
+        12.691416776486989,
+        12.446985014690895
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00077_seed100500_test2-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test3"
+      ],
+      "display_names": [
+        "tier2",
+        "test3"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 66,
+      "failure_turn": null,
+      "totals": [
+        901,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.3262431207197,
+        12.40209679971415
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00078_seed100500_tier2-test3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test3",
+        "tier2"
+      ],
+      "display_names": [
+        "test3",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 66,
+      "failure_turn": null,
+      "totals": [
+        0,
+        880
+      ],
+      "max_turn_cpu_ms": [
+        12.813717610291002,
+        10.599001647052258
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00079_seed100500_test3-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test4"
+      ],
+      "display_names": [
+        "tier2",
+        "test4"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        8220,
+        1000
+      ],
+      "max_turn_cpu_ms": [
+        17.003817773152367,
+        13.961461773494257
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00080_seed100500_tier2-test4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test4",
+        "tier2"
+      ],
+      "display_names": [
+        "test4",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1000,
+        8240
+      ],
+      "max_turn_cpu_ms": [
+        13.795416364315383,
+        14.428545979967776
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00081_seed100500_test4-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test5"
+      ],
+      "display_names": [
+        "tier2",
+        "test5"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        6591,
+        2814
+      ],
+      "max_turn_cpu_ms": [
+        12.326554324919163,
+        13.771825673569149
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00082_seed100500_tier2-test5.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test5",
+        "tier2"
+      ],
+      "display_names": [
+        "test5",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        2814,
+        6591
+      ],
+      "max_turn_cpu_ms": [
+        13.011676871630916,
+        10.820129549385403
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00083_seed100500_test5-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test6"
+      ],
+      "display_names": [
+        "tier2",
+        "test6"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        6274,
+        2514
+      ],
+      "max_turn_cpu_ms": [
+        13.159694804026985,
+        13.466718914570345
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00084_seed100500_tier2-test6.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test6",
+        "tier2"
+      ],
+      "display_names": [
+        "test6",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        2514,
+        6274
+      ],
+      "max_turn_cpu_ms": [
+        12.90850648636614,
+        13.87167887483432
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00085_seed100500_test6-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test7"
+      ],
+      "display_names": [
+        "tier2",
+        "test7"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 98,
+      "failure_turn": null,
+      "totals": [
+        1577,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.610172822203886,
+        12.953375985856928
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00086_seed100500_tier2-test7.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test7",
+        "tier2"
+      ],
+      "display_names": [
+        "test7",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 98,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1577
+      ],
+      "max_turn_cpu_ms": [
+        14.95633758092462,
+        11.31539405929344
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00087_seed100500_test7-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test8"
+      ],
+      "display_names": [
+        "tier2",
+        "test8"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 89,
+      "failure_turn": null,
+      "totals": [
+        1359,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.370278067486227,
+        14.15282152343454
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00088_seed100500_tier2-test8.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test8",
+        "tier2"
+      ],
+      "display_names": [
+        "test8",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 89,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1359
+      ],
+      "max_turn_cpu_ms": [
+        13.743141984928316,
+        13.626916683013174
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00089_seed100500_test8-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test9"
+      ],
+      "display_names": [
+        "tier2",
+        "test9"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 45,
+      "failure_turn": null,
+      "totals": [
+        589,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.14254364657527,
+        12.687980129528638
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00090_seed100500_tier2-test9.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test9",
+        "tier2"
+      ],
+      "display_names": [
+        "test9",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 45,
+      "failure_turn": null,
+      "totals": [
+        0,
+        589
+      ],
+      "max_turn_cpu_ms": [
+        13.956905157058229,
+        10.787608028707298
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00091_seed100500_test9-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test10"
+      ],
+      "display_names": [
+        "tier2",
+        "test10"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 53,
+      "failure_turn": null,
+      "totals": [
+        975,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.861656521510405,
+        13.408960496851051
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00092_seed100500_tier2-test10.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test10",
+        "tier2"
+      ],
+      "display_names": [
+        "test10",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 56,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1115
+      ],
+      "max_turn_cpu_ms": [
+        13.942812532904963,
+        12.759725056623651
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00093_seed100500_test10-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier2",
+        "test11"
+      ],
+      "display_names": [
+        "tier2",
+        "test11"
+      ],
+      "winner": 1,
+      "winner_label": "tier2",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 182,
+      "failure_turn": null,
+      "totals": [
+        2008,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.424261449094386,
+        12.861389850739622
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00094_seed100500_tier2-test11.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test11",
+        "tier2"
+      ],
+      "display_names": [
+        "test11",
+        "tier2"
+      ],
+      "winner": 2,
+      "winner_label": "tier2",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 176,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1852
+      ],
+      "max_turn_cpu_ms": [
+        13.102835912722032,
+        10.466067038540471
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00095_seed100500_test11-tier2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "sample"
+      ],
+      "display_names": [
+        "tier3",
+        "sample"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 117,
+      "failure_turn": null,
+      "totals": [
+        1101,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.946090510369181,
+        13.04253171370444
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00096_seed100500_tier3-sample.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "sample",
+        "tier3"
+      ],
+      "display_names": [
+        "sample",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 131,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1017
+      ],
+      "max_turn_cpu_ms": [
+        12.822806331889074,
+        14.531673257963488
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00097_seed100500_sample-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test1"
+      ],
+      "display_names": [
+        "tier3",
+        "test1"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        3002,
+        1100
+      ],
+      "max_turn_cpu_ms": [
+        13.436601074911888,
+        13.445596152704338
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00098_seed100500_tier3-test1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test1",
+        "tier3"
+      ],
+      "display_names": [
+        "test1",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1100,
+        3002
+      ],
+      "max_turn_cpu_ms": [
+        13.451941214813141,
+        11.265235223748876
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00099_seed100500_test1-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test2"
+      ],
+      "display_names": [
+        "tier3",
+        "test2"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 50,
+      "failure_turn": null,
+      "totals": [
+        958,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.72079611467845,
+        13.385688088586235
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00100_seed100500_tier3-test2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test2",
+        "tier3"
+      ],
+      "display_names": [
+        "test2",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 40,
+      "failure_turn": null,
+      "totals": [
+        0,
+        540
+      ],
+      "max_turn_cpu_ms": [
+        13.62441409416198,
+        13.006276876496495
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00101_seed100500_test2-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test3"
+      ],
+      "display_names": [
+        "tier3",
+        "test3"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 40,
+      "failure_turn": null,
+      "totals": [
+        420,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        12.765708038992187,
+        12.882087725040211
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00102_seed100500_tier3-test3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test3",
+        "tier3"
+      ],
+      "display_names": [
+        "test3",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 40,
+      "failure_turn": null,
+      "totals": [
+        0,
+        420
+      ],
+      "max_turn_cpu_ms": [
+        12.905518808473046,
+        12.064678370449332
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00103_seed100500_test3-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test4"
+      ],
+      "display_names": [
+        "tier3",
+        "test4"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        4303,
+        1000
+      ],
+      "max_turn_cpu_ms": [
+        14.671567445468508,
+        15.585429406075791
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00104_seed100500_tier3-test4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test4",
+        "tier3"
+      ],
+      "display_names": [
+        "test4",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1000,
+        4303
+      ],
+      "max_turn_cpu_ms": [
+        12.808223233489285,
+        13.592613888045324
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00105_seed100500_test4-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test5"
+      ],
+      "display_names": [
+        "tier3",
+        "test5"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        3786,
+        3093
+      ],
+      "max_turn_cpu_ms": [
+        13.846416692598925,
+        12.937801738364927
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00106_seed100500_tier3-test5.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test5",
+        "tier3"
+      ],
+      "display_names": [
+        "test5",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        3093,
+        3786
+      ],
+      "max_turn_cpu_ms": [
+        13.390988315614631,
+        11.34534389712116
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00107_seed100500_test5-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test6"
+      ],
+      "display_names": [
+        "tier3",
+        "test6"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        5220,
+        4267
+      ],
+      "max_turn_cpu_ms": [
+        14.320063898956187,
+        12.889359733598111
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00108_seed100500_tier3-test6.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test6",
+        "tier3"
+      ],
+      "display_names": [
+        "test6",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "turn_limit",
+      "turns": 200,
+      "failure_turn": null,
+      "totals": [
+        1694,
+        7782
+      ],
+      "max_turn_cpu_ms": [
+        13.97532901310246,
+        13.375209638346652
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00109_seed100500_test6-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test7"
+      ],
+      "display_names": [
+        "tier3",
+        "test7"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 59,
+      "failure_turn": null,
+      "totals": [
+        615,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.091811864834368,
+        45.11746285668941
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00110_seed100500_tier3-test7.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test7",
+        "tier3"
+      ],
+      "display_names": [
+        "test7",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 59,
+      "failure_turn": null,
+      "totals": [
+        0,
+        615
+      ],
+      "max_turn_cpu_ms": [
+        13.041885834125678,
+        11.617550936219576
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00111_seed100500_test7-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test8"
+      ],
+      "display_names": [
+        "tier3",
+        "test8"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 54,
+      "failure_turn": null,
+      "totals": [
+        551,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.291285113964703,
+        13.209665838929045
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00112_seed100500_tier3-test8.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test8",
+        "tier3"
+      ],
+      "display_names": [
+        "test8",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 52,
+      "failure_turn": null,
+      "totals": [
+        0,
+        452
+      ],
+      "max_turn_cpu_ms": [
+        12.172644775593627,
+        14.02857165314317
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00113_seed100500_test8-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test9"
+      ],
+      "display_names": [
+        "tier3",
+        "test9"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        680,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.202981090199362,
+        15.818477271053794
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00114_seed100500_tier3-test9.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test9",
+        "tier3"
+      ],
+      "display_names": [
+        "test9",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        0,
+        731
+      ],
+      "max_turn_cpu_ms": [
+        13.494896791852693,
+        11.299777966734139
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00115_seed100500_test9-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test10"
+      ],
+      "display_names": [
+        "tier3",
+        "test10"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 54,
+      "failure_turn": null,
+      "totals": [
+        871,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.31003990488182,
+        13.129166090681844
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00116_seed100500_tier3-test10.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test10",
+        "tier3"
+      ],
+      "display_names": [
+        "test10",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 61,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1267
+      ],
+      "max_turn_cpu_ms": [
+        14.540397105483082,
+        13.879885364658167
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00117_seed100500_test10-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier3",
+        "test11"
+      ],
+      "display_names": [
+        "tier3",
+        "test11"
+      ],
+      "winner": 1,
+      "winner_label": "tier3",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 81,
+      "failure_turn": null,
+      "totals": [
+        1150,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.694955227348064,
+        13.850324749505818
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00118_seed100500_tier3-test11.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test11",
+        "tier3"
+      ],
+      "display_names": [
+        "test11",
+        "tier3"
+      ],
+      "winner": 2,
+      "winner_label": "tier3",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 78,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1011
+      ],
+      "max_turn_cpu_ms": [
+        13.429445972415522,
+        11.2042338206683
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00119_seed100500_test11-tier3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "sample"
+      ],
+      "display_names": [
+        "tier4",
+        "sample"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 92,
+      "failure_turn": null,
+      "totals": [
+        948,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.42331320148139,
+        15.276440579697844
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00120_seed100500_tier4-sample.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "sample",
+        "tier4"
+      ],
+      "display_names": [
+        "sample",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 82,
+      "failure_turn": null,
+      "totals": [
+        0,
+        902
+      ],
+      "max_turn_cpu_ms": [
+        12.946702799457986,
+        14.485159861277698
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00121_seed100500_sample-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test1"
+      ],
+      "display_names": [
+        "tier4",
+        "test1"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 58,
+      "failure_turn": null,
+      "totals": [
+        957,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        48.081669087792584,
+        13.312113961620852
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00122_seed100500_tier4-test1.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test1",
+        "tier4"
+      ],
+      "display_names": [
+        "test1",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 58,
+      "failure_turn": null,
+      "totals": [
+        0,
+        957
+      ],
+      "max_turn_cpu_ms": [
+        14.238740978121799,
+        13.447763703658802
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00123_seed100500_test1-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test2"
+      ],
+      "display_names": [
+        "tier4",
+        "test2"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 62,
+      "failure_turn": null,
+      "totals": [
+        1487,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.48766082536674,
+        14.161917931851358
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00124_seed100500_tier4-test2.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test2",
+        "tier4"
+      ],
+      "display_names": [
+        "test2",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 47,
+      "failure_turn": null,
+      "totals": [
+        0,
+        736
+      ],
+      "max_turn_cpu_ms": [
+        13.307947462495044,
+        14.897867547162718
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00125_seed100500_test2-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test3"
+      ],
+      "display_names": [
+        "tier4",
+        "test3"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 34,
+      "failure_turn": null,
+      "totals": [
+        326,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.503990916858903,
+        13.439639485462026
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00126_seed100500_tier4-test3.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test3",
+        "tier4"
+      ],
+      "display_names": [
+        "test3",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 34,
+      "failure_turn": null,
+      "totals": [
+        0,
+        326
+      ],
+      "max_turn_cpu_ms": [
+        13.393453208499043,
+        12.872020679701
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00127_seed100500_test3-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test4"
+      ],
+      "display_names": [
+        "tier4",
+        "test4"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 63,
+      "failure_turn": null,
+      "totals": [
+        862,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.279494759816306,
+        13.061994660510267
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00128_seed100500_tier4-test4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test4",
+        "tier4"
+      ],
+      "display_names": [
+        "test4",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 63,
+      "failure_turn": null,
+      "totals": [
+        0,
+        862
+      ],
+      "max_turn_cpu_ms": [
+        12.484153260501559,
+        13.788126057728842
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00129_seed100500_test4-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test5"
+      ],
+      "display_names": [
+        "tier4",
+        "test5"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 77,
+      "failure_turn": null,
+      "totals": [
+        1113,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.713536164246587,
+        13.928410363377
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00130_seed100500_tier4-test5.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test5",
+        "tier4"
+      ],
+      "display_names": [
+        "test5",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 73,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1103
+      ],
+      "max_turn_cpu_ms": [
+        13.97661583832705,
+        14.013306543234064
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00131_seed100500_test5-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test6"
+      ],
+      "display_names": [
+        "tier4",
+        "test6"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 62,
+      "failure_turn": null,
+      "totals": [
+        845,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.435871962505791,
+        12.887560692290036
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00132_seed100500_tier4-test6.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test6",
+        "tier4"
+      ],
+      "display_names": [
+        "test6",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 68,
+      "failure_turn": null,
+      "totals": [
+        0,
+        983
+      ],
+      "max_turn_cpu_ms": [
+        12.603182866457127,
+        14.39045550326588
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00133_seed100500_test6-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test7"
+      ],
+      "display_names": [
+        "tier4",
+        "test7"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 64,
+      "failure_turn": null,
+      "totals": [
+        686,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        14.231811789974335,
+        12.72884987609384
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00134_seed100500_tier4-test7.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test7",
+        "tier4"
+      ],
+      "display_names": [
+        "test7",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 58,
+      "failure_turn": null,
+      "totals": [
+        0,
+        471
+      ],
+      "max_turn_cpu_ms": [
+        13.690283350625776,
+        12.352319000784371
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00135_seed100500_test7-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test8"
+      ],
+      "display_names": [
+        "tier4",
+        "test8"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 60,
+      "failure_turn": null,
+      "totals": [
+        652,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.036739555900976,
+        14.33931244181476
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00136_seed100500_tier4-test8.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test8",
+        "tier4"
+      ],
+      "display_names": [
+        "test8",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 54,
+      "failure_turn": null,
+      "totals": [
+        0,
+        477
+      ],
+      "max_turn_cpu_ms": [
+        12.815818868921157,
+        13.89251343337045
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00137_seed100500_test8-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test9"
+      ],
+      "display_names": [
+        "tier4",
+        "test9"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 58,
+      "failure_turn": null,
+      "totals": [
+        635,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        13.57658066275053,
+        13.27490390480248
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00138_seed100500_tier4-test9.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test9",
+        "tier4"
+      ],
+      "display_names": [
+        "test9",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 57,
+      "failure_turn": null,
+      "totals": [
+        0,
+        543
+      ],
+      "max_turn_cpu_ms": [
+        12.747196529035614,
+        11.91759628090568
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00139_seed100500_test9-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test10"
+      ],
+      "display_names": [
+        "tier4",
+        "test10"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 61,
+      "failure_turn": null,
+      "totals": [
+        1125,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        16.27725303079952,
+        12.879096872972427
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        16,
+        17
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00140_seed100500_tier4-test10.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test10",
+        "tier4"
+      ],
+      "display_names": [
+        "test10",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 61,
+      "failure_turn": null,
+      "totals": [
+        0,
+        1300
+      ],
+      "max_turn_cpu_ms": [
+        13.568905019710785,
+        13.646592739853357
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        18,
+        19
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00141_seed100500_test10-tier4.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "tier4",
+        "test11"
+      ],
+      "display_names": [
+        "tier4",
+        "test11"
+      ],
+      "winner": 1,
+      "winner_label": "tier4",
+      "score": [
+        1,
+        0
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        861,
+        0
+      ],
+      "max_turn_cpu_ms": [
+        15.563988401424984,
+        12.97166831828833
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        20,
+        21
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00142_seed100500_tier4-test11.jsonl"
+    },
+    {
+      "type": "result",
+      "seed": 100500,
+      "name": "",
+      "labels": [
+        "test11",
+        "tier4"
+      ],
+      "display_names": [
+        "test11",
+        "tier4"
+      ],
+      "winner": 2,
+      "winner_label": "tier4",
+      "score": [
+        0,
+        1
+      ],
+      "reason": "elimination",
+      "turns": 69,
+      "failure_turn": null,
+      "totals": [
+        0,
+        908
+      ],
+      "max_turn_cpu_ms": [
+        12.870063839367711,
+        11.4746024075618
+      ],
+      "cpu_timeouts": [
+        0,
+        0
+      ],
+      "forfeits": [
+        null,
+        null
+      ],
+      "cpus": [
+        22,
+        23
+      ],
+      "log": "E:\\Project\\AI_OneShot_Bench\\调研\\攻城略地开发\\工作区\\sol\\official_stage2a\\logs\\00143_seed100500_test11-tier4.jsonl"
+    }
+  ]
+}

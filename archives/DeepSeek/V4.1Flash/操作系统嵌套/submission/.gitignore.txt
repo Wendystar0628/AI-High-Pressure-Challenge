@@ -1,7 +1,4 @@
-﻿
-tools/.eval.js
-tools/.eval*.js
-*.log
+node_modules/
 data/
-shots/
-
+*.log
+.DS_Store

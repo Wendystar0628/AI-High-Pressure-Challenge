@@ -1,0 +1,15 @@
+{
+  "problem": "07",
+  "parts": [
+    {"name": "1", "title": "双轴错层回油支承座", "features": [
+      {"type": "extrude", "plane": "XY", "loops": [{"rect": [0, 0, 52, 34]}], "depth": 4, "name": "底板"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 4], "loops": [{"rect": [6, 4, 18, 30]}], "depth": 40, "name": "左立塔"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 4], "loops": [{"rect": [34, 4, 46, 30]}], "depth": 40, "name": "右立塔"},
+      {"type": "extrude", "plane": "XY", "origin": [0, 0, 4], "loops": [{"rect": [6, 4, 46, 30]}], "depth": 10, "name": "中间低台"},
+      {"type": "extrude", "plane": "YZ", "origin": [6, 0, 0], "loops": [{"circle": [17, 30], "d": 62}], "depth": 40, "name": "Φ62轴承座"},
+      {"type": "hole", "plane": "YZ", "origin": [6, 0, 0], "at": [17, 30], "d": 42, "through": true, "reverse": true, "name": "Φ42轴孔"},
+      {"type": "hole", "plane": "XY", "origin": [0, 0, 4],
+       "at": [[4, 4], [48, 4], [4, 30], [48, 30]], "d": 6, "through": true, "name": "底板4角孔"}
+    ]}
+  ]
+}

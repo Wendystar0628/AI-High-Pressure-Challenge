@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><body><pre id="o">testing...</pre><script>
+(async()=>{
+ let s='';
+ try { if(!navigator.gpu) throw new Error('no navigator.gpu'); const a=await navigator.gpu.requestAdapter(); if(!a) throw new Error('no adapter'); s+= 'adapter: '+a.info.vendor+' / '+a.info.architecture+'\n';
+ const d=await a.requestDevice(); s+='device ok\n';
+ const m=d.createShaderModule({code:'@compute @workgroup_size(1) fn main(){}'});
+ const p=await d.createComputePipelineAsync({layout:'auto',compute:{module:m,entryPoint:'main'}});
+ s+='compute pipeline ok\n'; s+='maxTex '+d.limits.maxTextureDimension2D+'\n';
+ } catch(e){ s+='ERR '+e.message; }
+ document.getElementById('o').textContent=s;
+})();
+</script></body></html>
