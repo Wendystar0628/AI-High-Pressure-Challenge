@@ -1,0 +1,984 @@
+{
+  "items": [
+    {
+      "type": "model",
+      "id": "claude-opus-5-5",
+      "name": "Claude Opus 5.5",
+      "en": "Claude Opus 5.5",
+      "short": "Opus5.5",
+      "terms": [
+        "Anthropic",
+        "Claude Code",
+        "Claude/Opus5.5"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/claude-opus-5-5/"
+    },
+    {
+      "type": "model",
+      "id": "claude-sonnet-5-5",
+      "name": "Claude Sonnet 5.5",
+      "en": "Claude Sonnet 5.5",
+      "short": "Sonnet5.5",
+      "terms": [
+        "Anthropic",
+        "Claude Code",
+        "Claude/Sonnet5.5"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/claude-sonnet-5-5/"
+    },
+    {
+      "type": "model",
+      "id": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "en": "Claude Haiku 5.5",
+      "short": "Haiku5.5",
+      "terms": [
+        "Anthropic",
+        "Claude Code",
+        "Claude/Haiku5.5"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/claude-haiku-5-5/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-6-1-sol",
+      "name": "GPT 6.1 Sol",
+      "en": "GPT 6.1 Sol",
+      "short": "6.1Sol",
+      "terms": [
+        "OpenAI",
+        "Codex",
+        "GPT/6.1Sol"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-6-1-sol/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-6-1-terra",
+      "name": "GPT 6.1 Terra",
+      "en": "GPT 6.1 Terra",
+      "short": "6.1Terra",
+      "terms": [
+        "OpenAI",
+        "Codex",
+        "GPT/6.1Terra"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-6-1-terra/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-6-astra",
+      "name": "GPT 6 Astra",
+      "en": "GPT 6 Astra",
+      "short": "6Astra",
+      "terms": [
+        "OpenAI",
+        "Codex",
+        "GPT/6Astra"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-6-astra/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-6-luna",
+      "name": "GPT 6 Luna",
+      "en": "GPT 6 Luna",
+      "short": "6Luna",
+      "terms": [
+        "OpenAI",
+        "Codex",
+        "GPT/6Luna"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-6-luna/"
+    },
+    {
+      "type": "model",
+      "id": "gpt-5-6-sol",
+      "name": "GPT 5.6 Sol",
+      "en": "GPT 5.6 Sol",
+      "short": "5.6Sol",
+      "terms": [
+        "GPT-5.6 Sol",
+        "OpenAI",
+        "Codex",
+        "GPT/5.6Sol"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/gpt-5-6-sol/"
+    },
+    {
+      "type": "model",
+      "id": "deepseek-v4-1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "en": "DeepSeek V4.1 Flash",
+      "short": "V4.1Flash",
+      "terms": [
+        "DeepSeek Flash",
+        "DeepSeek Harness",
+        "DeepSeek/V4.1Flash"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/deepseek-v4-1-flash/"
+    },
+    {
+      "type": "model",
+      "id": "mimo-v2-6-pro",
+      "name": "MiMo V2.6 Pro",
+      "en": "MiMo V2.6 Pro",
+      "short": "V2.6Pro",
+      "terms": [
+        "MiMo Pro",
+        "Xiaomi MiMo",
+        "Xiaomi",
+        "MiMo Code",
+        "MiMo/V2.6Pro"
+      ],
+      "py": [],
+      "pyi": [],
+      "href": "/models/mimo-v2-6-pro/"
+    },
+    {
+      "type": "model",
+      "id": "hy4",
+      "name": "Hy4",
+      "en": "Hy4",
+      "short": "Hy4",
+      "terms": [
+        "Hunyuan",
+        "混元",
+        "Tencent Hy4",
+        "Tencent",
+        "CodeBuddy Code",
+        "Hy/Hy4"
+      ],
+      "py": [
+        "hunyuan"
+      ],
+      "pyi": [
+        "hy"
+      ],
+      "href": "/models/hy4/"
+    },
+    {
+      "type": "model",
+      "id": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon",
+      "en": "Gemini 4 Carbon",
+      "short": "4Carbon",
+      "terms": [
+        "Gemini Carbon",
+        "Google",
+        "谷歌",
+        "Antigravity CLI",
+        "Gemini/4Carbon"
+      ],
+      "py": [
+        "guge"
+      ],
+      "pyi": [
+        "gg"
+      ],
+      "href": "/models/gemini-4-carbon/"
+    },
+    {
+      "type": "model",
+      "id": "gemini-4-hydrogen",
+      "name": "Gemini 4 Hydrogen",
+      "en": "Gemini 4 Hydrogen",
+      "short": "4Hydrogen",
+      "terms": [
+        "Gemini Hydrogen",
+        "Google",
+        "谷歌",
+        "Antigravity CLI",
+        "Gemini/4Hydrogen"
+      ],
+      "py": [
+        "guge"
+      ],
+      "pyi": [
+        "gg"
+      ],
+      "href": "/models/gemini-4-hydrogen/"
+    },
+    {
+      "type": "task",
+      "id": "formal-proof",
+      "name": "形式化证明题",
+      "en": "Formal Proofs",
+      "short": "形式化证明",
+      "terms": [
+        "Lean",
+        "Mathlib"
+      ],
+      "py": [
+        "xingshihuazhengmingti",
+        "xingshihuazhengming"
+      ],
+      "pyi": [
+        "xshzmt",
+        "xshzm"
+      ],
+      "category": "reason",
+      "short_en": "Formal Proofs",
+      "href": "/tasks/reason/formal-proof/"
+    },
+    {
+      "type": "task",
+      "id": "math-olympiad",
+      "name": "数学竞赛原创试题",
+      "en": "Original Math Olympiad Problems",
+      "short": "数学竞赛",
+      "terms": [
+        "竞赛数学"
+      ],
+      "py": [
+        "shuxuejingsaiyuanchuangshiti",
+        "shuxuejingsai",
+        "jingsaishuxue"
+      ],
+      "pyi": [
+        "sxjsycst",
+        "sxjs",
+        "jssx"
+      ],
+      "category": "reason",
+      "short_en": "Math Olympiad",
+      "href": "/tasks/reason/math-olympiad/"
+    },
+    {
+      "type": "task",
+      "id": "raytracing",
+      "name": "光线追踪渲染加速",
+      "en": "Ray Tracing Render Acceleration",
+      "short": "光线追踪加速",
+      "terms": [
+        "Ray Tracing Speedup",
+        "性能工程",
+        "Performance Engineering",
+        "CUDA",
+        "光追",
+        "江南园林",
+        "BVH"
+      ],
+      "py": [
+        "guangxianzhuizongxuanranjiasu",
+        "guangxianzhuizongjiasu",
+        "xingnenggongcheng",
+        "guangzhui",
+        "jiangnanyuanlin"
+      ],
+      "pyi": [
+        "gxzzxrjs",
+        "gxzzjs",
+        "xngc",
+        "gz",
+        "jnyl"
+      ],
+      "category": "algo",
+      "short_en": "Ray Tracing Speedup",
+      "href": "/tasks/algo/raytracing/"
+    },
+    {
+      "type": "task",
+      "id": "circuit",
+      "name": "数字电路仿真器加速",
+      "en": "Digital Circuit Simulator Acceleration",
+      "short": "电路仿真加速",
+      "terms": [
+        "Circuit Speedup",
+        "性能工程",
+        "Performance Engineering",
+        "C++",
+        "AVX2"
+      ],
+      "py": [
+        "shuzidianlufangzhenqijiasu",
+        "dianlufangzhenjiasu",
+        "xingnenggongcheng"
+      ],
+      "pyi": [
+        "szdlfzqjs",
+        "dlfzjs",
+        "xngc"
+      ],
+      "category": "algo",
+      "short_en": "Circuit Speedup",
+      "href": "/tasks/algo/circuit/"
+    },
+    {
+      "type": "task",
+      "id": "conquest",
+      "name": "攻城略地",
+      "en": "Siege & Conquest",
+      "short": "攻城略地",
+      "terms": [
+        "C++",
+        "博弈",
+        "Game AI"
+      ],
+      "py": [
+        "gongchenglvedi",
+        "boyi"
+      ],
+      "pyi": [
+        "gcld",
+        "by"
+      ],
+      "category": "battle",
+      "short_en": "Siege & Conquest",
+      "href": "/tasks/battle/conquest/"
+    },
+    {
+      "type": "task",
+      "id": "luban",
+      "name": "鲁班锁拆解",
+      "en": "Luban Lock Disassembly",
+      "short": "鲁班锁拆解",
+      "terms": [
+        "Burr Puzzle"
+      ],
+      "py": [
+        "lubansuochaijie"
+      ],
+      "pyi": [
+        "lbscj"
+      ],
+      "category": "spatial",
+      "short_en": "Luban Lock",
+      "href": "/tasks/spatial/luban/"
+    },
+    {
+      "type": "task",
+      "id": "drawing",
+      "name": "机械结构重建",
+      "en": "Mechanical Structure Reconstruction",
+      "short": "结构重建",
+      "terms": [
+        "工程图纸",
+        "三视图",
+        "Engineering Drawing",
+        "CAD"
+      ],
+      "py": [
+        "jixiejiegouchongjian",
+        "jiegouchongjian",
+        "gongchengtuzhi",
+        "sanshitu"
+      ],
+      "pyi": [
+        "jxjgcj",
+        "jgcj",
+        "gctz",
+        "sst"
+      ],
+      "category": "drawing",
+      "short_en": "Structure Reconstruction",
+      "href": "/tasks/drawing/drawing/"
+    },
+    {
+      "type": "task",
+      "id": "ae-editor",
+      "name": "AE风味动效设计编辑器",
+      "en": "AE-Style Motion Design Editor",
+      "short": "AE 动效编辑器",
+      "terms": [
+        "AE Motion Editor",
+        "After Effects"
+      ],
+      "py": [
+        "aefengweidongxiaoshejibianjiqi",
+        "aedongxiaobianjiqi"
+      ],
+      "pyi": [
+        "aefwdxsjbjq",
+        "aedxbjq"
+      ],
+      "category": "interact",
+      "short_en": "AE Motion Editor",
+      "href": "/tasks/interact/ae-editor/"
+    },
+    {
+      "type": "task",
+      "id": "tower-defense",
+      "name": "动态路由塔防",
+      "en": "Dynamic-Routing Tower Defense",
+      "short": "动态路由塔防",
+      "terms": [
+        "网络安全攻防战"
+      ],
+      "py": [
+        "dongtailuyoutafang",
+        "wangluoanquangongfangzhan"
+      ],
+      "pyi": [
+        "dtlytf",
+        "wlaqgfz"
+      ],
+      "category": "game",
+      "short_en": "Tower Defense",
+      "href": "/tasks/game/tower-defense/"
+    },
+    {
+      "type": "task",
+      "id": "jelly-tank",
+      "name": "果冻冲击与造浪水槽",
+      "en": "Jelly Impact and Wave Tank",
+      "short": "果冻水槽",
+      "terms": [
+        "Jelly & Wave Tank"
+      ],
+      "py": [
+        "guodongchongjiyuzaolangshuicao",
+        "guodongshuicao"
+      ],
+      "pyi": [
+        "gdcjyzlsc",
+        "gdsc"
+      ],
+      "category": "physics",
+      "short_en": "Jelly & Wave Tank",
+      "href": "/tasks/physics/jelly-tank/"
+    },
+    {
+      "type": "task",
+      "id": "harbor",
+      "name": "太阳雨渔港3D渲染",
+      "en": "Sunshower Fishing Harbor in 3D",
+      "short": "太阳雨渔港",
+      "terms": [
+        "Sunshower Harbor",
+        "三渲二",
+        "Three.js"
+      ],
+      "py": [
+        "taiyangyuyugang3dxuanran",
+        "taiyangyuyugang",
+        "sanxuaner"
+      ],
+      "pyi": [
+        "tyyyg3dxr",
+        "tyyyg",
+        "sxe"
+      ],
+      "category": "visual",
+      "short_en": "Sunshower Harbor",
+      "href": "/tasks/visual/harbor/"
+    },
+    {
+      "type": "task",
+      "id": "starship",
+      "name": "星际战舰编队",
+      "en": "Interstellar Battle Fleet",
+      "short": "星际战舰",
+      "terms": [
+        "体素",
+        "Voxel"
+      ],
+      "py": [
+        "xingjizhanjianbiandui",
+        "xingjizhanjian",
+        "tisu"
+      ],
+      "pyi": [
+        "xjzjbd",
+        "xjzj",
+        "ts"
+      ],
+      "category": "visual",
+      "short_en": "Battle Fleet",
+      "href": "/tasks/visual/starship/"
+    },
+    {
+      "type": "task",
+      "id": "nested-os",
+      "name": "操作系统嵌套",
+      "en": "Nested Operating Systems",
+      "short": "操作系统嵌套",
+      "terms": [
+        "Nested OS",
+        "Electron"
+      ],
+      "py": [
+        "caozuoxitongqiantao"
+      ],
+      "pyi": [
+        "czxtqt"
+      ],
+      "category": "system",
+      "short_en": "Nested OS",
+      "href": "/tasks/system/nested-os/"
+    },
+    {
+      "type": "category",
+      "id": "reason",
+      "name": "数学推理",
+      "en": "Math Reasoning",
+      "short": "数学推理",
+      "terms": [],
+      "py": [
+        "shuxuetuili"
+      ],
+      "pyi": [
+        "sxtl"
+      ],
+      "short_en": "Math",
+      "href": "/categories/#reason"
+    },
+    {
+      "type": "category",
+      "id": "algo",
+      "name": "性能优化",
+      "en": "Performance Optimization",
+      "short": "性能优化",
+      "terms": [],
+      "py": [
+        "xingnengyouhua"
+      ],
+      "pyi": [
+        "xnyh"
+      ],
+      "short_en": "Performance",
+      "href": "/categories/#algo"
+    },
+    {
+      "type": "category",
+      "id": "battle",
+      "name": "算法对抗",
+      "en": "Algorithm Battle",
+      "short": "算法对抗",
+      "terms": [],
+      "py": [
+        "suanfaduikang"
+      ],
+      "pyi": [
+        "sfdk"
+      ],
+      "short_en": "Battle",
+      "href": "/categories/#battle"
+    },
+    {
+      "type": "category",
+      "id": "spatial",
+      "name": "空间推理",
+      "en": "Spatial Reasoning",
+      "short": "空间推理",
+      "terms": [],
+      "py": [
+        "kongjiantuili"
+      ],
+      "pyi": [
+        "kjtl"
+      ],
+      "short_en": "Spatial",
+      "href": "/categories/#spatial"
+    },
+    {
+      "type": "category",
+      "id": "drawing",
+      "name": "几何建模",
+      "en": "Geometric Modeling",
+      "short": "几何建模",
+      "terms": [
+        "Geometry"
+      ],
+      "py": [
+        "jihejianmo"
+      ],
+      "pyi": [
+        "jhjm"
+      ],
+      "short_en": "Geometry",
+      "href": "/categories/#drawing"
+    },
+    {
+      "type": "category",
+      "id": "interact",
+      "name": "复杂交互应用",
+      "en": "Complex Interactive Apps",
+      "short": "交互应用",
+      "terms": [],
+      "py": [
+        "fuzajiaohuyingyong",
+        "jiaohuyingyong"
+      ],
+      "pyi": [
+        "fzjhyy",
+        "jhyy"
+      ],
+      "short_en": "Interactive",
+      "href": "/categories/#interact"
+    },
+    {
+      "type": "category",
+      "id": "game",
+      "name": "游戏设计与开发",
+      "en": "Game Design & Development",
+      "short": "游戏开发",
+      "terms": [],
+      "py": [
+        "youxishejiyukaifa",
+        "youxikaifa"
+      ],
+      "pyi": [
+        "yxsjykf",
+        "yxkf"
+      ],
+      "short_en": "Game",
+      "href": "/categories/#game"
+    },
+    {
+      "type": "category",
+      "id": "physics",
+      "name": "物理模拟",
+      "en": "Physics Simulation",
+      "short": "物理模拟",
+      "terms": [],
+      "py": [
+        "wulimoni"
+      ],
+      "pyi": [
+        "wlmn"
+      ],
+      "short_en": "Physics",
+      "href": "/categories/#physics"
+    },
+    {
+      "type": "category",
+      "id": "visual",
+      "name": "视觉设计与渲染",
+      "en": "Visual Design & Rendering",
+      "short": "视觉渲染",
+      "terms": [],
+      "py": [
+        "shijueshejiyuxuanran",
+        "shijuexuanran"
+      ],
+      "pyi": [
+        "sjsjyxr",
+        "sjxr"
+      ],
+      "short_en": "Visual",
+      "href": "/categories/#visual"
+    },
+    {
+      "type": "category",
+      "id": "system",
+      "name": "系统架构与实现",
+      "en": "System Architecture & Implementation",
+      "short": "系统架构",
+      "terms": [
+        "Systems"
+      ],
+      "py": [
+        "xitongjiagouyushixian",
+        "xitongjiagou"
+      ],
+      "pyi": [
+        "xtjgysx",
+        "xtjg"
+      ],
+      "short_en": "Systems",
+      "href": "/categories/#system"
+    },
+    {
+      "type": "section",
+      "id": "intro",
+      "name": "项目简介",
+      "en": "Introduction",
+      "short": "项目简介",
+      "terms": [],
+      "py": [
+        "xiangmujianjie"
+      ],
+      "pyi": [
+        "xmjj"
+      ],
+      "page": "about",
+      "href": "/about/#intro"
+    },
+    {
+      "type": "section",
+      "id": "overview",
+      "name": "题目总览",
+      "en": "Task Overview",
+      "short": "题目总览",
+      "terms": [],
+      "py": [
+        "timuzonglan"
+      ],
+      "pyi": [
+        "tmzl"
+      ],
+      "page": "about",
+      "href": "/about/#overview"
+    },
+    {
+      "type": "section",
+      "id": "tasks",
+      "name": "题目与考点",
+      "en": "Tasks and What They Test",
+      "short": "题目与考点",
+      "terms": [],
+      "py": [
+        "timuyukaodian"
+      ],
+      "pyi": [
+        "tmykd"
+      ],
+      "page": "about",
+      "href": "/about/#tasks"
+    },
+    {
+      "type": "section",
+      "id": "format",
+      "name": "测试形式",
+      "en": "How Tests Run",
+      "short": "测试形式",
+      "terms": [],
+      "py": [
+        "ceshixingshi"
+      ],
+      "pyi": [
+        "csxs"
+      ],
+      "page": "about",
+      "href": "/about/#format"
+    },
+    {
+      "type": "section",
+      "id": "format-1",
+      "name": "谁在运转测评",
+      "en": "Who Runs the Tests",
+      "short": "谁在运转测评",
+      "terms": [],
+      "py": [
+        "shuizaiyunzhuanceping"
+      ],
+      "pyi": [
+        "szyzcp"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-1"
+    },
+    {
+      "type": "section",
+      "id": "format-2",
+      "name": "一场作答怎样进行",
+      "en": "How a Run Proceeds",
+      "short": "一场作答怎样进行",
+      "terms": [],
+      "py": [
+        "yichangzuodazenyangjinxing"
+      ],
+      "pyi": [
+        "yczdzyjx"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-2"
+    },
+    {
+      "type": "section",
+      "id": "format-3",
+      "name": "提醒与立即续做",
+      "en": "Reminders and Immediate Continuation",
+      "short": "提醒与立即续做",
+      "terms": [],
+      "py": [
+        "tixingyulijixuzuo"
+      ],
+      "pyi": [
+        "txyljxz"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-3"
+    },
+    {
+      "type": "section",
+      "id": "format-4",
+      "name": "故障与续做",
+      "en": "Failures and Resuming",
+      "short": "故障与续做",
+      "terms": [],
+      "py": [
+        "guzhangyuxuzuo"
+      ],
+      "pyi": [
+        "gzyxz"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-4"
+    },
+    {
+      "type": "section",
+      "id": "format-5",
+      "name": "隔离的作答环境",
+      "en": "The Isolated Answering Environment",
+      "short": "隔离的作答环境",
+      "terms": [],
+      "py": [
+        "gelidezuodahuanjing"
+      ],
+      "pyi": [
+        "gldzdhj"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-5"
+    },
+    {
+      "type": "section",
+      "id": "format-6",
+      "name": "两个测试批次",
+      "en": "The Two Test Batches",
+      "short": "两个测试批次",
+      "terms": [],
+      "py": [
+        "lianggeceshipici"
+      ],
+      "pyi": [
+        "lgcspc"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-6"
+    },
+    {
+      "type": "section",
+      "id": "format-7",
+      "name": "工具与联网规定",
+      "en": "Tool and Network Rules",
+      "short": "工具与联网规定",
+      "terms": [],
+      "py": [
+        "gongjuyulianwangguiding"
+      ],
+      "pyi": [
+        "gjylwgd"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-7"
+    },
+    {
+      "type": "section",
+      "id": "format-8",
+      "name": "评分员怎么评",
+      "en": "How the Graders Score",
+      "short": "评分员怎么评",
+      "terms": [],
+      "py": [
+        "pingfenyuanzenmeping"
+      ],
+      "pyi": [
+        "pfyzmp"
+      ],
+      "page": "about",
+      "parent": "format",
+      "href": "/about/#format-8"
+    },
+    {
+      "type": "section",
+      "id": "scoring",
+      "name": "打分机制",
+      "en": "Scoring",
+      "short": "打分机制",
+      "terms": [],
+      "py": [
+        "dafenjizhi"
+      ],
+      "pyi": [
+        "dfjz"
+      ],
+      "page": "about",
+      "href": "/about/#scoring"
+    },
+    {
+      "type": "section",
+      "id": "scoring-1",
+      "name": "总分怎样合成",
+      "en": "How the Total Is Composed",
+      "short": "总分怎样合成",
+      "terms": [],
+      "py": [
+        "zongfenzenyanghecheng"
+      ],
+      "pyi": [
+        "zfzyhc"
+      ],
+      "page": "about",
+      "parent": "scoring",
+      "href": "/about/#scoring-1"
+    },
+    {
+      "type": "section",
+      "id": "scoring-2",
+      "name": "各题型的计分方式",
+      "en": "Scoring by Task Type",
+      "short": "各题型的计分方式",
+      "terms": [],
+      "py": [
+        "getixingdejifenfangshi"
+      ],
+      "pyi": [
+        "gtxdjffs"
+      ],
+      "page": "about",
+      "parent": "scoring",
+      "href": "/about/#scoring-2"
+    },
+    {
+      "type": "section",
+      "id": "scoring-3",
+      "name": "设计题计分",
+      "en": "Scoring Design Tasks",
+      "short": "设计题计分",
+      "terms": [],
+      "py": [
+        "shejitijifen"
+      ],
+      "pyi": [
+        "sjtjf"
+      ],
+      "page": "about",
+      "parent": "scoring",
+      "href": "/about/#scoring-3"
+    },
+    {
+      "type": "section",
+      "id": "principles",
+      "name": "设计原则",
+      "en": "Design Principles",
+      "short": "设计原则",
+      "terms": [],
+      "py": [
+        "shejiyuanze"
+      ],
+      "pyi": [
+        "sjyz"
+      ],
+      "page": "about",
+      "href": "/about/#principles"
+    }
+  ]
+}

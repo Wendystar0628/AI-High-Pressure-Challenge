@@ -1,0 +1,2100 @@
+{
+  "updated": "2026-11-14",
+  "cost_source": {
+    "name": "ModelDial 订阅额度",
+    "name_en": "ModelDial subscription quotas",
+    "url": "https://modeldial.com/subscriptions?period=week&view=insights",
+    "fetched": "2026-11-13",
+    "usd_cny": 6.7133
+  },
+  "order": [
+    "gpt-6-astra",
+    "gpt-6-1-sol",
+    "claude-opus-5-5",
+    "gemini-4-carbon",
+    "claude-sonnet-5-5",
+    "gemini-4-hydrogen",
+    "gpt-6-1-terra",
+    "claude-haiku-5-5",
+    "gpt-5-6-sol",
+    "deepseek-v4-1-flash",
+    "hy4",
+    "gpt-6-luna",
+    "mimo-v2-6-pro"
+  ],
+  "scores": {
+    "claude-opus-5-5": {
+      "total": 62.9,
+      "kinds": {
+        "standard": 45.9,
+        "design": 79.8
+      },
+      "categories": {
+        "reason": 58.3,
+        "algo": 59.2,
+        "battle": 39.5,
+        "spatial": 28.0,
+        "drawing": 44.4,
+        "interact": 80.7,
+        "game": 88.5,
+        "physics": 76.2,
+        "visual": 85.2,
+        "system": 68.3
+      },
+      "tasks": {
+        "formal-proof": 62.5,
+        "math-olympiad": 54.2,
+        "raytracing": 57.0,
+        "circuit": 61.5,
+        "conquest": 39.5,
+        "luban": 28.0,
+        "drawing": 44.4,
+        "ae-editor": 80.7,
+        "tower-defense": 88.5,
+        "jelly-tank": 76.2,
+        "harbor": 91.1,
+        "starship": 79.4,
+        "nested-os": 68.3
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 76.6
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 85.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 92.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 89.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 93.1
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 76.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 82.9
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 61.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.0
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 27.4,
+        "basis": "subscription",
+        "tokens": 584318405,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Claude Ultra",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 3,
+      "category_ranks": {
+        "reason": 3,
+        "algo": 2,
+        "battle": 5,
+        "spatial": 6,
+        "drawing": 4,
+        "interact": 1,
+        "game": 1,
+        "physics": 1,
+        "visual": 1,
+        "system": 6
+      },
+      "task_ranks": {
+        "formal-proof": 3,
+        "math-olympiad": 5,
+        "raytracing": 5,
+        "circuit": 1,
+        "conquest": 5,
+        "luban": 6,
+        "drawing": 4,
+        "ae-editor": 1,
+        "tower-defense": 1,
+        "jelly-tank": 1,
+        "harbor": 1,
+        "starship": 1,
+        "nested-os": 6
+      }
+    },
+    "claude-sonnet-5-5": {
+      "total": 57.3,
+      "kinds": {
+        "standard": 41.0,
+        "design": 73.7
+      },
+      "categories": {
+        "reason": 41.4,
+        "algo": 67.9,
+        "battle": 14.8,
+        "spatial": 26.5,
+        "drawing": 54.3,
+        "interact": 76.9,
+        "game": 78.8,
+        "physics": 52.0,
+        "visual": 83.1,
+        "system": 77.7
+      },
+      "tasks": {
+        "formal-proof": 50.0,
+        "math-olympiad": 32.7,
+        "raytracing": 83.4,
+        "circuit": 52.4,
+        "conquest": 14.8,
+        "luban": 26.5,
+        "drawing": 54.3,
+        "ae-editor": 76.9,
+        "tower-defense": 78.8,
+        "jelly-tank": 52.0,
+        "harbor": 88.8,
+        "starship": 77.5,
+        "nested-os": 77.7
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 73.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 80.4
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.4
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 87.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 90.5
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 70.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 47.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 57.0
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.2
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.1
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 23.8,
+        "basis": "subscription",
+        "tokens": 749100777,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Claude Ultra",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 5,
+      "category_ranks": {
+        "reason": 7,
+        "algo": 1,
+        "battle": 8,
+        "spatial": 8,
+        "drawing": 3,
+        "interact": 2,
+        "game": 2,
+        "physics": 5,
+        "visual": 2,
+        "system": 1
+      },
+      "task_ranks": {
+        "formal-proof": 6,
+        "math-olympiad": 8,
+        "raytracing": 1,
+        "circuit": 3,
+        "conquest": 8,
+        "luban": 8,
+        "drawing": 3,
+        "ae-editor": 2,
+        "tower-defense": 2,
+        "jelly-tank": 5,
+        "harbor": 2,
+        "starship": 2,
+        "nested-os": 1
+      }
+    },
+    "claude-haiku-5-5": {
+      "total": 40.7,
+      "kinds": {
+        "standard": 19.9,
+        "design": 61.6
+      },
+      "categories": {
+        "reason": 26.2,
+        "algo": 26.1,
+        "battle": 16.5,
+        "spatial": 0.0,
+        "drawing": 30.5,
+        "interact": 67.3,
+        "game": 66.8,
+        "physics": 50.5,
+        "visual": 62.0,
+        "system": 61.5
+      },
+      "tasks": {
+        "formal-proof": 25.0,
+        "math-olympiad": 27.4,
+        "raytracing": 26.8,
+        "circuit": 25.5,
+        "conquest": 16.5,
+        "luban": 0.0,
+        "drawing": 30.5,
+        "ae-editor": 67.3,
+        "tower-defense": 66.8,
+        "jelly-tank": 50.5,
+        "harbor": 71.0,
+        "starship": 53.0,
+        "nested-os": 61.5
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.3
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 60.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 73.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 41.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 65.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 45.2
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 55.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 59.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 63.1
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 16.0,
+        "basis": "subscription",
+        "tokens": 2432439479,
+        "method": "api_price",
+        "api_usd": 144.4,
+        "hours": 15.2,
+        "plan": {
+          "name": "Claude Ultra",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 8,
+      "category_ranks": {
+        "reason": 9,
+        "algo": 9,
+        "battle": 6,
+        "spatial": 12,
+        "drawing": 6,
+        "interact": 6,
+        "game": 8,
+        "physics": 6,
+        "visual": 10,
+        "system": 7
+      },
+      "task_ranks": {
+        "formal-proof": 8,
+        "math-olympiad": 9,
+        "raytracing": 11,
+        "circuit": 9,
+        "conquest": 6,
+        "luban": 12,
+        "drawing": 6,
+        "ae-editor": 6,
+        "tower-defense": 8,
+        "jelly-tank": 6,
+        "harbor": 10,
+        "starship": 10,
+        "nested-os": 7
+      }
+    },
+    "gpt-6-1-sol": {
+      "total": 68.7,
+      "kinds": {
+        "standard": 65.4,
+        "design": 72.0
+      },
+      "categories": {
+        "reason": 69.3,
+        "algo": 57.7,
+        "battle": 65.7,
+        "spatial": 69.4,
+        "drawing": 64.9,
+        "interact": 66.8,
+        "game": 76.2,
+        "physics": 68.5,
+        "visual": 75.0,
+        "system": 73.6
+      },
+      "tasks": {
+        "formal-proof": 62.5,
+        "math-olympiad": 76.2,
+        "raytracing": 59.6,
+        "circuit": 55.8,
+        "conquest": 65.7,
+        "luban": 69.4,
+        "drawing": 64.9,
+        "ae-editor": 66.8,
+        "tower-defense": 76.2,
+        "jelly-tank": 68.5,
+        "harbor": 77.3,
+        "starship": 72.8,
+        "nested-os": 73.6
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "text": "第1、7、19题用全构型编码代替实际求值和分类。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.6
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.5
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 61.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.9
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.7
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 12.9,
+        "basis": "subscription",
+        "tokens": 195399801,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "OpenAI Pro 200",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 2,
+      "category_ranks": {
+        "reason": 2,
+        "algo": 3,
+        "battle": 2,
+        "spatial": 2,
+        "drawing": 2,
+        "interact": 7,
+        "game": 3,
+        "physics": 3,
+        "visual": 6,
+        "system": 4
+      },
+      "task_ranks": {
+        "formal-proof": 3,
+        "math-olympiad": 1,
+        "raytracing": 4,
+        "circuit": 2,
+        "conquest": 2,
+        "luban": 2,
+        "drawing": 2,
+        "ae-editor": 7,
+        "tower-defense": 3,
+        "jelly-tank": 3,
+        "harbor": 6,
+        "starship": 4,
+        "nested-os": 4
+      }
+    },
+    "gpt-6-1-terra": {
+      "total": 45.0,
+      "kinds": {
+        "standard": 36.1,
+        "design": 53.8
+      },
+      "categories": {
+        "reason": 48.2,
+        "algo": 45.0,
+        "battle": 16.3,
+        "spatial": 28.1,
+        "drawing": 42.9,
+        "interact": 46.2,
+        "game": 68.0,
+        "physics": 41.4,
+        "visual": 66.0,
+        "system": 47.4
+      },
+      "tasks": {
+        "formal-proof": 37.5,
+        "math-olympiad": 58.9,
+        "raytracing": 47.9,
+        "circuit": 42.2,
+        "conquest": 16.3,
+        "luban": 28.1,
+        "drawing": 42.9,
+        "ae-editor": 46.2,
+        "tower-defense": 68.0,
+        "jelly-tank": 41.4,
+        "harbor": 71.6,
+        "starship": 60.5,
+        "nested-os": 47.4
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 40.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 51.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 58.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.7
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 52.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 34.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 48.2
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 43.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 51.6
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 23.9,
+        "basis": "subscription",
+        "tokens": 724983279,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "OpenAI Pro 200",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 7,
+      "category_ranks": {
+        "reason": 5,
+        "algo": 7,
+        "battle": 7,
+        "spatial": 5,
+        "drawing": 5,
+        "interact": 9,
+        "game": 7,
+        "physics": 8,
+        "visual": 8,
+        "system": 10
+      },
+      "task_ranks": {
+        "formal-proof": 7,
+        "math-olympiad": 3,
+        "raytracing": 7,
+        "circuit": 6,
+        "conquest": 7,
+        "luban": 5,
+        "drawing": 5,
+        "ae-editor": 9,
+        "tower-defense": 7,
+        "jelly-tank": 8,
+        "harbor": 8,
+        "starship": 8,
+        "nested-os": 10
+      }
+    },
+    "gpt-6-astra": {
+      "total": 70.3,
+      "kinds": {
+        "standard": 67.2,
+        "design": 73.5
+      },
+      "categories": {
+        "reason": 75.0,
+        "algo": 55.1,
+        "battle": 68.0,
+        "spatial": 66.7,
+        "drawing": 71.2,
+        "interact": 68.8,
+        "game": 74.1,
+        "physics": 72.2,
+        "visual": 77.8,
+        "system": 74.4
+      },
+      "tasks": {
+        "formal-proof": 75.0,
+        "math-olympiad": 75.0,
+        "raytracing": 59.7,
+        "circuit": 50.6,
+        "conquest": 68.0,
+        "luban": 66.7,
+        "drawing": 71.2,
+        "ae-editor": 68.8,
+        "tower-defense": 74.1,
+        "jelly-tank": 72.2,
+        "harbor": 81.0,
+        "starship": 74.7,
+        "nested-os": 74.4
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 59.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.0
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.7
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 88.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 81.4
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 69.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.3
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 73.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.4
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 57.5,
+        "basis": "subscription",
+        "tokens": 162658630,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "OpenAI Pro 200",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 1,
+      "category_ranks": {
+        "reason": 1,
+        "algo": 4,
+        "battle": 1,
+        "spatial": 3,
+        "drawing": 1,
+        "interact": 5,
+        "game": 4,
+        "physics": 2,
+        "visual": 3,
+        "system": 3
+      },
+      "task_ranks": {
+        "formal-proof": 1,
+        "math-olympiad": 2,
+        "raytracing": 3,
+        "circuit": 4,
+        "conquest": 1,
+        "luban": 3,
+        "drawing": 1,
+        "ae-editor": 5,
+        "tower-defense": 4,
+        "jelly-tank": 2,
+        "harbor": 3,
+        "starship": 3,
+        "nested-os": 3
+      }
+    },
+    "gpt-6-luna": {
+      "total": 22.2,
+      "kinds": {
+        "standard": 12.4,
+        "design": 32.0
+      },
+      "categories": {
+        "reason": 18.5,
+        "algo": 21.7,
+        "battle": 8.5,
+        "spatial": 8.0,
+        "drawing": 5.6,
+        "interact": 20.6,
+        "game": 42.6,
+        "physics": 27.3,
+        "visual": 43.5,
+        "system": 26.0
+      },
+      "tasks": {
+        "formal-proof": 12.5,
+        "math-olympiad": 24.4,
+        "raytracing": 34.3,
+        "circuit": 9.1,
+        "conquest": 8.5,
+        "luban": 8.0,
+        "drawing": 5.6,
+        "ae-editor": 20.6,
+        "tower-defense": 42.6,
+        "jelly-tank": 27.3,
+        "harbor": 53.5,
+        "starship": 33.3,
+        "nested-os": 26.0
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 21.9
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 19.3
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 39.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 46.2
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 49.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 57.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 40.2
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 20.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 33.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.1
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 25.9
+            }
+          ]
+        },
+        "conquest": {
+          "anomaly": [
+            {
+              "text": "仅合并等距来源的进攻兵力，救援安排在扩张之后，攻防协同薄弱。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 1.4,
+        "basis": "subscription",
+        "tokens": 401046274,
+        "method": "api_price",
+        "api_usd": 5.9,
+        "hours": 15.2,
+        "plan": {
+          "name": "OpenAI Pro 200",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 12,
+      "category_ranks": {
+        "reason": 10,
+        "algo": 11,
+        "battle": 11,
+        "spatial": 9,
+        "drawing": 10,
+        "interact": 12,
+        "game": 13,
+        "physics": 12,
+        "visual": 13,
+        "system": 12
+      },
+      "task_ranks": {
+        "formal-proof": 10,
+        "math-olympiad": 10,
+        "raytracing": 10,
+        "circuit": 11,
+        "conquest": 11,
+        "luban": 9,
+        "drawing": 10,
+        "ae-editor": 12,
+        "tower-defense": 13,
+        "jelly-tank": 12,
+        "harbor": 13,
+        "starship": 13,
+        "nested-os": 12
+      }
+    },
+    "gpt-5-6-sol": {
+      "total": 33.4,
+      "kinds": {
+        "standard": 24.4,
+        "design": 42.4
+      },
+      "categories": {
+        "reason": 40.5,
+        "algo": 39.5,
+        "battle": 5.6,
+        "spatial": 26.7,
+        "drawing": 9.8,
+        "interact": 25.1,
+        "game": 54.5,
+        "physics": 37.8,
+        "visual": 53.8,
+        "system": 41.0
+      },
+      "tasks": {
+        "formal-proof": 25.0,
+        "math-olympiad": 56.0,
+        "raytracing": 45.6,
+        "circuit": 33.4,
+        "conquest": 5.6,
+        "luban": 26.7,
+        "drawing": 9.8,
+        "ae-editor": 25.1,
+        "tower-defense": 54.5,
+        "jelly-tank": 37.8,
+        "harbor": 61.3,
+        "starship": 46.2,
+        "nested-os": 41.0
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 24.4
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 25.8
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 50.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.6
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 38.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 54.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 34.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 41.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 43.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 38.5
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 35.4,
+        "basis": "subscription",
+        "tokens": 409606369,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "OpenAI Pro 200",
+          "price": 200,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 9,
+      "category_ranks": {
+        "reason": 8,
+        "algo": 8,
+        "battle": 13,
+        "spatial": 7,
+        "drawing": 7,
+        "interact": 11,
+        "game": 11,
+        "physics": 9,
+        "visual": 11,
+        "system": 11
+      },
+      "task_ranks": {
+        "formal-proof": 8,
+        "math-olympiad": 4,
+        "raytracing": 8,
+        "circuit": 8,
+        "conquest": 13,
+        "luban": 7,
+        "drawing": 7,
+        "ae-editor": 11,
+        "tower-defense": 11,
+        "jelly-tank": 9,
+        "harbor": 11,
+        "starship": 12,
+        "nested-os": 11
+      }
+    },
+    "deepseek-v4-1-flash": {
+      "total": 31.9,
+      "kinds": {
+        "standard": 7.3,
+        "design": 56.4
+      },
+      "categories": {
+        "reason": 10.1,
+        "algo": 0.0,
+        "battle": 8.8,
+        "spatial": 8.0,
+        "drawing": 9.5,
+        "interact": 60.0,
+        "game": 65.0,
+        "physics": 36.5,
+        "visual": 67.5,
+        "system": 53.1
+      },
+      "tasks": {
+        "formal-proof": 12.5,
+        "math-olympiad": 7.7,
+        "raytracing": 0.0,
+        "circuit": 0.0,
+        "conquest": 8.8,
+        "luban": 8.0,
+        "drawing": 9.5,
+        "ae-editor": 60.0,
+        "tower-defense": 65.0,
+        "jelly-tank": 36.5,
+        "harbor": 74.1,
+        "starship": 60.8,
+        "nested-os": 53.1
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 60.7
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.4
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 63.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 67.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 68.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.8
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 55.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.0
+            }
+          ]
+        },
+        "raytracing": {
+          "anomaly": [
+            {
+              "text": "最终GPU建树把三角形下界当上界，导致大量交点漏检。"
+            }
+          ]
+        },
+        "circuit": {
+          "anomaly": [
+            {
+              "text": "末段修改寄存器融合后自测仍有根值不一致，最终源码保留该缺陷。"
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 26.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 46.5
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 48.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 58.0
+            }
+          ]
+        },
+        "conquest": {
+          "anomaly": [
+            {
+              "text": "调优依赖额外编译宏，未把已测试参数写回最终源码。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 69.9,
+        "basis": "api",
+        "tokens": 1465921352,
+        "method": "api_price",
+        "api_usd": 10.4,
+        "hours": 15.2,
+        "plan": {
+          "name": "DeepSeek API"
+        }
+      },
+      "rank": 10,
+      "category_ranks": {
+        "reason": 11,
+        "algo": 13,
+        "battle": 10,
+        "spatial": 9,
+        "drawing": 8,
+        "interact": 8,
+        "game": 9,
+        "physics": 10,
+        "visual": 7,
+        "system": 8
+      },
+      "task_ranks": {
+        "formal-proof": 10,
+        "math-olympiad": 11,
+        "raytracing": 13,
+        "circuit": 13,
+        "conquest": 10,
+        "luban": 9,
+        "drawing": 8,
+        "ae-editor": 8,
+        "tower-defense": 9,
+        "jelly-tank": 10,
+        "harbor": 7,
+        "starship": 7,
+        "nested-os": 8
+      }
+    },
+    "mimo-v2-6-pro": {
+      "total": 16.6,
+      "kinds": {
+        "standard": 6.0,
+        "design": 27.2
+      },
+      "categories": {
+        "reason": 0.0,
+        "algo": 11.6,
+        "battle": 10.3,
+        "spatial": 8.0,
+        "drawing": 0.0,
+        "interact": 19.9,
+        "game": 43.8,
+        "physics": 18.8,
+        "visual": 53.5,
+        "system": 0.0
+      },
+      "tasks": {
+        "formal-proof": 0.0,
+        "math-olympiad": 0.0,
+        "raytracing": 20.0,
+        "circuit": 3.2,
+        "conquest": 10.3,
+        "luban": 8.0,
+        "drawing": 0.0,
+        "ae-editor": 19.9,
+        "tower-defense": 43.8,
+        "jelly-tank": 18.8,
+        "harbor": 56.8,
+        "starship": 50.3,
+        "nested-os": 0.0
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "text": "读完题后持续推理，始终未创建或写入任何答案文件。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 17.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 22.5
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "三维帧缓冲从未跑通，字块、锤子、火星全程不显示，模型未验证示例后段"
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 40.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 47.0
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 54.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 59.0
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 45.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 55.2
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 16.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 21.5
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "水体管线存储缓冲超限，模型诊断出问题后没修完就中止，场景二整体失效"
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 0.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 0.0
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "从未启动过作品，模块导入路径写错导致整站卡在启动画面"
+            },
+            {
+              "text": "播放器与图表模块使用错误相对导入，阻断整个桌面启动。"
+            }
+          ]
+        },
+        "drawing": {
+          "anomaly": [
+            {
+              "text": "陷入读写工具调用循环且未交答案，并搜索目录外跨题记忆。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 60.1,
+        "basis": "api",
+        "tokens": 422066617,
+        "method": "api_price",
+        "api_usd": 9.0,
+        "hours": 15.2,
+        "plan": {
+          "name": "MiMo API"
+        }
+      },
+      "rank": 13,
+      "category_ranks": {
+        "reason": 12,
+        "algo": 12,
+        "battle": 9,
+        "spatial": 9,
+        "drawing": 13,
+        "interact": 13,
+        "game": 12,
+        "physics": 13,
+        "visual": 12,
+        "system": 13
+      },
+      "task_ranks": {
+        "formal-proof": 12,
+        "math-olympiad": 12,
+        "raytracing": 12,
+        "circuit": 12,
+        "conquest": 9,
+        "luban": 9,
+        "drawing": 13,
+        "ae-editor": 13,
+        "tower-defense": 12,
+        "jelly-tank": 13,
+        "harbor": 12,
+        "starship": 11,
+        "nested-os": 13
+      }
+    },
+    "hy4": {
+      "total": 27.0,
+      "kinds": {
+        "standard": 7.3,
+        "design": 46.7
+      },
+      "categories": {
+        "reason": 0.0,
+        "algo": 23.7,
+        "battle": 8.3,
+        "spatial": 0.0,
+        "drawing": 4.7,
+        "interact": 28.3,
+        "game": 61.3,
+        "physics": 31.4,
+        "visual": 62.8,
+        "system": 49.9
+      },
+      "tasks": {
+        "formal-proof": 0.0,
+        "math-olympiad": 0.0,
+        "raytracing": 35.0,
+        "circuit": 12.4,
+        "conquest": 8.3,
+        "luban": 0.0,
+        "drawing": 4.7,
+        "ae-editor": 28.3,
+        "tower-defense": 61.3,
+        "jelly-tank": 31.4,
+        "harbor": 71.4,
+        "starship": 54.2,
+        "nested-os": 49.9
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "formal-proof": {
+          "anomaly": [
+            {
+              "text": "只写了两份查符号用的探测脚本，八道题一个主定理都没有写出。"
+            }
+          ]
+        },
+        "math-olympiad": {
+          "anomaly": [
+            {
+              "text": "截止时仍在推敲首题，未创建答案目录或保存任何解答。"
+            }
+          ]
+        },
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 20.3
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 36.2
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 66.5
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.5
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.3
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 48.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 60.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 25.8
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 37.0
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "只做到果冻阶段就停止，水体与音效仍是占位空文件"
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "Claude Opus 5.5",
+              "score": 50.0
+            },
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 49.9
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 60.9,
+        "basis": "subscription",
+        "tokens": 341435710,
+        "method": "credits",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "CodeBuddy 140 元档",
+          "name_en": "CodeBuddy",
+          "price": 140,
+          "currency": "CNY",
+          "period": "month",
+          "credits": 9000
+        }
+      },
+      "rank": 11,
+      "category_ranks": {
+        "reason": 12,
+        "algo": 10,
+        "battle": 12,
+        "spatial": 12,
+        "drawing": 11,
+        "interact": 10,
+        "game": 10,
+        "physics": 11,
+        "visual": 9,
+        "system": 9
+      },
+      "task_ranks": {
+        "formal-proof": 12,
+        "math-olympiad": 12,
+        "raytracing": 9,
+        "circuit": 10,
+        "conquest": 12,
+        "luban": 12,
+        "drawing": 11,
+        "ae-editor": 10,
+        "tower-defense": 10,
+        "jelly-tank": 11,
+        "harbor": 9,
+        "starship": 9,
+        "nested-os": 9
+      }
+    },
+    "gemini-4-carbon": {
+      "total": 58.4,
+      "kinds": {
+        "standard": 48.5,
+        "design": 68.3
+      },
+      "categories": {
+        "reason": 54.2,
+        "algo": 49.4,
+        "battle": 52.2,
+        "spatial": 80.5,
+        "drawing": 6.4,
+        "interact": 70.7,
+        "game": 72.1,
+        "physics": 47.4,
+        "visual": 76.1,
+        "system": 75.3
+      },
+      "tasks": {
+        "formal-proof": 75.0,
+        "math-olympiad": 33.3,
+        "raytracing": 61.0,
+        "circuit": 37.8,
+        "conquest": 52.2,
+        "luban": 80.5,
+        "drawing": 6.4,
+        "ae-editor": 70.7,
+        "tower-defense": 72.1,
+        "jelly-tank": 47.4,
+        "harbor": 79.7,
+        "starship": 72.5,
+        "nested-os": 75.3
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.3
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.1
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "粒子空状态不推进步号，默认示例跳转卡死；音频接口名失配。"
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.7
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 75.3
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 53.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 41.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 22.5,
+        "basis": "subscription",
+        "tokens": 159720081,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Google AI Ultra 20×",
+          "name_en": "Google AI Ultra 20×",
+          "price": 199.99,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 4,
+      "category_ranks": {
+        "reason": 4,
+        "algo": 5,
+        "battle": 3,
+        "spatial": 1,
+        "drawing": 9,
+        "interact": 4,
+        "game": 5,
+        "physics": 7,
+        "visual": 4,
+        "system": 2
+      },
+      "task_ranks": {
+        "formal-proof": 1,
+        "math-olympiad": 6,
+        "raytracing": 2,
+        "circuit": 7,
+        "conquest": 3,
+        "luban": 1,
+        "drawing": 9,
+        "ae-editor": 4,
+        "tower-defense": 5,
+        "jelly-tank": 7,
+        "harbor": 4,
+        "starship": 5,
+        "nested-os": 2
+      }
+    },
+    "gemini-4-hydrogen": {
+      "total": 55.6,
+      "kinds": {
+        "standard": 40.6,
+        "design": 70.6
+      },
+      "categories": {
+        "reason": 47.9,
+        "algo": 48.5,
+        "battle": 46.7,
+        "spatial": 58.3,
+        "drawing": 1.5,
+        "interact": 72.1,
+        "game": 71.2,
+        "physics": 62.7,
+        "visual": 75.5,
+        "system": 71.6
+      },
+      "tasks": {
+        "formal-proof": 62.5,
+        "math-olympiad": 33.3,
+        "raytracing": 50.7,
+        "circuit": 46.3,
+        "conquest": 46.7,
+        "luban": 58.3,
+        "drawing": 1.5,
+        "ae-editor": 72.1,
+        "tower-defense": 71.2,
+        "jelly-tank": 62.7,
+        "harbor": 79.1,
+        "starship": 72.0,
+        "nested-os": 71.6
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.8
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 67.5
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 77.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.9
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.4
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.7
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.9
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 67.6
+            }
+          ]
+        },
+        "drawing": {
+          "anomaly": [
+            {
+              "text": "反复读图仅提交第03题，其余24题未交。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 48.7,
+        "basis": "subscription",
+        "tokens": 456926002,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Google AI Ultra 20×",
+          "name_en": "Google AI Ultra 20×",
+          "price": 199.99,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 6,
+      "category_ranks": {
+        "reason": 6,
+        "algo": 6,
+        "battle": 4,
+        "spatial": 4,
+        "drawing": 12,
+        "interact": 3,
+        "game": 6,
+        "physics": 4,
+        "visual": 5,
+        "system": 5
+      },
+      "task_ranks": {
+        "formal-proof": 3,
+        "math-olympiad": 6,
+        "raytracing": 6,
+        "circuit": 5,
+        "conquest": 4,
+        "luban": 4,
+        "drawing": 12,
+        "ae-editor": 3,
+        "tower-defense": 6,
+        "jelly-tank": 4,
+        "harbor": 5,
+        "starship": 6,
+        "nested-os": 5
+      }
+    }
+  },
+  "notice": null
+}
