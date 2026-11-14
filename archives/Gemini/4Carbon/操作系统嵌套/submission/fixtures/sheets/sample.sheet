@@ -1,0 +1,30 @@
+{
+  "format": "nestedos-sheet-v1",
+  "title": "sample.sheet",
+  "cols": 8,
+  "rows": 24,
+  "colWidths": {
+    "0": 116,
+    "1": 88,
+    "2": 88,
+    "3": 104
+  },
+  "cells": {
+    "A1": { "raw": "项目", "bold": true, "align": "left" },
+    "B1": { "raw": "数量", "bold": true, "align": "right" },
+    "C1": { "raw": "单价", "bold": true, "align": "right" },
+    "D1": { "raw": "小计", "bold": true, "align": "right" },
+    "A2": { "raw": "项目 A", "align": "left" },
+    "B2": { "raw": "24", "align": "right" },
+    "C2": { "raw": "6", "align": "right" },
+    "D2": { "raw": "=B2*C2", "align": "right", "bold": true },
+    "A3": { "raw": "项目 B", "align": "left" },
+    "B3": { "raw": "12", "align": "right" },
+    "C3": { "raw": "8", "align": "right" },
+    "D3": { "raw": "=B3*C3", "align": "right", "bold": true },
+    "A4": { "raw": "项目 C", "align": "left" },
+    "B4": { "raw": "18", "align": "right" },
+    "C4": { "raw": "4", "align": "right" },
+    "D4": { "raw": "=B4*C4", "align": "right", "bold": true }
+  }
+}

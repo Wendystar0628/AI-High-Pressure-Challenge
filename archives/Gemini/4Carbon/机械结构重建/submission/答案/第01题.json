@@ -1,0 +1,390 @@
+{
+  "problem": "01",
+  "parts": [
+    {
+      "name": "1",
+      "title": "滑阀驱动底座",
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XY",
+          "loops": [{"rect": [0, 0, 180, 120]}],
+          "depth": 16,
+          "name": "底板"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XY",
+          "origin": [0, 0, 16],
+          "loops": [{"rect": [90, 36, 170, 84]}],
+          "depth": 16,
+          "name": "导轨台"
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "plane": "XY",
+          "origin": [0, 0, 24],
+          "loops": [{"rect": [98, 44, 170, 76]}],
+          "depth": 8,
+          "name": "导槽"
+        },
+        {
+          "type": "hole",
+          "plane": "XY",
+          "origin": [0, 0, 16],
+          "at": [[10, 10], [10, 110], [170, 10], [170, 110]],
+          "d": 9,
+          "through": true,
+          "name": "四角安装孔"
+        },
+        {
+          "type": "fillet",
+          "radius": 2,
+          "edges": [[0, 0, 8]],
+          "name": "底板左前外竖棱R2"
+        },
+        {
+          "type": "chamfer",
+          "distance": 1,
+          "edges": [[90, 0, 0]],
+          "name": "前下直棱C1"
+        }
+      ]
+    },
+    {
+      "name": "2",
+      "title": "前轴承架",
+      "placement": {"translate": [24, 16, 16]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"path": [[0, 0], [52, 0], [52, 42], [42, 56], [10, 56], [0, 42]]}],
+          "depth": -12,
+          "name": "主体"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "at": [26, 38],
+          "d": 26,
+          "through": true,
+          "cbore": {"d": 34, "depth": 6},
+          "name": "轴承座孔及前沉台"
+        }
+      ]
+    },
+    {
+      "name": "3",
+      "title": "后轴承架",
+      "placement": {"translate": [24, 92, 16]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"path": [[0, 0], [52, 0], [52, 42], [42, 56], [10, 56], [0, 42]]}],
+          "depth": -12,
+          "name": "主体"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 12, 0],
+          "reverse": true,
+          "at": [26, 38],
+          "d": 26,
+          "through": true,
+          "cbore": {"d": 34, "depth": 6},
+          "name": "轴承座孔及后沉台"
+        }
+      ]
+    },
+    {
+      "name": "4",
+      "title": "前法兰轴套",
+      "placement": {"translate": [50, 16, 54]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"circle": [0, 0], "d": 34}],
+          "depth": -6,
+          "name": "前端法兰"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 6, 0],
+          "loops": [{"circle": [0, 0], "d": 26}],
+          "depth": -8,
+          "name": "套筒"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "at": [0, 0],
+          "d": 16,
+          "through": true,
+          "name": "内孔"
+        },
+        {
+          "type": "hole",
+          "plane": "XY",
+          "origin": [0, 0, 13],
+          "at": [0, 10],
+          "d": 4,
+          "depth": 6,
+          "name": "顶部油孔"
+        }
+      ]
+    },
+    {
+      "name": "5",
+      "title": "后法兰轴套",
+      "placement": {"translate": [50, 90, 54]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"circle": [0, 0], "d": 26}],
+          "depth": -8,
+          "name": "套筒"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 8, 0],
+          "loops": [{"circle": [0, 0], "d": 34}],
+          "depth": -6,
+          "name": "后端法兰"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "at": [0, 0],
+          "d": 16,
+          "through": true,
+          "name": "内孔"
+        },
+        {
+          "type": "hole",
+          "plane": "XY",
+          "origin": [0, 0, 13],
+          "at": [0, 4],
+          "d": 4,
+          "depth": 6,
+          "name": "顶部油孔"
+        }
+      ]
+    },
+    {
+      "name": "6",
+      "title": "偏心轴",
+      "placement": {"translate": [50, 10, 54]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"circle": [0, 0], "d": 16}],
+          "depth": -100,
+          "name": "主轴全段"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 24, 0],
+          "loops": [{"circle": [0, 0], "d": 24}],
+          "depth": -6,
+          "name": "前挡肩"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 32, 0],
+          "loops": [{"circle": [10, 0], "d": 44}],
+          "depth": -36,
+          "name": "偏心轮"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 70, 0],
+          "loops": [{"circle": [0, 0], "d": 24}],
+          "depth": -6,
+          "name": "后挡肩"
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "plane": "XY",
+          "origin": [0, 0, 5],
+          "loops": [{"rect": [-10, 90, 10, 100]}],
+          "depth": 5,
+          "name": "后端顶部扁位"
+        }
+      ]
+    },
+    {
+      "name": "7",
+      "title": "槽形从动框",
+      "placement": {"translate": [30, 40, 26]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [
+            {"rect": [0, 0, 60, 56]},
+            {"rect": [8, 6, 52, 50]}
+          ],
+          "depth": -40,
+          "name": "矩形外框及内窗"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 12, 0],
+          "loops": [{"rect": [60, 20, 102, 30]}],
+          "depth": -16,
+          "name": "连接耳"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 12, 0],
+          "at": [93, 25],
+          "d": 8,
+          "depth": 16,
+          "name": "耳销孔"
+        }
+      ]
+    },
+    {
+      "name": "8",
+      "title": "滑阀阀芯",
+      "placement": {"translate": [112, 44, 24]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [0, 0, 54, 32]}],
+          "depth": 6,
+          "name": "滑块底板"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XY",
+          "origin": [0, 0, 6],
+          "loops": [{"rect": [0, 0, 10, 32]}],
+          "depth": 14,
+          "name": "立柱根部"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XY",
+          "origin": [0, 0, 20],
+          "loops": [
+            {"rect": [0, 0, 20, 8]},
+            {"rect": [0, 24, 20, 32]}
+          ],
+          "depth": 12,
+          "name": "连接叉双耳"
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [22, 6, 42, 26]}],
+          "depth": 2,
+          "name": "底部凹腔"
+        },
+        {
+          "type": "hole",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "at": [11, 27],
+          "d": 8,
+          "through": true,
+          "name": "连接叉销孔"
+        }
+      ]
+    },
+    {
+      "name": "9",
+      "title": "连接销",
+      "placement": {"translate": [123, 40, 51]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"circle": [0, 0], "d": 12}],
+          "depth": -4,
+          "name": "销挡头"
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "plane": "XZ",
+          "origin": [0, 4, 0],
+          "loops": [{"circle": [0, 0], "d": 8}],
+          "depth": -36,
+          "name": "销杆"
+        }
+      ]
+    },
+    {
+      "name": "10",
+      "title": "导轨压板",
+      "placement": {"translate": [128, 36, 32]},
+      "features": [
+        {
+          "type": "extrude",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [0, 0, 42, 48]}],
+          "depth": 8,
+          "name": "压板毛坯"
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [0, 8, 42, 40]}],
+          "depth": 4,
+          "name": "压板底槽"
+        },
+        {
+          "type": "hole",
+          "plane": "XY",
+          "origin": [0, 0, 8],
+          "at": [[32, 4], [32, 44]],
+          "d": 5,
+          "through": true,
+          "name": "压板安装孔"
+        }
+      ]
+    }
+  ]
+}

@@ -1,695 +1,481 @@
 #include <cstdint>
 #include <vector>
 #include <algorithm>
+#include <cstring>
+#include <numeric>
 #include <immintrin.h>
 #include <omp.h>
 #include <windows.h>
-#include <cstring>
-#include <array>
-#include <unordered_map>
-
 struct Circuit {
-    int I, F, G, O, M, T;
-    uint64_t seed;
-    std::vector<int> d;
-    std::vector<uint8_t> type;
-    std::vector<int> in0, in1, in2;
-    std::vector<int> out;
+ int I,F,G,O,M,T; uint64_t seed;
+ std::vector<int> d; std::vector<uint8_t> type;
+ std::vector<int> in0,in1,in2,out;
 };
+namespace {
+using U=uint64_t;
+U mix(U x) { x+=0x9E3779B97F4A7C15ULL; x=(x^(x>>30))*0xBF58476D1CE4E5B9ULL; x=(x^(x>>27))*0x94D049BB133111EBULL; return x^(x>>31); }
+struct Node {int a,b,c,t;};
+
+struct Macro {
+ int base,width,depth; int sel[8];std::vector<std::pair<int,int>> outputs;
+};
+// Recognize only fully verified rectangular mux trees over flip-flops.
+std::vector<Macro> findMacros(const Circuit& c){
+ int muxes=std::count(c.type.begin(),c.type.end(),7);if(muxes<c.G/2)return {};
+ struct Desc {int base=-1,width=0,depth=0;int sel[8]={};};
+ int gb=2+c.I+c.F,fb=2+c.I;
+ std::vector<Desc> desc(c.G);std::vector<char> seen(c.G),child(c.G);std::vector<int> stack;
+ auto leaf=[&](int v)->Desc{if(v>=gb)return desc[v-gb];Desc d;if(v>=fb)d.base=v-fb;return d;};
+ for(int k=0;k<c.G;k++)if(!seen[k]){
+  stack.push_back(k);
+  while(!stack.empty()){
+   int i=stack.back();
+   if(c.type[i]!=7||c.in0[i]>=gb){seen[i]=1;stack.pop_back();continue;}
+   int a=c.in1[i],b=c.in2[i];
+   if(a>=gb&&!seen[a-gb]){stack.push_back(a-gb);continue;}
+   if(b>=gb&&!seen[b-gb]){stack.push_back(b-gb);continue;}
+   Desc x=leaf(a),y=leaf(b);
+   if(x.base>=0&&y.base>=0&&x.depth==y.depth&&x.depth<8){
+    int w=x.depth==0?y.base-x.base:x.width;
+    if((w==16||w==32||w==64)&&y.base-x.base==w*(1<<x.depth)&&(x.depth==0||x.width==y.width)&&std::equal(x.sel,x.sel+x.depth,y.sel)){
+     x.width=w;x.sel[x.depth++]=c.in0[i];desc[i]=x;
+     if(a>=gb)child[a-gb]=1;if(b>=gb)child[b-gb]=1;
+    }
+   }
+   seen[i]=1;stack.pop_back();
+  }
+ }
+ std::vector<Macro> macros;
+ for(int i=0;i<c.G;i++)if(!child[i]&&desc[i].depth>=4){
+  auto d=desc[i];int base=d.base/d.width*d.width,bit=d.base%d.width;int match=-1;
+  for(int j=0;j<(int)macros.size();j++){auto& m=macros[j];if(m.base==base&&m.width==d.width&&m.depth==d.depth&&std::equal(m.sel,m.sel+m.depth,d.sel)){match=j;break;}}
+  if(match<0){Macro m{};m.base=base;m.width=d.width;m.depth=d.depth;std::copy(d.sel,d.sel+d.depth,m.sel);macros.push_back(m);match=macros.size()-1;}
+  macros[match].outputs.push_back({gb+i,bit});
+ }
+ // Sparse taps are cheaper to evaluate as ordinary gates.
+ macros.erase(std::remove_if(macros.begin(),macros.end(),[](auto& m){return m.outputs.size()<size_t(m.width/2);}),macros.end());
+ return macros;
+}
+// Complemented edges, structural hashing, and optional six-input truth-table cuts.
+struct Net {
+ std::vector<Node> n;
+ 
+ struct Cut {U tt; int v[6]; int len;};
+ std::vector<Cut> cuts;
+ std::vector<int> table;
+ static constexpr U mask[6]={0x5555555555555555ULL,0x3333333333333333ULL,0x0f0f0f0f0f0f0f0fULL,0x00ff00ff00ff00ffULL,0x0000ffff0000ffffULL,0x00000000ffffffffULL};
+
+ std::vector<int> d,out;
+ int base,ffbase; bool useCuts,hashNodes; std::vector<Macro> macros;
+ Net(const Circuit& c):base(1+c.I+c.F),ffbase(base) {
+ macros=findMacros(c);for(auto& m:macros)base+=m.outputs.size();
+  
+ 
+ int equal=0;for(int k=0;k<c.G;k++)equal+=c.in0[k]==c.in1[k];
+
+ useCuts=equal>c.G/50;
+ hashNodes=!(std::count(c.type.begin(),c.type.end(),0)>c.G/3 && std::count(c.type.begin(),c.type.end(),6)<c.G/50);
+
+ n.reserve(base+c.G);n.resize(base, {0,0,0,-1});
+
+ if(useCuts)cuts.reserve(base+c.G);cuts.resize(base);cuts[0]={0,{0},0};
+ for(int i=1;i<base;i++)cuts[i]={0xaaaaaaaaaaaaaaaaULL,{i},1};
+ size_t cap=16;while(cap<(useCuts?size_t(c.G)/2:hashNodes?size_t(c.G)*2:0))cap*=2;table.resize(cap,-1);
+
+  std::vector<int> map(c.I+c.F+c.G+2,-1); map[0]=0; map[1]=1;
+  for(int i=2;i<c.I+c.F+2;i++) map[i]=(i-1)*2;
+  int macroId=ffbase;for(auto& m:macros)for(auto& o:m.outputs){map[o.first]=macroId*2;o.first=macroId++;}
+  const int gb=c.I+c.F+2;
+  std::vector<int> st;
+  
+  std::vector<int> roots=c.d;roots.insert(roots.end(),c.out.begin(),c.out.end());
+  for(int signal:roots) {
+   if(map[signal]>=0)continue;
+   st.push_back(signal-gb);
+
+   while(!st.empty()) {
+    int k=st.back();
+    int a=c.in0[k],b=c.in1[k],z=c.in2[k];
+    if(map[a]<0){st.push_back(a-gb);continue;}
+    if(b>=0&&map[b]<0){st.push_back(b-gb);continue;}
+    if(z>=0&&map[z]<0){st.push_back(z-gb);continue;}
+    int x=map[a],y=b<0?0:map[b],v=z<0?0:map[z],r=0;
+    switch(c.type[k]) {
+     case 0:r=land(x,y);break;
+     case 1:r=land(x^1,y^1)^1;break;
+     case 2:r=lxor(x,y);break;
+     case 3:r=land(x,y)^1;break;
+     case 4:r=land(x^1,y^1);break;
+     case 5:r=lxor(x,y)^1;break;
+     case 6:r=x^1;break;
+     case 7:r=mux(x,y,v);break;
+    }
+    map[gb+k]=r;st.pop_back();
+   }
+  }
+  for(int x:c.d)d.push_back(map[x]);
+  for(int x:c.out)out.push_back(map[x]);
+ }
+
+ int node(int t,int a,int b,int c=0){
+  if(!useCuts){
+   if(!hashNodes){int x=n.size();n.push_back({a,b,c,t});return x*2;}
+   U h=U(a)*0x9e3779b97f4a7c15ULL+U(b)*0xbf58476d1ce4e5b9ULL+U(c)*0x94d049bb133111ebULL+t;
+   size_t pos=(h^(h>>32))&(table.size()-1);
+   while(table[pos]>=0){int x=table[pos];auto old=n[x];if(old.t==t&&old.a==a&&old.b==b&&old.c==c)return x*2;pos=(pos+1)&(table.size()-1);}
+   int x=n.size();n.push_back({a,b,c,t});table[pos]=x;return x*2;
+  }
+
+
+  if((n.size()-base)*2>=table.size()){
+   table.assign(table.size()*2,-1);
+   for(int x=base;x<(int)n.size();x++){
+    const auto& r=cuts[x];U h=r.tt^(r.tt&1?~U(0):0);
+    for(int j=0;j<r.len;j++)h=(h^r.v[j])*0x9e3779b97f4a7c15ULL;
+    size_t pos=(h^(h>>32))&(table.size()-1);while(table[pos]>=0)pos=(pos+1)&(table.size()-1);table[pos]=x;
+   }
+  }
+  int ids[3]={a/2,b/2,c/2},num=t==2?3:2;
+  Cut cs[3];
+  for(int i=0;i<num;i++)cs[i]={0xaaaaaaaaaaaaaaaaULL,{ids[i]},1};
+  Cut r{};
+
+  auto unite=[&](){
+   r.len=cs[0].len;std::copy(cs[0].v,cs[0].v+r.len,r.v);
+   for(int v=1;v<num;v++){
+    int a=0,b=0,count=0,tmp[6];
+    while(a<r.len||b<cs[v].len){
+     int x;if(b==cs[v].len||(a<r.len&&r.v[a]<cs[v].v[b]))x=r.v[a++];
+     else if(a==r.len||cs[v].v[b]<r.v[a])x=cs[v].v[b++];
+     else{x=r.v[a++];b++;}
+     if(count==6)return false;tmp[count++]=x;
+    }
+    r.len=count;std::copy(tmp,tmp+count,r.v);
+   }
+   return true;
+  };
+  for(int i=0;i<num;i++)cs[i]=cuts[ids[i]];
+  if(!unite()){
+   for(int i=0;i<num;i++)cs[i]={0xaaaaaaaaaaaaaaaaULL,{ids[i]},1};
+   for(int i=0;i<num;i++){Cut old=cs[i];cs[i]=cuts[ids[i]];if(!unite())cs[i]=old;}
+   unite();
+  }
+  U tt[3];int inputs[3]={a,b,c};
+  for(int i=0;i<num;i++){
+   U z=cs[i].tt;int q=0;
+   for(int j=0;j<r.len;j++){
+    if(q<cs[i].len&&cs[i].v[q]==r.v[j])q++;
+    else {z=_pdep_u64(z,mask[j]);z|=z<<(1<<j);}
+   }
+   tt[i]=z^(inputs[i]&1?~U(0):0);
+  }
+  r.tt=t==0?(tt[0]&tt[1]):t==1?(tt[0]^tt[1]):tt[1]^(tt[0]&(tt[1]^tt[2]));
+  for(int j=0;j<r.len;){
+   if(((r.tt^(r.tt>>(1<<j)))&mask[j])==0){
+    r.tt=_pext_u64(r.tt,mask[j]);r.tt|=r.tt<<32;
+    for(int k=j;k+1<r.len;k++)r.v[k]=r.v[k+1];--r.len;
+   }else j++;
+  }
+  if(r.len==0)return r.tt&1;
+  if(r.len==1)return r.v[0]*2+(r.tt&1);
+  U canonical=r.tt^(r.tt&1?~U(0):0);
+  U h=canonical;for(int j=0;j<r.len;j++)h=(h^r.v[j])*0x9e3779b97f4a7c15ULL;
+  size_t pos=(h^(h>>32))&(table.size()-1);
+  while(table[pos]>=0){int x=table[pos];const Cut& old=cuts[x];
+   if(old.len==r.len&&(old.tt^(old.tt&1?~U(0):0))==canonical&&std::equal(r.v,r.v+r.len,old.v))return x*2+((old.tt^r.tt)&1);
+   pos=(pos+1)&(table.size()-1);
+  }
+  int x=n.size();n.push_back({a,b,c,t});cuts.push_back(r);table[pos]=x;return x*2;
+ }
+ int land(int a,int b){
+  if(a>b)std::swap(a,b);
+  if(a==0||a==(b^1))return 0;
+  if(a==1)return b;
+  if(a==b)return a;
+  return node(0,a,b);
+ }
+ int lxor(int a,int b){
+  int p=(a^b)&1;a&=~1;b&=~1;
+  if(a>b)std::swap(a,b);
+  if(a==0)return b^p;
+  if(a==b)return p;
+  return node(1,a,b)^p;
+ }
+ int mux(int s,int a,int b){
+  if(s&1){s^=1;std::swap(a,b);}
+  if(s==0)return a;
+  if(a==b)return a;
+  if(a==(b^1))return lxor(s,a);
+  if(a==0)return land(s,b);
+  if(b==0)return land(s^1,a);
+  if(a==1)return land(s,b^1)^1;
+  if(b==1)return land(s^1,a^1)^1;
+  if(s==a||s==(a^1))return mux(s,a&1,b);
+  if(s==b||s==(b^1))return mux(s,a,(b&1)^1);
+  int p=a&1;return node(2,s,a^p,b^p)^p;
+ }
+ std::vector<char> live(const Circuit& c){
+  std::vector<char> seen(n.size());std::vector<int> st;
+  
+  for(int x:out)st.push_back(x/2);
+  for(const auto& m:macros){for(int f=m.base;f<std::min(c.F,m.base+m.width*(1<<m.depth));f++)st.push_back(1+c.I+f);for(int j=0;j<m.depth;j++)if(m.sel[j]>=2)st.push_back(m.sel[j]-1);}
+
+  while(!st.empty()){
+   int v=st.back();st.pop_back();if(seen[v])continue;seen[v]=1;
+   if(v>=base){st.push_back(n[v].a/2);st.push_back(n[v].b/2);if(n[v].t==2)st.push_back(n[v].c/2);}
+   else if(v>c.I&&v<ffbase)st.push_back(d[v-c.I-1]/2);
+  }
+  return seen;
+ }
+};
+}
+namespace {
+struct Op {int a,b,c,d,t;};
+
+void transpose(U *a) {
+ for(int j=32;j;j>>=1){U mask=~U(0)/((U(1)<<j)+1);for(int k=0;k<64;k=(k+j+1)&~j){U z=((a[k]>>j)^a[k+j])&mask;a[k]^=z<<j;a[k+j]^=z;}}
+}
+void transposeAvx(U *a) {
+ for(int j=32;j>=4;j>>=1){
+  __m256i mask=_mm256_set1_epi64x(~U(0)/((U(1)<<j)+1));
+  __m256i shift=_mm256_set1_epi64x(j);
+  for(int block=0;block<64;block+=2*j)for(int k=block;k<block+j;k+=4){
+   __m256i x=_mm256_loadu_si256((const __m256i*)(a+k));
+   __m256i y=_mm256_loadu_si256((const __m256i*)(a+k+j));
+   __m256i z=_mm256_and_si256(_mm256_xor_si256(_mm256_srlv_epi64(x,shift),y),mask);
+   _mm256_storeu_si256((__m256i*)(a+k),_mm256_xor_si256(x,_mm256_sllv_epi64(z,shift)));
+   _mm256_storeu_si256((__m256i*)(a+k+j),_mm256_xor_si256(y,z));
+  }
+ }
+ for(int k=0;k<64;k+=4){
+  __m256i x=_mm256_loadu_si256((const __m256i*)(a+k));
+  __m256i y=_mm256_permute4x64_epi64(x,0x4e);
+  __m256i z=_mm256_and_si256(_mm256_xor_si256(_mm256_srli_epi64(x,2),y),_mm256_set1_epi64x(0x3333333333333333ULL));
+  z=_mm256_permute4x64_epi64(z,0x44);
+  x=_mm256_xor_si256(x,_mm256_blend_epi32(_mm256_slli_epi64(z,2),z,0xf0));
+  y=_mm256_permute4x64_epi64(x,0xb1);
+  z=_mm256_and_si256(_mm256_xor_si256(_mm256_srli_epi64(x,1),y),_mm256_set1_epi64x(0x5555555555555555ULL));
+  z=_mm256_permute4x64_epi64(z,0xa0);
+  x=_mm256_xor_si256(x,_mm256_blend_epi32(_mm256_slli_epi64(z,1),z,0xcc));
+  _mm256_storeu_si256((__m256i*)(a+k),x);
+ }
+
+}
+}
 
 namespace {
-uint64_t mix(uint64_t x) {
-    x += 0x9e3779b97f4a7c15ULL;
-    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
-    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
-    return x ^ (x >> 31);
-}
-struct Node { int a, b, c, op; };
-struct Builder {
-    std::vector<Node> n;
-    std::vector<int> table;
-    int base;
-    Builder(int leaves, int count) : base(leaves) {
-        n.resize(leaves);
-        n.reserve(leaves + count);
-        size_t size = 16;
-        while (size < size_t(count) * 2) size *= 2;
-        table.assign(size, 0);
+
+// In-memory AVX2 blocks; all memory and executable code are private to this call.
+// Register allocation uses next references and preserves the Windows x64 ABI.
+struct Jit {
+ std::vector<unsigned char> code; void* mem=nullptr;
+ using Fn=void(*)(void*);std::vector<Fn> fn;std::vector<size_t> starts; int stride;
+ void byte(int x){code.push_back(x);}
+ void disp(int x){for(int i=0;i<4;i++)byte(x>>(8*i));}
+ void vex(int r,int a,int b){if(b<8){byte(0xc5);byte((r<8?128:0)|5|((15-a)<<3));}else{byte(0xc4);byte(0x41|((r<8)?128:0)|((b<8)?32:0));byte(5|((15-a)<<3));}}
+ void load(int r,int slot){vex(r,0,0);byte(0x6f);byte(0x81+8*(r&7));disp(slot*stride);}
+ void save(int r,int slot){vex(r,0,0);byte(0x7f);byte(0x81+8*(r&7));disp(slot*stride);}
+ void op(int ins,int r,int a,int b){vex(r,a,b);byte(ins);byte(0xc0+8*(r&7)+(b&7));}
+ void opmem(int ins,int r,int a,int slot){vex(r,a,0);byte(ins);byte(0x81+8*(r&7));disp(slot*stride);}
+ void stackreg(int r,bool load){ // vmovdqu xmm, [rsp+disp32]
+  byte(0xc5);byte(r<8?0xfa:0x7a);byte(load?0x6f:0x7f);byte(0x84+8*(r&7));byte(0x24);disp((r-6)*16);
+ }
+ Jit(const std::vector<Op>& ops,int slots,int stride_):stride(stride_){
+  code.reserve(ops.size()*20);
+  const int BS=1024,NR=15,INF=1000000000;
+  std::vector<int> future(slots),mapping(slots,-1);
+  struct Nxt{int a,b,c,d;};std::vector<Nxt> nx(BS);
+
+  starts.push_back(0);
+  byte(0x48);byte(0x81);byte(0xec);disp(168);
+  for(int r=6;r<16;r++)stackreg(r,false);
+  op(0x76,15,15,15);
+  if(stride==64){byte(0x31);byte(0xd2);}
+  for(int start=0;start<(int)ops.size();start+=BS){
+   int end=std::min(start+BS,(int)ops.size());std::fill(future.begin(),future.end(),end);
+   for(int i=end-1;i>=start;i--){auto o=ops[i];auto& x=nx[i-start];x.d=future[o.d];future[o.d]=INF;x.a=future[o.a];x.b=future[o.b];x.c=future[o.c];future[o.a]=i;future[o.b]=i;if(o.t==5||o.t==6)future[o.c]=i;}
+   int bodyStart=code.size();
+   int slot[NR],next[NR];bool dirty[NR];for(int r=0;r<NR;r++){slot[r]=-1;next[r]=INF;dirty[r]=false;}
+   auto evict=[&](int r){if(slot[r]>=0){if(dirty[r]&&next[r]!=INF)save(r,slot[r]);mapping[slot[r]]=-1;}slot[r]=-1;dirty[r]=false;};
+   auto alloc=[&](unsigned pins){int best=-1;for(int r=0;r<NR;r++)if(!(pins>>r&1)){if(slot[r]<0)return r;if(best<0||next[r]>next[best])best=r;}evict(best);return best;};
+   for(int i=start;i<end;i++){
+    auto o=ops[i];auto x=nx[i-start];unsigned pins=0;
+    auto get=[&](int s){int r=mapping[s];if(r<0){r=alloc(pins);slot[r]=s;mapping[s]=r;load(r,s);}pins|=1u<<r;return r;};
+
+    int left=o.a,right=o.b,ln=x.a,rn=x.b;
+    if(o.t==1){std::swap(left,right);std::swap(ln,rn);}
+    int a=get(left),b=mapping[right],c=-1;
+    if(o.t==5||o.t==6)b=get(right);
+    else if(b>=0)pins|=1u<<b;
+    if(o.t==5||o.t==6){c=mapping[o.c];if(c>=0)pins|=1u<<c;}
+    next[a]=ln;if(b>=0)next[b]=rn;if(c>=0)next[c]=x.c;
+
+    int dest=mapping[o.d];
+    if(dest<0){for(int r=0;r<NR;r++)if(slot[r]>=0&&next[r]==INF){dest=r;break;}}
+    if(dest<0)dest=alloc(pins);
+    if(slot[dest]>=0)mapping[slot[dest]]=-1;
+
+    if(o.t<5||o.t==7){
+     int ins=o.t==0?0xdb:o.t==1||o.t==2?0xdf:(o.t==3||o.t==7)?0xeb:0xef;
+     if(b<0)opmem(ins,dest,a,right);else op(ins,dest,a,b);
+     if(o.t==3)op(0xef,dest,dest,15);
+    }else{
+     int tmp=(dest!=a&&dest!=b)?dest:alloc(pins|(1u<<dest));
+     if(c<0)opmem(0xef,tmp,b,o.c);else op(0xef,tmp,b,c);if(o.t==6)op(0xef,tmp,tmp,15);
+     op(0xdb,tmp,tmp,a);op(0xef,dest,tmp,b);
     }
-    int insert(int a, int b, int c, int op) {
-        uint64_t h = uint64_t(a) * 0x9e3779b185ebca87ULL
-                   ^ uint64_t(b) * 0xc2b2ae3d27d4eb4fULL
-                   ^ uint64_t(c + op) * 0x165667b19e3779f9ULL;
-        h ^= h >> 32;
-        size_t p = size_t(h) & (table.size() - 1);
-        while (table[p]) {
-            int id = table[p];
-            const Node& x = n[id];
-            if (x.a == a && x.b == b && x.c == c && x.op == op) return id * 2;
-            p = (p + 1) & (table.size() - 1);
-        }
-        int id = int(n.size());
-        n.push_back({a,b,c,op});
-        table[p] = id;
-        return id * 2;
-    }
-    int landRaw(int a, int b) {
-        if (a > b) std::swap(a,b);
-        if (a == 0 || a == (b ^ 1)) return 0;
-        if (a == 1 || a == b) return b;
-        return insert(a,b,0,0);
-    }
-    int land(int a,int b) {
-        if(a<2||b<2||a==b||a==(b^1))return landRaw(a,b);
-        for(int side=0;side<2;++side) {
-            int x=side?b:a,y=side?a:b;
-            if((y>>1)>=base && n[y>>1].op==0) {
-                const Node p=n[y>>1];
-                if(p.a==x || p.b==x) {
-                    if(!(y&1))return y;
-                    return landRaw(x,(p.a==x?p.b:p.a)^1);
-                }
-                if(p.a==(x^1) || p.b==(x^1))return (y&1)?x:0;
-            } else if((y>>1)>=base && n[y>>1].op==2) {
-                const Node p=n[y>>1];
-                if((p.a>>1)==(x>>1))return landRaw(x,p.b^1^(x&1)^(y&1));
-                if((p.b>>1)==(x>>1))return landRaw(x,p.a^1^(x&1)^(y&1));
-            }
-        }
-        return landRaw(a,b);
-    }
-    int lxor(int a, int b) {
-        int inv = (a ^ b) & 1;
-        a &= ~1; b &= ~1;
-        if (a > b) std::swap(a,b);
-        if (!a) return b ^ inv;
-        if (a == b) return inv;
-        if((b>>1)>=base && n[b>>1].op==2) {
-            const Node& p=n[b>>1];
-            if(p.a==a)return p.b^inv;
-            if(p.b==a)return p.a^inv;
-        }
-        if((a>>1)>=base && n[a>>1].op==2) {
-            const Node& p=n[a>>1];
-            if(p.a==b)return p.b^inv;
-            if(p.b==b)return p.a^inv;
-        }
-        for(int side=0;side<2;++side) {
-            int x=side?b:a,y=side?a:b;
-            if((y>>1)>=base && n[y>>1].op==0) {
-                const Node p=n[y>>1];
-                if((p.a>>1)==(x>>1))return (p.a&1)?(landRaw(x^1,p.b^1)^1^inv):(landRaw(x,p.b^1)^inv);
-                if((p.b>>1)==(x>>1))return (p.b&1)?(landRaw(x^1,p.a^1)^1^inv):(landRaw(x,p.a^1)^inv);
-            }
-        }
-        if((a>>1)>=base && (b>>1)>=base && n[a>>1].op==2 && n[b>>1].op==2) {
-            Node p=n[a>>1],q=n[b>>1];
-            int x=-1,y=0;
-            if(p.a==q.a){x=p.b;y=q.b;}
-            else if(p.a==q.b){x=p.b;y=q.a;}
-            else if(p.b==q.a){x=p.a;y=q.b;}
-            else if(p.b==q.b){x=p.a;y=q.a;}
-            if(x>=0) {
-                if(x>y)std::swap(x,y);
-                if(x==y)return inv;
-                if(x==0)return y^inv;
-                return insert(x,y,0,2)^inv;
-            }
-        }
-        return insert(a,b,0,2) ^ inv;
-    }
-    int cofactor(int x,int s,int v) {
-        if((x>>1)==(s>>1))return v^(x&1);
-        if((x>>1)<base)return x;
-        const Node& p=n[x>>1];
-        int inv=x&1;
-        if(p.op==7 && p.a==s)return (v?p.c:p.b)^inv;
-        if(p.op==0 || p.op==2) {
-            int k=-1,other=0;
-            if((p.a>>1)==(s>>1)){k=v^(p.a&1);other=p.b;}
-            else if((p.b>>1)==(s>>1)){k=v^(p.b&1);other=p.a;}
-            if(k>=0)return (p.op==0?(k?other:0):(other^k))^inv;
-        }
-        return x;
-    }
-    int mux(int s, int a, int b) {
-        if (s < 2) return s ? b : a;
-        if (a == b) return a;
-        if (s & 1) { s ^= 1; std::swap(a,b); }
-        a=cofactor(a,s,0);b=cofactor(b,s,1);
-        if(a==b)return a;
-        if (a == (b ^ 1)) return lxor(s,a);
-        if (a < 2) return a ? (land(s,b^1)^1) : land(s,b);
-        if (b < 2) return b ? (land(s^1,a^1)^1) : land(s^1,a);
-        if (a == s) return land(s,b);
-        if (a == (s^1)) return land(s,b^1)^1;
-        if (b == s) return land(s^1,a^1)^1;
-        if (b == (s^1)) return land(s^1,a);
-        int inv = a & 1;
-        return insert(s,a^inv,b^inv,7) ^ inv;
-    }
+    slot[dest]=o.d;mapping[o.d]=dest;next[dest]=x.d;dirty[dest]=true;
+   }
+   for(int r=0;r<NR;r++)evict(r);
+
+   if(stride==64){
+    byte(0x48);byte(0x83);byte(0xc1);byte(32); // advance to the other SIMD lane
+    byte(0x83);byte(0xf2);byte(1);
+    byte(0x0f);byte(0x85);disp(bodyStart-int(code.size())-4);
+    byte(0x48);byte(0x83);byte(0xe9);byte(64);
+   }
+  }
+  for(int r=6;r<16;r++)stackreg(r,true);
+  byte(0x48);byte(0x81);byte(0xc4);disp(168);
+  byte(0xc5);byte(0xf8);byte(0x77);byte(0xc3);
+
+  if(code.empty())return;
+  mem=VirtualAlloc(nullptr,code.size(),MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);
+  if(!mem)return;
+  memcpy(mem,code.data(),code.size());DWORD old;
+  if(!VirtualProtect(mem,code.size(),PAGE_EXECUTE_READ,&old)){VirtualFree(mem,0,MEM_RELEASE);mem=nullptr;return;}
+  FlushInstructionCache(GetCurrentProcess(),mem,code.size());
+  for(size_t x:starts)fn.push_back((Fn)((unsigned char*)mem+x));
+ }
+ ~Jit(){if(mem)VirtualFree(mem,0,MEM_RELEASE);}
 };
-
-std::vector<int> topology(const Circuit& c) {
-    int base = c.I + c.F + 2;
-    std::vector<unsigned char> seen(c.G);
-    std::vector<int> stack, order;
-    stack.reserve(c.G); order.reserve(c.G);
-    std::vector<int> roots=c.d;
-    roots.insert(roots.end(),c.out.begin(),c.out.end());
-    for (int signal : roots) {
-        if(signal<base)continue;
-        int root=signal-base;
-        if (seen[root]) continue;
-        stack.push_back(root);
-        seen[root] = 1;
-        while (!stack.empty()) {
-            int k = stack.back();
-            int a[3] = {c.in0[k],c.in1[k],c.in2[k]};
-            bool pushed = false;
-            for (int v : a) {
-                if (v >= base && !seen[v-base]) {
-                    seen[v-base] = 1;
-                    stack.push_back(v-base);
-                    pushed = true;
-                    break;
-                }
-            }
-            if (!pushed) { order.push_back(k); stack.pop_back(); }
-        }
-    }
-    return order;
+template<int Words> struct alignas(Words*8) Wide {U x[Words];};
 }
+// Each bit is an independent excitation. Workers own disjoint excitation batches.
+template<int B> static std::vector<uint64_t> simulateImpl(const Circuit& c) {
+ Net net(c);auto live=net.live(c);
+ bool phases=!net.hashNodes;
+ std::vector<int> id(net.n.size()),uses(net.n.size()),flip(phases?net.n.size():0);int size=net.base;
+ for(int i=0;i<size;i++)id[i]=i;
+ for(int i=net.base;i<int(net.n.size());i++)if(live[i]){
+  auto n=net.n[i];uses[n.a/2]++;uses[n.b/2]++;if(n.t==2)uses[n.c/2]++;
+ }
+ for(int i=0;i<c.F;i++)if(live[1+c.I+i])uses[net.d[i]/2]++;
+ for(int x:net.out)uses[x/2]++;
+ std::vector<int> free;
+ std::vector<Op> ops;
+ for(int i=net.base;i<int(net.n.size());i++)if(live[i]){
+  
+  auto n=net.n[i];
 
-template<int S> void transposeStage(uint64_t* a) {
-    constexpr uint64_t mask=~uint64_t(0)/((uint64_t(1)<<S)+1);
-    if constexpr(S<4) {
-        __m256i m=S==1?_mm256_set_epi64x(0,mask,0,mask):_mm256_set_epi64x(0,0,mask,mask);
-        for(int j=0;j<64;j+=4) {
-            __m256i v=_mm256_loadu_si256((const __m256i*)(a+j));
-            __m256i p=_mm256_permute4x64_epi64(v,S==1?0xb1:0x4e);
-            __m256i t=_mm256_and_si256(_mm256_xor_si256(_mm256_srli_epi64(v,S),p),m);
-            v=_mm256_xor_si256(v,_mm256_xor_si256(_mm256_slli_epi64(t,S),_mm256_permute4x64_epi64(t,S==1?0xb1:0x4e)));
-            _mm256_storeu_si256((__m256i*)(a+j),v);
-        }
-    } else {
-        __m256i m=_mm256_set1_epi64x(mask);
-        for(int b=0;b<64;b+=2*S)for(int j=0;j<S;j+=4) {
-            __m256i x=_mm256_loadu_si256((const __m256i*)(a+b+j));
-            __m256i y=_mm256_loadu_si256((const __m256i*)(a+b+j+S));
-            __m256i t=_mm256_and_si256(_mm256_xor_si256(_mm256_srli_epi64(x,S),y),m);
-            _mm256_storeu_si256((__m256i*)(a+b+j),_mm256_xor_si256(x,_mm256_slli_epi64(t,S)));
-            _mm256_storeu_si256((__m256i*)(a+b+j+S),_mm256_xor_si256(y,t));
-        }
-    }
-}
-void transpose(uint64_t* a) {
-    transposeStage<1>(a);transposeStage<2>(a);transposeStage<4>(a);
-    transposeStage<8>(a);transposeStage<16>(a);transposeStage<32>(a);
-}
-struct alignas(32) Word { __m256i v; };
-__m256i literal(const Word* v, int x) {
-    return _mm256_xor_si256(v[x>>1].v, _mm256_set1_epi64x(-(int64_t)(x&1)));
-}
+  int a=id[n.a/2],b=id[n.b/2],z=id[n.c/2];
+  int t=n.t==0?((n.a&1)*2+(n.b&1)):n.t==1?4:5+(n.c&1);
+  if(phases){
+   int pa=(n.a&1)^flip[n.a/2],pb=(n.b&1)^flip[n.b/2],pc=(n.c&1)^flip[n.c/2];
+   if(n.t==0){t=pa*2+pb;if(t==3){t=7;flip[i]=1;}}
+   else if(n.t==1){t=4;flip[i]=pa^pb;}
+   else{if(pa){std::swap(b,z);std::swap(pb,pc);}flip[i]=pb;t=5+(pb^pc);}
+  }
+  auto release=[&](int x){if(--uses[x]==0&&x>=net.base)free.push_back(id[x]);};
+  release(n.a/2);release(n.b/2);if(n.t==2)release(n.c/2);
+  int dest;if(free.empty())dest=size++;else{dest=free.back();free.pop_back();}
+  id[i]=dest;ops.push_back({a,b,z,dest,t});
+ }
+ std::vector<int> ff,dd,oo;for(int i=0;i<c.F;i++)if(live[1+c.I+i]){ff.push_back(1+c.I+i);dd.push_back(id[net.d[i]/2]*2+((net.d[i]&1)^(phases?flip[net.d[i]/2]:0)));}
+ for(int x:net.out)oo.push_back(id[x/2]*2+((x&1)^(phases?flip[x/2]:0)));
+ int packLimit=0;for(auto& m:net.macros)packLimit=std::max(packLimit,m.base+m.width*(1<<m.depth));
+ Jit jit(ops,size,B/8);
+ std::vector<U> hashes(size_t(c.T)*c.O);for(size_t i=0;i<hashes.size();i++)hashes[i]=mix(i);
 
-struct ReadGroup {
-    int base=0,width=0,depth=0;
-    std::array<int,8> select{};
-    std::array<int,64> nodes,slots;
-    bool active=false;
-    ReadGroup(){nodes.fill(-1);slots.fill(-1);}
-};
-struct ReadPlan {
-    std::vector<ReadGroup> groups;
-    std::vector<int> nodeGroup,directFF;
-    int ffBlocks=0;
-};
+ int digestGroups=(c.O+7)/8;
+ bool useDigestTable=c.O>=16&&c.M>=128&&!net.useCuts;
+ std::vector<U> digestTable;
+ if(useDigestTable){
+  digestTable.resize(size_t(c.T)*digestGroups*256);
+  for(int t=0;t<c.T;t++)for(int g=0;g<digestGroups;g++){
+   U* q=digestTable.data()+(size_t(t)*digestGroups+g)*256;
+   for(unsigned b=1;b<256;b++){int j=g*8+__builtin_ctz(b);q[b]=q[b&(b-1)]^(j<c.O?hashes[size_t(t)*c.O+j]:0);}
+  }
+ }
+ std::vector<U> ans(c.M);
+ int groups=(c.M+B-1)/B;
+ #pragma omp parallel for schedule(static) num_threads(std::min(4096/B,groups))
+ for(int group=0;group<groups;group++){
+  std::vector<Wide<B/64>> mem(size),next(ff.size());
+  std::vector<U> packed(net.macros.empty()?0:size_t((c.F+63)/64)*B);
+  U states[B],h[B]={};int count=std::min(B,c.M-B*group);
+  for(int m=0;m<B;m++)states[m]=mix(c.seed^U(B*group+m));
+  for(int t=0;t<c.T;t++){
+   for(int w=0;w<B/64;w++){
+    U a[64];for(int k=0;k<64;k++){a[k]=mix(states[64*w+k]);states[64*w+k]+=0x9E3779B97F4A7C15ULL;}
+    transpose(a);for(int i=0;i<c.I;i++)mem[1+i].x[w]=a[i];
+   }
 
-// Recognize regular register reads from their actual Boolean structure.
-// Their selectors must be current inputs or old flip-flop states, so the
-// entire word can be gathered before the remaining combinational program.
-ReadPlan registerReads(const Circuit& c,const Builder& b) {
-    ReadPlan plan;
-    if(c.G<1000 || c.M<256 || std::count(c.type.begin(),c.type.end(),uint8_t(7))<=c.G/3)return plan;
-    struct Pattern {int base=-1,chain=0;};
-    struct Chain {int width=0,depth=0;std::array<int,8> select{};};
-    std::vector<Pattern> patterns(b.n.size());
-    std::vector<Chain> chains(4);
-    chains[1].width=16;chains[2].width=32;chains[3].width=64;
-    std::unordered_map<uint64_t,int> chainMap,groupMap;
-    chainMap.reserve(8192);groupMap.reserve(2048);
-    plan.nodeGroup.assign(b.n.size(),-1);
-    for(int f=0;f<c.F;++f)patterns[1+c.I+f].base=f;
-    for(int k=b.base;k<int(b.n.size());++k) {
-        const Node& g=b.n[k];
-        if(g.op!=7 || ((g.b|g.c)&1) || (g.a>>1)>=b.base)continue;
-        Pattern p=patterns[g.b>>1],q=patterns[g.c>>1];
-        if(p.base<0 || q.base<0 || p.chain!=q.chain)continue;
-        int step=q.base-p.base,prev=p.chain;
-        if(prev==0) {
-            if(step==16)prev=1;else if(step==32)prev=2;else if(step==64)prev=3;else continue;
-        } else if(chains[prev].depth>=8 || step!=(chains[prev].width<<chains[prev].depth))continue;
-        uint64_t key=(uint64_t(prev)<<32)|uint32_t(g.a);
-        auto [pos,inserted]=chainMap.emplace(key,int(chains.size()));
-        if(inserted) {
-            Chain next=chains[prev];next.select[next.depth++]=g.a;chains.push_back(next);
-        }
-        int id=pos->second;
-        patterns[k]={p.base,id};
-        const Chain& chain=chains[id];
-        if(chain.depth<5)continue;
-        int groupBase=p.base-p.base%chain.width;
-        key=(uint64_t(id)<<32)|uint32_t(groupBase);
-        auto [where,created]=groupMap.emplace(key,int(plan.groups.size()));
-        if(created) {
-            ReadGroup r;r.base=groupBase;r.width=chain.width;r.depth=chain.depth;r.select=chain.select;
-            plan.groups.push_back(r);
-        }
-        int group=where->second;
-        plan.groups[group].nodes[p.base%chain.width]=k;
-        plan.nodeGroup[k]=group;
+   if(!net.macros.empty()){
+    for(int f=0;f<std::min(c.F,packLimit);f+=64)for(int w=0;w<B/64;w++){
+     U a[64]={};for(int j=0;j<64&&f+j<c.F;j++)a[j]=mem[1+c.I+f+j].x[w];
+     transposeAvx(a);for(int j=0;j<64;j++)packed[size_t(f/64)*B+w*64+j]=a[j];
     }
-    for(const auto& g:plan.groups) {
-        int count=0;for(int k:g.nodes)count+=k>=0;
-        if(count<g.width*3/4)for(int k:g.nodes)if(k>=0)plan.nodeGroup[k]=-1;
+    for(const auto& m:net.macros)for(int w=0;w<B/64;w++){
+     alignas(32) U a[64]={};
+     for(int j=0;j<m.depth;j++){int q=m.sel[j];a[j]=q<2?(q?~U(0):0):mem[q-1].x[w];}
+     transposeAvx(a);
+     int shift=__builtin_ctz(m.width);
+     for(int j=0;j<64;j+=4){
+      __m256i address=_mm256_add_epi64(_mm256_sllv_epi64(_mm256_load_si256((__m256i*)(a+j)),_mm256_set1_epi64x(shift)),_mm256_set1_epi64x(m.base));
+      __m256i idx=_mm256_add_epi64(_mm256_slli_epi64(_mm256_srli_epi64(address,6),(B==256?8:9)),_mm256_set_epi64x(w*64+j+3,w*64+j+2,w*64+j+1,w*64+j));
+      __m256i val=_mm256_i64gather_epi64((const long long*)packed.data(),idx,8);
+      val=_mm256_srlv_epi64(val,_mm256_and_si256(address,_mm256_set1_epi64x(63)));
+      _mm256_store_si256((__m256i*)(a+j),val);
+     }
+     transposeAvx(a);for(auto o:m.outputs)mem[o.first].x[w]=a[o.second];
     }
-    return plan;
-}
+   }
+   if(!jit.fn.empty()){
 
-// A straight-line AVX2 program. Each small block is reused for all SIMD
-// columns, keeping its instructions hot even for a very large circuit.
-struct Program {
-    static constexpr int blockSize=4096;
-    std::vector<unsigned char> code;
-    void* memory = nullptr;
-    using Function = void(*)(Word*,Word*,Word*);
-    Function function = nullptr;
-    int ffFirst=0,ffLast=0;
-    void byte(int v) { code.push_back(static_cast<unsigned char>(v)); }
-    void imm(int v) {
-        for (int i=0;i<4;++i) byte(uint32_t(v)>>(i*8));
-    }
-    void memoryOp(int op, int dst, int src, int offset, int base=1) {
-        if(base==1 && op!=0x7f && offset>=ffFirst && offset<ffLast) {
-            base=2;offset-=ffFirst;
-        }
-        if(base<8) {byte(0xc5);byte(((dst<8)<<7)|((~src&15)<<3)|5);}
-        else {byte(0xc4);byte(((dst<8)<<7)|0x41);byte(((~src&15)<<3)|5);}
-        byte(op); byte(0x80 | (base&7) | ((dst&7)<<3)); imm(offset);
-    }
-    void regOp(int op, int dst, int a, int b) {
-        if(b<8) {byte(0xc5);byte(((dst<8)<<7) | ((~a&15)<<3) | 5);}
-        else {byte(0xc4);byte(((dst<8)<<7)|0x40|1);byte(((~a&15)<<3)|5);}
-        byte(op); byte(0xc0 | ((dst&7)<<3) | (b&7));
-    }
-    void saveXmm(int reg,int offset,bool load) {
-        byte(0xf3);if(reg>=8)byte(0x44);
-        byte(0x0f);byte(load?0x6f:0x7f);byte(0x84|((reg&7)<<3));byte(0x24);imm(offset);
-    }
-    Program() = default;
-    void block(const std::vector<Node>& gates, const std::vector<int>& dest,
-        const std::vector<int>& kill, int columns, size_t first, std::vector<int>& cached,
-        const std::vector<int>& heads,const std::vector<int>& links,const std::vector<int>& ds) {
-        code.clear();code.reserve(blockSize*32);
-        const int stride = columns*32;
-            size_t end = std::min(first+blockSize,gates.size());
-            int xors=0;
-            for(size_t i=first;i<end;++i)xors+=gates[i].op==2;
-            bool weightSpills=xors*2>int(end-first);
-            struct Next {int a,b,c,d;};
-            std::vector<Next> after(end-first);
-            std::vector<int> future(cached.size(),int(end));
-            for(size_t i=end;i-->first;) {
-                const Node& g=gates[i];
-                Next& nx=after[i-first];
-                nx.d=future[dest[i]];
-                future[dest[i]]=int(end);
-                nx.a=future[g.a>>1];nx.b=future[g.b>>1];
-                nx.c=g.op==7?future[g.c>>1]:int(end);
-                future[g.a>>1]=future[g.b>>1]=int(i);
-                if(g.op==7)future[g.c>>1]=int(i);
-            }
-            if(columns>1){byte(0xb8);imm(columns);}
-            size_t loop=code.size();
-            int occupant[14],current=int(first);
-            bool dirty[14]{};
-            std::fill(occupant,occupant+14,-1);
-            auto allocate=[&](unsigned protectedRegs) {
-                int best=-1;
-                auto priority=[&](int r) {
-                    int distance=future[occupant[r]]-current;
-                    return distance*((weightSpills && dirty[r] && future[occupant[r]]<int(end))?1:2);
-                };
-                for(int r=0;r<14;++r) if(!(protectedRegs&(1u<<r))) {
-                    if(occupant[r]<0){best=r;break;}
-                    if(best<0 || priority(r)>priority(best) ||
-                        (priority(r)==priority(best) && !dirty[r] && dirty[best]))best=r;
-                }
-                if(occupant[best]>=0) {
-                    if(dirty[best]) memoryOp(0x7f,best,0,occupant[best]*stride);
-                    cached[occupant[best]]=-1;
-                }
-                occupant[best]=-1;dirty[best]=false;
-                return best;
-            };
-            auto load = [&](int slot,unsigned protectedRegs) {
-                int r=cached[slot];
-                if(r<0) {
-                    r=allocate(protectedRegs);
-                    occupant[r]=slot;cached[slot]=r;
-                    memoryOp(0x6f,r,0,slot*stride);
-                }
-                return r;
-            };
-            for(size_t i=first;i<end;++i) {
-                current=int(i);
-                const Node& g=gates[i];
-                int ax=g.a>>1,bx=g.b>>1;
-                int a=-1,b=-1;
-                int op=0;
-                bool andMux=false;
-                auto combine=[&](int opcode,int dst,int lhs,int slot) {
-                    if(cached[slot]>=0) {
-                        regOp(opcode,dst,lhs,cached[slot]);
-                    } else memoryOp(opcode,dst,lhs,slot*stride);
-                };
-                if(g.op==7) {
-                    int cx=g.c>>1;
-                    int xorCost=(cached[bx]<0)+(g.c&1);
-                    int andCost=(cached[ax]<0)+((g.c&1) && cached[cx]<0);
-                    andMux=andCost<=xorCost;
-                    if(andMux) {
-                        a=load(ax,0);
-                        b=(g.c&1)?load(cx,1u<<a):cached[cx];
-                        combine(0xdf,14,a,bx);
-                    } else {
-                        b=load(bx,0);
-                        combine(0xef,14,b,cx);
-                        if(g.c&1)regOp(0xef,14,14,15);
-                        combine(0xdb,14,14,ax);
-                    }
-                } else {
-                    op=g.op==2?0xef:g.op==1?0xeb:0xdb;
-                    if(g.op==0 && ((g.a^g.b)&1)) {
-                        if(g.b&1)std::swap(ax,bx);
-                        op=0xdf;
-                    } else if(cached[ax]<0 && cached[bx]>=0)std::swap(ax,bx);
-                    a=load(ax,0);
-                    b=cached[bx];
-                }
-                int src[3]={g.a>>1,g.b>>1,g.c>>1};
-                const Next& nx=after[i-first];
-                future[src[0]]=nx.a;future[src[1]]=nx.b;
-                if(g.op==7)future[src[2]]=nx.c;
-                for(int j=0;j<3;++j)if(kill[i]&(1<<j)) {
-                    int r=cached[src[j]];
-                    if(r>=0){occupant[r]=-1;dirty[r]=false;cached[src[j]]=-1;}
-                }
-                int r=allocate(0);
-                future[dest[i]]=nx.d;
-                if(g.op==7 && andMux) {
-                    if(g.c&1)regOp(0xdf,r,b,a);
-                    else if(b>=0)regOp(0xdb,r,a,b);
-                    else memoryOp(0xdb,r,a,(g.c>>1)*stride);
-                    regOp(0xeb,r,r,14);
-                } else if(g.op==7)regOp(0xef,r,14,b);
-                else if(b>=0)regOp(op,r,a,b);
-                else memoryOp(op,r,a,bx*stride);
-                for(int f=heads[i];f>=0;f=links[f]) {
-                    int value=r;
-                    if(ds[f]&1){regOp(0xef,14,r,15);value=14;}
-                    memoryOp(0x7f,value,0,f*stride,8);
-                }
-                if(!(kill[i]&8)) {
-                    occupant[r]=dest[i];dirty[r]=true;cached[dest[i]]=r;
-                }
-            }
-            for(int r=0;r<14;++r)if(occupant[r]>=0) {
-                if(dirty[r])memoryOp(0x7f,r,0,occupant[r]*stride);
-                cached[occupant[r]]=-1;
-            }
-            if(columns>1) {
-                byte(0x48);byte(0x83);byte(0xc1);byte(32);
-                byte(0x48);byte(0x83);byte(0xc2);byte(32);
-                byte(0x49);byte(0x83);byte(0xc0);byte(32);
-                byte(0xff);byte(0xc8);
-                byte(0x0f);byte(0x85);imm(int(loop)-int(code.size()+4));
-                byte(0x48);byte(0x81);byte(0xe9);imm(stride);
-                byte(0x48);byte(0x81);byte(0xea);imm(stride);
-                byte(0x49);byte(0x81);byte(0xe8);imm(stride);
-            }
-    }
-    Program(const std::vector<Node>& gates, const std::vector<int>& dest,
-        const std::vector<int>& kill, int slots, int columns,const Circuit& c,
-        const std::vector<int>& heads,const std::vector<int>& links,const std::vector<int>& ds) {
-        ffFirst=(1+c.I)*columns*32;ffLast=(1+c.I+c.F)*columns*32;
-        code.reserve(gates.size()*24+512);
-        byte(0x48);byte(0x81);byte(0xec);imm(168);
-        for(int r=6;r<16;++r)saveXmm(r,(r-6)*16,false);
-        regOp(0x76,15,15,15);
-        for(int f=0;f<c.F;++f)if((ds[f]>>1)<1+c.I+c.F)for(int col=0;col<columns;++col) {
-            memoryOp(0x6f,0,0,((ds[f]>>1)*columns+col)*32);
-            if(ds[f]&1)regOp(0xef,0,0,15);
-            memoryOp(0x7f,0,0,(f*columns+col)*32,8);
-        }
-        int chunks=(int(gates.size())+blockSize-1)/blockSize;
-        std::vector<std::vector<unsigned char>> parts(chunks);
-        int threads=std::max(1,std::min({8,omp_get_max_threads(),chunks}));
-        #pragma omp parallel num_threads(threads)
-        {
-            std::vector<int> cached(slots,-1);
-            Program p;
-            p.ffFirst=ffFirst;p.ffLast=ffLast;
-            #pragma omp for schedule(static)
-            for(int i=0;i<chunks;++i) {
-                p.block(gates,dest,kill,columns,size_t(i)*blockSize,cached,heads,links,ds);
-                parts[i]=p.code;
-            }
-        }
-        for(auto& p:parts)code.insert(code.end(),p.begin(),p.end());
-        for(int r=6;r<16;++r)saveXmm(r,(r-6)*16,true);
-        byte(0x48);byte(0x81);byte(0xc4);imm(168);
-        byte(0xc5);byte(0xf8);byte(0x77);byte(0xc3);
-        memory=VirtualAlloc(nullptr,code.size(),MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
-        if(memory) {
-            std::memcpy(memory,code.data(),code.size());
-            DWORD old;
-            if(VirtualProtect(memory,code.size(),PAGE_EXECUTE_READ,&old)) {
-                FlushInstructionCache(GetCurrentProcess(),memory,code.size());
-                function=reinterpret_cast<Function>(memory);
-            }
-        }
-    }
-    ~Program() { if(memory)VirtualFree(memory,0,MEM_RELEASE); }
-};
+    jit.fn[0](mem.data());
+   }else for(const auto& op:ops)for(int w=0;w<B/64;w++){
+    U a=mem[op.a].x[w],b=mem[op.b].x[w],z;
+    switch(op.t){
+     case 0:z=a&b;break;case 1:z=a&~b;break;case 2:z=~a&b;break;case 3:z=~(a|b);break;case 4:z=a^b;break;case 7:z=a|b;break;
+     case 5:z=b^(a&(b^mem[op.c].x[w]));break;
+     default:z=b^(a&(b^~mem[op.c].x[w]));break;
+    }mem[op.d].x[w]=z;
+   }
 
-template<int Columns>
-std::vector<uint64_t> execute(const Circuit& c, const std::vector<Node>& gates,
-    const std::vector<int>& dest, const std::vector<int>& kill, int slots, const std::vector<int>& ds, const std::vector<int>& outs,
-    const std::vector<int>& heads,const std::vector<int>& links,const ReadPlan& reads) {
-    constexpr int batchSize=Columns*256;
-    Program program(gates,dest,kill,slots,Columns,c,heads,links,ds);
-    std::vector<uint64_t> weights(size_t(c.T)*c.O);
-    for (size_t i = 0; i < weights.size(); ++i) weights[i] = mix(i);
-    std::vector<uint64_t> result(c.M);
-    int batches = (c.M+batchSize-1)/batchSize;
-    int threads = std::max(1,std::min({8,omp_get_max_threads(),batches}));
-    #pragma omp parallel for num_threads(threads) schedule(static)
-    for (int batch = 0; batch < batches; ++batch) {
-        std::vector<Word> vals(size_t(slots)*Columns), next(c.F*Columns), state(c.F*Columns);
-        std::vector<uint64_t> packed(size_t(reads.ffBlocks)*batchSize);
-        alignas(32) Word hashes[64][Columns]{};
-        uint64_t rng[batchSize];
-        for (int i = 0; i < batchSize; ++i) rng[i] = mix(c.seed ^ uint64_t(batch*batchSize+i));
-        for (int t = 0; t < c.T; ++t) {
-            for (int col=0;col<Columns;++col) {
-                alignas(32) uint64_t pis[64][4]{};
-                for (int w = 0; w < 4; ++w) {
-                    uint64_t r[64];
-                    for (int i = 0; i < 64; ++i) {
-                        int m=col*256+w*64+i;
-                        r[i] = mix(rng[m]);
-                        rng[m] += 0x9e3779b97f4a7c15ULL;
-                    }
-                    transpose(r);
-                    for (int i = 0; i < c.I; ++i) pis[i][w] = r[i];
-                }
-                for (int i = 0; i < c.I; ++i) vals[(1+i)*Columns+col].v = _mm256_load_si256((const __m256i*)pis[i]);
-            }
-            auto get=[&](int x,int col) {
-                int id=x>>1;
-                __m256i v=(id>c.I && id<=c.I+c.F)?state[(id-1-c.I)*Columns+col].v:vals[id*Columns+col].v;
-                return _mm256_xor_si256(v,_mm256_set1_epi64x(-(int64_t)(x&1)));
-            };
-            if(reads.ffBlocks) {
-                for(int col=0;col<Columns;++col) {
-                    for(int block=0;block<reads.ffBlocks;++block)for(int w=0;w<4;++w) {
-                        alignas(32) uint64_t r[64];
-                        for(int i=0;i<64;++i) {
-                            int f=block*64+i;
-                            r[i]=f<c.F?reinterpret_cast<const uint64_t*>(&state[f*Columns+col].v)[w]:0;
-                        }
-                        transpose(r);
-                        std::memcpy(packed.data()+size_t(block)*batchSize+col*256+w*64,r,sizeof(r));
-                    }
-                    for(const ReadGroup& g:reads.groups)if(g.active) {
-                        alignas(32) uint64_t selects[8][4];
-                        for(int i=0;i<g.depth;++i)_mm256_store_si256((__m256i*)selects[i],get(g.select[i],col));
-                        for(int w=0;w<4;++w) {
-                            alignas(32) uint64_t r[64]{};
-                            for(int i=0;i<g.depth;++i)r[i]=selects[i][w];
-                            transpose(r);
-                            for(int i=0;i<64;++i) {
-                                int f=g.base+g.width*int(r[i]);
-                                r[i]=packed[size_t(f>>6)*batchSize+col*256+w*64+i]>>(f&63);
-                            }
-                            transpose(r);
-                            for(int bit=0;bit<g.width;++bit)if(g.slots[bit]>=0)
-                                reinterpret_cast<uint64_t*>(&vals[g.slots[bit]*Columns+col].v)[w]=r[bit];
-                        }
-                    }
-                }
-                for(int f:reads.directFF)for(int col=0;col<Columns;++col)next[f*Columns+col].v=get(ds[f],col);
-            }
-            if(program.function) program.function(vals.data(),state.data(),next.data());
-            else for(size_t i=0;i<gates.size();++i) for(int col=0;col<Columns;++col) {
-                const Node& g=gates[i];
-                __m256i a=get(g.a,col),b=get(g.b,col),z;
-                if(g.op==0)z=_mm256_and_si256(a,b);
-                else if(g.op==1)z=_mm256_or_si256(a,b);
-                else if(g.op==2)z=_mm256_xor_si256(a,b);
-                else z=_mm256_xor_si256(b,_mm256_and_si256(a,_mm256_xor_si256(b,get(g.c,col))));
-                vals[dest[i]*Columns+col].v=z;
-                for(int f=heads[i];f>=0;f=links[f])next[f*Columns+col].v=_mm256_xor_si256(z,_mm256_set1_epi64x(-(int64_t)(ds[f]&1)));
-            }
-            if(!program.function)for(int f=0;f<c.F;++f)if((ds[f]>>1)<1+c.I+c.F)
-                for(int col=0;col<Columns;++col)next[f*Columns+col].v=get(ds[f],col);
-            for (int j = 0; j < c.O; ++j) {
-                Word value[Columns];
-                for(int col=0;col<Columns;++col) value[col].v=get(outs[j],col);
-                uint64_t w = weights[size_t(t)*c.O+j];
-                while (w) {
-                    int bit = __builtin_ctzll(w);
-                    for(int col=0;col<Columns;++col) hashes[bit][col].v = _mm256_xor_si256(hashes[bit][col].v,value[col].v);
-                    w &= w-1;
-                }
-            }
-            state.swap(next);
-        }
-        for(int col=0;col<Columns;++col) {
-            alignas(32) uint64_t hs[64][4];
-            for (int i = 0; i < 64; ++i) _mm256_store_si256((__m256i*)hs[i],hashes[i][col].v);
-            for (int w = 0; w < 4; ++w) {
-                uint64_t r[64];
-                for (int i = 0; i < 64; ++i) r[i] = hs[i][w];
-                transpose(r);
-                for (int i = 0; i < 64 && batch*batchSize+col*256+w*64+i < c.M; ++i)
-                    result[batch*batchSize+col*256+w*64+i] = r[i];
-            }
-        }
+   if(useDigestTable){
+    const U* tables=digestTable.data()+size_t(t)*digestGroups*256;
+    for(int w=0;w<B/64;w++){
+     alignas(32) U a[64]={};
+     for(int j=0;j<c.O;j++){int x=oo[j];a[j]=mem[x/2].x[w]^(x&1?~U(0):0);}
+     transposeAvx(a);
+     for(int m=0;m<64;m++){
+      
+      U bits=a[m],val=0;
+      if(c.O==64){
+       val=tables[(bits&255)]^tables[256+((bits>>8)&255)]^tables[512+((bits>>16)&255)]^tables[768+((bits>>24)&255)]
+          ^tables[1024+((bits>>32)&255)]^tables[1280+((bits>>40)&255)]^tables[1536+((bits>>48)&255)]^tables[1792+(bits>>56)];
+      }else for(int g=0;g<digestGroups;g++){val^=tables[g*256+(bits&255)];bits>>=8;}
+      h[w*64+m]^=val;
+     }
     }
-    return result;
-}
+   }else{
+    for(int j=0;j<c.O;j++){
+     int x=oo[j];U hv=hashes[size_t(t)*c.O+j];
+     for(int w=0;w<B/64;w++){U bits=mem[x/2].x[w]^(x&1?~U(0):0);while(bits){int b=__builtin_ctzll(bits);h[w*64+b]^=hv;bits&=bits-1;}}
+    }
+   }
+   // Stage all D inputs before updating any flip-flop.
+   for(size_t f=0;f<ff.size();f++)for(int w=0;w<B/64;w++)next[f].x[w]=mem[dd[f]/2].x[w]^(dd[f]&1?~U(0):0);
+   for(size_t f=0;f<ff.size();f++)mem[ff[f]]=next[f];
+  }
+  for(int m=0;m<count;m++)ans[group*B+m]=h[m];
+ }
+ return ans;
 }
 
 std::vector<uint64_t> simulate(const Circuit& c) {
-    const int leaves = 1 + c.I + c.F;
-    auto order = topology(c);
-    Builder build(leaves,c.G);
-    std::vector<int> map(c.I+c.F+c.G+2);
-    map[1] = 1;
-    for (int i = 2; i < leaves+1; ++i) map[i] = (i-1)*2;
-    for (int k : order) {
-        int a = map[c.in0[k]];
-        int b = c.in1[k] >= 0 ? map[c.in1[k]] : 0;
-        int z = 0;
-        switch (c.type[k]) {
-            case 0: z = build.land(a,b); break;
-            case 1: z = build.land(a^1,b^1)^1; break;
-            case 2: z = build.lxor(a,b); break;
-            case 3: z = build.land(a,b)^1; break;
-            case 4: z = build.land(a^1,b^1); break;
-            case 5: z = build.lxor(a,b)^1; break;
-            case 6: z = a^1; break;
-            case 7: z = build.mux(a,b,map[c.in2[k]]); break;
-        }
-        map[leaves+1+k] = z;
-    }
-    ReadPlan reads=registerReads(c,build);
-    auto isRead=[&](int k){return !reads.nodeGroup.empty() && reads.nodeGroup[k]>=0;};
-    std::vector<unsigned char> needed(build.n.size());
-    for (int d : c.d) needed[map[d]>>1] = 1;
-    for (int o : c.out) needed[map[o]>>1] = 1;
-    for (int k = int(build.n.size())-1; k >= leaves; --k) {
-        if (!needed[k]) continue;
-        if(isRead(k)){reads.groups[reads.nodeGroup[k]].active=true;continue;}
-        const auto& x = build.n[k];
-        needed[x.a>>1] = needed[x.b>>1] = 1;
-        if (x.op == 7) needed[x.c>>1] = 1;
-    }
-    std::vector<int> renumber(build.n.size());
-    std::vector<int> phase(build.n.size());
-    for (int i = 0; i < leaves; ++i) renumber[i] = i;
-    std::vector<Node> gates;
-    std::vector<int> dest, kill, uses(build.n.size());
-    for(int k=leaves;k<int(build.n.size());++k) if(needed[k] && !isRead(k)) {
-        const Node& x=build.n[k];
-        ++uses[x.a>>1];++uses[x.b>>1];
-        if(x.op==7)++uses[x.c>>1];
-    }
-    for(int o:c.out)++uses[map[o]>>1];
-    std::vector<int> available;
-    int slots=leaves;
-    for(auto& g:reads.groups)if(g.active) {
-        for(int bit=0;bit<g.width;++bit) {
-            int k=g.nodes[bit];
-            if(k>=0 && needed[k] && isRead(k)) {
-                renumber[k]=slots;g.slots[bit]=slots++;
-                if(uses[k]==0)available.push_back(renumber[k]);
-            }
-        }
-        reads.ffBlocks=std::max(reads.ffBlocks,(g.base+(g.width<<g.depth)+63)/64);
-    }
-    std::vector<int> gateIndex(build.n.size(),-1);
-    auto remap = [&](int x) { return renumber[x>>1]*2 + ((x&1)^phase[x>>1]); };
-    for (int k = leaves; k < int(build.n.size()); ++k) if (needed[k] && !isRead(k)) {
-        const auto& x = build.n[k];
-        Node g={remap(x.a),remap(x.b),remap(x.c),x.op};
-        bool swapped=false;
-        if(g.op==0 && (g.a&1) && (g.b&1)) {
-            g.a^=1;g.b^=1;g.op=1;phase[k]=1;
-        } else if(g.op==2) {
-            phase[k]=(g.a^g.b)&1;g.a&=~1;g.b&=~1;
-        } else if(g.op==7) {
-            if(g.a&1) {g.a^=1;std::swap(g.b,g.c);swapped=true;}
-            phase[k]=g.b&1;g.b^=phase[k];g.c^=phase[k];
-        }
-        gateIndex[k]=int(gates.size());gates.push_back(g);
-        int deaths=0;
-        auto consume=[&](int v,int bit) {
-            int id=v>>1;
-            if(--uses[id]==0) {
-                deaths|=1<<bit;
-                if(id>=leaves)available.push_back(renumber[id]);
-            }
-        };
-        consume(x.a,0);consume(x.b,1);if(x.op==7)consume(x.c,2);
-        if(swapped)deaths=(deaths&1)|((deaths&2)<<1)|((deaths&4)>>1);
-        int slot;
-        if(available.empty())slot=slots++;
-        else {slot=available.back();available.pop_back();}
-        renumber[k]=slot;dest.push_back(slot);
-        if(uses[k]==0){available.push_back(slot);deaths|=8;}
-        kill.push_back(deaths);
-    }
-    std::vector<int> ds(c.F), outs(c.O);
-    for (int i = 0; i < c.F; ++i) ds[i] = remap(map[c.d[i]]);
-    for (int i = 0; i < c.O; ++i) outs[i] = remap(map[c.out[i]]);
-    std::vector<int> heads(gates.size(),-1),links(c.F,-1);
-    for(int f=0;f<c.F;++f)if((map[c.d[f]]>>1)>=leaves) {
-        int id=map[c.d[f]]>>1;
-        if(isRead(id))reads.directFF.push_back(f);
-        else {int k=gateIndex[id];links[f]=heads[k];heads[k]=f;}
-    }
-    return execute<1>(c,gates,dest,kill,slots,ds,outs,heads,links,reads);
+ int muxes=std::count(c.type.begin(),c.type.end(),7);
+ if(muxes>c.G/2||c.M<=256)return simulateImpl<256>(c);
+ return simulateImpl<512>(c);
 }

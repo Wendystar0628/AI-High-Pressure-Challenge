@@ -1,0 +1,77 @@
+{
+  "task": "攻城略地",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "总分",
+      "max": 100,
+      "score": 52.2,
+      "reason": "指定g++及官方主程序编译通过，未见第八节违规；唯一一次正式480局共284胜1平195负，得284.5局分。官方脚本拟合r=500.36266470995383，换算52.2分；第五档25胜71负。"
+    }
+  ],
+  "metrics": {
+    "total_games": 480,
+    "wins": 284,
+    "draws": 1,
+    "losses": 195,
+    "total_points": 284.5,
+    "r": 500.36266470995383,
+    "score": 52.2,
+    "score_ci95": [
+      46.4,
+      58.3
+    ],
+    "by_opponent": [
+      {
+        "name": "第1档",
+        "games": 96,
+        "wins": 86,
+        "draws": 0,
+        "losses": 10,
+        "points": 86.0
+      },
+      {
+        "name": "第2档",
+        "games": 96,
+        "wins": 71,
+        "draws": 1,
+        "losses": 24,
+        "points": 71.5
+      },
+      {
+        "name": "第3档",
+        "games": 96,
+        "wins": 58,
+        "draws": 0,
+        "losses": 38,
+        "points": 58.0
+      },
+      {
+        "name": "第4档",
+        "games": 96,
+        "wins": 44,
+        "draws": 0,
+        "losses": 52,
+        "points": 44.0
+      },
+      {
+        "name": "第5档",
+        "games": 96,
+        "wins": 25,
+        "draws": 0,
+        "losses": 71,
+        "points": 25.0
+      }
+    ],
+    "cpu_timeout_turns": 0,
+    "forfeit_losses": 0,
+    "penalty_games": 0,
+    "opponent_cpu_timeout_turns": 0,
+    "opponent_forfeit_losses": 0,
+    "simultaneous_forfeit_draws": 0,
+    "is_official_configuration": true,
+    "report": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\攻城略地\\codex\\performance\\work\\official_report.json"
+  },
+  "notes": "评的是作答结束时工作目录的完整副本（评分表除外），不看git提交。原始提交只读，所有编译与评测产物位于本次工作目录；bot.cpp SHA256为CC2FEB9CDD9782EB97178DC56E5E9C7C6581D314CF345B28BB01F787DF394F55。公开引擎、主程序及裁判配套文件哈希与官方一致。仅运行一次官方evaluate.py，96张图、五档、每档96局，CPU 0–15、8局并行、原始时限；报告status=complete，未重跑或剔除对局。源码自然检查未见作弊；编译器及评测进程均已退出，官方裁判已完成子进程收尾。"
+}

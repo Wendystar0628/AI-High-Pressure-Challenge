@@ -58,7 +58,6 @@ export function createAxis({ data, state, computed, onFocus }) {
   function drawPassLabel(g, on, x) {
     g.replaceChildren();
     if (!on) return;
-    text(g, { class: 'ax-pass-label', x: x(PASS), y: Y2, 'text-anchor': 'middle' }, t('leaderboard.axis.pass'));
   }
 
   function drawRight(g, kind) {

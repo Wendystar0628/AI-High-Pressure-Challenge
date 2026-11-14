@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>玄铁动效工坊 · AE风味动效设计编辑器</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app-shell">
+    <!-- ==================== TOP STUDIO BAR ==================== -->
+    <header id="top-bar">
+      <div class="brand-cluster">
+        <div class="brand-mark">锻</div>
+        <span class="brand-title">玄铁动效工坊</span>
+        <span id="active-comp-badge" class="comp-pill">主合成 · 锻字</span>
+      </div>
+
+      <!-- Direct Manipulation & Drawing Tools -->
+      <div class="toolbar-group" title="画布交互与绘图工具">
+        <button class="tb-btn active" data-tool="select" title="选择/平移/缩放工具 (V)">↖ 选择</button>
+        <button class="tb-btn" data-tool="hand" title="抓手平移视图 (H 或按住空格拖动)">✋ 抓手</button>
+        <button class="tb-btn" data-tool="anchor" title="锚点工具：单独移动锚点并保持画面位置不变 (Y)">⌖ 锚点</button>
+        <button class="tb-btn" data-tool="rotate" title="旋转工具 (W)">↻ 旋转</button>
+        <button class="tb-btn" data-tool="camera" title="摄像机轨道工具 (C)">🎥 镜头</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" data-tool="rect" title="矩形绘制工具 (Q)">▭ 矩形</button>
+        <button class="tb-btn" data-tool="ellipse" title="椭圆绘制工具 (再按 Q)">◯ 椭圆</button>
+        <button class="tb-btn" data-tool="pen" title="钢笔贝塞尔路径与切线工具 (G)">✒ 钢笔</button>
+        <button class="tb-btn" data-tool="pin" title="网格变形图钉工具 (Ctrl+P)">📌 图钉</button>
+      </div>
+
+      <!-- Transport & Audio VU -->
+      <div class="toolbar-group">
+        <button id="btn-jump-start" class="tb-btn" title="回到合成起点 (Home)">⏮</button>
+        <button id="btn-kf-prev" class="tb-btn" title="跳到上一关键帧 (J)">‹◆</button>
+        <button id="btn-step-prev" class="tb-btn" title="上一帧 (← / ,)">◁</button>
+        <button id="btn-play" class="tb-btn" title="播放 / 暂停 (空格 Space)">▶ 播放</button>
+        <button id="btn-step-next" class="tb-btn" title="下一帧 (→ / .)">▷</button>
+        <button id="btn-kf-next" class="tb-btn" title="跳到下一关键帧 (K)">◆›</button>
+        <button id="btn-jump-end" class="tb-btn" title="跳到合成末尾 (End)">⏭</button>
+        <button id="btn-loop-toggle" class="tb-btn active" title="循环播放工作区 (B..N)">🔁 循环</button>
+        <div class="timecode-box">
+          <span id="timecode-display">00:00:00</span>
+          <span id="seconds-display">0.00s / 15.0s</span>
+        </div>
+        <button id="btn-mute-audio" class="tb-btn" title="音色声画开关">🔊 声画</button>
+        <div class="vu-meter" title="实时合成音色电平 (L/R)">
+          <div class="vu-track"><div id="vu-bar-l" class="vu-fill"></div></div>
+          <div class="vu-track"><div id="vu-bar-r" class="vu-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- Project, Precomp & Undo/Redo -->
+      <div class="toolbar-group">
+        <button id="btn-undo" class="tb-btn" title="撤销 (Ctrl+Z)" disabled>↶ 撤销</button>
+        <button id="btn-redo" class="tb-btn" title="重做 (Ctrl+Y / Ctrl+Shift+Z)" disabled>↷ 重做</button>
+        <div class="tb-sep"></div>
+        <button id="btn-precomp" class="tb-btn" title="原位预合成所选图层 (Ctrl+Shift+C)">📦 预合成</button>
+        <div class="tb-sep"></div>
+        <button id="btn-new-empty" class="tb-btn" title="新建空白工程">📄 空工程</button>
+        <button id="btn-open-proj" class="tb-btn" title="从本地打开 .json 工程文件">📂 打开</button>
+        <input id="file-open-input" type="file" accept=".json,application/json" style="display:none" />
+        <button id="btn-save-proj" class="tb-btn" title="保存当前工程为 .json 文件">💾 保存</button>
+        <button id="btn-reset-demo" class="tb-btn" title="重新载入 15 秒「锻字」默认示例工程">↺ 示例</button>
+      </div>
+    </header>
+
+    <!-- ==================== UPPER WORKSPACE ==================== -->
+    <main id="upper-workspace">
+      <!-- Left Panel: Project, Compositions, Quick Layer Creation & Character Swap -->
+      <aside class="side-panel left">
+        <div class="panel-header">
+          <span>项目 · 合成与新建</span>
+        </div>
+        <div id="project-panel-body" class="panel-scroll"></div>
+      </aside>
+
+      <!-- Center Prominent WebGL2 Composition Stage -->
+      <section id="center-stage-column">
+        <div id="viewport-stage">
+          <canvas id="gl-canvas" width="1280" height="720"></canvas>
+          <canvas id="gizmo-canvas"></canvas>
+        </div>
+        <div id="viewport-footer">
+          <div class="vf-left">
+            <button id="btn-fit-view" class="vf-pill" title="适配窗口大小">适配画布</button>
+            <button id="btn-toggle-custom-cam" class="vf-pill" title="在活动摄像机与三维自由观察视角间切换">🎥 活动摄像机</button>
+            <button id="btn-toggle-grid" class="vf-pill" title="显示/隐藏合成参考网格">网格</button>
+            <button id="btn-toggle-checker" class="vf-pill" title="切换透明背景棋盘格">透明棋盘</button>
+            <button id="btn-toggle-fields-gizmo" class="vf-pill" title="常显合成内全部空间场作用范围">空间场范围</button>
+          </div>
+          <div class="vf-right">
+            <span style="color:var(--text-dim);font-size:11px">滚轮缩放 · 中键/抓手平移</span>
+            <span id="viewport-zoom-label">100%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Context-Sensitive Properties, Expressions, Operators, 3D & Effects -->
+      <aside class="side-panel right">
+        <div class="panel-header">
+          <span>属性 · 表达式 · 效果 · 三维与模拟</span>
+        </div>
+        <div id="inspector-panel-body" class="panel-scroll"></div>
+      </aside>
+    </main>
+
+    <!-- ==================== BOTTOM DOCK: TIMELINE / CURVES / NODE GRAPH ==================== -->
+    <section id="bottom-dock" data-workspace="split">
+      <div id="bottom-dock-header">
+        <div class="dock-tabs">
+          <button class="dock-tab" data-bottom-ws="timeline">🎞 时间轴与曲线视图</button>
+          <button class="dock-tab" data-bottom-ws="nodes">◈ 程序几何节点图</button>
+          <button class="dock-tab active" data-bottom-ws="split">⊞ 同屏：时间轴 + 程序节点</button>
+        </div>
+        <div style="color:var(--text-dim);font-size:11px">
+          快捷键：Space 播放 · F9 缓入缓出 · P/S/R/T/A/U 展开属性 · Ctrl+Shift+C 原位预合成 · Ctrl+Z/Y 撤销重做
+        </div>
+      </div>
+
+      <div id="bottom-dock-body">
+        <!-- 1. Timeline & Curve Graph Pane -->
+        <div id="timeline-pane">
+          <div class="pane-subtoolbar">
+            <div class="tl-tools">
+              <button id="btn-tl-tracks" class="vf-pill active">轨道视图</button>
+              <button id="btn-tl-graph" class="vf-pill">📈 曲线视图 (值/速度/fx)</button>
+              <div id="tl-graph-subbar" style="display:none;align-items:center;gap:4px">
+                <button id="btn-graph-value" class="vf-pill active">值曲线</button>
+                <button id="btn-graph-speed" class="vf-pill">速度曲线 (实际路径速度)</button>
+              </div>
+              <button id="btn-tl-snap" class="vf-pill active" title="时间轴磁性吸附开关">🧲 吸附</button>
+            </div>
+            <div class="tl-tools">
+              <button id="btn-kf-ease" class="vf-pill" title="所选关键帧缓入缓出 (F9)">缓入缓出 F9</button>
+              <button id="btn-kf-linear" class="vf-pill" title="设为线性插值">◆ 线性</button>
+              <button id="btn-kf-hold" class="vf-pill" title="设为定格插值">■ 定格</button>
+              <select id="sel-kf-in" class="mini-select" title="单独设置进入插值">
+                <option value="">进入插值…</option>
+                <option value="linear">进入：线性</option>
+                <option value="bezier">进入：贝塞尔</option>
+                <option value="hold">进入：定格</option>
+              </select>
+              <select id="sel-kf-out" class="mini-select" title="单独设置离开插值">
+                <option value="">离开插值…</option>
+                <option value="linear">离开：线性</option>
+                <option value="bezier">离开：贝塞尔</option>
+                <option value="hold">离开：定格</option>
+              </select>
+              <button id="btn-kf-copy" class="vf-pill" title="复制所选关键帧 (Ctrl+C)">复制帧</button>
+              <button id="btn-kf-paste" class="vf-pill" title="在播放头粘贴关键帧 (Ctrl+V)">粘贴帧</button>
+            </div>
+          </div>
+
+          <div id="timeline-split">
+            <div id="timeline-outliner-wrap">
+              <div id="timeline-outliner-header">
+                <span>图层 / 属性 / 码表</span>
+                <span>3D · MB · 父级 · 混合 · 遮罩</span>
+              </div>
+              <div id="timeline-outliner-body"></div>
+            </div>
+            <div id="timeline-canvas-wrap">
+              <canvas id="timeline-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Procedural Node Graph Pane -->
+        <div id="node-editor-pane">
+          <div class="pane-subtoolbar">
+            <div class="node-tools">
+              <select id="node-add-select" class="mini-select"></select>
+              <button id="btn-node-group" class="vf-pill" title="将所选多个节点封装为子图节点组">📦 封装节点组</button>
+              <button id="btn-node-ungroup" class="vf-pill" title="将选中的节点组解组展开">📂 解组展开</button>
+              <button id="btn-node-dup" class="vf-pill" title="复制选中节点">⎘ 复制</button>
+              <button id="btn-node-del" class="vf-pill" title="删除选中节点或断开选中连线 (Delete)">✕ 删除</button>
+              <button id="btn-node-fit" class="vf-pill" title="缩放平移以看全所有节点">适配节点图</button>
+            </div>
+            <div class="port-legend">
+              <span><i style="background:#10b981"></i>几何</span>
+              <span><i style="background:#f97316"></i>空间场</span>
+              <span><i style="background:#38bdf8"></i>标量</span>
+              <span><i style="background:#a855f7"></i>向量</span>
+              <span><i style="background:#facc15"></i>颜色</span>
+            </div>
+          </div>
+
+          <div id="node-split">
+            <div id="node-canvas-wrap">
+              <canvas id="node-canvas"></canvas>
+              <div id="node-port-tooltip"></div>
+            </div>
+            <div id="node-param-pane"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Ordered Self-Contained Scripts (100% Direct `file://` Compatible, Zero Server Required) -->
+  <script defer src="js/core/math.js"></script>
+  <script defer src="js/core/geometry2d.js"></script>
+  <script defer src="js/core/fonts.js"></script>
+  <script defer src="js/core/geometry3d.js"></script>
+  <script defer src="js/core/animation.js"></script>
+  <script defer src="js/core/nodes.js"></script>
+  <script defer src="js/core/particles.js"></script>
+  <script defer src="js/core/audio.js"></script>
+  <script defer src="js/core/scene.js"></script>
+  <script defer src="js/render/webglRenderer.js"></script>
+  <script defer src="js/demo/forgeDemoProject.js"></script>
+  <script defer src="js/ui/canvasOverlay.js"></script>
+  <script defer src="js/ui/timelineView.js"></script>
+  <script defer src="js/ui/nodeEditorView.js"></script>
+  <script defer src="js/ui/inspectorView.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>

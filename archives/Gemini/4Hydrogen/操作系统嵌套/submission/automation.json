@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": [
+      "start",
+      "--",
+      "--data-dir",
+      "{dataDir}",
+      "--width",
+      "{width}",
+      "{height}",
+      "--remote-debugging-port={port}"
+    ],
+    "cwd": "."
+  },
+  "mainWindow": {
+    "title": "Nested OS"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "documents": "/Documents"
+    }
+  }
+}

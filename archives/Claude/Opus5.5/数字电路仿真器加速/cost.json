@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "数字电路仿真器加速",
+  "tokens": 25002340,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.17,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/数字电路仿真器加速/run-498be5005dd347809463ab3c5b9f9e26"
+  ]
+}

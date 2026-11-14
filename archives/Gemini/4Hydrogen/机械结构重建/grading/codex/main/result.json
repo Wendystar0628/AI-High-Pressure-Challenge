@@ -1,0 +1,178 @@
+{
+  "task": "机械结构重建",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "第01题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第02题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第03题",
+      "max": 3.5,
+      "score": 1.53,
+      "reason": "F综合 0.4340=0.8×F(0.2mm) 0.4025+0.2×F(2mm) 0.5602；窄容差P=0.4825、R=0.3452，宽容差P=0.6199、R=0.5110；得 1.53 分。14个特征全部生成，无失败步骤；主要外形及内腔、孔位尺寸存在误读。"
+    },
+    {
+      "name": "第04题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第05题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第06题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第07题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第08题",
+      "max": 3.5,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第09题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第10题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第11题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第12题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第13题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第14题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第15题",
+      "max": 4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第16题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第17题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第18题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第19题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第20题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第21题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第22题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第23题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第24题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    },
+    {
+      "name": "第25题",
+      "max": 4.4,
+      "score": 0.0,
+      "reason": "未提交本题答案文件，记 0 分。"
+    }
+  ],
+  "metrics": {
+    "total_score": 1.53,
+    "submitted_questions": 1,
+    "missing_questions": 24,
+    "第03题": {
+      "fscore_strict": 0.4025,
+      "fscore_wide": 0.5602,
+      "fscore": 0.434,
+      "precision": 0.4825,
+      "recall": 0.3452,
+      "wide_precision": 0.6199,
+      "wide_recall": 0.511,
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "notes": "评的是作答结束时工作目录的内容，不看git提交。原目录 H:\\AI_OneShot_Model\\Gemini\\4Hydrogen\\机械结构重建 已复制到 E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Hydrogen\\机械结构重建\\codex\\main\\work\\submission，第03题原件/副本SHA256一致。仅有答案/第03题.json，未发现其他题答案或异名答案。官方grade.py整题输出见 E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Hydrogen\\机械结构重建\\codex\\main\\work\\official_geometry.json；使用官方total=1.53（未舍入分项求和），未运行性能基准或采集性能指标。工具核查覆盖 E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Gemini\\4Hydrogen\\机械结构重建 下7段归档session.log（最新run-ccfe96ce995a4600aff1095431809f10），235次调用：188次read_file、44次run_command、1次write_file、2次manage_task。目录字段整理证据：run-ccfc96fb6cad43dba79be94614bacc25/session.log:922、run-0129cdd1a7a04b11be64fe0cc9551f93/session.log:422；官方预览证据：run-f1919625c46247f7803cbb364331ea80/session.log:323、329。PIL脚本只裁图看图，未计算机械尺寸；原受测提示词在首段日志:18明确允许工具必需临时目录，scratch仅作裁图与自身记录读取。manage_task仅查询官方预览命令，不是子代理。提交的9个工具源文件与官方一致，未发现作弊或触发整份归零的工具违规。详细证据见 E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Hydrogen\\机械结构重建\\codex\\main\\work\\tool_audit_conclusion.json。主要异常为反复读图却仅提交一题；第03题底板/外形三向尺寸及多个内腔孔位与参考不符，14个特征均成功，非生成失败。",
+  "anomaly": "反复读图仅提交第03题，其余24题未交。"
+}

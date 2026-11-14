@@ -4,7 +4,10 @@
     "key": "Claude/Opus5.5",
     "name": "Claude Opus 5.5",
     "short": "Opus5.5",
-    "aliases": ["Opus", "Opus 5.5"],
+    "aliases": [
+      "Opus",
+      "Opus 5.5"
+    ],
     "vendor": "Anthropic",
     "logo": "claude",
     "agent": "Claude Code",
@@ -20,7 +23,10 @@
     "key": "Claude/Sonnet5.5",
     "name": "Claude Sonnet 5.5",
     "short": "Sonnet5.5",
-    "aliases": ["Sonnet", "Sonnet 5.5"],
+    "aliases": [
+      "Sonnet",
+      "Sonnet 5.5"
+    ],
     "vendor": "Anthropic",
     "logo": "claude",
     "agent": "Claude Code",
@@ -32,7 +38,10 @@
     "key": "Claude/Haiku5.5",
     "name": "Claude Haiku 5.5",
     "short": "Haiku5.5",
-    "aliases": ["Haiku", "Haiku 5.5"],
+    "aliases": [
+      "Haiku",
+      "Haiku 5.5"
+    ],
     "vendor": "Anthropic",
     "logo": "claude",
     "agent": "Claude Code",
@@ -44,7 +53,10 @@
     "key": "GPT/6.1Sol",
     "name": "GPT 6.1 Sol",
     "short": "6.1Sol",
-    "aliases": ["Sol", "6.1 Sol"],
+    "aliases": [
+      "Sol",
+      "6.1 Sol"
+    ],
     "vendor": "OpenAI",
     "logo": "openai",
     "agent": "Codex",
@@ -56,7 +68,10 @@
     "key": "GPT/6.1Terra",
     "name": "GPT 6.1 Terra",
     "short": "6.1Terra",
-    "aliases": ["Terra", "6.1 Terra"],
+    "aliases": [
+      "Terra",
+      "6.1 Terra"
+    ],
     "vendor": "OpenAI",
     "logo": "openai",
     "agent": "Codex",
@@ -68,7 +83,10 @@
     "key": "GPT/6Astra",
     "name": "GPT 6 Astra",
     "short": "6Astra",
-    "aliases": ["Astra", "6 Astra"],
+    "aliases": [
+      "Astra",
+      "6 Astra"
+    ],
     "vendor": "OpenAI",
     "logo": "openai",
     "agent": "Codex",
@@ -84,7 +102,10 @@
     "key": "GPT/6Luna",
     "name": "GPT 6 Luna",
     "short": "6Luna",
-    "aliases": ["Luna", "6 Luna"],
+    "aliases": [
+      "Luna",
+      "6 Luna"
+    ],
     "vendor": "OpenAI",
     "logo": "openai",
     "agent": "Codex",
@@ -96,7 +117,10 @@
     "key": "GPT/5.6Sol",
     "name": "GPT 5.6 Sol",
     "short": "5.6Sol",
-    "aliases": ["5.6 Sol", "GPT-5.6 Sol"],
+    "aliases": [
+      "5.6 Sol",
+      "GPT-5.6 Sol"
+    ],
     "vendor": "OpenAI",
     "logo": "openai",
     "agent": "Codex",
@@ -112,7 +136,11 @@
     "key": "DeepSeek/V4.1Flash",
     "name": "DeepSeek V4.1 Flash",
     "short": "V4.1Flash",
-    "aliases": ["DeepSeek", "V4.1 Flash", "DeepSeek Flash"],
+    "aliases": [
+      "DeepSeek",
+      "V4.1 Flash",
+      "DeepSeek Flash"
+    ],
     "vendor": "DeepSeek",
     "logo": "deepseek",
     "agent": "DeepSeek Harness",
@@ -129,7 +157,12 @@
     "key": "MiMo/V2.6Pro",
     "name": "MiMo V2.6 Pro",
     "short": "V2.6Pro",
-    "aliases": ["MiMo", "V2.6 Pro", "MiMo Pro", "Xiaomi MiMo"],
+    "aliases": [
+      "MiMo",
+      "V2.6 Pro",
+      "MiMo Pro",
+      "Xiaomi MiMo"
+    ],
     "vendor": "Xiaomi",
     "logo": "xiaomimimo",
     "agent": "MiMo Code",
@@ -145,7 +178,12 @@
     "key": "Hy/Hy4",
     "name": "Hy4",
     "short": "Hy4",
-    "aliases": ["Hy", "Hunyuan", "混元", "Tencent Hy4"],
+    "aliases": [
+      "Hy",
+      "Hunyuan",
+      "混元",
+      "Tencent Hy4"
+    ],
     "vendor": "Tencent",
     "logo": "hunyuan",
     "agent": "CodeBuddy Code",
@@ -157,28 +195,17 @@
     "portrait": "腾讯混元.png"
   },
   {
-    "id": "gpt-6-2-sol",
-    "key": "GPT/6.2Sol",
-    "name": "GPT 6.2 Sol",
-    "short": "6.2Sol",
-    "aliases": ["6.2 Sol", "GPT-6.2 Sol"],
-    "vendor": "OpenAI",
-    "logo": "openai",
-    "agent": "Codex",
-    "effort": "xhigh",
-    "tested": "",
-    "audit": true,
-    "released": "2026-11-06",
-    "tier": "中高端性能主力",
-    "series": "SOL",
-    "portrait": "gpt.png"
-  },
-  {
     "id": "kimi-k3-1-pro",
     "key": "Kimi/K3.1Pro",
     "name": "Kimi K3.1 Pro",
     "short": "K3.1Pro",
-    "aliases": ["K3.1 Pro", "Kimi 3.1 Pro", "Kimi K3.1", "月之暗面", "Moonshot"],
+    "aliases": [
+      "K3.1 Pro",
+      "Kimi 3.1 Pro",
+      "Kimi K3.1",
+      "月之暗面",
+      "Moonshot"
+    ],
     "vendor": "Moonshot AI",
     "logo": "kimi",
     "agent": "Kimi Code",
@@ -191,7 +218,13 @@
     "key": "Gemini/4Carbon",
     "name": "Gemini 4 Carbon",
     "short": "4Carbon",
-    "aliases": ["Carbon", "Gemini Carbon", "Gemini 4", "Google", "谷歌"],
+    "aliases": [
+      "Carbon",
+      "Gemini Carbon",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
     "vendor": "Google",
     "logo": "gemini",
     "agent": "Antigravity CLI",
@@ -207,7 +240,13 @@
     "key": "Gemini/4Hydrogen",
     "name": "Gemini 4 Hydrogen",
     "short": "4Hydrogen",
-    "aliases": ["Hydrogen", "Gemini Hydrogen", "Gemini 4", "Google", "谷歌"],
+    "aliases": [
+      "Hydrogen",
+      "Gemini Hydrogen",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
     "vendor": "Google",
     "logo": "gemini",
     "agent": "Antigravity CLI",

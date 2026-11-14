@@ -1,0 +1,18 @@
+{
+  "model": "MiMo/V2.6Pro",
+  "task": "数字电路仿真器加速",
+  "tokens": 23437839,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.34,
+  "api_usd": 0.5,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "MiMo API"
+  },
+  "fitted": [],
+  "runs": [
+    "MiMo/V2.6Pro/数字电路仿真器加速/run-d80558e5b94d45939824e306d4801fff"
+  ]
+}

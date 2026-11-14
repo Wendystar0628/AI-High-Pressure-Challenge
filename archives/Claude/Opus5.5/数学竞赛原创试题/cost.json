@@ -1,10 +1,10 @@
 {
   "model": "Claude/Opus5.5",
   "task": "数学竞赛原创试题",
-  "tokens": 42125114,
+  "tokens": 4172172,
   "minutes": 60.0,
   "time": "开始→截止（实际停止未知）",
-  "cny": 1.98,
+  "cny": 0.2,
   "api_usd": null,
   "basis": "subscription",
   "method": "quota",
@@ -14,10 +14,8 @@
     "currency": "USD",
     "period": "month"
   },
-  "fitted": [
-    "运行时长比例"
-  ],
+  "fitted": [],
   "runs": [
-    "Claude/Opus5.5/数学竞赛原创试题/timer-1793732011.5149515"
+    "Claude/Opus5.5/数学竞赛原创试题/run-cc12f6d711624abcb3ee19e1ee29c545"
   ]
 }

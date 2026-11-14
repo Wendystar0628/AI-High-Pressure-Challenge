@@ -1,0 +1,26 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "机械结构重建",
+  "tokens": 4536121,
+  "minutes": 60.0,
+  "time": "关闭时间上界（实际停止未知）、实际停止",
+  "cny": 0.48,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/机械结构重建/run-0129cdd1a7a04b11be64fe0cc9551f93",
+    "Gemini/4Hydrogen/机械结构重建/run-5dc48688c07c40ccac5e038784dddfcf",
+    "Gemini/4Hydrogen/机械结构重建/run-7c65c6c33b2d49958b1a6f0048ef70c7",
+    "Gemini/4Hydrogen/机械结构重建/run-ccfe96ce995a4600aff1095431809f10",
+    "Gemini/4Hydrogen/机械结构重建/run-f1919625c46247f7803cbb364331ea80"
+  ]
+}

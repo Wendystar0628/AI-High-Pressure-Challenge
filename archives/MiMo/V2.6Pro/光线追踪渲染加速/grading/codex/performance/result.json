@@ -1,0 +1,52 @@
+{
+  "task": "光线追踪渲染加速",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "渲染加速",
+      "max": 100,
+      "score": 20.0,
+      "reason": "正式 evaluate.py 测得基线最小用时 510.584400 ms、提交 271.867500 ms，加速 1.878063 倍，速度分 q=20.003406778；5 次计时画面与 12 个隐藏输入全部通过，c=h=1，最终 20.0 分。源码核对未发现实质性违规。"
+    }
+  ],
+  "metrics": {
+    "baseline_min_ms": 510.5844,
+    "submission_min_ms": 271.8675,
+    "speedup": 1.8780633948522718,
+    "q": 20.003406777562397,
+    "c": 1,
+    "h": 1,
+    "timing_factors": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "hidden_factors": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "exception_pixels": 805,
+    "exception_limit": 3232,
+    "bias": [
+      -1.8479965528327803e-07,
+      -2.806949960742661e-07,
+      -1.0495384287455269e-07
+    ],
+    "rmse": 3.922978103908984e-05,
+    "formal_report": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\光线追踪渲染加速\\codex\\performance\\work\\formal-report\\results.json"
+  },
+  "notes": "评的是作答结束时的工作目录副本（work/submission），不看 git 提交；solution.cu SHA256=33EDE8E7DEF148F5528A9C1A05F52242ACB1A2502FCD3ECCF754E799ABC4BDB9。正式评测采用题目专属 evaluate.py，逻辑处理器16–27、高优先级、5次取最小值；3个公开边界全部通过。扫描的第25、28行仅为预分配内存指针，render第189–208行每次重建并上传场景，不构成跨调用场景缓存。当前manifest中性能输入b=803，上限3232，未采用README残留的旧数值。 评测主进程及报告记录的25个基线/提交运行进程均已退出。"
+}

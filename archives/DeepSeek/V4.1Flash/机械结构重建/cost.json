@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "机械结构重建",
+  "tokens": 37510145,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.93,
+  "api_usd": 0.29,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/机械结构重建/run-532187507378408684491e34762279c7"
+  ]
+}

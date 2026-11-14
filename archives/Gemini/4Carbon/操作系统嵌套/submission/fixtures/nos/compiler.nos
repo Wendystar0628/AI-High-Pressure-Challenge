@@ -1,0 +1,790 @@
+// ============================================================================
+// NestedOS 自举编译器 (/System/compiler.nos)
+// 语言：NosLang（本编译器使用 NosLang 编写，可在系统内编译自身并替换 /System/compiler.nbc）
+// ============================================================================
+
+let COMPILER_VERSION = "1.0.0-selfhost";
+let TOKENS = [];
+let POS = 0;
+let CUR_FN = null;
+
+fn is_alpha_code(c) {
+  return (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || c == 95;
+}
+
+fn is_digit_code(c) {
+  return c >= 48 && c <= 57;
+}
+
+fn is_keyword(s) {
+  return s == "fn" || s == "let" || s == "if" || s == "else" ||
+         s == "while" || s == "for" || s == "return" || s == "break" ||
+         s == "continue" || s == "true" || s == "false" || s == "null" ||
+         s == "syscall";
+}
+
+fn tokenize_nos(src) {
+  let out = [];
+  let i = 0;
+  let line = 1;
+  let n = len(src);
+  let singleOps = "+-*/%=<>!(){}[],.;:?";
+
+  while (i < n) {
+    let ch = char_at(src, i);
+    let code = char_code(src, i);
+
+    if (ch == " " || ch == "\t" || ch == "\r") {
+      i += 1;
+      continue;
+    }
+    if (ch == "\n") {
+      line += 1;
+      i += 1;
+      continue;
+    }
+    if (ch == "/" && char_at(src, i + 1) == "/") {
+      i += 2;
+      while (i < n && char_at(src, i) != "\n") {
+        i += 1;
+      }
+      continue;
+    }
+    if (ch == "/" && char_at(src, i + 1) == "*") {
+      i += 2;
+      while (i < n && !(char_at(src, i) == "*" && char_at(src, i + 1) == "/")) {
+        if (char_at(src, i) == "\n") { line += 1; }
+        i += 1;
+      }
+      i += 2;
+      continue;
+    }
+    if (ch == "\"" || ch == "'") {
+      let quote = ch;
+      i += 1;
+      let s = "";
+      while (i < n && char_at(src, i) != quote) {
+        let c0 = char_at(src, i);
+        if (c0 == "\\") {
+          i += 1;
+          let esc = char_at(src, i);
+          if (esc == "n") { s = s + "\n"; }
+          else if (esc == "t") { s = s + "\t"; }
+          else if (esc == "r") { s = s + "\r"; }
+          else { s = s + esc; }
+          i += 1;
+        } else {
+          if (c0 == "\n") { line += 1; }
+          s = s + c0;
+          i += 1;
+        }
+      }
+      i += 1;
+      push(out, { t: "STR", v: s, line: line });
+      continue;
+    }
+    if (is_digit_code(code)) {
+      let start = i;
+      while (i < n && (is_digit_code(char_code(src, i)) || char_at(src, i) == ".")) {
+        i += 1;
+      }
+      push(out, { t: "NUM", v: num(substr(src, start, i - start)), line: line });
+      continue;
+    }
+    if (is_alpha_code(code)) {
+      let start = i;
+      while (i < n && (is_alpha_code(char_code(src, i)) || is_digit_code(char_code(src, i)))) {
+        i += 1;
+      }
+      let word = substr(src, start, i - start);
+      if (is_keyword(word)) {
+        push(out, { t: "KW", v: word, line: line });
+      } else {
+        push(out, { t: "ID", v: word, line: line });
+      }
+      continue;
+    }
+
+    let two = substr(src, i, 2);
+    if (two == "==" || two == "!=" || two == "<=" || two == ">=" ||
+        two == "&&" || two == "||" || two == "+=" || two == "-=" ||
+        two == "*=" || two == "++" || two == "--") {
+      push(out, { t: "OP", v: two, line: line });
+      i += 2;
+      continue;
+    }
+    if (index_of(singleOps, ch, 0) >= 0) {
+      push(out, { t: "OP", v: ch, line: line });
+      i += 1;
+      continue;
+    }
+    syscall("report_error", "词法错误 第 " + str(line) + " 行：非法字符 " + ch);
+    return null;
+  }
+
+  push(out, { t: "EOF", v: "", line: line });
+  return out;
+}
+
+fn peek_tok() {
+  if (POS < len(TOKENS)) { return TOKENS[POS]; }
+  return TOKENS[len(TOKENS) - 1];
+}
+
+fn next_tok() {
+  let t = peek_tok();
+  POS += 1;
+  return t;
+}
+
+fn match_tok(t, v) {
+  let tok = peek_tok();
+  if (tok.t == t && (v == null || tok.v == v)) {
+    POS += 1;
+    return true;
+  }
+  return false;
+}
+
+fn expect_tok(t, v) {
+  let tok = peek_tok();
+  if (tok.t != t || (v != null && tok.v != v)) {
+    let exp = v != null ? v : t;
+    // Trigger VM error for clean compile diagnostic
+    let fail = 1 / 0;
+    return fail;
+  }
+  POS += 1;
+  return tok;
+}
+
+fn resolve_local(name) {
+  let s = len(CUR_FN.scopes) - 1;
+  while (s >= 0) {
+    let sc = CUR_FN.scopes[s];
+    if (has_key(sc, name)) {
+      return sc[name];
+    }
+    s -= 1;
+  }
+  return -1;
+}
+
+fn declare_local(name) {
+  let slot = CUR_FN.localCount;
+  CUR_FN.localCount += 1;
+  let topScope = CUR_FN.scopes[len(CUR_FN.scopes) - 1];
+  topScope[name] = slot;
+  return slot;
+}
+
+fn emit0(op) {
+  push(CUR_FN.code, [op]);
+  return len(CUR_FN.code) - 1;
+}
+
+fn emit1(op, a) {
+  push(CUR_FN.code, [op, a]);
+  return len(CUR_FN.code) - 1;
+}
+
+fn emit2(op, a, b) {
+  push(CUR_FN.code, [op, a, b]);
+  return len(CUR_FN.code) - 1;
+}
+
+fn materialize_lval(lhs) {
+  if (lhs.kind == "var") {
+    let slot = resolve_local(lhs.name);
+    if (slot >= 0) { emit1("LOAD_LOCAL", slot); }
+    else { emit1("LOAD_GLOBAL", lhs.name); }
+  } else if (lhs.kind == "prop") {
+    emit0("GET_PROP");
+  }
+}
+
+fn parse_primary() {
+  let tok = peek_tok();
+  if (tok.t == "NUM") {
+    next_tok();
+    emit1("CONST", tok.v);
+    return { kind: "rval" };
+  }
+  if (tok.t == "STR") {
+    next_tok();
+    emit1("CONST", tok.v);
+    return { kind: "rval" };
+  }
+  if (tok.t == "KW") {
+    if (tok.v == "true") { next_tok(); emit1("CONST", true); return { kind: "rval" }; }
+    if (tok.v == "false") { next_tok(); emit1("CONST", false); return { kind: "rval" }; }
+    if (tok.v == "null") { next_tok(); emit1("CONST", null); return { kind: "rval" }; }
+    if (tok.v == "syscall") {
+      next_tok();
+      expect_tok("OP", "(");
+      let argc = 0;
+      if (!match_tok("OP", ")")) {
+        while (true) {
+          parse_expr();
+          argc += 1;
+          if (!match_tok("OP", ",")) { break; }
+        }
+        expect_tok("OP", ")");
+      }
+      emit1("SYSCALL", argc);
+      return { kind: "rval" };
+    }
+  }
+  if (match_tok("OP", "(")) {
+    parse_expr();
+    expect_tok("OP", ")");
+    return { kind: "rval" };
+  }
+  if (match_tok("OP", "[")) {
+    let count = 0;
+    if (!match_tok("OP", "]")) {
+      while (true) {
+        if (peek_tok().t == "OP" && peek_tok().v == "]") { break; }
+        parse_expr();
+        count += 1;
+        if (!match_tok("OP", ",")) { break; }
+      }
+      expect_tok("OP", "]");
+    }
+    emit1("MAKE_ARR", count);
+    return { kind: "rval" };
+  }
+  if (match_tok("OP", "{")) {
+    let count = 0;
+    if (!match_tok("OP", "}")) {
+      while (true) {
+        if (peek_tok().t == "OP" && peek_tok().v == "}") { break; }
+        let kTok = next_tok();
+        let keyName = kTok.v;
+        emit1("CONST", keyName);
+        if (match_tok("OP", ":")) {
+          parse_expr();
+        } else {
+          let slot = resolve_local(keyName);
+          if (slot >= 0) { emit1("LOAD_LOCAL", slot); }
+          else { emit1("LOAD_GLOBAL", keyName); }
+        }
+        count += 1;
+        if (!match_tok("OP", ",")) { break; }
+      }
+      expect_tok("OP", "}");
+    }
+    emit1("MAKE_OBJ", count);
+    return { kind: "rval" };
+  }
+  if (tok.t == "ID") {
+    next_tok();
+    if (match_tok("OP", "(")) {
+      let argc = 0;
+      if (!match_tok("OP", ")")) {
+        while (true) {
+          if (peek_tok().t == "OP" && peek_tok().v == ")") { break; }
+          parse_expr();
+          argc += 1;
+          if (!match_tok("OP", ",")) { break; }
+        }
+        expect_tok("OP", ")");
+      }
+      emit2("CALL", tok.v, argc);
+      return { kind: "rval" };
+    }
+    if (tok.v == "__COMPILER_VERSION__") {
+      emit1("CONST", COMPILER_VERSION);
+      return { kind: "rval" };
+    }
+    return { kind: "var", name: tok.v };
+  }
+  expect_tok("ID", null);
+  return { kind: "rval" };
+}
+
+fn parse_postfix() {
+  let lhs = parse_primary();
+  while (true) {
+    if (match_tok("OP", ".")) {
+      materialize_lval(lhs);
+      let pTok = next_tok();
+      emit1("CONST", pTok.v);
+      lhs = { kind: "prop" };
+    } else if (match_tok("OP", "[")) {
+      materialize_lval(lhs);
+      parse_expr();
+      expect_tok("OP", "]");
+      lhs = { kind: "prop" };
+    } else {
+      break;
+    }
+  }
+
+  let nt = peek_tok();
+  if (nt.t == "OP" && (nt.v == "++" || nt.v == "--") && lhs.kind == "var") {
+    let opTok = next_tok();
+    let deltaOp = opTok.v == "++" ? "ADD" : "SUB";
+    let slot = resolve_local(lhs.name);
+    if (slot >= 0) {
+      emit1("LOAD_LOCAL", slot);
+      emit0("DUP");
+      emit1("CONST", 1);
+      emit0(deltaOp);
+      emit1("STORE_LOCAL", slot);
+      emit0("POP");
+    } else {
+      emit1("LOAD_GLOBAL", lhs.name);
+      emit0("DUP");
+      emit1("CONST", 1);
+      emit0(deltaOp);
+      emit1("STORE_GLOBAL", lhs.name);
+      emit0("POP");
+    }
+    return { kind: "rval" };
+  }
+
+  if (nt.t == "OP" && (nt.v == "=" || nt.v == "+=" || nt.v == "-=" || nt.v == "*=")) {
+    let assignOp = next_tok().v;
+    if (lhs.kind == "var") {
+      let slot = resolve_local(lhs.name);
+      if (assignOp == "=") {
+        parse_expr();
+        if (slot >= 0) { emit1("STORE_LOCAL", slot); }
+        else { emit1("STORE_GLOBAL", lhs.name); }
+      } else {
+        if (slot >= 0) { emit1("LOAD_LOCAL", slot); }
+        else { emit1("LOAD_GLOBAL", lhs.name); }
+        parse_expr();
+        if (assignOp == "+=") { emit0("ADD"); }
+        else if (assignOp == "-=") { emit0("SUB"); }
+        else { emit0("MUL"); }
+        if (slot >= 0) { emit1("STORE_LOCAL", slot); }
+        else { emit1("STORE_GLOBAL", lhs.name); }
+      }
+      return { kind: "rval" };
+    }
+    if (lhs.kind == "prop") {
+      if (assignOp == "=") {
+        parse_expr();
+        emit0("SET_PROP");
+      } else {
+        let tmpKey = declare_local("__tk_" + str(CUR_FN.localCount));
+        let tmpObj = declare_local("__to_" + str(CUR_FN.localCount));
+        emit1("STORE_LOCAL", tmpKey);
+        emit0("POP");
+        emit1("STORE_LOCAL", tmpObj);
+        emit0("POP");
+        emit1("LOAD_LOCAL", tmpObj);
+        emit1("LOAD_LOCAL", tmpKey);
+        emit1("LOAD_LOCAL", tmpObj);
+        emit1("LOAD_LOCAL", tmpKey);
+        emit0("GET_PROP");
+        parse_expr();
+        if (assignOp == "+=") { emit0("ADD"); }
+        else if (assignOp == "-=") { emit0("SUB"); }
+        else { emit0("MUL"); }
+        emit0("SET_PROP");
+      }
+      return { kind: "rval" };
+    }
+  }
+
+  materialize_lval(lhs);
+  return { kind: "rval" };
+}
+
+fn parse_unary() {
+  if (match_tok("OP", "-")) {
+    parse_unary();
+    emit0("NEG");
+    return null;
+  }
+  if (match_tok("OP", "!")) {
+    parse_unary();
+    emit0("NOT");
+    return null;
+  }
+  parse_postfix();
+  return null;
+}
+
+fn parse_mul() {
+  parse_unary();
+  while (peek_tok().t == "OP" && (peek_tok().v == "*" || peek_tok().v == "/" || peek_tok().v == "%")) {
+    let op = next_tok().v;
+    parse_unary();
+    if (op == "*") { emit0("MUL"); }
+    else if (op == "/") { emit0("DIV"); }
+    else { emit0("MOD"); }
+  }
+}
+
+fn parse_add() {
+  parse_mul();
+  while (peek_tok().t == "OP" && (peek_tok().v == "+" || peek_tok().v == "-")) {
+    let op = next_tok().v;
+    parse_mul();
+    if (op == "+") { emit0("ADD"); }
+    else { emit0("SUB"); }
+  }
+}
+
+fn parse_rel() {
+  parse_add();
+  while (peek_tok().t == "OP" && (peek_tok().v == "<" || peek_tok().v == "<=" || peek_tok().v == ">" || peek_tok().v == ">=")) {
+    let op = next_tok().v;
+    parse_add();
+    if (op == "<") { emit0("LT"); }
+    else if (op == "<=") { emit0("LTE"); }
+    else if (op == ">") { emit0("GT"); }
+    else { emit0("GTE"); }
+  }
+}
+
+fn parse_eq() {
+  parse_rel();
+  while (peek_tok().t == "OP" && (peek_tok().v == "==" || peek_tok().v == "!=")) {
+    let op = next_tok().v;
+    parse_rel();
+    if (op == "==") { emit0("EQ"); }
+    else { emit0("NEQ"); }
+  }
+}
+
+fn parse_and() {
+  parse_eq();
+  while (match_tok("OP", "&&")) {
+    emit0("DUP");
+    let jmpEnd = emit1("JMP_IF_FALSE", 0);
+    emit0("POP");
+    parse_eq();
+    CUR_FN.code[jmpEnd][1] = len(CUR_FN.code);
+  }
+}
+
+fn parse_or() {
+  parse_and();
+  while (match_tok("OP", "||")) {
+    emit0("DUP");
+    let jmpEnd = emit1("JMP_IF_TRUE", 0);
+    emit0("POP");
+    parse_and();
+    CUR_FN.code[jmpEnd][1] = len(CUR_FN.code);
+  }
+}
+
+fn parse_expr() {
+  // 支持三元运算符 cond ? a : b
+  parse_or();
+  if (match_tok("OP", "?")) {
+    let jmpFalse = emit1("JMP_IF_FALSE", 0);
+    parse_expr();
+    let jmpEnd = emit1("JMP", 0);
+    expect_tok("OP", ":");
+    CUR_FN.code[jmpFalse][1] = len(CUR_FN.code);
+    parse_expr();
+    CUR_FN.code[jmpEnd][1] = len(CUR_FN.code);
+  }
+}
+
+fn parse_block() {
+  expect_tok("OP", "{");
+  push(CUR_FN.scopes, {});
+  while (!(peek_tok().t == "OP" && peek_tok().v == "}") && peek_tok().t != "EOF") {
+    parse_stmt();
+  }
+  expect_tok("OP", "}");
+  pop(CUR_FN.scopes);
+}
+
+fn parse_stmt() {
+  let tok = peek_tok();
+  if (tok.t == "OP" && tok.v == "{") {
+    parse_block();
+    return null;
+  }
+  if (match_tok("KW", "let")) {
+    let id = expect_tok("ID", null).v;
+    let slot = declare_local(id);
+    if (match_tok("OP", "=")) {
+      parse_expr();
+    } else {
+      emit1("CONST", null);
+    }
+    emit1("STORE_LOCAL", slot);
+    emit0("POP");
+    match_tok("OP", ";");
+    return null;
+  }
+  if (match_tok("KW", "if")) {
+    expect_tok("OP", "(");
+    parse_expr();
+    expect_tok("OP", ")");
+    let jmpFalse = emit1("JMP_IF_FALSE", 0);
+    if (peek_tok().t == "OP" && peek_tok().v == "{") { parse_block(); }
+    else { parse_stmt(); }
+    if (match_tok("KW", "else")) {
+      let jmpEnd = emit1("JMP", 0);
+      CUR_FN.code[jmpFalse][1] = len(CUR_FN.code);
+      if (peek_tok().t == "OP" && peek_tok().v == "{") { parse_block(); }
+      else { parse_stmt(); }
+      CUR_FN.code[jmpEnd][1] = len(CUR_FN.code);
+    } else {
+      CUR_FN.code[jmpFalse][1] = len(CUR_FN.code);
+    }
+    return null;
+  }
+  if (match_tok("KW", "while")) {
+    let loopStart = len(CUR_FN.code);
+    expect_tok("OP", "(");
+    parse_expr();
+    expect_tok("OP", ")");
+    let jmpExit = emit1("JMP_IF_FALSE", 0);
+    let loopCtx = { breaks: [], continues: [] };
+    push(CUR_FN.loops, loopCtx);
+    if (peek_tok().t == "OP" && peek_tok().v == "{") { parse_block(); }
+    else { parse_stmt(); }
+    pop(CUR_FN.loops);
+    let ci = 0;
+    while (ci < len(loopCtx.continues)) {
+      CUR_FN.code[loopCtx.continues[ci]][1] = loopStart;
+      ci += 1;
+    }
+    emit1("JMP", loopStart);
+    let loopEnd = len(CUR_FN.code);
+    CUR_FN.code[jmpExit][1] = loopEnd;
+    let bi = 0;
+    while (bi < len(loopCtx.breaks)) {
+      CUR_FN.code[loopCtx.breaks[bi]][1] = loopEnd;
+      bi += 1;
+    }
+    return null;
+  }
+  if (match_tok("KW", "for")) {
+    expect_tok("OP", "(");
+    push(CUR_FN.scopes, {});
+    if (!match_tok("OP", ";")) {
+      if (match_tok("KW", "let")) {
+        let id = expect_tok("ID", null).v;
+        let slot = declare_local(id);
+        if (match_tok("OP", "=")) { parse_expr(); }
+        else { emit1("CONST", null); }
+        emit1("STORE_LOCAL", slot);
+        emit0("POP");
+      } else {
+        parse_expr();
+        emit0("POP");
+      }
+      expect_tok("OP", ";");
+    }
+    let condStart = len(CUR_FN.code);
+    let jmpExit = -1;
+    if (!match_tok("OP", ";")) {
+      parse_expr();
+      jmpExit = emit1("JMP_IF_FALSE", 0);
+      expect_tok("OP", ";");
+    }
+    let jmpBody = emit1("JMP", 0);
+    let stepStart = len(CUR_FN.code);
+    if (!match_tok("OP", ")")) {
+      parse_expr();
+      emit0("POP");
+      expect_tok("OP", ")");
+    }
+    emit1("JMP", condStart);
+    CUR_FN.code[jmpBody][1] = len(CUR_FN.code);
+    let loopCtx = { breaks: [], continues: [] };
+    push(CUR_FN.loops, loopCtx);
+    if (peek_tok().t == "OP" && peek_tok().v == "{") { parse_block(); }
+    else { parse_stmt(); }
+    pop(CUR_FN.loops);
+    let ci = 0;
+    while (ci < len(loopCtx.continues)) {
+      CUR_FN.code[loopCtx.continues[ci]][1] = stepStart;
+      ci += 1;
+    }
+    emit1("JMP", stepStart);
+    let loopEnd = len(CUR_FN.code);
+    if (jmpExit >= 0) { CUR_FN.code[jmpExit][1] = loopEnd; }
+    let bi = 0;
+    while (bi < len(loopCtx.breaks)) {
+      CUR_FN.code[loopCtx.breaks[bi]][1] = loopEnd;
+      bi += 1;
+    }
+    pop(CUR_FN.scopes);
+    return null;
+  }
+  if (match_tok("KW", "break")) {
+    let b = emit1("JMP", 0);
+    push(CUR_FN.loops[len(CUR_FN.loops) - 1].breaks, b);
+    match_tok("OP", ";");
+    return null;
+  }
+  if (match_tok("KW", "continue")) {
+    let c = emit1("JMP", 0);
+    push(CUR_FN.loops[len(CUR_FN.loops) - 1].continues, c);
+    match_tok("OP", ";");
+    return null;
+  }
+  if (match_tok("KW", "return")) {
+    if (peek_tok().t == "OP" && (peek_tok().v == ";" || peek_tok().v == "}")) {
+      emit1("CONST", null);
+    } else {
+      parse_expr();
+    }
+    emit0("RET");
+    match_tok("OP", ";");
+    return null;
+  }
+  if (match_tok("OP", ";")) {
+    return null;
+  }
+  parse_expr();
+  emit0("POP");
+  match_tok("OP", ";");
+  return null;
+}
+
+fn compile_source(src) {
+  TOKENS = tokenize_nos(src);
+  if (TOKENS == null) { return null; }
+  POS = 0;
+
+  let functions = [];
+  let initFn = {
+    name: "__init_globals",
+    paramCount: 2,
+    localCount: 2,
+    code: [],
+    scopes: [{ __arg0: 0, __arg1: 1 }],
+    loops: []
+  };
+
+  while (peek_tok().t != "EOF") {
+    if (match_tok("KW", "fn")) {
+      let fnName = expect_tok("ID", null).v;
+      expect_tok("OP", "(");
+      let params = [];
+      if (!match_tok("OP", ")")) {
+        while (true) {
+          push(params, expect_tok("ID", null).v);
+          if (!match_tok("OP", ",")) { break; }
+        }
+        expect_tok("OP", ")");
+      }
+      let fnObj = {
+        name: fnName,
+        paramCount: len(params),
+        localCount: 0,
+        code: [],
+        scopes: [{}],
+        loops: []
+      };
+      CUR_FN = fnObj;
+      let pi = 0;
+      while (pi < len(params)) {
+        declare_local(params[pi]);
+        pi += 1;
+      }
+      parse_block();
+      emit1("CONST", null);
+      emit0("RET");
+      push(functions, {
+        name: fnObj.name,
+        paramCount: fnObj.paramCount,
+        localCount: fnObj.localCount,
+        code: fnObj.code
+      });
+      CUR_FN = null;
+    } else if (match_tok("KW", "let")) {
+      let gName = expect_tok("ID", null).v;
+      CUR_FN = initFn;
+      if (match_tok("OP", "=")) {
+        parse_expr();
+      } else {
+        emit1("CONST", null);
+      }
+      emit1("STORE_GLOBAL", gName);
+      emit0("POP");
+      match_tok("OP", ";");
+      CUR_FN = null;
+    } else {
+      CUR_FN = initFn;
+      parse_stmt();
+      CUR_FN = null;
+    }
+  }
+
+  let mainFn = null;
+  let fi = 0;
+  while (fi < len(functions)) {
+    if (functions[fi].name == "main") {
+      mainFn = functions[fi];
+    }
+    fi += 1;
+  }
+
+  let entryName = "main";
+  if (len(initFn.code) > 0) {
+    CUR_FN = initFn;
+    if (mainFn != null) {
+      let pCount = min(2, mainFn.paramCount);
+      let k = 0;
+      while (k < pCount) {
+        emit1("LOAD_LOCAL", k);
+        k += 1;
+      }
+      emit2("CALL", "main", pCount);
+      emit0("RET");
+    } else {
+      emit1("CONST", null);
+      emit0("RET");
+    }
+    let outFns = [{
+      name: "__entry",
+      paramCount: 2,
+      localCount: initFn.localCount,
+      code: initFn.code
+    }];
+    let j = 0;
+    while (j < len(functions)) {
+      push(outFns, functions[j]);
+      j += 1;
+    }
+    functions = outFns;
+    entryName = "__entry";
+  }
+
+  return {
+    magic: "NOSBC1",
+    version: 1,
+    compilerVersion: COMPILER_VERSION,
+    entry: entryName,
+    functions: functions
+  };
+}
+
+fn main(arg0, arg1) {
+  // 模式 1：系统内部内存编译调用 (arg1 == "__MEM__")
+  if (arg1 == "__MEM__") {
+    return compile_source(arg0);
+  }
+
+  // 模式 2：在系统内运行 compiler.nos（默认自举重编译自身 -> /System/compiler.nbc）
+  let srcPath = arg0 != null && arg0 != "" ? arg0 : "/System/compiler.nos";
+  let outPath = arg1 != null && arg1 != "" ? arg1 : "/System/compiler.nbc";
+  let src = syscall("fs_read", srcPath);
+  if (src == null) {
+    syscall("report_error", "无法读取源文件: " + srcPath);
+    return null;
+  }
+  let bc = compile_source(src);
+  if (bc == null) {
+    return null;
+  }
+  let encoded = json_encode(bc);
+  let ok = syscall("fs_write", outPath, encoded);
+  syscall("report_result", "编译成功: " + srcPath + " -> " + outPath + " (编译器版本 " + COMPILER_VERSION + ")");
+  return ok;
+}

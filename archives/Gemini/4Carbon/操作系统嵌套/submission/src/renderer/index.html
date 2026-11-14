@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nested OS</title>
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+  <div id="app-shell">
+    <div id="root-scale-stage">
+      <div id="root-mount"></div>
+    </div>
+    <div id="global-drag-ghost" class="drag-ghost hidden" aria-hidden="true"></div>
+    <div id="global-drop-indicator" class="drop-indicator hidden" aria-hidden="true"></div>
+    <div id="global-toast-stack" class="toast-stack" aria-live="polite"></div>
+  </div>
+
+  <script src="./vm/nos-vm.js"></script>
+  <script src="./vm/bootstrap-compiler.js"></script>
+  <script type="module" src="./ui/app.js"></script>
+</body>
+</html>

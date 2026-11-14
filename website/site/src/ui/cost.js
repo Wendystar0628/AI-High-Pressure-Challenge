@@ -1,23 +1,22 @@
-// 测试开销 (orchestrator/docs/测试开销.md 五、六; leaderboard.md「模型行」「测试开销」).
-// scores.<id>.cost = { cny, basis, plan, tokens, fitted, method, api_usd }, top level cost_source
+// 测试开销 (leaderboard.md「模型行」「测试开销」).
+// scores.<id>.cost = { cny, basis, plan, tokens, method, api_usd }, top level cost_source
 // = { name, url, fetched, usd_cny } (data.costSource). Pages only read it; nothing about a model is fixed here.
 //
 //   hasCosts(data)              does the data carry costs at all (no column without them)
 //   costOf(data, id)            the cost object or null
 //   costKey(cost)               'subscription' | 'api' | 'none'  (the tag under the amount)
 //   fillCost(cell, cost)        a model row's cost cell, one line: the amount and a small basis mark (○ 按订阅折算,
-//                               ◆ 按 API 标价折算; shapes, not colours); no amount: 数据暂缺
-//   fillTokens(cell, cost)      a model row's token cell, one line: the 13-task total, * when some tasks are estimated
-//   costLegend()                the marks explained once (○ 按订阅折算  ◆ 按 API 标价折算  * 含估算), for the board head
+//                               ◆ 按 API 标价折算; shapes, not colours); no amount: 暂无数据
+//   fillTokens(cell, cost)      a model row's token cell, one line: the 13-task total; no data: 暂无数据
+//   costLegend()                the marks explained once (○ 按订阅折算  ◆ 按 API 标价折算), for the board head
 //   costMark(key)               the mark element of a basis ('subscription' | 'api')
-//   costTip(data, id)           tooltip content: plan, tokens, estimated tasks, the api_price note
+//   costTip(data, id)           tooltip content: plan, tokens, conversion basis note
 //   costSr(cost)                the sentence a screen reader hears after the row
 //   costFacts(data, id)         [plan, tokens] lines (side panel)
-//   costNotes(data, id)         [estimated tasks, api_price note] lines (side panel, tooltip)
+//   costNotes(data, id)         conversion basis notes (side panel, tooltip)
 //   costSourceNote(data, tag)   the foot note: how the amounts are converted (ModelDial, rate, date), the quota
 //                               source written out in full and linked (cost_source.url), and how to re-test it yourself
 //   fmtCNY(v) / fmtUSD(v) / fmtTokens(n)  (fmtTokens: "17.1 亿 Token" / "1.71B tokens")
-//   isEstimated(cost)           cost.fitted is not empty: some tasks' usage is estimated (the 含估算 mark)
 import { h } from '../core/dom.js';
 import { t, lang, pick } from '../core/i18n.js';
 import { fmtDate, fmtInt, DASH } from '../core/format.js';
@@ -54,10 +53,7 @@ export function fmtTokenValue(n) {
 /** With the unit: "17.1 亿 Token" / "1.71B tokens"; null -> "—" */
 export const fmtTokens = (n) => (n == null ? DASH : t('common.cost.tokensUnit', { v: fmtTokenValue(n) }));
 
-/** Some tasks had no usage record and were estimated (cost.fitted not empty). */
-export const isEstimated = (cost) => !!cost?.fitted?.length;
-
-/** The tag under the amount: 按订阅折算 / 按 API 标价折算 / 数据暂缺. */
+/** The tag under the amount: 按订阅折算 / 按 API 标价折算 / 暂无数据. */
 export function costKey(cost) {
   if (!cost || cost.cny == null) return 'none';
   return cost.basis === 'api' ? 'api' : 'subscription';
@@ -78,23 +74,12 @@ export function planText(plan) {
   return terms.length ? t('common.cost.planTerms', { name, terms: terms.join(t('common.cost.sep')) }) : name;
 }
 
-/** Task names of the estimated tasks, in the page's language (the data writes the Chinese task names). */
-function fittedNames(data, cost) {
-  const list = cost?.fitted ?? [];
-  return list.map((name) => {
-    const task = data.tasks.find((k) => k.name === name || k.key === name);
-    return task ? pick(task, 'name') : name;
-  });
-}
-
 /** The basis mark: a ring for 按订阅折算, a solid diamond for 按 API 标价折算 (shape tells them apart, not colour). */
 export const costMark = (key) => h('i.cost-mark', { class: `is-${key}`, 'aria-hidden': 'true' });
-/** The 含估算 mark: an asterisk after the token total. */
-export const estMark = () => h('i.cost-est', { 'aria-hidden': 'true' }, '*');
 
 /**
  * A model row's cost cell (.mrow-cost), one line, vertically centred: the amount and a small basis mark after it
- * (the words 按订阅折算 / 按 API 标价折算 are written once, in the legend). No amount: 数据暂缺.
+ * (the words 按订阅折算 / 按 API 标价折算 are written once, in the legend). No amount: 暂无数据.
  */
 export function fillCost(cell, cost) {
   const key = costKey(cost);
@@ -107,18 +92,15 @@ export function fillCost(cell, cost) {
 
 /**
  * A model row's token cell (.mrow-tok), one line: the 13-task total ("17.1 亿" / "1.71B"; the column head says
- * Token) and * when some tasks are estimated (explained once in the legend). No record: 数据暂缺.
+ * Token). No data: 暂无数据.
  */
 export function fillTokens(cell, cost) {
   const none = cost?.tokens == null;
   cell.classList.toggle('is-none', none);
-  // the * slot is always there (hidden when nothing is estimated), so the totals line up on the right
-  const est = estMark();
-  est.classList.toggle('is-off', none || !isEstimated(cost));
-  cell.replaceChildren(h('span.mrow-tok-v.num', none ? t('common.cost.basis.none') : fmtTokenValue(cost.tokens)), est);
+  cell.replaceChildren(h('span.mrow-tok-v.num', none ? t('common.cost.basis.none') : fmtTokenValue(cost.tokens)));
 }
 
-/** The marks explained once: ○ 按订阅折算  ◆ 按 API 标价折算  * 含估算 (only the marks the data uses). */
+/** The marks explained once: ○ 按订阅折算  ◆ 按 API 标价折算 (only the marks the data uses). */
 export function costLegend(data, tag = 'p.cost-legend') {
   const costs = Object.values(data.scores ?? {}).map((s) => s?.cost).filter(Boolean);
   const keys = new Set(costs.map(costKey));
@@ -127,7 +109,6 @@ export function costLegend(data, tag = 'p.cost-legend') {
     tag,
     keys.has('subscription') || !costs.length ? item(costMark('subscription'), t('common.cost.basis.subscription')) : null,
     keys.has('api') ? item(costMark('api'), t('common.cost.basis.api')) : null,
-    costs.some(isEstimated) ? item(estMark(), t('common.cost.legendEst')) : null,
   );
 }
 
@@ -136,7 +117,7 @@ export function costSr(cost) {
   const key = costKey(cost);
   const money = key === 'none' ? t('common.cost.srNone') : t('common.cost.sr', { cost: one(cost.cny), basis: costTag(cost) });
   const tokens = cost?.tokens == null ? t('common.cost.tokensNoneShort') : fmtTokens(cost.tokens);
-  return t('common.cost.srTokens', { money, tokens, est: isEstimated(cost) ? t('common.cost.srEst') : '' });
+  return t('common.cost.srTokens', { money, tokens });
 }
 
 /** [plan line, tokens line] for the panel and the tooltip; empty strings dropped. */
@@ -146,25 +127,19 @@ export function costFacts(data, id) {
   const key = costKey(cost);
   const plan = planText(cost?.plan);
   if (plan) out.push(t(`common.cost.plan.${key === 'api' ? 'api' : 'subscription'}`, { plan }));
-  out.push(cost?.tokens == null ? t('common.cost.tokensNone') : t('common.cost.tokens', { n: data.tasks.length, v: fmtTokens(cost.tokens) }) + (isEstimated(cost) ? t('common.cost.estSuffix') : ''));
+  out.push(cost?.tokens == null ? t('common.cost.tokensNone') : t('common.cost.tokens', { n: data.tasks.length, v: fmtTokens(cost.tokens) }));
   return out;
 }
 
-/** Notes that qualify the amount: how it was estimated, which tasks are estimated. */
+/** Public conversion basis notes for the panel and tooltip. */
 export function costNotes(data, id) {
   const cost = costOf(data, id);
   const out = [];
-  // no amount: say why, unless the token line already does (no usage records at all)
-  if (!cost || cost.cny == null) {
-    if (cost?.tokens != null) out.push(t('common.cost.noteNone'));
-  }
-  else if (cost.method === 'api_price' && cost.basis === 'api') out.push(t('common.cost.noteApiDirect'));
+  if (!cost || cost.cny == null) return out;
+  if (cost.method === 'api_price' && cost.basis === 'api') out.push(t('common.cost.noteApiDirect'));
   else if (cost.method === 'api_price') out.push(cost.api_usd == null ? t('common.cost.noteApiPrice') : t('common.cost.noteApiPriceUsd', { usd: fmtUSD(cost.api_usd) }));
   else if (cost.method === 'credits') out.push(t('common.cost.noteCredits'));
   else if (cost.method === 'quota') out.push(t('common.cost.noteQuota'));
-  const fitted = fittedNames(data, cost);
-  if (fitted.length >= data.tasks.length) out.push(t('common.cost.fittedAll', { n: data.tasks.length }));
-  else if (fitted.length) out.push(t('common.cost.fitted', { list: fitted.join(t('common.cost.listSep')) }));
   return out;
 }
 
@@ -187,8 +162,8 @@ const extLink = (href, text) => h('a', { href, target: '_blank', rel: 'noopener 
 
 /**
  * The note under the board, three lines: the rule behind the amounts (source name, dollar rate, date);
- * the quota source written out in full as a link (cost_source.url, new window); and how to check the
- * measured usage yourself (download the tasks and their isolated environments from GitHub).
+ * the quota source written out in full as a link (cost_source.url, new window); and how to re-test
+ * with the public tasks and their isolated environments from GitHub.
  * Returns null when the data has no cost_source.
  */
 export function costSourceNote(data, tag = 'div.cost-note') {

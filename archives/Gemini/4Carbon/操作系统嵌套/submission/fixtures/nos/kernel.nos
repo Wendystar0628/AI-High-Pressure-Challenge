@@ -1,0 +1,1139 @@
+// ============================================================================
+// NestedOS 子系统内核程序 (/System/kernel.nos)
+// 说明：本文件是运行子系统的真实内核程序，存放在父系统文件系统中，由父系统承载进程执行。
+// 修改本文件中的调度策略、系统调用、消息投递规则或文件系统规则并重启子系统后立即生效。
+// ============================================================================
+
+// --- 可调内核参数（可在父系统编辑器中直接改写测试） ---
+let SCHED_POLICY = "round_robin"; // 可选: "round_robin" | "favor_low_pid" | "favor_high_pid"
+let DEFAULT_TIME_SLICE = 450;     // 单次调度默认指令片
+let MSG_ORDER = "fifo";           // 可选: "fifo" | "lifo"
+let MSG_PREFIX = "";              // 若非空，为投递的字符串消息附加前缀
+let VFS_HIDE_DOTFILES = true;     // 目录列表是否隐藏以 "." 开头的隐藏项
+
+let SYS_INFO = {
+  sysId: "inner",
+  name: "子系统",
+  depth: 1,
+  vtime: 0.0,
+  speed: 1.0,
+  totalBudget: 16000,
+  lastGrantedBudget: 0,
+  memQuota: 16777216,
+  storageQuota: 8388608,
+  storageUsed: 0
+};
+
+let PROC_TABLE = [];
+let NEXT_PID = 1;
+let RR_CURSOR = 0;
+let ROLES = {};
+let VFS = {};          // path -> { type: "file"|"dir", content: "...", mtime: 0 }
+let TRASH_META = {};   // trashName -> { origPath, deletedAt }
+let SURFACES = {};     // winId -> surface packet
+let DESKTOP_STATE = null;
+let FC_CHANNELS = {};  // sessionId -> { sensors, controls }
+let CHART_SUBS = {};   // subId -> { queue: [], status: "disconnected", meta: {} }
+let PROJECTIONS = {};  // winId -> { targetSysId, appId, active }
+let CHILD_SYSTEMS = {}; // childSysId -> carrierPid
+let COMPILER_HASH = "boot";
+
+// ============================================================================
+// 1. 虚拟文件系统 (VFS) 实现
+// ============================================================================
+
+fn norm_path(p) {
+  if (p == null || p == "") { return "/"; }
+  let s = replace(str(p), "\\", "/");
+  if (char_at(s, 0) != "/") { s = "/" + s; }
+  while (len(s) > 1 && char_at(s, len(s) - 1) == "/") {
+    s = substr(s, 0, len(s) - 1);
+  }
+  return s;
+}
+
+fn parent_dir(p) {
+  let np = norm_path(p);
+  if (np == "/") { return "/"; }
+  let parts = split(np, "/");
+  if (len(parts) <= 2) { return "/"; }
+  let sub = slice(parts, 0, len(parts) - 1);
+  return join(sub, "/");
+}
+
+fn base_name(p) {
+  let np = norm_path(p);
+  if (np == "/") { return "/"; }
+  let parts = split(np, "/");
+  return parts[len(parts) - 1];
+}
+
+fn recalc_storage() {
+  let ks = keys(VFS);
+  let total = 0;
+  let i = 0;
+  while (i < len(ks)) {
+    let entry = VFS[ks[i]];
+    if (entry != null && entry.type == "file" && entry.content != null) {
+      total += len(entry.content) * 2 + 32;
+    } else {
+      total += 24;
+    }
+    i += 1;
+  }
+  SYS_INFO.storageUsed = total;
+  return total;
+}
+
+fn vfs_ensure_dirs(filePath) {
+  let np = norm_path(filePath);
+  let parts = split(np, "/");
+  let cur = "";
+  let i = 1;
+  while (i < len(parts) - 1) {
+    cur = cur + "/" + parts[i];
+    if (!has_key(VFS, cur)) {
+      VFS[cur] = { type: "dir", content: null, mtime: SYS_INFO.vtime };
+    }
+    i += 1;
+  }
+  if (!has_key(VFS, "/")) {
+    VFS["/"] = { type: "dir", content: null, mtime: 0 };
+  }
+}
+
+fn vfs_write_file(path, content, syncHost) {
+  let np = norm_path(path);
+  let strContent = content == null ? "" : str(content);
+  let newBytes = len(strContent) * 2 + 32;
+  let oldBytes = 0;
+  if (has_key(VFS, np) && VFS[np] != null && VFS[np].type == "file") {
+    oldBytes = len(VFS[np].content) * 2 + 32;
+  }
+  if (SYS_INFO.storageUsed - oldBytes + newBytes > SYS_INFO.storageQuota) {
+    return { ok: false, error: "E_STORAGE_QUOTA: 存储配额不足" };
+  }
+  vfs_ensure_dirs(np);
+  VFS[np] = { type: "file", content: strContent, mtime: SYS_INFO.vtime };
+  SYS_INFO.storageUsed = SYS_INFO.storageUsed - oldBytes + newBytes;
+  if (syncHost && np == "/System/compiler.nbc") {
+    COMPILER_HASH = "custom_" + str(SYS_INFO.vtime) + "_" + str(len(strContent));
+  }
+  if (syncHost) {
+    syscall("host_vfs_sync", "write", np, strContent);
+  }
+  return { ok: true, bytes: newBytes, path: np };
+}
+
+fn vfs_mkdir(path, syncHost) {
+  let np = norm_path(path);
+  vfs_ensure_dirs(np + "/_");
+  VFS[np] = { type: "dir", content: null, mtime: SYS_INFO.vtime };
+  if (syncHost) {
+    syscall("host_vfs_sync", "mkdir", np, null);
+  }
+  return { ok: true, path: np };
+}
+
+fn vfs_read_file(path) {
+  let np = norm_path(path);
+  if (!has_key(VFS, np)) { return null; }
+  let entry = VFS[np];
+  if (entry == null || entry.type != "file") { return null; }
+  return entry.content;
+}
+
+fn vfs_list_dir(dirPath) {
+  let dp = norm_path(dirPath);
+  let ks = keys(VFS);
+  let out = [];
+  let i = 0;
+  while (i < len(ks)) {
+    let p = ks[i];
+    if (p != "/" && p != dp && parent_dir(p) == dp) {
+      let name = base_name(p);
+      if (!(VFS_HIDE_DOTFILES && dp == "/" && char_at(name, 0) == ".")) {
+        let entry = VFS[p];
+        let size = entry.type == "file" && entry.content != null ? len(entry.content) : 0;
+        push(out, {
+          name: name,
+          path: p,
+          type: entry.type,
+          size: size,
+          mtime: entry.mtime,
+          origPath: has_key(TRASH_META, p) ? TRASH_META[p].origPath : null
+        });
+      }
+    }
+    i += 1;
+  }
+  return out;
+}
+
+fn vfs_delete_path(path) {
+  let np = norm_path(path);
+  if (!has_key(VFS, np) || np == "/") { return { ok: false, error: "文件不存在" }; }
+  if (index_of(np, "/.Trash/", 0) == 0) {
+    delete_key(VFS, np);
+    delete_key(TRASH_META, np);
+    recalc_storage();
+    syscall("host_vfs_sync", "delete", np, null);
+    return { ok: true };
+  }
+  vfs_mkdir("/.Trash", false);
+  let trashPath = "/.Trash/" + base_name(np);
+  let suffix = 1;
+  while (has_key(VFS, trashPath)) {
+    trashPath = "/.Trash/" + str(suffix) + "_" + base_name(np);
+    suffix += 1;
+  }
+  VFS[trashPath] = VFS[np];
+  TRASH_META[trashPath] = { origPath: np, deletedAt: SYS_INFO.vtime };
+  delete_key(VFS, np);
+  syscall("host_vfs_sync", "move", np, trashPath);
+  return { ok: true, trashPath: trashPath };
+}
+
+fn vfs_restore_trash(trashPath) {
+  let np = norm_path(trashPath);
+  if (!has_key(VFS, np)) { return { ok: false, error: "回收站项不存在" }; }
+  let dst = has_key(TRASH_META, np) ? TRASH_META[np].origPath : ("/Documents/" + base_name(np));
+  vfs_ensure_dirs(dst);
+  VFS[dst] = VFS[np];
+  delete_key(VFS, np);
+  delete_key(TRASH_META, np);
+  syscall("host_vfs_sync", "move", np, dst);
+  return { ok: true, restoredPath: dst };
+}
+
+fn vfs_copy_tree(src, dst) {
+  let sp = norm_path(src);
+  let dp = norm_path(dst);
+  if (!has_key(VFS, sp)) { return { ok: false, error: "源文件不存在" }; }
+  let entry = VFS[sp];
+  if (entry.type == "file") {
+    return vfs_write_file(dp, entry.content, true);
+  }
+  vfs_mkdir(dp, true);
+  let ks = keys(VFS);
+  let i = 0;
+  let prefix = sp + "/";
+  while (i < len(ks)) {
+    let k = ks[i];
+    if (index_of(k, prefix, 0) == 0) {
+      let rel = substr(k, len(sp), len(k) - len(sp));
+      let e = VFS[k];
+      if (e.type == "dir") { vfs_mkdir(dp + rel, true); }
+      else {
+        let wr = vfs_write_file(dp + rel, e.content, true);
+        if (!wr.ok) { return wr; }
+      }
+    }
+    i += 1;
+  }
+  return { ok: true, path: dp };
+}
+
+fn vfs_rename_path(oldPath, newPath) {
+  let op = norm_path(oldPath);
+  let np = norm_path(newPath);
+  if (!has_key(VFS, op)) { return { ok: false, error: "原路径不存在" }; }
+  let cp = vfs_copy_tree(op, np);
+  if (!cp.ok) { return cp; }
+  delete_key(VFS, op);
+  recalc_storage();
+  syscall("host_vfs_sync", "move", op, np);
+  return { ok: true, path: np };
+}
+
+// ============================================================================
+// 2. 编译器调用与进程生命周期管理
+// ============================================================================
+
+fn compile_nos_program(progPath, sourceCode) {
+  let cacheKey = COMPILER_HASH + "::" + str(len(sourceCode)) + "::" + sourceCode;
+  let cached = syscall("host_compile_cache", "get", cacheKey, null);
+  if (cached != null && cached.magic == "NOSBC1") {
+    return { ok: true, bytecode: cached };
+  }
+
+  // 读取本系统内的自举编译器可执行文件 /System/compiler.nbc
+  let compilerRaw = vfs_read_file("/System/compiler.nbc");
+  if (compilerRaw == null) {
+    return { ok: false, error: "缺少系统编译器 /System/compiler.nbc" };
+  }
+  let compilerBc = json_decode(compilerRaw);
+  let cvmId = __vm_spawn(compilerBc, 33554432, false, [sourceCode, "__MEM__"]);
+  let guard = 0;
+  while (guard < 600) {
+    let res = __vm_step(cvmId, 50000);
+    if (res.status == "exit") {
+      __vm_kill(cvmId);
+      if (res.value != null && res.value.magic == "NOSBC1") {
+        syscall("host_compile_cache", "set", cacheKey, res.value);
+        return { ok: true, bytecode: res.value };
+      }
+      return { ok: false, error: "编译失败: " + progPath };
+    }
+    if (res.status == "error") {
+      __vm_kill(cvmId);
+      return { ok: false, error: "编译语法错误 (" + progPath + "): " + str(res.error) };
+    }
+    if (res.status == "syscall") {
+      if (res.name == "report_error") {
+        __vm_kill(cvmId);
+        return { ok: false, error: str(res.args[0]) };
+      }
+      __vm_resume(cvmId, null);
+    }
+    guard += 1;
+  }
+  __vm_kill(cvmId);
+  return { ok: false, error: "编译超时: " + progPath };
+}
+
+fn find_proc(pid) {
+  let i = 0;
+  while (i < len(PROC_TABLE)) {
+    if (PROC_TABLE[i].pid == pid) {
+      return PROC_TABLE[i];
+    }
+    i += 1;
+  }
+  return null;
+}
+
+fn calc_used_proc_mem() {
+  let sum = 0;
+  let i = 0;
+  while (i < len(PROC_TABLE)) {
+    let p = PROC_TABLE[i];
+    if (p.state != "exited" && p.state != "error") {
+      sum += p.memBytes;
+    }
+    i += 1;
+  }
+  return sum;
+}
+
+fn spawn_process(progPath, entryArgs, opts) {
+  let np = norm_path(progPath);
+  let src = vfs_read_file(np);
+  if (src == null) {
+    return { ok: false, error: "程序文件不存在: " + np };
+  }
+  let comp = compile_nos_program(np, src);
+  if (!comp.ok) {
+    return comp;
+  }
+
+  let isCarrier = opts != null && opts.isCarrier == true;
+  let memLimit = (opts != null && opts.memQuota != null) ? opts.memQuota : (isCarrier ? 8388608 : 3145728);
+  if (calc_used_proc_mem() + 2048 > SYS_INFO.memQuota) {
+    return { ok: false, error: "E_MEM_QUOTA: 系统剩余内存配额不足，无法启动进程" };
+  }
+
+  let pid = NEXT_PID;
+  NEXT_PID += 1;
+  let argsArr = entryArgs != null ? entryArgs : [];
+  let vmId = __vm_spawn(comp.bytecode, min(memLimit, SYS_INFO.memQuota), isCarrier, argsArr);
+  let pName = (opts != null && opts.name != null) ? opts.name : base_name(np);
+  let role = (opts != null && opts.role != null) ? opts.role : null;
+  let sliceQuota = (opts != null && opts.quota != null) ? opts.quota : (isCarrier ? 9000 : DEFAULT_TIME_SLICE);
+
+  let proc = {
+    pid: pid,
+    vmId: vmId,
+    name: pName,
+    progPath: np,
+    role: role,
+    isCarrier: isCarrier,
+    childSysId: (opts != null && opts.childSysId != null) ? opts.childSysId : null,
+    parentPid: (opts != null && opts.parentPid != null) ? opts.parentPid : 0,
+    state: "ready",      // ready | running | waiting_time | waiting_msg | suspended | exited | error
+    prevWaitState: null,
+    wakeAt: 0,
+    quota: sliceQuota,
+    memQuota: memLimit,
+    cpuSelf: 0,
+    cpuChildren: 0,
+    remainingWork: 0,
+    memBytes: 1024,
+    msgQueue: [],
+    nextMsgSeq: 1,
+    logs: [],
+    lastResult: null,
+    error: null
+  };
+  if (role != null) {
+    ROLES[role] = pid;
+  }
+  push(PROC_TABLE, proc);
+  return { ok: true, pid: pid };
+}
+
+fn terminate_process(pid, reasonError) {
+  let proc = find_proc(pid);
+  if (proc == null) { return false; }
+  if (proc.state == "exited" || proc.state == "error") { return true; }
+  if (proc.vmId != null) {
+    __vm_kill(proc.vmId);
+    proc.vmId = null;
+  }
+  proc.msgQueue = [];
+  proc.remainingWork = 0;
+  proc.memBytes = 0;
+  if (reasonError != null) {
+    proc.state = "error";
+    proc.error = str(reasonError);
+  } else {
+    proc.state = "exited";
+  }
+  if (proc.role != null && has_key(ROLES, proc.role) && ROLES[proc.role] == pid) {
+    delete_key(ROLES, proc.role);
+  }
+  // 若该进程拥有已投送窗口，通知取消投送
+  let pks = keys(PROJECTIONS);
+  let i = 0;
+  while (i < len(pks)) {
+    let wid = pks[i];
+    let pj = PROJECTIONS[wid];
+    if (pj != null && pj.ownerPid == pid) {
+      syscall("host_cross_call", "project_close", { winId: wid, reason: "源应用进程已结束" });
+      delete_key(PROJECTIONS, wid);
+    }
+    i += 1;
+  }
+  // 若该进程是子系统承载进程，通知宿主该子树已停止
+  if (proc.isCarrier && proc.childSysId != null) {
+    syscall("host_cross_call", "child_stopped", {
+      childSysId: proc.childSysId,
+      error: reasonError
+    });
+  }
+  return true;
+}
+
+// ============================================================================
+// 3. 消息通信机制 (IPC) —— 修改此处规则可直接改变进程收消息行为
+// ============================================================================
+
+fn deliver_message(senderPid, targetPid, payload) {
+  let target = find_proc(targetPid);
+  if (target == null || target.state == "exited" || target.state == "error") {
+    return { ok: false, error: "ERR_NO_TARGET: 目标进程不存在或已结束" };
+  }
+  // 发送时深拷贝数据值，互不共享可变对象
+  let copied = clone(payload);
+  if (MSG_PREFIX != "" && type_of(copied) == "string") {
+    copied = MSG_PREFIX + copied;
+  }
+  let msg = {
+    from: senderPid,
+    to: targetPid,
+    seq: target.nextMsgSeq,
+    time: SYS_INFO.vtime,
+    data: copied
+  };
+  target.nextMsgSeq += 1;
+
+  if (MSG_ORDER == "lifo") {
+    let nextQ = [msg];
+    let i = 0;
+    while (i < len(target.msgQueue)) {
+      push(nextQ, target.msgQueue[i]);
+      i += 1;
+    }
+    target.msgQueue = nextQ;
+  } else {
+    push(target.msgQueue, msg);
+  }
+
+  // 若接收进程正在等待消息（且未被挂起），立即唤醒并交付
+  if (target.state == "waiting_msg") {
+    let popped = shift(target.msgQueue);
+    target.state = "ready";
+    target.wakeAt = 0;
+    __vm_resume(target.vmId, popped);
+  }
+  return { ok: true, seq: msg.seq };
+}
+
+// ============================================================================
+// 4. 进程调度器 —— 修改 SCHED_POLICY 或本函数即可改变调度行为
+// ============================================================================
+
+fn wake_waiting_processes() {
+  let i = 0;
+  while (i < len(PROC_TABLE)) {
+    let p = PROC_TABLE[i];
+    if (p.state == "waiting_time" && SYS_INFO.vtime >= p.wakeAt) {
+      p.state = "ready";
+      p.wakeAt = 0;
+      __vm_resume(p.vmId, SYS_INFO.vtime);
+    } else if (p.state == "waiting_msg" && p.wakeAt > 0 && SYS_INFO.vtime >= p.wakeAt) {
+      p.state = "ready";
+      p.wakeAt = 0;
+      __vm_resume(p.vmId, null);
+    }
+    // 如果等待消息期间已有积压消息，且当前处于 waiting_msg，也予以唤醒
+    if (p.state == "waiting_msg" && len(p.msgQueue) > 0) {
+      let msg = shift(p.msgQueue);
+      p.state = "ready";
+      p.wakeAt = 0;
+      __vm_resume(p.vmId, msg);
+    }
+    i += 1;
+  }
+}
+
+fn schedule_pick_next() {
+  let n = len(PROC_TABLE);
+  if (n == 0) { return null; }
+
+  if (SCHED_POLICY == "favor_low_pid") {
+    let i = 0;
+    while (i < n) {
+      if (PROC_TABLE[i].state == "ready") { return PROC_TABLE[i]; }
+      i += 1;
+    }
+    return null;
+  }
+
+  if (SCHED_POLICY == "favor_high_pid") {
+    let i = n - 1;
+    while (i >= 0) {
+      if (PROC_TABLE[i].state == "ready") { return PROC_TABLE[i]; }
+      i -= 1;
+    }
+    return null;
+  }
+
+  // 默认公平时间片轮转 (Round-Robin)
+  let checked = 0;
+  while (checked < n) {
+    let idx = (RR_CURSOR + checked) % n;
+    let cand = PROC_TABLE[idx];
+    if (cand.state == "ready") {
+      RR_CURSOR = (idx + 1) % n;
+      return cand;
+    }
+    checked += 1;
+  }
+  return null;
+}
+
+// ============================================================================
+// 5. 系统调用分发器 (Syscall Dispatcher) —— 可直接新增自定义系统调用
+// ============================================================================
+
+fn dispatch_syscall(proc, callName, args) {
+  if (callName == "time_now") {
+    __vm_resume(proc.vmId, SYS_INFO.vtime);
+    return null;
+  }
+  if (callName == "sleep") {
+    let dur = max(0, num(args[0]));
+    if (dur <= 0) {
+      __vm_resume(proc.vmId, SYS_INFO.vtime);
+    } else {
+      proc.state = "waiting_time";
+      proc.wakeAt = SYS_INFO.vtime + dur;
+    }
+    return null;
+  }
+  if (callName == "yield") {
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "get_pid") {
+    __vm_resume(proc.vmId, proc.pid);
+    return null;
+  }
+  if (callName == "get_sys_info") {
+    __vm_resume(proc.vmId, clone(SYS_INFO));
+    return null;
+  }
+  if (callName == "register_role") {
+    let r = str(args[0]);
+    proc.role = r;
+    ROLES[r] = proc.pid;
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "find_pid_by_role") {
+    let r = str(args[0]);
+    let found = has_key(ROLES, r) ? ROLES[r] : null;
+    if (found != null) {
+      let fp = find_proc(found);
+      if (fp == null || fp.state == "exited" || fp.state == "error") {
+        found = null;
+      }
+    }
+    __vm_resume(proc.vmId, found);
+    return null;
+  }
+  if (callName == "send_msg") {
+    let res = deliver_message(proc.pid, num(args[0]), args[1]);
+    __vm_resume(proc.vmId, res);
+    return null;
+  }
+  if (callName == "recv_msg") {
+    if (len(proc.msgQueue) > 0) {
+      let msg = shift(proc.msgQueue);
+      __vm_resume(proc.vmId, msg);
+    } else {
+      __vm_resume(proc.vmId, null);
+    }
+    return null;
+  }
+  if (callName == "recv_msg_wait") {
+    if (len(proc.msgQueue) > 0) {
+      let msg = shift(proc.msgQueue);
+      __vm_resume(proc.vmId, msg);
+    } else {
+      proc.state = "waiting_msg";
+      let timeout = args[0] != null ? num(args[0]) : 0;
+      proc.wakeAt = timeout > 0 ? (SYS_INFO.vtime + timeout) : 0;
+    }
+    return null;
+  }
+  if (callName == "fs_list") {
+    __vm_resume(proc.vmId, vfs_list_dir(args[0]));
+    return null;
+  }
+  if (callName == "fs_read") {
+    __vm_resume(proc.vmId, vfs_read_file(args[0]));
+    return null;
+  }
+  if (callName == "fs_write") {
+    let res = vfs_write_file(args[0], args[1], true);
+    __vm_resume(proc.vmId, res);
+    return null;
+  }
+  if (callName == "fs_mkdir") {
+    __vm_resume(proc.vmId, vfs_mkdir(args[0], true));
+    return null;
+  }
+  if (callName == "fs_delete") {
+    __vm_resume(proc.vmId, vfs_delete_path(args[0]));
+    return null;
+  }
+  if (callName == "fs_restore") {
+    __vm_resume(proc.vmId, vfs_restore_trash(args[0]));
+    return null;
+  }
+  if (callName == "fs_copy") {
+    __vm_resume(proc.vmId, vfs_copy_tree(args[0], args[1]));
+    return null;
+  }
+  if (callName == "fs_rename") {
+    __vm_resume(proc.vmId, vfs_rename_path(args[0], args[1]));
+    return null;
+  }
+  if (callName == "proc_spawn") {
+    let pArgs = len(args) > 1 && args[1] != null ? args[1] : [];
+    let pOpts = len(args) > 2 && args[2] != null ? args[2] : {};
+    pOpts.parentPid = proc.pid;
+    let sr = spawn_process(args[0], pArgs, pOpts);
+    __vm_resume(proc.vmId, sr);
+    return null;
+  }
+  if (callName == "proc_kill") {
+    let ok = terminate_process(num(args[0]), null);
+    __vm_resume(proc.vmId, ok);
+    return null;
+  }
+  if (callName == "proc_exit") {
+    terminate_process(proc.pid, null);
+    return null;
+  }
+  if (callName == "proc_suspend") {
+    let tp = find_proc(num(args[0]));
+    if (tp != null && tp.pid != proc.pid && tp.state != "exited" && tp.state != "error" && tp.state != "suspended") {
+      tp.prevWaitState = tp.state;
+      tp.state = "suspended";
+    }
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "proc_resume") {
+    let tp = find_proc(num(args[0]));
+    if (tp != null && tp.state == "suspended") {
+      tp.state = tp.prevWaitState != null ? tp.prevWaitState : "ready";
+      tp.prevWaitState = null;
+    }
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "proc_set_quota") {
+    let tp = find_proc(num(args[0]));
+    if (tp != null) {
+      if (args[1] != null && num(args[1]) > 0) { tp.quota = num(args[1]); }
+      if (args[2] != null && num(args[2]) > 0) {
+        tp.memQuota = num(args[2]);
+        if (tp.vmId != null) { __vm_set_mem_limit(tp.vmId, tp.memQuota); }
+      }
+    }
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "proc_list") {
+    let list = [];
+    let i = 0;
+    while (i < len(PROC_TABLE)) {
+      let p = PROC_TABLE[i];
+      push(list, {
+        pid: p.pid,
+        name: p.name,
+        progPath: p.progPath,
+        role: p.role,
+        isCarrier: p.isCarrier,
+        childSysId: p.childSysId,
+        state: p.state,
+        quota: p.quota,
+        memQuota: p.memQuota,
+        cpuSelf: p.cpuSelf,
+        cpuChildren: p.cpuChildren,
+        remainingWork: p.remainingWork,
+        memBytes: p.memBytes,
+        msgCount: len(p.msgQueue),
+        lastResult: p.lastResult,
+        error: p.error
+      });
+      i += 1;
+    }
+    __vm_resume(proc.vmId, list);
+    return null;
+  }
+  if (callName == "sys_set_limits") {
+    if (args[0] != null && num(args[0]) >= 100) { SYS_INFO.totalBudget = num(args[0]); }
+    if (args[1] != null && num(args[1]) >= 262144) { SYS_INFO.memQuota = num(args[1]); }
+    if (args[2] != null && num(args[2]) >= 131072) { SYS_INFO.storageQuota = num(args[2]); }
+    syscall("host_cross_call", "sys_limits_updated", clone(SYS_INFO));
+    __vm_resume(proc.vmId, clone(SYS_INFO));
+    return null;
+  }
+  if (callName == "report_result") {
+    let txt = str(args[0]);
+    proc.lastResult = txt;
+    push(proc.logs, { t: SYS_INFO.vtime, text: txt });
+    if (len(proc.logs) > 25) { shift(proc.logs); }
+    syscall("host_cross_call", "proc_log", { pid: proc.pid, name: proc.name, text: txt, isError: false });
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "report_error") {
+    let txt = str(args[0]);
+    proc.error = txt;
+    push(proc.logs, { t: SYS_INFO.vtime, text: "[ERR] " + txt });
+    syscall("host_cross_call", "proc_log", { pid: proc.pid, name: proc.name, text: txt, isError: true });
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "surface_submit") {
+    let wid = str(args[0]);
+    let surf = clone(args[1]);
+    surf.ownerPid = proc.pid;
+    surf.updatedAt = SYS_INFO.vtime;
+    SURFACES[wid] = surf;
+    if (has_key(PROJECTIONS, wid) && PROJECTIONS[wid] != null) {
+      syscall("host_cross_call", "project_frame", {
+        winId: wid,
+        targetSysId: PROJECTIONS[wid].targetSysId,
+        appId: PROJECTIONS[wid].appId,
+        surface: clone(surf)
+      });
+    }
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "surface_close") {
+    let wid = str(args[0]);
+    delete_key(SURFACES, wid);
+    if (has_key(PROJECTIONS, wid)) {
+      syscall("host_cross_call", "project_close", { winId: wid, reason: "源窗口已关闭" });
+      delete_key(PROJECTIONS, wid);
+    }
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "wm_get_surfaces") {
+    __vm_resume(proc.vmId, clone(SURFACES));
+    return null;
+  }
+  if (callName == "wm_present_desktop") {
+    DESKTOP_STATE = clone(args[0]);
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "project_window") {
+    let wid = str(args[0]);
+    let appId = str(args[1]);
+    let targetSysId = str(args[2]);
+    PROJECTIONS[wid] = { targetSysId: targetSysId, appId: appId, ownerPid: proc.pid };
+    let curSurf = has_key(SURFACES, wid) ? clone(SURFACES[wid]) : null;
+    let res = syscall("host_cross_call", "project_open", {
+      winId: wid,
+      appId: appId,
+      targetSysId: targetSysId,
+      surface: curSurf
+    });
+    __vm_resume(proc.vmId, res);
+    return null;
+  }
+  if (callName == "unproject_window") {
+    let wid = str(args[0]);
+    delete_key(PROJECTIONS, wid);
+    syscall("host_cross_call", "project_close", { winId: wid, reason: "已取消投送" });
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "fc_write_sensors") {
+    let sid = str(args[0]);
+    if (!has_key(FC_CHANNELS, sid)) {
+      FC_CHANNELS[sid] = { sensors: null, controls: null };
+    }
+    FC_CHANNELS[sid].sensors = clone(args[1]);
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "fc_read_sensors") {
+    let sid = str(args[0]);
+    let ch = has_key(FC_CHANNELS, sid) ? FC_CHANNELS[sid] : null;
+    __vm_resume(proc.vmId, ch != null ? clone(ch.sensors) : null);
+    return null;
+  }
+  if (callName == "fc_write_controls") {
+    let sid = str(args[0]);
+    if (!has_key(FC_CHANNELS, sid)) {
+      FC_CHANNELS[sid] = { sensors: null, controls: null };
+    }
+    let ctrl = clone(args[1]);
+    ctrl.writtenAt = SYS_INFO.vtime;
+    ctrl.writerPid = proc.pid;
+    FC_CHANNELS[sid].controls = ctrl;
+    __vm_resume(proc.vmId, true);
+    return null;
+  }
+  if (callName == "fc_read_controls") {
+    let sid = str(args[0]);
+    let ch = has_key(FC_CHANNELS, sid) ? FC_CHANNELS[sid] : null;
+    __vm_resume(proc.vmId, ch != null ? clone(ch.controls) : null);
+    return null;
+  }
+  if (callName == "chart_service") {
+    let res = syscall("host_cross_call", "chart_service", {
+      action: args[0],
+      payload: args[1],
+      callerPid: proc.pid
+    });
+    __vm_resume(proc.vmId, res);
+    return null;
+  }
+  if (callName == "subsys_manage") {
+    let action = str(args[0]);
+    let targetId = args[1] != null ? str(args[1]) : null;
+    let extra = len(args) > 2 ? args[2] : null;
+    if (action == "create") {
+      // 在本系统文件系统中为新直属子系统准备内核源文件，并启动承载进程！
+      let allocRes = syscall("host_cross_call", "subsys_prepare_create", extra);
+      if (allocRes != null && allocRes.ok) {
+        let childId = allocRes.childSysId;
+        let kTemplate = vfs_read_file("/System/kernel.nos");
+        let kDest = "/Subsystems/" + childId + "/kernel.nos";
+        vfs_write_file(kDest, kTemplate, true);
+        let sp = spawn_process(kDest, [childId], {
+          name: "carrier:" + childId,
+          isCarrier: true,
+          childSysId: childId,
+          quota: max(1200, floor(SYS_INFO.totalBudget * 0.68)),
+          memQuota: max(2097152, floor(SYS_INFO.memQuota * 0.65))
+        });
+        if (sp.ok) {
+          CHILD_SYSTEMS[childId] = sp.pid;
+          syscall("host_cross_call", "subsys_carrier_started", { childSysId: childId, carrierPid: sp.pid });
+        } else {
+          syscall("host_cross_call", "subsys_kernel_error", { childSysId: childId, error: sp.error });
+        }
+        __vm_resume(proc.vmId, { ok: sp.ok, childSysId: childId, pid: sp.pid, error: sp.error });
+      } else {
+        __vm_resume(proc.vmId, allocRes);
+      }
+      return null;
+    }
+    if (action == "restart" && targetId != null) {
+      if (has_key(CHILD_SYSTEMS, targetId)) {
+        terminate_process(CHILD_SYSTEMS[targetId], null);
+      }
+      let kPath = "/Subsystems/" + targetId + "/kernel.nos";
+      syscall("host_cross_call", "subsys_prepare_restart", { childSysId: targetId });
+      let sp = spawn_process(kPath, [targetId], {
+        name: "carrier:" + targetId,
+        isCarrier: true,
+        childSysId: targetId,
+        quota: max(1200, floor(SYS_INFO.totalBudget * 0.68)),
+        memQuota: max(2097152, floor(SYS_INFO.memQuota * 0.65))
+      });
+      if (sp.ok) {
+        CHILD_SYSTEMS[targetId] = sp.pid;
+        syscall("host_cross_call", "subsys_carrier_started", { childSysId: targetId, carrierPid: sp.pid });
+      } else {
+        syscall("host_cross_call", "subsys_kernel_error", { childSysId: targetId, error: sp.error });
+      }
+      __vm_resume(proc.vmId, sp);
+      return null;
+    }
+    let mRes = syscall("host_cross_call", "subsys_manage", { action: action, targetId: targetId, extra: extra });
+    __vm_resume(proc.vmId, mRes);
+    return null;
+  }
+  if (callName == "host_file_io") {
+    let ioRes = syscall("host_cross_call", "host_file_io", { action: args[0], path: args[1], content: args[2] });
+    __vm_resume(proc.vmId, ioRes);
+    return null;
+  }
+
+  // 若是直属子系统承载进程发来的宿主端口调用 (host_*)，由本内核代理转发并受本系统调度约束！
+  if (proc.isCarrier && index_of(callName, "host_", 0) == 0) {
+    let fwd = syscall("host_child_bridge", proc.childSysId, callName, args);
+    __vm_resume(proc.vmId, fwd);
+    return null;
+  }
+
+  __vm_fail(proc.vmId, "E_NOSYS: 未知系统调用 " + callName);
+  return null;
+}
+
+// ============================================================================
+// 6. 内核主循环（开机引导 + 按父系统拨付推进逻辑时间与进程调度）
+// ============================================================================
+
+fn boot_kernel() {
+  let info = syscall("host_boot_info");
+  SYS_INFO.sysId = info.sysId;
+  SYS_INFO.name = info.name;
+  SYS_INFO.depth = info.depth;
+  SYS_INFO.totalBudget = info.totalBudget;
+  SYS_INFO.memQuota = info.memQuota;
+  SYS_INFO.storageQuota = info.storageQuota;
+  SYS_INFO.speed = info.speed;
+
+  // 装载本系统初始文件树
+  let files = info.initialFiles;
+  let i = 0;
+  while (i < len(files)) {
+    let f = files[i];
+    if (f.type == "dir") {
+      vfs_mkdir(f.path, false);
+    } else {
+      vfs_write_file(f.path, f.content, false);
+    }
+    i += 1;
+  }
+  COMPILER_HASH = info.compilerHash != null ? str(info.compilerHash) : "boot";
+  recalc_storage();
+
+  // 启动窗口管理与桌面程序 (/System/wm.nos)
+  spawn_process("/System/wm.nos", [], {
+    name: "wm",
+    role: "wm",
+    quota: 1800,
+    memQuota: 4194304
+  });
+
+  // 若重启时存在保留的子系统树结构，自动按新状态拉起其承载进程
+  if (info.retainedChildren != null) {
+    let ci = 0;
+    while (ci < len(info.retainedChildren)) {
+      let cid = info.retainedChildren[ci];
+      let kPath = "/Subsystems/" + cid + "/kernel.nos";
+      if (vfs_read_file(kPath) == null) {
+        vfs_write_file(kPath, vfs_read_file("/System/kernel.nos"), true);
+      }
+      let sp = spawn_process(kPath, [cid], {
+        name: "carrier:" + cid,
+        isCarrier: true,
+        childSysId: cid,
+        quota: max(1200, floor(SYS_INFO.totalBudget * 0.68)),
+        memQuota: max(2097152, floor(SYS_INFO.memQuota * 0.65))
+      });
+      if (sp.ok) {
+        CHILD_SYSTEMS[cid] = sp.pid;
+        syscall("host_cross_call", "subsys_carrier_started", { childSysId: cid, carrierPid: sp.pid });
+      } else {
+        syscall("host_cross_call", "subsys_kernel_error", { childSysId: cid, error: sp.error });
+      }
+      ci += 1;
+    }
+  }
+}
+
+fn handle_host_packets(poll) {
+  if (poll == null) { return null; }
+  SYS_INFO.speed = poll.speed;
+  SYS_INFO.totalBudget = poll.totalBudget;
+  SYS_INFO.memQuota = poll.memQuota;
+  SYS_INFO.storageQuota = poll.storageQuota;
+  SYS_INFO.lastGrantedBudget = poll.budgetGranted;
+
+  // 推进本系统虚拟时间
+  if (poll.dt > 0) {
+    SYS_INFO.vtime += poll.dt;
+  }
+
+  // 将指针与键盘输入送给窗口管理器进程 wm
+  if (poll.events != null && len(poll.events) > 0 && has_key(ROLES, "wm")) {
+    let wmPid = ROLES["wm"];
+    let ei = 0;
+    while (ei < len(poll.events)) {
+      deliver_message(0, wmPid, poll.events[ei]);
+      ei += 1;
+    }
+  }
+
+  // 处理跨层消息（实时表格推送、文件拖放副本、投送交互转发等）
+  if (poll.incomingCrossMsgs != null) {
+    let mi = 0;
+    while (mi < len(poll.incomingCrossMsgs)) {
+      let cm = poll.incomingCrossMsgs[mi];
+      if (cm.kind == "file_drop") {
+        let wr = vfs_write_file(cm.dstPath, cm.content, true);
+        if (has_key(ROLES, "wm")) {
+          deliver_message(0, ROLES["wm"], { type: "fs_changed", path: cm.dstPath, ok: wr.ok, error: wr.error });
+        }
+      } else if (cm.kind == "proj_input") {
+        // 投送窗口发回源应用的交互事件，送入对应窗口所属进程队列！
+        if (has_key(SURFACES, cm.winId) && SURFACES[cm.winId] != null) {
+          deliver_message(0, SURFACES[cm.winId].ownerPid, cm.event);
+        }
+      } else if (cm.kind == "proj_closed_by_target") {
+        delete_key(PROJECTIONS, cm.winId);
+      } else if (cm.kind == "chart_push" && cm.targetPid != null) {
+        deliver_message(0, cm.targetPid, { type: "chart_raw_push", payload: cm.payload });
+      } else if (cm.kind == "parent_cmd") {
+        if (cm.action == "open_kernel_for" && has_key(ROLES, "wm")) {
+          deliver_message(0, ROLES["wm"], {
+            type: "launch_app",
+            appId: "editor",
+            filePath: "/Subsystems/" + cm.childSysId + "/kernel.nos"
+          });
+        } else if (cm.action == "restart_child") {
+          let tid = cm.childSysId;
+          if (has_key(CHILD_SYSTEMS, tid)) {
+            terminate_process(CHILD_SYSTEMS[tid], null);
+          }
+          let kPath = "/Subsystems/" + tid + "/kernel.nos";
+          let sp = spawn_process(kPath, [tid], {
+            name: "carrier:" + tid,
+            isCarrier: true,
+            childSysId: tid,
+            quota: max(1200, floor(SYS_INFO.totalBudget * 0.68)),
+            memQuota: max(2097152, floor(SYS_INFO.memQuota * 0.65))
+          });
+          if (sp.ok) {
+            CHILD_SYSTEMS[tid] = sp.pid;
+            syscall("host_cross_call", "subsys_carrier_started", { childSysId: tid, carrierPid: sp.pid });
+          } else {
+            syscall("host_cross_call", "subsys_kernel_error", { childSysId: tid, error: sp.error });
+          }
+        } else if (cm.action == "set_child_grant") {
+          let tid = cm.childSysId;
+          if (has_key(CHILD_SYSTEMS, tid)) {
+            let cp = find_proc(CHILD_SYSTEMS[tid]);
+            if (cp != null) { cp.quota = max(100, num(cm.grant)); }
+          }
+        } else if (cm.action == "kill_child_carrier") {
+          let tid = cm.childSysId;
+          if (has_key(CHILD_SYSTEMS, tid)) {
+            terminate_process(CHILD_SYSTEMS[tid], null);
+            delete_key(CHILD_SYSTEMS, tid);
+          }
+        }
+      }
+      mi += 1;
+    }
+  }
+}
+
+fn main() {
+  boot_kernel();
+
+  while (true) {
+    let poll = syscall("host_poll");
+    handle_host_packets(poll);
+    wake_waiting_processes();
+
+    // 在本步拨付的可用预算内轮转调度就绪进程
+    let stepPool = min(SYS_INFO.totalBudget, poll.budgetGranted);
+    let usedInLoop = 0;
+    let rounds = 0;
+    let maxRounds = max(6, len(PROC_TABLE) * 2);
+
+    while (usedInLoop < stepPool && rounds < maxRounds) {
+      let proc = schedule_pick_next();
+      if (proc == null) {
+        break;
+      }
+      let slice = min(proc.quota, stepPool - usedInLoop);
+      if (slice <= 0) {
+        break;
+      }
+      proc.state = "running";
+      let res = __vm_step(proc.vmId, slice);
+      usedInLoop += max(1, res.consumed);
+      proc.cpuSelf += res.selfConsumed;
+      proc.cpuChildren += res.childConsumed;
+      proc.remainingWork = res.remainingWork;
+      proc.memBytes = res.memBytes;
+
+      if (res.status == "yield") {
+        if (proc.state == "running") {
+          proc.state = "ready";
+        }
+      } else if (res.status == "syscall") {
+        proc.state = "ready";
+        dispatch_syscall(proc, res.name, res.args);
+      } else if (res.status == "exit") {
+        terminate_process(proc.pid, null);
+      } else if (res.status == "error") {
+        terminate_process(proc.pid, res.error);
+      }
+      rounds += 1;
+    }
+
+    // 提交桌面状态与本步遥测快照
+    let procSnap = [];
+    let pi = 0;
+    while (pi < len(PROC_TABLE)) {
+      let p = PROC_TABLE[pi];
+      push(procSnap, {
+        pid: p.pid,
+        name: p.name,
+        progPath: p.progPath,
+        role: p.role,
+        isCarrier: p.isCarrier,
+        childSysId: p.childSysId,
+        state: p.state,
+        quota: p.quota,
+        memQuota: p.memQuota,
+        cpuSelf: p.cpuSelf,
+        cpuChildren: p.cpuChildren,
+        remainingWork: p.remainingWork,
+        memBytes: p.memBytes,
+        msgCount: len(p.msgQueue),
+        lastResult: p.lastResult,
+        error: p.error
+      });
+      pi += 1;
+    }
+
+    syscall("host_present", {
+      sysInfo: SYS_INFO,
+      desktop: DESKTOP_STATE,
+      surfaces: SURFACES,
+      processes: procSnap,
+      projections: PROJECTIONS
+    });
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "光线追踪渲染加速",
+  "tokens": 11021252,
+  "minutes": 60,
+  "time": "限时回退",
+  "cny": 3.9,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [
+    "运行时长比例"
+  ],
+  "runs": []
+}

@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "AE风味动效设计编辑器",
+  "tokens": 35439293,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.78,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/AE风味动效设计编辑器/run-7b77c0a06ebf45629d3bad1e01751d14"
+  ]
+}

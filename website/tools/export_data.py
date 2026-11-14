@@ -1,17 +1,16 @@
-"""Export the results website's data from the grading records, read-only.
+"""Export local live scores, or the separate confirmed formal snapshot.
 
-    python website/tools/export_data.py
+python website/tools/export_data.py                              refresh site/data (audit and partial models included)
+python website/tools/export_data.py --scores-only                grading refresh; initialize static files if missing
+python website/tools/export_data.py --confirmed --out <folder>   formal build input, used by publish.py
 
-Writes website/site/data/models.json, tasks.json, scores.json, search.json and stems/<category>/<task>.json from:
-  website/tools/models.json      the registry: only registered models appear on the site
-  website/tools/site.json        the site-wide hold: a non-null "notice" {zh, en} exports no model at all and
-                                 puts the notice in scores.json, which the score pages show instead (README「暂停公示」)
-  website/tools/tasks_meta.json  bilingual copy of categories and tasks, and the about page's section titles
-  orchestrator/tasks.py          task order within a category, weights, minutes, category and kind
-  orchestrator/grading.py        load(), task_scores() and model_scores(): the scores_report algorithm
-  the statements in the repo     each task's 题干, cut by the rule at STEM_RULE below
-Nothing is written under orchestrator/, Grading/ or H:\\. Needs pypinyin (pip install pypinyin==0.53.0).
+Local final task scores come from grading.py; incomplete totals/ranks remain null. Formal data comes only from
+confirmed-scores.json and is still filtered by current registration/audit. Cost privacy and anonymous anomaly
+projection apply to both. Imports retain complete-only defaults for other consumers such as video tools.
+No grading, usage, answer or video records are modified. Requires pypinyin==0.53.0.
 """
+import argparse
+import copy
 import json
 import posixpath
 import re
@@ -26,6 +25,7 @@ TOOLS = Path(__file__).resolve().parent
 WEBSITE = TOOLS.parent
 BENCH = WEBSITE.parent
 OUT = WEBSITE / 'site' / 'data'
+CONFIRMED = TOOLS / 'confirmed-scores.json'
 LOGOS = WEBSITE / 'logos' / 'mark'
 sys.path.insert(0, str(BENCH / 'orchestrator'))
 
@@ -58,9 +58,12 @@ def read_json(path):
 
 
 def write_json(path, data):
+    content = json.dumps(data, ensure_ascii=False, indent=2) + '\n'
+    if path.is_file() and path.read_text(encoding='utf-8') == content:
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix('.tmp')
-    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    tmp.write_text(content, encoding='utf-8')
     tmp.replace(path)
 
 
@@ -70,7 +73,7 @@ def date_of(ts):
 
 # ---------- registry and task copy ----------
 
-def load_registry():
+def load_registry(include_private=False):
     models = read_json(TOOLS / 'models.json')
     seen_id, seen_key = set(), set()
     for m in models:
@@ -87,7 +90,7 @@ def load_registry():
         seen_key.add(m['key'])
     # Temporary hold, rarely used: "audit": true keeps a model registered (videos and cost accounting still read it)
     # but leaves it off the site entirely. The user removes the field when it may go public and publish.py runs again.
-    return [m for m in models if not m.get('audit')]
+    return models if include_private else [m for m in models if not m.get('audit')]
 
 
 def site_notice():
@@ -169,6 +172,21 @@ def load_tasks():
 
 # ---------- scores ----------
 
+def public_fields(data, fields):
+    """Explicit scalar projection: private cost extensions never become downloadable website data."""
+    if not isinstance(data, dict):
+        return {}
+    return {k: data[k] for k in fields if k in data and (data[k] is None or isinstance(data[k], (str, int, float, bool)))}
+
+
+def public_cost(cost):
+    out = public_fields(cost, ('cny', 'basis', 'tokens', 'method', 'api_usd', 'hours'))
+    if 'plan' in cost:
+        out['plan'] = (public_fields(cost['plan'], ('name', 'name_en', 'price', 'currency', 'period', 'credits'))
+                       if isinstance(cost['plan'], dict) else None)
+    return out
+
+
 def ranks(values):
     """{id: rank} by score, highest first; equal one-decimal scores share a rank (1, 2, 2, 4); None gets None."""
     scored = sorted((v for v in values.values() if v is not None), reverse=True)
@@ -183,7 +201,7 @@ def grader_scores(task, sc):
         return []
     sources = sc.get('sources') or []
     main = [g for g in grading.GRADERS if any(s[0] == g and s[1] in (None, 'main') for s in sources)
-            and g in TASKS[task].graders_for('main')]
+            and g in sc.get('grader_keys', TASKS[task].graders_for('main'))]
     if len(main) < 2:
         return []
     expected = grading.guide_items(task)
@@ -194,7 +212,7 @@ def grader_scores(task, sc):
         for key, (maximum, weight) in expected.items():
             selected = 'performance' if key in performance else 'main'
             vals = [mine[key]['score'] for grader, scope, r in sources if key in (mine := grading.by_key(r))
-                    and grader in TASKS[task].graders_for(selected) and scope in (None, selected)
+                    and grader in (('codex',) if selected == 'performance' else main) and scope in (None, selected)
                     and (selected == 'performance' or grader == g)]
             full += maximum * weight
             if vals:
@@ -206,8 +224,8 @@ def grader_scores(task, sc):
 
 def task_info(model, per, timer):
     """Per task, only what the score itself does not say: why it has no score yet ('state': testing = 评测中,
-    missing = 未交, failed = 评分失败, unscored = 未给总分), each grader's score of a design task, and the graders'
-    anomaly notes ([{grader, text}]). Tasks with nothing to add are left out."""
+    missing = 未交, failed = 评分失败, unscored = 未给总分), each grader's score of a design task, and
+    anomaly text ([{text}]) without its grader attribution. Tasks with nothing to add are left out."""
     out = {}
     for n in TASKS:
         p, info = per[n], {}
@@ -218,8 +236,7 @@ def task_info(model, per, timer):
                 g, 'missing' if closed else 'testing')
         elif graders := grader_scores(n, p['sc']):
             info['graders'] = graders
-        notes = [{'grader': grading.GRADERS[gk], 'text': r['anomaly']}
-                 for gk, r in zip(grading.GRADERS, p['rs']) if r and r.get('anomaly')]
+        notes = [{'text': r['anomaly']} for r in p['rs'] if r and r.get('anomaly')]
         if notes:
             info['anomaly'] = notes
         if info:
@@ -260,18 +277,8 @@ def model_record(state, model, categories):
     return record, (max(mtimes) if mtimes else None)
 
 
-def build_scores(models, categories):
-    state = grading.load()
-    cost_source, model_costs = costs.load()
-    records, newest = {}, []
-    for m in models:
-        if m['key'] not in state['models']:
-            print(f'提示：{m["key"]} 还没有评分记录，按评测中导出。')
-        records[m['id']], latest = model_record(state, m, categories)
-        records[m['id']]['cost'] = model_costs[m['key']]
-        if latest:
-            newest.append(latest)
-    ids = [m['id'] for m in models]
+def rank_records(records, categories):
+    ids = list(records)
     overall = ranks({i: records[i]['total'] for i in ids})
     by_cat = {c['key']: ranks({i: records[i]['categories'][c['key']] for i in ids}) for c in categories}
     by_task = {t['key']: ranks({i: records[i]['tasks'][t['key']] for i in ids}) for c in categories for t in c['tasks']}
@@ -279,10 +286,29 @@ def build_scores(models, categories):
         records[i]['rank'] = overall[i]
         records[i]['category_ranks'] = {c: by_cat[c][i] for c in by_cat}
         records[i]['task_ranks'] = {t: by_task[t][i] for t in by_task}
-    order = sorted(ids, key=lambda i: (overall[i] is None, overall[i] or 0, ids.index(i)))
+    return sorted(ids, key=lambda i: (overall[i] is None, overall[i] or 0, ids.index(i)))
+
+
+def build_scores(models, categories, complete_only=True):
+    state = grading.load()
+    cost_source, model_costs = costs.load([m['key'] for m in models])
+    records, newest = {}, []
+    task_keys = [t['key'] for c in categories for t in c['tasks']]
+    for m in models:
+        if complete_only and m['key'] not in state['models']:
+            print(f'提示：{m["key"]} 还没有评分记录，不公开。')
+            continue
+        record, latest = model_record(state, m, categories)
+        if complete_only and not grading.complete_score_record(record, task_keys):
+            continue
+        records[m['id']] = record
+        records[m['id']]['cost'] = public_cost(model_costs.get(m['key'], {}))
+        if latest:
+            newest.append(latest)
+    order = rank_records(records, categories)
     return {
         'updated': date_of(max(newest)) if newest else None,
-        'cost_source': cost_source,
+        'cost_source': public_fields(cost_source, ('name', 'name_en', 'url', 'fetched', 'usd_cny')),
         'order': order,
         'scores': {i: records[i] for i in order},
     }
@@ -584,34 +610,104 @@ def write_stems(categories):
 
 # ---------- main ----------
 
-def main():
-    sys.stdout.reconfigure(encoding='utf-8')
-    registry = load_registry()
-    notice = site_notice()
-    if notice:   # site-wide hold: every model is left out, as if all had "audit"
-        registry = []
-    categories, sections = load_tasks()
+def confirmed_data(categories):
+    if not CONFIRMED.is_file():
+        raise SystemExit('缺少已确认成绩快照，不能正式发布')
+    snapshot = read_json(CONFIRMED)
+    allowed = {m['id'] for m in load_registry()}
+    models = [m for m in snapshot['models'] if m['id'] in allowed]
+    task_keys = [t['key'] for c in categories for t in c['tasks']]
+    scores = copy.deepcopy(snapshot['scores'])
+    scores['scores'] = {m['id']: scores['scores'][m['id']] for m in models}
+    if not all(grading.complete_score_record(r, task_keys) for r in scores['scores'].values()):
+        raise SystemExit('已确认快照含未完成全套的模型')
+    scores['cost_source'] = public_fields(scores.get('cost_source'), ('name', 'name_en', 'url', 'fetched', 'usd_cny'))
+    for record in scores['scores'].values():
+        record['cost'] = public_cost(record.get('cost', {}))
+        for info in record.get('task_info', {}).values():
+            if 'anomaly' in info:
+                info['anomaly'] = [{'text': a['text']} for a in info['anomaly']]
+    scores['order'] = rank_records(scores['scores'], categories)
+    return models, scores
 
-    models = []
+
+def confirm_model(key):
+    """Called only by the explicit user-authorized --confirm command; update exactly this model's scores."""
+    categories, _ = load_tasks()
+    model = next((m for m in load_registry(include_private=True) if m['key'] == key), None)
+    if model is None:
+        raise SystemExit('没有登记这个型号：' + key)
+    fresh = build_scores([model], categories)
+    if model['id'] not in fresh['scores']:
+        raise SystemExit('确认正式成绩需要全套 13 题完整且无评分缺口：' + key)
+    snapshot = read_json(CONFIRMED)
+    tested = model.get('tested') or latest_session_date(key)
+    public_model = {k: model[k] for k in ('id', 'key', 'name', 'short', 'vendor', 'logo', 'agent', 'effort')}
+    public_model.update(aliases=model.get('aliases', []), tested=tested)
+    snapshot['models'] = [m for m in snapshot['models'] if m['id'] != model['id']] + [public_model]
+    snapshot['scores']['scores'][model['id']] = fresh['scores'][model['id']]
+    snapshot['scores']['updated'] = fresh['updated'] or snapshot['scores']['updated']
+    snapshot['scores']['cost_source'] = fresh['cost_source']
+    snapshot['scores']['order'] = rank_records(snapshot['scores']['scores'], categories)
+    write_json(CONFIRMED, snapshot)
+    registry = read_json(TOOLS / 'models.json')
     for m in registry:
-        tested = m.get('tested') or latest_session_date(m['key'])
-        models.append({k: m[k] for k in ('id', 'key', 'name', 'short') if k in m} |
-                      {'aliases': m.get('aliases', []), 'vendor': m['vendor'], 'logo': m['logo'], 'agent': m['agent'],
-                       'effort': m['effort'], 'tested': tested})
+        if m['key'] == key:
+            m.pop('audit', None)
+    write_json(TOOLS / 'models.json', registry)
+    return model['id']
 
-    scores = build_scores(registry, categories)
+
+def main(argv=()):
+    sys.stdout.reconfigure(encoding='utf-8')
+    ap = argparse.ArgumentParser(description='本地实时预览，或仅导出已确认正式成绩')
+    ap.add_argument('--confirmed', action='store_true')
+    ap.add_argument('--scores-only', action='store_true', help='本地评分刷新；缺少静态数据时完整初始化')
+    ap.add_argument('--out', type=Path)
+    args = ap.parse_args(argv)
+    if args.confirmed and args.scores_only:
+        ap.error('--scores-only 仅用于本地预览')
+    global OUT
+    if args.confirmed and (args.out is None or args.out.resolve() == (WEBSITE / 'site/data').resolve()):
+        ap.error('--confirmed 必须用 --out 指向独立正式构建目录')
+    if args.out is not None:
+        OUT = args.out.resolve()
+    categories, sections = load_tasks()
+    static = not args.scores_only or not (OUT / 'tasks.json').is_file() or any(
+        not (OUT / 'stems' / c['key'] / f'{t["key"]}.json').is_file()
+        for c in categories for t in c['tasks'])
+    notice = site_notice() if args.confirmed else None
+    if args.confirmed:
+        models, scores = confirmed_data(categories)
+    else:
+        registry = load_registry(include_private=True)
+        scores = build_scores(registry, categories, complete_only=False)
+        registry = [m for m in registry if m['id'] in scores['scores']]
+        models = []
+        for m in registry:
+            tested = m.get('tested') or latest_session_date(m['key'])
+            models.append({k: m[k] for k in ('id', 'key', 'name', 'short') if k in m} |
+                          {'aliases': m.get('aliases', []), 'vendor': m['vendor'], 'logo': m['logo'], 'agent': m['agent'],
+                           'effort': m['effort'], 'tested': tested})
+    if notice:
+        models = []
+        scores['scores'] = {}
+        scores['order'] = []
     scores['notice'] = notice
     search = build_search(models, categories, sections)
     tasks = [c | {'tasks': [{k: v for k, v in t.items() if not k.startswith('_')} for t in c['tasks']]}
              for c in categories]
 
-    write_json(OUT / 'models.json', models)
-    write_json(OUT / 'tasks.json', tasks)
     write_json(OUT / 'scores.json', scores)
+    write_json(OUT / 'models.json', models)
+    if static:
+        write_json(OUT / 'tasks.json', tasks)
     write_json(OUT / 'search.json', search)
-    write_stems(categories)
+    if static:
+        write_stems(categories)
 
-    print(f'已写入 {OUT}：models.json、tasks.json、scores.json、search.json，题干 stems/（{len(TASKS)} 题）；'
+    written = 'models.json、scores.json、search.json' + (f'、tasks.json、题干 stems/（{len(TASKS)} 题）' if static else '')
+    print(f'已同步 {OUT}：{written}；'
           f'数据日期 {scores["updated"]}')
     if notice:
         print(f'暂停公示（site.json 的 notice）：不导出任何模型，成绩页显示「{notice["zh"]}」')
@@ -624,4 +720,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "攻城略地",
+  "tokens": 42152134,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.01,
+  "api_usd": 0.3,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/攻城略地/run-3556c35d762645b896f0f7bad653e098"
+  ]
+}

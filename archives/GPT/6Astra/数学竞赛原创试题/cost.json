@@ -1,10 +1,10 @@
 {
   "model": "GPT/6Astra",
   "task": "数学竞赛原创试题",
-  "tokens": 12808422,
+  "tokens": 1948914,
   "minutes": 60.0,
   "time": "开始→截止（实际停止未知）",
-  "cny": 4.52,
+  "cny": 0.69,
   "api_usd": null,
   "basis": "subscription",
   "method": "quota",
@@ -14,10 +14,8 @@
     "currency": "USD",
     "period": "month"
   },
-  "fitted": [
-    "运行时长比例"
-  ],
+  "fitted": [],
   "runs": [
-    "GPT/6Astra/数学竞赛原创试题/timer-1793732015.3221579"
+    "GPT/6Astra/数学竞赛原创试题/run-7ca7b020462243928584d87c1110eeab"
   ]
 }

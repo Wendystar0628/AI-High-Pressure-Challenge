@@ -1,0 +1,20 @@
+// ============================================================================
+// 预置示例程序 1：累加计算程序 (/Programs/sum.nos)
+// 可修改 MAX_N 后保存重新运行，检验变量计算、循环、文件写入与结果报告。
+// ============================================================================
+
+let MAX_N = 1000;
+
+fn main() {
+  let pid = syscall("get_pid");
+  let t0 = syscall("time_now");
+  let acc = 0;
+  for (let i = 1; i <= MAX_N; i++) {
+    acc += i;
+  }
+  let t1 = syscall("time_now");
+  let summary = "PID=" + str(pid) + " 计算 1.." + str(MAX_N) + " 累加和 = " + str(acc) + " (虚拟耗时 " + str(round((t1 - t0) * 1000)) + "ms)";
+  syscall("fs_write", "/Documents/sum_result.txt", summary + "\n");
+  syscall("report_result", summary);
+  return acc;
+}

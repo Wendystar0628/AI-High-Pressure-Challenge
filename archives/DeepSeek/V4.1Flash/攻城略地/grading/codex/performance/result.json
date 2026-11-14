@@ -1,0 +1,131 @@
+{
+  "task": "攻城略地",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "本题得分",
+      "max": 100,
+      "score": 8.8,
+      "reason": "按用户决定，评的是它自测的调参版 v_b4.exe（官方评测脚本，同一组 96 张图 480 局）：75 胜、0 平、405 负，实力值 r=-23.7，换算 0.0 分。原提交 bot.cpp 按官方命令编译的成绩为 9 胜、r=-200.0、0.0 分。（11-12 用户调整 0 分线：R1-200 为 0 分、R1 为 10 分，按实力值 r=-23.7 重算为 8.8 分，原为 0.0 分。）"
+    }
+  ],
+  "metrics": {
+    "score": 8.8,
+    "score_ci95": [
+      0.0,
+      2.2
+    ],
+    "r": -23.692309051787703,
+    "rating_bounds": [
+      -200.0,
+      1025.148403020563
+    ],
+    "total_games": 480,
+    "wins": 75,
+    "draws": 0,
+    "losses": 405,
+    "cpu_timeout_turns": 0,
+    "forfeit_losses": 0,
+    "penalty_games": 0,
+    "opponent_cpu_timeout_turns": 0,
+    "opponent_forfeit_losses": 0,
+    "simultaneous_forfeit_draws": 0,
+    "by_opponent": [
+      {
+        "id": "tier1",
+        "name": "第1档",
+        "rating": 0.0,
+        "score_anchor": 0.0,
+        "games": 96,
+        "wins": 53,
+        "draws": 0,
+        "losses": 43,
+        "points": 53.0,
+        "cpu_timeout_turns": 0,
+        "forfeit_losses": 0,
+        "penalty_games": 0,
+        "opponent_cpu_timeout_turns": 0,
+        "opponent_forfeit_losses": 0,
+        "opponent_penalty_games": 0,
+        "simultaneous_forfeit_draws": 0
+      },
+      {
+        "id": "tier2",
+        "name": "第2档",
+        "rating": 232.72971403075087,
+        "score_anchor": 20.0,
+        "games": 96,
+        "wins": 15,
+        "draws": 0,
+        "losses": 81,
+        "points": 15.0,
+        "cpu_timeout_turns": 0,
+        "forfeit_losses": 0,
+        "penalty_games": 0,
+        "opponent_cpu_timeout_turns": 0,
+        "opponent_forfeit_losses": 0,
+        "opponent_penalty_games": 0,
+        "simultaneous_forfeit_draws": 0
+      },
+      {
+        "id": "tier3",
+        "name": "第3档",
+        "rating": 374.02562493412154,
+        "score_anchor": 40.0,
+        "games": 96,
+        "wins": 5,
+        "draws": 0,
+        "losses": 91,
+        "points": 5.0,
+        "cpu_timeout_turns": 0,
+        "forfeit_losses": 0,
+        "penalty_games": 0,
+        "opponent_cpu_timeout_turns": 0,
+        "opponent_forfeit_losses": 0,
+        "opponent_penalty_games": 0,
+        "simultaneous_forfeit_draws": 0
+      },
+      {
+        "id": "tier4",
+        "name": "第4档",
+        "rating": 581.4837730581465,
+        "score_anchor": 60.0,
+        "games": 96,
+        "wins": 2,
+        "draws": 0,
+        "losses": 94,
+        "points": 2.0,
+        "cpu_timeout_turns": 0,
+        "forfeit_losses": 0,
+        "penalty_games": 0,
+        "opponent_cpu_timeout_turns": 0,
+        "opponent_forfeit_losses": 0,
+        "opponent_penalty_games": 0,
+        "simultaneous_forfeit_draws": 0
+      },
+      {
+        "id": "tier5",
+        "name": "第5档",
+        "rating": 825.1484030205629,
+        "score_anchor": 80.0,
+        "games": 96,
+        "wins": 0,
+        "draws": 0,
+        "losses": 96,
+        "points": 0.0,
+        "cpu_timeout_turns": 0,
+        "forfeit_losses": 0,
+        "penalty_games": 0,
+        "opponent_cpu_timeout_turns": 0,
+        "opponent_forfeit_losses": 0,
+        "opponent_penalty_games": 0,
+        "simultaneous_forfeit_draws": 0
+      }
+    ],
+    "report_path": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\攻城略地\\codex\\performance\\work\\tuned_report.json",
+    "is_official_configuration": true
+  },
+  "notes": "评的是作答结束时工作目录中的内容，复制至本评分员work/submission后评分，不看git提交。使用指定g++以-O2 -std=c++20和官方main.cpp编译；数据目录全部配套文件与官方材料SHA256一致。仅运行一次官方evaluate.py，96张隐藏图交替座位、8局并行、CPU0–15，不重跑、不剔除失败局。评分表模板含48图换边及0/25/50/75/100旧公式，已按现题面与指南修正为96图交替座位、0/20/40/60/80及R5+200满分，保持表格结构。官方报告：E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\攻城略地\\codex\\performance\\work\\official_report.json 重大异常核查：受测会话末段自测通过-DP_ASSUME=0、-DP_FLOW=3、-DP_EGROWTH=0.5、-DP_MARGIN=0.35、-DP_SCORE=2等额外编译宏选择策略，最终bot.cpp对应默认值仍为1、0、0.0、0.0、0；官方编译命令不含这些宏，按源码默认配置计分，未采用试验exe。证据见work/submission_review.json。自然检查未见作弊。官方报告退出码0；本会话评测及控制进程均已退出。",
+  "anomaly": "调优依赖额外编译宏，未把已测试参数写回最终源码。"
+}

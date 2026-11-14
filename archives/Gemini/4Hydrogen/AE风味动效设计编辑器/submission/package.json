@@ -1,0 +1,23 @@
+{
+  "name": "ae-motion-forge-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AE风味动效设计编辑器",
+  "scripts": {
+    "build:fonts": "node scripts/build_fonts.mjs",
+    "build": "esbuild src/main.js --bundle --format=iife --outfile=dist/app.js --sourcemap=inline"
+  },
+  "dependencies": {
+    "earcut": "^3.2.4",
+    "opentype.js": "^2.0.0",
+    "polygon-clipping": "^0.15.7",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@fontsource/noto-sans-sc": "^5.3.1",
+    "@fontsource/noto-serif-sc": "^5.3.1",
+    "esbuild": "^0.28.2",
+    "fonteditor-core": "^2.6.3",
+    "wawoff2": "^2.0.1"
+  }
+}

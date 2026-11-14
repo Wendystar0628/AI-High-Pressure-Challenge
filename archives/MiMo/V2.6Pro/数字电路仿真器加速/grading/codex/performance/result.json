@@ -1,25 +1,107 @@
 {
-    "task":  "通用数字电路仿真器加速",
+    "task":  "数字电路仿真器加速",
     "complete":  true,
     "grader":  "GPT 6.1 Sol",
     "items":  [
                   {
                       "name":  "总分",
                       "max":  100,
-                      "score":  3.4,
-                      "reason":  "指定命令编译成功，源码检查未发现题面第十节第1–7条违规；官方 evaluate.py 正确性7/7、性能24/24通过。24例均慢于基线，性能得分平均3.4，乘以7/7后总分3.4。"
+                      "score":  3.2,
+                      "reason":  "官方 evaluate.py：隐藏正确性 7/7、性能输入 9/9 全部通过。九个性能输入加速比为 0.2462–0.3165，单项得分 2.8–3.6，性能平均及整题得分均为 3.2。"
                   }
               ],
     "metrics":  {
                     "correctness_passed":  7,
                     "correctness_total":  7,
-                    "performance_passed":  24,
-                    "performance_inputs":  24,
-                    "performance_score":  3.4,
-                    "G":  0.29431923175102614,
-                    "min_speedup":  0.20687730361184076,
-                    "max_speedup":  0.60697638736910242,
-                    "evaluation_report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluation_report.json"
+                    "performance_passed":  9,
+                    "performance_inputs":  9,
+                    "performance_score":  3.2,
+                    "G":  0.28317525504527885,
+                    "score":  3.2,
+                    "report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数字电路仿真器加速\\codex\\performance\\work\\evaluation-report.json",
+                    "summary":  [
+                                    {
+                                        "case":  "input_01",
+                                        "family":  "深链",
+                                        "R_i_ms":  1009.547,
+                                        "C_i_ms":  3524.239,
+                                        "s_i":  0.28645815451222234,
+                                        "points_i":  3.3,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_02",
+                                        "family":  "深链",
+                                        "R_i_ms":  1009.213,
+                                        "C_i_ms":  3604.519,
+                                        "s_i":  0.27998548488716524,
+                                        "points_i":  3.2,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_03",
+                                        "family":  "深链",
+                                        "R_i_ms":  1013.459,
+                                        "C_i_ms":  3275.082,
+                                        "s_i":  0.3094453818255543,
+                                        "points_i":  3.5,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_04",
+                                        "family":  "阵列乘法器",
+                                        "R_i_ms":  956.503,
+                                        "C_i_ms":  3021.819,
+                                        "s_i":  0.3165321946814154,
+                                        "points_i":  3.6,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_05",
+                                        "family":  "阵列乘法器",
+                                        "R_i_ms":  969.8,
+                                        "C_i_ms":  3116.188,
+                                        "s_i":  0.31121357248022263,
+                                        "points_i":  3.5,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_06",
+                                        "family":  "阵列乘法器",
+                                        "R_i_ms":  954.199,
+                                        "C_i_ms":  3070.3,
+                                        "s_i":  0.31078363677816495,
+                                        "points_i":  3.5,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_07",
+                                        "family":  "寄存器堆",
+                                        "R_i_ms":  991.664,
+                                        "C_i_ms":  3943.529,
+                                        "s_i":  0.2514661360421085,
+                                        "points_i":  2.9,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_08",
+                                        "family":  "寄存器堆",
+                                        "R_i_ms":  1010.313,
+                                        "C_i_ms":  4059.725,
+                                        "s_i":  0.24886242294736713,
+                                        "points_i":  2.8,
+                                        "status":  "PASS"
+                                    },
+                                    {
+                                        "case":  "input_09",
+                                        "family":  "寄存器堆",
+                                        "R_i_ms":  982.457,
+                                        "C_i_ms":  3989.973,
+                                        "s_i":  0.24623149078953668,
+                                        "points_i":  2.8,
+                                        "status":  "PASS"
+                                    }
+                                ]
                 },
-    "notes":  "评的是提交工作目录中的 solution.cpp；仓库仅有初始题面提交 41c6129aa0770cd215651bdafddefe0f752fc8dd，未回退版本。原件只读复制，副本与原件 SHA256 一致：54728BE31F3557E8377BE3E43CBA30BFA15739018C59DA7998AAAB8C62F7A8AC。使用官方 grader.cpp、基线和指定 g++ 参数，仅运行一次 evaluate.py；无会话错误。"
+    "notes":  "评的是作答结束时工作目录的副本，不看 git 提交。副本为 work\\submission，solution.cpp SHA256=55541ADC948494E6D0257EEE0C028A86B8B35D4C1AFCC6C10866D5EB47AC6013。提交和官方基线均以指定 g++ -O2 -std=c++20 -march=native -fopenmp 参数重新编译；官方 evaluate.py 仅运行一次，54 次性能运行全部 PASS，无基线或环境错误。源码检查未发现第十节第1–7条违规或作弊。"
 }

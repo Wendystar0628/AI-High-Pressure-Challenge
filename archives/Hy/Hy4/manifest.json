@@ -188,6 +188,38 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "光线追踪渲染加速/cost.json",
+      "role": "cost",
+      "task": "光线追踪渲染加速",
+      "bytes": 535,
+      "sha256": "9a7d7f5a1681b1a5eb353a203cd7399885e72954c4c7077820834cabee25691b"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\光线追踪渲染加速\\codex\\performance\\result.json",
+      "path": "光线追踪渲染加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "光线追踪渲染加速",
+      "bytes": 3106,
+      "sha256": "53c12067de9e0696f5e3bee14a47045421776a3f2d8478865e6ca3aaccf32ac3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\评分表_6.1Sol.md",
+      "path": "光线追踪渲染加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "光线追踪渲染加速",
+      "bytes": 2075,
+      "sha256": "8a94545eb55b96dc024ca03124c1723ee91befaddae118f535eb10ffa4f19b2c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\solution.cu",
+      "path": "光线追踪渲染加速/submission/solution.cu",
+      "role": "submission",
+      "task": "光线追踪渲染加速",
+      "bytes": 7232,
+      "sha256": "dc6032166db7d32e4253e5a533784ca7a9f792161aef38d84f3aca1f6bd3d3a6"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "动态路由塔防/cost.json",
       "role": "cost",
       "task": "动态路由塔防",
@@ -500,230 +532,6 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
-      "path": "工程图纸三维还原/cost.json",
-      "role": "cost",
-      "task": "工程图纸三维还原",
-      "bytes": 536,
-      "sha256": "ade6ec3283db9bb082afebe3589b6ef1be0a29017c9707b9086ac6329a06ae8c"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\工程图纸三维还原\\codex\\main\\result.json",
-      "path": "工程图纸三维还原/grading/codex/main/result.json",
-      "role": "result",
-      "task": "工程图纸三维还原",
-      "bytes": 9344,
-      "sha256": "bc63f1f58172b5903aca6cfd9707ccb2625d6afc10c1ba79ffcdbd76c05eaf20"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\评分表_6.1Sol.md",
-      "path": "工程图纸三维还原/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "工程图纸三维还原",
-      "bytes": 3109,
-      "sha256": "7a195de434202fcc98abb9a1967d780554c5b57b66469658ded3470c3a14d2fe"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第01题.json",
-      "path": "工程图纸三维还原/submission/答案/第01题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3527,
-      "sha256": "254cc0c0655fc92f5d13c12c9f53fb530be010ecaffed64e22959d9e32ecd2d0"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第02题.json",
-      "path": "工程图纸三维还原/submission/答案/第02题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2816,
-      "sha256": "ee6f61d4a6cbe0221260543c2d5395be6041a4b27ef84d2506f20ff396f600b1"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第03题.json",
-      "path": "工程图纸三维还原/submission/答案/第03题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1710,
-      "sha256": "44d85c0dcf5d71701e5912718f7c066b9005ff3ba5fac279aad0f4e74a1aafd4"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第04题.json",
-      "path": "工程图纸三维还原/submission/答案/第04题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 690,
-      "sha256": "2fb90191c81c19f8763faba781c1c6811577a3f8156fbe295476cc86733c19f7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第05题.json",
-      "path": "工程图纸三维还原/submission/答案/第05题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1258,
-      "sha256": "f96a9ad1830b1f0e22add77dcff61561e1e87606438873abf3ea791871e12a0c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第06题.json",
-      "path": "工程图纸三维还原/submission/答案/第06题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1153,
-      "sha256": "c20ea849d9643d3c0a42feb8c8e9c5fc4a88d8b073d2415104209e273d4dfde5"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第07题.json",
-      "path": "工程图纸三维还原/submission/答案/第07题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1078,
-      "sha256": "1e1ec758785075260f0a610bcb8008d6529051d0f52f9d7bcf141380b0952da3"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第08题.json",
-      "path": "工程图纸三维还原/submission/答案/第08题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1360,
-      "sha256": "4439e94c63adf705ea84811a444a7633fe71a9f41b1e83a684e6f33a4b09b028"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第09题.json",
-      "path": "工程图纸三维还原/submission/答案/第09题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1245,
-      "sha256": "98031bc037571717f4fa36721d4609e978b82d769db3a980515276cef2d630b7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第10题.json",
-      "path": "工程图纸三维还原/submission/答案/第10题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1289,
-      "sha256": "62ef1e76a44cff31280030b14f93dfbdfc19e3dd1a3b442753690e270e1605d2"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第11题.json",
-      "path": "工程图纸三维还原/submission/答案/第11题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1410,
-      "sha256": "5e9820585c640e675ac8045b9cfc2e9dcf5d190e278cf41be06fc4d4e0a8e765"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第12题.json",
-      "path": "工程图纸三维还原/submission/答案/第12题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1369,
-      "sha256": "7014b57dfc731142a359312943a2d29ffd88061ab85f8271fc14bc846ee74b2c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第13题.json",
-      "path": "工程图纸三维还原/submission/答案/第13题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1352,
-      "sha256": "d74d88424c61ba5c158e8a83cf53b1c994730adc00e21243b8ff2c2bad7722e8"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第14题.json",
-      "path": "工程图纸三维还原/submission/答案/第14题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1347,
-      "sha256": "19ae772d6e5393adfd0baabf8755e00208861e45e4a2208df3de3f0961821481"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第15题.json",
-      "path": "工程图纸三维还原/submission/答案/第15题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1343,
-      "sha256": "74dc1e264badfc553966146c3dcae5bc1151e3fb480e7d3ae023f4c65db439c7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第16题.json",
-      "path": "工程图纸三维还原/submission/答案/第16题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 928,
-      "sha256": "3744f938c8ffb4b5310253e0bdfd9c733d79243b5ddccc124445772f41430435"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第17题.json",
-      "path": "工程图纸三维还原/submission/答案/第17题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1125,
-      "sha256": "818bb4cd0b9a6d6d817abd3b450b1e3aafd7d4ab2e6e8c2c85b449e36b28b9c2"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第18题.json",
-      "path": "工程图纸三维还原/submission/答案/第18题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1132,
-      "sha256": "b5ef1725e76fe0cb1e4520d826332d424a2d2744d88a79550118f7054744c168"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第19题.json",
-      "path": "工程图纸三维还原/submission/答案/第19题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1125,
-      "sha256": "df0f1ba9c7f02374949125c79de0486f4b3683d3220687458a5213c98a575df1"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第20题.json",
-      "path": "工程图纸三维还原/submission/答案/第20题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 906,
-      "sha256": "7dcb1e8b495433425644b6893f1ea5131eed6eeeb345521904798132ac013c54"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第21题.json",
-      "path": "工程图纸三维还原/submission/答案/第21题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1125,
-      "sha256": "c849781bddd77c1608ee0f0a26ef148da47974c7b38eabb8b348398e7f819836"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第22题.json",
-      "path": "工程图纸三维还原/submission/答案/第22题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1012,
-      "sha256": "636270b6a19482c98d066932ce535ef2c2e60bad5bbe1a2d859d2fcf00c3176a"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第23题.json",
-      "path": "工程图纸三维还原/submission/答案/第23题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 991,
-      "sha256": "1c4dcca0514a82c83391a3c6ebf8abf78ca1dfc6f1375103c57581d65e0c840e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第24题.json",
-      "path": "工程图纸三维还原/submission/答案/第24题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1000,
-      "sha256": "4cccd85cbd778c284a4ac4df457907780e6321d29a5bb66805ce8c37e44455f7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\答案\\第25题.json",
-      "path": "工程图纸三维还原/submission/答案/第25题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 997,
-      "sha256": "96a9acad1107d3a4bc204be7a033a2e7317eab8ca862e846f1ea4ff101db9088"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "形式化证明题/cost.json",
       "role": "cost",
       "task": "形式化证明题",
@@ -1004,27 +812,91 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "攻城略地/cost.json",
+      "role": "cost",
+      "task": "攻城略地",
+      "bytes": 512,
+      "sha256": "1b387255078df8f001f4868fbabeb8aacc0e64292c7e28cc9f0a7ce324349c17"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\攻城略地\\codex\\performance\\result.json",
+      "path": "攻城略地/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "攻城略地",
+      "bytes": 8758,
+      "sha256": "56e6354dd8006f2e82e238c2038d8a0860045dd9c20ecfeb9f7a9d3f5886f211"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\评分表_6.1Sol.md",
+      "path": "攻城略地/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "攻城略地",
+      "bytes": 1643,
+      "sha256": "b676c55827a452732edb98c3a93ef2b6235ffdcd01feee8218459df369d6bd48"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\bot.cpp",
+      "path": "攻城略地/submission/bot.cpp",
+      "role": "submission",
+      "task": "攻城略地",
+      "bytes": 7410,
+      "sha256": "c8d50396c003afcfca91e1b25dc955e35c19428c2e56ee69c403edd4af604666"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数字电路仿真器加速/cost.json",
+      "role": "cost",
+      "task": "数字电路仿真器加速",
+      "bytes": 542,
+      "sha256": "591efaa3dcbc4740162fecf548c3aaca37839b12d6aa468ded4677c343a51085"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "数字电路仿真器加速",
+      "bytes": 6360,
+      "sha256": "2e902e69344b93d6e61ad76c9dcfff21270a57c9f33c9bcf6ff3bf2fed99ed14"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数字电路仿真器加速",
+      "bytes": 1942,
+      "sha256": "98d784a1901097f55e0c4bf18382f68af65e6e15bfce2bf5e5c9bd08290c74a2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "数字电路仿真器加速",
+      "bytes": 17096,
+      "sha256": "c61e942d59e854c6d48fe9ac39855cb3b37a663732ded1021c0474c001aa13dc"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "数学竞赛原创试题/cost.json",
       "role": "cost",
       "task": "数学竞赛原创试题",
-      "bytes": 513,
-      "sha256": "2b73ce09da1691c8f6a508646dfea26e86219ff75a1c2493474e42655498f1ba"
+      "bytes": 534,
+      "sha256": "a31ae38589efb073fa17dd133eae09a2b780d427e34f03ed8f16f6dbeaf72c29"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\数学竞赛原创试题\\codex\\main\\result.json",
       "path": "数学竞赛原创试题/grading/codex/main/result.json",
       "role": "result",
       "task": "数学竞赛原创试题",
-      "bytes": 5863,
-      "sha256": "00dd5ed4ccce6a0cd4d3ec9c18ef613ddf89c0f3e207a26b43b6839e0402806e"
+      "bytes": 8076,
+      "sha256": "804946fef8388e0c3ad79d36974e30037b563e91222073c1904cb9920e58dc75"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\评分表_6.1Sol.md",
       "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "数学竞赛原创试题",
-      "bytes": 2450,
-      "sha256": "d53e8c4e275706ef3d01fa3a44c5ee33da06be49018701d3edab0c27e157070c"
+      "bytes": 3370,
+      "sha256": "8b8a9fd341463cf892a3d9974f4732421637b7f6379e56ddee992c20429d05cf"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1105,6 +977,230 @@
       "task": "星际战舰编队",
       "bytes": 1985,
       "sha256": "6184b613cc927f4f30e88283c229fdd39ce484510eaa3ae9136f3551d355d398"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "机械结构重建/cost.json",
+      "role": "cost",
+      "task": "机械结构重建",
+      "bytes": 524,
+      "sha256": "c295607a40368c38ee0f4c666f71f63fce7a9c683689984cad6f2c2221c527d9"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\机械结构重建\\codex\\main\\result.json",
+      "path": "机械结构重建/grading/codex/main/result.json",
+      "role": "result",
+      "task": "机械结构重建",
+      "bytes": 9316,
+      "sha256": "11625804034f725ac8ca5657fbff94b1e031276fed93a354f4dcef5f5ddfd1bc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\评分表_6.1Sol.md",
+      "path": "机械结构重建/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "机械结构重建",
+      "bytes": 3103,
+      "sha256": "df0fe71d0070770f6675faa5fe996877f0d199e86756c50a83a1be41097b275d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第01题.json",
+      "path": "机械结构重建/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3527,
+      "sha256": "254cc0c0655fc92f5d13c12c9f53fb530be010ecaffed64e22959d9e32ecd2d0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第02题.json",
+      "path": "机械结构重建/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2816,
+      "sha256": "ee6f61d4a6cbe0221260543c2d5395be6041a4b27ef84d2506f20ff396f600b1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第03题.json",
+      "path": "机械结构重建/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1710,
+      "sha256": "44d85c0dcf5d71701e5912718f7c066b9005ff3ba5fac279aad0f4e74a1aafd4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第04题.json",
+      "path": "机械结构重建/submission/答案/第04题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 690,
+      "sha256": "2fb90191c81c19f8763faba781c1c6811577a3f8156fbe295476cc86733c19f7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第05题.json",
+      "path": "机械结构重建/submission/答案/第05题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1258,
+      "sha256": "f96a9ad1830b1f0e22add77dcff61561e1e87606438873abf3ea791871e12a0c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第06题.json",
+      "path": "机械结构重建/submission/答案/第06题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1153,
+      "sha256": "c20ea849d9643d3c0a42feb8c8e9c5fc4a88d8b073d2415104209e273d4dfde5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第07题.json",
+      "path": "机械结构重建/submission/答案/第07题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1078,
+      "sha256": "1e1ec758785075260f0a610bcb8008d6529051d0f52f9d7bcf141380b0952da3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第08题.json",
+      "path": "机械结构重建/submission/答案/第08题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1360,
+      "sha256": "4439e94c63adf705ea84811a444a7633fe71a9f41b1e83a684e6f33a4b09b028"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第09题.json",
+      "path": "机械结构重建/submission/答案/第09题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1245,
+      "sha256": "98031bc037571717f4fa36721d4609e978b82d769db3a980515276cef2d630b7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第10题.json",
+      "path": "机械结构重建/submission/答案/第10题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1289,
+      "sha256": "62ef1e76a44cff31280030b14f93dfbdfc19e3dd1a3b442753690e270e1605d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第11题.json",
+      "path": "机械结构重建/submission/答案/第11题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1410,
+      "sha256": "5e9820585c640e675ac8045b9cfc2e9dcf5d190e278cf41be06fc4d4e0a8e765"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第12题.json",
+      "path": "机械结构重建/submission/答案/第12题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1369,
+      "sha256": "7014b57dfc731142a359312943a2d29ffd88061ab85f8271fc14bc846ee74b2c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第13题.json",
+      "path": "机械结构重建/submission/答案/第13题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1352,
+      "sha256": "d74d88424c61ba5c158e8a83cf53b1c994730adc00e21243b8ff2c2bad7722e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第14题.json",
+      "path": "机械结构重建/submission/答案/第14题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1347,
+      "sha256": "19ae772d6e5393adfd0baabf8755e00208861e45e4a2208df3de3f0961821481"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第15题.json",
+      "path": "机械结构重建/submission/答案/第15题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1343,
+      "sha256": "74dc1e264badfc553966146c3dcae5bc1151e3fb480e7d3ae023f4c65db439c7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第16题.json",
+      "path": "机械结构重建/submission/答案/第16题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 928,
+      "sha256": "3744f938c8ffb4b5310253e0bdfd9c733d79243b5ddccc124445772f41430435"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第17题.json",
+      "path": "机械结构重建/submission/答案/第17题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1125,
+      "sha256": "818bb4cd0b9a6d6d817abd3b450b1e3aafd7d4ab2e6e8c2c85b449e36b28b9c2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第18题.json",
+      "path": "机械结构重建/submission/答案/第18题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1132,
+      "sha256": "b5ef1725e76fe0cb1e4520d826332d424a2d2744d88a79550118f7054744c168"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第19题.json",
+      "path": "机械结构重建/submission/答案/第19题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1125,
+      "sha256": "df0f1ba9c7f02374949125c79de0486f4b3683d3220687458a5213c98a575df1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第20题.json",
+      "path": "机械结构重建/submission/答案/第20题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 906,
+      "sha256": "7dcb1e8b495433425644b6893f1ea5131eed6eeeb345521904798132ac013c54"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第21题.json",
+      "path": "机械结构重建/submission/答案/第21题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1125,
+      "sha256": "c849781bddd77c1608ee0f0a26ef148da47974c7b38eabb8b348398e7f819836"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第22题.json",
+      "path": "机械结构重建/submission/答案/第22题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1012,
+      "sha256": "636270b6a19482c98d066932ce535ef2c2e60bad5bbe1a2d859d2fcf00c3176a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第23题.json",
+      "path": "机械结构重建/submission/答案/第23题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 991,
+      "sha256": "1c4dcca0514a82c83391a3c6ebf8abf78ca1dfc6f1375103c57581d65e0c840e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第24题.json",
+      "path": "机械结构重建/submission/答案/第24题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1000,
+      "sha256": "4cccd85cbd778c284a4ac4df457907780e6321d29a5bb66805ce8c37e44455f7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\答案\\第25题.json",
+      "path": "机械结构重建/submission/答案/第25题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 997,
+      "sha256": "96a9acad1107d3a4bc204be7a033a2e7317eab8ca862e846f1ea4ff101db9088"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1219,30 +1315,6 @@
       "sha256": "590f7401ad5f940ec24ba3e1aea6662254e3702203d0b88199668b2ba8ad7ebd"
     },
     {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\数字电路仿真器加速\\codex\\performance\\result.json",
-      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
-      "role": "result",
-      "task": "数字电路仿真器加速",
-      "bytes": 1540,
-      "sha256": "c9c084a2eeb3ec186964271519ccb4512d71d5db1037cb821d7dd2ab2578743b"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\评分表_6.1Sol.md",
-      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "数字电路仿真器加速",
-      "bytes": 1462,
-      "sha256": "649ec61ea05bec9b77a01409ec5b73e8f2e278352cd703d3975c4dba698cb8d8"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\solution.cpp",
-      "path": "数字电路仿真器加速/submission/solution.cpp",
-      "role": "submission",
-      "task": "数字电路仿真器加速",
-      "bytes": 10991,
-      "sha256": "b686e4be5ce0125da3bbae45d5fec84edda4593a8fc5cded1f02062ae044b24c"
-    },
-    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "鲁班锁拆解/cost.json",
       "role": "cost",
@@ -1281,6 +1353,426 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\bvh.hpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\dev_out.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_L0.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_L0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b1000000000.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b1000000000.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b150000000.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b150000000.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b2000000000.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b2000000000.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b80000000.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_b80000000.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_base.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c0.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c1048576.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c1048576.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c134217728.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c134217728.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c16777216.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c16777216.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c262144.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c262144.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c4194304.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c4194304.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c8388608.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_c8388608.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_divsqrt.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_divsqrt.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_full.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_full.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k2.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k3.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k6.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_k6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l10.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l11.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l11.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l12.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l13.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l13.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l9.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_l9.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_lb.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_lb.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb0.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb10.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb12.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb14.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb14.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb16.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_mb8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_ni.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_ni.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p3.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p5.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p5.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p6.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_p6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd10.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd12.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd6.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd7.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd7.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_pd8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_prediv.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_prediv.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_restr.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_restr.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_v0.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\grader_v0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\prof.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\reference.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\render_math.cuh",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\rt.h",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\tmp.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\光线追踪渲染加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\光线追踪渲染加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\动态路由塔防\\.git",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
@@ -1295,42 +1787,6 @@
     {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\crop.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\dump_dims.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\q03_front.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\q03_main.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\q03_top.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\全部尺寸.txt",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\工程图纸三维还原",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\工程图纸三维还原.md",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\工程图纸三维还原\\预览",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\形式化证明题\\.git",
@@ -1361,7 +1817,255 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数学竞赛原创试题\\.git",
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\analyze2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\analyze3.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\debug.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\debug_main.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_c",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_c2",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_r",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_s",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_ss",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_sv",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_t",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_v1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\logs_v2",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\sample_bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\攻城略地.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\攻城略地\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\bench.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\bench.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\dbg_1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\dbg_3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\dce.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\e.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\err_01.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\f_1_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\f_1_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\f_3_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\f_3_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g3_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g3_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g3l_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g3l_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g_1_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g_1_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g_2_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\g_2_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader_16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader_4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader_8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\live.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\m_1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\m_3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\m_5.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\o.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\o3_1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\o3_3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\order.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\out_01.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\out_04.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\out_07.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\ref_err.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\ref_err4.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\ref_err7.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\ring.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\runs.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\simplify.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\stats.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\topo.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\数据",
       "reason": "标准题只取交付答案"
     },
     {
@@ -1377,72 +2081,44 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\crop.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\dump_dims.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\q03_front.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\q03_main.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\q03_top.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\全部尺寸.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\机械结构重建",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\机械结构重建.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\机械结构重建\\预览",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\.gitignore",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze2.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze2.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze3.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\analyze3.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\diag_grader.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\diag_noBr.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\diag_noGate.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\diag_v.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\grader_diag.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\数据",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\数字电路仿真器加速\\数字电路仿真器加速.md",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Hy\\Hy4\\鲁班锁拆解\\.git",

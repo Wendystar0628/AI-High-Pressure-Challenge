@@ -1,0 +1,150 @@
+// ============================================================================
+// NestedOS 子系统文本与程序编辑器 (/Apps/editor.nos)
+// ============================================================================
+
+let WIN_ID = "";
+let FILE_PATH = "/Programs/sum.nos";
+let TEXT = "";
+let DIRTY = false;
+let STATUS = "就绪";
+let LAST_RUN_PID = null;
+
+fn load_file(path) {
+  let content = syscall("fs_read", path);
+  FILE_PATH = path;
+  if (content != null) {
+    TEXT = content;
+    DIRTY = false;
+    STATUS = "已载入 " + path + " (" + str(len(content)) + " 字符)";
+  } else {
+    TEXT = "// 新建程序 " + path + "\nfn main() {\n  syscall(\"report_result\", \"Hello NestedOS!\");\n}\n";
+    DIRTY = true;
+    STATUS = "新建未保存文件: " + path;
+  }
+  let wmPid = syscall("find_pid_by_role", "wm");
+  if (wmPid != null) {
+    syscall("send_msg", wmPid, { type: "set_win_title", winId: WIN_ID, title: "编辑器 · " + FILE_PATH + (DIRTY ? " *" : "") });
+  }
+}
+
+fn save_current() {
+  let wr = syscall("fs_write", FILE_PATH, TEXT);
+  if (wr.ok) {
+    DIRTY = false;
+    STATUS = "已保存 " + FILE_PATH + " (" + str(wr.bytes) + " B)";
+    let wmPid = syscall("find_pid_by_role", "wm");
+    if (wmPid != null) {
+      syscall("send_msg", wmPid, { type: "set_win_title", winId: WIN_ID, title: "编辑器 · " + FILE_PATH });
+    }
+    return true;
+  }
+  STATUS = "保存失败: " + str(wr.error);
+  return false;
+}
+
+fn run_current() {
+  if (DIRTY) {
+    if (!save_current()) { return null; }
+  }
+  let sp = syscall("proc_spawn", FILE_PATH, [], {
+    name: FILE_PATH,
+    quota: 500,
+    memQuota: 3145728
+  });
+  if (sp.ok) {
+    LAST_RUN_PID = sp.pid;
+    STATUS = "已启动进程 PID=" + str(sp.pid) + " (" + FILE_PATH + ")";
+  } else {
+    STATUS = "启动/编译错误: " + str(sp.error);
+  }
+}
+
+fn collect_quick_files() {
+  let out = [
+    "/Programs/sum.nos",
+    "/Programs/sender.nos",
+    "/Programs/receiver.nos",
+    "/Programs/spin.nos",
+    "/Apps/flight_ctrl.nos",
+    "/System/compiler.nos",
+    "/System/wm.nos",
+    "/Apps/files.nos",
+    "/Apps/charts.nos",
+    "/Demo/minimal.scene",
+    "/Demo/helicopter-24.scene"
+  ];
+  // 附带直属子系统内核源文件快捷入口
+  let subs = syscall("fs_list", "/Subsystems");
+  if (subs != null) {
+    let i = 0;
+    while (i < len(subs)) {
+      if (subs[i].type == "dir") {
+        push(out, subs[i].path + "/kernel.nos");
+      }
+      i += 1;
+    }
+  }
+  return out;
+}
+
+fn submit_ui() {
+  let runInfo = null;
+  if (LAST_RUN_PID != null) {
+    let procs = syscall("proc_list");
+    let i = 0;
+    while (i < len(procs)) {
+      if (procs[i].pid == LAST_RUN_PID) {
+        runInfo = procs[i];
+      }
+      i += 1;
+    }
+  }
+  syscall("surface_submit", WIN_ID, {
+    kind: "editor",
+    filePath: FILE_PATH,
+    text: TEXT,
+    dirty: DIRTY,
+    status: STATUS,
+    lastRunPid: LAST_RUN_PID,
+    lastRunInfo: runInfo,
+    quickFiles: collect_quick_files()
+  });
+}
+
+fn main(winId, initPath) {
+  WIN_ID = str(winId);
+  load_file((initPath != null && initPath != "") ? str(initPath) : "/Programs/sum.nos");
+  submit_ui();
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 0.8);
+    if (msg != null && msg.data != null) {
+      let ev = msg.data;
+      if (ev.action == "edit_text") {
+        TEXT = str(ev.text);
+        if (!DIRTY) {
+          DIRTY = true;
+          let wmPid = syscall("find_pid_by_role", "wm");
+          if (wmPid != null) {
+            syscall("send_msg", wmPid, { type: "set_win_title", winId: WIN_ID, title: "编辑器 · " + FILE_PATH + " *" });
+          }
+        }
+      } else if (ev.action == "set_filename") {
+        FILE_PATH = str(ev.filePath);
+        DIRTY = true;
+      } else if (ev.action == "open_file") {
+        load_file(str(ev.filePath));
+      } else if (ev.action == "new_file") {
+        FILE_PATH = ev.filePath != null ? str(ev.filePath) : "/Programs/custom.nos";
+        TEXT = "// 自定义程序\nfn main() {\n  let total = 0;\n  for (let i = 1; i <= 10; i++) {\n    total += i;\n  }\n  syscall(\"report_result\", \"结果=\" + str(total));\n}\n";
+        DIRTY = true;
+        STATUS = "已创建新缓冲区 " + FILE_PATH;
+      } else if (ev.action == "save") {
+        save_current();
+      } else if (ev.action == "run") {
+        run_current();
+      }
+    }
+    submit_ui();
+  }
+}

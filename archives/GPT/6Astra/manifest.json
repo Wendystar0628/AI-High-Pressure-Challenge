@@ -172,6 +172,38 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "光线追踪渲染加速/cost.json",
+      "role": "cost",
+      "task": "光线追踪渲染加速",
+      "bytes": 401,
+      "sha256": "bd80d75239a0d7aae1f79c71895fd12b4fe43544d839ded5e5ec05c0aec22c9c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\光线追踪渲染加速\\codex\\performance\\result.json",
+      "path": "光线追踪渲染加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "光线追踪渲染加速",
+      "bytes": 2848,
+      "sha256": "f0206f63cbbb9c68e6379dca9f1d50b38e4d68ce200209e499ccf4855915e314"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\评分表_6.1Sol.md",
+      "path": "光线追踪渲染加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "光线追踪渲染加速",
+      "bytes": 2099,
+      "sha256": "b52d703c68c200a6df9c49a2aed051a9fdb452e5f99a742107efa3e153fa6261"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution.cu",
+      "path": "光线追踪渲染加速/submission/solution.cu",
+      "role": "submission",
+      "task": "光线追踪渲染加速",
+      "bytes": 18905,
+      "sha256": "5d22cd258a600e5e2e119fc725fed2287decf967ebef52ed2191af0aa22abb0d"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "动态路由塔防/cost.json",
       "role": "cost",
       "task": "动态路由塔防",
@@ -521,230 +553,6 @@
       "task": "太阳雨渔港3D渲染",
       "bytes": 2984,
       "sha256": "7bdf275d5d612d53f2c3ee3267ddc4153340e6bc7bf0c59effb9e5a27a80c285"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
-      "path": "工程图纸三维还原/cost.json",
-      "role": "cost",
-      "task": "工程图纸三维还原",
-      "bytes": 485,
-      "sha256": "46c4d8df9c7b211eb1f1f218fa205104f40f61b9aa951c1fb143d705f925831f"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\工程图纸三维还原\\codex\\main\\result.json",
-      "path": "工程图纸三维还原/grading/codex/main/result.json",
-      "role": "result",
-      "task": "工程图纸三维还原",
-      "bytes": 20647,
-      "sha256": "402f144fe2414fe0e7c32aeedcd104609b47aa02128de68b77851865afe327d4"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\评分表_6.1Sol.md",
-      "path": "工程图纸三维还原/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "工程图纸三维还原",
-      "bytes": 3910,
-      "sha256": "6c50a9f52fd827b9400931c9173b7f41859c212192fa1b9a31ec8908e0d453d6"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第01题.json",
-      "path": "工程图纸三维还原/submission/答案/第01题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3702,
-      "sha256": "532d89d188a52af420dab96fe94f3287c3a93af4c7071c3ef4626da49f74dd9f"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第02题.json",
-      "path": "工程图纸三维还原/submission/答案/第02题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3081,
-      "sha256": "a331ac484808ba42ae6393b97cf97df2fc03126170926ee3c6cc478dcd5a043d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第03题.json",
-      "path": "工程图纸三维还原/submission/答案/第03题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1320,
-      "sha256": "a336d380f4a7df9328e56cab19a9b726ead8da214f03ca777a801f254fa67206"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第04题.json",
-      "path": "工程图纸三维还原/submission/答案/第04题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1629,
-      "sha256": "4423e0131f55a3a7929d227215239b744317523022739fbe8885183d65ad996d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第05题.json",
-      "path": "工程图纸三维还原/submission/答案/第05题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1899,
-      "sha256": "5d2b7dbe9c32b938d6076a7a941534cb54955152b5b05a7c5ae2d116540a7958"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第06题.json",
-      "path": "工程图纸三维还原/submission/答案/第06题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1605,
-      "sha256": "d73bc0a16e5f7df4c176e799932bfe128e86c270678e4085ab1efc813f66bdf9"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第07题.json",
-      "path": "工程图纸三维还原/submission/答案/第07题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1540,
-      "sha256": "6147222a8724ed3be306634b8352db9b604f31da33e3abf1e23c037518218100"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第08题.json",
-      "path": "工程图纸三维还原/submission/答案/第08题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1739,
-      "sha256": "f6f621c203627742f4294f0ed7370965f0effaf16b84f2739f65bb70f577799e"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第09题.json",
-      "path": "工程图纸三维还原/submission/答案/第09题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1648,
-      "sha256": "40f1d5ba54fe02e09ef08b4a59334b2ac6fe51e6ac3aff1d23ad79be3f4b2657"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第10题.json",
-      "path": "工程图纸三维还原/submission/答案/第10题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1844,
-      "sha256": "86f0b06404341d3471320f44f854ba92610f667c4053c26fd0b9383314e57a34"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第11题.json",
-      "path": "工程图纸三维还原/submission/答案/第11题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2352,
-      "sha256": "c369745fffd667d021e58bfccb0b2d9375d7d50fe2a27150b212c31f32e06685"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第12题.json",
-      "path": "工程图纸三维还原/submission/答案/第12题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1669,
-      "sha256": "4906e2ac365fa88eec5b1ba1ea4ac34ab281dffb08356ab6e38d421bbb7f40fc"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第13题.json",
-      "path": "工程图纸三维还原/submission/答案/第13题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2019,
-      "sha256": "a9f4adbed081176ce65bd20c0cacd7659750f93eafb9b2e0e9886980ba066de3"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第14题.json",
-      "path": "工程图纸三维还原/submission/答案/第14题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 1863,
-      "sha256": "790ec73b6c8ab5c862bdb6ff8bfb784679eac7bb1771befaf9df4d2df7eab148"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第15题.json",
-      "path": "工程图纸三维还原/submission/答案/第15题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2154,
-      "sha256": "14fa79e496719a302fc344951ab718a8152a84fac5fd2810cb877e9d751dd029"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第16题.json",
-      "path": "工程图纸三维还原/submission/答案/第16题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3815,
-      "sha256": "cd205769e8207c90179b7ff50ef9bf1129a80955aac84af99380689c62a1054b"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第17题.json",
-      "path": "工程图纸三维还原/submission/答案/第17题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 4568,
-      "sha256": "872112d0eed942fda628070e2fed7056e6f76b1a69d74f936583633be9898674"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第18题.json",
-      "path": "工程图纸三维还原/submission/答案/第18题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3656,
-      "sha256": "45eefe5ae3d09fe6589d0f33620ef05e68a2a4b009d2ce5746920a3aab84c476"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第19题.json",
-      "path": "工程图纸三维还原/submission/答案/第19题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 4963,
-      "sha256": "a0dc8af33437b8f7e9616144e7b00b681e0904fb954529a85658389617d51ec1"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第20题.json",
-      "path": "工程图纸三维还原/submission/答案/第20题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3449,
-      "sha256": "cde370bdd0a48626be898455e23f10ad7fd3c2d9d9e4ad4b00f4e5fd36f12f7c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第21题.json",
-      "path": "工程图纸三维还原/submission/答案/第21题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 6854,
-      "sha256": "10bf892bf0dfd19eced0ab36215c397efe2d8df2ea795afc04555c84aff07241"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第22题.json",
-      "path": "工程图纸三维还原/submission/答案/第22题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 9401,
-      "sha256": "5a54efa6ae5231de12c97d823f54c7f21bce0b9e777865a570bc0edbeb252db8"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第23题.json",
-      "path": "工程图纸三维还原/submission/答案/第23题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 11668,
-      "sha256": "bdebc52059e8cd19d564c61abf5eed17d4f1eeaf9f28a21c4da8cb4c361c5701"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第24题.json",
-      "path": "工程图纸三维还原/submission/答案/第24题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 14905,
-      "sha256": "66fe97543f8ceadbd10911036cf1305935150670f3cf6f7d6922cdd3ea262861"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\答案\\第25题.json",
-      "path": "工程图纸三维还原/submission/答案/第25题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 10765,
-      "sha256": "229243665971fc64d98e93c1cc5e24bd480706f19008ca3399b445ae703a0fc5"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1212,171 +1020,283 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "攻城略地/cost.json",
+      "role": "cost",
+      "task": "攻城略地",
+      "bytes": 461,
+      "sha256": "cf007ed599ad74deee632d2e40e58f8d3e03986cfe500dd1a4b1dc854c12e555"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\攻城略地\\codex\\performance\\result.json",
+      "path": "攻城略地/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "攻城略地",
+      "bytes": 7794,
+      "sha256": "dec211c37b2048699886cd65a7f0b432d5fe6709b81ea3657028e977a5147558"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\评分表_6.1Sol.md",
+      "path": "攻城略地/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "攻城略地",
+      "bytes": 1654,
+      "sha256": "3b5429e07d9401f962eed26d43706302a9fd99dec8fde26e4f03b84df45c1547"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\bot.cpp",
+      "path": "攻城略地/submission/bot.cpp",
+      "role": "submission",
+      "task": "攻城略地",
+      "bytes": 15341,
+      "sha256": "618c5bf56a49e92adb1184cb28447b1d84bbdc82c44fe4e976c50166729bbf0a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数字电路仿真器加速/cost.json",
+      "role": "cost",
+      "task": "数字电路仿真器加速",
+      "bytes": 463,
+      "sha256": "667a9f9e5fd3bd017e45e9a538151e7748d7ad2a03ef35e2320969224fa29a7b"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "数字电路仿真器加速",
+      "bytes": 6330,
+      "sha256": "69da2d2046097ccf1d05ff499f729086e73031831224b759fe45c66874c46324"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数字电路仿真器加速",
+      "bytes": 1950,
+      "sha256": "bd116f9c822c963a9b7e54d794b8cf237f81a182fef1ac8a24f07f9d022aee45"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "数字电路仿真器加速",
+      "bytes": 20829,
+      "sha256": "3780cbedb75b7689a3448d2d5223bc6d2550013c78fb4695481334210dd57fee"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "数学竞赛原创试题/cost.json",
       "role": "cost",
       "task": "数学竞赛原创试题",
-      "bytes": 503,
-      "sha256": "a70b0ca69cb565c07aa2ae50e0d8f3d6f1071f1962cd734aa03da893ca45f866"
+      "bytes": 484,
+      "sha256": "1a744242fa874a9a65fba816b2cf87ca65c5b75d0a1c0668f0efcf7a6ea39732"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\数学竞赛原创试题\\codex\\main\\result.json",
       "path": "数学竞赛原创试题/grading/codex/main/result.json",
       "role": "result",
       "task": "数学竞赛原创试题",
-      "bytes": 5252,
-      "sha256": "8d39ae4e7b1084bff5cfaa191386a46ac0111f178605c82a412edc0a0f5cda2d"
+      "bytes": 7781,
+      "sha256": "c598011d401dd5b10ae78474cb7398e8dda200bc0c9c883b7c15143f57528969"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\评分表_6.1Sol.md",
       "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "数学竞赛原创试题",
-      "bytes": 2426,
-      "sha256": "efadb248940b85936f2f8eca4d6a4ed247d370c9a4cbc409a2a49ee0b566290a"
+      "bytes": 3367,
+      "sha256": "dff6d795caeefccb33e33eb53ea294853b7f85c492602fc0b021df093dbadae9"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第01题.md",
       "path": "数学竞赛原创试题/submission/答案/第01题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3152,
-      "sha256": "8c8242db96626e65159fec2c08ac07a19a6e59c4ea8ea2257408537c394c1020"
+      "bytes": 1647,
+      "sha256": "209e5764e36dead885fa1d491dc6e5037960b8e93ee42f389b5c4ae0dfeaf9ef"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第02题.md",
       "path": "数学竞赛原创试题/submission/答案/第02题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 2982,
-      "sha256": "38b33e424930d26dcd856c2571ba9cdd9f5361ccdfaff307d6526ae265b8a4ab"
+      "bytes": 2977,
+      "sha256": "8fd1e1dd4639e95a1853254930daa88270442a36915a99ac8373820a44b1e996"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第03题.md",
       "path": "数学竞赛原创试题/submission/答案/第03题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3070,
-      "sha256": "03d3b1329045bfeeafae4d64d8dd6638e39d93c10449e8d9ed5c1ceea2afcb09"
+      "bytes": 2719,
+      "sha256": "6c528fb7d7302aa8eb3347c343357d8bb0aa2aec24a89108889cadc5b5a4cd99"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第04题.md",
       "path": "数学竞赛原创试题/submission/答案/第04题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3157,
-      "sha256": "c762048ca82553242fcc71a9ab5431ec8124c8dd3f3cf7174ef2b8abdbef3d4c"
+      "bytes": 2731,
+      "sha256": "e9135190d9c3568a1aee1899555d7611866128eb181544df5db0857d752a6f19"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第05题.md",
       "path": "数学竞赛原创试题/submission/答案/第05题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3931,
-      "sha256": "78eef05bb4773ec724fbe959fdb3ec35dabdf76f01b6594d496ace284639563e"
+      "bytes": 4511,
+      "sha256": "0033fd3ed5e1145f7d94d794416183645484ccd99e44215eaf60cfdd50d21b40"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第06题.md",
       "path": "数学竞赛原创试题/submission/答案/第06题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 2818,
-      "sha256": "05b6a7b983270eb35795210777438a6649151cd27ae85f43d404fc403828e68d"
+      "bytes": 1616,
+      "sha256": "ede5690d5417bcef2d25a6825a4ba91a8578dbc9c4b9e3a98c7c178c882d5dfb"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第07题.md",
       "path": "数学竞赛原创试题/submission/答案/第07题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 5213,
-      "sha256": "cf3ed58f23af21f77be185f65f2edf00396f31b7b58373d4a854b36d8d1ae8a6"
+      "bytes": 4528,
+      "sha256": "67be06d2ae219578938b2e4a4ca32bf053405bb685820c4683824abdf6b89c05"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第08题.md",
       "path": "数学竞赛原创试题/submission/答案/第08题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3624,
-      "sha256": "a9682b09eb77e9b93474581dfb7780bed48d19aef442fd32bd64a59441fb972c"
+      "bytes": 3147,
+      "sha256": "80c8b4872c53a284233e88e97914e209381ff9e7026702da5cbe5eeee199deeb"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第09题.md",
       "path": "数学竞赛原创试题/submission/答案/第09题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 5432,
-      "sha256": "ee4af0d61e2c29c8225d6f7e4e3f16cb42319b91bf3d4c47ad9f749eb1685bd3"
+      "bytes": 5670,
+      "sha256": "ecd525656680a703fd4ba6c13526369e942fc477a982e83145f460284f755070"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第10题.md",
       "path": "数学竞赛原创试题/submission/答案/第10题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 2812,
-      "sha256": "22e6fb330035e9b8b78f93209e196fbea511dfafb228de9e2edd20657ad59591"
+      "bytes": 2325,
+      "sha256": "18faf455bddd20b26572ad4369cd1275a7ba1219f1f2c6a24c7b18c8af363d54"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第11题.md",
       "path": "数学竞赛原创试题/submission/答案/第11题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3442,
-      "sha256": "8112cebf2147c4f6f6cd9454520d39c8be4c5f8ba92e04d71a1767d401532aba"
+      "bytes": 2626,
+      "sha256": "088d25600b20488f25c7eceefc658125a9584dc9396c546766af8d2b2ed472b2"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第12题.md",
       "path": "数学竞赛原创试题/submission/答案/第12题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 4366,
-      "sha256": "844c1e63a7f78e07df5d7074ab5fe67ae121775991888b40feb776eb10eb8242"
+      "bytes": 3071,
+      "sha256": "67c66db0070c3cab0f2fc9da8773dddad848a69c0bf57dbfbbcd3f168d5a4681"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第13题.md",
       "path": "数学竞赛原创试题/submission/答案/第13题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3550,
-      "sha256": "9912726c79e3edc8f20b8e619e1616973959ea8e0d58f0b4aa070932cbcfff90"
+      "bytes": 2468,
+      "sha256": "33e54271bb61ba425609a981c626b1ee64e02ec2789780c7fd6885ee88331490"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第14题.md",
       "path": "数学竞赛原创试题/submission/答案/第14题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 1211,
-      "sha256": "0552aba495ffe326e97b69e8e53d2651b2be11b5bc41d0d6c4090e9234ba8b74"
+      "bytes": 3583,
+      "sha256": "7cdb6cda45b2a629c9eaff846199eaa3b8a17e15beaabab40e4a9517e393f36e"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第15题.md",
       "path": "数学竞赛原创试题/submission/答案/第15题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 1226,
-      "sha256": "7b865e9b98d291d31c603759208b0370c16ccbcd77521696a71c6a60b58ff3a0"
+      "bytes": 3240,
+      "sha256": "6ffae20239c236be230399edf8c1e90e6d612b3411b78697a70c650b9aa0c7be"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第16题.md",
       "path": "数学竞赛原创试题/submission/答案/第16题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 7568,
-      "sha256": "1025b61dd5492629843a160b740b1133b83b86d9cc170058228e2afdd7041a3e"
+      "bytes": 1730,
+      "sha256": "0d4eb80b874aece8166d065443370c68523b5567c779950b48eab3000c3b6fbf"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第17题.md",
       "path": "数学竞赛原创试题/submission/答案/第17题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 1236,
-      "sha256": "a5656966ac1b75eb1b453c9f7cfd8e6b4e2c809d5a2ab24c63d1fb1ce168e83d"
+      "bytes": 3324,
+      "sha256": "4ceb0fd1511e1d9c24fcf89ac9318e78c625185f5162c066f3c466d151b70804"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第18题.md",
       "path": "数学竞赛原创试题/submission/答案/第18题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 916,
-      "sha256": "1e2960fbeb9c1d90c3d9508aa8a37a7cbcf3e0d2197d42bf36effb020f855740"
+      "bytes": 934,
+      "sha256": "a6b325a45c2d4a523251a14ad4d971cecb320a5a870dfe7ae2146815c1b9f606"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第19题.md",
+      "path": "数学竞赛原创试题/submission/答案/第19题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 918,
+      "sha256": "4f3f20c685acce56add85028b76148e0d754ca4ba2771162a2be5440fa58ba61"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第20题.md",
+      "path": "数学竞赛原创试题/submission/答案/第20题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 3963,
+      "sha256": "51b217bfcee211e5eee2f751b1589756fe1dfedb6f17b7340cf06f831f1f2519"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第21题.md",
+      "path": "数学竞赛原创试题/submission/答案/第21题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 975,
+      "sha256": "056c8dfb0cce4a74a83f0c8cb768ffdb2f7eb267ac42a98d833a11f20e587894"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第22题.md",
+      "path": "数学竞赛原创试题/submission/答案/第22题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 5893,
+      "sha256": "06b801c03a9068095afb040f8ef04f685e5f116f8ff6a6febf6902e7356df93a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第23题.md",
+      "path": "数学竞赛原创试题/submission/答案/第23题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 917,
+      "sha256": "cfe23b54da8bc87fe057d77b125c9ad5869f7bf82f0aa7077d3867686cfedce4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\答案\\第24题.md",
+      "path": "数学竞赛原创试题/submission/答案/第24题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 97,
+      "sha256": "8f6515cb2ae1acea47351c3a3a114e20239628e66d71e4a231fa54b0593c73f0"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1449,6 +1369,230 @@
       "task": "星际战舰编队",
       "bytes": 2257,
       "sha256": "3a527418c62761f9c1a527830d395c458f3ed8e69796c01a55c12c804821110c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "机械结构重建/cost.json",
+      "role": "cost",
+      "task": "机械结构重建",
+      "bytes": 473,
+      "sha256": "55212bfdb1e9271388b7070aaece0611bd4304c7cbfcf8eb8caed830e73c3e5f"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\机械结构重建\\codex\\main\\result.json",
+      "path": "机械结构重建/grading/codex/main/result.json",
+      "role": "result",
+      "task": "机械结构重建",
+      "bytes": 20635,
+      "sha256": "ef4969411a06b026a1bc003aa0eae063c74180c1e6bb976a8bcde29abff474b7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\评分表_6.1Sol.md",
+      "path": "机械结构重建/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "机械结构重建",
+      "bytes": 3904,
+      "sha256": "153bc45403e6c738e644df5d77f98dc2682ce9de6ccd369e089551b8792d8c99"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第01题.json",
+      "path": "机械结构重建/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3702,
+      "sha256": "532d89d188a52af420dab96fe94f3287c3a93af4c7071c3ef4626da49f74dd9f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第02题.json",
+      "path": "机械结构重建/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3081,
+      "sha256": "a331ac484808ba42ae6393b97cf97df2fc03126170926ee3c6cc478dcd5a043d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第03题.json",
+      "path": "机械结构重建/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1320,
+      "sha256": "a336d380f4a7df9328e56cab19a9b726ead8da214f03ca777a801f254fa67206"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第04题.json",
+      "path": "机械结构重建/submission/答案/第04题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1629,
+      "sha256": "4423e0131f55a3a7929d227215239b744317523022739fbe8885183d65ad996d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第05题.json",
+      "path": "机械结构重建/submission/答案/第05题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1899,
+      "sha256": "5d2b7dbe9c32b938d6076a7a941534cb54955152b5b05a7c5ae2d116540a7958"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第06题.json",
+      "path": "机械结构重建/submission/答案/第06题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1605,
+      "sha256": "d73bc0a16e5f7df4c176e799932bfe128e86c270678e4085ab1efc813f66bdf9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第07题.json",
+      "path": "机械结构重建/submission/答案/第07题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1540,
+      "sha256": "6147222a8724ed3be306634b8352db9b604f31da33e3abf1e23c037518218100"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第08题.json",
+      "path": "机械结构重建/submission/答案/第08题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1739,
+      "sha256": "f6f621c203627742f4294f0ed7370965f0effaf16b84f2739f65bb70f577799e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第09题.json",
+      "path": "机械结构重建/submission/答案/第09题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1648,
+      "sha256": "40f1d5ba54fe02e09ef08b4a59334b2ac6fe51e6ac3aff1d23ad79be3f4b2657"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第10题.json",
+      "path": "机械结构重建/submission/答案/第10题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1844,
+      "sha256": "86f0b06404341d3471320f44f854ba92610f667c4053c26fd0b9383314e57a34"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第11题.json",
+      "path": "机械结构重建/submission/答案/第11题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2352,
+      "sha256": "c369745fffd667d021e58bfccb0b2d9375d7d50fe2a27150b212c31f32e06685"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第12题.json",
+      "path": "机械结构重建/submission/答案/第12题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1669,
+      "sha256": "4906e2ac365fa88eec5b1ba1ea4ac34ab281dffb08356ab6e38d421bbb7f40fc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第13题.json",
+      "path": "机械结构重建/submission/答案/第13题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2019,
+      "sha256": "a9f4adbed081176ce65bd20c0cacd7659750f93eafb9b2e0e9886980ba066de3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第14题.json",
+      "path": "机械结构重建/submission/答案/第14题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 1863,
+      "sha256": "790ec73b6c8ab5c862bdb6ff8bfb784679eac7bb1771befaf9df4d2df7eab148"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第15题.json",
+      "path": "机械结构重建/submission/答案/第15题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2154,
+      "sha256": "14fa79e496719a302fc344951ab718a8152a84fac5fd2810cb877e9d751dd029"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第16题.json",
+      "path": "机械结构重建/submission/答案/第16题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3815,
+      "sha256": "cd205769e8207c90179b7ff50ef9bf1129a80955aac84af99380689c62a1054b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第17题.json",
+      "path": "机械结构重建/submission/答案/第17题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 4568,
+      "sha256": "872112d0eed942fda628070e2fed7056e6f76b1a69d74f936583633be9898674"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第18题.json",
+      "path": "机械结构重建/submission/答案/第18题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3656,
+      "sha256": "45eefe5ae3d09fe6589d0f33620ef05e68a2a4b009d2ce5746920a3aab84c476"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第19题.json",
+      "path": "机械结构重建/submission/答案/第19题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 4963,
+      "sha256": "a0dc8af33437b8f7e9616144e7b00b681e0904fb954529a85658389617d51ec1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第20题.json",
+      "path": "机械结构重建/submission/答案/第20题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3449,
+      "sha256": "cde370bdd0a48626be898455e23f10ad7fd3c2d9d9e4ad4b00f4e5fd36f12f7c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第21题.json",
+      "path": "机械结构重建/submission/答案/第21题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 6854,
+      "sha256": "10bf892bf0dfd19eced0ab36215c397efe2d8df2ea795afc04555c84aff07241"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第22题.json",
+      "path": "机械结构重建/submission/答案/第22题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 9401,
+      "sha256": "5a54efa6ae5231de12c97d823f54c7f21bce0b9e777865a570bc0edbeb252db8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第23题.json",
+      "path": "机械结构重建/submission/答案/第23题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 11668,
+      "sha256": "bdebc52059e8cd19d564c61abf5eed17d4f1eeaf9f28a21c4da8cb4c361c5701"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第24题.json",
+      "path": "机械结构重建/submission/答案/第24题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 14905,
+      "sha256": "66fe97543f8ceadbd10911036cf1305935150670f3cf6f7d6922cdd3ea262861"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\答案\\第25题.json",
+      "path": "机械结构重建/submission/答案/第25题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 10765,
+      "sha256": "229243665971fc64d98e93c1cc5e24bd480706f19008ca3399b445ae703a0fc5"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1537,30 +1681,6 @@
       "task": "果冻冲击与造浪水槽",
       "bytes": 6121,
       "sha256": "db8f26e59b65bf2aaa693a7d2f8ff4e448f223b32e59d94bc869284acb35c283"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\数字电路仿真器加速\\codex\\performance\\result.json",
-      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
-      "role": "result",
-      "task": "数字电路仿真器加速",
-      "bytes": 1472,
-      "sha256": "acf1d6e7ee6a9c8212d0eb4189c54f2b8f4abf1c50b07279207249446a6f331d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\评分表_6.1Sol.md",
-      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "数字电路仿真器加速",
-      "bytes": 1464,
-      "sha256": "77b0eae7f54f9f5ee6f50881daebb162418fe5980feed9247550a942ae0ee63a"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution.cpp",
-      "path": "数字电路仿真器加速/submission/solution.cpp",
-      "role": "submission",
-      "task": "数字电路仿真器加速",
-      "bytes": 29969,
-      "sha256": "c3e74374177ad7b8f9dff569a0af5104aa98b194fe69dfe4c24582ae1d569545"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1653,6 +1773,618 @@
       "reason": "依赖、缓存、编译产物或题目数据"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\aobuckets",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\aobuckets.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\aobuckets.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\baseline",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\bench.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\build_extra.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\bvh.hpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\candidates",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\candidates.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\candidates.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\certificate",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\certificate.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\certificate.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\check_extreme.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact2",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact2.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\compact2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\fastunit",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\fastunit.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\fastunit.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\final_check",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\final_templated",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\finalbase",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\finalbase.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\finalbase.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpu1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpu1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpu1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpusah",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpusah.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gpusah.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grader.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grid128",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grid128.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\grid128.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gridguard",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gridguard.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\gridguard.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\groups8",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\groups8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\groups8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf4",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf8",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\leaf8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\lighttree",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\lighttree.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\lighttree.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\make_extra.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\oracle.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\oracle.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\oracle.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\packet4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\packet4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\packet4b",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\packet4b.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\packet4b.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\precise.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\precise.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile_stage",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile_stage.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile_stage.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile_stage.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\profile_woop.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\reference.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\render_math.cuh",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\rt.h",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\sah8",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\sah8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\sah8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\shared16",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\shared16.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\shared16.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_aobuckets.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_before_warp_average.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_candidates.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_certificate.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_compact1.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_compact2.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_cpu.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_fastunit.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_finalbase.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_gpusah.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_grid.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_groups8.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_lbvh.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_lighttree.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_packet.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_precise.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_shared16.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_tiles8.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_topcache.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_tuning.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_v1.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_warp_average.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_warps.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_wave.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_wide4.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_wide8.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\solution_woop4.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\stress",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\stress.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tiles8",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tiles8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tiles8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\topcache",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\topcache.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\topcache.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\trial1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune10",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune10.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune6",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune6.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tune6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneinline",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneinline.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneinline.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneleaf1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneleaf1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\tuneleaf1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warpavg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warpavg.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warpavg.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warps",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warps.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\warps.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wave",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wave.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wave.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide4",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide8",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide8.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\wide8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\woop4",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\woop4.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\woop4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\光线追踪渲染加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\光线追踪渲染加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\动态路由塔防\\.git",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
@@ -1681,18 +2413,6 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\工程图纸三维还原",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\工程图纸三维还原.md",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\工程图纸三维还原\\预览",
-      "reason": "标准题只取交付答案"
-    },
-    {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\形式化证明题\\.git",
       "reason": "标准题只取交付答案"
     },
@@ -1709,7 +2429,1131 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数学竞赛原创试题\\.git",
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\base.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\baseline.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\baseline.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\break.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\break.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\break.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\build_meta.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\change.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\cleanup.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\cover.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\cover.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\cover.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\endexact.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\endgame.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\endgame.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\evac.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\final_smoke.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\finalize.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\finaltest.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\future.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\future2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\future2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\future2.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\geo.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\geo.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\guarded.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\guarded.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\inflow.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\inflow.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\inspect3.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\inspect9.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\inspect_log.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\invest.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\invest.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\invest.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\late25.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\late25.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\late25.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_base",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_final",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_future",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_future2",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_risk",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_search",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\logs_validation",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\margin.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\margin.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\margin.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\meta.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\meta.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\open24new.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\open40new.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\opening.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\opening.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\opening.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\opening24.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\opening24.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_accel.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_accel.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_accel.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_accel.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_ambush.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_ambush.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_ambush.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_ambush.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_ambush.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_change.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_combo.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_combo.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_combo.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_commit.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_commit.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_commit.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_commit.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_deadline.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_deadline.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_deadline.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_deadline.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_depot.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_depot.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_depot.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_efficient.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_efficient.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_efficient.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_efficient.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_efficient.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_ambush.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_ambush.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_combo.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_combo.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_old.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_final_old.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_finalize.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_fork.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_fork.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_fork.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_guard.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_guard.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_guard.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_guard.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_guard.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_headtohead.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_headtohead.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_ambush.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_ambush.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_deadline.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_deadline.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_efficient.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_efficient.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_new.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_new.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_old.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_old.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_rescue.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_hold_rescue.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_inspect.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_logs_head",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_logs_weak",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_open.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_open.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_open.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_open.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_open.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_original.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_original.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_region.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_region.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_region.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_region.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_region.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_rescue.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_rescue.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_rescue.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_rescue.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_rescue.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_security.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_security.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_security.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_security.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_security.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_stats.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_verification.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_verify.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_weak.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_weak.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_weak_old.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev2_weak_old.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_base.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_counter.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_counter.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_counter.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_counter.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_econ.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_econ.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_econ.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_econ.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_econ.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_inspect.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_inspect.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_inspect.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_integral.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_integral.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_integral.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_integral.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_integral.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_logs_base",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_long.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_long.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_long.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_next.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_pressure.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_pressure.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_pressure.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_pressure.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_pressure.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_solvency.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_solvency.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_solvency.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_solvency.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rev3_solvency.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\risk.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\risk.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\risk.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rollout.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\rollout.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\route.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\route.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\search.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\tactical.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\tactical.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\transit.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\transit.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\transit.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\validation.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\value.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\value.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\verify_final.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\wave.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\wave.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\weak_final.json",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\攻城略地.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\攻城略地\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\abstract.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\abstract.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\adaptive.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\analyze.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\analyze.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\arithmetic_phase.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\arithmetic_random_test.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\arithmetic_random_test.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\arithmetic_test_setup.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\batch1024.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\batch256.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\chain_shape.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\compact_macros.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\cuts.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\digest_tables.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\edit_jit.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\factor_writes.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\fast_union.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\final_polish.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\hybrid.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\inspect.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\jit_regs.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\large_random_test.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\large_random_test.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\macro_test.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\macro_test.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\macros.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\memory_operands.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\mux_memory.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\packed_writes.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\patterns.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\phase.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\phase_guard.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\prep_optimizations.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile01.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile02.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile07macro.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile_out.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\profile_solution.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\random_test.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\random_test.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\schedule_depth.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_avx_transpose.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_batch1024_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_blocks_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_compact_macro_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_depth_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_digest_tables.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_memory_binary.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_mux_memory.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_o3_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_packed_writes_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_phase_arithmetic_v1.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_phase_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_prep_optimized.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_start_turn2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_start_turn3.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_stitched_512.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v1.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v10.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v3.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v4.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v5.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v6.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v7.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v8.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_v9.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\solution_write_factoring_experiment.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\stitch_blocks.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\transpose_avx.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\write_stats.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\数据",
       "reason": "标准题只取交付答案"
     },
     {
@@ -1729,36 +3573,24 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\机械结构重建",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\机械结构重建.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\机械结构重建\\预览",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\vendor",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\.gitignore",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\analyze.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\tests",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\数据",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\数字电路仿真器加速\\数字电路仿真器加速.md",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\GPT\\6Astra\\鲁班锁拆解\\.git",

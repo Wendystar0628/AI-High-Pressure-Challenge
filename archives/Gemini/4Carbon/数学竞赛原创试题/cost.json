@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Carbon",
+  "task": "数学竞赛原创试题",
+  "tokens": 1394551,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 0.2,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Carbon/数学竞赛原创试题/run-3fb86c6d55a14c578fb036f321b7d10f"
+  ]
+}

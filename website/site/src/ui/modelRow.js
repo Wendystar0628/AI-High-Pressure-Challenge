@@ -28,7 +28,7 @@
 // 它在本行的读屏句（ctx.sr）写好之后跑，需要时可以改写那一句。
 //
 // 测试开销列（cost: true，排行总榜用）：分数后面多两格，同一行、竖直居中——.mrow-cost 金额 ¥23.4 后跟依据小记号
-// （○ 按订阅折算、◆ 按 API 标价折算，形状区分；金额为 null 写「数据暂缺」），.mrow-tok 13 题合计 Token（有拟合的题时后跟 *）；
+// （○ 按订阅折算、◆ 按 API 标价折算，形状区分；金额为 null 写「暂无数据」），.mrow-tok 13 题合计 Token；
 // 记号的意思由页面写一次图例（ui/cost.js costLegend）；
 // 取 scores.<id>.cost（ui/cost.js），读屏句末尾接一句开销。表头 createRowHead({ cost: '测试开销', tokens: 'Token' }) 同列。
 import { h } from '../core/dom.js';

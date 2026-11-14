@@ -1,0 +1,23 @@
+{
+  "model": "Hy/Hy4",
+  "task": "机械结构重建",
+  "tokens": 16630721,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.83,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "credits",
+  "plan": {
+    "name": "CodeBuddy 140 元档",
+    "name_en": "CodeBuddy",
+    "price": 140,
+    "currency": "CNY",
+    "period": "month",
+    "credits": 9000
+  },
+  "fitted": [],
+  "runs": [
+    "Hy/Hy4/机械结构重建/run-96ba6a01413a49808db88f81f750adeb"
+  ]
+}

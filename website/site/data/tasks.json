@@ -165,10 +165,10 @@
   },
   {
     "key": "drawing",
-    "name": "识图建模",
-    "en": "Drawing Interpretation & Modeling",
-    "short": "识图建模",
-    "short_en": "Drawing",
+    "name": "几何建模",
+    "en": "Geometric Modeling",
+    "short": "几何建模",
+    "short_en": "Geometry",
     "icon": "drawing",
     "weight": 10,
     "kind": "standard",
@@ -180,10 +180,10 @@
         "path": "drawing/drawing",
         "no": 7,
         "category": "drawing",
-        "name": "工程图纸三维还原",
-        "name_en": "Reading Engineering Drawings into 3D Models",
-        "short": "图纸三维还原",
-        "short_en": "Drawing to 3D",
+        "name": "机械结构重建",
+        "name_en": "Mechanical Structure Reconstruction",
+        "short": "结构重建",
+        "short_en": "Structure Reconstruction",
         "weight": 10,
         "minutes": 60,
         "kind": "standard",
@@ -191,7 +191,7 @@
         "brief_en": "Read the engineering drawings of 25 mechanical parts and assemblies (446 sheets), work out their shapes by hand, and write each part as a JSON model description, with every part's position and orientation for the assemblies.",
         "deliverable": "答案\\第01题.json–第25题.json：每题一份建模描述",
         "deliverable_en": "答案\\第01题.json–第25题.json, one model description per problem",
-        "statement": "识图建模/工程图纸三维还原.md"
+        "statement": "几何建模/机械结构重建.md"
       }
     ]
   },

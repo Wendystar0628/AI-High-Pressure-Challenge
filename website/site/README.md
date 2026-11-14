@@ -133,7 +133,7 @@ boot(async ({ route, data, t, lang }) => {
 ```
 
 - 权重是百分数（类别 15、题 7.5）；分数 0–100 一位小数，没出分是 `null`。
-- 测试开销在 `score(id).cost`：`{ cny, basis, plan, tokens, fitted, method, api_usd }`（格式见 `orchestrator/docs/测试开销.md` 第五节），页面经 `ui/cost.js` 读写。
+- 测试开销在 `score(id).cost`：`{ cny, basis, plan, tokens, method, api_usd }`，页面经 `ui/cost.js` 读写。
 - `loadSearch()` → search.json 的 `items`。`fetchJSON(name)` 取任一数据文件（带缓存），子文件夹照写，如题目页的 `fetchJSON('stems/reason/formal-proof')`。`bundle()` → `{ updated, models, tasks, scores, order, cost_source? }`（下载 JSON 用）。
 
 ### 名次 `core/rank.js`
@@ -279,11 +279,11 @@ list.rows;  // Map<id, li>
 - `createRowHead({ …, hidden: true })`：默认整行对读屏隐藏；`hidden: false` 时标签可读，只隐藏装饰格（勾选位、图标位、没有链接的图区）。表头的名次、分数和其他表头字同一字号。
 - `barPlot`：共用的横向分数柱（`charts/bar.js`），固定 0–100，柱尾荧光绿四角星（HTML 叠加层）。自己画图区时同样只往 `cell` 里画。
 - `listToSVG(ol, { head })` → Promise `{ svg, width, height }`：表头和每个可见的模型行，连同行里的子行（`.mrow-sub`），拼成一张 SVG（`charts/export.js` 的 `rowsToSVG`），给 `exportButton({ build })`。
-- 测试开销列（`cost: true`）：行多两格 `.mrow-cost`（金额加依据记号）、`.mrow-tok`（Token 加 `*`），类 `has-cost`，列宽 `--mrow-cost-w`、`--mrow-tok-w`，各一行、竖直居中；读屏句末尾接一句开销。记号的图例由页面写一次（`costLegend`）。
+- 测试开销列（`cost: true`）：行多两格 `.mrow-cost`（金额加依据记号）、`.mrow-tok`（Token 合计），类 `has-cost`，列宽 `--mrow-cost-w`、`--mrow-tok-w`，各一行、竖直居中；读屏句末尾接一句开销。记号的图例由页面写一次（`costLegend`）。
 
 ### 测试开销 `ui/cost.js`
 
-`hasCosts(data)`（数据里有没有开销）、`costOf(data, id)`、`costKey(cost)`（`subscription` | `api` | `none`）、`costTag(cost)`（按订阅折算 / 按 API 标价折算 / 数据暂缺）、`fmtCNY(v)`（`¥45.1`）、`fmtUSD(v)`、`fmtTokens(n)`（`17.1 亿 Token` / `1.71B tokens`）、`fmtTokenValue(n)`（只要数字）、`isEstimated(cost)`（`fitted` 非空）、`planText(plan)`、`fillCost(cell, cost)` / `fillTokens(cell, cost)`（行里的两格：金额加依据记号、Token 加 `*`）、`costMark(key)` / `estMark()`（○ 按订阅折算、◆ 按 API 标价折算、* 含估算）、`costLegend(data, tag)`（记号图例，只写一次）、`costTip(data, id)`（浮签内容）、`costFacts` / `costNotes`（侧面板的字段和说明：套餐、Token、`method` 的来历、拟合的题）、`costSr(cost)`（读屏）、`costSourceNote(data, tag)`（页脚的说明三行：换算依据；完整写出的额度来源网址 `cost_source.url`，新窗口链接；复测说明和 GitHub 仓库链接）。文案在 `common.cost`。
+`hasCosts(data)`（数据里有没有开销）、`costOf(data, id)`、`costKey(cost)`（`subscription` | `api` | `none`）、`costTag(cost)`（按订阅折算 / 按 API 标价折算 / 暂无数据）、`fmtCNY(v)`（`¥45.1`）、`fmtUSD(v)`、`fmtTokens(n)`（`17.1 亿 Token` / `1.71B tokens`）、`fmtTokenValue(n)`（只要数字）、`planText(plan)`、`fillCost(cell, cost)` / `fillTokens(cell, cost)`（行里的两格：金额加依据记号、Token 合计）、`costMark(key)`（○ 按订阅折算、◆ 按 API 标价折算）、`costLegend(data, tag)`（记号图例，只写一次）、`costTip(data, id)`（浮签内容）、`costFacts` / `costNotes`（侧面板的字段和说明：套餐、Token、折算依据）、`costSr(cost)`（读屏）、`costSourceNote(data, tag)`（页脚的说明三行：换算依据；完整写出的额度来源网址 `cost_source.url`，新窗口链接；复测说明和 GitHub 仓库链接）。文案在 `common.cost`。
 
 ### 工具条 `ui/toolbar.js`
 

@@ -1,4 +1,4 @@
-// FIG 数学推理：两种判法 / 性能优化：计分曲线 / 算法对抗：480 局与实力值换算 / 空间推理：步数计分 / 识图建模：吻合度计分.
+// FIG 数学推理：两种判法 / 性能优化：计分曲线 / 算法对抗：480 局与实力值换算 / 空间推理：步数计分 / 几何建模：吻合度计分.
 // Standard tasks are lime with an ink edge; "passed / scored" is solid ink,
 // "0" an empty box, "forbidden" hatch; references (baseline, B, reference
 // value) are cyan.

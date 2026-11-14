@@ -26,7 +26,7 @@
   | `--cat-algo` 性能优化 | 绿 300 | `--cat-game` 游戏设计与开发 | 紫 400 |
   | `--cat-battle` 算法对抗 | 绿 700 | `--cat-physics` 物理模拟 | 紫 600 |
   | `--cat-spatial` 空间推理 | 绿 500 | `--cat-visual` 视觉设计与渲染 | 紫 300 |
-  | `--cat-drawing` 识图建模 | 绿 800 | `--cat-system` 系统架构与实现 | 紫 500 |
+  | `--cat-drawing` 几何建模 | 绿 800 | `--cat-system` 系统架构与实现 | 紫 500 |
 
   段间留纸色缝。不分类别时标准评判题用 `--lime` 加 `.edge`，主动设计题用 `--violet`。
 - **两类同图加形状**：标题或图例前，标准评判题放方块 `<i class="k std"></i>`，主动设计题放四角星 `<span class="star k des"></span>`。

@@ -1,0 +1,229 @@
+// ============================================================================
+// NestedOS 三维环境特效协作进程 (/Apps/player_fx.nos)
+// 职责：根据动画时刻与机体状态计算三维下洗气流尘土、草叶压倒场、故障火花浓烟、撞击火球与余波烟尘。
+// 说明：采用基于时刻的确定性粒子场算法，任意跳转或逐帧呈现的首次画面即与连续播放至该时刻完全一致。
+// ============================================================================
+
+let TIMELINE_PID = 0;
+let WIN_ID = "";
+let LAST_CRAFT = null;
+
+fn hash01(seed) {
+  let v = sin(seed * 127.1 + 311.7) * 43758.5453;
+  return v - floor(v);
+}
+
+fn compute_fx_at(t, cs) {
+  if (cs == null) {
+    return {
+      frameTime: t,
+      downwash: null,
+      grassBend: null,
+      smokePuffs: [],
+      fireBalls: [],
+      sparks: []
+    };
+  }
+
+  let agl = max(0.0, num(cs.agl));
+  let rpmFactor = clamp(num(cs.rpm) / 440.0, 0.0, 1.15);
+  let washStrength = (!cs.crashed && agl < 13.5) ? (rpmFactor * clamp(1.0 - agl / 13.5, 0.0, 1.0)) : 0.0;
+
+  let downwash = null;
+  let grassBend = null;
+  if (washStrength > 0.04) {
+    let ringRadius = 1.9 + agl * 0.36;
+    let dustPuffs = [];
+    let count = 14;
+    let i = 0;
+    while (i < count) {
+      let cycle = (t * 1.65 + i / count);
+      let phase = cycle - floor(cycle);
+      let ang = (i / count) * 6.28318 + t * 1.9 + phase * 1.1;
+      let rad = ringRadius * (0.35 + phase * 0.95);
+      push(dustPuffs, {
+        pos: [
+          cs.pos[0] + cos(ang) * rad + cs.wind[0] * phase * 0.35,
+          cs.groundY + 0.16 + phase * phase * 1.25 * washStrength,
+          cs.pos[2] + sin(ang) * rad + cs.wind[2] * phase * 0.35
+        ],
+        radius: (0.38 + phase * 0.92) * (0.5 + washStrength * 0.7),
+        alpha: (1.0 - phase) * 0.55 * washStrength
+      });
+      i += 1;
+    }
+    downwash = {
+      center: [cs.pos[0], cs.groundY + 0.05, cs.pos[2]],
+      radius: ringRadius,
+      strength: washStrength,
+      puffs: dustPuffs
+    };
+    grassBend = {
+      center: [cs.pos[0], cs.groundY, cs.pos[2]],
+      radius: ringRadius * 1.35,
+      strength: washStrength
+    };
+  }
+
+  // 故障征兆火花与黑烟尾迹 + 撞击高潮火球浓烟与余波沉降
+  let smokePuffs = [];
+  let fireBalls = [];
+  let sparks = [];
+
+  if (cs.faultStage >= 1 && !cs.crashed) {
+    // 机尾与发动机舱冒出随风飘散的三维浓烟团
+    let puffCount = cs.faultStage >= 2 ? 18 : 10;
+    let stepT = 0.09;
+    let baseSlot = floor(t / stepT);
+    let k = 0;
+    while (k < puffCount) {
+      let slot = baseSlot - k;
+      if (slot >= 0) {
+        let birthT = slot * stepT;
+        let age = max(0.0, t - birthT);
+        let h1 = hash01(slot * 1.7 + 3.0) - 0.5;
+        let h2 = hash01(slot * 2.3 + 9.0) - 0.5;
+        // 根据当前速度反向推算历史尾迹空间位置，形成真实三维螺旋烟带
+        let px = cs.pos[0] - cs.vel[0] * age * 0.72 + cs.wind[0] * age * 0.5 + h1 * (0.4 + age * 1.2);
+        let py = cs.pos[1] + 0.55 - cs.vel[1] * age * 0.55 + age * 1.85;
+        let pz = cs.pos[2] - cs.vel[2] * age * 0.72 + cs.wind[2] * age * 0.5 + h2 * (0.4 + age * 1.2);
+        push(smokePuffs, {
+          pos: [px, py, pz],
+          radius: 0.35 + age * (cs.faultStage >= 2 ? 1.35 : 0.85),
+          alpha: clamp((1.0 - age / 1.8) * (cs.faultStage >= 2 ? 0.72 : 0.48), 0.04, 0.78),
+          darkness: cs.faultStage >= 2 ? 0.16 : 0.32
+        });
+      }
+      k += 1;
+    }
+
+    // 故障征兆与失控期间的电火花
+    let spkCount = cs.faultStage == 1 ? 6 : 9;
+    let s = 0;
+    while (s < spkCount) {
+      let ph = (t * 9.0 + s * 0.37);
+      let frac = ph - floor(ph);
+      let a1 = hash01(floor(ph) + s * 13.0) * 6.28318;
+      push(sparks, {
+        pos: [
+          cs.pos[0] + cos(a1) * (0.3 + frac * 1.5),
+          cs.pos[1] + 0.4 + (0.4 - frac * frac * 1.6),
+          cs.pos[2] + sin(a1) * (0.3 + frac * 1.5)
+        ],
+        size: 0.12 * (1.0 - frac * 0.6)
+      });
+      s += 1;
+    }
+  }
+
+  if (cs.crashed && cs.impactTime >= 0) {
+    let sinceHit = max(0.0, t - cs.impactTime);
+    let ip = cs.impactPos != null ? cs.impactPos : cs.pos;
+    let inten = max(0.7, num(cs.impactIntensity));
+
+    // 1. 撞击瞬间高潮爆炸火球（0 ~ 2.4 秒剧烈绽放，之后转为低矮余火直至平息）
+    if (sinceHit < 3.6) {
+      let burstFade = clamp(1.0 - sinceHit / 2.6, 0.0, 1.0);
+      let fi = 0;
+      while (fi < 7) {
+        let ang = fi * 0.92 + sinceHit * 0.8;
+        let spread = (0.35 + sinceHit * 1.6) * (0.4 + (fi % 3) * 0.35) * burstFade;
+        push(fireBalls, {
+          pos: [
+            ip[0] + cos(ang) * spread,
+            ip[1] + 0.55 + sinceHit * (1.4 - sinceHit * 0.22) * (0.5 + (fi % 2) * 0.4),
+            ip[2] + sin(ang) * spread
+          ],
+          radius: (0.75 + sinceHit * 1.35) * inten * max(0.25, burstFade),
+          heat: clamp(1.0 - sinceHit / 2.2, 0.15, 1.0),
+          alpha: clamp(burstFade * 0.92, 0.0, 0.95)
+        });
+        fi += 1;
+      }
+    }
+
+    // 2. 撞击冲击波尘土环（随余波逐渐沉降落定，到 3.2 秒完全落定停稳！）
+    if (sinceHit < 3.4) {
+      let settle = clamp(1.0 - sinceHit / 3.2, 0.0, 1.0);
+      let ringR = 1.4 + (1.0 - settle * settle) * 8.5 * inten;
+      let di = 0;
+      while (di < 16) {
+        let ang = (di / 16.0) * 6.28318 + 0.2;
+        push(smokePuffs, {
+          pos: [
+            ip[0] + cos(ang) * ringR,
+            sample_dust_y(cs.groundY, sinceHit, settle),
+            ip[2] + sin(ang) * ringR
+          ],
+          radius: (0.85 + (1.0 - settle) * 1.45),
+          alpha: settle * 0.58,
+          darkness: 0.58
+        });
+        di += 1;
+      }
+    }
+
+    // 3. 残骸上方徐徐升起并在末段平稳消散的黑烟柱
+    let plumeFade = clamp(1.0 - max(0.0, sinceHit - 2.6) / 1.6, 0.08, 1.0);
+    let pk = 0;
+    while (pk < 12) {
+      let slotAge = min(sinceHit, pk * 0.26 + (sinceHit - floor(sinceHit / 0.26) * 0.26));
+      if (slotAge >= 0 && slotAge <= sinceHit + 0.01) {
+        let drift = slotAge * 0.65;
+        push(smokePuffs, {
+          pos: [
+            cs.pos[0] + cs.wind[0] * slotAge * 0.35 + sin(pk * 2.1) * drift * 0.45,
+            cs.pos[1] + 0.5 + slotAge * 2.05,
+            cs.pos[2] + cs.wind[2] * slotAge * 0.35 + cos(pk * 1.7) * drift * 0.45
+          ],
+          radius: 0.55 + slotAge * 0.88,
+          alpha: clamp((1.0 - slotAge / 3.5) * 0.62 * plumeFade, 0.03, 0.68),
+          darkness: 0.14
+        });
+      }
+      pk += 1;
+    }
+  }
+
+  return {
+    frameTime: t,
+    downwash: downwash,
+    grassBend: grassBend,
+    smokePuffs: smokePuffs,
+    fireBalls: fireBalls,
+    sparks: sparks
+  };
+}
+
+fn sample_dust_y(groundY, sinceHit, settle) {
+  let arc = sin(clamp(sinceHit / 3.2, 0.0, 1.0) * 3.14159) * 1.35;
+  return groundY + 0.22 + arc * settle;
+}
+
+fn main(timelinePid, winId) {
+  TIMELINE_PID = num(timelinePid);
+  WIN_ID = str(winId);
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 1.0);
+    if (msg != null && msg.data != null) {
+      let latest = msg.data;
+      while (true) {
+        let m2 = syscall("recv_msg");
+        if (m2 == null) { break; }
+        if (m2.data != null) { latest = m2.data; }
+      }
+
+      if (latest.craftSummary != null) {
+        LAST_CRAFT = latest.craftSummary;
+      }
+      let t = latest.time != null ? num(latest.time) : 0.0;
+      let fx = compute_fx_at(t, LAST_CRAFT);
+      syscall("send_msg", TIMELINE_PID, {
+        type: "fx_frame",
+        epoch: latest.epoch,
+        fx: fx
+      });
+    }
+  }
+}

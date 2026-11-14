@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek/V4.1Flash",
+  "task": "光线追踪渲染加速",
+  "tokens": 40363259,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.92,
+  "api_usd": 0.29,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "DeepSeek API"
+  },
+  "fitted": [],
+  "runs": [
+    "DeepSeek/V4.1Flash/光线追踪渲染加速/run-fe3fdaacd84c43a1b5212f804636b439"
+  ]
+}

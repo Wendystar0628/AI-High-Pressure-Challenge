@@ -1,6 +1,6 @@
 // What one score cell says beyond its number (the matrix and the per-task
 // blocks): why a task has no score yet, each grader's score of a design task,
-// the graders' anomaly notes, and the weight. Data: scores.<id>.task_info
+// anomaly notes, and the weight. Data: scores.<id>.task_info
 // (website/tools/export_data.py task_info), absent when there is nothing to add.
 //
 //   cellState(data, id, col)      null (scored) | 'testing' | 'missing' | 'failed' | 'unscored'
@@ -69,7 +69,7 @@ export function cellTip(data, id, col) {
   if (col.type === 'task') {
     const it = info(data, id, col.key);
     if (it.graders?.length) lines.push(h('span', t('common.cell.graders', { list: it.graders.map((g) => `${g.name} ${fmtScore(g.score)}`).join(' │ ') })));
-    for (const a of it.anomaly ?? []) lines.push(h('span.site-tip-note', t('common.cell.anomaly', { grader: a.grader, text: a.text })));
+    for (const a of it.anomaly ?? []) lines.push(h('span.site-tip-note', t('common.cell.anomaly', { text: a.text })));
   }
   return h('span.site-tip-lines', lines);
 }

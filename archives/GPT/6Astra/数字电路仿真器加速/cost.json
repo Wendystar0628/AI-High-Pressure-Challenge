@@ -1,0 +1,21 @@
+{
+  "model": "GPT/6Astra",
+  "task": "数字电路仿真器加速",
+  "tokens": 8132850,
+  "minutes": 59.5,
+  "time": "实际停止",
+  "cny": 2.87,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "OpenAI Pro 200",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "GPT/6Astra/数字电路仿真器加速/run-def0258f74814d8eaf6845ce577cf6b5"
+  ]
+}

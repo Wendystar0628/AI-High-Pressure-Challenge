@@ -170,6 +170,24 @@
     "tested": "2026-11-13"
   },
   {
+    "id": "kimi-k3-1-pro",
+    "key": "Kimi/K3.1Pro",
+    "name": "Kimi K3.1 Pro",
+    "short": "K3.1Pro",
+    "aliases": [
+      "K3.1 Pro",
+      "Kimi 3.1 Pro",
+      "Kimi K3.1",
+      "月之暗面",
+      "Moonshot"
+    ],
+    "vendor": "Moonshot AI",
+    "logo": "kimi",
+    "agent": "Kimi Code",
+    "effort": "max",
+    "tested": "2026-11-14"
+  },
+  {
     "id": "gemini-4-carbon",
     "key": "Gemini/4Carbon",
     "name": "Gemini 4 Carbon",
@@ -185,7 +203,7 @@
     "logo": "gemini",
     "agent": "Antigravity CLI",
     "effort": "high",
-    "tested": null
+    "tested": "2026-11-13"
   },
   {
     "id": "gemini-4-hydrogen",
@@ -203,6 +221,6 @@
     "logo": "gemini",
     "agent": "Antigravity CLI",
     "effort": "xhigh",
-    "tested": null
+    "tested": "2026-11-13"
   }
 ]

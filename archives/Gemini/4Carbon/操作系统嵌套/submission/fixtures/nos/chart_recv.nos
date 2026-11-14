@@ -1,0 +1,96 @@
+// ============================================================================
+// NestedOS 实时数据接收协作进程 (/Apps/chart_recv.nos)
+// 职责：管理与根系统电子表格的数据订阅通道，按单调递增版本号接收快照副本，并通过 IPC 消息转发给图表主进程。
+// ============================================================================
+
+let CHART_PID = 0;
+let WIN_ID = "";
+let SUB_ID = null;
+let LAST_VERSION = 0;
+
+fn main(chartPid, winId) {
+  CHART_PID = num(chartPid);
+  WIN_ID = str(winId);
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 0.25);
+    if (msg != null && msg.data != null) {
+      let d = msg.data;
+      if (d.type == "connect") {
+        if (SUB_ID != null) {
+          syscall("chart_service", "unsubscribe", { subId: SUB_ID });
+        }
+        LAST_VERSION = 0;
+        let res = syscall("chart_service", "subscribe", {
+          winId: WIN_ID,
+          docId: d.docId,
+          range: d.range
+        });
+        if (res != null && res.ok) {
+          SUB_ID = res.subId;
+          if (res.snapshot != null) {
+            LAST_VERSION = res.snapshot.version;
+            syscall("send_msg", CHART_PID, {
+              type: "data_version",
+              subId: SUB_ID,
+              snapshot: res.snapshot
+            });
+          }
+        } else {
+          let err = res != null && res.error != null ? res.error : "无法建立数据连接";
+          syscall("send_msg", CHART_PID, { type: "conn_error", error: err });
+        }
+      } else if (d.type == "disconnect") {
+        if (SUB_ID != null) {
+          syscall("chart_service", "unsubscribe", { subId: SUB_ID });
+          SUB_ID = null;
+        }
+        syscall("send_msg", CHART_PID, { type: "disconnected" });
+      } else if (d.type == "chart_raw_push" && d.payload != null) {
+        let p = d.payload;
+        if (SUB_ID != null && p.subId == SUB_ID) {
+          if (p.closed) {
+            SUB_ID = null;
+            syscall("send_msg", CHART_PID, { type: "source_closed", title: p.title });
+          } else if (p.version > LAST_VERSION) {
+            LAST_VERSION = p.version;
+            syscall("send_msg", CHART_PID, {
+              type: "data_version",
+              subId: SUB_ID,
+              snapshot: p
+            });
+          }
+        }
+      }
+    }
+
+    // 轮询拉取（用于从子树暂停积压队列恢复后的按序排空）
+    if (SUB_ID != null) {
+      let polled = syscall("chart_service", "poll", { subId: SUB_ID, afterVersion: LAST_VERSION });
+      if (polled != null && polled.updates != null && len(polled.updates) > 0) {
+        let i = 0;
+        while (i < len(polled.updates)) {
+          let u = polled.updates[i];
+          if (u.closed) {
+            SUB_ID = null;
+            syscall("send_msg", CHART_PID, { type: "source_closed", title: u.title });
+            break;
+          }
+          if (u.version > LAST_VERSION) {
+            LAST_VERSION = u.version;
+            syscall("send_msg", CHART_PID, {
+              type: "data_version",
+              subId: SUB_ID,
+              snapshot: u
+            });
+          }
+          i += 1;
+        }
+      } else if (polled != null && polled.restoredDisconnected) {
+        // 快照恢复或分叉后，外部实时源需用户重新连接
+        SUB_ID = null;
+        syscall("send_msg", CHART_PID, { type: "restored_pending" });
+      }
+    }
+  }
+}

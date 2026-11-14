@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>网络安全攻防战 · 动态路由塔防</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- 实时三维网络空间画布 -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- 三维世界坐标投影层：塔/敌人生命护盾条、加密/伪装/改道标记与伤害跳字 -->
+  <div id="world-hud-layer" class="world-hud-layer"></div>
+
+  <!-- 鼠标跟随的部署/封路预览提示框 -->
+  <div id="cursor-preview-tip" class="cursor-tip hidden"></div>
+
+  <!-- ==================================================================== -->
+  <!-- 主界面：守护进程网络管理操作系统（关卡选择 + 实战演示 + 图鉴入口） -->
+  <!-- ==================================================================== -->
+  <section id="menu-screen" class="menu-screen">
+    <header class="os-menu-topbar">
+      <div class="os-brand">
+        <div class="os-logo-mark">◈</div>
+        <div>
+          <div class="os-sys-tag">TIDAL-GUARD DAEMON OS // 自治域「汐域」防御终端</div>
+          <h1 class="os-main-title">网络安全攻防战 <span class="sub-hl">动态路由塔防</span></h1>
+        </div>
+      </div>
+
+      <div class="os-menu-actions">
+        <button class="os-btn secondary js-open-codex">📘 设备手册</button>
+        <button class="os-btn secondary" id="btn-open-threats">📕 威胁档案</button>
+        <div class="audio-ctrl-group">
+          <button class="os-btn ghost js-mute-btn">🔊 音效</button>
+          <input type="range" min="0" max="100" value="65" class="vol-slider js-vol-slider" title="主音量调节" />
+        </div>
+      </div>
+    </header>
+
+    <div class="menu-scroll-body">
+      <div class="worldview-brief">
+        <span class="brief-badge">系统告警 // ALERT</span>
+        <span>攻击组织<strong>「蛰影」</strong>正混入正常业务流量渗透自治域<strong>「汐域」</strong>。您作为守护进程，须在维持各入口至<strong>「中枢」</strong>业务连通的前提下，灵活隔离交换节点动态改道，协同六类守护设备清除入侵载荷。</span>
+      </div>
+
+      <div class="menu-section-head">
+        <h2>拓扑防区接入（关卡选择）</h2>
+        <span class="sec-hint">三张立体网络地图均可直接进入 · 中键拖动环绕 / Shift+中键平移 / 滚轮缩放</span>
+      </div>
+      <div id="menu-map-grid" class="menu-map-grid"></div>
+
+      <div class="menu-section-head demo-sec-head">
+        <div>
+          <h2>战术实战演示（实时引擎推演）</h2>
+          <span class="sec-hint">基于真实游戏逻辑实时演出动态改道、旁路直通与首领阶段对抗（随时可退出）</span>
+        </div>
+        <button class="os-btn accent" id="btn-play-all-demos">▶ 依次连播三段演示</button>
+      </div>
+      <div id="menu-demo-grid" class="menu-demo-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- 战斗主界面 HUD：守护进程实时控制台 -->
+  <!-- ==================================================================== -->
+  <section id="battle-hud" class="battle-hud hidden">
+    <!-- 顶部常驻状态栏 -->
+    <header class="hud-topbar">
+      <div class="hud-sector-box">
+        <span class="sys-dot"></span>
+        <strong id="val-map-title">汐域 // 分段内网</strong>
+      </div>
+
+      <div class="hud-metrics">
+        <div class="metric-pill integrity" title="敌人进入中枢出口时下降，归零则防御失败">
+          <span class="m-label">中枢完整度</span>
+          <strong id="val-integrity">20 / 20</strong>
+        </div>
+        <div class="metric-pill compute" title="随业务进程增长、消灭敌人回收，用于部署/升级塔与备份还原">
+          <span class="m-label">⚡ 算力</span>
+          <strong id="val-compute">260</strong>
+        </div>
+        <div class="metric-pill intel" title="通过波次、消灭重点威胁与交战守住隔离节点获得，用于隔离节点、升级分支与情报道具">
+          <span class="m-label">◈ 情报</span>
+          <strong id="val-intel">32</strong>
+        </div>
+        <div class="metric-pill wave">
+          <strong id="val-wave">波次 1/14</strong>
+          <button id="btn-next-wave" class="mini-wave-btn hidden">立即迎击</button>
+        </div>
+      </div>
+
+      <div class="hud-controls">
+        <div class="speed-group">
+          <button class="spd-btn" data-speed="0" title="暂停 / 继续 (Space)">⏸ 暂停</button>
+          <button class="spd-btn active" data-speed="1" title="1倍正常速度">1×</button>
+          <button class="spd-btn" data-speed="2" title="2倍加速">2×</button>
+          <button class="spd-btn" data-speed="3" title="3倍加速">3×</button>
+        </div>
+        <button class="os-btn ghost compact-btn" id="btn-reset-cam" title="回到完整俯瞰默认视角 (R)">复位视角</button>
+        <button class="os-btn ghost compact-btn js-open-codex">图鉴说明</button>
+        <div class="audio-ctrl-group compact">
+          <button class="os-btn ghost compact-btn js-mute-btn">🔊</button>
+          <input type="range" min="0" max="100" value="65" class="vol-slider small js-vol-slider" title="音量" />
+        </div>
+        <button class="os-btn secondary compact-btn" id="btn-open-menu">菜单</button>
+      </div>
+    </header>
+
+    <!-- 顶部中央堆叠区：首领血条 + 关键事件横幅（自动避让实战演示顶栏，绝不重叠） -->
+    <div id="hud-top-center-stack" class="hud-top-center-stack">
+      <div id="boss-top-bar" class="boss-top-bar hidden">
+        <div class="boss-bar-header">
+          <span id="boss-bar-name">首领</span>
+          <span id="boss-bar-hp">4600 / 4600</span>
+        </div>
+        <div class="boss-bar-track">
+          <div id="boss-bar-fill" class="boss-bar-fill"></div>
+        </div>
+      </div>
+      <div id="center-alert-banner" class="center-banner hidden"></div>
+    </div>
+
+    <div id="orient-confirm-bar" class="orient-confirm-bar hidden">
+      <span>正在设定「拦截器」攻击朝向：移动鼠标瞄准，<strong>左键点击确认部署</strong></span>
+      <button class="os-btn danger-outline compact-btn" id="btn-cancel-orient">取消部署 (不扣费)</button>
+    </div>
+
+    <!-- 左侧：按入口分组的「流量预报」、实时系统告警日志与新威胁首次登场提示卡 -->
+    <aside class="hud-left-col">
+      <div class="os-panel forecast-panel">
+        <div class="panel-head">
+          <span>流量预报 // TRAFFIC FORECAST</span>
+          <small>点击威胁查档案</small>
+        </div>
+        <div id="forecast-body" class="forecast-body"></div>
+      </div>
+
+      <div class="os-panel syslog-panel">
+        <div class="panel-head">
+          <span>守护日志 // DAEMON LOG</span>
+          <small>中键环绕 · Shift+中键平移 · 滚轮缩放</small>
+        </div>
+        <div id="sys-log-list" class="sys-log-list"></div>
+      </div>
+
+      <div id="threat-toast" class="os-panel threat-toast hidden" title="点击打开威胁档案"></div>
+    </aside>
+
+    <!-- 右侧：选中设备 / 敌方威胁 / 交换节点详情与控制面板 -->
+    <aside id="inspector-panel" class="os-panel inspector-panel hidden">
+      <div class="panel-head">
+        <span>目标检视 // INSPECTOR</span>
+        <button class="close-x" id="btn-close-inspector">✕</button>
+      </div>
+      <div id="inspector-body" class="inspector-body"></div>
+    </aside>
+
+    <!-- 底部：待部署防御塔栏 + 战术道具栏 -->
+    <footer class="hud-bottom-dock">
+      <div class="dock-section towers-sec">
+        <div class="dock-sec-title">守护设备部署栏 <span>（按住卡片拖至战场部署，或单击卡片再点地图）</span></div>
+        <div id="tower-dock-cards" class="dock-cards-row"></div>
+      </div>
+
+      <div class="dock-section items-sec">
+        <div class="dock-sec-title">应急调度道具 <span>（悬停预览范围与新路线）</span></div>
+        <div id="item-dock-cards" class="dock-cards-row"></div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- 实战演示叠加层：演示进度、退出按钮、关键步骤字幕与可见虚拟鼠标光标 -->
+  <!-- ==================================================================== -->
+  <div id="demo-overlay" class="demo-overlay hidden">
+    <div class="demo-top-strip">
+      <div class="demo-info-pill">
+        <span class="live-dot"></span>
+        <strong id="demo-badge-title">实战演示</strong>
+        <div class="demo-prog-bar"><div id="demo-progress-fill" class="demo-prog-fill"></div></div>
+      </div>
+      <button class="os-btn danger-outline" id="btn-exit-demo">✕ 退出演示 [Esc]</button>
+    </div>
+
+    <div id="demo-subtitle-box" class="demo-subtitle-box"></div>
+
+    <!-- 演示虚拟光标（清晰箭头 + 按下波纹 + 操作标签） -->
+    <div id="demo-virtual-cursor" class="demo-virtual-cursor">
+      <svg viewBox="0 0 28 28" class="cursor-svg">
+        <polygon points="3,2 3,23 9,18 14,26 18,24 13,16 21,16" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
+      </svg>
+      <div class="cursor-ripple"></div>
+      <div id="demo-cursor-tag" class="demo-cursor-tag hidden"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- 图鉴弹窗：「设备手册」与「威胁档案」 -->
+  <!-- ==================================================================== -->
+  <div id="codex-modal" class="os-modal-backdrop hidden">
+    <div class="os-modal codex-dialog">
+      <div class="modal-header">
+        <div class="codex-tabs">
+          <button class="codex-tab active" data-codex-tab="devices">📘 设备手册（塔 / 道具 / 地形 / 状态）</button>
+          <button class="codex-tab" data-codex-tab="threats">📕 威胁档案（恶意程序 / 首领）</button>
+        </div>
+        <button class="os-btn secondary compact-btn" id="btn-close-codex">关闭 [Esc]</button>
+      </div>
+      <div id="codex-pane-devices" class="modal-scroll-body"></div>
+      <div id="codex-pane-threats" class="modal-scroll-body hidden"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- 局中系统菜单弹窗 -->
+  <!-- ==================================================================== -->
+  <div id="pause-modal" class="os-modal-backdrop hidden">
+    <div class="os-modal small-dialog">
+      <div class="modal-header">
+        <h3>守护进程控制台 // SYSTEM MENU</h3>
+      </div>
+      <div class="pause-menu-btns">
+        <button class="os-btn primary full-btn" id="btn-resume-battle">▶ 继续当前战斗</button>
+        <button class="os-btn secondary full-btn js-open-codex">📘 查阅设备手册与威胁档案</button>
+        <button class="os-btn accent full-btn js-restart-map">↻ 重新开始本图（初始局面）</button>
+        <button class="os-btn danger-outline full-btn js-back-select">⮌ 返回关卡选择</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- 胜负结算：「事件报告」(Incident Report) -->
+  <!-- ==================================================================== -->
+  <div id="report-modal" class="os-modal-backdrop hidden">
+    <div class="os-modal report-dialog">
+      <div class="report-top-tag">SECURITY INCIDENT REPORT // 汐域安全审计事件报告</div>
+      <h2 id="report-stamp" class="report-stamp win">事件结案 // 威胁全面肃清</h2>
+      <p id="report-summary-text" class="report-summary"></p>
+      <div id="report-stats-grid" class="report-stats-grid"></div>
+      <div class="report-actions">
+        <button class="os-btn accent js-restart-map">↻ 重开本图</button>
+        <button class="os-btn primary js-back-select">⮌ 返回关卡选择</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./dist/bundle.js"></script>
+</body>
+</html>

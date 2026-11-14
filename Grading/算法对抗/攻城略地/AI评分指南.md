@@ -3,6 +3,7 @@
 - 一律评作答结束时工作目录中的内容，不看git提交。
 - 依据：题面第五、六、七、八、十一节。公开材料在 `算法对抗/攻城略地/`，作答时整个文件夹复制成 `数据/`。除了engine.hpp、main.cpp、mapgen.py、arena.py、sample_bot.cpp，还需referee_core.py、winproc.py、engine_bridge.cpp及两个陪练exe。
 - 评分材料在本目录：五档源码opponents/、96个隐藏种子的seeds.json、正式实力值baselines.json、evaluate.py、judge_core.py、cycles.json。满分100，本题在性能评分队列中整题串行测量。
+- 只有一个分项“总分”，满分100分。
 
 ## 测量与计分
 

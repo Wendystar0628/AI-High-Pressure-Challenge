@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Carbon",
+  "task": "太阳雨渔港3D渲染",
+  "tokens": 34688309,
+  "minutes": 100.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 4.89,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Carbon/太阳雨渔港3D渲染/run-79d7e3b05dfc44d7960f3ae994a626ad"
+  ]
+}

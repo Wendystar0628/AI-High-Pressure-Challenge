@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "launch": {
+    "command": "npm",
+    "args": [
+      "start",
+      "--",
+      "--data-dir",
+      "{dataDir}",
+      "--width",
+      "{width}",
+      "--height",
+      "{height}",
+      "--remote-debugging-port={port}"
+    ],
+    "cwd": "."
+  },
+  "mainWindow": {
+    "title": "Nested OS"
+  },
+  "contextNotes": {
+    "rendererDom": "根系统与全部嵌套子系统桌面、应用窗口及跨层投送窗口均位于主窗口同一渲染上下文 DOM 中，可直接按 data-testid、data-system-id、data-window-id、data-app-id 定位；内置真实浏览器标签内容使用 Electron <webview> 标签承载外部网页。",
+    "benchApi": "主渲染上下文挂载 window.bench (version=1, ready(), reset(), inspect())。"
+  },
+  "fixtures": {
+    "outer": {
+      "workbook": "/Demo/sample.sheet",
+      "chartRange": "A1:D4",
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "manual": "/Documents/操作说明.md",
+      "kernelTemplate": "/System/kernel.nos",
+      "compiler": "/System/compiler.nos",
+      "compilerBinary": "/System/compiler.nbc",
+      "programs": "/Programs",
+      "sumProgram": "/Programs/sum.nos",
+      "senderProgram": "/Programs/sender.nos",
+      "receiverProgram": "/Programs/receiver.nos",
+      "spinProgram": "/Programs/spin.nos"
+    },
+    "inner": {
+      "helicopter": "/Demo/helicopter-24.scene",
+      "minimalScene": "/Demo/minimal.scene",
+      "documents": "/Documents",
+      "kernel": "/System/kernel.nos",
+      "compiler": "/System/compiler.nos",
+      "compilerBinary": "/System/compiler.nbc",
+      "windowManager": "/System/wm.nos",
+      "filesApp": "/Apps/files.nos",
+      "editorApp": "/Apps/editor.nos",
+      "tasksApp": "/Apps/tasks.nos",
+      "playerApp": "/Apps/player_timeline.nos",
+      "playerSceneWorker": "/Apps/player_scene.nos",
+      "playerFxWorker": "/Apps/player_fx.nos",
+      "chartsApp": "/Apps/charts.nos",
+      "chartRecvWorker": "/Apps/chart_recv.nos",
+      "flightController": "/Apps/flight_ctrl.nos",
+      "programs": "/Programs",
+      "childKernelPattern": "/Subsystems/{childSystemId}/kernel.nos"
+    }
+  }
+}

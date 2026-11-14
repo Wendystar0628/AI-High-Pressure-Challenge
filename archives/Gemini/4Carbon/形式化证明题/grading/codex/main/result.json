@@ -1,0 +1,57 @@
+{
+  "task": "形式化证明题",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "第 1 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；追加核验后 problem1 的实际命题与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 2 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；追加核验后 problem2 的实际命题与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 3 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；追加核验后 problem3 的数字系数多项式不可约命题与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 4 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；追加核验后 problem4 的并封闭集合族不等式与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 5 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；追加核验后 problem5 的约数模同余命题与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 6 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "原文件单独编译退出码0，无错误或sorry警告；problem6 的维数上界及等号分类命题与题面一致，仅依赖 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 7 题",
+      "score": 0,
+      "reason": "作答结束时的工作目录中没有第7题证明文件或主定理 problem7。",
+      "max": 12.5
+    },
+    {
+      "name": "第 8 题",
+      "score": 0,
+      "reason": "作答结束时的工作目录中没有第8题证明文件或主定理 problem8。",
+      "max": 12.5
+    }
+  ],
+  "metrics": {},
+  "notes": "评的是作答结束时工作目录的内容，已复制到本评分员工作目录的 submission 子目录；不看 git 提交。原始提交只读，核验指令仅追加至 probes 中的副本。编译输出和退出码保存在 work/logs。"
+}

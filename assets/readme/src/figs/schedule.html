@@ -78,7 +78,7 @@ const TASKS = [
   ['数学竞赛原创试题', 'reason', 0, 60],
   ['攻城略地', 'battle', 0, 60],
   ['鲁班锁拆解', 'spatial', 0, 60],
-  ['工程图纸三维还原', 'drawing', 0, 60],
+  ['机械结构重建', 'drawing', 0, 60],
   ['AE风味动效设计编辑器', 'interact', 0, 60],
   ['动态路由塔防', 'game', 0, 90],
   ['果冻冲击与造浪水槽', 'physics', 0, 60],
@@ -168,7 +168,7 @@ const A = put('stage panel', `left:0;top:${yS + 48}px`,
   `<div class="t"><h3>主体</h3><span class="field">16 个会话同时评</span></div>
    <div class="r"><span class="scope">${shape('game')}设计题</span>
      <span class="who">${judge('Claude Opus 5.5')}${judge('GPT 6.1 Sol')}<span class="then">取平均</span></span></div>
-   <div class="r"><span class="scope">${shape('reason')}形式化、数学竞赛、鲁班锁、图纸建模</span>
+   <div class="r"><span class="scope">${shape('reason')}形式化、数学竞赛、鲁班锁、结构重建</span>
      <span class="who">${judge('GPT 6.1 Sol')}</span></div>`);
 const B = put('stage panel', `left:0;top:${yS + 48 + 116}px`,
   `<div class="t"><h3>性能</h3><span class="field">3 个会话依次评，独占机器</span></div>

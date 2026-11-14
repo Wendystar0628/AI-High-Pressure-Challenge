@@ -1,0 +1,26 @@
+{
+  "model": "Gemini/4Carbon",
+  "task": "机械结构重建",
+  "tokens": 100424,
+  "minutes": 60.0,
+  "time": "关闭时间上界（实际停止未知）、实际停止",
+  "cny": 0.01,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Carbon/机械结构重建/run-54e37d99b98b40d1b90ea5c298f101d0",
+    "Gemini/4Carbon/机械结构重建/run-7e0e86c216f6455da9e1511f21c2a9f0",
+    "Gemini/4Carbon/机械结构重建/run-968d643a4bd841b3b610b1ca5966f759",
+    "Gemini/4Carbon/机械结构重建/run-9bd942b5763a49e39bb89476ef191233",
+    "Gemini/4Carbon/机械结构重建/run-bfd5712e4c3e452d873d67b6e00ced5a"
+  ]
+}

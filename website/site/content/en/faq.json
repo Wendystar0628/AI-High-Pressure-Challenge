@@ -16,11 +16,6 @@
           "a": "Because 6.1~Sol is a **top-tier distillation of Astra**: its abilities and behaviour are almost identical."
         },
         {
-          "id": "terra-60",
-          "q": "How does 6.1~Terra reach 60 points?",
-          "a": "First, Terra stands on the GPT family's intelligence base. Second, Terra measured **close to 100 TPS**, a real speed edge under a time limit. And this challenge is **not a pure front-end test**."
-        },
-        {
           "id": "grader-bias",
           "q": "Does grading with Opus~5.5 and 6.1~Sol make them favour their own family's models?",
           "a": "No. I ran dedicated comparisons **graded blind and with model names shown**: when Opus and GPT grade their own family's models, the gap moves by **under 2~points**, which is normal variation. And from the attention mechanism's point of view alone, a grader spends its time checking code and running tests; it does not pay attention to the model's code name."
@@ -35,7 +30,7 @@
           "id": "cost-method",
           "q": "How are the test cost and token usage calculated?",
           "a": [
-            "By an automatic tally that Sol wrote: it adds up the tokens of **the last attempt** from the logs. Subscriptions are priced from ModelDial's weekly quotas, credits at their tier price, and APIs at what was actually paid.",
+            "Each model shows **the total tokens for this round** across the 13 tasks. Subscriptions are converted from ModelDial's public weekly quotas or plan price ratios, credits at their tier price, and APIs at official list prices.",
             { "source": { "label": "Quota source", "url": "https://modeldial.com/subscriptions?period=week&view=insights" } }
           ]
         },

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>网络安全攻防战 · 汐域守护进程</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- 3D Viewport & Crisp 2D Projected Overlay -->
+    <div id="viewport"></div>
+    <canvas id="hud-overlay"></canvas>
+
+    <!-- Main Menu / Level Select -->
+    <section id="menu-screen" class="screen active">
+      <div class="menu-backdrop"></div>
+      <div class="menu-shell">
+        <header class="menu-header">
+          <div class="brand-badge">
+            <span class="pulse-dot"></span>
+            <span>DAEMON_OS v4.2 // 自治域「汐域」主动路由防御终端</span>
+          </div>
+          <h1 class="game-title">网络安全攻防战</h1>
+          <p class="game-subtitle">
+            攻击组织「蛰影」正在渗透核心网段。调控交换节点改变入侵路由，权衡火力覆盖、协议降级与设备耐久，守护全域中枢。
+          </p>
+        </header>
+
+        <div class="menu-section-label">选择防区接入（关卡选择）</div>
+        <div id="map-cards" class="map-cards-grid"></div>
+
+        <div class="menu-footer-bar">
+          <div class="demo-panel">
+            <div class="demo-panel-title">
+              <span class="tag-pill">实时演算</span>
+              <span>实战演示（60 秒全景演练）</span>
+            </div>
+            <div class="demo-buttons">
+              <button class="btn btn-accent" id="btn-demo-all">▶ 连播三段演练</button>
+              <button class="btn btn-ghost" data-demo="demo-1">I · 分段取舍</button>
+              <button class="btn btn-ghost" data-demo="demo-2">II · 旁路直通</button>
+              <button class="btn btn-ghost" data-demo="demo-3">III · 蛰影现身</button>
+            </div>
+          </div>
+
+          <div class="menu-utility-buttons">
+            <button class="btn btn-secondary" id="btn-menu-compendium">📘 系统档案库（图鉴）</button>
+            <button class="btn btn-secondary" id="btn-menu-audio">🔊 音频与环境设置</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Battle HUD -->
+    <section id="battle-hud" class="hud hidden">
+      <!-- Top Telemetry Bar -->
+      <header class="hud-top">
+        <div class="hud-top-left">
+          <div class="map-pill">
+            <span id="hud-map-tag" class="mono-dim">AS-4108</span>
+            <strong id="hud-map-name">分段内网</strong>
+          </div>
+          <div class="wave-pill">
+            <span id="hud-wave-num" class="mono-bright">波次 0 / 14</span>
+            <span id="hud-wave-title" class="wave-sub">准备阶段</span>
+          </div>
+          <button id="btn-start-wave" class="btn btn-primary btn-wave">▶ 开始波次</button>
+        </div>
+
+        <div class="hud-resources">
+          <div class="res-box res-compute" title="用于部署、升级防御设备与使用备份还原">
+            <span class="res-label">算力</span>
+            <strong id="hud-compute" class="mono-num">250</strong>
+          </div>
+          <div class="res-box res-intel" title="用于节点隔离、升级分支专精与应急情报道具">
+            <span class="res-label">情报</span>
+            <strong id="hud-intel" class="mono-num">30</strong>
+          </div>
+          <div class="res-box res-integrity" title="敌人突破至出口将削减中枢完整度，归零即防线失守">
+            <span class="res-label">中枢完整度</span>
+            <strong id="hud-integrity" class="mono-num">20 / 20</strong>
+          </div>
+        </div>
+
+        <div class="hud-controls">
+          <button id="btn-pause" class="btn btn-icon" title="暂停/继续 (Space)">⏸ 暂停</button>
+          <div class="speed-group">
+            <button class="btn btn-speed active" data-speed="1">1× </button>
+            <button class="btn btn-speed" data-speed="2">2×</button>
+            <button class="btn btn-speed" data-speed="3">3×</button>
+          </div>
+          <button id="btn-reset-cam" class="btn btn-icon" title="重置默认视角 (R)">⌖ 视角</button>
+          <button id="btn-mute" class="btn btn-icon" title="静音开关">🔊</button>
+          <button id="btn-hud-compendium" class="btn btn-icon" title="设备手册与威胁档案">📘 图鉴</button>
+          <button id="btn-hud-menu" class="btn btn-icon" title="菜单与重开">☰ 菜单</button>
+        </div>
+      </header>
+
+      <!-- Left: Traffic Forecast (流量预报) -->
+      <aside id="forecast-panel" class="panel forecast-panel">
+        <div class="panel-header">
+          <span>📡 流量预报</span>
+          <button id="btn-toggle-forecast" class="btn-mini">收起</button>
+        </div>
+        <div id="forecast-body" class="forecast-body"></div>
+      </aside>
+
+      <!-- Top-Center Alerts & Route Preview Delta -->
+      <div class="top-banners">
+        <div id="route-delta-banner" class="route-delta-banner hidden"></div>
+        <div id="alerts-stack" class="alerts-stack"></div>
+      </div>
+
+      <!-- Right: Contextual Inspector (选中面板) -->
+      <aside id="inspector-panel" class="panel inspector-panel hidden">
+        <div class="panel-header">
+          <span id="inspector-title">设备详情</span>
+          <button id="btn-close-inspector" class="btn-mini">✕</button>
+        </div>
+        <div id="inspector-body" class="inspector-body"></div>
+      </aside>
+
+      <!-- Interceptor Orientation Bar (朝向设定) -->
+      <div id="orient-bar" class="orient-bar hidden">
+        <div class="orient-title">🎯 设定拦截器攻击朝向（场内移动鼠标或点选方位 · 左键确认 / 右键或 Esc 取消）</div>
+        <div class="orient-actions">
+          <button class="btn btn-ghost orient-dir" data-dir="2">↑ 北 (-Z)</button>
+          <button class="btn btn-ghost orient-dir" data-dir="3">← 西 (-X)</button>
+          <button class="btn btn-ghost orient-dir" data-dir="1">→ 东 (+X)</button>
+          <button class="btn btn-ghost orient-dir" data-dir="0">↓ 南 (+Z)</button>
+          <button class="btn btn-primary" id="btn-orient-confirm">✓ 确认部署</button>
+          <button class="btn btn-danger" id="btn-orient-cancel">✕ 取消</button>
+        </div>
+      </div>
+
+      <!-- Bottom: Categorized Deployment Dock (待部署栏) -->
+      <footer id="deploy-dock" class="deploy-dock">
+        <div class="dock-group">
+          <div class="dock-group-label">防线阻挡</div>
+          <div id="dock-defense" class="dock-cards"></div>
+        </div>
+        <div class="dock-divider"></div>
+        <div class="dock-group">
+          <div class="dock-group-label">远距支援</div>
+          <div id="dock-support" class="dock-cards"></div>
+        </div>
+        <div class="dock-divider"></div>
+        <div class="dock-group">
+          <div class="dock-group-label">应急指令</div>
+          <div id="dock-items" class="dock-cards"></div>
+        </div>
+      </footer>
+
+      <!-- Subtle Camera Hint -->
+      <div class="cam-hint">
+        <span>视图操作：中键拖动环绕 · Shift+中键平移 · 滚轮缩放 · 左键点选与拖放部署</span>
+      </div>
+    </section>
+
+    <!-- Demo Overlay (Subtitles + Exit Demo + Simulated Cursor) -->
+    <div id="demo-overlay" class="demo-overlay hidden">
+      <div class="demo-top-bar">
+        <div class="demo-badge">
+          <span class="pulse-dot red"></span>
+          <span id="demo-title-badge">实战演示</span>
+          <span id="demo-timer-badge" class="mono-dim">00.0s</span>
+        </div>
+        <button id="btn-exit-demo" class="btn btn-danger">退出演示 (Esc)</button>
+      </div>
+      <div id="demo-subtitle-box" class="demo-subtitle-box">
+        <div id="demo-sub-title" class="demo-sub-title"></div>
+        <div id="demo-sub-text" class="demo-sub-text"></div>
+      </div>
+    </div>
+    <div id="demo-cursor" class="demo-cursor hidden">
+      <div class="cursor-pointer">
+        <svg viewBox="0 0 28 28" width="28" height="28" fill="none">
+          <circle class="cursor-halo" cx="4" cy="4" r="9" stroke="#facc15" stroke-width="2"/>
+          <path d="M4 3L22 14L13.5 16.5L10.5 24.5L4 3Z" fill="#fde047" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div id="demo-cursor-badge" class="cursor-badge hidden"></div>
+    </div>
+
+    <!-- Dragging Card Ghost -->
+    <div id="drag-ghost" class="drag-ghost hidden"></div>
+
+    <!-- Hover Tooltip -->
+    <div id="hover-tooltip" class="hover-tooltip hidden"></div>
+
+    <!-- Pause Modal -->
+    <div id="pause-modal" class="modal hidden">
+      <div class="modal-card compact">
+        <div class="modal-header">
+          <h2>守护进程已暂停</h2>
+          <button class="btn-mini" id="btn-pause-close">✕</button>
+        </div>
+        <div class="modal-actions-col">
+          <button class="btn btn-primary" id="btn-resume-game">▶ 继续作战</button>
+          <button class="btn btn-secondary" id="btn-restart-map">↻ 重开本图</button>
+          <button class="btn btn-secondary" id="btn-pause-compendium">📘 系统档案库（图鉴）</button>
+          <button class="btn btn-secondary" id="btn-pause-audio">🔊 音频设置</button>
+          <button class="btn btn-danger" id="btn-back-to-menu">⟵ 返回关卡选择</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settlement Modal: Incident Report (事件报告) -->
+    <div id="report-modal" class="modal hidden">
+      <div class="modal-card report-card">
+        <div class="report-header">
+          <div>
+            <div id="report-case-id" class="mono-dim">INCIDENT_REPORT // #XY-2026</div>
+            <h2 id="report-title">事件报告：防线稳固</h2>
+          </div>
+          <div id="report-stamp" class="report-stamp pass">DEFENDED</div>
+        </div>
+        <p id="report-summary" class="report-summary"></p>
+        <div id="report-stats-grid" class="report-stats-grid"></div>
+        <div class="report-actions">
+          <button class="btn btn-secondary" id="btn-report-restart">↻ 重开本图</button>
+          <button class="btn btn-secondary" id="btn-report-menu">⟵ 返回关卡选择</button>
+          <button class="btn btn-primary hidden" id="btn-report-next">▶ 前往下一防区</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compendium Modal: Device Manual & Threat Dossier -->
+    <div id="compendium-modal" class="modal hidden">
+      <div class="modal-card wide-card">
+        <div class="modal-header">
+          <div>
+            <div class="mono-dim">DAEMON_OS // ARCHIVE</div>
+            <h2>系统档案库</h2>
+          </div>
+          <button class="btn btn-ghost" id="btn-close-compendium">✕ 关闭</button>
+        </div>
+        <div class="compendium-tabs">
+          <button class="tab-btn active" data-tab="devices">🛡 设备手册（塔与应急指令）</button>
+          <button class="tab-btn" data-tab="threats">☣ 威胁档案（敌军与首领）</button>
+          <button class="tab-btn" data-tab="terrain">🗺 地形与法则（地块、状态与操作）</button>
+        </div>
+        <div id="compendium-content" class="compendium-content"></div>
+      </div>
+    </div>
+
+    <!-- Audio Settings Modal -->
+    <div id="audio-modal" class="modal hidden">
+      <div class="modal-card compact">
+        <div class="modal-header">
+          <h2>🔊 音频与合成器设置</h2>
+          <button class="btn-mini" id="btn-close-audio">✕</button>
+        </div>
+        <div class="audio-rows">
+          <label class="audio-row">
+            <span>静音总开关</span>
+            <input type="checkbox" id="chk-audio-mute" />
+          </label>
+          <label class="audio-row">
+            <span>主音量 <strong id="val-master">70%</strong></span>
+            <input type="range" id="rng-master" min="0" max="100" value="70" />
+          </label>
+          <label class="audio-row">
+            <span>环境音乐 <strong id="val-music">45%</strong></span>
+            <input type="range" id="rng-music" min="0" max="100" value="45" />
+          </label>
+          <label class="audio-row">
+            <span>战斗与系统音效 <strong id="val-sfx">75%</strong></span>
+            <input type="range" id="rng-sfx" min="0" max="100" value="75" />
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

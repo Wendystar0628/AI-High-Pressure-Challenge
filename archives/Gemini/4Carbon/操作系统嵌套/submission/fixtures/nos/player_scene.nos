@@ -1,0 +1,775 @@
+// ============================================================================
+// NestedOS 三维飞行场景与刚体物理协作进程 (/Apps/player_scene.nos)
+// 职责：装载独立 .scene / .rec 场景资源，计算部件层级位姿、地形与障碍物几何碰撞、损坏状态及碎片翻滚落定。
+// 说明：本进程代码不含任何特定直升机硬编码几何；修改 .scene 中的地形、障碍、材质或节点后结果立即随之改变。
+// ============================================================================
+
+let TIMELINE_PID = 0;
+let FX_PID = 0;
+let WIN_ID = "";
+let SESSION_ID = "";
+
+let SCENE_PATH = "";
+let SCENE_DATA = null;
+let FIXED_DT = 0.025;           // 40Hz 确定性物理积分步长
+let CHECKPOINTS = [];           // 录制/回放模式下每 1.0 秒缓存一次确定性状态快照
+
+// 排演实时演化状态
+let REH_STATE = null;
+let REH_LOG = [];               // 实际发生的控制与输入时序记录
+let REH_INPUTS = {
+  windX: 0.0,
+  windZ: 0.0,
+  targetHeading: 45.0,
+  faultTime: -1.0,
+  faultTriggered: false,
+  navMode: "hover",
+  targetPoint: null
+};
+
+// 依据 .scene 中声明的地形谐波参数与停机坪几何求取任意 (x, z) 的真实地表高度
+fn sample_terrain_y(env, x, z) {
+  if (env == null || env.terrain == null) { return 0.0; }
+  let tr = env.terrain;
+  let base = tr.baseY != null ? num(tr.baseY) : 0.0;
+  let amp = tr.hillAmp != null ? num(tr.hillAmp) : 0.0;
+  let freq = tr.hillFreq != null ? num(tr.hillFreq) : 0.06;
+  let h = base + amp * (sin(x * freq + 0.4) * cos(z * freq - 0.3) + 0.45 * sin((x + z) * freq * 1.7));
+
+  // 平整停机坪区域顶面高度
+  if (env.pads != null) {
+    let i = 0;
+    while (i < len(env.pads)) {
+      let pad = env.pads[i];
+      let dx = x - pad.pos[0];
+      let dz = z - pad.pos[2];
+      let r = sqrt(dx * dx + dz * dz);
+      let pr = pad.radius != null ? num(pad.radius) : 4.2;
+      if (r <= pr + 2.5) {
+        let blend = clamp((pr + 2.5 - r) / 2.5, 0.0, 1.0);
+        h = h * (1.0 - blend) + num(pad.pos[1]) * blend;
+      }
+      i += 1;
+    }
+  }
+  return h;
+}
+
+// 检查与 .scene 中三维障碍物 (建筑/塔台/岩石) 的体积碰撞
+fn check_obstacle_hit(env, pos, radius) {
+  if (env == null || env.obstacles == null) { return null; }
+  let i = 0;
+  while (i < len(env.obstacles)) {
+    let ob = env.obstacles[i];
+    let ox = ob.pos[0];
+    let oy = ob.pos[1];
+    let oz = ob.pos[2];
+    let sx = ob.size[0] * 0.5 + radius;
+    let sy = ob.size[1];
+    let sz = ob.size[2] * 0.5 + radius;
+    if (abs(pos[0] - ox) <= sx && abs(pos[2] - oz) <= sz && pos[1] <= oy + sy && pos[1] >= oy - radius) {
+      return ob;
+    }
+    i += 1;
+  }
+  return null;
+}
+
+fn make_initial_flight_state(fm, env) {
+  let init = fm.initialState;
+  let p0 = clone(init.pos);
+  let gy = sample_terrain_y(env, p0[0], p0[2]);
+  if (p0[1] < gy + 0.42) { p0[1] = gy + 0.42; }
+  return {
+    t: 0.0,
+    pos: p0,
+    vel: clone(init.vel),
+    rot: clone(init.rot),         // [pitch, yaw, roll] 弧度
+    angVel: clone(init.angVel),
+    rpm: num(init.rpm),
+    mainAngle: 0.0,
+    tailAngle: 0.0,
+    collective: num(init.collective),
+    cyclicPitch: 0.0,
+    cyclicRoll: 0.0,
+    tailPedal: 0.0,
+    wind: [0.0, 0.0, 0.0],
+    faultStage: 0,                // 0: 正常, 1: 故障征兆冒烟火花, 2: 尾传动失效失控
+    crashed: false,
+    impactTime: -1.0,
+    impactPos: null,
+    impactIntensity: 0.0,
+    partDamage: {},               // nodeId -> { status, broken }
+    debris: []                    // 脱离的立体碎片刚体列表
+  };
+}
+
+fn spawn_crash_debris(st, fm, env, hitSpeed, contactPoint) {
+  let templates = fm.debrisTemplates != null ? fm.debrisTemplates : [];
+  let i = 0;
+  while (i < len(templates)) {
+    let tp = templates[i];
+    st.partDamage[tp.partId] = { status: "碰撞断裂脱落", broken: true, severity: 1.0 };
+    let ang = i * 1.15 + st.rot[1];
+    let outSpd = clamp(hitSpeed * 0.55, 3.2, 11.5);
+    let vx = st.vel[0] * 0.35 + cos(ang) * outSpd * (0.7 + (i % 3) * 0.25);
+    let vz = st.vel[2] * 0.35 + sin(ang) * outSpd * (0.7 + ((i + 1) % 3) * 0.25);
+    let vy = clamp(hitSpeed * 0.42 + 2.6 + (i % 2) * 1.8, 2.5, 9.2);
+    push(st.debris, {
+      id: tp.id,
+      partId: tp.partId,
+      label: tp.label,
+      size: clone(tp.size),
+      color: tp.color,
+      pos: [
+        contactPoint[0] + tp.offset[0],
+        max(sample_terrain_y(env, contactPoint[0], contactPoint[2]) + 0.35, contactPoint[1] + tp.offset[1]),
+        contactPoint[2] + tp.offset[2]
+      ],
+      vel: [vx, vy, vz],
+      rot: [st.rot[0], st.rot[1] + ang * 0.3, st.rot[2]],
+      angVel: [(i % 2 == 0 ? 5.4 : -4.8), 3.6 - i * 1.1, (i % 3 == 0 ? -5.2 : 4.4)],
+      settled: false
+    });
+    i += 1;
+  }
+  st.partDamage["fuselage"] = { status: "机体撞击受损", broken: false, severity: 0.85 };
+  st.partDamage["cockpit_canopy"] = { status: "风挡碎裂", broken: false, severity: 0.7 };
+  st.partDamage["skid_left"] = { status: "滑撬弯折变形", broken: false, severity: 0.8 };
+}
+
+fn step_debris_list(st, env, dt) {
+  let i = 0;
+  while (i < len(st.debris)) {
+    let d = st.debris[i];
+    if (!d.settled) {
+      d.vel[1] -= 9.81 * dt;
+      d.vel[0] *= (1.0 - 0.35 * dt);
+      d.vel[2] *= (1.0 - 0.35 * dt);
+      d.pos[0] += d.vel[0] * dt;
+      d.pos[1] += d.vel[1] * dt;
+      d.pos[2] += d.vel[2] * dt;
+
+      d.rot[0] += d.angVel[0] * dt;
+      d.rot[1] += d.angVel[1] * dt;
+      d.rot[2] += d.angVel[2] * dt;
+
+      let gy = sample_terrain_y(env, d.pos[0], d.pos[2]) + d.size[1] * 0.5;
+      if (d.pos[1] <= gy) {
+        d.pos[1] = gy;
+        if (abs(d.vel[1]) > 1.15) {
+          d.vel[1] = -d.vel[1] * 0.28;
+          d.vel[0] *= 0.62;
+          d.vel[2] *= 0.62;
+          d.angVel[0] *= 0.58;
+          d.angVel[1] *= 0.58;
+          d.angVel[2] *= 0.58;
+        } else {
+          d.vel[1] = 0.0;
+          d.vel[0] *= (1.0 - min(1.0, 6.5 * dt));
+          d.vel[2] *= (1.0 - min(1.0, 6.5 * dt));
+          d.angVel[0] *= (1.0 - min(1.0, 7.5 * dt));
+          d.angVel[2] *= (1.0 - min(1.0, 7.5 * dt));
+          d.angVel[1] *= (1.0 - min(1.0, 7.5 * dt));
+          // 碎片贴合地面渐趋停稳
+          d.rot[0] *= (1.0 - min(1.0, 4.0 * dt));
+          d.rot[2] *= (1.0 - min(1.0, 4.0 * dt));
+          let speedSq = d.vel[0] * d.vel[0] + d.vel[2] * d.vel[2];
+          let angSq = d.angVel[0] * d.angVel[0] + d.angVel[1] * d.angVel[1] + d.angVel[2] * d.angVel[2];
+          if (speedSq < 0.008 && angSq < 0.015) {
+            d.vel = [0.0, 0.0, 0.0];
+            d.angVel = [0.0, 0.0, 0.0];
+            d.settled = true;
+          }
+        }
+      }
+    }
+    i += 1;
+  }
+}
+
+// 核心单步刚体与气动演化（默认演出、回放与实时排演共用同一演化函数！）
+fn step_flight_physics(st, fm, env, ctrl, dt) {
+  st.t += dt;
+  if (ctrl != null) {
+    if (ctrl.collective != null) { st.collective = clamp(num(ctrl.collective), 0.0, 1.0); }
+    if (ctrl.cyclicPitch != null) { st.cyclicPitch = clamp(num(ctrl.cyclicPitch), -1.0, 1.0); }
+    if (ctrl.cyclicRoll != null) { st.cyclicRoll = clamp(num(ctrl.cyclicRoll), -1.0, 1.0); }
+    if (ctrl.tailPedal != null) { st.tailPedal = clamp(num(ctrl.tailPedal), -1.0, 1.0); }
+    if (ctrl.windX != null) { st.wind[0] = num(ctrl.windX); }
+    if (ctrl.windZ != null) { st.wind[2] = num(ctrl.windZ); }
+    if (ctrl.faultStage != null && num(ctrl.faultStage) > st.faultStage) {
+      st.faultStage = num(ctrl.faultStage);
+    }
+  }
+
+  if (st.faultStage == 1 && !st.crashed) {
+    st.partDamage["engine_cowling"] = { status: "警告：尾传动轴过热冒烟", broken: false, severity: 0.45 };
+    st.partDamage["tail_rotor"] = { status: "警告：转速脉动异常", broken: false, severity: 0.40 };
+  } else if (st.faultStage >= 2 && !st.crashed) {
+    st.partDamage["tail_rotor"] = { status: "故障：尾桨传动失效", broken: false, severity: 0.95 };
+    st.partDamage["engine_cowling"] = { status: "故障：动力舱黑烟喷涌", broken: false, severity: 0.80 };
+  }
+
+  let gy = sample_terrain_y(env, st.pos[0], st.pos[2]);
+  let skidClearance = 0.42;
+
+  if (st.crashed) {
+    // 坠地后残骸滑行摩擦停稳 + 旋翼停转 + 碎片翻滚落定
+    st.rpm = max(0.0, st.rpm - 180.0 * dt);
+    st.mainAngle += (st.rpm * 0.1047) * dt;
+    st.vel[1] -= 9.81 * dt;
+    st.pos[0] += st.vel[0] * dt;
+    st.pos[1] += st.vel[1] * dt;
+    st.pos[2] += st.vel[2] * dt;
+    let cgy = sample_terrain_y(env, st.pos[0], st.pos[2]) + 0.30;
+    if (st.pos[1] <= cgy) {
+      st.pos[1] = cgy;
+      st.vel[1] = 0.0;
+      st.vel[0] *= (1.0 - min(1.0, 4.2 * dt));
+      st.vel[2] *= (1.0 - min(1.0, 4.2 * dt));
+      st.angVel[0] *= (1.0 - min(1.0, 6.0 * dt));
+      st.angVel[1] *= (1.0 - min(1.0, 6.0 * dt));
+      st.angVel[2] *= (1.0 - min(1.0, 6.0 * dt));
+      if (abs(st.vel[0]) < 0.03 && abs(st.vel[2]) < 0.03) {
+        st.vel = [0.0, 0.0, 0.0];
+        st.angVel = [0.0, 0.0, 0.0];
+      }
+    }
+    st.rot[0] += st.angVel[0] * dt;
+    st.rot[1] += st.angVel[1] * dt;
+    st.rot[2] += st.angVel[2] * dt;
+    step_debris_list(st, env, dt);
+    return null;
+  }
+
+  // 正常或故障飞行阶段：旋翼转速与相位推进
+  let targetRpm = st.collective > 0.06 ? 440.0 : 260.0;
+  if (st.t < 1.3 && ctrl != null && ctrl.spinupRatio != null) {
+    targetRpm = 440.0 * clamp(num(ctrl.spinupRatio), 0.08, 1.0);
+  }
+  st.rpm += (targetRpm - st.rpm) * min(1.0, 2.8 * dt);
+  let rpmRatio = clamp(st.rpm / 440.0, 0.0, 1.15);
+  st.mainAngle += (st.rpm * 0.10472) * dt;
+  let tailEff = st.faultStage >= 2 ? 0.05 : (st.faultStage == 1 ? 0.86 : 1.0);
+  st.tailAngle += (st.rpm * 0.48 * tailEff) * dt;
+
+  let onGround = (st.pos[1] <= gy + skidClearance + 0.03) && (st.collective * rpmRatio < 0.48);
+  if (onGround) {
+    st.pos[1] = gy + skidClearance;
+    st.vel = [0.0, 0.0, 0.0];
+    st.angVel = [0.0, 0.0, 0.0];
+    st.rot[0] *= (1.0 - min(1.0, 6.0 * dt));
+    st.rot[2] *= (1.0 - min(1.0, 6.0 * dt));
+    return null;
+  }
+
+  // 开环不稳定角动力学：失去飞控周期更新时姿态会自然发散！
+  let instab = fm.instability != null ? num(fm.instability) : 0.92;
+  let windMomentP = (st.wind[2] * cos(st.rot[1]) - st.wind[0] * sin(st.rot[1])) * 0.028;
+  let windMomentR = (st.wind[0] * cos(st.rot[1]) + st.wind[2] * sin(st.rot[1])) * 0.028;
+  let faultTremor = st.faultStage == 1 ? (sin(st.t * 28.0) * 0.35) : 0.0;
+
+  let pitchAcc = st.cyclicPitch * 5.2 * rpmRatio + sin(st.rot[0]) * instab - st.angVel[0] * 1.65 + windMomentP;
+  let rollAcc  = st.cyclicRoll  * 5.4 * rpmRatio + sin(st.rot[2]) * instab - st.angVel[2] * 1.65 + windMomentR;
+  if (st.faultStage >= 2) {
+    // 尾桨失效伴随陀螺耦合横滚俯仰摆振
+    pitchAcc += sin(st.t * 4.5) * 1.35;
+    rollAcc  += cos(st.t * 4.2) * 1.55;
+  }
+
+  let reactionTorque = 2.64 * st.collective * rpmRatio;
+  let tailCounterTorque = 6.0 * st.tailPedal * rpmRatio * tailEff;
+  let yawAcc = (tailCounterTorque - reactionTorque) - st.angVel[1] * (st.faultStage >= 2 ? 0.55 : 1.75) + faultTremor;
+
+  st.angVel[0] = clamp(st.angVel[0] + pitchAcc * dt, -4.5, 4.5);
+  st.angVel[1] = clamp(st.angVel[1] + yawAcc * dt, -7.2, 7.2);
+  st.angVel[2] = clamp(st.angVel[2] + rollAcc * dt, -4.8, 4.8);
+
+  st.rot[0] = clamp(st.rot[0] + st.angVel[0] * dt, -1.35, 1.35);
+  st.rot[1] = st.rot[1] + st.angVel[1] * dt;
+  st.rot[2] = clamp(st.rot[2] + st.angVel[2] * dt, -1.42, 1.42);
+
+  // 主旋翼升力方向转换到世界坐标系
+  let liftMag = (fm.liftGain != null ? num(fm.liftGain) : 18.2) * st.collective * rpmRatio * rpmRatio;
+  if (st.faultStage >= 2) {
+    // 故障失控后发动机功率衰减，持续掉高直至触地撞击
+    liftMag *= 0.62;
+  }
+
+  let cp = cos(st.rot[0]); let sp = sin(st.rot[0]);
+  let cy = cos(st.rot[1]); let sy = sin(st.rot[1]);
+  let cr = cos(st.rot[2]); let sr = sin(st.rot[2]);
+
+  // 机身向上法向量受俯仰(pitch < 0 前倾加速)与横滚(roll > 0 右倾)影响
+  let upX = -sp * sy + sr * cy;
+  let upY = cp * cr;
+  let upZ = sp * cy + sr * sy;
+
+  let relVx = st.vel[0] - st.wind[0];
+  let relVz = st.vel[2] - st.wind[2];
+
+  let ax = liftMag * upX - relVx * 0.28;
+  let ay = liftMag * upY - 9.81 - st.vel[1] * 0.22;
+  let az = liftMag * upZ - relVz * 0.28;
+
+  st.vel[0] += ax * dt;
+  st.vel[1] += ay * dt;
+  st.vel[2] += az * dt;
+
+  st.pos[0] += st.vel[0] * dt;
+  st.pos[1] += st.vel[1] * dt;
+  st.pos[2] += st.vel[2] * dt;
+
+  // 检查障碍物三维接触与地面接触
+  let newGy = sample_terrain_y(env, st.pos[0], st.pos[2]);
+  let obHit = check_obstacle_hit(env, st.pos, 1.45);
+  let speedMag = sqrt(st.vel[0] * st.vel[0] + st.vel[1] * st.vel[1] + st.vel[2] * st.vel[2]);
+
+  if (obHit != null) {
+    st.crashed = true;
+    st.impactTime = st.t;
+    st.impactPos = clone(st.pos);
+    st.impactIntensity = clamp(speedMag / 9.0, 0.65, 1.4);
+    spawn_crash_debris(st, fm, env, max(6.0, speedMag), st.pos);
+    st.vel[0] = -st.vel[0] * 0.25;
+    st.vel[2] = -st.vel[2] * 0.25;
+    return null;
+  }
+
+  if (st.pos[1] <= newGy + skidClearance) {
+    let vertImpact = -st.vel[1];
+    let tiltMag = abs(st.rot[0]) + abs(st.rot[2]);
+    if (vertImpact > 3.5 || speedMag > 5.8 || tiltMag > 0.62 || st.faultStage >= 2) {
+      // 重着陆或失控坠地撞击！
+      st.pos[1] = newGy + 0.30;
+      st.crashed = true;
+      st.impactTime = st.t;
+      st.impactPos = clone(st.pos);
+      st.impactIntensity = clamp(max(vertImpact, speedMag * 0.75) / 8.0, 0.65, 1.4);
+      spawn_crash_debris(st, fm, env, max(6.5, speedMag), st.pos);
+      st.vel[1] = 0.0;
+      st.vel[0] *= 0.42;
+      st.vel[2] *= 0.42;
+      st.rot[2] = clamp(st.rot[2] + 0.38, -0.85, 0.85);
+    } else {
+      // 平稳受控降落（例如在 H1 或 H2 停机坪着陆）
+      st.pos[1] = newGy + skidClearance;
+      st.vel[1] = 0.0;
+      st.vel[0] *= (1.0 - min(1.0, 5.0 * dt));
+      st.vel[2] *= (1.0 - min(1.0, 5.0 * dt));
+      st.rot[0] *= (1.0 - min(1.0, 5.0 * dt));
+      st.rot[2] *= (1.0 - min(1.0, 5.0 * dt));
+      st.angVel = [0.0, st.angVel[1] * 0.7, 0.0];
+    }
+  }
+  return null;
+}
+
+// 从预置或排演记录时间表中插值/采样 t 时刻的控制量
+fn lookup_schedule_ctrl(schedule, t) {
+  if (schedule == null || len(schedule) == 0) { return null; }
+  let chosen = schedule[0];
+  let i = 0;
+  while (i < len(schedule)) {
+    if (schedule[i].t <= t + 0.0001) {
+      chosen = schedule[i];
+    } else {
+      // 对连续舵量做平滑线性插值（若为密集离散记录则保持阶跃）
+      let nxt = schedule[i];
+      if (chosen.interp == true && nxt.t > chosen.t) {
+        let k = clamp((t - chosen.t) / (nxt.t - chosen.t), 0.0, 1.0);
+        return {
+          collective: chosen.collective + (nxt.collective - chosen.collective) * k,
+          cyclicPitch: chosen.cyclicPitch + (nxt.cyclicPitch - chosen.cyclicPitch) * k,
+          cyclicRoll: chosen.cyclicRoll + (nxt.cyclicRoll - chosen.cyclicRoll) * k,
+          tailPedal: chosen.tailPedal + (nxt.tailPedal - chosen.tailPedal) * k,
+          spinupRatio: chosen.spinupRatio != null ? (chosen.spinupRatio + ((nxt.spinupRatio != null ? nxt.spinupRatio : 1.0) - chosen.spinupRatio) * k) : 1.0,
+          windX: chosen.windX != null ? chosen.windX : 0.0,
+          windZ: chosen.windZ != null ? chosen.windZ : 0.0,
+          faultStage: chosen.faultStage != null ? chosen.faultStage : 0
+        };
+      }
+      break;
+    }
+    i += 1;
+  }
+  return chosen;
+}
+
+fn build_checkpoints() {
+  CHECKPOINTS = [];
+  if (SCENE_DATA == null || SCENE_DATA.flightModel == null) { return null; }
+  let fm = SCENE_DATA.flightModel;
+  let env = SCENE_DATA.environment;
+  let st0 = make_initial_flight_state(fm, env);
+  push(CHECKPOINTS, st0);
+}
+
+fn ensure_checkpoints_up_to(secIdx) {
+  let fm = SCENE_DATA.flightModel;
+  let env = SCENE_DATA.environment;
+  while (len(CHECKPOINTS) - 1 < secIdx) {
+    let cur = clone(CHECKPOINTS[len(CHECKPOINTS) - 1]);
+    let targetSec = len(CHECKPOINTS) * 1.0;
+    while (cur.t + FIXED_DT * 0.5 <= targetSec) {
+      let ctrl = lookup_schedule_ctrl(fm.recordedSchedule, cur.t);
+      step_flight_physics(cur, fm, env, ctrl, FIXED_DT);
+    }
+    cur.t = targetSec;
+    push(CHECKPOINTS, cur);
+  }
+}
+
+fn evaluate_recorded_at(targetT) {
+  let fm = SCENE_DATA.flightModel;
+  let env = SCENE_DATA.environment;
+  let t = max(0.0, num(targetT));
+  if (len(CHECKPOINTS) == 0) {
+    build_checkpoints();
+  }
+  let idx = max(0, floor(t));
+  ensure_checkpoints_up_to(idx);
+  let st = clone(CHECKPOINTS[idx]);
+  while (st.t + FIXED_DT * 0.5 <= t) {
+    let stepDt = min(FIXED_DT, t - st.t);
+    if (stepDt <= 0.0001) { break; }
+    let ctrl = lookup_schedule_ctrl(fm.recordedSchedule, st.t);
+    step_flight_physics(st, fm, env, ctrl, stepDt);
+  }
+  st.t = t;
+  return st;
+}
+
+// 支持非直升机的任意关键帧场景（例如 minimal.scene）
+fn evaluate_generic_tracks(targetT) {
+  let nodeOverrides = {};
+  if (SCENE_DATA != null && SCENE_DATA.tracks != null) {
+    let i = 0;
+    while (i < len(SCENE_DATA.tracks)) {
+      let tr = SCENE_DATA.tracks[i];
+      let ov = has_key(nodeOverrides, tr.nodeId) ? nodeOverrides[tr.nodeId] : {};
+      if (tr.spinSpeed != null) {
+        let ang = num(targetT) * num(tr.spinSpeed);
+        ov.rot = [0.0, ang, 0.0];
+      }
+      if (tr.bobAmp != null) {
+        let baseY = tr.baseY != null ? num(tr.baseY) : 1.0;
+        ov.pos = [0.0, baseY + sin(num(targetT) * 2.2) * num(tr.bobAmp), 0.0];
+      }
+      nodeOverrides[tr.nodeId] = ov;
+      i += 1;
+    }
+  }
+  return {
+    isFlight: false,
+    frameTime: num(targetT),
+    nodeOverrides: nodeOverrides,
+    partDamage: {},
+    debris: [],
+    craftSummary: null
+  };
+}
+
+fn pack_flight_pose(st) {
+  let env = SCENE_DATA.environment;
+  let gy = sample_terrain_y(env, st.pos[0], st.pos[2]);
+  let nodeOverrides = {};
+  nodeOverrides["craft_root"] = {
+    pos: clone(st.pos),
+    rot: clone(st.rot)
+  };
+  nodeOverrides["main_rotor_hub"] = {
+    rot: [0.0, st.mainAngle, 0.0],
+    blurAlpha: clamp((st.rpm - 180.0) / 260.0, 0.0, 0.72)
+  };
+  nodeOverrides["tail_rotor"] = {
+    rot: [st.tailAngle, 0.0, 0.0],
+    blurAlpha: st.faultStage >= 2 ? 0.0 : clamp((st.rpm - 180.0) / 260.0, 0.0, 0.65)
+  };
+
+  // 已脱落的部件在机体层级中隐藏（由独立三维碎片刚体代替显示！）
+  let dks = keys(st.partDamage);
+  let i = 0;
+  while (i < len(dks)) {
+    let pid = dks[i];
+    if (st.partDamage[pid].broken) {
+      let cur = has_key(nodeOverrides, pid) ? nodeOverrides[pid] : {};
+      cur.hidden = true;
+      nodeOverrides[pid] = cur;
+    }
+    i += 1;
+  }
+
+  return {
+    isFlight: true,
+    frameTime: st.t,
+    nodeOverrides: nodeOverrides,
+    partDamage: clone(st.partDamage),
+    debris: clone(st.debris),
+    craftSummary: {
+      t: st.t,
+      pos: clone(st.pos),
+      vel: clone(st.vel),
+      rot: clone(st.rot),
+      rpm: st.rpm,
+      collective: st.collective,
+      groundY: gy,
+      agl: max(0.0, st.pos[1] - gy),
+      wind: clone(st.wind),
+      faultStage: st.faultStage,
+      crashed: st.crashed,
+      impactTime: st.impactTime,
+      impactPos: st.impactPos != null ? clone(st.impactPos) : null,
+      impactIntensity: st.impactIntensity
+    }
+  };
+}
+
+fn load_scene_resource(path) {
+  let raw = syscall("fs_read", path);
+  if (raw == null) {
+    return { ok: false, error: "找不到场景文件: " + path };
+  }
+  SCENE_PATH = path;
+  SCENE_DATA = json_decode(raw);
+  CHECKPOINTS = [];
+  REH_STATE = null;
+  REH_LOG = [];
+  if (SCENE_DATA != null && SCENE_DATA.flightModel != null) {
+    build_checkpoints();
+  }
+  let dur = (SCENE_DATA != null && SCENE_DATA.meta != null && SCENE_DATA.meta.duration != null) ? num(SCENE_DATA.meta.duration) : 10.0;
+  let fps = (SCENE_DATA != null && SCENE_DATA.meta != null && SCENE_DATA.meta.fps != null) ? num(SCENE_DATA.meta.fps) : 30.0;
+  return {
+    ok: true,
+    duration: dur,
+    fps: fps,
+    hasFlightModel: SCENE_DATA != null && SCENE_DATA.flightModel != null,
+    sceneData: SCENE_DATA
+  };
+}
+
+fn start_rehearsal_from(startT, inputs) {
+  if (SCENE_DATA == null || SCENE_DATA.flightModel == null) { return null; }
+  if (inputs != null) { REH_INPUTS = clone(inputs); }
+  REH_STATE = evaluate_recorded_at(startT);
+  // 继承 0..startT 的历史记录，保证从任意时间点转入排演无缝续演并可完整保存回放！
+  REH_LOG = [];
+  let sched = SCENE_DATA.flightModel.recordedSchedule;
+  if (sched != null) {
+    let i = 0;
+    while (i < len(sched)) {
+      if (sched[i].t < startT) {
+        push(REH_LOG, clone(sched[i]));
+      }
+      i += 1;
+    }
+  }
+  // 将初始状态写入传感器与舵面保持寄存器
+  let env = SCENE_DATA.environment;
+  let gy = sample_terrain_y(env, REH_STATE.pos[0], REH_STATE.pos[2]);
+  let pad2Pos = (env.pads != null && len(env.pads) > 1) ? env.pads[1].pos : [20.0, 0.0, -10.0];
+  syscall("fc_write_controls", SESSION_ID, {
+    collective: REH_STATE.collective,
+    cyclicPitch: REH_STATE.cyclicPitch,
+    cyclicRoll: REH_STATE.cyclicRoll,
+    tailPedal: REH_STATE.tailPedal
+  });
+  syscall("fc_write_sensors", SESSION_ID, {
+    active: true,
+    timestamp: REH_STATE.t,
+    pos: clone(REH_STATE.pos),
+    vel: clone(REH_STATE.vel),
+    rot: clone(REH_STATE.rot),
+    angVel: clone(REH_STATE.angVel),
+    rpm: REH_STATE.rpm,
+    groundY: gy,
+    wind: [REH_INPUTS.windX, 0.0, REH_INPUTS.windZ],
+    targetHeading: REH_INPUTS.targetHeading,
+    navMode: REH_INPUTS.navMode,
+    targetPoint: REH_INPUTS.targetPoint,
+    pad2: pad2Pos,
+    faultStage: REH_STATE.faultStage
+  });
+}
+
+fn step_rehearsal_to(targetT) {
+  if (REH_STATE == null) { start_rehearsal_from(targetT, REH_INPUTS); }
+  let fm = SCENE_DATA.flightModel;
+  let env = SCENE_DATA.environment;
+  let pad2Pos = (env.pads != null && len(env.pads) > 1) ? env.pads[1].pos : [20.0, 0.0, -10.0];
+
+  // 单次最多补算 16 个物理步（若预算极低导致物理落后于虚拟时间，画面保持在已算完时刻，恢复后按虚拟时间继续补算，不变成慢动作）
+  let steps = 0;
+  while (REH_STATE.t + FIXED_DT * 0.5 <= targetT && steps < 16) {
+    let latestCtrl = syscall("fc_read_controls", SESSION_ID);
+    let fStage = REH_STATE.faultStage;
+    if (REH_INPUTS.faultTriggered) {
+      fStage = 2;
+    } else if (REH_INPUTS.faultTime > 0 && REH_STATE.t >= REH_INPUTS.faultTime) {
+      fStage = REH_STATE.t >= REH_INPUTS.faultTime + 0.9 ? 2 : 1;
+    }
+
+    let stepCtrl = {
+      collective: latestCtrl != null ? latestCtrl.collective : REH_STATE.collective,
+      cyclicPitch: latestCtrl != null ? latestCtrl.cyclicPitch : REH_STATE.cyclicPitch,
+      cyclicRoll: latestCtrl != null ? latestCtrl.cyclicRoll : REH_STATE.cyclicRoll,
+      tailPedal: latestCtrl != null ? latestCtrl.tailPedal : REH_STATE.tailPedal,
+      windX: REH_INPUTS.windX,
+      windZ: REH_INPUTS.windZ,
+      faultStage: fStage,
+      interp: false
+    };
+
+    push(REH_LOG, {
+      t: round(REH_STATE.t * 1000) / 1000,
+      collective: round(stepCtrl.collective * 1000) / 1000,
+      cyclicPitch: round(stepCtrl.cyclicPitch * 1000) / 1000,
+      cyclicRoll: round(stepCtrl.cyclicRoll * 1000) / 1000,
+      tailPedal: round(stepCtrl.tailPedal * 1000) / 1000,
+      windX: stepCtrl.windX,
+      windZ: stepCtrl.windZ,
+      faultStage: stepCtrl.faultStage,
+      interp: false
+    });
+
+    step_flight_physics(REH_STATE, fm, env, stepCtrl, FIXED_DT);
+
+    let gy = sample_terrain_y(env, REH_STATE.pos[0], REH_STATE.pos[2]);
+    syscall("fc_write_sensors", SESSION_ID, {
+      active: !REH_STATE.crashed,
+      timestamp: REH_STATE.t,
+      pos: clone(REH_STATE.pos),
+      vel: clone(REH_STATE.vel),
+      rot: clone(REH_STATE.rot),
+      angVel: clone(REH_STATE.angVel),
+      rpm: REH_STATE.rpm,
+      groundY: gy,
+      wind: [REH_INPUTS.windX, 0.0, REH_INPUTS.windZ],
+      targetHeading: REH_INPUTS.targetHeading,
+      navMode: REH_INPUTS.navMode,
+      targetPoint: REH_INPUTS.targetPoint,
+      pad2: pad2Pos,
+      faultStage: REH_STATE.faultStage
+    });
+    steps += 1;
+  }
+  return REH_STATE;
+}
+
+fn save_rehearsal_record(dstPath) {
+  if (SCENE_DATA == null || SCENE_DATA.flightModel == null) {
+    return { ok: false, error: "当前场景无飞行记录可保存" };
+  }
+  let recObj = clone(SCENE_DATA);
+  recObj.meta.name = "飞行排演记录 · " + dstPath;
+  recObj.meta.duration = REH_STATE != null ? max(1.0, round(REH_STATE.t * 100) / 100) : recObj.meta.duration;
+  recObj.flightModel.recordedSchedule = clone(REH_LOG);
+  let wr = syscall("fs_write", dstPath, json_encode(recObj));
+  return wr;
+}
+
+fn main(timelinePid, winId, fxPid) {
+  TIMELINE_PID = num(timelinePid);
+  WIN_ID = str(winId);
+  FX_PID = fxPid != null ? num(fxPid) : 0;
+  SESSION_ID = "fc_" + WIN_ID;
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 1.0);
+    if (msg != null && msg.data != null) {
+      let d = msg.data;
+      if (d.type == "set_fx_pid") {
+        FX_PID = num(d.fxPid);
+      } else if (d.type == "load_scene") {
+        let lr = load_scene_resource(str(d.path));
+        if (lr.ok) {
+          let pose0 = lr.hasFlightModel ? pack_flight_pose(evaluate_recorded_at(0.0)) : evaluate_generic_tracks(0.0);
+          if (FX_PID > 0) {
+            syscall("send_msg", FX_PID, {
+              type: "scene_loaded",
+              epoch: d.epoch,
+              time: 0.0,
+              craftSummary: pose0.craftSummary
+            });
+          }
+          syscall("send_msg", TIMELINE_PID, {
+            type: "scene_loaded_ack",
+            epoch: d.epoch,
+            ok: true,
+            duration: lr.duration,
+            fps: lr.fps,
+            hasFlightModel: lr.hasFlightModel,
+            sceneData: lr.sceneData,
+            pose: pose0
+          });
+        } else {
+          syscall("send_msg", TIMELINE_PID, {
+            type: "scene_loaded_ack",
+            epoch: d.epoch,
+            ok: false,
+            error: lr.error
+          });
+        }
+      } else if (d.type == "start_rehearsal") {
+        start_rehearsal_from(num(d.time), d.inputs);
+        let pose = pack_flight_pose(REH_STATE);
+        if (FX_PID > 0) {
+          syscall("send_msg", FX_PID, { type: "fx_sample", epoch: d.epoch, time: REH_STATE.t, seeked: false, craftSummary: pose.craftSummary });
+        }
+        syscall("send_msg", TIMELINE_PID, { type: "scene_frame", epoch: d.epoch, pose: pose });
+      } else if (d.type == "update_reh_inputs") {
+        REH_INPUTS = clone(d.inputs);
+      } else if (d.type == "save_record") {
+        let sr = save_rehearsal_record(str(d.path));
+        syscall("send_msg", TIMELINE_PID, { type: "record_saved", ok: sr.ok, path: d.path, error: sr.error });
+      } else if (d.type == "sample") {
+        // 排空冗余排队采样请求，直接计算最新请求时刻（保证低预算下也不落后堆积旧帧）
+        let latest = d;
+        while (true) {
+          let mNext = syscall("recv_msg");
+          if (mNext == null) { break; }
+          if (mNext.data != null && mNext.data.type == "sample") {
+            latest = mNext.data;
+          } else if (mNext.data != null && mNext.data.type == "update_reh_inputs") {
+            REH_INPUTS = clone(mNext.data.inputs);
+          } else if (mNext.data != null && mNext.data.type == "save_record") {
+            let sr2 = save_rehearsal_record(str(mNext.data.path));
+            syscall("send_msg", TIMELINE_PID, { type: "record_saved", ok: sr2.ok, path: mNext.data.path, error: sr2.error });
+          }
+        }
+
+        if (SCENE_DATA != null) {
+          let pose = null;
+          if (SCENE_DATA.flightModel != null) {
+            if (latest.mode == "rehearsal") {
+              if (latest.inputs != null) { REH_INPUTS = clone(latest.inputs); }
+              let st = step_rehearsal_to(num(latest.time));
+              pose = pack_flight_pose(st);
+            } else {
+              let st = evaluate_recorded_at(num(latest.time));
+              pose = pack_flight_pose(st);
+            }
+          } else {
+            pose = evaluate_generic_tracks(num(latest.time));
+          }
+          if (FX_PID > 0) {
+            syscall("send_msg", FX_PID, {
+              type: "fx_sample",
+              epoch: latest.epoch,
+              time: pose.frameTime,
+              seeked: latest.seeked,
+              craftSummary: pose.craftSummary
+            });
+          }
+          syscall("send_msg", TIMELINE_PID, {
+            type: "scene_frame",
+            epoch: latest.epoch,
+            pose: pose
+          });
+        }
+      }
+    }
+  }
+}

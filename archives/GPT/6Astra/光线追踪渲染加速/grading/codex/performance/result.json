@@ -1,0 +1,46 @@
+{
+    "task":  "光线追踪渲染加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "渲染加速",
+                      "max":  100,
+                      "score":  59.7,
+                      "reason":  "官方完整评测：基线最小 515.027900 ms，提交最小 105.769300 ms，加速 4.869352 倍；5 次计时画面及 12 个隐藏输入全部通过，c=h=1，q×c×h=59.7。源码及 Nsight 数据流核查未见实质性违规。"
+                  }
+              ],
+    "metrics":  {
+                    "R_ms":  515.0279,
+                    "C_ms":  105.7693,
+                    "speedup":  4.869351503697198,
+                    "q":  59.700780743722525,
+                    "c":  1,
+                    "h":  1,
+                    "unrounded_score":  59.700780743722525,
+                    "timing_factors":  [
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1
+                                       ],
+                    "hidden_factors":  [
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1
+                                       ],
+                    "official_results":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\GPT\\6Astra\\光线追踪渲染加速\\codex\\performance\\work\\evaluation\\results.json",
+                    "audit_control_d2h_bytes":  120
+                },
+    "notes":  "评的是作答结束时工作目录的副本，不看 git 提交；solution.cu SHA-256=5D22CD258A600E5E2E119FC725FED2287DECF967EBEF52ED2191AF0AA22ABB0D，副本与原提交一致。官方评测 formal=true，16–27逻辑处理器、高优先级、基线与提交各5次交错取最小值；运行前GPU利用率1%–2%，无CUDA占用或未识别进程。3个公开边界、5次计时画面和12个隐藏输入全部通过。Nsight核查仅额外回传120字节控制信息，未见实质性违规或作弊；追踪不参与计分。评分证据位于 work/evaluation、work/source_audit.json 和 work/profile_audit；自启评测、追踪及被追踪进程均已退出，英文工具临时目录已清理。"
+}

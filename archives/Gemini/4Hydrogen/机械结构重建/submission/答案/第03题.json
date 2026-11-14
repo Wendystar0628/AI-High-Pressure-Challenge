@@ -1,0 +1,134 @@
+{
+  "problem": "03",
+  "parts": [
+    {
+      "name": "1",
+      "title": "双腔斜顶分流阀壳",
+      "features": [
+        {
+          "type": "extrude",
+          "op": "add",
+          "name": "底板",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [-12, -10, 134, 82]}],
+          "depth": 12
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "name": "主壳体及斜顶",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"path": [[0, 12], [0, 74], [86, 74], [122, 38], [122, 12]]}],
+          "depth": [-72, 0]
+        },
+        {
+          "type": "extrude",
+          "op": "add",
+          "name": "前凸台Φ34",
+          "plane": "XZ",
+          "origin": [0, 0, 0],
+          "loops": [{"circle": [32, 34], "d": 34}],
+          "depth": 6
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "name": "左内腔",
+          "plane": "XY",
+          "origin": [0, 0, 12],
+          "loops": [{"rect": [10, 12, 46, 60]}],
+          "depth": 52
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "name": "右内腔",
+          "plane": "XY",
+          "origin": [0, 0, 12],
+          "loops": [{"rect": [54, 12, 102, 60]}],
+          "depth": 32
+        },
+        {
+          "type": "extrude",
+          "op": "cut",
+          "name": "底板下矩形孔",
+          "plane": "XY",
+          "origin": [0, 0, 0],
+          "loops": [{"rect": [22, 29, 42, 43]}],
+          "depth": 12
+        },
+        {
+          "type": "hole",
+          "name": "前壁通孔Φ22",
+          "plane": "XZ",
+          "origin": [0, -6, 0],
+          "at": [32, 34],
+          "d": 22,
+          "depth": 20
+        },
+        {
+          "type": "hole",
+          "name": "后壁孔Φ18",
+          "plane": "ZX",
+          "origin": [0, 72, 0],
+          "at": [30, 74],
+          "d": 18,
+          "depth": 15
+        },
+        {
+          "type": "hole",
+          "name": "隔墙连通孔Φ18",
+          "plane": "YZ",
+          "origin": [55, 0, 0],
+          "at": [36, 30],
+          "d": 18,
+          "depth": 10
+        },
+        {
+          "type": "hole",
+          "name": "顶面盲孔Φ5",
+          "plane": "XY",
+          "origin": [0, 0, 74],
+          "at": [[6, 20], [6, 52]],
+          "d": 5,
+          "depth": 16
+        },
+        {
+          "type": "hole",
+          "name": "底板四角安装孔Φ7",
+          "plane": "XY",
+          "origin": [0, 0, 12],
+          "at": [[-6, -4], [-6, 76], [128, -4], [128, 76]],
+          "d": 7,
+          "depth": 12
+        },
+        {
+          "type": "hole",
+          "name": "斜面斜孔Φ12",
+          "plane": {
+            "origin": [104, 36, 56],
+            "normal": [0.7071067811865476, 0, 0.7071067811865476],
+            "x_dir": [0, 1, 0]
+          },
+          "at": [0, 0],
+          "d": 12,
+          "depth": 42
+        },
+        {
+          "type": "fillet",
+          "name": "底板左前外竖棱R2",
+          "radius": 2,
+          "edges": [[-12, -10, 6]]
+        },
+        {
+          "type": "chamfer",
+          "name": "前下直棱C1",
+          "distance": 1,
+          "edges": [[60, -10, 0]]
+        }
+      ]
+    }
+  ]
+}

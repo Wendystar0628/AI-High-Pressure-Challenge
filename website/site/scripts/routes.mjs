@@ -97,8 +97,8 @@ function makeT(i18nDir, lang) {
   };
 }
 
-export function routePlugin({ root }) {
-  const dataDir = join(root, 'data');
+export function routePlugin({ root, dataDir: customDataDir }) {
+  const dataDir = customDataDir || process.env.ONESHOT_SITE_DATA_DIR?.trim() || join(root, 'data');
   const pagesDir = join(root, 'pages');
   const i18nDir = join(root, 'src', 'i18n');
   let base = '/';

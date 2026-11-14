@@ -1,0 +1,40 @@
+// ============================================================================
+// 预置示例程序 3：消息发送程序 (/Programs/sender.nos)
+// 若接收进程尚未启动则自动拉起 /Programs/receiver.nos，按序发送消息并检验不存在目标的返回值。
+// ============================================================================
+
+let PAYLOADS = ["Alpha-24", "Bravo-Flight", "Charlie-Sync", "Delta-Done"];
+
+fn main() {
+  let rxPid = syscall("find_pid_by_role", "msg_demo_rx");
+  if (rxPid == null) {
+    let sp = syscall("proc_spawn", "/Programs/receiver.nos", [], { name: "receiver" });
+    if (!sp.ok) {
+      syscall("report_error", "启动接收进程失败: " + str(sp.error));
+      return null;
+    }
+    rxPid = sp.pid;
+    // 等待接收进程完成注册
+    syscall("sleep", 0.06);
+  }
+
+  // 发送拷贝值检验：发送后立刻原地修改本地数组，接收方拿到的仍是发送时刻的值
+  let mutableBox = ["box_v1"];
+  let sentCount = 0;
+  for (let i = 0; i < len(PAYLOADS); i++) {
+    let content = PAYLOADS[i] + " (" + mutableBox[0] + ")";
+    let res = syscall("send_msg", rxPid, content);
+    mutableBox[0] = "mutated_after_" + str(i);
+    if (res != null && res.ok) {
+      sentCount += 1;
+    }
+  }
+
+  // 检验向不存在的进程发送消息得到明确错误结果
+  let ghostRes = syscall("send_msg", 999999, "ghost");
+  let ghostTag = (ghostRes != null && !ghostRes.ok) ? ghostRes.error : "unexpected";
+
+  let report = "已向 PID=" + str(rxPid) + " 按序发送 " + str(sentCount) + " 条消息；不存在目标测试返回: " + str(ghostTag);
+  syscall("report_result", report);
+  return report;
+}

@@ -89,7 +89,7 @@
       <div class="sp"><p><b>记 0 分</b>：一次分离都没完成的题；<br>自编程序搜索、模拟或用求解器的整份作答</p></div>
     </section>
     <section class="blk">
-      <div class="bh"><div class="l"><span class="eyebrow slash">Drawing to Model</span><h3><i class="k std"></i>工程图纸三维还原</h3></div>
+      <div class="bh"><div class="l"><span class="eyebrow slash">Structure Reconstruction</span><h3><i class="k std"></i>机械结构重建</h3></div>
         <div class="icons"><img class="icon" src="../../icon-drawing.svg" alt=""></div></div>
       <p class="rule">25 题分三档，每题分值 w 为 3.5、4 或 4.4，合计 100。0.2 毫米和 2 毫米两档各求表面吻合度 F，合成 F* = 0.8F<sub>0.2</sub> + 0.2F<sub>2</sub>，每题得 w × min(1, F*/0.99)；只平移、不旋转。</p>
       <svg id="drawing" width="416" height="128"></svg>
@@ -253,7 +253,7 @@ const axes = P => el('polyline', { points: `${P.L},${P.T - 6} ${P.L},${P.B} ${P.
   txt(g, 0, y+H+66, 'cap', '未拆完时按合法完成的分离计部分分，最多 50%。');
 }
 
-/* 工程图纸：25个小格；F为两档按80/20合成后的值，只有05和16用于示意。 */
+/* 机械结构重建：25个小格；F为两档按80/20合成后的值，只有05和16用于示意。 */
 {
   const g=document.getElementById('drawing');
   const w=[3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4, 4, 4, 4, 4, 4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4], F=w.map(()=>1);F[4]=.918;F[15]=.64;

@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "攻城略地",
+  "tokens": 35838759,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.82,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/攻城略地/run-dd698db1b64446dc9c8e0d16d1f592f4"
+  ]
+}

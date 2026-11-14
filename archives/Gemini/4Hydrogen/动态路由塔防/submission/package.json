@@ -1,0 +1,18 @@
+{
+  "name": "dynamic-routing-td",
+  "version": "1.0.0",
+  "private": true,
+  "description": "网络安全攻防战 - 动态路由三维塔防",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --format=iife --target=chrome120 --outfile=app.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.187.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  }
+}

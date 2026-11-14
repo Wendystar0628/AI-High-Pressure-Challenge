@@ -1,17 +1,19 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "cost_source": {
     "name": "ModelDial 订阅额度",
     "name_en": "ModelDial subscription quotas",
     "url": "https://modeldial.com/subscriptions?period=week&view=insights",
-    "fetched": "2026-11-07",
+    "fetched": "2026-11-13",
     "usd_cny": 6.7133
   },
   "order": [
     "gpt-6-astra",
     "gpt-6-1-sol",
     "claude-opus-5-5",
+    "gemini-4-carbon",
     "claude-sonnet-5-5",
+    "gemini-4-hydrogen",
     "gpt-6-1-terra",
     "claude-haiku-5-5",
     "gpt-5-6-sol",
@@ -19,8 +21,7 @@
     "hy4",
     "gpt-6-luna",
     "mimo-v2-6-pro",
-    "gemini-4-carbon",
-    "gemini-4-hydrogen"
+    "kimi-k3-1-pro"
   ],
   "scores": {
     "gpt-6-astra": {
@@ -135,267 +136,15 @@
       "cost": {
         "cny": 57.5,
         "basis": "subscription",
+        "tokens": 162658630,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "OpenAI Pro 200",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 162658630,
-        "fitted": [
-          "形式化证明题",
-          "动态路由塔防",
-          "太阳雨渔港3D渲染",
-          "光线追踪渲染加速",
-          "鲁班锁拆解"
-        ],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2,
-        "fit_basis": {
-          "method": "agent_elapsed_time",
-          "source": "GPT/6Astra",
-          "tokens_per_minute": 183687.5356107679,
-          "source_tokens": 94694242,
-          "source_minutes": 515.5180599768956,
-          "source_times": {
-            "果冻冲击与造浪水槽": {
-              "minutes": 51.30880782206853,
-              "fallback": false,
-              "label": "实际停止",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\果冻冲击与造浪水槽\\run-048b736be57344af9eeaf7f9d5c5de0e\\session.log#agent_completed_at"
-              ]
-            },
-            "操作系统嵌套": {
-              "minutes": 81.70056068102518,
-              "fallback": false,
-              "label": "实际停止",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\session.log#agent_completed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\操作系统嵌套\\run-cfd22ee56e394a30aa0deaf32589a541\\host.json"
-              ]
-            },
-            "AE风味动效设计编辑器": {
-              "minutes": 52.96179868777593,
-              "fallback": false,
-              "label": "实际停止",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\AE风味动效设计编辑器\\run-6c7a7297cc2c46f0864b5aaa84329d88\\session.log#agent_completed_at"
-              ]
-            },
-            "数学竞赛原创试题": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数学竞赛原创试题\\run-7ca7b020462243928584d87c1110eeab\\runtime.json#closed_at"
-              ]
-            },
-            "星际战舰编队": {
-              "minutes": 90.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\星际战舰编队\\run-9be230be6dd34e88a1490092bb6c3ca8\\runtime.json#closed_at"
-              ]
-            },
-            "工程图纸三维还原": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\工程图纸三维还原\\run-5ebf605d6ae94c66921ef5e7934dd7f0\\runtime.json#closed_at"
-              ]
-            },
-            "数字电路仿真器加速": {
-              "minutes": 59.546892786026,
-              "fallback": false,
-              "label": "实际停止",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\数字电路仿真器加速\\run-def0258f74814d8eaf6845ce577cf6b5\\session.log#agent_completed_at"
-              ]
-            },
-            "攻城略地": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\GPT\\6Astra\\攻城略地\\run-98e12f876b3847fa854f440075dced15\\runtime.json#closed_at"
-              ]
-            }
-          },
-          "tasks": {
-            "形式化证明题": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 11021252,
-              "segments": [
-                {
-                  "run": "GPT/6Astra/形式化证明题/timer-1793699493.1404154",
-                  "time": {
-                    "minutes": 60.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/形式化证明题",
-                      "前段计时归档原因：改为 8 题，七个模型重测"
-                    ]
-                  }
-                }
-              ]
-            },
-            "动态路由塔防": {
-              "minutes": 90.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 16531878,
-              "segments": [
-                {
-                  "run": "GPT/6Astra/动态路由塔防/timer-1793583558.0270402",
-                  "time": {
-                    "minutes": 90.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/动态路由塔防"
-                    ]
-                  }
-                }
-              ]
-            },
-            "太阳雨渔港3D渲染": {
-              "minutes": 100.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 18368754,
-              "segments": [
-                {
-                  "run": "GPT/6Astra/太阳雨渔港3D渲染/timer-1793583560.5644612",
-                  "time": {
-                    "minutes": 100.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/太阳雨渔港3D渲染"
-                    ]
-                  }
-                }
-              ]
-            },
-            "光线追踪渲染加速": {
-              "minutes": 60,
-              "fallback": true,
-              "label": "限时回退",
-              "sources": [
-                "题目限时（无完整作答时长记录）"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 11021252,
-              "segments": []
-            },
-            "鲁班锁拆解": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 11021252,
-              "segments": [
-                {
-                  "run": "GPT/6Astra/鲁班锁拆解/timer-1793742813.8459013",
-                  "time": {
-                    "minutes": 60.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.GPT/6Astra/鲁班锁拆解",
-                      "前段计时归档原因：换成新八题版（Handshake…Linear，档次 2/4/2，分值 8/12/18，材料文件夹沿用原名），旧八题版这轮不评分，七模型重测"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
         }
       },
       "rank": 1,
@@ -403,28 +152,28 @@
         "reason": 1,
         "algo": 4,
         "battle": 1,
-        "spatial": 2,
+        "spatial": 3,
         "drawing": 1,
-        "interact": 3,
+        "interact": 5,
         "game": 4,
         "physics": 2,
         "visual": 3,
-        "system": 2
+        "system": 3
       },
       "task_ranks": {
         "formal-proof": 1,
         "math-olympiad": 2,
-        "raytracing": 2,
+        "raytracing": 3,
         "circuit": 4,
         "conquest": 1,
-        "luban": 2,
+        "luban": 3,
         "drawing": 1,
-        "ae-editor": 3,
+        "ae-editor": 5,
         "tower-defense": 4,
         "jelly-tank": 2,
         "harbor": 3,
         "starship": 3,
-        "nested-os": 2
+        "nested-os": 3
       }
     },
     "gpt-6-1-sol": {
@@ -466,7 +215,6 @@
         "math-olympiad": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "第1、7、19题用全构型编码代替实际求值和分类。"
             }
           ]
@@ -547,45 +295,44 @@
       "cost": {
         "cny": 12.9,
         "basis": "subscription",
+        "tokens": 195399801,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "OpenAI Pro 200",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 195399801,
-        "fitted": [],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2
+        }
       },
       "rank": 2,
       "category_ranks": {
         "reason": 2,
         "algo": 3,
         "battle": 2,
-        "spatial": 1,
+        "spatial": 2,
         "drawing": 2,
-        "interact": 5,
+        "interact": 7,
         "game": 3,
         "physics": 3,
-        "visual": 4,
-        "system": 3
+        "visual": 6,
+        "system": 4
       },
       "task_ranks": {
-        "formal-proof": 2,
+        "formal-proof": 3,
         "math-olympiad": 1,
-        "raytracing": 3,
+        "raytracing": 4,
         "circuit": 2,
         "conquest": 2,
-        "luban": 1,
+        "luban": 2,
         "drawing": 2,
-        "ae-editor": 5,
+        "ae-editor": 7,
         "tower-defense": 3,
         "jelly-tank": 3,
-        "harbor": 4,
+        "harbor": 6,
         "starship": 4,
-        "nested-os": 3
+        "nested-os": 4
       }
     },
     "claude-opus-5-5": {
@@ -700,287 +447,202 @@
       "cost": {
         "cny": 27.4,
         "basis": "subscription",
+        "tokens": 584318405,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "Claude Ultra",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 584318405,
-        "fitted": [
-          "形式化证明题",
-          "太阳雨渔港3D渲染",
-          "光线追踪渲染加速",
-          "鲁班锁拆解"
-        ],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2,
-        "fit_basis": {
-          "method": "agent_elapsed_time",
-          "source": "Claude/Opus5.5",
-          "tokens_per_minute": 626951.077027027,
-          "source_tokens": 463943797,
-          "source_minutes": 740.0,
-          "source_times": {
-            "动态路由塔防": {
-              "minutes": 90.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\deadline.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\session.log#agent_completed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\session.log#agent_stopped_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\动态路由塔防\\20261101-055335\\host.json"
-              ]
-            },
-            "太阳雨渔港3D渲染": {
-              "minutes": 90.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\deadline.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\session.log#agent_completed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\session.log#agent_stopped_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\20261031-000037\\host.json"
-              ]
-            },
-            "果冻冲击与造浪水槽": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/果冻冲击与造浪水槽、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\run-80f6c3c384fb4514b4fd55f67be16f88\\runtime.json#closed_at"
-              ]
-            },
-            "操作系统嵌套": {
-              "minutes": 110.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-8b96a8f6a1d941fc860227570b5fa121\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/操作系统嵌套、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\操作系统嵌套\\run-e1f31e1f00b84992861917c33ba348ae\\runtime.json#closed_at"
-              ]
-            },
-            "AE风味动效设计编辑器": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/AE风味动效设计编辑器、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\AE风味动效设计编辑器\\run-a6127b19ceac4bedbba8f83c4e0f1f48\\runtime.json#closed_at"
-              ]
-            },
-            "数学竞赛原创试题": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数学竞赛原创试题、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数学竞赛原创试题\\run-cc12f6d711624abcb3ee19e1ee29c545\\host.json"
-              ]
-            },
-            "星际战舰编队": {
-              "minutes": 90.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/星际战舰编队、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\runtime.json#closed_at",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\星际战舰编队\\run-54b53ece624e4b8eb5ca071adda8c650\\host.json"
-              ]
-            },
-            "工程图纸三维还原": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/工程图纸三维还原、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\工程图纸三维还原\\run-4b3dbefba5d0424081a42b4735c43bb6\\runtime.json#closed_at"
-              ]
-            },
-            "数字电路仿真器加速": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/数字电路仿真器加速、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\数字电路仿真器加速\\run-498be5005dd347809463ab3c5b9f9e26\\runtime.json#closed_at"
-              ]
-            },
-            "攻城略地": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json#stopped",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/攻城略地、E:\\Project\\AI_OneShot_Bench\\orchestrator\\logs\\Claude\\Opus5.5\\攻城略地\\run-5151fc96333e4d6c8b3685a2bb9c5330\\runtime.json#closed_at"
-              ]
-            }
-          },
-          "tasks": {
-            "形式化证明题": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 37617065,
-              "segments": [
-                {
-                  "run": "Claude/Opus5.5/形式化证明题/timer-1793699491.2902353",
-                  "time": {
-                    "minutes": 60.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/形式化证明题"
-                    ]
-                  }
-                }
-              ]
-            },
-            "太阳雨渔港3D渲染": {
-              "minutes": 12.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染#closed_at"
-              ],
-              "measured_tokens": 105607156,
-              "fitted_tokens": 7523413,
-              "segments": [
-                {
-                  "run": "Claude/Opus5.5/太阳雨渔港3D渲染/timer-1793376040.6203678",
-                  "time": {
-                    "minutes": 12.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "resume",
-                    "inferred": true,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/太阳雨渔港3D渲染",
-                      "推定续做：缩短授权时长、继承半场提醒，且未见重测归档边界；会话 ID 无法补证",
-                      "前段归档目录 20261031-000037；本段在归档后 3.620 秒启动"
-                    ]
-                  }
-                }
-              ]
-            },
-            "光线追踪渲染加速": {
-              "minutes": 60,
-              "fallback": true,
-              "label": "限时回退",
-              "sources": [
-                "题目限时（无完整作答时长记录）"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 37617065,
-              "segments": []
-            },
-            "鲁班锁拆解": {
-              "minutes": 60.0,
-              "fallback": false,
-              "label": "开始→截止（实际停止未知）",
-              "sources": [
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
-                "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解#closed_at"
-              ],
-              "measured_tokens": 0,
-              "fitted_tokens": 37617065,
-              "segments": [
-                {
-                  "run": "Claude/Opus5.5/鲁班锁拆解/timer-1793742810.494672",
-                  "time": {
-                    "minutes": 60.0,
-                    "fallback": false,
-                    "label": "开始→截止（实际停止未知）",
-                    "sources": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解#closed_at"
-                    ]
-                  },
-                  "lineage": {
-                    "kind": "new",
-                    "inferred": false,
-                    "evidence": [
-                      "E:\\Project\\AI_OneShot_Bench\\orchestrator\\state.json#tasks.Claude/Opus5.5/鲁班锁拆解",
-                      "前段计时归档原因：换成新八题版（Handshake…Linear，档次 2/4/2，分值 8/12/18，材料文件夹沿用原名），旧八题版这轮不评分，七模型重测"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
         }
       },
       "rank": 3,
       "category_ranks": {
         "reason": 3,
         "algo": 2,
-        "battle": 3,
-        "spatial": 4,
+        "battle": 5,
+        "spatial": 6,
         "drawing": 4,
         "interact": 1,
         "game": 1,
         "physics": 1,
         "visual": 1,
-        "system": 4
+        "system": 6
       },
       "task_ranks": {
-        "formal-proof": 2,
+        "formal-proof": 3,
         "math-olympiad": 5,
-        "raytracing": 4,
+        "raytracing": 5,
         "circuit": 1,
-        "conquest": 3,
-        "luban": 4,
+        "conquest": 5,
+        "luban": 6,
         "drawing": 4,
         "ae-editor": 1,
         "tower-defense": 1,
         "jelly-tank": 1,
         "harbor": 1,
         "starship": 1,
-        "nested-os": 4
+        "nested-os": 6
+      }
+    },
+    "gemini-4-carbon": {
+      "total": 58.4,
+      "kinds": {
+        "standard": 48.5,
+        "design": 68.3
+      },
+      "categories": {
+        "reason": 54.2,
+        "algo": 49.4,
+        "battle": 52.2,
+        "spatial": 80.5,
+        "drawing": 6.4,
+        "interact": 70.7,
+        "game": 72.1,
+        "physics": 47.4,
+        "visual": 76.1,
+        "system": 75.3
+      },
+      "tasks": {
+        "formal-proof": 75.0,
+        "math-olympiad": 33.3,
+        "raytracing": 61.0,
+        "circuit": 37.8,
+        "conquest": 52.2,
+        "luban": 80.5,
+        "drawing": 6.4,
+        "ae-editor": 70.7,
+        "tower-defense": 72.1,
+        "jelly-tank": 47.4,
+        "harbor": 79.7,
+        "starship": 72.5,
+        "nested-os": 75.3
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.3
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 66.1
+            }
+          ],
+          "anomaly": [
+            {
+              "text": "粒子空状态不推进步号，默认示例跳转卡死；音频接口名失配。"
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 78.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.7
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 84.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 75.3
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.5
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 53.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 41.8
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 71.0
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 22.5,
+        "basis": "subscription",
+        "tokens": 159720081,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Google AI Ultra 20×",
+          "name_en": "Google AI Ultra 20×",
+          "price": 199.99,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 4,
+      "category_ranks": {
+        "reason": 4,
+        "algo": 5,
+        "battle": 3,
+        "spatial": 1,
+        "drawing": 9,
+        "interact": 4,
+        "game": 5,
+        "physics": 7,
+        "visual": 4,
+        "system": 2
+      },
+      "task_ranks": {
+        "formal-proof": 1,
+        "math-olympiad": 6,
+        "raytracing": 2,
+        "circuit": 8,
+        "conquest": 3,
+        "luban": 1,
+        "drawing": 9,
+        "ae-editor": 4,
+        "tower-defense": 5,
+        "jelly-tank": 7,
+        "harbor": 4,
+        "starship": 5,
+        "nested-os": 2
       }
     },
     "claude-sonnet-5-5": {
@@ -1095,45 +757,204 @@
       "cost": {
         "cny": 23.8,
         "basis": "subscription",
+        "tokens": 749100777,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "Claude Ultra",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 749100777,
-        "fitted": [],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2
+        }
       },
-      "rank": 4,
+      "rank": 5,
       "category_ranks": {
-        "reason": 5,
+        "reason": 7,
         "algo": 1,
-        "battle": 6,
-        "spatial": 6,
+        "battle": 9,
+        "spatial": 8,
         "drawing": 3,
         "interact": 2,
         "game": 2,
-        "physics": 4,
+        "physics": 5,
         "visual": 2,
         "system": 1
       },
       "task_ranks": {
-        "formal-proof": 4,
-        "math-olympiad": 6,
+        "formal-proof": 6,
+        "math-olympiad": 8,
         "raytracing": 1,
         "circuit": 3,
-        "conquest": 6,
-        "luban": 6,
+        "conquest": 9,
+        "luban": 8,
         "drawing": 3,
         "ae-editor": 2,
         "tower-defense": 2,
-        "jelly-tank": 4,
+        "jelly-tank": 5,
         "harbor": 2,
         "starship": 2,
         "nested-os": 1
+      }
+    },
+    "gemini-4-hydrogen": {
+      "total": 55.6,
+      "kinds": {
+        "standard": 40.6,
+        "design": 70.6
+      },
+      "categories": {
+        "reason": 47.9,
+        "algo": 48.5,
+        "battle": 46.7,
+        "spatial": 58.3,
+        "drawing": 1.5,
+        "interact": 72.1,
+        "game": 71.2,
+        "physics": 62.7,
+        "visual": 75.5,
+        "system": 71.6
+      },
+      "tasks": {
+        "formal-proof": 62.5,
+        "math-olympiad": 33.3,
+        "raytracing": 50.7,
+        "circuit": 46.3,
+        "conquest": 46.7,
+        "luban": 58.3,
+        "drawing": 1.5,
+        "ae-editor": 72.1,
+        "tower-defense": 71.2,
+        "jelly-tank": 62.7,
+        "harbor": 79.1,
+        "starship": 72.0,
+        "nested-os": 71.6
+      },
+      "status": "ranked",
+      "done": 13,
+      "task_info": {
+        "ae-editor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 76.8
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 67.5
+            }
+          ]
+        },
+        "tower-defense": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 77.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 64.9
+            }
+          ]
+        },
+        "harbor": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 83.4
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 74.7
+            }
+          ]
+        },
+        "starship": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 79.0
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 65.0
+            }
+          ]
+        },
+        "jelly-tank": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 68.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 56.9
+            }
+          ]
+        },
+        "nested-os": {
+          "graders": [
+            {
+              "name": "GPT 6.1 Sol",
+              "score": 75.5
+            },
+            {
+              "name": "Claude Opus 5.5",
+              "score": 67.6
+            }
+          ]
+        },
+        "drawing": {
+          "anomaly": [
+            {
+              "text": "反复读图仅提交第03题，其余24题未交。"
+            }
+          ]
+        }
+      },
+      "cost": {
+        "cny": 48.7,
+        "basis": "subscription",
+        "tokens": 456926002,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Google AI Ultra 20×",
+          "name_en": "Google AI Ultra 20×",
+          "price": 199.99,
+          "currency": "USD",
+          "period": "month"
+        }
+      },
+      "rank": 6,
+      "category_ranks": {
+        "reason": 6,
+        "algo": 6,
+        "battle": 4,
+        "spatial": 4,
+        "drawing": 13,
+        "interact": 3,
+        "game": 6,
+        "physics": 4,
+        "visual": 5,
+        "system": 5
+      },
+      "task_ranks": {
+        "formal-proof": 3,
+        "math-olympiad": 6,
+        "raytracing": 6,
+        "circuit": 5,
+        "conquest": 4,
+        "luban": 4,
+        "drawing": 13,
+        "ae-editor": 3,
+        "tower-defense": 6,
+        "jelly-tank": 4,
+        "harbor": 5,
+        "starship": 6,
+        "nested-os": 5
       }
     },
     "gpt-6-1-terra": {
@@ -1248,45 +1069,44 @@
       "cost": {
         "cny": 23.9,
         "basis": "subscription",
+        "tokens": 724983279,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "OpenAI Pro 200",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 724983279,
-        "fitted": [],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2
+        }
       },
-      "rank": 5,
+      "rank": 7,
       "category_ranks": {
-        "reason": 4,
-        "algo": 5,
-        "battle": 5,
-        "spatial": 3,
+        "reason": 5,
+        "algo": 7,
+        "battle": 8,
+        "spatial": 5,
         "drawing": 5,
-        "interact": 7,
-        "game": 5,
-        "physics": 6,
-        "visual": 6,
-        "system": 8
+        "interact": 9,
+        "game": 7,
+        "physics": 8,
+        "visual": 8,
+        "system": 10
       },
       "task_ranks": {
-        "formal-proof": 5,
+        "formal-proof": 7,
         "math-olympiad": 3,
-        "raytracing": 5,
-        "circuit": 5,
-        "conquest": 5,
-        "luban": 3,
+        "raytracing": 7,
+        "circuit": 6,
+        "conquest": 8,
+        "luban": 5,
         "drawing": 5,
-        "ae-editor": 7,
-        "tower-defense": 5,
-        "jelly-tank": 6,
-        "harbor": 6,
-        "starship": 6,
-        "nested-os": 8
+        "ae-editor": 9,
+        "tower-defense": 7,
+        "jelly-tank": 8,
+        "harbor": 8,
+        "starship": 8,
+        "nested-os": 10
       }
     },
     "claude-haiku-5-5": {
@@ -1401,45 +1221,44 @@
       "cost": {
         "cny": 16.0,
         "basis": "subscription",
+        "tokens": 2432439479,
+        "method": "api_price",
+        "api_usd": 144.4,
+        "hours": 15.2,
         "plan": {
           "name": "Claude Ultra",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 2432439479,
-        "fitted": [],
-        "method": "api_price",
-        "api_usd": 144.4,
-        "hours": 15.2
+        }
       },
-      "rank": 6,
+      "rank": 8,
       "category_ranks": {
-        "reason": 7,
-        "algo": 7,
-        "battle": 4,
-        "spatial": 10,
+        "reason": 9,
+        "algo": 10,
+        "battle": 7,
+        "spatial": 13,
         "drawing": 6,
-        "interact": 4,
-        "game": 6,
-        "physics": 5,
-        "visual": 8,
-        "system": 5
+        "interact": 6,
+        "game": 8,
+        "physics": 6,
+        "visual": 10,
+        "system": 7
       },
       "task_ranks": {
-        "formal-proof": 6,
-        "math-olympiad": 7,
-        "raytracing": 9,
-        "circuit": 7,
-        "conquest": 4,
-        "luban": 10,
+        "formal-proof": 8,
+        "math-olympiad": 9,
+        "raytracing": 12,
+        "circuit": 10,
+        "conquest": 7,
+        "luban": 13,
         "drawing": 6,
-        "ae-editor": 4,
-        "tower-defense": 6,
-        "jelly-tank": 5,
-        "harbor": 8,
-        "starship": 8,
-        "nested-os": 5
+        "ae-editor": 6,
+        "tower-defense": 8,
+        "jelly-tank": 6,
+        "harbor": 10,
+        "starship": 10,
+        "nested-os": 7
       }
     },
     "gpt-5-6-sol": {
@@ -1554,45 +1373,44 @@
       "cost": {
         "cny": 35.4,
         "basis": "subscription",
+        "tokens": 409606369,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "OpenAI Pro 200",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 409606369,
-        "fitted": [],
-        "method": "quota",
-        "api_usd": null,
-        "hours": 15.2
+        }
       },
-      "rank": 7,
+      "rank": 9,
       "category_ranks": {
-        "reason": 6,
-        "algo": 6,
-        "battle": 11,
-        "spatial": 5,
+        "reason": 8,
+        "algo": 8,
+        "battle": 14,
+        "spatial": 7,
         "drawing": 7,
-        "interact": 9,
-        "game": 9,
-        "physics": 7,
-        "visual": 9,
-        "system": 9
+        "interact": 11,
+        "game": 11,
+        "physics": 9,
+        "visual": 11,
+        "system": 11
       },
       "task_ranks": {
-        "formal-proof": 6,
+        "formal-proof": 8,
         "math-olympiad": 4,
-        "raytracing": 6,
-        "circuit": 6,
-        "conquest": 11,
-        "luban": 5,
+        "raytracing": 8,
+        "circuit": 9,
+        "conquest": 14,
+        "luban": 7,
         "drawing": 7,
-        "ae-editor": 9,
-        "tower-defense": 9,
-        "jelly-tank": 7,
-        "harbor": 9,
-        "starship": 10,
-        "nested-os": 9
+        "ae-editor": 11,
+        "tower-defense": 11,
+        "jelly-tank": 9,
+        "harbor": 11,
+        "starship": 12,
+        "nested-os": 11
       }
     },
     "deepseek-v4-1-flash": {
@@ -1682,7 +1500,6 @@
         "raytracing": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "最终GPU建树把三角形下界当上界，导致大量交点漏检。"
             }
           ]
@@ -1690,7 +1507,6 @@
         "circuit": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "末段修改寄存器融合后自测仍有根值不一致，最终源码保留该缺陷。"
             }
           ]
@@ -1722,7 +1538,6 @@
         "conquest": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "调优依赖额外编译宏，未把已测试参数写回最终源码。"
             }
           ]
@@ -1731,42 +1546,41 @@
       "cost": {
         "cny": 69.9,
         "basis": "api",
-        "plan": {
-          "name": "DeepSeek API"
-        },
         "tokens": 1465921352,
-        "fitted": [],
         "method": "api_price",
         "api_usd": 10.4,
-        "hours": 15.2
+        "hours": 15.2,
+        "plan": {
+          "name": "DeepSeek API"
+        }
       },
-      "rank": 8,
+      "rank": 10,
       "category_ranks": {
-        "reason": 9,
-        "algo": 11,
-        "battle": 8,
-        "spatial": 7,
+        "reason": 12,
+        "algo": 14,
+        "battle": 11,
+        "spatial": 9,
         "drawing": 8,
-        "interact": 6,
-        "game": 7,
-        "physics": 8,
-        "visual": 5,
-        "system": 6
+        "interact": 8,
+        "game": 9,
+        "physics": 10,
+        "visual": 7,
+        "system": 8
       },
       "task_ranks": {
-        "formal-proof": 8,
-        "math-olympiad": 9,
-        "raytracing": 11,
-        "circuit": 11,
-        "conquest": 8,
-        "luban": 7,
+        "formal-proof": 10,
+        "math-olympiad": 12,
+        "raytracing": 14,
+        "circuit": 14,
+        "conquest": 11,
+        "luban": 9,
         "drawing": 8,
-        "ae-editor": 6,
-        "tower-defense": 7,
-        "jelly-tank": 8,
-        "harbor": 5,
-        "starship": 5,
-        "nested-os": 6
+        "ae-editor": 8,
+        "tower-defense": 9,
+        "jelly-tank": 10,
+        "harbor": 7,
+        "starship": 7,
+        "nested-os": 8
       }
     },
     "hy4": {
@@ -1808,7 +1622,6 @@
         "formal-proof": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "只写了两份查符号用的探测脚本，八道题一个主定理都没有写出。"
             }
           ]
@@ -1816,7 +1629,6 @@
         "math-olympiad": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "截止时仍在推敲首题，未创建答案目录或保存任何解答。"
             }
           ]
@@ -1882,7 +1694,6 @@
           ],
           "anomaly": [
             {
-              "grader": "Claude Opus 5.5",
               "text": "只做到果冻阶段就停止，水体与音效仍是占位空文件"
             }
           ]
@@ -1903,6 +1714,10 @@
       "cost": {
         "cny": 60.9,
         "basis": "subscription",
+        "tokens": 341435710,
+        "method": "credits",
+        "api_usd": null,
+        "hours": 15.2,
         "plan": {
           "name": "CodeBuddy 140 元档",
           "name_en": "CodeBuddy",
@@ -1910,63 +1725,35 @@
           "currency": "CNY",
           "period": "month",
           "credits": 9000
-        },
-        "tokens": 341435710,
-        "fitted": [],
-        "method": "credits",
-        "api_usd": null,
-        "hours": 15.2,
-        "usage_gaps": {
-          "形式化证明题": [
-            {
-              "at": 1793983084.121,
-              "request": "01a1b1b6184777128d70e9cf8617ed84",
-              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
-            }
-          ],
-          "数学竞赛原创试题": [
-            {
-              "at": 1794440715.112,
-              "request": "01a1ccf6dbac737a995e4c2d2a0acf60",
-              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
-            }
-          ],
-          "鲁班锁拆解": [
-            {
-              "at": 1793960876.581,
-              "request": "01a1b0668c31732bb5d69a963233b87a",
-              "reason": "有模型输出，但服务未返回用量或积分；不可从字符数或上下文占用还原"
-            }
-          ]
         }
       },
-      "rank": 9,
+      "rank": 11,
       "category_ranks": {
-        "reason": 10,
-        "algo": 8,
-        "battle": 10,
-        "spatial": 10,
-        "drawing": 10,
-        "interact": 8,
-        "game": 8,
-        "physics": 9,
-        "visual": 7,
-        "system": 7
+        "reason": 13,
+        "algo": 11,
+        "battle": 13,
+        "spatial": 13,
+        "drawing": 12,
+        "interact": 10,
+        "game": 10,
+        "physics": 11,
+        "visual": 9,
+        "system": 9
       },
       "task_ranks": {
-        "formal-proof": 10,
-        "math-olympiad": 10,
-        "raytracing": 7,
-        "circuit": 8,
-        "conquest": 10,
-        "luban": 10,
-        "drawing": 10,
-        "ae-editor": 8,
-        "tower-defense": 8,
-        "jelly-tank": 9,
-        "harbor": 7,
-        "starship": 7,
-        "nested-os": 7
+        "formal-proof": 13,
+        "math-olympiad": 13,
+        "raytracing": 10,
+        "circuit": 11,
+        "conquest": 13,
+        "luban": 13,
+        "drawing": 12,
+        "ae-editor": 10,
+        "tower-defense": 10,
+        "jelly-tank": 11,
+        "harbor": 9,
+        "starship": 9,
+        "nested-os": 9
       }
     },
     "gpt-6-luna": {
@@ -2080,7 +1867,6 @@
         "conquest": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "仅合并等距来源的进攻兵力，救援安排在扩张之后，攻防协同薄弱。"
             }
           ]
@@ -2089,45 +1875,44 @@
       "cost": {
         "cny": 1.4,
         "basis": "subscription",
+        "tokens": 401046274,
+        "method": "api_price",
+        "api_usd": 5.9,
+        "hours": 15.2,
         "plan": {
           "name": "OpenAI Pro 200",
           "price": 200,
           "currency": "USD",
           "period": "month"
-        },
-        "tokens": 401046274,
-        "fitted": [],
-        "method": "api_price",
-        "api_usd": 5.9,
-        "hours": 15.2
+        }
       },
-      "rank": 10,
+      "rank": 12,
       "category_ranks": {
-        "reason": 8,
-        "algo": 9,
-        "battle": 9,
-        "spatial": 7,
-        "drawing": 9,
-        "interact": 10,
-        "game": 11,
-        "physics": 10,
-        "visual": 11,
-        "system": 10
+        "reason": 11,
+        "algo": 12,
+        "battle": 12,
+        "spatial": 9,
+        "drawing": 11,
+        "interact": 12,
+        "game": 13,
+        "physics": 12,
+        "visual": 13,
+        "system": 12
       },
       "task_ranks": {
-        "formal-proof": 8,
-        "math-olympiad": 8,
-        "raytracing": 8,
-        "circuit": 9,
-        "conquest": 9,
-        "luban": 7,
-        "drawing": 9,
-        "ae-editor": 10,
-        "tower-defense": 11,
-        "jelly-tank": 10,
-        "harbor": 11,
-        "starship": 11,
-        "nested-os": 10
+        "formal-proof": 10,
+        "math-olympiad": 11,
+        "raytracing": 11,
+        "circuit": 12,
+        "conquest": 12,
+        "luban": 9,
+        "drawing": 11,
+        "ae-editor": 12,
+        "tower-defense": 13,
+        "jelly-tank": 12,
+        "harbor": 13,
+        "starship": 13,
+        "nested-os": 12
       }
     },
     "mimo-v2-6-pro": {
@@ -2169,7 +1954,6 @@
         "math-olympiad": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "读完题后持续推理，始终未创建或写入任何答案文件。"
             }
           ]
@@ -2187,7 +1971,6 @@
           ],
           "anomaly": [
             {
-              "grader": "Claude Opus 5.5",
               "text": "三维帧缓冲从未跑通，字块、锤子、火星全程不显示，模型未验证示例后段"
             }
           ]
@@ -2241,7 +2024,6 @@
           ],
           "anomaly": [
             {
-              "grader": "Claude Opus 5.5",
               "text": "水体管线存储缓冲超限，模型诊断出问题后没修完就中止，场景二整体失效"
             }
           ]
@@ -2259,11 +2041,9 @@
           ],
           "anomaly": [
             {
-              "grader": "Claude Opus 5.5",
               "text": "从未启动过作品，模块导入路径写错导致整站卡在启动画面"
             },
             {
-              "grader": "GPT 6.1 Sol",
               "text": "播放器与图表模块使用错误相对导入，阻断整个桌面启动。"
             }
           ]
@@ -2271,7 +2051,6 @@
         "drawing": {
           "anomaly": [
             {
-              "grader": "GPT 6.1 Sol",
               "text": "陷入读写工具调用循环且未交答案，并搜索目录外跨题记忆。"
             }
           ]
@@ -2280,278 +2059,134 @@
       "cost": {
         "cny": 60.1,
         "basis": "api",
-        "plan": {
-          "name": "MiMo API"
-        },
         "tokens": 422066617,
-        "fitted": [],
         "method": "api_price",
         "api_usd": 9.0,
-        "hours": 15.2
+        "hours": 15.2,
+        "plan": {
+          "name": "MiMo API"
+        }
       },
-      "rank": 11,
+      "rank": 13,
+      "category_ranks": {
+        "reason": 13,
+        "algo": 13,
+        "battle": 10,
+        "spatial": 9,
+        "drawing": 14,
+        "interact": 13,
+        "game": 12,
+        "physics": 13,
+        "visual": 12,
+        "system": 13
+      },
+      "task_ranks": {
+        "formal-proof": 13,
+        "math-olympiad": 13,
+        "raytracing": 13,
+        "circuit": 13,
+        "conquest": 10,
+        "luban": 9,
+        "drawing": 14,
+        "ae-editor": 13,
+        "tower-defense": 12,
+        "jelly-tank": 13,
+        "harbor": 12,
+        "starship": 11,
+        "nested-os": 13
+      }
+    },
+    "kimi-k3-1-pro": {
+      "total": null,
+      "kinds": {
+        "standard": 17.4,
+        "design": null
+      },
+      "categories": {
+        "reason": 19.3,
+        "algo": 37.4,
+        "battle": 17.7,
+        "spatial": 6.4,
+        "drawing": 6.3,
+        "interact": null,
+        "game": null,
+        "physics": null,
+        "visual": null,
+        "system": null
+      },
+      "tasks": {
+        "formal-proof": 12.5,
+        "math-olympiad": 26.2,
+        "raytracing": 35.7,
+        "circuit": 39.0,
+        "conquest": 17.7,
+        "luban": 6.4,
+        "drawing": 6.3,
+        "ae-editor": null,
+        "tower-defense": null,
+        "jelly-tank": null,
+        "harbor": null,
+        "starship": null,
+        "nested-os": null
+      },
+      "status": "testing",
+      "done": 7,
+      "task_info": {
+        "ae-editor": {
+          "state": "testing"
+        },
+        "tower-defense": {
+          "state": "testing"
+        },
+        "harbor": {
+          "state": "testing"
+        },
+        "starship": {
+          "state": "testing"
+        },
+        "jelly-tank": {
+          "state": "testing"
+        },
+        "nested-os": {
+          "state": "testing"
+        }
+      },
+      "cost": {
+        "cny": 32.9,
+        "basis": "subscription",
+        "tokens": 309876807,
+        "method": "quota",
+        "api_usd": null,
+        "hours": 15.2,
+        "plan": {
+          "name": "Kimi Pro",
+          "name_en": "Kimi Pro",
+          "price": 199,
+          "currency": "CNY",
+          "period": "month"
+        }
+      },
+      "rank": null,
       "category_ranks": {
         "reason": 10,
-        "algo": 10,
-        "battle": 7,
-        "spatial": 7,
-        "drawing": 11,
-        "interact": 11,
-        "game": 10,
-        "physics": 11,
-        "visual": 10,
-        "system": 11
+        "algo": 9,
+        "battle": 6,
+        "spatial": 12,
+        "drawing": 10,
+        "interact": null,
+        "game": null,
+        "physics": null,
+        "visual": null,
+        "system": null
       },
       "task_ranks": {
         "formal-proof": 10,
         "math-olympiad": 10,
-        "raytracing": 10,
-        "circuit": 10,
-        "conquest": 7,
-        "luban": 7,
-        "drawing": 11,
-        "ae-editor": 11,
-        "tower-defense": 10,
-        "jelly-tank": 11,
-        "harbor": 10,
-        "starship": 9,
-        "nested-os": 11
-      }
-    },
-    "gemini-4-carbon": {
-      "total": null,
-      "kinds": {
-        "standard": null,
-        "design": null
-      },
-      "categories": {
-        "reason": null,
-        "algo": null,
-        "battle": null,
-        "spatial": null,
-        "drawing": null,
-        "interact": null,
-        "game": null,
-        "physics": null,
-        "visual": null,
-        "system": null
-      },
-      "tasks": {
-        "formal-proof": null,
-        "math-olympiad": null,
-        "raytracing": null,
-        "circuit": null,
-        "conquest": null,
-        "luban": null,
-        "drawing": null,
-        "ae-editor": null,
-        "tower-defense": null,
-        "jelly-tank": null,
-        "harbor": null,
-        "starship": null,
-        "nested-os": null
-      },
-      "status": "testing",
-      "done": 0,
-      "task_info": {
-        "formal-proof": {
-          "state": "testing"
-        },
-        "math-olympiad": {
-          "state": "testing"
-        },
-        "ae-editor": {
-          "state": "testing"
-        },
-        "tower-defense": {
-          "state": "testing"
-        },
-        "harbor": {
-          "state": "testing"
-        },
-        "starship": {
-          "state": "testing"
-        },
-        "raytracing": {
-          "state": "testing"
-        },
-        "circuit": {
-          "state": "testing"
-        },
-        "jelly-tank": {
-          "state": "testing"
-        },
-        "nested-os": {
-          "state": "testing"
-        },
-        "luban": {
-          "state": "testing"
-        },
-        "drawing": {
-          "state": "testing"
-        },
-        "conquest": {
-          "state": "testing"
-        }
-      },
-      "cost": {
-        "cny": null,
-        "basis": "subscription",
-        "plan": {
-          "name": "Google AI Ultra",
-          "name_en": "Google AI Ultra",
-          "price": 199.99,
-          "currency": "USD",
-          "period": "month"
-        },
-        "tokens": null,
-        "fitted": [],
-        "method": null,
-        "api_usd": null,
-        "hours": 15.2
-      },
-      "rank": null,
-      "category_ranks": {
-        "reason": null,
-        "algo": null,
-        "battle": null,
-        "spatial": null,
-        "drawing": null,
-        "interact": null,
-        "game": null,
-        "physics": null,
-        "visual": null,
-        "system": null
-      },
-      "task_ranks": {
-        "formal-proof": null,
-        "math-olympiad": null,
-        "raytracing": null,
-        "circuit": null,
-        "conquest": null,
-        "luban": null,
-        "drawing": null,
-        "ae-editor": null,
-        "tower-defense": null,
-        "jelly-tank": null,
-        "harbor": null,
-        "starship": null,
-        "nested-os": null
-      }
-    },
-    "gemini-4-hydrogen": {
-      "total": null,
-      "kinds": {
-        "standard": null,
-        "design": null
-      },
-      "categories": {
-        "reason": null,
-        "algo": null,
-        "battle": null,
-        "spatial": null,
-        "drawing": null,
-        "interact": null,
-        "game": null,
-        "physics": null,
-        "visual": null,
-        "system": null
-      },
-      "tasks": {
-        "formal-proof": null,
-        "math-olympiad": null,
-        "raytracing": null,
-        "circuit": null,
-        "conquest": null,
-        "luban": null,
-        "drawing": null,
-        "ae-editor": null,
-        "tower-defense": null,
-        "jelly-tank": null,
-        "harbor": null,
-        "starship": null,
-        "nested-os": null
-      },
-      "status": "testing",
-      "done": 0,
-      "task_info": {
-        "formal-proof": {
-          "state": "testing"
-        },
-        "math-olympiad": {
-          "state": "testing"
-        },
-        "ae-editor": {
-          "state": "testing"
-        },
-        "tower-defense": {
-          "state": "testing"
-        },
-        "harbor": {
-          "state": "testing"
-        },
-        "starship": {
-          "state": "testing"
-        },
-        "raytracing": {
-          "state": "testing"
-        },
-        "circuit": {
-          "state": "testing"
-        },
-        "jelly-tank": {
-          "state": "testing"
-        },
-        "nested-os": {
-          "state": "testing"
-        },
-        "luban": {
-          "state": "testing"
-        },
-        "drawing": {
-          "state": "testing"
-        },
-        "conquest": {
-          "state": "testing"
-        }
-      },
-      "cost": {
-        "cny": null,
-        "basis": "subscription",
-        "plan": {
-          "name": "Google AI Ultra",
-          "name_en": "Google AI Ultra",
-          "price": 199.99,
-          "currency": "USD",
-          "period": "month"
-        },
-        "tokens": null,
-        "fitted": [],
-        "method": null,
-        "api_usd": null,
-        "hours": 15.2
-      },
-      "rank": null,
-      "category_ranks": {
-        "reason": null,
-        "algo": null,
-        "battle": null,
-        "spatial": null,
-        "drawing": null,
-        "interact": null,
-        "game": null,
-        "physics": null,
-        "visual": null,
-        "system": null
-      },
-      "task_ranks": {
-        "formal-proof": null,
-        "math-olympiad": null,
-        "raytracing": null,
-        "circuit": null,
-        "conquest": null,
-        "luban": null,
-        "drawing": null,
+        "raytracing": 9,
+        "circuit": 7,
+        "conquest": 6,
+        "luban": 12,
+        "drawing": 10,
         "ae-editor": null,
         "tower-defense": null,
         "jelly-tank": null,

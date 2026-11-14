@@ -1,0 +1,119 @@
+// ============================================================================
+// NestedOS 闭环飞控进程 (/Apps/flight_ctrl.nos)
+// 说明：本程序是普通用户态系统程序，通过系统接口读取带时间戳的机体传感器值，计算总距、周期变距与尾桨舵量并写回。
+// 机体本身开环不稳定；若降低预算、运行持续计算进程或大幅调快时间速率导致本进程控制周期变长，机体将振荡直至失控坠毁。
+// 按操作说明编写的新飞控程序可直接替换本程序驾驶 24 号直升机，支持悬停、航向保持与第二停机坪 (H2) 自动降落。
+// ============================================================================
+
+// --- 可调 PID 控制增益（可在编辑器中修改保存，立即改变飞行品质） ---
+let KP_ALT = 0.22;
+let KD_ALT = 0.28;
+let KP_ATT = 2.60;
+let KD_ATT = 1.15;
+let KP_YAW = 2.40;
+let KD_YAW = 1.10;
+let CRUISE_SPEED = 6.5;
+
+fn wrap_angle(a) {
+  let pi = 3.14159265;
+  while (a > pi) { a -= 2.0 * pi; }
+  while (a < -pi) { a += 2.0 * pi; }
+  return a;
+}
+
+fn main(sessionId) {
+  let sid = sessionId != null ? str(sessionId) : "default";
+  syscall("register_role", "flight_ctrl");
+  let intAlt = 0.0;
+  let lastT = -1.0;
+
+  while (true) {
+    let s = syscall("fc_read_sensors", sid);
+    if (s != null && s.active) {
+      let dt = (lastT >= 0 && s.timestamp > lastT) ? (s.timestamp - lastT) : 0.04;
+      lastT = s.timestamp;
+
+      // 1. 目标点与高度决策（巡航 / 悬停 / 自动前往第二停机坪 H2 降落）
+      let targetAlt = s.groundY + 11.5;
+      let desVx = 0.0;
+      let desVz = 0.0;
+      let desYaw = num(s.targetHeading) * 3.14159265 / 180.0;
+
+      if (s.navMode == "land_h2" && s.pad2 != null) {
+        let dx = s.pad2[0] - s.pos[0];
+        let dz = s.pad2[2] - s.pos[2];
+        let dist = sqrt(dx * dx + dz * dz);
+        if (dist > 1.8) {
+          desYaw = atan2(dx, -dz);
+          let spd = clamp(dist * 0.45, 0.8, CRUISE_SPEED);
+          desVx = (dx / dist) * spd;
+          desVz = (dz / dist) * spd;
+          targetAlt = max(s.groundY, s.pad2[1]) + clamp(dist * 0.35 + 2.5, 2.5, 12.0);
+        } else {
+          // 对准 H2 停机坪正上方，平稳下降着陆
+          desVx = dx * 0.6;
+          desVz = dz * 0.6;
+          targetAlt = s.pad2[1] + 0.42;
+        }
+      } else if (s.navMode == "fly_heading") {
+        desVx = sin(desYaw) * CRUISE_SPEED;
+        desVz = -cos(desYaw) * CRUISE_SPEED;
+      } else if (s.targetPoint != null) {
+        let dx = s.targetPoint[0] - s.pos[0];
+        let dz = s.targetPoint[2] - s.pos[2];
+        let dist = sqrt(dx * dx + dz * dz);
+        if (dist > 1.5) {
+          desYaw = atan2(dx, -dz);
+          let spd = clamp(dist * 0.42, 0.5, CRUISE_SPEED);
+          desVx = (dx / dist) * spd;
+          desVz = (dz / dist) * spd;
+        }
+      }
+
+      // 2. 高度总距控制 (Collective)
+      let altErr = targetAlt - s.pos[1];
+      intAlt = clamp(intAlt + altErr * clamp(dt, 0.0, 0.1) * 0.06, -0.18, 0.22);
+      let collective = clamp(0.54 + KP_ALT * altErr - KD_ALT * s.vel[1] + intAlt, 0.05, 1.0);
+      if (s.navMode == "land_h2" && s.pad2 != null) {
+        let d2 = sqrt((s.pad2[0] - s.pos[0]) * (s.pad2[0] - s.pos[0]) + (s.pad2[2] - s.pos[2]) * (s.pad2[2] - s.pos[2]));
+        if (d2 < 1.6 && (s.pos[1] - s.pad2[1]) < 0.72) {
+          collective = 0.18;
+        }
+      }
+
+      // 3. 将世界系期望速度变换到机体系，计算目标俯仰与横滚角（含抗风补偿）
+      let cy = cos(s.rot[1]);
+      let sy = sin(s.rot[1]);
+      let errVxWorld = desVx - s.vel[0] - s.wind[0] * 0.32;
+      let errVzWorld = desVz - s.vel[2] - s.wind[2] * 0.32;
+      // 机体系前方为 (sin(yaw), -cos(yaw))，右方为 (cos(yaw), sin(yaw))
+      let fwdErr = errVxWorld * sy - errVzWorld * cy;
+      let rightErr = errVxWorld * cy + errVzWorld * sy;
+
+      let targetPitch = clamp(-fwdErr * 0.065, -0.34, 0.34);
+      let targetRoll = clamp(-rightErr * 0.065, -0.36, 0.36);
+
+      // 4. 姿态内环周期变距与方向舵控制
+      let pitchErr = targetPitch - s.rot[0];
+      let rollErr = targetRoll - s.rot[2];
+      let yawErr = wrap_angle(desYaw - s.rot[1]);
+
+      let cyclicPitch = clamp(KP_ATT * pitchErr - KD_ATT * s.angVel[0], -1.0, 1.0);
+      let cyclicRoll = clamp(KP_ATT * rollErr - KD_ATT * s.angVel[2], -1.0, 1.0);
+      // 尾桨需平衡主旋翼反扭矩 (约 0.42 * collective) 并跟踪目标航向
+      let antiTorque = 0.44 * collective;
+      let tailPedal = clamp(antiTorque + KP_YAW * yawErr - KD_YAW * s.angVel[1], -1.0, 1.0);
+
+      syscall("fc_write_controls", sid, {
+        collective: collective,
+        cyclicPitch: cyclicPitch,
+        cyclicRoll: cyclicRoll,
+        tailPedal: tailPedal,
+        sensorTimestamp: s.timestamp
+      });
+    }
+
+    // 正常 25Hz 控制周期（受子系统虚拟时钟与调度额度共同约束）
+    syscall("sleep", 0.04);
+  }
+}

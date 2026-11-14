@@ -1,0 +1,15 @@
+{
+  "name": "sunshower-harbor-diorama",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Three.js 微缩场景：太阳雨中的小渔港堤岸",
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --format=iife --outfile=bundle.js --target=chrome110"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

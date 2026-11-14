@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星际战舰编队：旗舰与护卫舰</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #02040a;
+    }
+    #stage {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <script src="js/01_math_rng.js"></script>
+  <script src="js/02_palette_materials.js"></script>
+  <script src="js/03_voxel_core.js"></script>
+  <script src="js/04_ships_weapons.js"></script>
+  <script src="js/05_asteroids.js"></script>
+  <script src="js/06_interiors.js"></script>
+  <script src="js/07_shaders.js"></script>
+  <script src="js/08_timeline_director.js"></script>
+  <script src="js/09_renderer_main.js"></script>
+</body>
+</html>

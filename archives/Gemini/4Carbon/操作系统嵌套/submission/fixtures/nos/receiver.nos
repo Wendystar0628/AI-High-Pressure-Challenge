@@ -1,0 +1,31 @@
+// ============================================================================
+// 预置示例程序 2：消息接收程序 (/Programs/receiver.nos)
+// 按发送顺序等待并接收进程消息，将收到的完整内容写入 /Documents/messages.log 并报告。
+// ============================================================================
+
+let EXPECT_COUNT = 4;
+
+fn main() {
+  let myPid = syscall("get_pid");
+  syscall("register_role", "msg_demo_rx");
+  syscall("report_result", "接收进程已就绪 PID=" + str(myPid) + "，正在等待消息...");
+
+  let received = [];
+  let i = 0;
+  while (i < EXPECT_COUNT) {
+    let msg = syscall("recv_msg_wait", 30.0);
+    if (msg == null) {
+      syscall("report_error", "等待消息超时，已收 " + str(len(received)) + " 条");
+      return received;
+    }
+    let line = "#" + str(msg.seq) + " [from PID " + str(msg.from) + " @ " + str(round(msg.time * 100) / 100) + "s]: " + str(msg.data);
+    push(received, line);
+    syscall("report_result", "收到 " + str(len(received)) + "/" + str(EXPECT_COUNT) + " -> " + str(msg.data));
+    i += 1;
+  }
+
+  let fullLog = join(received, "\n") + "\n";
+  syscall("fs_write", "/Documents/messages.log", fullLog);
+  syscall("report_result", "全部 " + str(EXPECT_COUNT) + " 条消息按序接收完毕: " + join(received, " | "));
+  return received;
+}

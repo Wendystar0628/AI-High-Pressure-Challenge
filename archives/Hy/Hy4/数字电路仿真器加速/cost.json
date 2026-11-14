@@ -1,0 +1,23 @@
+{
+  "model": "Hy/Hy4",
+  "task": "数字电路仿真器加速",
+  "tokens": 12076913,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.15,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "credits",
+  "plan": {
+    "name": "CodeBuddy 140 元档",
+    "name_en": "CodeBuddy",
+    "price": 140,
+    "currency": "CNY",
+    "period": "month",
+    "credits": 9000
+  },
+  "fitted": [],
+  "runs": [
+    "Hy/Hy4/数字电路仿真器加速/run-31d62c4572854385b93bfff96fee688a"
+  ]
+}

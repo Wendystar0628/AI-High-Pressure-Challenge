@@ -1,0 +1,205 @@
+{
+  "format": "机械结构重建·图纸",
+  "problem": "24",
+  "sheet": "24-49",
+  "sheet_index": 49,
+  "sheet_count": 62,
+  "title": "4号偏心芯轴",
+  "frame": "part",
+  "part": "12",
+  "paper": {
+    "size": "A2",
+    "width": 594,
+    "height": 420
+  },
+  "dpi": 240,
+  "projection": "第一角画法",
+  "units": "毫米",
+  "scale": "1.5:1",
+  "title_block": {
+    "title": "4号偏心芯轴",
+    "drawing_no": "JX-24-12-1",
+    "material": "钢",
+    "quantity": 1,
+    "scale_text": "1.5:1"
+  },
+  "parts_list": [],
+  "notes": [
+    "技术要求",
+    "单位mm；链式和相对尺寸须结合剖视推算。",
+    "R/C均须建模；未注棱保持理论交线。",
+    "斜轴倾角对总+Z，方位从总+X逆时针；孔从外端面向内。",
+    "斜视首孔在轴线与总Z的共面低侧；其余孔90°均布。",
+    "序号1坐标系与总坐标系重合；其余零件由配合及键向定位。"
+  ],
+  "version": 2,
+  "conventions": {
+    "图纸": "形状、图线、遮挡关系和剖面边界仅见同名PNG；JSON不提供图线或标注图元坐标。",
+    "尺寸": "每个尺寸旁的〔D编号〕对应dimensions目录；编号在整题内唯一。value为尺寸数值，text为完整标注，参考尺寸保留括号。",
+    "坐标": "O是零件坐标原点，箭头X/Y/Z指向正向；单位毫米。装配图采用总坐标系，零件图采用各自坐标系。",
+    "投影": "第一角画法；主视沿+Y，俯视沿−Z，左视沿+X。其他视图以definition.direction为投射方向。",
+    "剖切": "definition.section只说明剖切平面与方式；剖切位置字母标在PNG上，不包含截面轮廓。",
+    "尺寸链": "线性尺寸由尺寸界线所指的轮廓、轴线或中心位置之间量取。局部定形与相对定位尺寸需结合PNG联立；不得将尺寸数值直接当成绝对坐标。"
+  },
+  "dimensions": [
+    {
+      "id": "D427",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 10,
+      "text": "10"
+    },
+    {
+      "id": "D428",
+      "view": "俯视图",
+      "type": "直径",
+      "value": 20,
+      "text": "Φ20"
+    },
+    {
+      "id": "D429",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 3,
+      "text": "3"
+    },
+    {
+      "id": "D430",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 6,
+      "text": "6"
+    },
+    {
+      "id": "D431",
+      "view": "俯视图",
+      "type": "直径",
+      "value": 28,
+      "text": "Φ28"
+    },
+    {
+      "id": "D432",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 20,
+      "text": "环腔外径Φ20"
+    },
+    {
+      "id": "D433",
+      "view": "俯视图",
+      "type": "直径",
+      "value": 16,
+      "text": "环腔内径Φ16"
+    },
+    {
+      "id": "D434",
+      "view": "俯视图",
+      "type": "轴向长度",
+      "value": 4,
+      "text": "环腔轴向宽4"
+    },
+    {
+      "id": "D435",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 4,
+      "text": "4"
+    },
+    {
+      "id": "D436",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 4,
+      "text": "4"
+    },
+    {
+      "id": "D437",
+      "view": "俯视图",
+      "type": "孔径",
+      "value": 20,
+      "text": "环腔外径Φ20"
+    },
+    {
+      "id": "D438",
+      "view": "俯视图",
+      "type": "直径",
+      "value": 14,
+      "text": "环腔内径Φ14"
+    },
+    {
+      "id": "D439",
+      "view": "俯视图",
+      "type": "轴向长度",
+      "value": 3,
+      "text": "环腔轴向宽3"
+    },
+    {
+      "id": "D440",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 4,
+      "text": "4"
+    },
+    {
+      "id": "D441",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 3,
+      "text": "3"
+    },
+    {
+      "id": "D442",
+      "view": "主视图",
+      "type": "链式或相对定位尺寸",
+      "value": 10,
+      "text": "10"
+    }
+  ],
+  "views": [
+    {
+      "name": "主视图",
+      "kind": "basic",
+      "position": "front",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "俯视图",
+      "kind": "basic",
+      "position": "top",
+      "frame": "part",
+      "projection_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    },
+    {
+      "name": "左视图",
+      "kind": "basic",
+      "position": "left",
+      "frame": "part",
+      "projection_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "section": null,
+      "type": "基本视图",
+      "section_label": null,
+      "coordinate_system": "零件自身坐标系；O及正向见PNG"
+    }
+  ]
+}

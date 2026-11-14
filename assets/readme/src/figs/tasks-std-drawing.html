@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="size" content="960x850">
-<title>识图建模判法</title>
+<title>几何建模判法</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
   .desc { margin-top: 10px; }
@@ -61,12 +61,12 @@
 <body>
 <div class="frame">
   <header class="head">
-    <div class="pair"><span class="eyebrow slash">Drawing Interpretation &amp; Modeling</span><h2 class="title"><img class="icon" src="../../icon-drawing.svg" alt="">识图建模：读懂图纸，还原实体</h2></div>
+    <div class="pair"><span class="eyebrow slash">Geometric Modeling</span><h2 class="title"><img class="icon" src="../../icon-drawing.svg" alt="">几何建模：读懂图纸，还原实体</h2></div>
     <i class="lead"></i>
   </header>
   <p class="desc">先核对工具使用，再把建模描述生成实体，按与原设计零件的表面吻合度计分；接受任何合法的写法。</p>
 
-  <div class="part"><span class="eyebrow slash">Drawing to Model</span><h3>工程图纸三维还原</h3><span class="field">25 套图纸，三档分值</span></div>
+  <div class="part"><span class="eyebrow slash">Structure Reconstruction</span><h3>机械结构重建</h3><span class="field">25 套图纸，三档分值</span></div>
   <div class="cols top">
     <section>
       <div class="ch">
@@ -161,7 +161,7 @@ const sq = (p, x, y, r, fill, stroke = 'var(--paper)', sw = 1.5) =>
   txt(g, 416, B + 46, 'lb', 'F综合', 'end');
 }
 
-/* 25 cells sized by points, as for the locks; the category colour of 识图建模. */
+/* 25 cells sized by points, as for the locks; the category colour of 几何建模. */
 {
   const g = document.getElementById('tiers2');
   const w = [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4, 4, 4, 4, 4, 4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4, 4.4], G = 3, P = (416 - G * 24) / 100, y = 40.5, H = 26;

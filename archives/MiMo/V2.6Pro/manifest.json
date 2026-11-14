@@ -212,6 +212,38 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "光线追踪渲染加速/cost.json",
+      "role": "cost",
+      "task": "光线追踪渲染加速",
+      "bytes": 411,
+      "sha256": "a2d89dd882369ca717b7312cbb6ca1818c9d47299f012bbba228be427280457a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\光线追踪渲染加速\\codex\\performance\\result.json",
+      "path": "光线追踪渲染加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "光线追踪渲染加速",
+      "bytes": 1899,
+      "sha256": "08d03694755bc1fdb02239ec62cc33e93f8def4717e1070ac5494156376a5771"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\评分表_6.1Sol.md",
+      "path": "光线追踪渲染加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "光线追踪渲染加速",
+      "bytes": 2132,
+      "sha256": "0ec5afa3ed871cc5c11beee668224ee0ea942df95ac6ef15eef24c0e4765f8df"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\solution.cu",
+      "path": "光线追踪渲染加速/submission/solution.cu",
+      "role": "submission",
+      "task": "光线追踪渲染加速",
+      "bytes": 8152,
+      "sha256": "33ede8e7def148f5528a9c1a05f52242acb1a2502fcd3eccf754e799abc4bdb9"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "动态路由塔防/cost.json",
       "role": "cost",
       "task": "动态路由塔防",
@@ -617,30 +649,6 @@
       "task": "太阳雨渔港3D渲染",
       "bytes": 603445,
       "sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
-      "path": "工程图纸三维还原/cost.json",
-      "role": "cost",
-      "task": "工程图纸三维还原",
-      "bytes": 411,
-      "sha256": "a2e4bab123c71a4b53befdeb86a039a2afeb2df3d3d78139255f13bf25efb446"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\工程图纸三维还原\\codex\\main\\result.json",
-      "path": "工程图纸三维还原/grading/codex/main/result.json",
-      "role": "result",
-      "task": "工程图纸三维还原",
-      "bytes": 8465,
-      "sha256": "30ea5b7688ba86d37d54f72933745ba2ef8b1ebd859341889da1a24f40731c4d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\评分表_6.1Sol.md",
-      "path": "工程图纸三维还原/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "工程图纸三维还原",
-      "bytes": 3221,
-      "sha256": "e5d35313b230f0ad9173b5d68aaf92ab07c548ee8d3ca4fbee73e3bbca5a47d3"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1124,27 +1132,91 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "攻城略地/cost.json",
+      "role": "cost",
+      "task": "攻城略地",
+      "bytes": 386,
+      "sha256": "d14333ee43bcf41bfd850c257caf932502658804a74db83aeb30f58230e3e6a7"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\攻城略地\\codex\\performance\\result.json",
+      "path": "攻城略地/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "攻城略地",
+      "bytes": 7763,
+      "sha256": "4486fe3ad44dc04250011b1b45ea46ca242284da0cffac6be4956ac4152beae4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\评分表_6.1Sol.md",
+      "path": "攻城略地/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "攻城略地",
+      "bytes": 1652,
+      "sha256": "e6ba2e8beae5536ffdd60cb010fb1cade0621acac87a7c45246ff1d70bf53cc1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\bot.cpp",
+      "path": "攻城略地/submission/bot.cpp",
+      "role": "submission",
+      "task": "攻城略地",
+      "bytes": 9985,
+      "sha256": "d600184880cf7e9b9f53f859868d29b67f9bc58e527b34e1829e4705b45d4b5a"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数字电路仿真器加速/cost.json",
+      "role": "cost",
+      "task": "数字电路仿真器加速",
+      "bytes": 416,
+      "sha256": "ba402e61dd51eb48949ffae17a10f89d2d3df7769932c0fc14c1e13eb6fbb0d7"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "数字电路仿真器加速",
+      "bytes": 6254,
+      "sha256": "8ddaab64ffeee3ac67a3ee6e8bcb6edca418e8ff7a07dcf2e468fbd3dc7b86d1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数字电路仿真器加速",
+      "bytes": 1945,
+      "sha256": "54be8248c6075bef2d86aad8b31f01f713c6a44dd1102ecbd589b0b5af28f33f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "数字电路仿真器加速",
+      "bytes": 12926,
+      "sha256": "55541adc948494e6d0257eee0c028a86b8b35d4c1afcc6c10866d5eb47ac6013"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "数学竞赛原创试题/cost.json",
       "role": "cost",
       "task": "数学竞赛原创试题",
-      "bytes": 388,
-      "sha256": "e7ad11318291a7d8a6e0af34f79056b9886e4fea7883d4acf9683f3c6fe59df4"
+      "bytes": 410,
+      "sha256": "48c34c6163ecef9fb8f15ade6a75477d998ca2a7de524ba18562f06ca4a19d8c"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数学竞赛原创试题\\codex\\main\\result.json",
       "path": "数学竞赛原创试题/grading/codex/main/result.json",
       "role": "result",
       "task": "数学竞赛原创试题",
-      "bytes": 5785,
-      "sha256": "151a85501083060d8ff3c229d228889e4c6525b900fb0bc53e61eb37a5ca6168"
+      "bytes": 7979,
+      "sha256": "bb9203f4f441336eafe353cbb74f8bdef13955336dcb5d08e80e137eff73d9ac"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\评分表_6.1Sol.md",
       "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "数学竞赛原创试题",
-      "bytes": 2469,
-      "sha256": "2c81f43e1917b3724d136d694254790565098c3369c0c33aa070e11c1767637e"
+      "bytes": 3338,
+      "sha256": "b94b4d51af3b68c52be34d77d6aed912d189c82495e03aba2593836c15759beb"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1281,6 +1353,30 @@
       "task": "星际战舰编队",
       "bytes": 3005,
       "sha256": "0bc558bc9ff9c56ed1f29d7c04d63029db43088add65c51b768203a702214959"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "机械结构重建/cost.json",
+      "role": "cost",
+      "task": "机械结构重建",
+      "bytes": 399,
+      "sha256": "6cd3ae4aff658edf8c34b83a496108a3fcefe009cb1258d29c307d2bc002b719"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\机械结构重建\\codex\\main\\result.json",
+      "path": "机械结构重建/grading/codex/main/result.json",
+      "role": "result",
+      "task": "机械结构重建",
+      "bytes": 8453,
+      "sha256": "0d87bcc792757a2fbe8c421f80d6e6d96b657c860527420a1e920b3633c67e81"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\评分表_6.1Sol.md",
+      "path": "机械结构重建/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "机械结构重建",
+      "bytes": 3215,
+      "sha256": "d5b977448a0076998e727a3e79a6cfe0094cbfacd8eefc90f34d4314fd94097f"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1435,30 +1531,6 @@
       "sha256": "efeaa76deb41dc6c8e4e755412856a16c85fc5735ebcd32749f2dea191c89689"
     },
     {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\MiMo\\V2.6Pro\\数字电路仿真器加速\\codex\\performance\\result.json",
-      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
-      "role": "result",
-      "task": "数字电路仿真器加速",
-      "bytes": 1570,
-      "sha256": "fa1eed6bcded658f0e867b1a62c7b8bfcd27940007994889c1c8c45996060323"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\评分表_6.1Sol.md",
-      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "数字电路仿真器加速",
-      "bytes": 1457,
-      "sha256": "37fc1b535082a82b7e6e223a28945f10159d0e94df6106e5ed61a351cd0f47a7"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\solution.cpp",
-      "path": "数字电路仿真器加速/submission/solution.cpp",
-      "role": "submission",
-      "task": "数字电路仿真器加速",
-      "bytes": 12895,
-      "sha256": "54728be31f3557e8377be3e43cba30bfa15739018c59da7998aaab8c62f7a8ac"
-    },
-    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "鲁班锁拆解/cost.json",
       "role": "cost",
@@ -1505,6 +1577,110 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\analyze_input.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\bvh.hpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\cmp_out.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\grader.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\out_01.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\out_b1.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\out_b2.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\out_b3.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\out_s.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\ref_out.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\reference.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\render_math.cuh",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\rt.h",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\run_tb.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\test.ps1",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\test_all.cmd",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\test_run.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\time_build.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\view_expected.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\view_img.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\光线追踪渲染加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\光线追踪渲染加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\动态路由塔防\\.git",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
@@ -1519,1954 +1695,6 @@
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\.mimocode",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\all_dims.txt",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\dump_all.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\dump_dims.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\make_views.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\read_01-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\resize_all.py",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-1.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-10.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-11.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-12.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-13.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-14.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-15.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-16.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-2.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-3.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-4.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-5.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-6.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-7.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-8.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\temp_01-9.png",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_01-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_02-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_03-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_04-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_05-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_06-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_07-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_08-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_09-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_10-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_11-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_12-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_13-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_14-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_15-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_16-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_17-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_18-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_19-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_20-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-24.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-25.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-26.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-27.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_21-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-24.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-25.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-26.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-27.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-28.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-29.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-30.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-31.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-32.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-33.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-34.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-35.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-36.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-37.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-38.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-39.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-40.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-41.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-42.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_22-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-24.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-25.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-26.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-27.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-28.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-29.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-30.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-31.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-32.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-33.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-34.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-35.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-36.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-37.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-38.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-39.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-40.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-41.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-42.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-43.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-44.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-45.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-46.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-47.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-48.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-49.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-50.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-51.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_23-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-24.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-25.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-26.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-27.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-28.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-29.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-30.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-31.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-32.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-33.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-34.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-35.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-36.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-37.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-38.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-39.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-40.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-41.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-42.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-43.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-44.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-45.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-46.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-47.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-48.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-49.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-50.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-51.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-52.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-53.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-54.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-55.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-56.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-57.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-58.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-59.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-60.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-61.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-62.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_24-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-1.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-10.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-11.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-12.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-13.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-14.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-15.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-16.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-17.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-18.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-19.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-2.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-20.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-21.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-22.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-23.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-24.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-25.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-26.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-27.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-28.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-29.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-3.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-30.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-31.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-32.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-33.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-34.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-35.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-36.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-37.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-38.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-39.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-4.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-40.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-41.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-42.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-43.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-44.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-45.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-46.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-47.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-48.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-49.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-5.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-50.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-51.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-52.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-53.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-54.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-55.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-56.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-57.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-58.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-59.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-6.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-60.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-61.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-62.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-63.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-64.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-65.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-66.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-67.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-68.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-69.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-7.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-70.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-71.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-72.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-8.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\view_25-9.jpg",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\工程图纸三维还原",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\工程图纸三维还原\\工程图纸三维还原.md",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\形式化证明题\\.git",
@@ -3489,7 +1717,79 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数学竞赛原创试题\\.git",
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\analyze2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\analyze3.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\logs_diag",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\logs_strong",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\logs_v13",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\logs_v16",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\sample_bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\攻城略地.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\攻城略地\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze2.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\verify.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数据",
       "reason": "标准题只取交付答案"
     },
     {
@@ -3509,44 +1809,1956 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\.mimocode",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\all_dims.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\dump_all.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\dump_dims.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\make_views.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\read_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\resize_all.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-1.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-10.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-11.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-12.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-13.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-14.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-15.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-16.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-2.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-3.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-4.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-5.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-6.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-7.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-8.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\temp_01-9.png",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_01-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_02-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_03-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_03-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_03-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_03-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_04-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_04-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_04-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_04-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_05-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_05-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_05-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_05-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_05-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_06-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_06-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_06-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_06-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_06-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_07-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_07-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_07-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_07-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_08-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_08-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_08-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_08-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_08-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_09-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_09-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_09-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_09-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_09-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_10-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_11-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_12-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_12-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_12-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_12-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_12-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_13-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_14-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_14-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_14-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_14-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_14-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_15-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_16-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_17-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_18-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_19-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_20-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_21-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_22-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_23-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-52.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-53.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-54.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-55.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-56.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-57.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-58.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-59.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-60.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-61.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-62.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_24-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-1.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-10.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-11.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-12.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-13.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-14.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-15.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-16.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-17.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-18.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-19.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-2.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-20.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-21.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-22.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-23.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-24.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-25.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-26.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-27.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-28.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-29.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-3.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-30.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-31.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-32.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-33.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-34.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-35.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-36.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-37.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-38.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-39.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-4.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-40.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-41.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-42.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-43.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-44.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-45.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-46.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-47.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-48.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-49.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-5.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-50.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-51.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-52.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-53.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-54.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-55.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-56.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-57.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-58.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-59.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-6.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-60.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-61.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-62.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-63.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-64.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-65.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-66.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-67.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-68.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-69.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-7.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-70.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-71.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-72.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-8.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\view_25-9.jpg",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\机械结构重建",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\机械结构重建\\机械结构重建.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\.mimocode",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\analyze.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\grader.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\test_transpose.cpp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\test_transpose.exe",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数据",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\数字电路仿真器加速\\数字电路仿真器加速.md",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\MiMo\\V2.6Pro\\鲁班锁拆解\\.git",
@@ -3566,7 +3778,7 @@
     }
   ],
   "missing_answers": [
-    "数学竞赛原创试题",
-    "工程图纸三维还原"
+    "机械结构重建",
+    "数学竞赛原创试题"
   ]
 }

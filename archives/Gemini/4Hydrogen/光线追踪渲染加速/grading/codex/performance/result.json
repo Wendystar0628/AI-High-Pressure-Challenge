@@ -1,0 +1,45 @@
+{
+  "task": "光线追踪渲染加速",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "渲染加速",
+      "max": 100,
+      "score": 50.7,
+      "reason": "正式评测基线最小用时 523.409500 ms，提交 129.086900 ms，加速 4.054707 倍。5 次计时及 12 个隐藏输入全部通过，c=h=1，最终得分 50.7。"
+    }
+  ],
+  "metrics": {
+    "R_ms": 523.4095,
+    "C_ms": 129.0869,
+    "s": 4.054706558140291,
+    "q": 50.67004327214422,
+    "c": 1,
+    "h": 1,
+    "score_unrounded": 50.67004327214422,
+    "timed_factors": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "hidden_factors": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "results_json": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Hydrogen\\光线追踪渲染加速\\codex\\performance\\work\\evaluation\\results.json"
+  },
+  "notes": "评的是作答结束时工作目录的副本，不看 git 提交；solution.cu 的原件与副本 SHA-256 一致。官方 evaluate.py 按默认正式配置只运行一次，formal=true，逻辑处理器16–27、高优先级、5次取最小值；3个公开边界、5次计时画面及12个隐藏输入全部通过。源码与规则扫描核查未发现实质性违规，静态空间每次重建，DeviceToHost只回传4字节队列计数。已确认本会话评测主进程及报告记录的全部子进程退出。详细证据位于 work\\evaluation\\results.json、source-review.json、verified-evidence.json 和 process-cleanup.json。"
+}

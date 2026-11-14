@@ -13,7 +13,7 @@
       "defs": [
         [
           "What",
-          "A timed benchmark for AI coding agents. The tasks run from Lean formal proofs, olympiad mathematics, performance optimization, game-playing programs, Luban lock disassembly and reading engineering drawings into 3D models all the way to designing and building complete web works and a desktop system."
+          "A timed benchmark for AI coding agents. The tasks run from Lean formal proofs, olympiad mathematics, performance optimization, game-playing programs, Luban lock disassembly and mechanical structure reconstruction all the way to designing and building complete web works and a desktop system."
         ],
         [
           "Who",
@@ -38,7 +38,7 @@
     }
   ],
   "overview": [
-    "The 7 tasks in Math Reasoning, Performance Optimization, Algorithm Battle, Spatial Reasoning, and Drawing Interpretation & Modeling are standard tasks; the other 5 categories contain 6 design tasks. Select a task name to open its page.",
+    "The 7 tasks in Math Reasoning, Performance Optimization, Algorithm Battle, Spatial Reasoning, and Geometric Modeling are standard tasks; the other 5 categories contain 6 design tasks. Select a task name to open its page.",
     {
       "fig": "weights"
     },
@@ -987,7 +987,7 @@
               ],
               [
                 "Graders",
-                "Claude Opus 5.5 (headless Claude Code) and GPT 6.1 Sol (headless Codex)",
+                "Claude Opus 5.5 and GPT 6.1 Sol",
                 "Score by the grading guide; see [How the Graders Score](#format-8)"
               ]
             ]
@@ -1481,7 +1481,7 @@
         },
         {
           "details": {
-            "title": "Reading engineering drawings into 3D models: scoring by surface match",
+            "title": "Mechanical structure reconstruction: scoring by surface match",
             "blocks": [
               "Problem $i$ compares the answer's surfaces with the reference at a 0.2 mm and a 2 mm tolerance. At each, $F = 2PR/(P+R)$: $P$ is weighted by answer surface area, and $R$ samples each reference geometric face (adjacent fragments of one surface merged) by area, then weights the faces equally. One translation for the whole problem is found at 0.2 mm and reused at 2 mm; neither rotates. $w_i$ is its points (3.5 each for 01–08, 4 each for 09–15, 4.4 each for 16–25). A near-perfect match earns full marks:",
               {
@@ -1529,7 +1529,7 @@
       "en": "Grading",
       "items": [
         "**Grading follows the statement**: grading guides list directions and items according to the statement's scoring criteria. Design-task directions are independent, and each thing counts in one item only.",
-        "**What can be computed goes to tools**: Lean compilation, performance speedups, the results of the battle games, the legality and step counts of Luban lock routes, and the surface match of the drawing models are all computed exactly by tools. Graders only judge what needs judging.",
+        "**What can be computed goes to tools**: Lean compilation, performance speedups, the results of the battle games, the legality and step counts of Luban lock routes, and the surface match in structure reconstruction are all computed exactly by tools. Graders only judge what needs judging.",
         "**Discrimination where strong models are**: performance tasks interpolate on anchor tables whose slope grows from the low range to the upper-middle range. Standard methods only reach the low range; works at an upper-middle level pull clearly ahead."
       ]
     }
@@ -2262,7 +2262,7 @@
                 "averaged"
               ],
               [
-                "Formal proofs, olympiad, Luban lock, drawing models",
+                "Formal proofs, olympiad, Luban lock, structure reconstruction",
                 [
                   "GPT 6.1 Sol"
                 ],
@@ -2327,7 +2327,7 @@
           ]
         },
         {
-          "name": "Drawing to 3D",
+          "name": "Struct. Recon.",
           "sub": "By hand",
           "icons": [
             "drawing"
@@ -2668,8 +2668,8 @@
           ]
         },
         "drawing": {
-          "eyebrow": "Drawing to 3D",
-          "name": "Drawing to 3D",
+          "eyebrow": "Geometric Modeling",
+          "name": "Structure Reconstruction",
           "note": "25 problems in three tiers, each worth w = 3.5, 4 or 4.4 points, 100 in all. The surface match F is found at 0.2 mm and at 2 mm and combined as F* = 0.8 × F(0.2 mm) + 0.2 × F(2 mm); each problem earns w × min(1, F*/0.99).",
           "ex": [
             3.5,
@@ -2857,12 +2857,12 @@
       ]
     },
     "drawing": {
-      "title": "Drawing Interpretation & Modeling: from drawings to solids",
+      "title": "Geometric Modeling: from drawings to solids",
       "readout": "Check tool use, build solids, then score by surface match",
       "drawing": {
         "head": {
-          "eyebrow": "Drawing to 3D",
-          "name": "Drawings to 3D models",
+          "eyebrow": "Geometric Modeling",
+          "name": "Mechanical Structure Reconstruction",
           "note": "25 sets, three tiers of points"
         },
         "left": {

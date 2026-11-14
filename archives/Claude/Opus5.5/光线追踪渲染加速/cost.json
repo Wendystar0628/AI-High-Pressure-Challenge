@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "光线追踪渲染加速",
+  "tokens": 37617065,
+  "minutes": 60,
+  "time": "限时回退",
+  "cny": 1.76,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [
+    "运行时长比例"
+  ],
+  "runs": []
+}

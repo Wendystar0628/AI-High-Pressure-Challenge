@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "攻城略地",
+  "tokens": 23493629,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.1,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/攻城略地/run-5151fc96333e4d6c8b3685a2bb9c5330"
+  ]
+}

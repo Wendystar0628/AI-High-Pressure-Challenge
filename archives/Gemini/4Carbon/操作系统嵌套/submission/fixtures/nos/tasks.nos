@@ -1,0 +1,99 @@
+// ============================================================================
+// NestedOS 子系统进程与子系统管理器 (/Apps/tasks.nos)
+// ============================================================================
+
+let WIN_ID = "";
+let ACTIVE_TAB = "procs"; // "procs" | "subsystems" | "quotas"
+let STATUS = "实时监控中";
+
+fn handle_ui(ev) {
+  if (ev == null) { return null; }
+  let act = ev.action;
+  if (act == "switch_tab") {
+    ACTIVE_TAB = str(ev.tab);
+  } else if (act == "proc_suspend") {
+    syscall("proc_suspend", num(ev.pid));
+    STATUS = "已挂起进程 PID=" + str(ev.pid);
+  } else if (act == "proc_resume") {
+    syscall("proc_resume", num(ev.pid));
+    STATUS = "已继续进程 PID=" + str(ev.pid);
+  } else if (act == "proc_kill") {
+    syscall("proc_kill", num(ev.pid));
+    STATUS = "已结束进程 PID=" + str(ev.pid);
+  } else if (act == "proc_quota") {
+    syscall("proc_set_quota", num(ev.pid), num(ev.quota), null);
+    STATUS = "已更新 PID=" + str(ev.pid) + " 调度额度=" + str(ev.quota);
+  } else if (act == "set_sys_limits") {
+    syscall("sys_set_limits", ev.budget, ev.memQuota, ev.storageQuota);
+    STATUS = "已更新本系统资源配额";
+  } else if (act == "subsys_create") {
+    let wmPid = syscall("find_pid_by_role", "wm");
+    if (wmPid != null) {
+      syscall("send_msg", wmPid, { type: "wm_action", action: "system_new" });
+    }
+    STATUS = "正在创建新直属子系统...";
+  } else if (act == "subsys_cmd") {
+    let subAct = str(ev.subAction);
+    let tid = str(ev.targetId);
+    if (subAct == "open_kernel") {
+      let wmPid = syscall("find_pid_by_role", "wm");
+      if (wmPid != null) {
+        syscall("send_msg", wmPid, { type: "launch_app", appId: "editor", filePath: "/Subsystems/" + tid + "/kernel.nos" });
+      }
+      STATUS = "已在编辑器打开 " + tid + " 的内核源码";
+    } else if (subAct == "open_desktop") {
+      let wmPid = syscall("find_pid_by_role", "wm");
+      if (wmPid != null) {
+        syscall("send_msg", wmPid, { type: "open_subsys_win", childSysId: tid });
+      }
+    } else if (subAct == "set_grant") {
+      let procs = syscall("proc_list");
+      let i = 0;
+      while (i < len(procs)) {
+        if (procs[i].isCarrier && procs[i].childSysId == tid) {
+          syscall("proc_set_quota", procs[i].pid, num(ev.grant), null);
+        }
+        i += 1;
+      }
+      syscall("subsys_manage", "set_grant", tid, { grant: num(ev.grant) });
+      STATUS = "已设置子系统 " + tid + " 拨付上限=" + str(ev.grant);
+    } else {
+      let r = syscall("subsys_manage", subAct, tid, ev.extra);
+      if (r != null && r.message != null) {
+        STATUS = str(r.message);
+      } else {
+        STATUS = "已对 " + tid + " 执行操作: " + subAct;
+      }
+    }
+  }
+}
+
+fn submit_ui() {
+  let sysInfo = syscall("get_sys_info");
+  let procs = syscall("proc_list");
+  let children = syscall("subsys_manage", "list", null, null);
+  let snapshots = syscall("fs_list", "/Snapshots");
+
+  syscall("surface_submit", WIN_ID, {
+    kind: "tasks",
+    activeTab: ACTIVE_TAB,
+    status: STATUS,
+    sysInfo: sysInfo,
+    processes: procs,
+    children: children != null ? children : [],
+    snapshots: snapshots != null ? snapshots : []
+  });
+}
+
+fn main(winId) {
+  WIN_ID = str(winId);
+  submit_ui();
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 0.35);
+    if (msg != null && msg.data != null) {
+      handle_ui(msg.data);
+    }
+    submit_ui();
+  }
+}

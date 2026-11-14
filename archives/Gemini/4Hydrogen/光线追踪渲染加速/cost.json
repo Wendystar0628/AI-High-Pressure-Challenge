@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "光线追踪渲染加速",
+  "tokens": 28227207,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.01,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/光线追踪渲染加速/run-ff3d5a1c6c9449f8996dc089c11067e1"
+  ]
+}

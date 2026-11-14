@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>果冻冲击与造浪水槽</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="error-banner"></div>
+
+  <div id="ui-root">
+    <!-- Top Header -->
+    <div class="top-bar">
+      <div class="brand-group">
+        <span class="brand-dot"></span>
+        <div>
+          <div class="brand-title">果冻冲击与造浪水槽</div>
+          <div class="brand-sub">三维软体断裂 · 多密度浮沉 · WebGPU 粒子网格流体</div>
+        </div>
+      </div>
+
+      <div class="scene-tabs">
+        <button id="tab-jelly" class="scene-tab jelly-tab active">场景一：重球冲击果冻</button>
+        <button id="tab-tank" class="scene-tab">场景二：多密度球与造浪水槽</button>
+      </div>
+
+      <div class="top-right-tools">
+        <button id="btn-cam-preset" class="icon-btn" title="切换预设观察视角">视角切换</button>
+        <button id="btn-sound" class="icon-btn active" title="开启或关闭物理合成音效">音效：开启</button>
+        <button id="btn-drawer-toggle" class="icon-btn">收起参数</button>
+      </div>
+    </div>
+
+    <!-- Right Control Panel -->
+    <div class="middle-area">
+      <div id="control-drawer" class="control-drawer">
+        <!-- Scene 1 Panel: Jelly Impact -->
+        <div id="panel-jelly">
+          <div class="panel-section">
+            <div class="section-header">
+              <span>三种冲击触发</span>
+              <span class="section-badge">四面体体积软体</span>
+            </div>
+            <div class="action-grid">
+              <button id="btn-hit-center" class="act-btn primary-jelly">正中冲击</button>
+              <button id="btn-hit-offset" class="act-btn">偏心冲击</button>
+              <button id="btn-hit-multi" class="act-btn">连续冲击</button>
+              <button id="btn-hit-compare" class="act-btn">三冻对比弹跳</button>
+            </div>
+          </div>
+
+          <div class="panel-section" style="margin-top: 12px;">
+            <div class="section-header">
+              <span>果冻与重球参数</span>
+              <span class="section-badge">实时生效</span>
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">果冻软硬（柔嫩 ↔ 弹韧）</span>
+                <span id="val-stiff" class="param-val">50%</span>
+              </div>
+              <input id="sl-stiff" type="range" min="0.06" max="1.00" step="0.01" value="0.50">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">结实程度（易裂 ↔ 坚韧）</span>
+                <span id="val-tough" class="param-val">56%</span>
+              </div>
+              <input id="sl-tough" type="range" min="0.08" max="1.00" step="0.01" value="0.56">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">重球质量</span>
+                <span id="val-mass" class="param-val">2.8 kg</span>
+              </div>
+              <input id="sl-mass" type="range" min="0.5" max="8.5" step="0.1" value="2.8">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">下落高度</span>
+                <span id="val-height" class="param-val">1.15 m</span>
+              </div>
+              <input id="sl-height" type="range" min="0.35" max="2.10" step="0.05" value="1.15">
+            </div>
+          </div>
+
+          <div class="panel-section" style="margin-top: 12px;">
+            <div class="hint-text">
+              台上设蜜桃布丁主冻、青柠高弹方墩、浆果柔嫩软垫及石质伴球。左键拖拽旋转镜头，右键平移，滚轮缩放。
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 2 Panel: Multi-Density Wave Tank -->
+        <div id="panel-tank" class="hidden">
+          <div class="panel-section">
+            <div class="section-header">
+              <span>水槽与造浪控制</span>
+              <span class="section-badge">3D FLIP 计算着色器</span>
+            </div>
+            <div class="action-grid">
+              <button id="btn-release-balls" class="act-btn primary-tank">释放小球</button>
+              <button id="btn-toggle-wave" class="act-btn">开始造浪</button>
+            </div>
+          </div>
+
+          <div class="panel-section" style="margin-top: 12px;">
+            <div class="section-header">
+              <span>造浪装置参数</span>
+              <span class="section-badge">活塞推板</span>
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">造浪幅度（长波 ↔ 破碎浪）</span>
+                <span id="val-wave-amp" class="param-val">58%</span>
+              </div>
+              <input id="sl-wave-amp" type="range" min="0.05" max="1.00" step="0.01" value="0.58">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name">造浪频率（调节浪距）</span>
+                <span id="val-wave-freq" class="param-val">0.78 Hz</span>
+              </div>
+              <input id="sl-wave-freq" type="range" min="0.40" max="1.40" step="0.02" value="0.78">
+            </div>
+          </div>
+
+          <div class="panel-section" style="margin-top: 12px;">
+            <div class="section-header">
+              <span>各组小球密度 (g/cm³)</span>
+              <span class="section-badge">水 = 1.00</span>
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name"><span class="color-swatch" style="background:#ff4733"></span>组一 · 珊瑚红（低密度）</span>
+                <span id="val-dens-0" class="param-val">0.35</span>
+              </div>
+              <input id="sl-dens-0" type="range" min="0.15" max="3.20" step="0.05" value="0.35">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name"><span class="color-swatch" style="background:#ffba10"></span>组二 · 琥珀黄（半潜）</span>
+                <span id="val-dens-1" class="param-val">0.72</span>
+              </div>
+              <input id="sl-dens-1" type="range" min="0.15" max="3.20" step="0.05" value="0.72">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name"><span class="color-swatch" style="background:#14d17a"></span>组三 · 翡翠绿（中性浮力）</span>
+                <span id="val-dens-2" class="param-val">1.00</span>
+              </div>
+              <input id="sl-dens-2" type="range" min="0.15" max="3.20" step="0.05" value="1.00">
+            </div>
+
+            <div class="param-row">
+              <div class="param-label-line">
+                <span class="param-name"><span class="color-swatch" style="background:#8a42f5"></span>组四 · 紫晶蓝（高密度）</span>
+                <span id="val-dens-3" class="param-val">2.65</span>
+              </div>
+              <input id="sl-dens-3" type="range" min="0.15" max="3.50" step="0.05" value="2.65">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Transport & Preset Demos -->
+    <div class="bottom-bar">
+      <div class="transport-bar">
+        <button id="btn-trigger-main" class="icon-btn" title="触发当前场景动作">触发</button>
+        <button id="btn-pause" class="icon-btn" title="空格键暂停或继续">暂停</button>
+        <button id="btn-slowmo" class="icon-btn" title="S 键切换慢放">慢放</button>
+        <button id="btn-reset" class="icon-btn" title="R 键重置当前场景">重置</button>
+        <button id="btn-rerun" class="icon-btn" title="重置并重新运行上一次动作">重新运行</button>
+      </div>
+
+      <div class="demo-bar">
+        <span class="demo-bar-label">内置演示：</span>
+        <button class="demo-btn" data-demo-run="jelly-center">正中单击</button>
+        <button class="demo-btn" data-demo-run="jelly-multi">连击砸裂</button>
+        <button class="demo-btn" data-demo-run="jelly-offset">偏击滑碰</button>
+        <button class="demo-btn" data-demo-run="tank-full">风浪浮沉</button>
+      </div>
+
+      <div id="status-readout" class="status-pill">正在初始化 WebGPU…</div>
+    </div>
+  </div>
+
+  <script src="js/math.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/gpu-core.js"></script>
+  <script src="js/jelly-sim.js"></script>
+  <script src="js/jelly-renderer.js"></script>
+  <script src="js/fluid-gpu.js"></script>
+  <script src="js/tank-renderer.js"></script>
+  <script src="js/demos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

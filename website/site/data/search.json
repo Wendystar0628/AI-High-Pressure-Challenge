@@ -177,6 +177,28 @@
     },
     {
       "type": "model",
+      "id": "kimi-k3-1-pro",
+      "name": "Kimi K3.1 Pro",
+      "en": "Kimi K3.1 Pro",
+      "short": "K3.1Pro",
+      "terms": [
+        "Kimi 3.1 Pro",
+        "月之暗面",
+        "Moonshot",
+        "Moonshot AI",
+        "Kimi Code",
+        "Kimi/K3.1Pro"
+      ],
+      "py": [
+        "yuezhianmian"
+      ],
+      "pyi": [
+        "yzam"
+      ],
+      "href": "/models/kimi-k3-1-pro/"
+    },
+    {
+      "type": "model",
       "id": "gemini-4-carbon",
       "name": "Gemini 4 Carbon",
       "en": "Gemini 4 Carbon",
@@ -367,26 +389,29 @@
     {
       "type": "task",
       "id": "drawing",
-      "name": "工程图纸三维还原",
-      "en": "Reading Engineering Drawings into 3D Models",
-      "short": "图纸三维还原",
+      "name": "机械结构重建",
+      "en": "Mechanical Structure Reconstruction",
+      "short": "结构重建",
       "terms": [
-        "Drawing to 3D",
+        "工程图纸",
         "三视图",
+        "Engineering Drawing",
         "CAD"
       ],
       "py": [
-        "gongchengtuzhisanweihuanyuan",
-        "tuzhisanweihuanyuan",
+        "jixiejiegouchongjian",
+        "jiegouchongjian",
+        "gongchengtuzhi",
         "sanshitu"
       ],
       "pyi": [
-        "gctzswhy",
-        "tzswhy",
+        "jxjgcj",
+        "jgcj",
+        "gctz",
         "sst"
       ],
       "category": "drawing",
-      "short_en": "Drawing to 3D",
+      "short_en": "Structure Reconstruction",
       "href": "/tasks/drawing/drawing/"
     },
     {
@@ -589,17 +614,19 @@
     {
       "type": "category",
       "id": "drawing",
-      "name": "识图建模",
-      "en": "Drawing Interpretation & Modeling",
-      "short": "识图建模",
-      "terms": [],
+      "name": "几何建模",
+      "en": "Geometric Modeling",
+      "short": "几何建模",
+      "terms": [
+        "Geometry"
+      ],
       "py": [
-        "shitujianmo"
+        "jihejianmo"
       ],
       "pyi": [
-        "stjm"
+        "jhjm"
       ],
-      "short_en": "Drawing",
+      "short_en": "Geometry",
       "href": "/categories/#drawing"
     },
     {

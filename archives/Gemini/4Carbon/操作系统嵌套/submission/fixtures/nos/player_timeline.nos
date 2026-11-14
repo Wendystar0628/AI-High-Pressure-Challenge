@@ -1,0 +1,522 @@
+// ============================================================================
+// NestedOS 三维场景播放器与时序主进程 (/Apps/player_timeline.nos)
+// 职责：管理播放状态机、虚拟时间推进、镜头状态、三维点选反馈、飞行排演参数及跨层投送，
+//       并通过 IPC 消息驱动 player_scene (物理与部件) 与 player_fx (环境特效) 协作更新。
+// ============================================================================
+
+let WIN_ID = "";
+let SCENE_PID = 0;
+let FX_PID = 0;
+let CTRL_PID = 0;
+
+let SCENE_PATH = "/Demo/helicopter-24.scene";
+let SCENE_RESOURCE = null;
+let HAS_FLIGHT_MODEL = false;
+
+let STATE = "paused";           // "playing" | "paused" | "stopped" | "rehearsal"
+let POSITION = 0.0;
+let DURATION = 15.0;
+let FPS = 30.0;
+let RATE = 1.0;
+let LOOP = false;
+let LAST_VTIME = -1.0;
+
+let EPOCH = 1;                  // 每次跳转或重载递增，防止旧纪元残留画面覆盖新位置
+let CUR_POSE = null;
+let CUR_FX = null;
+let DISPLAY_FRAME_TIME = 0.0;
+
+let CAMERA_MODE = "show";       // "show" | "follow" | "orbit"
+let ORBIT_CAM = {
+  yaw: 0.68,
+  pitch: 0.34,
+  dist: 13.5,
+  panX: 0.0,
+  panY: 0.8
+};
+
+let SELECTION_TEXT = "点击三维视图中的机体部件可查看名称与受损状态；排演中点击地面可设定目标航向";
+let STATUS_TEXT = "正在装载场景资源...";
+
+let CONTROLLER_PATH = "/Apps/flight_ctrl.nos";
+let SAVE_REC_NAME = "/Documents/rehearsal-1.rec";
+let REH_INPUTS = {
+  windX: 0.0,
+  windZ: 0.0,
+  targetHeading: 45.0,
+  faultTime: -1.0,
+  faultTriggered: false,
+  navMode: "fly_heading",
+  targetPoint: null
+};
+
+fn stop_controller_if_any() {
+  if (CTRL_PID > 0) {
+    syscall("proc_kill", CTRL_PID);
+    CTRL_PID = 0;
+  }
+}
+
+fn spawn_flight_controller() {
+  stop_controller_if_any();
+  let sp = syscall("proc_spawn", CONTROLLER_PATH, ["fc_" + WIN_ID], {
+    name: "flight_ctrl",
+    role: "flight_ctrl_" + WIN_ID,
+    quota: 520,
+    memQuota: 2097152
+  });
+  if (sp.ok) {
+    CTRL_PID = sp.pid;
+    let wmPid = syscall("find_pid_by_role", "wm");
+    if (wmPid != null) {
+      syscall("send_msg", wmPid, { type: "register_collab", winId: WIN_ID, pid: CTRL_PID });
+    }
+    STATUS_TEXT = "排演进行中 · 飞控进程 PID=" + str(CTRL_PID) + " (" + CONTROLLER_PATH + ")";
+  } else {
+    STATUS_TEXT = "飞控启动失败（机体将无控发散！）: " + str(sp.error);
+  }
+}
+
+fn request_load_scene(path) {
+  stop_controller_if_any();
+  SCENE_PATH = path;
+  STATE = "paused";
+  POSITION = 0.0;
+  EPOCH += 1;
+  CUR_POSE = null;
+  CUR_FX = null;
+  STATUS_TEXT = "正在载入场景: " + path;
+  syscall("send_msg", SCENE_PID, {
+    type: "load_scene",
+    path: path,
+    epoch: EPOCH
+  });
+  let wmPid = syscall("find_pid_by_role", "wm");
+  if (wmPid != null) {
+    syscall("send_msg", wmPid, { type: "set_win_title", winId: WIN_ID, title: "三维场景播放器 · " + path });
+  }
+}
+
+fn dispatch_sample(seeked) {
+  if (SCENE_PID > 0) {
+    syscall("send_msg", SCENE_PID, {
+      type: "sample",
+      epoch: EPOCH,
+      time: POSITION,
+      mode: STATE == "rehearsal" ? "rehearsal" : "recorded",
+      seeked: seeked,
+      inputs: REH_INPUTS
+    });
+  }
+  // 同时向特效进程发送时序脉冲，确保当单独挂起 player_scene 时，player_fx 仍能随时间演化！
+  if (FX_PID > 0 && !seeked) {
+    syscall("send_msg", FX_PID, {
+      type: "fx_tick",
+      epoch: EPOCH,
+      time: POSITION,
+      seeked: false,
+      craftSummary: null
+    });
+  }
+}
+
+fn compute_camera_state() {
+  let focus = [0.0, 1.2, 0.0];
+  let craftYaw = 0.0;
+  if (CUR_POSE != null && CUR_POSE.craftSummary != null) {
+    let cs = CUR_POSE.craftSummary;
+    focus = [cs.pos[0], cs.pos[1] + 0.55, cs.pos[2]];
+    craftYaw = cs.rot[1];
+  }
+
+  if (CAMERA_MODE == "show") {
+    // 演出镜头：平滑围绕机体前侧方跟拍，确保紫黄涂装与机身两侧“24”清晰呈现，撞击后稳健收束
+    let t = DISPLAY_FRAME_TIME;
+    let sideAngle = craftYaw + 1.18 + sin(t * 0.35) * 0.28;
+    let dist = t < 3.2 ? (9.8 + t * 0.65) : (t < 10.6 ? 12.2 : 14.2);
+    let elev = t < 3.0 ? 2.6 : (t < 10.6 ? 3.5 : 4.6);
+    return {
+      mode: "show",
+      eye: [
+        focus[0] + cos(sideAngle) * dist,
+        max(focus[1] + elev, 2.2),
+        focus[2] + sin(sideAngle) * dist
+      ],
+      target: focus,
+      fov: 46
+    };
+  }
+
+  if (CAMERA_MODE == "follow") {
+    let backX = -sin(craftYaw) * 13.0 + cos(craftYaw) * 4.2;
+    let backZ = cos(craftYaw) * 13.0 + sin(craftYaw) * 4.2;
+    return {
+      mode: "follow",
+      eye: [focus[0] + backX, focus[1] + 4.4, focus[2] + backZ],
+      target: focus,
+      fov: 48
+    };
+  }
+
+  // 自由环绕镜头 (orbit)
+  let cp = cos(ORBIT_CAM.pitch);
+  let sp = sin(ORBIT_CAM.pitch);
+  return {
+    mode: "orbit",
+    eye: [
+      focus[0] + ORBIT_CAM.panX + cos(ORBIT_CAM.yaw) * cp * ORBIT_CAM.dist,
+      focus[1] + ORBIT_CAM.panY + sp * ORBIT_CAM.dist,
+      focus[2] + sin(ORBIT_CAM.yaw) * cp * ORBIT_CAM.dist
+    ],
+    target: [focus[0] + ORBIT_CAM.panX, focus[1] + ORBIT_CAM.panY, focus[2]],
+    fov: 48,
+    orbit: clone(ORBIT_CAM)
+  };
+}
+
+fn list_scene_candidates() {
+  let out = ["/Demo/helicopter-24.scene", "/Demo/minimal.scene"];
+  let docs = syscall("fs_list", "/Documents");
+  if (docs != null) {
+    let i = 0;
+    while (i < len(docs)) {
+      let p = docs[i].path;
+      if (index_of(p, ".scene", 0) > 0 || index_of(p, ".rec", 0) > 0) {
+        if (index_of(out, p, 0) < 0) { push(out, p); }
+      }
+      i += 1;
+    }
+  }
+  return out;
+}
+
+fn list_controller_candidates() {
+  let out = ["/Apps/flight_ctrl.nos"];
+  let progs = syscall("fs_list", "/Programs");
+  if (progs != null) {
+    let i = 0;
+    while (i < len(progs)) {
+      let p = progs[i].path;
+      if (index_of(p, "ctrl", 0) >= 0 || index_of(p, "pilot", 0) >= 0 || index_of(p, "fly", 0) >= 0) {
+        push(out, p);
+      }
+      i += 1;
+    }
+  }
+  return out;
+}
+
+fn handle_msg(d) {
+  if (d == null) { return null; }
+
+  if (d.type == "scene_loaded_ack") {
+    if (d.epoch != EPOCH) { return null; }
+    if (d.ok) {
+      DURATION = num(d.duration);
+      FPS = num(d.fps);
+      HAS_FLIGHT_MODEL = d.hasFlightModel == true;
+      SCENE_RESOURCE = d.sceneData;
+      CUR_POSE = d.pose;
+      DISPLAY_FRAME_TIME = 0.0;
+      STATUS_TEXT = "就绪 · 帧率 " + str(FPS) + " FPS · 总时长 " + str(DURATION) + "s";
+    } else {
+      STATUS_TEXT = "载入失败: " + str(d.error);
+    }
+    return null;
+  }
+
+  if (d.type == "scene_frame") {
+    if (d.epoch == EPOCH && d.pose != null) {
+      CUR_POSE = d.pose;
+      DISPLAY_FRAME_TIME = num(d.pose.frameTime);
+    }
+    return null;
+  }
+
+  if (d.type == "fx_frame") {
+    if (d.epoch == EPOCH && d.fx != null) {
+      CUR_FX = d.fx;
+    }
+    return null;
+  }
+
+  if (d.type == "record_saved") {
+    STATUS_TEXT = d.ok ? ("排演记录已保存至 " + str(d.path)) : ("保存记录失败: " + str(d.error));
+    return null;
+  }
+
+  let act = d.action;
+  if (act == "open_scene") {
+    if (d.path != null && d.path != "") {
+      request_load_scene(str(d.path));
+    }
+  } else if (act == "play") {
+    if (STATE == "rehearsal") {
+      LAST_VTIME = syscall("time_now");
+    } else {
+      if (POSITION >= DURATION - 0.001) {
+        POSITION = 0.0;
+        EPOCH += 1;
+        dispatch_sample(true);
+      }
+      STATE = "playing";
+      LAST_VTIME = syscall("time_now");
+      STATUS_TEXT = "播放中 (" + str(RATE) + "x)";
+    }
+  } else if (act == "pause") {
+    if (STATE == "rehearsal") {
+      stop_controller_if_any();
+    }
+    STATE = "paused";
+    LAST_VTIME = -1.0;
+    STATUS_TEXT = "已暂停于 " + str(round(POSITION * 100) / 100) + "s";
+  } else if (act == "stop") {
+    stop_controller_if_any();
+    STATE = "stopped";
+    POSITION = 0.0;
+    LAST_VTIME = -1.0;
+    EPOCH += 1;
+    dispatch_sample(true);
+    STATUS_TEXT = "已停止并回到第 0 帧";
+  } else if (act == "replay") {
+    stop_controller_if_any();
+    POSITION = 0.0;
+    STATE = "playing";
+    LAST_VTIME = syscall("time_now");
+    EPOCH += 1;
+    dispatch_sample(true);
+    STATUS_TEXT = "从头重播中";
+  } else if (act == "step") {
+    if (STATE == "playing") { STATE = "paused"; }
+    let frameDur = 1.0 / max(1.0, FPS);
+    if (STATE != "rehearsal") {
+      POSITION = min(DURATION, POSITION + frameDur);
+    } else {
+      POSITION = POSITION + frameDur;
+    }
+    EPOCH += 1;
+    dispatch_sample(true);
+    STATUS_TEXT = "单步推进 1 帧 (+" + str(round(frameDur * 1000)) + "ms) -> " + str(round(POSITION * 100) / 100) + "s";
+  } else if (act == "seek") {
+    stop_controller_if_any();
+    if (STATE == "rehearsal") { STATE = "paused"; }
+    POSITION = clamp(num(d.time), 0.0, DURATION);
+    LAST_VTIME = syscall("time_now");
+    EPOCH += 1;
+    dispatch_sample(true);
+    STATUS_TEXT = "跳转至 " + str(round(POSITION * 100) / 100) + "s";
+  } else if (act == "set_rate") {
+    RATE = clamp(num(d.rate), 0.1, 8.0);
+    LAST_VTIME = syscall("time_now");
+    STATUS_TEXT = "播放倍速: " + str(RATE) + "x";
+  } else if (act == "toggle_loop") {
+    LOOP = !LOOP;
+  } else if (act == "set_camera") {
+    CAMERA_MODE = str(d.mode);
+  } else if (act == "orbit_drag") {
+    CAMERA_MODE = "orbit";
+    ORBIT_CAM.yaw += num(d.dx) * 0.01;
+    ORBIT_CAM.pitch = clamp(ORBIT_CAM.pitch + num(d.dy) * 0.01, -0.25, 1.38);
+  } else if (act == "orbit_zoom") {
+    CAMERA_MODE = "orbit";
+    ORBIT_CAM.dist = clamp(ORBIT_CAM.dist + num(d.delta) * 0.015, 4.0, 42.0);
+  } else if (act == "pick_object") {
+    if (d.kind == "part") {
+      let pid = str(d.partId);
+      let label = d.label != null ? str(d.label) : pid;
+      let dmgText = "结构完好 · 运行正常";
+      if (CUR_POSE != null && CUR_POSE.partDamage != null && has_key(CUR_POSE.partDamage, pid)) {
+        dmgText = CUR_POSE.partDamage[pid].status;
+      }
+      SELECTION_TEXT = "选中部件：" + label + " (" + pid + ") — " + dmgText;
+    } else if (d.kind == "ground" && d.point != null) {
+      let gp = d.point;
+      if (STATE == "rehearsal" && CUR_POSE != null && CUR_POSE.craftSummary != null) {
+        let cs = CUR_POSE.craftSummary;
+        let headingRad = atan2(gp[0] - cs.pos[0], -(gp[2] - cs.pos[2]));
+        let headingDeg = round((headingRad * 180.0 / 3.14159265 + 360.0)) % 360;
+        REH_INPUTS.targetHeading = headingDeg;
+        REH_INPUTS.targetPoint = [gp[0], gp[1], gp[2]];
+        REH_INPUTS.navMode = "point";
+        syscall("send_msg", SCENE_PID, { type: "update_reh_inputs", inputs: REH_INPUTS });
+        SELECTION_TEXT = "已设定地面目标点 (" + str(round(gp[0])) + ", " + str(round(gp[2])) + ") · 目标航向 " + str(headingDeg) + "°";
+      } else {
+        SELECTION_TEXT = "地面坐标 (" + str(round(gp[0] * 10) / 10) + ", " + str(round(gp[2] * 10) / 10) + ")";
+      }
+    }
+  } else if (act == "rehearsal_start") {
+    if (!HAS_FLIGHT_MODEL) {
+      STATUS_TEXT = "当前场景不含飞行动力学模型";
+      return null;
+    }
+    // 若在地面第 0 秒开始排演，默认切到起飞悬停/航向模式；若从演出中途切入则保持当前时刻连续演化不跳变！
+    STATE = "rehearsal";
+    LAST_VTIME = syscall("time_now");
+    EPOCH += 1;
+    REH_INPUTS.faultTriggered = false;
+    syscall("send_msg", SCENE_PID, {
+      type: "start_rehearsal",
+      epoch: EPOCH,
+      time: POSITION,
+      inputs: REH_INPUTS
+    });
+    spawn_flight_controller();
+  } else if (act == "rehearsal_land_h2") {
+    REH_INPUTS.navMode = "land_h2";
+    REH_INPUTS.targetPoint = null;
+    syscall("send_msg", SCENE_PID, { type: "update_reh_inputs", inputs: REH_INPUTS });
+    STATUS_TEXT = "飞控指令：自动前往第二停机坪 (H2) 悬停并降落";
+  } else if (act == "rehearsal_set_wind") {
+    REH_INPUTS.windX = num(d.windX);
+    REH_INPUTS.windZ = d.windZ != null ? num(d.windZ) : (num(d.windX) * 0.45);
+    syscall("send_msg", SCENE_PID, { type: "update_reh_inputs", inputs: REH_INPUTS });
+    STATUS_TEXT = "环境风速已设为 (" + str(REH_INPUTS.windX) + ", " + str(REH_INPUTS.windZ) + ") m/s";
+  } else if (act == "rehearsal_set_heading") {
+    REH_INPUTS.targetHeading = num(d.heading);
+    REH_INPUTS.navMode = "fly_heading";
+    REH_INPUTS.targetPoint = null;
+    syscall("send_msg", SCENE_PID, { type: "update_reh_inputs", inputs: REH_INPUTS });
+    STATUS_TEXT = "目标航向已更新为 " + str(REH_INPUTS.targetHeading) + "°";
+  } else if (act == "rehearsal_set_fault") {
+    if (d.immediate == true) {
+      REH_INPUTS.faultTriggered = true;
+      STATUS_TEXT = "已立即触发尾桨传动失效故障！";
+    } else {
+      REH_INPUTS.faultTime = num(d.faultTime);
+      REH_INPUTS.faultTriggered = false;
+      STATUS_TEXT = REH_INPUTS.faultTime > 0 ? ("已设定在 " + str(REH_INPUTS.faultTime) + "s 触发故障") : "已取消定时故障";
+    }
+    syscall("send_msg", SCENE_PID, { type: "update_reh_inputs", inputs: REH_INPUTS });
+  } else if (act == "rehearsal_set_controller") {
+    CONTROLLER_PATH = str(d.path);
+    if (STATE == "rehearsal") {
+      spawn_flight_controller();
+    } else {
+      STATUS_TEXT = "已选定飞控程序: " + CONTROLLER_PATH;
+    }
+  } else if (act == "save_record") {
+    let p = (d.path != null && d.path != "") ? str(d.path) : SAVE_REC_NAME;
+    SAVE_REC_NAME = p;
+    syscall("send_msg", SCENE_PID, { type: "save_record", path: p });
+  } else if (act == "project") {
+    syscall("project_window", WIN_ID, "player", str(d.targetSysId));
+    STATUS_TEXT = "已将播放器视图投送至 " + str(d.targetSysId);
+  }
+}
+
+fn advance_playback_clock() {
+  let nowV = syscall("time_now");
+  if (STATE != "playing" && STATE != "rehearsal") {
+    LAST_VTIME = nowV;
+    return false;
+  }
+  if (LAST_VTIME < 0) {
+    LAST_VTIME = nowV;
+    return false;
+  }
+  let dt = (nowV - LAST_VTIME) * RATE;
+  LAST_VTIME = nowV;
+  if (dt <= 0.0001) { return false; }
+
+  if (STATE == "playing") {
+    POSITION += dt;
+    if (POSITION >= DURATION) {
+      if (LOOP) {
+        POSITION = POSITION - floor(POSITION / DURATION) * DURATION;
+        EPOCH += 1;
+        dispatch_sample(true);
+        return true;
+      } else {
+        POSITION = DURATION;
+        STATE = "paused";
+        STATUS_TEXT = "播放完成（停在末帧 " + str(DURATION) + "s）";
+        dispatch_sample(false);
+        return true;
+      }
+    }
+    dispatch_sample(false);
+    return true;
+  }
+
+  if (STATE == "rehearsal") {
+    POSITION += dt;
+    if (POSITION > DURATION) { DURATION = round(POSITION * 10) / 10; }
+    dispatch_sample(false);
+    return true;
+  }
+  return false;
+}
+
+fn submit_ui() {
+  let ancestors = syscall("subsys_manage", "ancestors", null, null);
+  syscall("surface_submit", WIN_ID, {
+    kind: "player",
+    scenePath: SCENE_PATH,
+    state: STATE,
+    position: round(POSITION * 1000) / 1000,
+    duration: DURATION,
+    fps: FPS,
+    rate: RATE,
+    loop: LOOP,
+    frameTime: round(DISPLAY_FRAME_TIME * 1000) / 1000,
+    camera: compute_camera_state(),
+    cameraMode: CAMERA_MODE,
+    selectionText: SELECTION_TEXT,
+    statusText: STATUS_TEXT,
+    hasFlightModel: HAS_FLIGHT_MODEL,
+    controllerPath: CONTROLLER_PATH,
+    saveRecName: SAVE_REC_NAME,
+    rehInputs: REH_INPUTS,
+    sceneCandidates: list_scene_candidates(),
+    controllerCandidates: list_controller_candidates(),
+    ancestors: ancestors != null ? ancestors : [{ id: "outer", name: "根系统桌面" }],
+    sceneResource: SCENE_RESOURCE,
+    pose: CUR_POSE,
+    fx: CUR_FX
+  });
+}
+
+fn main(winId, initScene) {
+  WIN_ID = str(winId);
+  let myPid = syscall("get_pid");
+
+  let spFx = syscall("proc_spawn", "/Apps/player_fx.nos", [myPid, WIN_ID], {
+    name: "player_fx",
+    quota: 520,
+    memQuota: 3145728
+  });
+  if (spFx.ok) { FX_PID = spFx.pid; }
+
+  let spScene = syscall("proc_spawn", "/Apps/player_scene.nos", [myPid, WIN_ID, FX_PID], {
+    name: "player_scene",
+    quota: 950,
+    memQuota: 6291456
+  });
+  if (spScene.ok) { SCENE_PID = spScene.pid; }
+
+  let wmPid = syscall("find_pid_by_role", "wm");
+  if (wmPid != null) {
+    if (FX_PID > 0) { syscall("send_msg", wmPid, { type: "register_collab", winId: WIN_ID, pid: FX_PID }); }
+    if (SCENE_PID > 0) { syscall("send_msg", wmPid, { type: "register_collab", winId: WIN_ID, pid: SCENE_PID }); }
+  }
+
+  request_load_scene((initScene != null && initScene != "") ? str(initScene) : "/Demo/helicopter-24.scene");
+  submit_ui();
+
+  while (true) {
+    let waitDur = (STATE == "playing" || STATE == "rehearsal") ? 0.03 : 0.25;
+    let msg = syscall("recv_msg_wait", waitDur);
+    if (msg != null) {
+      handle_msg(msg.data);
+      let burst = 0;
+      while (burst < 12) {
+        let m2 = syscall("recv_msg");
+        if (m2 == null) { break; }
+        handle_msg(m2.data);
+        burst += 1;
+      }
+    }
+    advance_playback_clock();
+    submit_ui();
+  }
+}

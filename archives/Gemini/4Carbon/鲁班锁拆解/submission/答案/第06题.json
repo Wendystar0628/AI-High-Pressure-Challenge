@@ -1,0 +1,34 @@
+{
+  "puzzle": "06",
+  "plan": {
+    "moves": [
+      {"pieces": ["D"], "delta": [1, 0, 0]},
+      {"pieces": ["C", "D"], "delta": [0, 1, 0]},
+      {"pieces": ["C"], "delta": [0, 0, -1]},
+      {"pieces": ["B", "D"], "delta": [-1, 0, 0]},
+      {"pieces": ["A"], "delta": [0, 0, 1]},
+      {"pieces": ["C", "D"], "delta": [0, -1, 0]},
+      {"pieces": ["B"], "delta": [1, 0, 0]},
+      {"pieces": ["A"], "delta": [0, -1, 0]},
+      {"pieces": ["C"], "delta": [0, 0, 1]},
+      {"pieces": ["B", "D"], "delta": [0, 1, 0]},
+      {"pieces": ["A"], "out": [0, 0, 1]}
+    ],
+    "removed": null,
+    "remaining": {
+      "moves": [
+        {"pieces": ["D"], "out": [-1, 0, 0]}
+      ],
+      "removed": null,
+      "remaining": {
+        "moves": [
+          {"pieces": ["B"], "delta": [0, -1, 0]},
+          {"pieces": ["C"], "delta": [0, 0, -1]},
+          {"pieces": ["C"], "out": [1, 0, 0]}
+        ],
+        "removed": null,
+        "remaining": null
+      }
+    }
+  }
+}

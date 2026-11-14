@@ -267,7 +267,7 @@
   height: 10px;
   margin: 0;
 }
-/* the graders noted an anomaly: a short slash in the corner (the tooltip says what) */
+/* an anomaly note: a short slash in the corner (the tooltip says what) */
 .mx-flag {
   position: absolute;
   left: 4px;

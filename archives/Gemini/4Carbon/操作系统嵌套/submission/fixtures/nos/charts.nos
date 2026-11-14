@@ -1,0 +1,451 @@
+// ============================================================================
+// NestedOS 图表工作台主进程 (/Apps/charts.nos)
+// 说明：数据列提取、数值变换、坐标轴刻度计算、柱状/折线几何生成及虚拟时间过渡动画均在本程序中执行。
+// 修改 VALUE_SCALE、SORT_CATEGORIES 或 compute_chart_shapes 后重新打开，图表即按新规则工作。
+// ============================================================================
+
+let VALUE_SCALE = 1.0;          // 数值缩放因子（改写如 2.0 或 0.5 可检验取值规则变化）
+let SORT_CATEGORIES = "none";   // 可选: "none" | "desc" (按首序列从高到低排序类别)
+let TRANSITION_DUR = 0.35;      // 过渡动画虚拟时间长度（秒）
+
+let WIN_ID = "";
+let RECV_PID = 0;
+let WORKBOOKS = [];
+let SELECTED_DOC_ID = "";
+let SOURCE_TITLE = "";
+let RANGE_STR = "A1:D4";
+let LABEL_COL = "A";
+let SERIES_COLS = "D";          // 支持逗号分隔多列，如 "B,D" 或 "B,C,D"
+let CHART_TYPE = "bar";         // "bar" | "line"
+let CONN_STATE = "disconnected"; // "disconnected" | "connected" | "source_closed" | "restored_pending"
+let STATUS_TEXT = "未连接（请选择工作簿与区域后点击连接）";
+
+let CACHED_SNAPSHOT = null;     // 最近一次完整二维表快照 { version, startCol, startRow, matrix, title }
+let CUR_CATEGORIES = [];
+let TARGET_SERIES = [];         // [{ name, col, values: [] }]
+let FROM_SERIES = [];
+let ANIM_START_T = 0;
+let HOVER_INDEX = -1;
+let SELECTED_POINT = null;      // { catIdx, seriesIdx, label, seriesName, value }
+
+let SERIES_PALETTE = ["#8b5cf6", "#facc15", "#38bdf8", "#34d399", "#fb7185"];
+
+fn col_letter_to_index(colStr) {
+  let s = trim(str(colStr));
+  if (len(s) == 0) { return 0; }
+  let c = char_code(s, 0);
+  if (c >= 97 && c <= 122) { return c - 97; }
+  if (c >= 65 && c <= 90) { return c - 65; }
+  return 0;
+}
+
+fn extract_cell_number(raw) {
+  if (raw == null || raw == "") { return 0; }
+  let n = parse_num(raw);
+  if (is_nan(n)) { return 0; }
+  return n * VALUE_SCALE;
+}
+
+fn rebuild_series_from_cache() {
+  if (CACHED_SNAPSHOT == null || CACHED_SNAPSHOT.matrix == null) { return null; }
+  let mat = CACHED_SNAPSHOT.matrix;
+  if (len(mat) == 0) { return null; }
+
+  let baseCol = CACHED_SNAPSHOT.startCol != null ? num(CACHED_SNAPSHOT.startCol) : 0;
+  let lIdx = clamp(col_letter_to_index(LABEL_COL) - baseCol, 0, max(0, len(mat[0]) - 1));
+
+  let sParts = split(SERIES_COLS, ",");
+  let sIndices = [];
+  let si = 0;
+  while (si < len(sParts)) {
+    let part = trim(sParts[si]);
+    if (part != "") {
+      let idx = col_letter_to_index(part) - baseCol;
+      if (idx >= 0 && idx < len(mat[0])) {
+        push(sIndices, { col: part, idx: idx });
+      }
+    }
+    si += 1;
+  }
+  if (len(sIndices) == 0 && len(mat[0]) > 1) {
+    push(sIndices, { col: "B", idx: min(1, len(mat[0]) - 1) });
+  }
+
+  // 判断首行是否为表头（若首行对应数值列不是纯数字则作为序列名称）
+  let hasHeader = len(mat) > 1 && is_nan(parse_num(mat[0][sIndices[0].idx]));
+  let startR = hasHeader ? 1 : 0;
+
+  let cats = [];
+  let r = startR;
+  while (r < len(mat)) {
+    push(cats, str(mat[r][lIdx]));
+    r += 1;
+  }
+
+  let newSeries = [];
+  let k = 0;
+  while (k < len(sIndices)) {
+    let colInfo = sIndices[k];
+    let sName = hasHeader ? str(mat[0][colInfo.idx]) : ("列 " + colInfo.col);
+    let vals = [];
+    let rr = startR;
+    while (rr < len(mat)) {
+      push(vals, extract_cell_number(mat[rr][colInfo.idx]));
+      rr += 1;
+    }
+    push(newSeries, {
+      name: sName,
+      col: colInfo.col,
+      color: SERIES_PALETTE[k % len(SERIES_PALETTE)],
+      values: vals
+    });
+    k += 1;
+  }
+
+  // 可选：按首序列降序重排类别
+  if (SORT_CATEGORIES == "desc" && len(newSeries) > 0) {
+    let n = len(cats);
+    let a = 0;
+    while (a < n) {
+      let b = a + 1;
+      while (b < n) {
+        if (newSeries[0].values[a] < newSeries[0].values[b]) {
+          let tc = cats[a]; cats[a] = cats[b]; cats[b] = tc;
+          let s2 = 0;
+          while (s2 < len(newSeries)) {
+            let tv = newSeries[s2].values[a];
+            newSeries[s2].values[a] = newSeries[s2].values[b];
+            newSeries[s2].values[b] = tv;
+            s2 += 1;
+          }
+        }
+        b += 1;
+      }
+      a += 1;
+    }
+  }
+
+  FROM_SERIES = len(TARGET_SERIES) > 0 ? sample_interpolated_series(syscall("time_now")) : clone(newSeries);
+  CUR_CATEGORIES = cats;
+  TARGET_SERIES = newSeries;
+  ANIM_START_T = syscall("time_now");
+}
+
+fn sample_interpolated_series(nowT) {
+  if (len(TARGET_SERIES) == 0) { return []; }
+  let progress = TRANSITION_DUR <= 0 ? 1.0 : clamp((nowT - ANIM_START_T) / TRANSITION_DUR, 0.0, 1.0);
+  // 平滑缓动 smoothstep
+  let ease = progress * progress * (3.0 - 2.0 * progress);
+  let out = [];
+  let s = 0;
+  while (s < len(TARGET_SERIES)) {
+    let ts = TARGET_SERIES[s];
+    let fs = (s < len(FROM_SERIES)) ? FROM_SERIES[s] : null;
+    let vals = [];
+    let i = 0;
+    while (i < len(ts.values)) {
+      let v1 = ts.values[i];
+      let v0 = (fs != null && i < len(fs.values)) ? fs.values[i] : v1;
+      push(vals, v0 + (v1 - v0) * ease);
+      i += 1;
+    }
+    push(out, {
+      name: ts.name,
+      col: ts.col,
+      color: ts.color,
+      values: vals,
+      targetValues: ts.values
+    });
+    s += 1;
+  }
+  return out;
+}
+
+// 计算二维绘图图元（完全在子系统进程中算出矩形/折线/坐标轴刻度！）
+fn compute_chart_shapes(seriesNow) {
+  let W = 500;
+  let H = 250;
+  let padL = 54;
+  let padR = 22;
+  let padT = 28;
+  let padB = 42;
+  let plotW = W - padL - padR;
+  let plotH = H - padT - padB;
+
+  let maxVal = 10;
+  let minVal = 0;
+  let s = 0;
+  while (s < len(seriesNow)) {
+    let i = 0;
+    while (i < len(seriesNow[s].values)) {
+      let v = seriesNow[s].values[i];
+      if (v > maxVal) { maxVal = v; }
+      if (v < minVal) { minVal = v; }
+      i += 1;
+    }
+    s += 1;
+  }
+  if (maxVal == minVal) { maxVal = minVal + 10; }
+  let span = (maxVal - minVal) * 1.12;
+  let yMax = minVal + span;
+  let yMin = minVal < 0 ? minVal * 1.1 : 0;
+  let yRange = max(1, yMax - yMin);
+  let zeroY = padT + plotH - ((0 - yMin) / yRange) * plotH;
+
+  let ticks = [];
+  let ti = 0;
+  while (ti <= 4) {
+    let ratio = ti / 4.0;
+    let tv = yMin + yRange * ratio;
+    let ty = padT + plotH - ratio * plotH;
+    push(ticks, { y: ty, label: str(round(tv * 10) / 10) });
+    ti += 1;
+  }
+
+  let bars = [];
+  let lines = [];
+  let catLabels = [];
+  let catCount = max(1, len(CUR_CATEGORIES));
+  let sCount = max(1, len(seriesNow));
+  let groupStep = plotW / catCount;
+
+  let ci = 0;
+  while (ci < len(CUR_CATEGORIES)) {
+    push(catLabels, {
+      x: padL + groupStep * (ci + 0.5),
+      y: padT + plotH + 18,
+      text: CUR_CATEGORIES[ci],
+      active: HOVER_INDEX == ci
+    });
+    ci += 1;
+  }
+
+  if (CHART_TYPE == "bar") {
+    let groupW = groupStep * 0.68;
+    let barW = max(8, (groupW / sCount) - 4);
+    let si = 0;
+    while (si < len(seriesNow)) {
+      let ser = seriesNow[si];
+      let k = 0;
+      while (k < len(ser.values)) {
+        let v = ser.values[k];
+        let vy = padT + plotH - ((v - yMin) / yRange) * plotH;
+        let bx = padL + groupStep * k + (groupStep - groupW) / 2 + si * (barW + 4);
+        let topY = min(vy, zeroY);
+        let bh = max(2, abs(zeroY - vy));
+        push(bars, {
+          x: bx,
+          y: topY,
+          w: barW,
+          h: bh,
+          color: ser.color,
+          catIdx: k,
+          seriesIdx: si,
+          label: k < len(CUR_CATEGORIES) ? CUR_CATEGORIES[k] : "",
+          seriesName: ser.name,
+          value: round(v * 100) / 100
+        });
+        k += 1;
+      }
+      si += 1;
+    }
+  } else {
+    let si = 0;
+    while (si < len(seriesNow)) {
+      let ser = seriesNow[si];
+      let pts = [];
+      let k = 0;
+      while (k < len(ser.values)) {
+        let v = ser.values[k];
+        let px = padL + groupStep * (k + 0.5);
+        let py = padT + plotH - ((v - yMin) / yRange) * plotH;
+        push(pts, {
+          x: px,
+          y: py,
+          catIdx: k,
+          seriesIdx: si,
+          label: k < len(CUR_CATEGORIES) ? CUR_CATEGORIES[k] : "",
+          seriesName: ser.name,
+          value: round(v * 100) / 100,
+          color: ser.color
+        });
+        k += 1;
+      }
+      push(lines, { name: ser.name, color: ser.color, points: pts });
+      si += 1;
+    }
+  }
+
+  return {
+    viewW: W,
+    viewH: H,
+    padL: padL,
+    padT: padT,
+    plotW: plotW,
+    plotH: plotH,
+    zeroY: zeroY,
+    ticks: ticks,
+    catLabels: catLabels,
+    bars: bars,
+    lines: lines
+  };
+}
+
+fn refresh_workbooks() {
+  let res = syscall("chart_service", "list_sources", {});
+  if (res != null && res.workbooks != null) {
+    WORKBOOKS = res.workbooks;
+    if (SELECTED_DOC_ID == "" && len(WORKBOOKS) > 0) {
+      SELECTED_DOC_ID = WORKBOOKS[0].docId;
+      SOURCE_TITLE = WORKBOOKS[0].title;
+    }
+  }
+}
+
+fn submit_ui() {
+  let nowT = syscall("time_now");
+  let seriesNow = sample_interpolated_series(nowT);
+  let geom = compute_chart_shapes(seriesNow);
+  let ancestors = syscall("subsys_manage", "ancestors", null, null);
+
+  syscall("surface_submit", WIN_ID, {
+    kind: "charts",
+    workbooks: WORKBOOKS,
+    selectedDocId: SELECTED_DOC_ID,
+    sourceTitle: SOURCE_TITLE,
+    range: RANGE_STR,
+    labelCol: LABEL_COL,
+    seriesCols: SERIES_COLS,
+    chartType: CHART_TYPE,
+    connectionState: CONN_STATE,
+    version: CACHED_SNAPSHOT != null ? CACHED_SNAPSHOT.version : 0,
+    statusText: STATUS_TEXT,
+    categories: CUR_CATEGORIES,
+    series: seriesNow,
+    geometry: geom,
+    hoverIndex: HOVER_INDEX,
+    selectedPoint: SELECTED_POINT,
+    ancestors: ancestors != null ? ancestors : [{ id: "outer", name: "根系统桌面" }]
+  });
+}
+
+fn handle_msg(d) {
+  if (d == null) { return null; }
+
+  if (d.type == "data_version" && d.snapshot != null) {
+    CACHED_SNAPSHOT = d.snapshot;
+    SOURCE_TITLE = str(d.snapshot.title);
+    CONN_STATE = "connected";
+    STATUS_TEXT = "已连接 · " + SOURCE_TITLE + " [" + RANGE_STR + "] · 版本 v" + str(d.snapshot.version);
+    rebuild_series_from_cache();
+    return null;
+  }
+  if (d.type == "conn_error") {
+    CONN_STATE = "disconnected";
+    STATUS_TEXT = "连接失败: " + str(d.error);
+    return null;
+  }
+  if (d.type == "disconnected") {
+    CONN_STATE = "disconnected";
+    STATUS_TEXT = "已主动断开连接（保留最后一次图表与数据）";
+    return null;
+  }
+  if (d.type == "source_closed") {
+    CONN_STATE = "source_closed";
+    STATUS_TEXT = "数据源工作簿已关闭（保留已接收数据，重开工作簿后可重新连接）";
+    return null;
+  }
+  if (d.type == "restored_pending") {
+    CONN_STATE = "restored_pending";
+    STATUS_TEXT = "已恢复，待重新连接（当前展示缓存数据）";
+    return null;
+  }
+
+  let act = d.action;
+  if (act == "refresh_sources") {
+    refresh_workbooks();
+  } else if (act == "set_source") {
+    SELECTED_DOC_ID = str(d.docId);
+    let i = 0;
+    while (i < len(WORKBOOKS)) {
+      if (WORKBOOKS[i].docId == SELECTED_DOC_ID) {
+        SOURCE_TITLE = WORKBOOKS[i].title;
+      }
+      i += 1;
+    }
+  } else if (act == "set_range") {
+    RANGE_STR = trim(str(d.range));
+  } else if (act == "set_label_col") {
+    LABEL_COL = trim(str(d.col));
+    rebuild_series_from_cache();
+  } else if (act == "set_series_cols") {
+    SERIES_COLS = trim(str(d.cols));
+    rebuild_series_from_cache();
+  } else if (act == "toggle_type" || act == "set_type") {
+    if (d.chartType != null) {
+      CHART_TYPE = str(d.chartType);
+    } else {
+      CHART_TYPE = CHART_TYPE == "bar" ? "line" : "bar";
+    }
+  } else if (act == "connect") {
+    refresh_workbooks();
+    if (SELECTED_DOC_ID == "" && len(WORKBOOKS) > 0) {
+      SELECTED_DOC_ID = WORKBOOKS[0].docId;
+      SOURCE_TITLE = WORKBOOKS[0].title;
+    }
+    syscall("send_msg", RECV_PID, {
+      type: "connect",
+      docId: SELECTED_DOC_ID,
+      range: RANGE_STR
+    });
+    STATUS_TEXT = "正在请求建立连接...";
+  } else if (act == "disconnect") {
+    syscall("send_msg", RECV_PID, { type: "disconnect" });
+  } else if (act == "hover_point") {
+    HOVER_INDEX = num(d.catIdx);
+  } else if (act == "select_point") {
+    SELECTED_POINT = d.point;
+    HOVER_INDEX = d.point != null ? num(d.point.catIdx) : -1;
+  } else if (act == "project") {
+    syscall("project_window", WIN_ID, "charts", str(d.targetSysId));
+    STATUS_TEXT = "已投送图表窗口至 " + str(d.targetSysId);
+  }
+}
+
+fn main(winId) {
+  WIN_ID = str(winId);
+  let myPid = syscall("get_pid");
+  let sp = syscall("proc_spawn", "/Apps/chart_recv.nos", [myPid, WIN_ID], {
+    name: "chart_recv",
+    quota: 450,
+    memQuota: 2097152
+  });
+  if (sp.ok) {
+    RECV_PID = sp.pid;
+    let wmPid = syscall("find_pid_by_role", "wm");
+    if (wmPid != null) {
+      syscall("send_msg", wmPid, { type: "register_collab", winId: WIN_ID, pid: RECV_PID });
+    }
+  }
+
+  refresh_workbooks();
+  submit_ui();
+
+  while (true) {
+    let nowT = syscall("time_now");
+    let animating = len(TARGET_SERIES) > 0 && (nowT - ANIM_START_T) < (TRANSITION_DUR + 0.06);
+    let waitSec = animating ? 0.04 : 0.35;
+    let msg = syscall("recv_msg_wait", waitSec);
+    if (msg != null) {
+      handle_msg(msg.data);
+      let burst = 0;
+      while (burst < 8) {
+        let m2 = syscall("recv_msg");
+        if (m2 == null) { break; }
+        handle_msg(m2.data);
+        burst += 1;
+      }
+    }
+    submit_ui();
+  }
+}

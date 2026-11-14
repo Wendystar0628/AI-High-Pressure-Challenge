@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "数字电路仿真器加速",
+  "tokens": 14584119,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 1.55,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/数字电路仿真器加速/run-ac36bfc75f0646a993b42db31c0025d0"
+  ]
+}

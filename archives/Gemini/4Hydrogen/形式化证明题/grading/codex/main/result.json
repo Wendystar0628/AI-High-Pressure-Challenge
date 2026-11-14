@@ -1,0 +1,57 @@
+{
+  "task": "形式化证明题",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "第 1 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem1.lean 单独编译及追加核验均以退出码 0 通过，无 sorry 警告；problem1 的实际命题与题面一致，依赖仅为 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 2 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem2.lean 单独编译及追加核验均以退出码 0 通过，无 sorry 警告；problem2 的实际命题与题面一致，依赖仅为 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 3 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem3.lean 单独编译及追加核验均以退出码 0 通过，无 sorry 警告；problem3 的实际命题与题面一致，依赖仅为 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 4 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem4.lean 单独编译及追加核验均以退出码 0 通过，无 sorry 警告；problem4 的实际命题与题面一致，依赖仅为 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 5 题",
+      "max": 12.5,
+      "score": 12.5,
+      "reason": "Problem5.lean 单独编译及追加核验均以退出码 0 通过，无 sorry 警告；problem5 的实际命题与题面一致，依赖仅为 propext、Classical.choice、Quot.sound。"
+    },
+    {
+      "name": "第 6 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "Problem6.lean 单独编译退出码为 1：第 56 行类型类推断卡住、第 287 行 unknown tactic，另有多处未解决目标和语法错误。追加核验也失败，problem6 的依赖中出现 sorryAx。"
+    },
+    {
+      "name": "第 7 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "作答结束时工作目录中没有第 7 题的 Lean 文件或主定理 problem7。"
+    },
+    {
+      "name": "第 8 题",
+      "max": 12.5,
+      "score": 0,
+      "reason": "作答结束时工作目录中没有第 8 题的 Lean 文件或主定理 problem8。"
+    }
+  ],
+  "metrics": {},
+  "notes": "评的是受测模型作答结束时的工作目录副本（work/submission），不看 git 提交；原始提交除指定评分表外未修改。逐题原样编译和追加 #print axioms、#check 的日志见 work/logs。第 6 题的 sorryAx 出现在编译错误恢复后的声明依赖中，其源码未直接书写 sorry；自然检查未见改变命题或绕过编译检查的迹象。"
+}

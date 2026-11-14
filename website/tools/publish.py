@@ -1,15 +1,15 @@
-"""Publish the results website in one go: export scores, build, push the built site to the gh-pages branch.
+"""Publish website content with the existing confirmed score snapshot.
 
-    python website/tools/publish.py              export + build + push to GitHub Pages
-    python website/tools/publish.py --no-upload  export + build only, to check a build locally
-While website/tools/site.json has "hold": true, every run (manual or the automatic one after grading) only builds.
+python website/tools/publish.py                  build and upload confirmed scores only
+python website/tools/publish.py --no-upload      isolated formal build, without upload
+python website/tools/publish.py --confirm <key>  after explicit user confirmation, approve one complete model and publish
 
-The scheduler runs it on its own when a model's grading has ended (orchestrator/site_publish.py); run it by hand
-after scores are edited or the site code changes. Where it publishes is set only in website/tools/publish.json.
-GitHub Pages serves the branch under that domain and Alibaba Cloud DCDN in front picks up new pages within its HTML
-cache time, so nothing else needs refreshing and no cloud keys are involved. The branch holds only the latest
-build: each publish replaces it with one fresh commit."""
+Live grading only refreshes site/data through export_data.py. Formal builds use a temporary data directory
+via ONESHOT_SITE_DATA_DIR and never overwrite the live preview or upgrade scores implicitly.
+"""
+import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -37,25 +37,31 @@ def held():
         return False
 
 
-def run(cmd, cwd=None):
+def run(cmd, cwd=None, env=None):
     print('>', ' '.join(str(c) for c in cmd), flush=True)
-    subprocess.run([str(c) for c in cmd], cwd=cwd, check=True)
+    subprocess.run([str(c) for c in cmd], cwd=cwd, env=env, check=True)
+
+
+def exporter():
+    if str(TOOLS) not in sys.path:
+        sys.path.insert(0, str(TOOLS))
+    import export_data
+    return export_data
 
 
 def build():
-    sys.path.insert(0, str(REPO / 'orchestrator'))
-    import usage
-    if usage.ledger_only():
-        print('本地核账模式：只读用量台账和已保存请求，跳过会话采集与台账写入。', flush=True)
-    else:
-        usage.collect()
-    run([sys.executable, TOOLS / 'export_data.py'])
-    npm = shutil.which('npm') or 'npm'
-    if not (SITE / 'node_modules').is_dir():
-        run([npm, 'ci'], cwd=SITE)
-    run([npm, 'run', 'build'], cwd=SITE)
-    if not (DIST / 'index.html').exists():
-        raise SystemExit(f'构建没有产出 {DIST / "index.html"}')
+    """Build only the confirmed snapshot, using isolated data; the live preview stays untouched."""
+    with tempfile.TemporaryDirectory(prefix='oneshot-confirmed-site-') as folder:
+        data = Path(folder).resolve() / 'data'
+        run([sys.executable, TOOLS / 'export_data.py', '--confirmed', '--out', data])
+        npm = shutil.which('npm') or 'npm'
+        if not (SITE / 'node_modules').is_dir():
+            run([npm, 'ci'], cwd=SITE)
+        run([npm, 'run', 'build', '--', '--outDir', DIST.resolve()], cwd=SITE,
+            env=os.environ | {'ONESHOT_SITE_DATA_DIR': str(data)})
+        if not (DIST / 'index.html').exists():
+            raise SystemExit(f'构建没有产出 {DIST / "index.html"}')
+        return summary(data)
 
 
 def pushed_note(cfg):
@@ -81,10 +87,10 @@ def deploy(cfg):
     print(pushed_note(cfg) + '。', flush=True)
 
 
-def summary():
+def summary(data_dir):
     """The ranking as published: one line per registered model, in the site's order."""
-    scores = json.loads((SITE / 'data' / 'scores.json').read_text(encoding='utf-8'))
-    models = {m['id']: m['name'] for m in json.loads((SITE / 'data' / 'models.json').read_text(encoding='utf-8'))}
+    scores = json.loads((Path(data_dir) / 'scores.json').read_text(encoding='utf-8'))
+    models = {m['id']: m['name'] for m in json.loads((Path(data_dir) / 'models.json').read_text(encoding='utf-8'))}
     lines = [f'成绩日期 {scores["updated"]}，{len(models)} 个模型：']
     for mid in scores['order']:
         s = scores['scores'][mid]
@@ -93,12 +99,20 @@ def summary():
     return lines
 
 
-def main():
+def main(argv=()):
     sys.stdout.reconfigure(encoding='utf-8')
-    build()
-    print('\n'.join(summary()), flush=True)
-    if '--no-upload' in sys.argv:
-        print('按 --no-upload 只构建，没有推送。', flush=True)
+    ap = argparse.ArgumentParser(description='只发布已确认成绩；新成绩须用户明确确认')
+    ap.add_argument('--no-upload', action='store_true')
+    ap.add_argument('--confirm', metavar='厂商/型号')
+    args = ap.parse_args(argv)
+    if args.confirm:
+        sys.path.insert(0, str(REPO / 'orchestrator'))
+        import common
+        with common.locked():
+            exporter().confirm_model(args.confirm)
+    print('\n'.join(build()), flush=True)
+    if args.no_upload:
+        print('按 --no-upload 仅构建已确认正式成绩，没有推送。', flush=True)
         return
     if held():
         print('site.json 的 hold 打开：推送暂停，只构建，没有推送。', flush=True)
@@ -107,4 +121,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

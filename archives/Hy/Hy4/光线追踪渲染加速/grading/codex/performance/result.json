@@ -1,0 +1,55 @@
+{
+    "task":  "光线追踪渲染加速",
+    "complete":  true,
+    "grader":  "GPT 6.1 Sol",
+    "items":  [
+                  {
+                      "name":  "渲染加速",
+                      "max":  100,
+                      "score":  35,
+                      "reason":  "正式评测加速比为 2.761941 倍，q=35.039105578；5次计时画面及12个隐藏输入全部通过，c=h=1，最终得分35.0。源码核查未确认实质性违规。"
+                  }
+              ],
+    "metrics":  {
+                    "R_ms":  510.9582,
+                    "C_ms":  184.9997,
+                    "speedup":  2.761940695038965,
+                    "q":  35.03910557831445,
+                    "c":  1,
+                    "h":  1,
+                    "raw_score":  35.03910557831445,
+                    "timed_factors":  [
+                                          1,
+                                          1,
+                                          1,
+                                          1,
+                                          1
+                                      ],
+                    "hidden_factors":  [
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1,
+                                           1
+                                       ],
+                    "timed_exception_pixels":  [
+                                                   793,
+                                                   793,
+                                                   793,
+                                                   793,
+                                                   793
+                                               ],
+                    "timed_exception_limit":  3232,
+                    "timed_rmse":  3.8910115763868806E-05,
+                    "formal":  true,
+                    "report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Hy\\Hy4\\光线追踪渲染加速\\codex\\performance\\work\\evaluation\\results.json"
+                },
+    "notes":  "评的是作答结束时工作目录的副本，不看 git 提交；solution.cu SHA256 为 DC6032166DB7D32E4253E5A533784CA7A9F792161AEF38D84F3ACA1F6BD3D3A6。按本题专属 evaluate.py 运行一次，逻辑处理器16–27、高优先级、五次取最小值；3个公开边界输入亦全部通过。规则扫描仅命中可复用显存指针 dNodes，已人工核实每次 render 重新建树并上传。 正式评测报告 valid=true、formal=true；每次运行前均无其他 CUDA 进程，GPU 利用率不超过7%；本会话启动的评测及其子进程均已退出。"
+}

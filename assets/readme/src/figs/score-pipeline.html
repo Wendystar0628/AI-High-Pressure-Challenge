@@ -76,7 +76,7 @@
   <div class="hr ink" style="top:146px; width:700px"></div>
   <div class="abs" style="left:40px; top:158px">
     <div class="lt"><span class="eyebrow slash">Standard</span><h3><i class="k std"></i>标准评判题</h3><span class="field">7 题</span></div>
-    <div class="cats"><span><img class="icon" src="../../icon-reason.svg" alt="">数学推理</span><span><img class="icon" src="../../icon-algo.svg" alt="">性能优化</span><span><img class="icon" src="../../icon-battle.svg" alt="">算法对抗</span><span><img class="icon" src="../../icon-spatial.svg" alt="">空间推理</span><span><img class="icon" src="../../icon-drawing.svg" alt="">识图建模</span></div>
+    <div class="cats"><span><img class="icon" src="../../icon-reason.svg" alt="">数学推理</span><span><img class="icon" src="../../icon-algo.svg" alt="">性能优化</span><span><img class="icon" src="../../icon-battle.svg" alt="">算法对抗</span><span><img class="icon" src="../../icon-spatial.svg" alt="">空间推理</span><span><img class="icon" src="../../icon-drawing.svg" alt="">几何建模</span></div>
   </div>
   <div class="abs node panel tab" id="s0" style="left:40px; top:226px">程序校验</div>
   <div class="abs what" id="w0" style="left:206px; top:225px">生成分数<span class="eg">鲁班锁 66.68 / 100</span></div>
@@ -145,7 +145,7 @@ const part = (id, sel) => rect(document.querySelector(`#${id} ${sel}`));
 
 // Weight bar: ten categories, widths proportional to weight, in task-table order so each kind stays together.
 // Fills are the category colours --cat-<key>; the five standard (lime) categories add the ink edge.
-const W = [['reason', '数学推理', 10], ['algo', '性能优化', 10], ['battle', '算法对抗', 10], ['spatial', '空间推理', 10], ['drawing', '识图建模', 10],
+const W = [['reason', '数学推理', 10], ['algo', '性能优化', 10], ['battle', '算法对抗', 10], ['spatial', '空间推理', 10], ['drawing', '几何建模', 10],
            ['interact', '交互应用', 10], ['game', '游戏开发', 10], ['physics', '物理模拟', 10],
            ['visual', '视觉渲染', 10], ['system', '系统架构', 10]];
 document.getElementById('wbar').innerHTML = W.map(([c, n, w], i) =>

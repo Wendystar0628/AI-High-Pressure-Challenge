@@ -1,0 +1,7343 @@
+{
+  "format": "nestedos-scene-v1",
+  "meta": {
+    "name": "24号紫黄涂装直升机 · 峡谷基地飞行与坠毁演出",
+    "duration": 15,
+    "fps": 30,
+    "weather": "晴朗傍晚 · 微风暖阳",
+    "description": "紫黄配色24号直升机从H1停机坪启动离地、前飞转向、传动过热冒烟征兆、尾桨失效失控螺旋并撞击山坡的完整15秒记录，同时支持实时闭环飞控排演。"
+  },
+  "environment": {
+    "skyTop": "#1e2952",
+    "skyHorizon": "#eab676",
+    "fogColor": "#d6a982",
+    "fogNear": 55,
+    "fogFar": 175,
+    "ambientColor": "#cbd5e1",
+    "ambientIntensity": 0.62,
+    "lights": [
+      {
+        "type": "directional",
+        "color": "#ffe8c2",
+        "intensity": 2.35,
+        "pos": [
+          42,
+          56,
+          34
+        ],
+        "castShadow": true
+      },
+      {
+        "type": "hemisphere",
+        "skyColor": "#93c5fd",
+        "groundColor": "#3f6212",
+        "intensity": 0.55
+      }
+    ],
+    "terrain": {
+      "size": 160,
+      "segments": 96,
+      "baseY": 0,
+      "hillAmp": 2.1,
+      "hillFreq": 0.055,
+      "color": "#4d7c3f",
+      "ridgeColor": "#6b7280",
+      "roughness": 0.88,
+      "metalness": 0.04
+    },
+    "pads": [
+      {
+        "id": "pad_h1",
+        "label": "一号停机坪 H1",
+        "pos": [
+          -18,
+          1.45,
+          10
+        ],
+        "radius": 4.4,
+        "color": "#334155",
+        "ringColor": "#facc15",
+        "code": "H1"
+      },
+      {
+        "id": "pad_h2",
+        "label": "二号停机坪 H2",
+        "pos": [
+          20,
+          1.85,
+          -10
+        ],
+        "radius": 4.4,
+        "color": "#334155",
+        "ringColor": "#facc15",
+        "code": "H2"
+      }
+    ],
+    "obstacles": [
+      {
+        "id": "obs_tower",
+        "label": "基地指挥塔台",
+        "type": "tower",
+        "pos": [
+          -6,
+          0.8,
+          -14.5
+        ],
+        "size": [
+          4.4,
+          11.2,
+          4.4
+        ],
+        "color": "#cbd5e1",
+        "accentColor": "#7c3aed",
+        "roughness": 0.45,
+        "metalness": 0.3
+      },
+      {
+        "id": "obs_hangar",
+        "label": "机务维修机库",
+        "type": "hangar",
+        "pos": [
+          -27,
+          1.2,
+          -3.5
+        ],
+        "size": [
+          10.5,
+          5.6,
+          7.6
+        ],
+        "color": "#475569",
+        "accentColor": "#facc15",
+        "roughness": 0.55,
+        "metalness": 0.45
+      },
+      {
+        "id": "obs_radar",
+        "label": "气象导航站",
+        "type": "building",
+        "pos": [
+          11.5,
+          1.3,
+          -19
+        ],
+        "size": [
+          5.2,
+          5.8,
+          5.2
+        ],
+        "color": "#64748b",
+        "accentColor": "#eab308",
+        "roughness": 0.5,
+        "metalness": 0.35
+      },
+      {
+        "id": "obs_rock_1",
+        "label": "东侧岩体障碍",
+        "type": "rock",
+        "pos": [
+          14,
+          0.7,
+          9.5
+        ],
+        "size": [
+          4.6,
+          3.1,
+          4
+        ],
+        "color": "#57534e",
+        "accentColor": "#78716c",
+        "roughness": 0.92,
+        "metalness": 0.05
+      }
+    ],
+    "foliage": {
+      "treeCount": 42,
+      "grassClusters": 130,
+      "seed": 2401
+    },
+    "distantPeaks": {
+      "count": 18,
+      "radius": 112,
+      "minHeight": 16,
+      "maxHeight": 34,
+      "color": "#475569",
+      "snowColor": "#f1f5f9"
+    }
+  },
+  "cameras": {
+    "defaultEye": [
+      -8,
+      5.2,
+      18.5
+    ],
+    "defaultTarget": [
+      -18,
+      2.2,
+      10
+    ],
+    "fov": 46
+  },
+  "nodes": [
+    {
+      "id": "craft_root",
+      "label": "24号直升机总成",
+      "parentId": null,
+      "pos": [
+        -18,
+        1.87,
+        10
+      ],
+      "rot": [
+        0,
+        0.72,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "fuselage",
+      "label": "机身主体 (24号紫黄涂装)",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        0.58,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "fuselage_loft",
+        "stations": [
+          {
+            "z": -2.05,
+            "rx": 0.18,
+            "ry": 0.16,
+            "y": -0.14
+          },
+          {
+            "z": -1.55,
+            "rx": 0.56,
+            "ry": 0.46,
+            "y": -0.06
+          },
+          {
+            "z": -0.75,
+            "rx": 0.78,
+            "ry": 0.68,
+            "y": 0.04
+          },
+          {
+            "z": 0.15,
+            "rx": 0.8,
+            "ry": 0.72,
+            "y": 0.06
+          },
+          {
+            "z": 0.95,
+            "rx": 0.64,
+            "ry": 0.58,
+            "y": 0.05
+          },
+          {
+            "z": 1.55,
+            "rx": 0.34,
+            "ry": 0.32,
+            "y": 0.1
+          }
+        ]
+      },
+      "material": {
+        "color": "#ffffff",
+        "roughness": 0.28,
+        "metalness": 0.24,
+        "texture": {
+          "type": "heli_livery",
+          "primaryColor": "#581c87",
+          "secondaryColor": "#6d28d9",
+          "stripeColor": "#facc15",
+          "numberText": "24",
+          "numberColor": "#fde047",
+          "outlineColor": "#1e1b4b"
+        }
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "cockpit_canopy",
+      "label": "座舱曲面风挡",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        0.74,
+        -0.92
+      ],
+      "rot": [
+        0.18,
+        0,
+        0
+      ],
+      "scale": [
+        0.68,
+        0.52,
+        0.92
+      ],
+      "geometry": {
+        "type": "sphere",
+        "radius": 0.95
+      },
+      "material": {
+        "color": "#0f172a",
+        "roughness": 0.08,
+        "metalness": 0.82,
+        "opacity": 0.88
+      },
+      "castShadow": true,
+      "receiveShadow": false
+    },
+    {
+      "id": "nose_chin",
+      "label": "机头黄色识别整流罩",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        0.36,
+        -1.72
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.58,
+        0.32,
+        0.55
+      ],
+      "geometry": {
+        "type": "sphere",
+        "radius": 0.65
+      },
+      "material": {
+        "color": "#facc15",
+        "roughness": 0.3,
+        "metalness": 0.22
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "engine_cowling",
+      "label": "动力舱与排气整流罩",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        1.32,
+        0.22
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.86,
+          0.38,
+          1.48
+        ]
+      },
+      "material": {
+        "color": "#4c1d95",
+        "roughness": 0.34,
+        "metalness": 0.35,
+        "stripeColor": "#facc15"
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "main_rotor_hub",
+      "label": "主旋翼轴毂",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        1.68,
+        0.05
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "cylinder",
+        "radiusTop": 0.14,
+        "radiusBottom": 0.16,
+        "height": 0.36
+      },
+      "material": {
+        "color": "#94a3b8",
+        "roughness": 0.25,
+        "metalness": 0.78
+      },
+      "castShadow": true,
+      "receiveShadow": false
+    },
+    {
+      "id": "main_rotor_blades",
+      "label": "四叶主旋翼桨叶",
+      "parentId": "main_rotor_hub",
+      "pos": [
+        0,
+        0.12,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "rotor_4blade",
+        "span": 6.8,
+        "chord": 0.24,
+        "thickness": 0.035
+      },
+      "material": {
+        "color": "#1e1b4b",
+        "tipColor": "#facc15",
+        "roughness": 0.32,
+        "metalness": 0.45
+      },
+      "castShadow": true,
+      "receiveShadow": false
+    },
+    {
+      "id": "tail_boom",
+      "label": "紫黄警戒涂装尾梁",
+      "parentId": "craft_root",
+      "pos": [
+        0,
+        0.74,
+        2.75
+      ],
+      "rot": [
+        1.5708,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "cylinder",
+        "radiusTop": 0.13,
+        "radiusBottom": 0.28,
+        "height": 2.85
+      },
+      "material": {
+        "color": "#5b21b6",
+        "roughness": 0.32,
+        "metalness": 0.28
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "vertical_fin",
+      "label": "黄色高可视垂尾与平尾",
+      "parentId": "tail_boom",
+      "pos": [
+        0,
+        1.28,
+        -0.35
+      ],
+      "rot": [
+        -1.25,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "box",
+        "size": [
+          0.12,
+          1.15,
+          0.48
+        ]
+      },
+      "material": {
+        "color": "#facc15",
+        "roughness": 0.3,
+        "metalness": 0.22
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "tail_rotor",
+      "label": "尾桨总成",
+      "parentId": "tail_boom",
+      "pos": [
+        0.18,
+        1.32,
+        -0.32
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "tail_rotor_4blade",
+        "span": 1.32,
+        "chord": 0.11,
+        "thickness": 0.025
+      },
+      "material": {
+        "color": "#facc15",
+        "tipColor": "#581c87",
+        "roughness": 0.3,
+        "metalness": 0.5
+      },
+      "castShadow": true,
+      "receiveShadow": false
+    },
+    {
+      "id": "skid_left",
+      "label": "左起落滑撬",
+      "parentId": "craft_root",
+      "pos": [
+        -0.68,
+        -0.32,
+        -0.1
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "skid",
+        "length": 2.7,
+        "radius": 0.055,
+        "side": -1
+      },
+      "material": {
+        "color": "#cbd5e1",
+        "roughness": 0.32,
+        "metalness": 0.75
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "id": "skid_right",
+      "label": "右起落滑撬",
+      "parentId": "craft_root",
+      "pos": [
+        0.68,
+        -0.32,
+        -0.1
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "skid",
+        "length": 2.7,
+        "radius": 0.055,
+        "side": 1
+      },
+      "material": {
+        "color": "#cbd5e1",
+        "roughness": 0.32,
+        "metalness": 0.75
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    }
+  ],
+  "flightModel": {
+    "craftNodeId": "craft_root",
+    "instability": 0.92,
+    "liftGain": 18.2,
+    "initialState": {
+      "pos": [
+        -18,
+        1.87,
+        10
+      ],
+      "vel": [
+        0,
+        0,
+        0
+      ],
+      "rot": [
+        0,
+        0.95,
+        0
+      ],
+      "angVel": [
+        0,
+        0,
+        0
+      ],
+      "rpm": 90,
+      "collective": 0.05
+    },
+    "debrisTemplates": [
+      {
+        "id": "deb_blade_a",
+        "partId": "main_rotor_blades",
+        "label": "断裂主旋翼桨叶 A",
+        "size": [
+          2.6,
+          0.08,
+          0.24
+        ],
+        "color": "#1e1b4b",
+        "offset": [
+          0.8,
+          1.2,
+          0.2
+        ]
+      },
+      {
+        "id": "deb_blade_b",
+        "partId": "main_rotor_blades",
+        "label": "断裂主旋翼桨叶 B",
+        "size": [
+          2.4,
+          0.08,
+          0.24
+        ],
+        "color": "#facc15",
+        "offset": [
+          -0.8,
+          1.1,
+          -0.2
+        ]
+      },
+      {
+        "id": "deb_tail",
+        "partId": "tail_boom",
+        "label": "折断紫黄尾梁段",
+        "size": [
+          0.34,
+          0.34,
+          2.2
+        ],
+        "color": "#5b21b6",
+        "offset": [
+          -0.4,
+          0.7,
+          1.6
+        ]
+      },
+      {
+        "id": "deb_fin",
+        "partId": "vertical_fin",
+        "label": "脱落黄色垂尾",
+        "size": [
+          0.14,
+          0.95,
+          0.44
+        ],
+        "color": "#facc15",
+        "offset": [
+          0.3,
+          0.9,
+          1.9
+        ]
+      },
+      {
+        "id": "deb_cowl",
+        "partId": "engine_cowling",
+        "label": "掀飞动力舱盖",
+        "size": [
+          0.75,
+          0.28,
+          1.1
+        ],
+        "color": "#6d28d9",
+        "offset": [
+          0.2,
+          1,
+          0
+        ]
+      },
+      {
+        "id": "deb_skid_r",
+        "partId": "skid_right",
+        "label": "折断右起落滑撬",
+        "size": [
+          0.16,
+          0.18,
+          2.1
+        ],
+        "color": "#94a3b8",
+        "offset": [
+          0.7,
+          0.2,
+          0
+        ]
+      }
+    ],
+    "recordedSchedule": [
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.085,
+        "t": 0
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.089,
+        "t": 0.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.094,
+        "t": 0.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.099,
+        "t": 0.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.103,
+        "t": 0.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.108,
+        "t": 0.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.112,
+        "t": 0.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.117,
+        "t": 0.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.122,
+        "t": 0.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.126,
+        "t": 0.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.131,
+        "t": 0.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.136,
+        "t": 0.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.14,
+        "t": 0.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.145,
+        "t": 0.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.149,
+        "t": 0.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.154,
+        "t": 0.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.159,
+        "t": 0.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.163,
+        "t": 0.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.168,
+        "t": 0.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.173,
+        "t": 0.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.177,
+        "t": 0.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.182,
+        "t": 0.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.186,
+        "t": 0.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.191,
+        "t": 0.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.196,
+        "t": 0.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.2,
+        "t": 0.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.205,
+        "t": 0.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.21,
+        "t": 0.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.214,
+        "t": 0.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.219,
+        "t": 0.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.224,
+        "t": 0.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.228,
+        "t": 0.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.233,
+        "t": 0.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.237,
+        "t": 0.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.242,
+        "t": 0.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.247,
+        "t": 0.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.251,
+        "t": 0.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.256,
+        "t": 0.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.261,
+        "t": 0.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.265,
+        "t": 0.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.27,
+        "t": 1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.274,
+        "t": 1.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.279,
+        "t": 1.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.284,
+        "t": 1.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.288,
+        "t": 1.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.293,
+        "t": 1.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.298,
+        "t": 1.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.302,
+        "t": 1.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.307,
+        "t": 1.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.311,
+        "t": 1.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.316,
+        "t": 1.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.321,
+        "t": 1.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.12,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.325,
+        "t": 1.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.757,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.039,
+        "collective": 1,
+        "t": 1.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.757,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.039,
+        "collective": 1,
+        "t": 1.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.648,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.03,
+        "collective": 1,
+        "t": 1.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.648,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.03,
+        "collective": 1,
+        "t": 1.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.575,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.023,
+        "collective": 1,
+        "t": 1.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.575,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.023,
+        "collective": 1,
+        "t": 1.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.526,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.018,
+        "collective": 1,
+        "t": 1.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.526,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.018,
+        "collective": 1,
+        "t": 1.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.493,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.014,
+        "collective": 1,
+        "t": 1.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.493,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.014,
+        "collective": 1,
+        "t": 1.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.471,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.011,
+        "collective": 1,
+        "t": 1.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.471,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.011,
+        "collective": 1,
+        "t": 1.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.457,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.009,
+        "collective": 1,
+        "t": 1.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.457,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.009,
+        "collective": 1,
+        "t": 1.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.448,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.007,
+        "collective": 1,
+        "t": 1.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.448,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.007,
+        "collective": 1,
+        "t": 1.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.442,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.006,
+        "collective": 1,
+        "t": 1.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.442,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.006,
+        "collective": 1,
+        "t": 1.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.439,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.004,
+        "collective": 1,
+        "t": 1.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.439,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.004,
+        "collective": 1,
+        "t": 1.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.437,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.003,
+        "collective": 1,
+        "t": 1.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.437,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.003,
+        "collective": 1,
+        "t": 1.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.003,
+        "collective": 1,
+        "t": 1.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.003,
+        "collective": 1,
+        "t": 1.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.002,
+        "collective": 1,
+        "t": 1.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.002,
+        "collective": 1,
+        "t": 1.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.001,
+        "collective": 1,
+        "t": 1.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.001,
+        "collective": 1,
+        "t": 2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.001,
+        "collective": 1,
+        "t": 2.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0.001,
+        "collective": 1,
+        "t": 2.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 1,
+        "t": 2.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.435,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 1,
+        "t": 2.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.418,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.961,
+        "t": 2.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.418,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.961,
+        "t": 2.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.35,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.805,
+        "t": 2.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.35,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.805,
+        "t": 2.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.298,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.686,
+        "t": 2.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.298,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": 0,
+        "collective": 0.686,
+        "t": 2.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.259,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.597,
+        "t": 2.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.259,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.597,
+        "t": 2.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.23,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.531,
+        "t": 2.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.23,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0,
+        "collective": 0.531,
+        "t": 2.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.482,
+        "t": 2.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.482,
+        "t": 2.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.194,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.447,
+        "t": 2.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.194,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.447,
+        "t": 2.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.183,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.421,
+        "t": 2.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.183,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.421,
+        "t": 2.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.176,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.404,
+        "t": 2.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.176,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.404,
+        "t": 2.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.171,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.392,
+        "t": 2.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.171,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.392,
+        "t": 2.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.168,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.385,
+        "t": 2.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.168,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.385,
+        "t": 2.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.166,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.382,
+        "t": 2.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.166,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.382,
+        "t": 2.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.166,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.38,
+        "t": 2.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.166,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.38,
+        "t": 2.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.167,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.381,
+        "t": 2.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.167,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.381,
+        "t": 2.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.168,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.383,
+        "t": 2.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.168,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.383,
+        "t": 2.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.169,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.386,
+        "t": 2.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.169,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.386,
+        "t": 2.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.171,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.39,
+        "t": 2.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.171,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.39,
+        "t": 2.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.173,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.394,
+        "t": 2.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.173,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.394,
+        "t": 3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.175,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.399,
+        "t": 3.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.175,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.399,
+        "t": 3.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.177,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.404,
+        "t": 3.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.177,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.404,
+        "t": 3.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.179,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.409,
+        "t": 3.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.179,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.002,
+        "collective": 0.409,
+        "t": 3.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.182,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.414,
+        "t": 3.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.182,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.414,
+        "t": 3.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.184,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.419,
+        "t": 3.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.184,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.419,
+        "t": 3.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.186,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.423,
+        "t": 3.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.186,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.423,
+        "t": 3.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.188,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.428,
+        "t": 3.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.188,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.428,
+        "t": 3.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.19,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.433,
+        "t": 3.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.19,
+        "cyclicRoll": 0,
+        "cyclicPitch": 0.001,
+        "collective": 0.433,
+        "t": 3.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.276,
+        "cyclicRoll": -0.04,
+        "cyclicPitch": -0.939,
+        "collective": 0.437,
+        "t": 3.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.276,
+        "cyclicRoll": -0.04,
+        "cyclicPitch": -0.939,
+        "collective": 0.437,
+        "t": 3.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.248,
+        "cyclicRoll": -0.025,
+        "cyclicPitch": -0.64,
+        "collective": 0.441,
+        "t": 3.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.248,
+        "cyclicRoll": -0.025,
+        "cyclicPitch": -0.64,
+        "collective": 0.441,
+        "t": 3.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.231,
+        "cyclicRoll": -0.015,
+        "cyclicPitch": -0.429,
+        "collective": 0.445,
+        "t": 3.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.231,
+        "cyclicRoll": -0.015,
+        "cyclicPitch": -0.429,
+        "collective": 0.445,
+        "t": 3.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.22,
+        "cyclicRoll": -0.007,
+        "cyclicPitch": -0.28,
+        "collective": 0.449,
+        "t": 3.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.22,
+        "cyclicRoll": -0.007,
+        "cyclicPitch": -0.28,
+        "collective": 0.449,
+        "t": 3.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.213,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": -0.174,
+        "collective": 0.453,
+        "t": 3.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.213,
+        "cyclicRoll": -0.001,
+        "cyclicPitch": -0.174,
+        "collective": 0.453,
+        "t": 3.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": -0.1,
+        "collective": 0.457,
+        "t": 3.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": -0.1,
+        "collective": 0.457,
+        "t": 3.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": -0.047,
+        "collective": 0.461,
+        "t": 3.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": -0.047,
+        "collective": 0.461,
+        "t": 3.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": -0.011,
+        "collective": 0.465,
+        "t": 3.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": -0.011,
+        "collective": 0.465,
+        "t": 3.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.015,
+        "collective": 0.469,
+        "t": 3.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.207,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.015,
+        "collective": 0.469,
+        "t": 3.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.208,
+        "cyclicRoll": 0.007,
+        "cyclicPitch": 0.033,
+        "collective": 0.474,
+        "t": 3.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.208,
+        "cyclicRoll": 0.007,
+        "cyclicPitch": 0.033,
+        "collective": 0.474,
+        "t": 3.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.046,
+        "collective": 0.478,
+        "t": 3.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.209,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.046,
+        "collective": 0.478,
+        "t": 3.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.211,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.054,
+        "collective": 0.482,
+        "t": 3.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.211,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.054,
+        "collective": 0.482,
+        "t": 4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.213,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.06,
+        "collective": 0.487,
+        "t": 4.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.213,
+        "cyclicRoll": 0.006,
+        "cyclicPitch": 0.06,
+        "collective": 0.487,
+        "t": 4.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.215,
+        "cyclicRoll": 0.005,
+        "cyclicPitch": 0.064,
+        "collective": 0.491,
+        "t": 4.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.215,
+        "cyclicRoll": 0.005,
+        "cyclicPitch": 0.064,
+        "collective": 0.491,
+        "t": 4.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.216,
+        "cyclicRoll": 0.005,
+        "cyclicPitch": 0.067,
+        "collective": 0.495,
+        "t": 4.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.216,
+        "cyclicRoll": 0.005,
+        "cyclicPitch": 0.067,
+        "collective": 0.495,
+        "t": 4.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.218,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": 0.068,
+        "collective": 0.499,
+        "t": 4.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.218,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": 0.068,
+        "collective": 0.499,
+        "t": 4.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.22,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": 0.088,
+        "collective": 0.503,
+        "t": 4.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.22,
+        "cyclicRoll": 0.004,
+        "cyclicPitch": 0.088,
+        "collective": 0.503,
+        "t": 4.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.222,
+        "cyclicRoll": 0.003,
+        "cyclicPitch": 0.103,
+        "collective": 0.507,
+        "t": 4.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.222,
+        "cyclicRoll": 0.003,
+        "cyclicPitch": 0.103,
+        "collective": 0.507,
+        "t": 4.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.224,
+        "cyclicRoll": 0.003,
+        "cyclicPitch": 0.114,
+        "collective": 0.511,
+        "t": 4.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.224,
+        "cyclicRoll": 0.003,
+        "cyclicPitch": 0.114,
+        "collective": 0.511,
+        "t": 4.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.225,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.121,
+        "collective": 0.514,
+        "t": 4.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.225,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.121,
+        "collective": 0.514,
+        "t": 4.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.227,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.126,
+        "collective": 0.518,
+        "t": 4.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.227,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.126,
+        "collective": 0.518,
+        "t": 4.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.228,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.129,
+        "collective": 0.521,
+        "t": 4.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.228,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.129,
+        "collective": 0.521,
+        "t": 4.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.23,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.13,
+        "collective": 0.524,
+        "t": 4.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.23,
+        "cyclicRoll": 0.002,
+        "cyclicPitch": 0.13,
+        "collective": 0.524,
+        "t": 4.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.231,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.131,
+        "collective": 0.527,
+        "t": 4.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.231,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.131,
+        "collective": 0.527,
+        "t": 4.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.232,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.13,
+        "collective": 0.529,
+        "t": 4.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.232,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.13,
+        "collective": 0.529,
+        "t": 4.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.233,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.129,
+        "collective": 0.531,
+        "t": 4.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.233,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.129,
+        "collective": 0.531,
+        "t": 4.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.234,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.128,
+        "collective": 0.533,
+        "t": 4.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.234,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.128,
+        "collective": 0.533,
+        "t": 4.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.235,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.126,
+        "collective": 0.535,
+        "t": 4.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.235,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.126,
+        "collective": 0.535,
+        "t": 4.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.235,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.123,
+        "collective": 0.536,
+        "t": 4.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.235,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.123,
+        "collective": 0.536,
+        "t": 4.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.121,
+        "collective": 0.537,
+        "t": 4.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.121,
+        "collective": 0.537,
+        "t": 4.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.118,
+        "collective": 0.538,
+        "t": 4.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.118,
+        "collective": 0.538,
+        "t": 4.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.115,
+        "collective": 0.538,
+        "t": 4.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.115,
+        "collective": 0.538,
+        "t": 5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.112,
+        "collective": 0.539,
+        "t": 5.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.112,
+        "collective": 0.539,
+        "t": 5.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.108,
+        "collective": 0.539,
+        "t": 5.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.108,
+        "collective": 0.539,
+        "t": 5.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.105,
+        "collective": 0.539,
+        "t": 5.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.105,
+        "collective": 0.539,
+        "t": 5.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.101,
+        "collective": 0.539,
+        "t": 5.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.101,
+        "collective": 0.539,
+        "t": 5.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.098,
+        "collective": 0.539,
+        "t": 5.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.098,
+        "collective": 0.539,
+        "t": 5.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.094,
+        "collective": 0.539,
+        "t": 5.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.094,
+        "collective": 0.539,
+        "t": 5.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.091,
+        "collective": 0.538,
+        "t": 5.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.091,
+        "collective": 0.538,
+        "t": 5.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.088,
+        "collective": 0.538,
+        "t": 5.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.237,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.088,
+        "collective": 0.538,
+        "t": 5.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.084,
+        "collective": 0.538,
+        "t": 5.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.084,
+        "collective": 0.538,
+        "t": 5.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.081,
+        "collective": 0.537,
+        "t": 5.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.081,
+        "collective": 0.537,
+        "t": 5.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.078,
+        "collective": 0.537,
+        "t": 5.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.078,
+        "collective": 0.537,
+        "t": 5.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.074,
+        "collective": 0.537,
+        "t": 5.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.236,
+        "cyclicRoll": 0.001,
+        "cyclicPitch": 0.074,
+        "collective": 0.537,
+        "t": 5.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -1,
+        "cyclicRoll": 0.647,
+        "cyclicPitch": 0.281,
+        "collective": 0.517,
+        "t": 5.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -1,
+        "cyclicRoll": 0.647,
+        "cyclicPitch": 0.281,
+        "collective": 0.517,
+        "t": 5.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.872,
+        "cyclicRoll": 0.432,
+        "cyclicPitch": 0.202,
+        "collective": 0.47,
+        "t": 5.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.872,
+        "cyclicRoll": 0.432,
+        "cyclicPitch": 0.202,
+        "collective": 0.47,
+        "t": 5.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.504,
+        "cyclicRoll": 0.28,
+        "cyclicPitch": 0.136,
+        "collective": 0.436,
+        "t": 5.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.504,
+        "cyclicRoll": 0.28,
+        "cyclicPitch": 0.136,
+        "collective": 0.436,
+        "t": 5.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.261,
+        "cyclicRoll": 0.174,
+        "cyclicPitch": 0.082,
+        "collective": 0.41,
+        "t": 5.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.261,
+        "cyclicRoll": 0.174,
+        "cyclicPitch": 0.082,
+        "collective": 0.41,
+        "t": 5.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.1,
+        "cyclicRoll": 0.1,
+        "cyclicPitch": 0.041,
+        "collective": 0.392,
+        "t": 5.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": -0.1,
+        "cyclicRoll": 0.1,
+        "cyclicPitch": 0.041,
+        "collective": 0.392,
+        "t": 5.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.005,
+        "cyclicRoll": 0.047,
+        "cyclicPitch": 0.012,
+        "collective": 0.379,
+        "t": 5.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.005,
+        "cyclicRoll": 0.047,
+        "cyclicPitch": 0.012,
+        "collective": 0.379,
+        "t": 5.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.073,
+        "cyclicRoll": 0.011,
+        "cyclicPitch": -0.009,
+        "collective": 0.371,
+        "t": 5.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.073,
+        "cyclicRoll": 0.011,
+        "cyclicPitch": -0.009,
+        "collective": 0.371,
+        "t": 5.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.118,
+        "cyclicRoll": -0.013,
+        "cyclicPitch": -0.022,
+        "collective": 0.366,
+        "t": 5.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.118,
+        "cyclicRoll": -0.013,
+        "cyclicPitch": -0.022,
+        "collective": 0.366,
+        "t": 6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.147,
+        "cyclicRoll": -0.03,
+        "cyclicPitch": -0.029,
+        "collective": 0.365,
+        "t": 6.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.147,
+        "cyclicRoll": -0.03,
+        "cyclicPitch": -0.029,
+        "collective": 0.365,
+        "t": 6.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.165,
+        "cyclicRoll": -0.041,
+        "cyclicPitch": -0.032,
+        "collective": 0.365,
+        "t": 6.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.165,
+        "cyclicRoll": -0.041,
+        "cyclicPitch": -0.032,
+        "collective": 0.365,
+        "t": 6.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.177,
+        "cyclicRoll": -0.047,
+        "cyclicPitch": -0.032,
+        "collective": 0.367,
+        "t": 6.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.177,
+        "cyclicRoll": -0.047,
+        "cyclicPitch": -0.032,
+        "collective": 0.367,
+        "t": 6.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.184,
+        "cyclicRoll": -0.051,
+        "cyclicPitch": -0.03,
+        "collective": 0.371,
+        "t": 6.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.184,
+        "cyclicRoll": -0.051,
+        "cyclicPitch": -0.03,
+        "collective": 0.371,
+        "t": 6.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.202,
+        "cyclicRoll": -0.052,
+        "cyclicPitch": -0.026,
+        "collective": 0.406,
+        "t": 6.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.202,
+        "cyclicRoll": -0.052,
+        "cyclicPitch": -0.026,
+        "collective": 0.406,
+        "t": 6.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.223,
+        "cyclicRoll": -0.051,
+        "cyclicPitch": -0.021,
+        "collective": 0.45,
+        "t": 6.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.223,
+        "cyclicRoll": -0.051,
+        "cyclicPitch": -0.021,
+        "collective": 0.45,
+        "t": 6.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.238,
+        "cyclicRoll": -0.048,
+        "cyclicPitch": -0.015,
+        "collective": 0.485,
+        "t": 6.325
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.238,
+        "cyclicRoll": -0.048,
+        "cyclicPitch": -0.015,
+        "collective": 0.485,
+        "t": 6.35
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.248,
+        "cyclicRoll": -0.045,
+        "cyclicPitch": -0.008,
+        "collective": 0.512,
+        "t": 6.375
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.248,
+        "cyclicRoll": -0.045,
+        "cyclicPitch": -0.008,
+        "collective": 0.512,
+        "t": 6.4
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.256,
+        "cyclicRoll": -0.041,
+        "cyclicPitch": -0.002,
+        "collective": 0.533,
+        "t": 6.425
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.256,
+        "cyclicRoll": -0.041,
+        "cyclicPitch": -0.002,
+        "collective": 0.533,
+        "t": 6.45
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.262,
+        "cyclicRoll": -0.037,
+        "cyclicPitch": 0.004,
+        "collective": 0.549,
+        "t": 6.475
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.262,
+        "cyclicRoll": -0.037,
+        "cyclicPitch": 0.004,
+        "collective": 0.549,
+        "t": 6.5
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.266,
+        "cyclicRoll": -0.033,
+        "cyclicPitch": 0.01,
+        "collective": 0.562,
+        "t": 6.525
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.266,
+        "cyclicRoll": -0.033,
+        "cyclicPitch": 0.01,
+        "collective": 0.562,
+        "t": 6.55
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.268,
+        "cyclicRoll": -0.029,
+        "cyclicPitch": 0.015,
+        "collective": 0.572,
+        "t": 6.575
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.268,
+        "cyclicRoll": -0.029,
+        "cyclicPitch": 0.015,
+        "collective": 0.572,
+        "t": 6.6
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.27,
+        "cyclicRoll": -0.026,
+        "cyclicPitch": 0.019,
+        "collective": 0.58,
+        "t": 6.625
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.27,
+        "cyclicRoll": -0.026,
+        "cyclicPitch": 0.019,
+        "collective": 0.58,
+        "t": 6.65
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.271,
+        "cyclicRoll": -0.023,
+        "cyclicPitch": 0.024,
+        "collective": 0.586,
+        "t": 6.675
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.271,
+        "cyclicRoll": -0.023,
+        "cyclicPitch": 0.024,
+        "collective": 0.586,
+        "t": 6.7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.272,
+        "cyclicRoll": -0.02,
+        "cyclicPitch": 0.027,
+        "collective": 0.591,
+        "t": 6.725
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.272,
+        "cyclicRoll": -0.02,
+        "cyclicPitch": 0.027,
+        "collective": 0.591,
+        "t": 6.75
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.018,
+        "cyclicPitch": 0.03,
+        "collective": 0.595,
+        "t": 6.775
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.018,
+        "cyclicPitch": 0.03,
+        "collective": 0.595,
+        "t": 6.8
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.016,
+        "cyclicPitch": 0.033,
+        "collective": 0.598,
+        "t": 6.825
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.016,
+        "cyclicPitch": 0.033,
+        "collective": 0.598,
+        "t": 6.85
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.015,
+        "cyclicPitch": 0.036,
+        "collective": 0.601,
+        "t": 6.875
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.015,
+        "cyclicPitch": 0.036,
+        "collective": 0.601,
+        "t": 6.9
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.014,
+        "cyclicPitch": 0.038,
+        "collective": 0.603,
+        "t": 6.925
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.014,
+        "cyclicPitch": 0.038,
+        "collective": 0.603,
+        "t": 6.95
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.012,
+        "cyclicPitch": 0.039,
+        "collective": 0.605,
+        "t": 6.975
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.012,
+        "cyclicPitch": 0.039,
+        "collective": 0.605,
+        "t": 7
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.012,
+        "cyclicPitch": 0.041,
+        "collective": 0.606,
+        "t": 7.025
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.012,
+        "cyclicPitch": 0.041,
+        "collective": 0.606,
+        "t": 7.05
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.042,
+        "collective": 0.608,
+        "t": 7.075
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.042,
+        "collective": 0.608,
+        "t": 7.1
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.043,
+        "collective": 0.609,
+        "t": 7.125
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.043,
+        "collective": 0.609,
+        "t": 7.15
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.044,
+        "collective": 0.61,
+        "t": 7.175
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.044,
+        "collective": 0.61,
+        "t": 7.2
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.611,
+        "t": 7.225
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.611,
+        "t": 7.25
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.612,
+        "t": 7.275
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.612,
+        "t": 7.3
+      },
+      {
+        "interp": false,
+        "faultStage": 0,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.613,
+        "t": 7.325
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.273,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.613,
+        "t": 7.35
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.287,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.613,
+        "t": 7.375
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.287,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.045,
+        "collective": 0.613,
+        "t": 7.4
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.292,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.614,
+        "t": 7.425
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.292,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.614,
+        "t": 7.45
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.281,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.615,
+        "t": 7.475
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.281,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.615,
+        "t": 7.5
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.289,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.616,
+        "t": 7.525
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.289,
+        "cyclicRoll": -0.009,
+        "cyclicPitch": 0.044,
+        "collective": 0.616,
+        "t": 7.55
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.316,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.043,
+        "collective": 0.616,
+        "t": 7.575
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.316,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.043,
+        "collective": 0.616,
+        "t": 7.6
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.326,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.617,
+        "t": 7.625
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.326,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.617,
+        "t": 7.65
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.309,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.618,
+        "t": 7.675
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.309,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.618,
+        "t": 7.7
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.298,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.618,
+        "t": 7.725
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.298,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.041,
+        "collective": 0.618,
+        "t": 7.75
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.315,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.04,
+        "collective": 0.619,
+        "t": 7.775
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.315,
+        "cyclicRoll": -0.01,
+        "cyclicPitch": 0.04,
+        "collective": 0.619,
+        "t": 7.8
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.334,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.039,
+        "collective": 0.62,
+        "t": 7.825
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.334,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.039,
+        "collective": 0.62,
+        "t": 7.85
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.326,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.621,
+        "t": 7.875
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.326,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.621,
+        "t": 7.9
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.305,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.621,
+        "t": 7.925
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.305,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.621,
+        "t": 7.95
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.308,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.622,
+        "t": 7.975
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.308,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.622,
+        "t": 8
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.33,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.623,
+        "t": 8.025
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.33,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.038,
+        "collective": 0.623,
+        "t": 8.05
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.336,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.624,
+        "t": 8.075
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.336,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.624,
+        "t": 8.1
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.316,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.625,
+        "t": 8.125
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.316,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.625,
+        "t": 8.15
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.304,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.626,
+        "t": 8.175
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.304,
+        "cyclicRoll": -0.011,
+        "cyclicPitch": 0.036,
+        "collective": 0.626,
+        "t": 8.2
+      },
+      {
+        "interp": false,
+        "faultStage": 1,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.32,
+        "cyclicRoll": -0.024,
+        "cyclicPitch": 0.036,
+        "collective": 0.626,
+        "t": 8.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.32,
+        "cyclicRoll": -0.024,
+        "cyclicPitch": 0.036,
+        "collective": 0.626,
+        "t": 8.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 8.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 9.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 10.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 11.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 12.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 13.975
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.025
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.05
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.075
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.1
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.125
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.15
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.175
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.2
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.225
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.25
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.275
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.3
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.325
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.35
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.375
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.4
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.425
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.45
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.475
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.5
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.525
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.55
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.575
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.6
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.625
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.65
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.675
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.7
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.725
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.75
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.775
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.8
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.825
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.85
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.875
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.9
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.925
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.95
+      },
+      {
+        "interp": false,
+        "faultStage": 2,
+        "windZ": -0.4,
+        "windX": 0.6,
+        "tailPedal": 0.39,
+        "cyclicRoll": 0.008,
+        "cyclicPitch": 0.05,
+        "collective": 0.656,
+        "t": 14.975
+      }
+    ]
+  }
+}

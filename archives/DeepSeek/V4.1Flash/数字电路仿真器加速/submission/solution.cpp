@@ -1,17 +1,11 @@
 #include <cstdint>
-#include <cstdlib>
-#include <cstring>
 #include <vector>
+#include <cstring>
 #include <algorithm>
-#include <immintrin.h>
-
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#endif
-
-#ifdef _OPENMP
 #include <omp.h>
+#include <immintrin.h>
+#ifdef _WIN32
+#include <windows.h>
 #endif
 
 struct Circuit {
@@ -23,627 +17,436 @@ struct Circuit {
     std::vector<int> out;
 };
 
-#ifndef USE_INTERP
-#define USE_INTERP 0
-#endif
-#ifndef NT_OVERRIDE
-#define NT_OVERRIDE 0
-#endif
-
-static inline uint64_t sm64(uint64_t &s) {
-    uint64_t z = (s += 0x9E3779B97F4A7C15ULL);
+static inline uint64_t splitmix64_next(uint64_t* s) {
+    uint64_t z = (*s += 0x9E3779B97F4A7C15ULL);
     z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
     z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
     return z ^ (z >> 31);
 }
+static inline uint64_t mix64(uint64_t x) { return splitmix64_next(&x); }
 
-static inline void transpose64(uint64_t a[64]) {
+struct alignas(32) Vec4 { uint64_t w[4]; };
+
+static inline void transpose64(uint64_t* a) {
     uint64_t m = 0x00000000FFFFFFFFULL;
-    for (int j = 32; j != 0; ) {
-        for (int k = 0; k < 64; k = ((k | j) + 1) & ~j) {
-            uint64_t t = ((a[k] >> j) ^ a[k | j]) & m;
-            a[k] ^= (t << j);
-            a[k | j] ^= t;
+    for (int j = 32; j; j >>= 1) {
+        for (int k = 0; k < 64; k = (k + j + 1) & ~j) {
+            uint64_t t = ((a[k] >> j) ^ a[k + j]) & m;
+            a[k] ^= t << j;
+            a[k + j] ^= t;
         }
-        j >>= 1;
-        if (j) m ^= m << j;
+        m = m ^ (m << (j >> 1));
     }
 }
 
-namespace {
-
-constexpr int W = 4;  // 64-bit words per batch (AVX2 width)
-
-// input references: >=0 gate position, <0 fixed slot (-ref-1)
-struct Build {
-    int n = 0;
-    int nSlots = 0;
-    std::vector<int> order;   // position -> original gate
-    std::vector<int> type;
-    std::vector<int> ra, rb, rc;  // input refs
-    std::vector<int> outSlot;
-    std::vector<int> lastUse;
-    std::vector<uint8_t> isLast;
-    std::vector<int> dRef;
-    std::vector<int> outRef;
-    std::vector<int> ffSlot;
-    std::vector<int> ffUserStart;   // CSR: value -> flip-flops using it as d
-    std::vector<int> ffUserList;
-    std::vector<uint8_t> isOut;
-    bool dIsFF = false;
+// ---------------- tiny x86-64 AVX2 code emitter ----------------
+struct CodeBuf {
+    uint8_t* p;
+    uint8_t* base;
+    bool ok;
+    CodeBuf(size_t n) {
+        base = (uint8_t*)VirtualAlloc(nullptr, n, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+        p = base;
+        ok = (base != nullptr);
+    }
+    ~CodeBuf() { if (base) VirtualFree(base, 0, MEM_RELEASE); }
+    inline void b(uint8_t x) { *p++ = x; }
+    inline void d32(int32_t x) { memcpy(p, &x, 4); p += 4; }
 };
 
-inline int refSlot(const Build &b, int ref) {
-    return ref >= 0 ? b.outSlot[ref] : (-ref - 1);
-}
-
-// ---------------------------------------------------------------- interpreter
-
-void runInterp(const Build &bd, const Circuit &c, const std::vector<uint64_t> &keys,
-               std::vector<uint64_t> &res, int nt) {
-    const int F = c.F, O = c.O, M = c.M, T = c.T;
-    const int n = bd.n;
-    const int TESTS = 64 * W;
-    const int nBatches = (M + TESTS - 1) / TESTS;
-
-#pragma omp parallel num_threads(nt)
-    {
-        std::vector<uint64_t> piVal((size_t)64 * W);
-        uint64_t rbuf[64];
-        uint64_t *vals = (uint64_t *)_mm_malloc((size_t)bd.nSlots * W * 8, 32);
-        uint64_t *fftmp = (uint64_t *)_mm_malloc((size_t)(F ? F : 1) * W * 8, 32);
-        std::vector<uint64_t> H((size_t)TESTS);
-
-#pragma omp for schedule(dynamic, 1)
-        for (int bi = 0; bi < nBatches; bi++) {
-            const int m0 = bi * TESTS;
-            uint64_t state[TESTS];
-            for (int q = 0; q < TESTS; q++) {
-                int m = m0 + q;
-                uint64_t z = (m < M) ? (c.seed ^ (uint64_t)m) : 0;
-                state[q] = (m < M) ? sm64(z) : 0;
-            }
-            std::fill(H.begin(), H.end(), 0);
-            std::memset(vals, 0, (size_t)(2 + c.I + c.F) * W * 8);
-            for (int w = 0; w < W; w++) vals[W + w] = ~0ULL;
-
-            for (int t = 0; t < T; t++) {
-                for (int w = 0; w < W; w++) {
-                    for (int q = 0; q < 64; q++) {
-                        int m = m0 + w * 64 + q;
-                        rbuf[q] = (m < M) ? sm64(state[w * 64 + q]) : 0;
-                    }
-                    transpose64(rbuf);
-                    for (int i = 0; i < 64; i++) piVal[(size_t)i * W + w] = rbuf[i];
-                }
-                for (int i = 0; i < c.I; i++)
-                    for (int w = 0; w < W; w++) vals[(size_t)(2 + i) * W + w] = (i < 64) ? piVal[(size_t)i * W + w] : 0;
-
-                for (int i = 0; i < n; i++) {
-                    int ty = bd.type[i];
-                    int sa = refSlot(bd, bd.ra[i]);
-                    int sb = refSlot(bd, bd.rb[i]);
-                    int sc = refSlot(bd, bd.rc[i]);
-                    const __m256i *pa = (const __m256i *)(vals + (size_t)sa * W);
-                    __m256i A = _mm256_load_si256(pa);
-                    __m256i R;
-                    if (ty == 6) {
-                        R = _mm256_xor_si256(A, _mm256_set1_epi64x(-1));
-                    } else if (ty == 7) {
-                        __m256i B = _mm256_load_si256((const __m256i *)(vals + (size_t)sb * W));
-                        __m256i C = _mm256_load_si256((const __m256i *)(vals + (size_t)sc * W));
-                        R = _mm256_xor_si256(B, _mm256_and_si256(A, _mm256_xor_si256(B, C)));
-                    } else {
-                        __m256i B = _mm256_load_si256((const __m256i *)(vals + (size_t)sb * W));
-                        switch (ty) {
-                            case 0: R = _mm256_and_si256(A, B); break;
-                            case 1: R = _mm256_or_si256(A, B); break;
-                            case 2: R = _mm256_xor_si256(A, B); break;
-                            case 3: R = _mm256_xor_si256(_mm256_and_si256(A, B), _mm256_set1_epi64x(-1)); break;
-                            case 4: R = _mm256_xor_si256(_mm256_or_si256(A, B), _mm256_set1_epi64x(-1)); break;
-                            default: R = _mm256_xor_si256(_mm256_xor_si256(A, B), _mm256_set1_epi64x(-1)); break;
-                        }
-                    }
-                    _mm256_store_si256((__m256i *)(vals + (size_t)bd.outSlot[i] * W), R);
-                }
-
-                {
-                    const uint64_t *kt = keys.data() + (size_t)t * O;
-                    for (int j = 0; j < O; j++) {
-                        uint64_t key = kt[j];
-                        const uint64_t *v = vals + (size_t)refSlot(bd, bd.outRef[j]) * W;
-                        for (int w = 0; w < W; w++) {
-                            uint64_t x = v[w];
-                            uint64_t *hh = H.data() + (size_t)w * 64;
-                            while (x) {
-                                int bit = __builtin_ctzll(x);
-                                hh[bit] ^= key;
-                                x &= x - 1;
-                            }
-                        }
-                    }
-                }
-
-                if (!bd.dIsFF) {
-                    for (int f = 0; f < F; f++) {
-                        if (bd.dRef[f] >= 0) continue;  // stored directly by generated code
-                        const uint64_t *src = vals + (size_t)refSlot(bd, bd.dRef[f]) * W;
-                        uint64_t *dst = vals + (size_t)bd.ffSlot[f] * W;
-                        for (int w = 0; w < W; w++) dst[w] = src[w];
-                    }
-                } else {
-                    for (int f = 0; f < F; f++) {
-                        const uint64_t *src = vals + (size_t)refSlot(bd, bd.dRef[f]) * W;
-                        for (int w = 0; w < W; w++) fftmp[(size_t)f * W + w] = src[w];
-                    }
-                    for (int f = 0; f < F; f++) {
-                        uint64_t *dst = vals + (size_t)bd.ffSlot[f] * W;
-                        for (int w = 0; w < W; w++) dst[w] = fftmp[(size_t)f * W + w];
-                    }
-                }
-            }
-            for (int q = 0; q < TESTS; q++) {
-                int m = m0 + q;
-                if (m < M) res[m] = H[q];
-            }
-        }
-        _mm_free(vals);
-        _mm_free(fftmp);
+// Fills VEX prefix + opcode + modrm (+disp32). reg/v/rm are ymm indices 0..15.
+static inline void vex(CodeBuf& c, int reg, int v, int rm, int opcode, bool mem, int32_t disp) {
+    int R = ((reg >> 3) & 1) ^ 1;
+    int B = ((rm >> 3) & 1) ^ 1;
+    int vf = (~v) & 0xF;
+    if (R && B) {
+        c.b(0xC5);
+        c.b((uint8_t)((R << 7) | (vf << 3) | 4 | 1));
+    } else {
+        c.b(0xC4);
+        c.b((uint8_t)((R << 7) | (1 << 6) | (B << 5) | 1));
+        c.b((uint8_t)((vf << 3) | 4 | 1));
+    }
+    c.b((uint8_t)opcode);
+    if (mem) {
+        c.b((uint8_t)(0x80 | ((reg & 7) << 3) | 1));  // [rcx + disp32]
+        c.d32(disp);
+    } else {
+        c.b((uint8_t)(0xC0 | ((reg & 7) << 3) | (rm & 7)));
     }
 }
-
-// ----------------------------------------------------------------------- JIT
-
-// opcodes (VEX.256.66.0F)
-enum { OP_MOVDQA = 0x6F, OP_MOVDQU = 0x7F, OP_AND = 0xDB, OP_OR = 0xEB, OP_XOR = 0xEF, OP_CMPEQD = 0x76 };
-
-struct Emitter {
-    uint8_t *buf = nullptr;
-    uint8_t *cur = nullptr;
-    size_t sz = 0;
-    void begin(size_t cap) { buf = (uint8_t *)std::malloc(cap); cur = buf; sz = 0; }
-    void release() { std::free(buf); buf = nullptr; cur = nullptr; }
-    inline void u8(int x) { *cur++ = (uint8_t)x; }
-    inline void u32(int32_t x) { cur[0] = (uint8_t)x; cur[1] = (uint8_t)(x >> 8); cur[2] = (uint8_t)(x >> 16); cur[3] = (uint8_t)(x >> 24); cur += 4; }
-    inline void vex(int opcode, int pp, int dst, int src1, int rm, int32_t disp, bool mem, bool rspmem = false) {
-        int R = (dst >> 3) & 1;
-        int B = mem ? 0 : ((rm >> 3) & 1);
-        if (R == 0 && B == 0) {
-            u8(0xC5);
-            u8((1 << 7) | (((~src1) & 0xF) << 3) | (1 << 2) | pp);
-        } else {
-            u8(0xC4);
-            u8((((~R) & 1) << 7) | (1 << 6) | (((~B) & 1) << 5) | 1);
-            u8((((~src1) & 0xF) << 3) | (1 << 2) | pp);
-        }
-        u8(opcode);
-        if (mem) {
-            u8(0x80 | ((dst & 7) << 3) | (rspmem ? 4 : 1));
-            if (rspmem) u8(0x24);
-            u32(disp);
-        } else {
-            u8(0xC0 | ((dst & 7) << 3) | (rm & 7));
-        }
-    }
-    inline void load(int dst, int slot) { vex(OP_MOVDQA, 1, dst, 0, 0, slot * 32, true); }
-    inline void store(int src, int slot) { vex(OP_MOVDQU, 1, src, 0, 0, slot * 32, true); }
-    inline void mov(int dst, int src) { vex(OP_MOVDQA, 1, dst, 0, src, 0, false); }
-    inline void rr(int opc, int dst, int src1, int rm) { vex(opc, 1, dst, src1, rm, 0, false); }
-    inline void rm(int opc, int dst, int src1, int slot) { vex(opc, 1, dst, src1, 0, slot * 32, true); }
-    inline void opWith(int opc, int dst, int rx, int slot) {
-        if (rx >= 0) rr(opc, dst, dst, rx); else rm(opc, dst, dst, slot);
-    }
-    inline void movTo(int dst, int rx, int slot) {
-        if (rx >= 0) mov(dst, rx); else load(dst, slot);
-    }
-};
-
-// Generate AVX2 code implementing one combinational evaluation.
-bool generate(const Build &b, Emitter &em, bool directFF) {
-    const int n = b.n;
-    em.begin((size_t)n * 57 + (size_t)(b.ffSlot.size() + 8) * 20 + 4096);
-    if (!em.buf) return false;
-
-    em.u8(0x48); em.u8(0x81); em.u8(0xEC); em.u32(320);  // sub rsp, 320
-    for (int r = 6; r <= 15; r++) em.vex(OP_MOVDQU, 2, r, 0, 0, (r - 6) * 32, true, true);  // save
-    em.rr(OP_CMPEQD, 15, 15, 15);  // all ones
-
-    int regVal[16], regLU[16];
-    for (int i = 0; i < 16; i++) { regVal[i] = -1; regLU[i] = -1; }
-    regVal[15] = -2;
-    // only ymm0-7 are used for values: every VEX operand then fits the 2-byte form
-    constexpr int NREG = 8;
-    std::vector<int> valReg((size_t)n, -1);
-
-    for (int i = 0; i < n; i++) {
-        const int ty = b.type[i];
-        const int r0 = b.ra[i], r1 = b.rb[i], r2 = b.rc[i];
-        const int s0 = refSlot(b, r0), s1 = refSlot(b, r1), s2 = refSlot(b, r2);
-        const int v0 = (r0 >= 0) ? valReg[r0] : -1;
-        const int v1 = (r1 >= 0) ? valReg[r1] : -1;
-        const int v2 = (r2 >= 0) ? valReg[r2] : -1;
-
-        int T = -1;
-        bool deadPick = false;
-        if (ty == 7) {
-            if (r2 >= 0 && v2 >= 0 && v2 != v0 && v2 != v1 && b.isLast[(size_t)i * 3 + 2]) { T = v2; deadPick = true; }
-        } else {
-            if (r0 >= 0 && b.isLast[(size_t)i * 3] && v0 >= 0) { T = v0; deadPick = true; }
-            else if (r1 >= 0 && b.isLast[(size_t)i * 3 + 1] && v1 >= 0) { T = v1; deadPick = true; }
-        }
-        if (T < 0)
-            for (int r = 0; r < NREG; r++) if (regVal[r] == -1) { T = r; break; }
-        if (T < 0) {
-            int best = -1, blu = -1;
-            for (int r = 0; r < NREG; r++) {
-                int v = regVal[r];
-                if (v < 0) continue;
-                if (ty == 7 && (r == v0 || r == v1)) continue;
-                if (regLU[r] > blu) { blu = regLU[r]; best = r; }
-            }
-            if (best < 0) {
-                for (int r = 0; r < NREG; r++) {
-                    int v = regVal[r];
-                    if (v < 0) continue;
-                    if (regLU[r] > blu) { blu = regLU[r]; best = r; }
-                }
-            }
-            if (best < 0) return false;
-            int v = regVal[best];
-            em.store(best, b.outSlot[v]);
-            valReg[v] = -1;
-            regVal[best] = -1;
-            regLU[best] = -1;
-            T = best;
-            deadPick = false;
-        }
-        (void)deadPick;
-
-        if (ty == 6) {
-            if (v0 >= 0) em.rr(OP_XOR, T, v0, 15);
-            else { em.load(T, s0); em.rr(OP_XOR, T, T, 15); }
-        } else if (ty == 7) {
-            if (r1 >= 0 && r2 >= 0 && r1 == r2) {
-                if (v1 >= 0) em.mov(T, v1); else em.load(T, s1);
-            } else {
-                int R1 = v1;
-                if (R1 < 0) {
-                    int u = -1;
-                    for (int r = 0; r < NREG && u < 0; r++)
-                        if (regVal[r] == -1 && r != T && r != v0 && r != v2) u = r;
-                    if (u < 0) {
-                        int best = -1, blu = -1;
-                        for (int r = 0; r < NREG; r++) {
-                            int v = regVal[r];
-                            if (v < 0 || r == T || r == v0 || r == v2) continue;
-                            if (regLU[r] > blu) { blu = regLU[r]; best = r; }
-                        }
-                        if (best >= 0) {
-                            int v = regVal[best];
-                            em.store(best, b.outSlot[v]);
-                            valReg[v] = -1;
-                            regVal[best] = -1;
-                            regLU[best] = -1;
-                            u = best;
-                        }
-                    }
-                    if (u >= 0) { em.load(u, s1); R1 = u; }
-                }
-                if (R1 >= 0) {
-                    if (v2 >= 0) em.rr(OP_XOR, T, R1, v2); else em.rm(OP_XOR, T, R1, s2);
-                } else if (v2 >= 0) {
-                    em.rm(OP_XOR, T, v2, s1);
-                } else {
-                    em.load(T, s2);
-                    em.rm(OP_XOR, T, T, s1);
-                }
-                em.opWith(OP_AND, T, v0, s0);
-                em.opWith(OP_XOR, T, R1, s1);
-            }
-        } else {
-            int opc = (ty == 0 || ty == 3) ? OP_AND : (ty == 1 || ty == 4) ? OP_OR : OP_XOR;
-            if (v0 >= 0) {
-                if (v1 >= 0) em.rr(opc, T, v0, v1); else em.rm(opc, T, v0, s1);
-            } else if (v1 >= 0) {
-                em.rm(opc, T, v1, s0);
-            } else {
-                em.load(T, s0);
-                em.rm(opc, T, T, s1);
-            }
-            if (ty >= 3) em.rr(OP_XOR, T, T, 15);
-        }
-
-        if (r0 >= 0 && b.isLast[(size_t)i * 3]) { int rr = valReg[r0]; if (rr >= 0 && rr != T) { regVal[rr] = -1; regLU[rr] = -1; } valReg[r0] = -1; }
-        if (ty != 6 && r1 >= 0 && b.isLast[(size_t)i * 3 + 1]) { int rr = valReg[r1]; if (rr >= 0 && rr != T) { regVal[rr] = -1; regLU[rr] = -1; } valReg[r1] = -1; }
-        if (ty == 7 && r2 >= 0 && b.isLast[(size_t)i * 3 + 2]) { int rr = valReg[r2]; if (rr >= 0 && rr != T) { regVal[rr] = -1; regLU[rr] = -1; } valReg[r2] = -1; }
-
-        valReg[i] = T;
-        regVal[T] = i;
-        regLU[T] = b.lastUse[i];
-    }
-
-    for (int v = 0; v < n; v++) {
-        if (b.lastUse[v] != n || valReg[v] < 0) continue;
-        int fs = b.ffUserStart[v], fe = b.ffUserStart[v + 1];
-        if (directFF && fs < fe) {
-            for (int e = fs; e < fe; e++) em.store(valReg[v], b.ffSlot[b.ffUserList[e]]);
-            if (b.isOut[v]) em.store(valReg[v], b.outSlot[v]);
-        } else {
-            em.store(valReg[v], b.outSlot[v]);
-        }
-    }
-    if (directFF) {
-        for (int v = 0; v < n; v++) {
-            if (b.lastUse[v] != n || valReg[v] >= 0) continue;
-            int fs = b.ffUserStart[v], fe = b.ffUserStart[v + 1];
-            if (fs >= fe) continue;
-            em.load(0, b.outSlot[v]);
-            for (int e = fs; e < fe; e++) em.store(0, b.ffSlot[b.ffUserList[e]]);
-        }
-    }
-
-    for (int r = 6; r <= 15; r++) em.vex(OP_MOVDQU, 2, r, 0, 0, (r - 6) * 32, true, true);  // restore
-    em.u8(0x48); em.u8(0x81); em.u8(0xC4); em.u32(320);  // add rsp, 320
-    em.u8(0xC5); em.u8(0xF8); em.u8(0x77);               // vzeroupper
-    em.u8(0xC3);                                          // ret
-    em.sz = (size_t)(em.cur - em.buf);
-    return true;
+enum { OP_AND = 0, OP_OR = 1, OP_XOR = 2 };
+static inline void e_load(CodeBuf& c, int d, int32_t disp) { vex(c, d, 0, 1, 0x6F, true, disp); }
+static inline void e_store(CodeBuf& c, int s, int32_t disp) { vex(c, s, 0, 1, 0x7F, true, disp); }
+static inline void e_alu_mem(CodeBuf& c, int op, int d, int v, int32_t disp) {
+    static const uint8_t o[3] = {0xDB, 0xEB, 0xEF};
+    vex(c, d, v, 1, o[op], true, disp);
 }
+static inline void e_alu_reg(CodeBuf& c, int op, int d, int v, int rm) {
+    static const uint8_t o[3] = {0xDB, 0xEB, 0xEF};
+    vex(c, d, v, rm, o[op], false, 0);
+}
+static inline void e_setones(CodeBuf& c, int r) { vex(c, r, r, r, 0x76, false, 0); }
 
-}  // namespace
-
-std::vector<uint64_t> simulate(const Circuit &c) {
+std::vector<uint64_t> simulate(const Circuit& c) {
     const int I = c.I, F = c.F, G = c.G, O = c.O, M = c.M, T = c.T;
-    const int BASE = I + F + 2;
+    const int baseFF = 2 + I;
+    const int baseG = 2 + I + F;
+    std::vector<uint64_t> result((size_t)M, 0);
+    if (M <= 0) return result;
 
-    Build bd;
-    bd.order.reserve((size_t)G);
-
-    // DFS post-order over the gates reachable from flip-flop inputs and primary outputs.
-    std::vector<int> orderD;
-    orderD.reserve((size_t)G);
+    // ---------- topological order ----------
+    std::vector<uint32_t> cnt(G > 0 ? G : 1, 0);
+    std::vector<int> indeg(G, 0);
+    for (int k = 0; k < G; k++) {
+        int s;
+        if ((s = c.in0[k]) >= baseG) { cnt[s - baseG]++; indeg[k]++; }
+        if (c.type[k] != 6 && (s = c.in1[k]) >= baseG) { cnt[s - baseG]++; indeg[k]++; }
+        if (c.type[k] == 7 && (s = c.in2[k]) >= baseG) { cnt[s - baseG]++; indeg[k]++; }
+    }
+    std::vector<int> off(G + 1);
+    off[0] = 0;
+    for (int k = 0; k < G; k++) off[k + 1] = off[k] + (int)cnt[k];
+    std::vector<int> cons(off[G]);
     {
-        std::vector<uint8_t> state((size_t)G, 0);
-        std::vector<uint32_t> stk;
-        stk.reserve(4096);
-        for (int s = 0; s < G; s++) {
-            if (state[s]) continue;
-            state[s] = 1;
-            stk.push_back((uint32_t)s << 2);
-            while (!stk.empty()) {
-                uint32_t top = stk.back();
-                int k = (int)(top >> 2);
-                int q = (int)(top & 3);
-                if (q < 3) {
-                    stk.back() = top + 1;
-                    int a = (q == 0) ? c.in0[k] : (q == 1) ? c.in1[k] : c.in2[k];
-                    if (a >= BASE) {
-                        int d = a - BASE;
-                        if (!state[d]) { state[d] = 1; stk.push_back((uint32_t)d << 2); }
-                    }
-                } else {
-                    orderD.push_back(k);
-                    stk.pop_back();
+        std::vector<int> pos(off.begin(), off.end() - 1);
+        for (int k = 0; k < G; k++) {
+            int s;
+            if ((s = c.in0[k]) >= baseG) cons[pos[s - baseG]++] = k;
+            if (c.type[k] != 6 && (s = c.in1[k]) >= baseG) cons[pos[s - baseG]++] = k;
+            if (c.type[k] == 7 && (s = c.in2[k]) >= baseG) cons[pos[s - baseG]++] = k;
+        }
+    }
+    std::vector<uint8_t> usedEnd(G, 0);
+    for (int f = 0; f < F; f++) { int s = c.d[f]; if (s >= baseG) usedEnd[s - baseG] = 1; }
+    for (int j = 0; j < O; j++) { int s = c.out[j]; if (s >= baseG) usedEnd[s - baseG] = 1; }
+
+    std::vector<int> order;
+    order.reserve(G);
+    {
+        std::vector<int> q(G);
+        int muxCount = 0;
+        for (int k = 0; k < G; k++) if (c.type[k] == 7) muxCount++;
+        bool useLifo = (G > 0 && (long long)muxCount * 10 > (long long)G * 3);
+        int qt = 0;
+        for (int k = 0; k < G; k++) if (indeg[k] == 0) q[qt++] = k;
+        if (useLifo) {
+            while (qt > 0) {
+                int k = q[--qt];
+                order.push_back(k);
+                for (int e = off[k]; e < off[k + 1]; e++) {
+                    int t = cons[e];
+                    if (--indeg[t] == 0) q[qt++] = t;
+                }
+            }
+        } else {
+            int qh = 0;
+            while (qh < qt) {
+                int k = q[qh++];
+                order.push_back(k);
+                for (int e = off[k]; e < off[k + 1]; e++) {
+                    int t = cons[e];
+                    if (--indeg[t] == 0) q[qt++] = t;
                 }
             }
         }
     }
-    bd.order = std::move(orderD);
-    const int n = (int)bd.order.size();
+    if ((int)order.size() != G) return result;
 
-    // base slot assignment
-    const int nBase = 2 + I + F;
-    std::vector<int> baseSlot((size_t)BASE);
-    baseSlot[0] = 0; baseSlot[1] = 1;
-    for (int i = 0; i < I; i++) baseSlot[2 + i] = 2 + i;
-    for (int f = 0; f < F; f++) baseSlot[2 + I + f] = 2 + I + f;
-
-    // gate -> position
-    std::vector<int> gatePos((size_t)G, -1);
-    for (int i = 0; i < n; i++) gatePos[bd.order[i]] = i;
-    auto refOf = [&](int sig) -> int {
-        if (sig >= BASE) return gatePos[sig - BASE];
-        return -(baseSlot[sig] + 1);
-    };
-    bd.n = n;
-    bd.type.resize((size_t)n);
-    bd.ra.resize((size_t)n); bd.rb.resize((size_t)n); bd.rc.resize((size_t)n);
-    for (int i = 0; i < n; i++) {
-        int k = bd.order[i];
-        bd.type[i] = c.type[k];
-        bd.ra[i] = refOf(c.in0[k]);
-        bd.rb[i] = (c.type[k] == 6) ? -1 : refOf(c.in1[k]);
-        bd.rc[i] = (c.type[k] == 7) ? refOf(c.in2[k]) : -1;
-    }
-    bd.dRef.resize((size_t)F);
-    bd.ffSlot.resize((size_t)F);
-    for (int f = 0; f < F; f++) {
-        bd.dRef[f] = refOf(c.d[f]);
-        bd.ffSlot[f] = baseSlot[2 + I + f];
-        if (c.d[f] >= 2 + I && c.d[f] < BASE) bd.dIsFF = true;
-    }
-    bd.outRef.resize((size_t)O);
-    for (int j = 0; j < O; j++) bd.outRef[j] = refOf(c.out[j]);
-
-    // last use by position, plus per-input "is last use" flags
-    bd.lastUse.assign((size_t)n, -1);
-    bd.isLast.assign((size_t)n * 3, 0);
-    for (int f = 0; f < F; f++) if (bd.dRef[f] >= 0) bd.lastUse[bd.dRef[f]] = n;
-    for (int j = 0; j < O; j++) if (bd.outRef[j] >= 0) bd.lastUse[bd.outRef[j]] = n;
-    for (int i = n - 1; i >= 0; i--) {
-        int r0 = bd.ra[i], r1 = bd.rb[i], r2 = bd.rc[i];
-        if (r0 >= 0 && bd.lastUse[r0] < 0) { bd.lastUse[r0] = i; bd.isLast[(size_t)i * 3] = 1; }
-        if (r1 >= 0 && bd.lastUse[r1] < 0) { bd.lastUse[r1] = i; bd.isLast[(size_t)i * 3 + 1] = 1; }
-        if (r2 >= 0 && bd.lastUse[r2] < 0) { bd.lastUse[r2] = i; bd.isLast[(size_t)i * 3 + 2] = 1; }
-    }
-    for (int i = 0; i < n; i++) if (bd.lastUse[i] < 0) bd.lastUse[i] = n;
-
-    // slot colouring
-    std::vector<int> head((size_t)n + 1, -1), nxt((size_t)n, -1);
-    for (int i = 0; i < n; i++) {
-        int lu = bd.lastUse[i];
-        nxt[i] = head[lu]; head[lu] = i;
-    }
-    std::vector<int> outSlot((size_t)n);
+    // ---------- slot allocation ----------
+    std::vector<int> gslot(G);
     std::vector<int> freeStack;
-    freeStack.reserve((size_t)n);
-    int nSlots = nBase;
-    for (int i = 0; i < n; i++) {
-        if (i > 0) for (int e = head[i - 1]; e != -1; e = nxt[e]) freeStack.push_back(outSlot[e]);
+    int nextSlot = 2 + I + F;
+    std::vector<int> rem(G);
+    for (int k = 0; k < G; k++) rem[k] = off[k + 1] - off[k];
+    for (int p = 0; p < G; p++) {
+        int k = order[p];
+        int ds;
+        if (!freeStack.empty()) { ds = freeStack.back(); freeStack.pop_back(); }
+        else ds = nextSlot++;
+        gslot[k] = ds;
         int s;
-        if (!freeStack.empty()) { s = freeStack.back(); freeStack.pop_back(); }
-        else s = nSlots++;
-        outSlot[i] = s;
-    }
-    bd.nSlots = nSlots;
-    bd.outSlot = outSlot;
-    {
-        bd.ffUserStart.assign((size_t)n + 1, 0);
-        for (int f = 0; f < F; f++) if (bd.dRef[f] >= 0) bd.ffUserStart[(size_t)bd.dRef[f] + 1]++;
-        for (int i = 0; i < n; i++) bd.ffUserStart[i + 1] += bd.ffUserStart[i];
-        bd.ffUserList.resize((size_t)bd.ffUserStart[n]);
-        std::vector<int> fillp(bd.ffUserStart.begin(), bd.ffUserStart.end() - 1);
-        for (int f = 0; f < F; f++) if (bd.dRef[f] >= 0) bd.ffUserList[fillp[bd.dRef[f]]++] = f;
-        bd.isOut.assign((size_t)n, 0);
-        for (int j = 0; j < O; j++) if (bd.outRef[j] >= 0) bd.isOut[bd.outRef[j]] = 1;
-    }
-
-    // digest keys
-    std::vector<uint64_t> keys((size_t)T * O);
-    for (int t = 0; t < T; t++)
-        for (int j = 0; j < O; j++) {
-            uint64_t z = (uint64_t)t * (uint64_t)O + (uint64_t)j;
-            keys[(size_t)t * O + j] = sm64(z);
+        if ((s = c.in0[k]) >= baseG) {
+            int j = s - baseG;
+            if (--rem[j] == 0 && !usedEnd[j]) freeStack.push_back(gslot[j]);
         }
-
-    const int TESTS = 64 * W;
-    const int nBatches = (M + TESTS - 1) / TESTS;
-    std::vector<uint64_t> res((size_t)M, 0);
-
-#ifdef _OPENMP
-    int nt = omp_get_num_procs();
-#else
-    int nt = 1;
-#endif
-    if (NT_OVERRIDE) nt = NT_OVERRIDE;
-    else { int lim = 8; if (nt > lim) nt = lim; }
-    if (nt > nBatches) nt = nBatches;
-    if (nt < 1) nt = 1;
-
-    // generate code
-    Emitter em;
-    bool jitOk = false;
-    void *codeMem = nullptr;
-    bool outHasFF = false;
-    for (int j = 0; j < O; j++) if (c.out[j] >= 2 + I && c.out[j] < BASE) outHasFF = true;
-    if (!USE_INTERP && n <= 2000000) jitOk = generate(bd, em, !bd.dIsFF && !outHasFF);
-
-    if (!jitOk) {
-        em.release();
-        runInterp(bd, c, keys, res, nt);
-        return res;
+        if (c.type[k] != 6 && (s = c.in1[k]) >= baseG) {
+            int j = s - baseG;
+            if (--rem[j] == 0 && !usedEnd[j]) freeStack.push_back(gslot[j]);
+        }
+        if (c.type[k] == 7 && (s = c.in2[k]) >= baseG) {
+            int j = s - baseG;
+            if (--rem[j] == 0 && !usedEnd[j]) freeStack.push_back(gslot[j]);
+        }
     }
+    const int nslots = nextSlot;
 
-#ifdef _WIN32
-    codeMem = VirtualAlloc(nullptr, em.sz, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-    if (!codeMem) { em.release(); runInterp(bd, c, keys, res, nt); return res; }
-    std::memcpy(codeMem, em.buf, em.sz);
-    em.release();
+    std::vector<int> slotOf((size_t)baseG + G);
+    slotOf[0] = 0; slotOf[1] = 1;
+    for (int i = 0; i < I; i++) slotOf[2 + i] = 2 + i;
+    for (int f = 0; f < F; f++) slotOf[baseFF + f] = baseFF + f;
+    for (int k = 0; k < G; k++) slotOf[baseG + k] = gslot[k];
+
+    std::vector<int32_t> ea(G), eb(G), ec(G), ed(G);
+    std::vector<uint8_t> et(G);
+    for (int p = 0; p < G; p++) {
+        int k = order[p];
+        et[p] = c.type[k];
+        ea[p] = slotOf[c.in0[k]];
+        eb[p] = (c.type[k] != 6) ? slotOf[c.in1[k]] : 0;
+        ec[p] = (c.type[k] == 7) ? slotOf[c.in2[k]] : 0;
+        ed[p] = gslot[k];
+    }
+    std::vector<int32_t> dslot(F), oslot(O);
+    bool anyFFd = false;
+    for (int f = 0; f < F; f++) {
+        dslot[f] = slotOf[c.d[f]];
+        if (c.d[f] >= baseFF && c.d[f] < baseG) anyFFd = true;
+    }
+    for (int j = 0; j < O; j++) oslot[j] = slotOf[c.out[j]];
+
+    // ---------- code generation ----------
+    CodeBuf cb((size_t)G * 64 + 65536);
+    if (!cb.ok) return result;
+    e_setones(cb, 3);
+    {
+        // Consumers remaining per gate (for one-step register fusion).
+        std::vector<int> remG(G);
+        for (int k = 0; k < G; k++) remG[k] = off[k + 1] - off[k];
+        int pendSlot = -1, pendGate = -1;
+        for (int p = 0; p < G; p++) {
+            int k = order[p];
+            int t = et[p];
+            int sA = ea[p], sB = eb[p], sC = ec[p];
+            int32_t oa = sA * 32, ob = sB * 32, oc = sC * 32;
+            int usePos = -1;
+            if (pendSlot >= 0) {
+                if (sA == pendSlot) usePos = 0;
+                else if (t != 6 && sB == pendSlot) usePos = 1;
+                else if (t == 7 && sC == pendSlot) usePos = 2;
+            }
+            bool useP = usePos >= 0;
+            bool canFuse = false;
+            if (useP) {
+#ifdef NOFUSE_ALL
+                canFuse = false;
+#else
+                if (t <= 5) {
+                    int other = (usePos == 0) ? sB : sA;
+                    if (other != pendSlot) canFuse = true;
+#ifdef NOFUSE_POS1
+                    if (usePos == 1) canFuse = false;
 #endif
-    if (!codeMem) { em.release(); runInterp(bd, c, keys, res, nt); return res; }
+#ifdef NOFUSE_INV
+                    if (t >= 3) canFuse = false;
+#endif
+                } else if (t == 6) {
+                    canFuse = true;
+#ifdef NOFUSE_NOT
+                    canFuse = false;
+#endif
+                } else {
+                    if (usePos == 1 && sA != pendSlot && sC != pendSlot) canFuse = true;
+#ifdef NOFUSE_MUX
+                    canFuse = false;
+#endif
+                }
+#endif
+            }
+            if (pendSlot >= 0) {
+                int useCount = 0;
+                if (sA == pendSlot) useCount++;
+                if (t != 6 && sB == pendSlot) useCount++;
+                if (t == 7 && sC == pendSlot) useCount++;
+                bool neededAfter = (remG[pendGate] > useCount) || (usedEnd[pendGate] != 0);
+                if (canFuse) {
+                    if (neededAfter) e_store(cb, 0, pendSlot * 32);
+                } else {
+                    if (useP || neededAfter) e_store(cb, 0, pendSlot * 32);
+                }
+            }
+            // bookkeeping: this gate consumes its gate-inputs
+            if (sA >= 2 + I + F) remG[sA - (2 + I + F)]--;
+            if (t != 6 && sB >= 2 + I + F) remG[sB - (2 + I + F)]--;
+            if (t == 7 && sC >= 2 + I + F) remG[sC - (2 + I + F)]--;
 
-    typedef void (*JitFn)(uint64_t *);
-    JitFn fn = (JitFn)codeMem;
-    const bool directFF = !bd.dIsFF && !outHasFF;
+            if (canFuse) {
+                if (t <= 5) {
+                    int other = (usePos == 0) ? sB : sA;
+                    int32_t oo = (usePos == 0) ? ob : oa;
+                    int op = (t == 0 || t == 3) ? OP_AND : (t == 1 || t == 4 ? OP_OR : OP_XOR);
+                    e_alu_mem(cb, op, 0, 0, oo);
+                    if (t >= 3) e_alu_reg(cb, OP_XOR, 0, 0, 3);
+                } else if (t == 6) {
+                    e_alu_reg(cb, OP_XOR, 0, 0, 3);
+                } else {
+                    e_alu_mem(cb, OP_XOR, 1, 0, oc);  // a ^ b
+                    e_alu_mem(cb, OP_AND, 1, 1, oa);  // & s
+                    e_alu_reg(cb, OP_XOR, 0, 0, 1);   // a ^ ...
+                }
+            } else {
+                switch (t) {
+                    case 0: e_load(cb, 0, oa); e_alu_mem(cb, OP_AND, 0, 0, ob); break;
+                    case 1: e_load(cb, 0, oa); e_alu_mem(cb, OP_OR, 0, 0, ob); break;
+                    case 2: e_load(cb, 0, oa); e_alu_mem(cb, OP_XOR, 0, 0, ob); break;
+                    case 3: e_load(cb, 0, oa); e_alu_mem(cb, OP_AND, 0, 0, ob); e_alu_reg(cb, OP_XOR, 0, 0, 3); break;
+                    case 4: e_load(cb, 0, oa); e_alu_mem(cb, OP_OR, 0, 0, ob); e_alu_reg(cb, OP_XOR, 0, 0, 3); break;
+                    case 5: e_load(cb, 0, oa); e_alu_mem(cb, OP_XOR, 0, 0, ob); e_alu_reg(cb, OP_XOR, 0, 0, 3); break;
+                    case 6: e_load(cb, 0, oa); e_alu_reg(cb, OP_XOR, 0, 0, 3); break;
+                    default:
+                        e_load(cb, 0, ob);               // a = in1
+                        e_alu_mem(cb, OP_XOR, 1, 0, oc); // a ^ b
+                        e_alu_mem(cb, OP_AND, 1, 1, oa); // & s
+                        e_alu_reg(cb, OP_XOR, 0, 0, 1);  // a ^ ...
+                        break;
+                }
+            }
+            pendSlot = ed[p];
+            pendGate = k;
+#ifdef ALWAYS_STORE
+            e_store(cb, 0, ed[p] * 32);
+#endif
+        }
+        if (pendSlot >= 0 && (remG[pendGate] > 0 || usedEnd[pendGate] != 0))
+            e_store(cb, 0, pendSlot * 32);
+    }
+    cb.b(0xC5); cb.b(0xF8); cb.b(0x77); cb.b(0xC3);  // vzeroupper; ret
+#ifdef VERIFY_SLOTS
+    {
+        std::vector<Vec4> A(nslots), B(nslots);
+        for (int i = 0; i < nslots; i++) for (int j = 0; j < 4; j++) { A[i].w[j] = B[i].w[j] = (uint64_t)(i * 131 + j * 7 + 1); }
+        for (int p = 0; p < G; p++) {
+            __m256i a = _mm256_load_si256((const __m256i*)A[ea[p]].w);
+            __m256i b = _mm256_load_si256((const __m256i*)A[eb[p]].w);
+            __m256i r;
+            switch (et[p]) {
+                case 0: r = _mm256_and_si256(a, b); break;
+                case 1: r = _mm256_or_si256(a, b); break;
+                case 2: r = _mm256_xor_si256(a, b); break;
+                case 3: r = _mm256_xor_si256(_mm256_and_si256(a, b), _mm256_set1_epi64x(-1)); break;
+                case 4: r = _mm256_xor_si256(_mm256_or_si256(a, b), _mm256_set1_epi64x(-1)); break;
+                case 5: r = _mm256_xor_si256(_mm256_xor_si256(a, b), _mm256_set1_epi64x(-1)); break;
+                case 6: r = _mm256_xor_si256(a, _mm256_set1_epi64x(-1)); break;
+                default: { __m256i cc = _mm256_load_si256((const __m256i*)A[ec[p]].w); __m256i tt = _mm256_xor_si256(b, cc); r = _mm256_xor_si256(b, _mm256_and_si256(tt, a)); break; }
+            }
+            _mm256_store_si256((__m256i*)A[ed[p]].w, r);
+        }
+        ((void(*)(void*))cb.base)(B.data());
+        int bad = 0;
+        std::vector<int> slotGate(nslots, -1);
+        for (int p = 0; p < G; p++) slotGate[ed[p]] = order[p];
+        std::vector<int> roots;
+        for (int f = 0; f < F; f++) roots.push_back(dslot[f]);
+        for (int j = 0; j < O; j++) roots.push_back(oslot[j]);
+        for (int i : roots) for (int j = 0; j < 4; j++)
+            if (A[i].w[j] != B[i].w[j]) { fprintf(stderr, "ROOTDIFF slot=%d gate=%d word=%d interp=%llx jit=%llx\n", i, slotGate[i], j, (unsigned long long)A[i].w[j], (unsigned long long)B[i].w[j]); bad++; break; }
+        if (!bad) fprintf(stderr, "ROOTS OK (%d checked)\n", (int)roots.size());
+    }
+#endif
+    typedef void (*Fn)(void*);
+    Fn fn = (Fn)cb.base;
+
+    // ---------- parallel simulation ----------
+    const int nw = (M + 63) / 64;
+    const int CW = 4;
+    const int nchunks = (nw + CW - 1) / CW;
+    int nt = omp_get_max_threads();
+    if (nt > 8) nt = 8;
+    if (nt > nchunks) nt = nchunks;
+    if (nt < 1) nt = 1;
+#ifdef FORCE_THREADS
+    nt = FORCE_THREADS;
+    if (nt > nchunks) nt = nchunks;
+#endif
 
 #pragma omp parallel num_threads(nt)
     {
-        std::vector<uint64_t> piVal((size_t)64 * W);
-        uint64_t rbuf[64];
-        uint64_t *vals = (uint64_t *)_mm_malloc((size_t)bd.nSlots * W * 8, 32);
-        uint64_t *fftmp = (uint64_t *)_mm_malloc((size_t)(F ? F : 1) * W * 8, 32);
-        std::vector<uint64_t> H((size_t)TESTS);
+        int tid = omp_get_thread_num();
+        int c0 = (int)((long long)nchunks * tid / nt);
+        int c1 = (int)((long long)nchunks * (tid + 1) / nt);
 
-#pragma omp for schedule(dynamic, 1)
-        for (int bi = 0; bi < nBatches; bi++) {
-            const int m0 = bi * TESTS;
-            uint64_t state[TESTS];
-            for (int q = 0; q < TESTS; q++) {
-                int m = m0 + q;
-                if (m < M) { uint64_t z = c.seed ^ (uint64_t)m; state[q] = sm64(z); } else state[q] = 0;
+        std::vector<Vec4> S((size_t)nslots);
+        Vec4* s = S.data();
+        for (int i = 0; i < nslots; i++)
+            _mm256_store_si256((__m256i*)s[i].w, _mm256_setzero_si256());
+        _mm256_store_si256((__m256i*)s[1].w, _mm256_set1_epi64x(-1));
+
+        alignas(64) uint64_t rng[256];
+        alignas(64) uint64_t rstate[256];
+        alignas(64) uint64_t outbits[64][4];
+        alignas(64) uint64_t maskm[256];
+        uint64_t tbl[8][256];
+
+        for (int chunk = c0; chunk < c1; chunk++) {
+            int m0 = chunk * 256;
+            int nvalid = std::min(256, M - m0);
+            // reset flip-flop state for this group of sequences (all FFs start at 0)
+            if (F > 0) {
+                const __m256i z = _mm256_setzero_si256();
+                for (int f = 0; f < F; f++)
+                    _mm256_store_si256((__m256i*)s[baseFF + f].w, z);
             }
-            std::fill(H.begin(), H.end(), 0);
-            std::memset(vals, 0, (size_t)nBase * W * 8);
-            for (int w = 0; w < W; w++) vals[W + w] = ~0ULL;
+            for (int j = 0; j < 256; j++)
+                rstate[j] = mix64(c.seed ^ (uint64_t)(m0 + j));
+            uint64_t HH[256];
+            for (int j = 0; j < 256; j++) HH[j] = 0;
 
             for (int t = 0; t < T; t++) {
-                for (int w = 0; w < W; w++) {
-                    for (int q = 0; q < 64; q++) {
-                        int m = m0 + w * 64 + q;
-                        rbuf[q] = (m < M) ? sm64(state[w * 64 + q]) : 0;
-                    }
-                    transpose64(rbuf);
-                    for (int i = 0; i < 64; i++) piVal[(size_t)i * W + w] = rbuf[i];
-                }
-                for (int i = 0; i < I; i++) {
-                    uint64_t pv = (i < 64) ? piVal[(size_t)i * W] : 0;
-                    for (int w = 0; w < W; w++) vals[(size_t)(2 + i) * W + w] = (i < 64) ? piVal[(size_t)i * W + w] : 0;
-                    (void)pv;
+                for (int j = 0; j < 256; j++) rng[j] = splitmix64_next(&rstate[j]);
+                for (int g = 0; g < 4; g++) {
+                    uint64_t tmp[64];
+                    for (int j = 0; j < 64; j++) tmp[j] = rng[g * 64 + j];
+                    transpose64(tmp);
+                    for (int i = 0; i < I; i++) s[2 + i].w[g] = tmp[i];
                 }
 
-                fn(vals);
+                fn(s);
 
-                {
-                    const uint64_t *kt = keys.data() + (size_t)t * O;
-                    for (int j = 0; j < O; j++) {
-                        uint64_t key = kt[j];
-                        const uint64_t *v = vals + (size_t)refSlot(bd, bd.outRef[j]) * W;
-                        for (int w = 0; w < W; w++) {
-                            uint64_t x = v[w];
-                            uint64_t *hh = H.data() + (size_t)w * 64;
-                            while (x) {
-                                int bit = __builtin_ctzll(x);
-                                hh[bit] ^= key;
-                                x &= x - 1;
-                            }
-                        }
+                // digest
+                uint64_t C[64];
+                for (int j = 0; j < O; j++) C[j] = mix64((uint64_t)t * O + j);
+                for (int j = O; j < 64; j++) C[j] = 0;
+                for (int e = 0; e < 8; e++) {
+                    tbl[e][0] = 0;
+                    for (int v = 1; v < 256; v++) {
+                        int b = __builtin_ctz(v);
+                        tbl[e][v] = tbl[e][v & (v - 1)] ^ C[e * 8 + b];
                     }
                 }
+                for (int j = 0; j < O; j++)
+                    for (int g = 0; g < 4; g++) outbits[j][g] = s[oslot[j]].w[g];
+                for (int j = O; j < 64; j++)
+                    for (int g = 0; g < 4; g++) outbits[j][g] = 0;
+                for (int g = 0; g < 4; g++) {
+                    uint64_t tmp[64];
+                    for (int j = 0; j < 64; j++) tmp[j] = outbits[j][g];
+                    transpose64(tmp);
+                    for (int m = 0; m < 64; m++) maskm[g * 64 + m] = tmp[m];
+                }
+                for (int m = 0; m < nvalid; m++) {
+                    uint64_t mk = maskm[m];
+                    HH[m] ^= tbl[0][mk & 255] ^ tbl[1][(mk >> 8) & 255] ^
+                             tbl[2][(mk >> 16) & 255] ^ tbl[3][(mk >> 24) & 255] ^
+                             tbl[4][(mk >> 32) & 255] ^ tbl[5][(mk >> 40) & 255] ^
+                             tbl[6][(mk >> 48) & 255] ^ tbl[7][(mk >> 56) & 255];
+                }
 
-                if (directFF) {
+                // FF update
+                if (!anyFFd) {
                     for (int f = 0; f < F; f++) {
-                        if (bd.dRef[f] >= 0) continue;  // stored directly by generated code
-                        const uint64_t *src = vals + (size_t)refSlot(bd, bd.dRef[f]) * W;
-                        uint64_t *dst = vals + (size_t)bd.ffSlot[f] * W;
-                        for (int w = 0; w < W; w++) dst[w] = src[w];
+                        int ds = dslot[f];
+                        if (ds == baseFF + f) continue;
+                        _mm256_store_si256((__m256i*)s[baseFF + f].w,
+                                           _mm256_load_si256((const __m256i*)s[ds].w));
                     }
                 } else {
-                    for (int f = 0; f < F; f++) {
-                        const uint64_t *src = vals + (size_t)refSlot(bd, bd.dRef[f]) * W;
-                        for (int w = 0; w < W; w++) fftmp[(size_t)f * W + w] = src[w];
-                    }
-                    for (int f = 0; f < F; f++) {
-                        uint64_t *dst = vals + (size_t)bd.ffSlot[f] * W;
-                        for (int w = 0; w < W; w++) dst[w] = fftmp[(size_t)f * W + w];
-                    }
+                    std::vector<Vec4> tmp(F > 0 ? F : 1);
+                    for (int f = 0; f < F; f++) tmp[f] = s[dslot[f]];
+                    for (int f = 0; f < F; f++) s[baseFF + f] = tmp[f];
                 }
             }
-            for (int q = 0; q < TESTS; q++) {
-                int m = m0 + q;
-                if (m < M) res[m] = H[q];
-            }
+            for (int m = 0; m < nvalid; m++) result[m0 + m] = HH[m];
         }
-        _mm_free(vals);
-        _mm_free(fftmp);
     }
-
-    VirtualFree(codeMem, 0, MEM_RELEASE);
-    return res;
+    return result;
 }
-
-
-
-
-
-
-

@@ -1,0 +1,95 @@
+{
+  "format": "nestedos-scene-v1",
+  "meta": {
+    "name": "最小三维示例场景",
+    "duration": 8,
+    "fps": 30,
+    "description": "最小合法三维场景示例：一个旋转立方体、一盏平行光、一台相机"
+  },
+  "environment": {
+    "skyTop": "#0f172a",
+    "skyHorizon": "#334155",
+    "ambientColor": "#94a3b8",
+    "ambientIntensity": 0.65,
+    "lights": [
+      {
+        "type": "directional",
+        "color": "#fff7ed",
+        "intensity": 1.8,
+        "pos": [
+          12,
+          20,
+          10
+        ],
+        "castShadow": true
+      }
+    ],
+    "terrain": {
+      "size": 40,
+      "segments": 24,
+      "baseY": 0,
+      "hillAmp": 0,
+      "hillFreq": 0.05,
+      "color": "#1e293b",
+      "roughness": 0.85
+    }
+  },
+  "cameras": {
+    "defaultEye": [
+      4.5,
+      3.4,
+      5.5
+    ],
+    "defaultTarget": [
+      0,
+      1.1,
+      0
+    ],
+    "fov": 46
+  },
+  "nodes": [
+    {
+      "id": "cube_1",
+      "label": "示例多面体",
+      "parentId": null,
+      "pos": [
+        0,
+        1.2,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": {
+        "type": "box",
+        "size": [
+          1.5,
+          1.5,
+          1.5
+        ]
+      },
+      "material": {
+        "color": "#8b5cf6",
+        "roughness": 0.32,
+        "metalness": 0.25
+      },
+      "castShadow": true,
+      "receiveShadow": true
+    }
+  ],
+  "tracks": [
+    {
+      "nodeId": "cube_1",
+      "spinSpeed": 1.2,
+      "bobAmp": 0.25,
+      "baseY": 1.25
+    }
+  ]
+}

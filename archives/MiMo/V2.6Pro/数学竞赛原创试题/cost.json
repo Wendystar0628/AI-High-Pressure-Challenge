@@ -1,11 +1,11 @@
 {
   "model": "MiMo/V2.6Pro",
   "task": "数学竞赛原创试题",
-  "tokens": 919810,
+  "tokens": 1191180,
   "minutes": 60.0,
   "time": "开始→截止（实际停止未知）",
-  "cny": 0.12,
-  "api_usd": 0.02,
+  "cny": 0.17,
+  "api_usd": 0.03,
   "basis": "api",
   "method": "api_price",
   "plan": {
@@ -13,6 +13,6 @@
   },
   "fitted": [],
   "runs": [
-    "MiMo/V2.6Pro/数学竞赛原创试题/20261106-164155"
+    "MiMo/V2.6Pro/数学竞赛原创试题/run-d9d8ef66f3e14b49a71ede4f037c995a"
   ]
 }

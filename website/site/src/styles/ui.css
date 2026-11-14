@@ -197,8 +197,8 @@
   color: var(--st-ink-2);
 }
 /* test cost (cost: true): two more columns right of the score, each one line, vertically centred like the
-   score: 测试开销 (the amount, then its small tag 按订阅折算 / 按 API 标价折算 / 数据暂缺) and Token (the 13-task
-   total, then a quiet dashed 含估算 mark when some tasks are estimated). Same row height, no stacked lines. */
+   score: 测试开销 (the amount, then its small basis mark ○ 按订阅折算 / ◆ 按 API 标价折算 / 暂无数据) and Token
+   (the 13-task total). Same row height, no stacked lines. */
 .mrow.has-cost {
   grid-template-columns: 2rem 2.75rem 1.5rem minmax(9rem, var(--mrow-name)) minmax(4rem, 1fr) 4.75rem var(--mrow-cost-w, 8.25rem) var(--mrow-tok-w, 6.25rem);
 }
@@ -240,7 +240,7 @@
   font-size: 0.7rem;
   font-weight: 500;
 }
-/* the basis marks (shape, not colour): ring = 按订阅折算, solid diamond = 按 API 标价折算; * = 含估算 */
+/* the basis marks (shape, not colour): ring = 按订阅折算, solid diamond = 按 API 标价折算 */
 .cost-mark {
   position: relative;
   top: -0.05em;
@@ -260,19 +260,6 @@
   background: var(--st-ink-2);
   transform: rotate(45deg) scale(0.92);
 }
-.cost-est {
-  flex: none;
-  width: 0.5rem;
-  text-align: left;
-  color: var(--st-ink-2);
-  font-size: 0.85rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 1;
-}
-.cost-est.is-off {
-  visibility: hidden;
-}
 .cost-legend {
   display: flex;
   flex-wrap: wrap;
@@ -287,19 +274,6 @@
   align-items: center;
   gap: 0.35rem;
   white-space: nowrap;
-}
-.cost-legend .cost-est {
-  font-size: 0.95rem;
-  transform: translateY(0.12em);
-}
-.mrow-cost-est {
-  flex: none;
-  padding: 0 0.25rem;
-  border: 1px dashed var(--st-ink-2);
-  color: var(--st-ink-2);
-  font-size: 0.7rem;
-  font-weight: 500;
-  line-height: 1.2;
 }
 
 .mrow-head :is(.mrow-cost, .mrow-tok) {

@@ -1,12 +1,8 @@
-// solution.cpp — synchronous sequential circuit simulator (bit-parallel across stimuli)
-// COI prune, topological order, levelize + type-sorted runs, 64-wide bit-parallel,
-// hybrid eval: run-specialized loops for long runs, branchless cmov kernel for short runs.
 #include <cstdint>
 #include <vector>
-#include <algorithm>
 #include <cstring>
-#include <cstdlib>
-
+#include <algorithm>
+#include <immintrin.h>
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -20,322 +16,282 @@ struct Circuit {
     std::vector<int> out;
 };
 
-static inline uint64_t mix64(uint64_t x) {
-    x += 0x9E3779B97F4A7C15ULL;
-    x = (x ^ (x >> 30)) * 0xBF58476D1CE4E5B9ULL;
-    x = (x ^ (x >> 27)) * 0x94D049BB133111EBULL;
-    return x ^ (x >> 31);
+static inline uint64_t splitmix64_next(uint64_t* s) {
+    uint64_t z = (*s += 0x9E3779B97F4A7C15ULL);
+    z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
+    z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
+    return z ^ (z >> 31);
 }
+static inline uint64_t mix64(uint64_t x) { return splitmix64_next(&x); }
 
-static void transpose64(uint64_t x[64]) {
-    uint64_t m = 0x00000000FFFFFFFFULL;
-    int j = 32;
-    while (j > 0) {
-        for (int k = 0; k < 64; k++) {
-            if (k & j) continue;
-            uint64_t t = ((x[k] >> j) ^ x[k | j]) & m;
-            x[k] ^= t << j;
-            x[k | j] ^= t;
-        }
-        if (j == 1) break;
-        j >>= 1;
-        m ^= m << j;
-    }
-}
-
-enum : uint8_t { OP_AND = 0, OP_NAND, OP_OR, OP_NOR, OP_XOR, OP_XNOR, OP_MUX };
+#define PW 256
+typedef __m256i Vec;
+static const Vec VONES = _mm256_set1_epi64x(-1);
 
 std::vector<uint64_t> simulate(const Circuit& c) {
     const int I = c.I, F = c.F, G = c.G, O = c.O, M = c.M, T = c.T;
-    std::vector<uint64_t> H((size_t)M, 0);
-    if (M <= 0 || T < 0) return H;
+    const uint64_t seed = c.seed;
+    const int gate_base = I + F + 2;
+    const int n_sig = gate_base + G;
 
-    const int sigBase = 2 + I + F;
-
-    // ---- cone of influence ----
-    std::vector<uint8_t> live((size_t)sigBase + G, 0);
-    std::vector<int> stack;
-    stack.reserve(sigBase + G);
-    for (int j = 0; j < O; j++) {
-        int s = c.out[j];
-        if (s >= 0 && s < (int)live.size() && !live[s]) { live[s] = 1; stack.push_back(s); }
-    }
-    for (int f = 0; f < F; f++) {
-        int s = c.d[f];
-        if (s >= 0 && s < (int)live.size() && !live[s]) { live[s] = 1; stack.push_back(s); }
-    }
-    while (!stack.empty()) {
-        int s = stack.back();
-        stack.pop_back();
-        if (s >= sigBase) {
-            int k = s - sigBase;
-            int ins[3] = {c.in0[k], c.in1[k], c.in2[k]};
-            for (int t = 0; t < 3; t++) {
-                int u = ins[t];
-                if (u >= 0 && u < (int)live.size() && !live[u]) { live[u] = 1; stack.push_back(u); }
-            }
-        }
-    }
-
-    // ---- topo sort + levelize ----
-    std::vector<int> indeg(G, 0);
-    std::vector<std::vector<int>> fanout(G);
+    // 1. Build reverse dependency CSR + in-degrees
+    std::vector<int> indeg(G, 0), rev_count(G, 0);
     for (int k = 0; k < G; k++) {
-        if (!live[sigBase + k]) continue;
-        int ins[3] = {c.in0[k], c.in1[k], c.in2[k]};
-        for (int t = 0; t < 3; t++) {
-            int u = ins[t];
-            if (u >= sigBase && u < sigBase + G && live[u]) {
-                indeg[k]++;
-                fanout[u - sigBase].push_back(k);
-            }
+        int t = c.type[k];
+        int nin = (t == 6) ? 1 : (t == 7) ? 3 : 2;
+        const int ins[3] = {c.in0[k], c.in1[k], c.in2[k]};
+        for (int j = 0; j < nin; j++)
+            if (ins[j] >= gate_base) { indeg[k]++; rev_count[ins[j] - gate_base]++; }
+    }
+    std::vector<int> rev_off(G + 1, 0);
+    for (int k = 0; k < G; k++) rev_off[k+1] = rev_off[k] + rev_count[k];
+    std::vector<int> rev_data(rev_off[G]);
+    {
+        std::vector<int> pos(rev_off.begin(), rev_off.begin() + G);
+        for (int k = 0; k < G; k++) {
+            int t = c.type[k];
+            int nin = (t == 6) ? 1 : (t == 7) ? 3 : 2;
+            const int ins[3] = {c.in0[k], c.in1[k], c.in2[k]};
+            for (int j = 0; j < nin; j++)
+                if (ins[j] >= gate_base) rev_data[pos[ins[j]-gate_base]++] = k;
         }
     }
+
+    // 2. Kahn's topological sort
     std::vector<int> topo;
     topo.reserve(G);
-    std::vector<int> level(G, 0);
     {
         std::vector<int> q;
         q.reserve(G);
-        for (int k = 0; k < G; k++)
-            if (live[sigBase + k] && indeg[k] == 0) q.push_back(k);
-        for (size_t i = 0; i < q.size(); i++) {
+        for (int k = 0; k < G; k++) if (!indeg[k]) q.push_back(k);
+        for (int i = 0; i < (int)q.size(); i++) {
             int k = q[i];
             topo.push_back(k);
-            for (int w : fanout[k]) {
-                if (level[w] < level[k] + 1) level[w] = level[k] + 1;
-                if (--indeg[w] == 0) q.push_back(w);
-            }
-        }
-    }
-    const int ng = (int)topo.size();
-
-    // ---- normalize ops (NOT -> XOR with const1) ----
-    std::vector<uint8_t> nrm((size_t)ng);
-    std::vector<int> bov((size_t)ng, -1);
-    for (int pos = 0; pos < ng; pos++) {
-        int k = topo[pos];
-        switch (c.type[k]) {
-            case 0: nrm[pos] = OP_AND; break;
-            case 1: nrm[pos] = OP_OR; break;
-            case 2: nrm[pos] = OP_XOR; break;
-            case 3: nrm[pos] = OP_NAND; break;
-            case 4: nrm[pos] = OP_NOR; break;
-            case 5: nrm[pos] = OP_XNOR; break;
-            case 6: nrm[pos] = OP_XOR; bov[pos] = 1; break;
-            default: nrm[pos] = OP_MUX; break;
+            for (int j = rev_off[k]; j < rev_off[k+1]; j++)
+                if (--indeg[rev_data[j]] == 0) q.push_back(rev_data[j]);
         }
     }
 
-    // ---- eval order: sort by op within each level ----
-    int maxlev = 0;
-    for (int k = 0; k < G; k++)
-        if (live[sigBase + k]) maxlev = std::max(maxlev, level[k]);
-    const int nlev = maxlev + 1;
-    std::vector<int> lstart((size_t)nlev + 1, 0);
-    for (int pos = 0; pos < ng; pos++) lstart[level[topo[pos]] + 1]++;
-    for (int l = 0; l < nlev; l++) lstart[l + 1] += lstart[l];
-    std::vector<int> eval2topo((size_t)ng);
-    {
-        std::vector<int> cursor = lstart;
-        for (int pos = 0; pos < ng; pos++) eval2topo[cursor[level[topo[pos]]]++] = pos;
-        for (int l = 0; l < nlev; l++)
-            std::sort(eval2topo.begin() + lstart[l], eval2topo.begin() + lstart[l + 1],
-                      [&](int a, int b) { return nrm[a] < nrm[b]; });
+    // 3. Compute levels
+    std::vector<int32_t> level(G, 0);
+    for (int idx = 0; idx < (int)topo.size(); idx++) {
+        int k = topo[idx];
+        int t = c.type[k];
+        int nin = (t == 6) ? 1 : (t == 7) ? 3 : 2;
+        const int ins[3] = {c.in0[k], c.in1[k], c.in2[k]};
+        int lv = 0;
+        for (int j = 0; j < nin; j++)
+            if (ins[j] >= gate_base) { int dl = level[ins[j]-gate_base]; if (dl > lv) lv = dl; }
+        level[k] = lv + 1;
     }
 
-    // ---- renumber signals in eval order ----
-    const int gateBase = 2 + I + F;
-    const int nsig = gateBase + ng;
-    std::vector<int> remap((size_t)sigBase + G, -1);
-    for (int s = 0; s < sigBase; s++) remap[s] = s;
-    for (int p = 0; p < ng; p++) remap[sigBase + topo[eval2topo[p]]] = gateBase + p;
+    // 4. Sort by (level, type) for long same-type runs
+    std::vector<int> order = topo;
+    std::sort(order.begin(), order.end(), [&](int a, int b) {
+        return level[a] != level[b] ? level[a] < level[b] : c.type[a] < c.type[b];
+    });
 
-    // ---- gate metadata ----
-    // ctl = i0 | i1<<32 ; sel = third input (MUX select, 0 otherwise) ; op = normalized op
-    std::vector<uint64_t> ctl((size_t)ng);
-    std::vector<uint32_t> sel((size_t)ng, 0);
-    std::vector<uint8_t> op((size_t)ng);
-    for (int p = 0; p < ng; p++) {
-        int k = topo[eval2topo[p]];
-        int bo = bov[eval2topo[p]];
-        uint8_t o = nrm[eval2topo[p]];
-        if (o == OP_MUX) {
-            uint32_t da = (uint32_t)remap[c.in1[k]];
-            uint32_t db = (uint32_t)remap[c.in2[k]];
-            ctl[p] = (uint64_t)da | ((uint64_t)db << 32);
-            sel[p] = (uint32_t)remap[c.in0[k]];
+    // 5. Simplification: const prop + identity/inverse
+    std::vector<int> subst(n_sig);
+    for (int s = 0; s < n_sig; s++) subst[s] = s;
+    std::vector<int8_t> is_const(n_sig, -1);
+    is_const[0] = 0; is_const[1] = 1;
+
+    struct EvalOp { uint8_t type; int32_t in0, in1, in2, out; };
+    std::vector<EvalOp> eval_ops;
+    eval_ops.reserve(G);
+
+    for (int idx = 0; idx < (int)order.size(); idx++) {
+        int k = order[idx], t = c.type[k], sig_out = gate_base + k;
+        int ra = subst[c.in0[k]];
+        int rb = (t != 6) ? subst[c.in1[k]] : -1;
+        int rc = (t == 7) ? subst[c.in2[k]] : -1;
+        int8_t ca = is_const[ra], cb = (rb>=0)?is_const[rb]:-1, cc = (rc>=0)?is_const[rc]:-1;
+
+        if (t == 6) {
+            if (ca >= 0) is_const[sig_out] = 1 - ca;
+            else eval_ops.push_back({6, ra, -1, -1, sig_out});
+        } else if (t == 7) {
+            if (ca>=0&&cb>=0&&cc>=0) is_const[sig_out]=ca?cc:cb;
+            else if (ca==0) { if(cb>=0)is_const[sig_out]=cb; else subst[sig_out]=rb; }
+            else if (ca==1) { if(cc>=0)is_const[sig_out]=cc; else subst[sig_out]=rc; }
+            else if (cb>=0&&cc>=0&&cb==cc) is_const[sig_out]=cb;
+            else if (cb==0&&cc==1) subst[sig_out]=ra;
+            else if (cb==1&&cc==0) eval_ops.push_back({6,ra,-1,-1,sig_out});
+            else eval_ops.push_back({7,ra,rb,rc,sig_out});
         } else {
-            uint32_t x0 = (uint32_t)remap[c.in0[k]];
-            uint32_t x1 = (bo >= 0) ? (uint32_t)bo : (uint32_t)remap[c.in1[k]];
-            ctl[p] = (uint64_t)x0 | ((uint64_t)x1 << 32);
+            bool done = false;
+            if (ca>=0&&cb>=0) {
+                int r; switch(t){case 0:r=ca&cb;break;case 1:r=ca|cb;break;case 2:r=ca^cb;break;
+                case 3:r=1-(ca&cb);break;case 4:r=1-(ca|cb);break;default:r=1-(ca^cb);break;}
+                is_const[sig_out]=r; done=true;
+            } else if (cb>=0&&ca<0) {
+                int x=ra; switch(t){
+                case 0: if(!cb){is_const[sig_out]=0;}else{subst[sig_out]=x;} done=true;break;
+                case 1: if(cb){is_const[sig_out]=1;}else{subst[sig_out]=x;} done=true;break;
+                case 2: if(!cb){subst[sig_out]=x;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 3: if(!cb){is_const[sig_out]=1;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 4: if(cb){is_const[sig_out]=0;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 5: if(cb){subst[sig_out]=x;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;}
+            } else if (ca>=0&&cb<0) {
+                int x=rb; switch(t){
+                case 0: if(!ca){is_const[sig_out]=0;}else{subst[sig_out]=x;} done=true;break;
+                case 1: if(ca){is_const[sig_out]=1;}else{subst[sig_out]=x;} done=true;break;
+                case 2: if(!ca){subst[sig_out]=x;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 3: if(!ca){is_const[sig_out]=1;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 4: if(ca){is_const[sig_out]=0;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;
+                case 5: if(ca){subst[sig_out]=x;}else{eval_ops.push_back({6,x,-1,-1,sig_out});} done=true;break;}
+            }
+            if (!done) eval_ops.push_back({(uint8_t)t, ra, rb, -1, sig_out});
         }
-        op[p] = o;
     }
-    std::vector<uint32_t> didx(F), ffslot(F);
-    for (int f = 0; f < F; f++) {
-        didx[f] = (uint32_t)remap[c.d[f]];
-        ffslot[f] = (uint32_t)(2 + I + f);
-    }
-    std::vector<uint32_t> outidx(O);
-    for (int j = 0; j < O; j++) outidx[j] = (uint32_t)remap[c.out[j]];
 
-    // ---- runs ----
-    struct Run { uint8_t o; int s, e; };
-    std::vector<Run> runs;
+    // 6. Resolve outputs and FF inputs
+    std::vector<int> res_out(O), res_d(F);
+    for (int j = 0; j < O; j++) res_out[j] = subst[c.out[j]];
+    for (int f = 0; f < F; f++) res_d[f] = subst[c.d[f]];
+
+    // 7. DCE
+    std::vector<uint8_t> live(n_sig, 0);
+    for (int j = 0; j < O; j++) live[res_out[j]] = 1;
+    for (int f = 0; f < F; f++) live[res_d[f]] = 1;
+    for (int idx = (int)eval_ops.size()-1; idx >= 0; idx--) {
+        auto& op = eval_ops[idx];
+        if (!live[op.out]) continue;
+        live[op.in0]=1; if(op.in1>=0)live[op.in1]=1; if(op.in2>=0)live[op.in2]=1;
+    }
+
+    // 8. Build compact eval arrays (in topological order)
+    std::vector<int32_t> op_in0, op_in1, op_in2, op_out;
+    std::vector<uint8_t> op_type;
+    for (auto& op : eval_ops) {
+        if (live[op.out]) {
+            op_type.push_back(op.type);
+            op_in0.push_back(op.in0); op_in1.push_back(op.in1);
+            op_in2.push_back(op.in2); op_out.push_back(op.out);
+        }
+    }
+    const int n_ops = (int)op_in0.size();
+
+    // 9. Signal remapping: compact indices in eval order for cache locality
+    //    new layout: [0]=const0 [1]=const1 [2..I+1]=PIs [I+2..I+F+1]=FFs [I+F+2..]=gate outputs in eval order
+    std::vector<int32_t> remap(n_sig, -1);
+    remap[0] = 0; remap[1] = 1;
+    for (int i = 0; i < I; i++) remap[2+i] = 2+i;
+    for (int f = 0; f < F; f++) remap[I+2+f] = I+2+f;
+    int next_idx = I + F + 2;
+    for (int i = 0; i < n_ops; i++) remap[op_out[i]] = next_idx++;
+    // Constant gate outputs -> 0 or 1
+    for (int s = gate_base; s < n_sig; s++)
+        if (is_const[s] == 0) remap[s] = 0;
+        else if (is_const[s] == 1) remap[s] = 1;
+    // Substituted signals -> target's remap
+    for (int s = 0; s < n_sig; s++)
+        if (remap[s] < 0 && subst[s] != s) remap[s] = remap[subst[s]];
+    // Safety: any remaining unmapped -> 0
+    for (int s = 0; s < n_sig; s++) if (remap[s] < 0) remap[s] = 0;
+
+    // Apply remapping
+    for (int i = 0; i < n_ops; i++) {
+        op_in0[i] = remap[op_in0[i]];
+        op_in1[i] = remap[op_in1[i]];
+        op_in2[i] = remap[op_in2[i]];
+        op_out[i] = remap[op_out[i]];
+    }
+    for (int j = 0; j < O; j++) res_out[j] = remap[res_out[j]];
+    for (int f = 0; f < F; f++) res_d[f] = remap[res_d[f]];
+    const int new_n_sig = next_idx;
+
+    // 10. mix64 table
+    std::vector<uint64_t> mix_table((size_t)T * O);
+    for (int t = 0; t < T; t++)
+        for (int j = 0; j < O; j++)
+            mix_table[(size_t)t*O+j] = mix64((uint64_t)t*O+j);
+
+    // 11. PRNG states
+    std::vector<uint64_t> init_states(M);
+    for (int m = 0; m < M; m++) init_states[m] = mix64(seed ^ (uint64_t)m);
+
+    // === Simulation ===
+    std::vector<uint64_t> H(M, 0);
+    const int n_packs = (M + PW - 1) / PW;
+
+    #pragma omp parallel
     {
-        int maxRun = 0;
-        for (int p = 0; p < ng;) {
-            int q = p + 1;
-            while (q < ng && op[q] == op[p]) q++;
-            runs.push_back({op[p], p, q});
-            maxRun = std::max(maxRun, q - p);
-            p = q;
-        }
-        (void)maxRun;
-    }
+        Vec* val = (Vec*)_mm_malloc((size_t)new_n_sig * sizeof(Vec), 64);
+        Vec* ff_tmp = (Vec*)_mm_malloc((size_t)(F>0?F:1) * sizeof(Vec), 64);
+        uint64_t rbuf[PW], tbuf[4][64];
 
-    // ---- stimuli R[t][m] ----
-    std::vector<uint64_t> R((size_t)T * M);
-    for (int m = 0; m < M; m++) {
-        uint64_t s = mix64(c.seed ^ (uint64_t)m);
-        for (int t = 0; t < T; t++) {
-            s += 0x9E3779B97F4A7C15ULL;
-            uint64_t z = s;
-            z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
-            z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
-            R[(size_t)t * M + m] = z ^ (z >> 31);
-        }
-    }
+        #pragma omp for schedule(static)
+        for (int p = 0; p < n_packs; p++) {
+            const int m0 = p * PW;
+            const int m1 = std::min(m0 + PW, M);
+            const int ng = m1 - m0;
 
-    // decide: long runs -> specialized switch loops; else branchless
-    long long runLenSum = 0;
-    int longRuns = 0;
-    for (auto& r : runs) {
-        runLenSum += r.e - r.s;
-        if (r.e - r.s >= 8) longRuns++;
-    }
-    // fraction of gates covered by runs of length >= 8
-    long long covered = 0;
-    for (auto& r : runs)
-        if (r.e - r.s >= 8) covered += r.e - r.s;
-    const bool useRuns = (covered * 2 >= ng); // >=50% of gates in long runs
+            val[0] = _mm256_setzero_si256();
+            val[1] = VONES;
+            for (int f = 0; f < F; f++) val[I+2+f] = _mm256_setzero_si256();
 
-    const int ngroups = (M + 63) / 64;
-
-#ifdef _OPENMP
-#pragma omp parallel
-#endif
-    {
-        std::vector<uint64_t> vals((size_t)nsig);
-        std::vector<uint64_t> newff((size_t)(F > 0 ? F : 1));
-        uint64_t row[64];
-
-#ifdef _OPENMP
-#pragma omp for schedule(dynamic, 1)
-#endif
-        for (int g = 0; g < ngroups; g++) {
-            const int base_m = g * 64;
-            const int n = (M - base_m > 64) ? 64 : (M - base_m);
-            std::memset(vals.data(), 0, (size_t)nsig * 8);
-            vals[1] = ~0ULL;
-            uint64_t Hloc[64];
-            std::memset(Hloc, 0, sizeof Hloc);
+            uint64_t ps[PW];
+            for (int k = 0; k < PW; k++) ps[k] = (m0+k<M) ? init_states[m0+k] : 0;
 
             for (int t = 0; t < T; t++) {
-                for (int m = 0; m < 64; m++)
-                    row[m] = (m < n) ? R[(size_t)t * M + base_m + m] : 0;
-                transpose64(row);
-                for (int i = 0; i < I; i++) vals[2 + i] = row[i];
+                for (int k = 0; k < ng; k++) rbuf[k] = splitmix64_next(&ps[k]);
 
-                if (useRuns) {
-                    for (const Run& rn : runs) {
-                        switch (rn.o) {
-                            case OP_AND:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = vals[(uint32_t)pk] & vals[pk >> 32];
-                                }
-                                break;
-                            case OP_NAND:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = ~(vals[(uint32_t)pk] & vals[pk >> 32]);
-                                }
-                                break;
-                            case OP_OR:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = vals[(uint32_t)pk] | vals[pk >> 32];
-                                }
-                                break;
-                            case OP_NOR:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = ~(vals[(uint32_t)pk] | vals[pk >> 32]);
-                                }
-                                break;
-                            case OP_XOR:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = vals[(uint32_t)pk] ^ vals[pk >> 32];
-                                }
-                                break;
-                            case OP_XNOR:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    vals[gateBase + k] = ~(vals[(uint32_t)pk] ^ vals[pk >> 32]);
-                                }
-                                break;
-                            case OP_MUX:
-                                for (int k = rn.s; k < rn.e; k++) {
-                                    uint64_t pk = ctl[k];
-                                    uint64_t da = vals[(uint32_t)pk];
-                                    uint64_t db = vals[pk >> 32];
-                                    uint64_t s = vals[sel[k]];
-                                    vals[gateBase + k] = da ^ ((da ^ db) & s);
-                                }
-                                break;
-                            default: break;
+                // Transpose r -> PI (256x64 bit)
+                for (int q = 0; q < 4; q++)
+                    for (int i = 0; i < I; i++) {
+                        uint64_t pi = 0;
+                        for (int k = 0; k < 64; k++) pi |= ((rbuf[q*64+k] >> i) & 1) << k;
+                        tbuf[q][i] = pi;
+                    }
+                for (int i = 0; i < I; i++)
+                    val[2+i] = _mm256_set_epi64x((int64_t)tbuf[3][i],(int64_t)tbuf[2][i],
+                                                  (int64_t)tbuf[1][i],(int64_t)tbuf[0][i]);
+
+                // Evaluate gates with type-batched windows
+                int idx = 0;
+                while (idx < n_ops) {
+                    uint8_t tt = op_type[idx];
+                    int end = idx + 1;
+                    while (end < n_ops && op_type[end] == tt) end++;
+                    switch (tt) {
+                        case 0: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_and_si256(val[op_in0[i]],val[op_in1[i]]); break;
+                        case 1: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_or_si256(val[op_in0[i]],val[op_in1[i]]); break;
+                        case 2: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_xor_si256(val[op_in0[i]],val[op_in1[i]]); break;
+                        case 3: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_xor_si256(_mm256_and_si256(val[op_in0[i]],val[op_in1[i]]),VONES); break;
+                        case 4: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_xor_si256(_mm256_or_si256(val[op_in0[i]],val[op_in1[i]]),VONES); break;
+                        case 5: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_xor_si256(_mm256_xor_si256(val[op_in0[i]],val[op_in1[i]]),VONES); break;
+                        case 6: for(int i=idx;i<end;i++) val[op_out[i]]=_mm256_xor_si256(val[op_in0[i]],VONES); break;
+                        case 7: for(int i=idx;i<end;i++){Vec s=val[op_in0[i]];val[op_out[i]]=_mm256_or_si256(_mm256_and_si256(s,val[op_in2[i]]),_mm256_andnot_si256(s,val[op_in1[i]]));} break;
+                    }
+                    idx = end;
+                }
+
+                // Hash accumulation
+                for (int j = 0; j < O; j++) {
+                    uint64_t w4[4];
+                    _mm256_storeu_si256((__m256i*)w4, val[res_out[j]]);
+                    uint64_t mv = mix_table[(size_t)t*O+j];
+                    for (int q = 0; q < 4; q++) {
+                        uint64_t w = w4[q];
+                        while (w) {
+                            int k = __builtin_ctzll(w);
+                            if (m0+q*64+k < M) H[m0+q*64+k] ^= mv;
+                            w &= w - 1;
                         }
                     }
-                } else {
-                    // branchless kernel (cmov-based select, no unpredictable branches)
-                    for (int k = 0; k < ng; k++) {
-                        uint64_t pk = ctl[k];
-                        uint64_t a = vals[(uint32_t)pk], b = vals[pk >> 32];
-                        uint64_t u = a & b, v = a ^ b;
-                        uint64_t s = vals[sel[k]];
-                        uint64_t muxv = a ^ (v & s);
-                        uint64_t orv = u | v;
-                        uint8_t o = op[k];
-                        // sel2: 0 -> u, 1 -> orv, 2 -> v, 3 -> muxv
-                        uint64_t sel2 = o >> 1; // 0,0,1,1,2,2,3
-                        uint64_t lo = (sel2 & 1) ? orv : u;
-                        uint64_t hi = (sel2 & 1) ? muxv : v;
-                        uint64_t r = (sel2 & 2) ? hi : lo;
-                        r ^= -(uint64_t)(o & 1);
-                        vals[gateBase + k] = r;
-                    }
                 }
 
-                for (int j = 0; j < O; j++) {
-                    uint64_t w = vals[outidx[j]];
-                    const uint64_t cc = mix64((uint64_t)t * (uint64_t)O + (uint64_t)j);
-                    while (w) {
-                        int m = __builtin_ctzll(w);
-                        Hloc[m] ^= cc;
-                        w &= w - 1;
-                    }
-                }
-
+                // FF update
                 if (F > 0) {
-                    for (int f = 0; f < F; f++) newff[f] = vals[didx[f]];
-                    for (int f = 0; f < F; f++) vals[ffslot[f]] = newff[f];
+                    for (int f = 0; f < F; f++) ff_tmp[f] = val[res_d[f]];
+                    for (int f = 0; f < F; f++) val[I+2+f] = ff_tmp[f];
                 }
             }
-            for (int m = 0; m < n; m++) H[(size_t)base_m + m] = Hloc[m];
         }
+        _mm_free(val);
+        _mm_free(ff_tmp);
     }
     return H;
 }

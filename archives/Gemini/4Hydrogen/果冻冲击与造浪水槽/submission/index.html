@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>果冻冲击与造浪水槽 — 3D 多相物理实验室</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="viewport"></canvas>
+
+  <div class="ui-layer">
+    <!-- Top Header & Transport -->
+    <div class="panel top-bar">
+      <div class="brand-group">
+        <span class="brand-title">多相物理实验室</span>
+        <span class="brand-sub">软体断裂 · 3D APIC/FLIP 造浪双向耦合</span>
+        <div class="segmented" style="margin-left: 8px;">
+          <button id="btn-scene-jelly" class="seg-btn active">场景一 · 重球冲击果冻</button>
+          <button id="btn-scene-tank" class="seg-btn">场景二 · 多密度球与造浪水槽</button>
+        </div>
+      </div>
+
+      <div class="transport-group">
+        <button id="btn-pause" class="btn">暂停</button>
+        <button id="btn-slow" class="btn">慢放</button>
+        <button id="btn-rerun" class="btn">重演</button>
+        <button id="btn-reset" class="btn">重置</button>
+        <button id="btn-audio" class="btn active">音效：开</button>
+      </div>
+    </div>
+
+    <!-- Right Controls Panel -->
+    <div class="panel side-panel">
+      <!-- Scene 1 Controls -->
+      <div id="panel-jelly">
+        <div class="section-title">冲击触发</div>
+        <div class="action-grid-3" style="margin-bottom: 12px;">
+          <button id="btn-hit-center" class="btn primary">正中</button>
+          <button id="btn-hit-offset" class="btn warm">偏心</button>
+          <button id="btn-hit-multi" class="btn danger">连续</button>
+        </div>
+
+        <div class="section-title">材料与重球参数</div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label">果冻软硬</span>
+            <span id="val-stiffness" class="slider-val">1.00x</span>
+          </div>
+          <input id="sl-stiffness" type="range" min="0.35" max="2.40" step="0.05" value="1.00">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label">结实程度（抗裂）</span>
+            <span id="val-toughness" class="slider-val">1.00x</span>
+          </div>
+          <input id="sl-toughness" type="range" min="0.35" max="2.50" step="0.05" value="1.00">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label">重球质量</span>
+            <span id="val-ballmass" class="slider-val">1.00x</span>
+          </div>
+          <input id="sl-ballmass" type="range" min="0.40" max="2.80" step="0.05" value="1.00">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label">下落高度</span>
+            <span id="val-dropheight" class="slider-val">1.85 m</span>
+          </div>
+          <input id="sl-dropheight" type="range" min="0.70" max="3.20" step="0.05" value="1.85">
+        </div>
+      </div>
+
+      <!-- Scene 2 Controls -->
+      <div id="panel-tank" class="hidden">
+        <div class="section-title">水槽操作</div>
+        <div class="action-grid" style="margin-bottom: 12px;">
+          <button id="btn-drop-spheres" class="btn primary">再次释放小球</button>
+          <button id="btn-toggle-wave" class="btn primary">开始造浪</button>
+        </div>
+
+        <div class="section-title">造浪机参数</div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label">造浪幅度</span>
+            <span id="val-waveamp" class="slider-val">20 cm</span>
+          </div>
+          <input id="sl-waveamp" type="range" min="0.05" max="0.36" step="0.01" value="0.20">
+        </div>
+
+        <div class="slider-row" style="margin-bottom: 12px;">
+          <div class="slider-head">
+            <span class="slider-label">造浪频率</span>
+            <span id="val-wavefreq" class="slider-val">0.62 Hz</span>
+          </div>
+          <input id="sl-wavefreq" type="range" min="0.25" max="1.10" step="0.01" value="0.62">
+        </div>
+
+        <div class="section-title">四组同尺寸小球密度（水=1.00）</div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label"><i class="color-dot" style="background:#ff5c29;"></i>轻质浮球</span>
+            <span id="val-d0" class="slider-val">0.34</span>
+          </div>
+          <input id="sl-d0" type="range" min="0.20" max="2.80" step="0.02" value="0.34">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label"><i class="color-dot" style="background:#facc15;"></i>浅浸浮球</span>
+            <span id="val-d1" class="slider-val">0.72</span>
+          </div>
+          <input id="sl-d1" type="range" min="0.20" max="2.80" step="0.02" value="0.72">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label"><i class="color-dot" style="background:#10db8f;"></i>中性悬浮球</span>
+            <span id="val-d2" class="slider-val">1.00</span>
+          </div>
+          <input id="sl-d2" type="range" min="0.20" max="2.80" step="0.02" value="1.00">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-label"><i class="color-dot" style="background:#3d61f5;"></i>高密度沉球</span>
+            <span id="val-d3" class="slider-val">2.45</span>
+          </div>
+          <input id="sl-d3" type="range" min="0.20" max="3.00" step="0.02" value="2.45">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel hint-badge">
+      左键旋转 · 右键平移 · 滚轮缩放 · Space 暂停 · R 重置 · H 显隐界面
+    </div>
+
+    <!-- Bottom Preset Demo Bar -->
+    <div class="panel bottom-bar">
+      <div class="demo-group">
+        <span class="demo-label">内置演示：</span>
+        <button class="btn" data-demo="jelly-center">正中单击 (6.5s)</button>
+        <button class="btn" data-demo="jelly-multi">连击开裂 (9s)</button>
+        <button class="btn" data-demo="jelly-offset">偏击滚落 (7s)</button>
+        <button class="btn" data-demo="tank-full">风浪全过程 (18s)</button>
+      </div>
+      <div class="status-group">
+        <span id="status-readout">就绪</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="error-banner" class="hidden"></div>
+
+  <script defer src="js/math.js"></script>
+  <script defer src="js/audio.js"></script>
+  <script defer src="js/gpu_core.js"></script>
+  <script defer src="js/mc_tables.js"></script>
+  <script defer src="js/scene_jelly.js"></script>
+  <script defer src="js/shaders_tank.js"></script>
+  <script defer src="js/scene_tank.js"></script>
+  <script defer src="js/demos.js"></script>
+  <script defer src="js/main.js"></script>
+</body>
+</html>

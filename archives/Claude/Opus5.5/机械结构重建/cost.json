@@ -1,0 +1,21 @@
+{
+  "model": "Claude/Opus5.5",
+  "task": "机械结构重建",
+  "tokens": 52854774,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.48,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Claude Ultra",
+    "price": 200,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Claude/Opus5.5/机械结构重建/run-4b3dbefba5d0424081a42b4735c43bb6"
+  ]
+}

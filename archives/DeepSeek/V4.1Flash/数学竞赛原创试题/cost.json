@@ -1,11 +1,11 @@
 {
   "model": "DeepSeek/V4.1Flash",
   "task": "数学竞赛原创试题",
-  "tokens": 44025005,
-  "minutes": 51.3,
+  "tokens": 12034949,
+  "minutes": 37.6,
   "time": "实际停止",
-  "cny": 2.26,
-  "api_usd": 0.34,
+  "cny": 0.57,
+  "api_usd": 0.09,
   "basis": "api",
   "method": "api_price",
   "plan": {
@@ -13,6 +13,6 @@
   },
   "fitted": [],
   "runs": [
-    "DeepSeek/V4.1Flash/数学竞赛原创试题/20261106-113238"
+    "DeepSeek/V4.1Flash/数学竞赛原创试题/run-b40559374a93405991871a12c1340f0a"
   ]
 }

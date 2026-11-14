@@ -1,0 +1,18 @@
+{
+  "model": "MiMo/V2.6Pro",
+  "task": "攻城略地",
+  "tokens": 46907360,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 6.68,
+  "api_usd": 1.0,
+  "basis": "api",
+  "method": "api_price",
+  "plan": {
+    "name": "MiMo API"
+  },
+  "fitted": [],
+  "runs": [
+    "MiMo/V2.6Pro/攻城略地/run-45d808be8d2341908112cd92ad5a86d8"
+  ]
+}

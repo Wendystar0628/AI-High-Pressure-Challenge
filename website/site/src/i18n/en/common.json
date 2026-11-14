@@ -252,40 +252,32 @@
     "credits": "{n} credits",
     "planTerms": "{name} ({terms})",
     "sep": ", ",
-    "listSep": ", ",
     "plan": {
       "subscription": "Plan: {plan}",
       "api": "At {plan} list prices"
     },
     "tokensUnit": "{v} tokens",
     "tokens": "{v} over {n} tasks",
-    "tokensNone": "No token usage recorded",
+    "tokensNone": "Tokens: no data",
     "tokensNoneShort": "Tokens: no data",
-    "est": "est.",
-    "legendEst": "includes estimates (tasks without usage records)",
     "tokensHead": "Tokens",
-    "estSuffix": " (incl. estimates)",
-    "noteQuota": "Prorated from ModelDial weekly quotas: the share of the quota used, at the subscription fee",
-    "noteApiPrice": "No quota data on ModelDial; estimated from official API prices",
-    "noteApiPriceUsd": "No quota data on ModelDial; estimated from official API prices (API equivalent {usd})",
-    "noteCredits": "Converted from the credits the sessions used",
-    "noteNone": "No quota or price data available",
-    "fitted": "Includes estimates: no usage records for {list}",
-    "fittedAll": "No usage records for any of the {n} tasks: all estimated",
+    "noteQuota": "Prorated from ModelDial weekly quotas at the subscription fee",
+    "noteApiPrice": "Converted from official API list prices and prorated to the subscription plan",
+    "noteApiPriceUsd": "Converted from official API list prices and prorated to the plan (API equivalent {usd})",
+    "noteCredits": "Converted at the plan's credit tier price",
     "sr": "test cost ¥{cost}, {basis}",
     "srNone": "test cost: no data",
     "srAppend": "{text}, {cost}",
-    "srTokens": "{money}, {tokens}{est}",
-    "srEst": ", including estimates",
-    "source": "Test cost: subscription models are prorated from weekly quotas (data: {src}) at the subscription fee; where no quota is listed, the API equivalent is computed first and prorated against the plan. API models are priced request by request from local usage at official list prices. US$1 = ¥{rate}; quota data as of {date}.",
+    "srTokens": "{money}, {tokens}",
+    "source": "Test cost: subscription models are prorated from weekly quotas (data: {src}) at the subscription fee, or prorated to the plan from their official API equivalent; credit plans use their tier price; API models are priced at official list prices. US$1 = ¥{rate}; quota data as of {date}.",
     "sourceUrl": "Subscription quota source: {url}",
-    "retest": "If you doubt the measured usage, download the tasks and their isolated environments from GitHub and run them yourself to compare: {repo}",
+    "retest": "To compare test usage yourself, download the tasks and their isolated environments from GitHub and run them directly: {repo}",
     "csv": {
       "cny": "Test cost (CNY)",
       "basis": "Cost basis",
       "tokens": "Tokens"
     },
-    "noteApiDirect": "Each request's input, cache-hit and output tokens from local records, at the official API list prices in force when it was made; the API equivalent is the cost"
+    "noteApiDirect": "Calculated from input, cache-hit and output tokens at official API list prices"
   },
   "export": {
     "button": "Save as image",
@@ -334,7 +326,7 @@
     "categoryScore": "{name} score",
     "weight": "weight {w}",
     "graders": "Graders {list}",
-    "anomaly": "Score anomaly ({grader}): {text}"
+    "anomaly": "{text}"
   },
   "matrix": {
     "model": "Model",

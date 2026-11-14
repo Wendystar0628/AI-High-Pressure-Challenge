@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "形式化证明题",
+  "tokens": 33826653,
+  "minutes": 60.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.61,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/形式化证明题/run-ccbf29fe44ff43a8a64dacdc8ae97343"
+  ]
+}

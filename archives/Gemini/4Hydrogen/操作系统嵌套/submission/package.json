@@ -1,0 +1,16 @@
+{
+  "name": "nested-os",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Nested Graphical Operating System with Programmable Subsystems, 3D Helicopter Flight Rehearsal, and Cross-Layer Projection",
+  "main": "src/main/main.cjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "three": "^0.175.0"
+  },
+  "devDependencies": {
+    "electron": "45.2.1"
+  }
+}

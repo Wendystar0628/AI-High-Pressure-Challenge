@@ -1,0 +1,747 @@
+// ============================================================================
+// NestedOS 子系统窗口管理与桌面程序 (/System/wm.nos)
+// 说明：子系统内的窗口叠放次序、焦点分配、命中判断、拖动缩放贴靠与输入分发全部由本程序决定。
+// 修改下方策略常量或函数后保存并重启子系统，桌面将按新规则运行。
+// ============================================================================
+
+let FOCUS_POLICY = "click";     // 可选: "click" (点击获焦) | "hover" (指针悬停跟随焦点)
+let RAISE_ON_FOCUS = true;      // 获焦时是否自动置顶窗口
+let HIT_ORDER = "top_down";     // 可选: "top_down" (上层优先命中) | "bottom_up" (下层优先命中)
+let SNAP_MARGIN = 22;           // 左右半屏贴靠触发边距（像素）
+let TASKBAR_H = 36;
+let TITLEBAR_H = 30;
+
+let DESKTOP_W = 920;
+let DESKTOP_H = 600;
+let WINDOWS = [];               // 从底到顶按 z 序排列
+let NEXT_WIN_SEQ = 1;
+let FOCUSED_WIN_ID = null;
+
+let START_OPEN = false;
+let NOTIF_OPEN = false;
+let CTX_MENU = null;            // { x, y, items }
+let CONFIRM_DIALOG = null;      // { winId, childSysId, title, message }
+let SELECTED_ICON = null;
+let NOTIFICATIONS = [];
+let DRAG_STATE = null;          // { mode: "move"|"resize", winId, startX, startY, origX, origY, origW, origH, dir }
+
+let DESKTOP_ICONS = [
+  { id: "ic_player", label: "三维播放器", icon: "player", appId: "player", filePath: null },
+  { id: "ic_charts", label: "图表工作台", icon: "charts", appId: "charts", filePath: null },
+  { id: "ic_files", label: "文件管理器", icon: "files", appId: "files", filePath: null },
+  { id: "ic_editor", label: "程序编辑器", icon: "editor", appId: "editor", filePath: null },
+  { id: "ic_tasks", label: "进程管理器", icon: "tasks", appId: "tasks", filePath: null },
+  { id: "ic_heli", label: "24号直升机", icon: "scene", appId: "player", filePath: "/Demo/helicopter-24.scene" },
+  { id: "ic_fctrl", label: "飞控程序", icon: "code", appId: "editor", filePath: "/Apps/flight_ctrl.nos" }
+];
+
+fn add_notification(title, body) {
+  let t = syscall("time_now");
+  push(NOTIFICATIONS, { title: title, body: body, time: t });
+  if (len(NOTIFICATIONS) > 20) {
+    shift(NOTIFICATIONS);
+  }
+}
+
+fn find_win_idx(winId) {
+  let i = 0;
+  while (i < len(WINDOWS)) {
+    if (WINDOWS[i].id == winId) { return i; }
+    i += 1;
+  }
+  return -1;
+}
+
+fn find_win(winId) {
+  let idx = find_win_idx(winId);
+  return idx >= 0 ? WINDOWS[idx] : null;
+}
+
+fn raise_window(winId) {
+  let idx = find_win_idx(winId);
+  if (idx < 0 || idx == len(WINDOWS) - 1) { return null; }
+  let w = WINDOWS[idx];
+  let out = [];
+  let i = 0;
+  while (i < len(WINDOWS)) {
+    if (i != idx) { push(out, WINDOWS[i]); }
+    i += 1;
+  }
+  push(out, w);
+  WINDOWS = out;
+}
+
+fn focus_window(winId) {
+  if (winId == null) {
+    FOCUSED_WIN_ID = null;
+    return null;
+  }
+  let w = find_win(winId);
+  if (w == null || w.state == "minimized") { return null; }
+  FOCUSED_WIN_ID = winId;
+  if (RAISE_ON_FOCUS) {
+    raise_window(winId);
+  }
+  if (w.ownerPid != null && w.ownerPid > 0) {
+    syscall("send_msg", w.ownerPid, { type: "focus", focused: true });
+  }
+}
+
+fn pick_top_visible_focus() {
+  let i = len(WINDOWS) - 1;
+  while (i >= 0) {
+    if (WINDOWS[i].state != "minimized") {
+      FOCUSED_WIN_ID = WINDOWS[i].id;
+      return null;
+    }
+    i -= 1;
+  }
+  FOCUSED_WIN_ID = null;
+}
+
+// 窗口命中判断（改写 HIT_ORDER 即可改变上下层命中优先级）
+fn hit_test_window(x, y) {
+  if (y >= DESKTOP_H - TASKBAR_H) { return null; }
+  if (HIT_ORDER == "bottom_up") {
+    let i = 0;
+    while (i < len(WINDOWS)) {
+      let w = WINDOWS[i];
+      if (w.state != "minimized" && x >= w.x && x <= w.x + w.w && y >= w.y && y <= w.y + w.h) {
+        return w;
+      }
+      i += 1;
+    }
+    return null;
+  }
+  let i = len(WINDOWS) - 1;
+  while (i >= 0) {
+    let w = WINDOWS[i];
+    if (w.state != "minimized" && x >= w.x && x <= w.x + w.w && y >= w.y && y <= w.y + w.h) {
+      return w;
+    }
+    i -= 1;
+  }
+  return null;
+}
+
+fn icon_rect(idx) {
+  let col = floor(idx / 5);
+  let row = idx % 5;
+  return {
+    x: 14 + col * 86,
+    y: 14 + row * 84,
+    w: 76,
+    h: 76
+  };
+}
+
+fn hit_test_icon(x, y) {
+  let i = 0;
+  while (i < len(DESKTOP_ICONS)) {
+    let r = icon_rect(i);
+    if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) {
+      return DESKTOP_ICONS[i];
+    }
+    i += 1;
+  }
+  return null;
+}
+
+fn fit_win_in_desktop(w) {
+  let usableH = max(160, DESKTOP_H - TASKBAR_H);
+  if (w.state == "maximized") {
+    w.x = 0;
+    w.y = 0;
+    w.w = DESKTOP_W;
+    w.h = usableH;
+    return null;
+  }
+  w.w = clamp(w.w, 240, max(240, DESKTOP_W - 12));
+  w.h = clamp(w.h, 150, max(150, usableH - 8));
+  w.x = clamp(w.x, 4, max(4, DESKTOP_W - w.w - 4));
+  w.y = clamp(w.y, 4, max(4, usableH - w.h - 4));
+}
+
+fn clamp_win_bounds(w) {
+  let usableH = max(160, DESKTOP_H - TASKBAR_H);
+  w.w = clamp(w.w, 240, max(240, DESKTOP_W));
+  w.h = clamp(w.h, 150, usableH);
+  if (w.state == "maximized") {
+    w.x = 0;
+    w.y = 0;
+    w.w = DESKTOP_W;
+    w.h = usableH;
+  } else {
+    w.x = clamp(w.x, 0, max(0, DESKTOP_W - min(w.w, 160)));
+    w.y = clamp(w.y, 0, max(0, usableH - TITLEBAR_H));
+  }
+}
+
+fn app_prog_info(appId) {
+  if (appId == "files") { return { path: "/Apps/files.nos", title: "文件管理器", w: 540, h: 380 }; }
+  if (appId == "editor") { return { path: "/Apps/editor.nos", title: "文本与程序编辑器", w: 560, h: 400 }; }
+  if (appId == "tasks") { return { path: "/Apps/tasks.nos", title: "进程与子系统管理", w: 600, h: 410 }; }
+  if (appId == "player") { return { path: "/Apps/player_timeline.nos", title: "三维场景播放器", w: 640, h: 440 }; }
+  if (appId == "charts") { return { path: "/Apps/charts.nos", title: "实时图表工作台", w: 580, h: 400 }; }
+  return null;
+}
+
+fn launch_app(appId, argPath) {
+  let info = app_prog_info(appId);
+  if (info == null) { return null; }
+
+  let sysInfo = syscall("get_sys_info");
+  let winId = sysInfo.sysId + "-win-" + str(NEXT_WIN_SEQ);
+  NEXT_WIN_SEQ += 1;
+
+  let offset = ((NEXT_WIN_SEQ - 2) % 5) * 20;
+  let usableH = max(220, DESKTOP_H - TASKBAR_H);
+  let leftClear = DESKTOP_W >= 620 ? 186 : (DESKTOP_W >= 460 ? 96 : 16);
+  let ww = min(info.w, max(280, DESKTOP_W - leftClear - 14));
+  let wh = min(info.h, max(190, usableH - 22));
+  let wx = clamp(leftClear + offset, 0, max(0, DESKTOP_W - ww));
+  let wy = clamp(14 + offset, 0, max(0, usableH - wh));
+
+  let sp = syscall("proc_spawn", info.path, [winId, argPath], {
+    name: appId,
+    quota: appId == "player" ? 900 : 600,
+    memQuota: 4194304
+  });
+
+  if (!sp.ok) {
+    add_notification("启动应用失败", str(sp.error));
+    return null;
+  }
+
+  let win = {
+    id: winId,
+    appId: appId,
+    title: info.title,
+    ownerPid: sp.pid,
+    collabPids: [],
+    childSysId: null,
+    x: wx,
+    y: wy,
+    w: ww,
+    h: wh,
+    restoreRect: null,
+    state: "normal",
+    projectable: appId == "player" || appId == "charts"
+  };
+  push(WINDOWS, win);
+  focus_window(winId);
+  START_OPEN = false;
+  CTX_MENU = null;
+  return winId;
+}
+
+fn open_subsystem_window(childSysId) {
+  // 检查是否已有该子系统窗口
+  let i = 0;
+  while (i < len(WINDOWS)) {
+    if (WINDOWS[i].appId == "subsystem" && WINDOWS[i].childSysId == childSysId) {
+      WINDOWS[i].state = "normal";
+      focus_window(WINDOWS[i].id);
+      return WINDOWS[i].id;
+    }
+    i += 1;
+  }
+  let sysInfo = syscall("get_sys_info");
+  let winId = sysInfo.sysId + "-subwin-" + childSysId;
+  let usableH = max(240, DESKTOP_H - TASKBAR_H);
+  let ww = clamp(floor(DESKTOP_W * 0.78), 320, max(320, DESKTOP_W - 20));
+  let wh = clamp(floor(usableH * 0.84), 220, max(220, usableH - 16));
+  let wx = clamp(DESKTOP_W - ww - 14, 8, max(8, DESKTOP_W - ww));
+  let wy = clamp(12, 4, max(4, usableH - wh));
+  let win = {
+    id: winId,
+    appId: "subsystem",
+    title: "子系统桌面 · " + childSysId,
+    ownerPid: 0,
+    collabPids: [],
+    childSysId: childSysId,
+    x: wx,
+    y: wy,
+    w: ww,
+    h: wh,
+    restoreRect: null,
+    state: "normal",
+    projectable: false
+  };
+  push(WINDOWS, win);
+  focus_window(winId);
+  return winId;
+}
+
+fn create_child_subsystem() {
+  let res = syscall("subsys_manage", "create", null, {});
+  if (res != null && res.ok) {
+    open_subsystem_window(res.childSysId);
+    add_notification("已创建子系统", "直属子系统 " + res.childSysId + " 已启动");
+  } else {
+    let err = res != null && res.error != null ? res.error : "未知错误";
+    add_notification("创建子系统失败", str(err));
+  }
+}
+
+fn close_window_now(winId) {
+  let idx = find_win_idx(winId);
+  if (idx < 0) { return null; }
+  let w = WINDOWS[idx];
+  syscall("surface_close", winId);
+
+  if (w.appId == "subsystem" && w.childSysId != null) {
+    syscall("subsys_manage", "close", w.childSysId, null);
+  } else {
+    if (w.ownerPid != null && w.ownerPid > 0) {
+      syscall("proc_kill", w.ownerPid);
+    }
+    let ci = 0;
+    while (ci < len(w.collabPids)) {
+      syscall("proc_kill", w.collabPids[ci]);
+      ci += 1;
+    }
+  }
+
+  let out = [];
+  let i = 0;
+  while (i < len(WINDOWS)) {
+    if (i != idx) { push(out, WINDOWS[i]); }
+    i += 1;
+  }
+  WINDOWS = out;
+  if (FOCUSED_WIN_ID == winId) {
+    pick_top_visible_focus();
+  }
+}
+
+fn request_close_window(winId) {
+  let w = find_win(winId);
+  if (w == null) { return null; }
+  if (w.appId == "subsystem" && w.childSysId != null) {
+    CONFIRM_DIALOG = {
+      winId: winId,
+      childSysId: w.childSysId,
+      title: "确认关闭子系统窗口",
+      message: "关闭窗口将停止子系统 " + w.childSysId + " 及其整棵后代子树的所有运行中进程（已保存文件与快照仍保留）。是否继续？"
+    };
+    return null;
+  }
+  close_window_now(winId);
+}
+
+fn toggle_maximize_window(winId) {
+  let w = find_win(winId);
+  if (w == null) { return null; }
+  let usableH = max(180, DESKTOP_H - TASKBAR_H);
+  if (w.state == "maximized") {
+    w.state = "normal";
+    if (w.restoreRect != null) {
+      w.x = w.restoreRect.x;
+      w.y = w.restoreRect.y;
+      w.w = w.restoreRect.w;
+      w.h = w.restoreRect.h;
+    }
+    clamp_win_bounds(w);
+  } else {
+    w.restoreRect = { x: w.x, y: w.y, w: w.w, h: w.h };
+    w.state = "maximized";
+    w.x = 0;
+    w.y = 0;
+    w.w = DESKTOP_W;
+    w.h = usableH;
+  }
+  focus_window(winId);
+  if (w.ownerPid > 0) {
+    syscall("send_msg", w.ownerPid, { type: "resize", w: w.w, h: w.h - TITLEBAR_H });
+  }
+}
+
+fn minimize_window(winId) {
+  let w = find_win(winId);
+  if (w == null) { return null; }
+  w.state = "minimized";
+  if (FOCUSED_WIN_ID == winId) {
+    pick_top_visible_focus();
+  }
+}
+
+fn snap_window_half(winId, side) {
+  let w = find_win(winId);
+  if (w == null) { return null; }
+  let usableH = max(180, DESKTOP_H - TASKBAR_H);
+  if (w.restoreRect == null) {
+    w.restoreRect = { x: w.x, y: w.y, w: w.w, h: w.h };
+  }
+  w.state = "normal";
+  w.y = 0;
+  w.h = usableH;
+  w.w = floor(DESKTOP_W / 2);
+  w.x = side == "left" ? 0 : (DESKTOP_W - w.w);
+  if (w.ownerPid > 0) {
+    syscall("send_msg", w.ownerPid, { type: "resize", w: w.w, h: w.h - TITLEBAR_H });
+  }
+}
+
+fn handle_event(ev) {
+  if (ev == null) { return null; }
+
+  if (ev.desktopW != null && ev.desktopH != null) {
+    if (ev.desktopW != DESKTOP_W || ev.desktopH != DESKTOP_H) {
+      DESKTOP_W = max(300, num(ev.desktopW));
+      DESKTOP_H = max(220, num(ev.desktopH));
+      let wi = 0;
+      while (wi < len(WINDOWS)) {
+        fit_win_in_desktop(WINDOWS[wi]);
+        wi += 1;
+      }
+    }
+  }
+
+  // 来自应用进程的窗口元数据更新（标题、协作进程登记、打开文件请求等）
+  if (ev.type == "register_collab") {
+    let w = find_win(ev.winId);
+    if (w != null) { push(w.collabPids, ev.pid); }
+    return null;
+  }
+  if (ev.type == "set_win_title") {
+    let w = find_win(ev.winId);
+    if (w != null) { w.title = str(ev.title); }
+    return null;
+  }
+  if (ev.type == "launch_app") {
+    if (ev.appId == "player" && ev.filePath != null) {
+      let pi = len(WINDOWS) - 1;
+      while (pi >= 0) {
+        if (WINDOWS[pi].appId == "player" && WINDOWS[pi].ownerPid > 0) {
+          if (WINDOWS[pi].state == "minimized") { WINDOWS[pi].state = "normal"; }
+          focus_window(WINDOWS[pi].id);
+          syscall("send_msg", WINDOWS[pi].ownerPid, { action: "open_scene", path: ev.filePath });
+          return null;
+        }
+        pi -= 1;
+      }
+    }
+    launch_app(ev.appId, ev.filePath);
+    return null;
+  }
+  if (ev.type == "open_subsys_win") {
+    open_subsystem_window(ev.childSysId);
+    return null;
+  }
+  if (ev.type == "fs_changed") {
+    if (!ev.ok) {
+      add_notification("文件传递失败", str(ev.error));
+    } else {
+      add_notification("已接收跨层文件", str(ev.path));
+    }
+    let wi = 0;
+    while (wi < len(WINDOWS)) {
+      if (WINDOWS[wi].appId == "files" && WINDOWS[wi].ownerPid > 0) {
+        syscall("send_msg", WINDOWS[wi].ownerPid, { type: "refresh" });
+      }
+      wi += 1;
+    }
+    return null;
+  }
+
+  // 高层语义动作（按钮点击、开始菜单启动、窗口按钮、对话框确认等）
+  if (ev.type == "wm_action") {
+    let act = ev.action;
+    if (act == "toggle_start") {
+      START_OPEN = !START_OPEN;
+      NOTIF_OPEN = false;
+      CTX_MENU = null;
+    } else if (act == "toggle_notif") {
+      NOTIF_OPEN = !NOTIF_OPEN;
+      START_OPEN = false;
+      CTX_MENU = null;
+    } else if (act == "launch") {
+      launch_app(ev.appId, ev.filePath);
+    } else if (act == "system_new") {
+      START_OPEN = false;
+      CTX_MENU = null;
+      create_child_subsystem();
+    } else if (act == "open_subsys_win") {
+      open_subsystem_window(ev.childSysId);
+    } else if (act == "taskbar_click") {
+      let w = find_win(ev.winId);
+      if (w != null) {
+        if (w.state == "minimized") {
+          w.state = "normal";
+          focus_window(w.id);
+        } else if (FOCUSED_WIN_ID == w.id) {
+          minimize_window(w.id);
+        } else {
+          focus_window(w.id);
+        }
+      }
+    } else if (act == "win_focus") {
+      focus_window(ev.winId);
+    } else if (act == "win_min") {
+      minimize_window(ev.winId);
+    } else if (act == "win_max") {
+      toggle_maximize_window(ev.winId);
+    } else if (act == "win_close") {
+      request_close_window(ev.winId);
+    } else if (act == "win_project") {
+      let w = find_win(ev.winId);
+      if (w != null && w.projectable) {
+        syscall("project_window", w.id, w.appId, ev.targetSysId);
+        add_notification("已发起窗口投送", w.title + " -> " + ev.targetSysId);
+      }
+    } else if (act == "confirm_close_subsys") {
+      if (CONFIRM_DIALOG != null) {
+        let wid = CONFIRM_DIALOG.winId;
+        CONFIRM_DIALOG = null;
+        close_window_now(wid);
+      }
+    } else if (act == "cancel_dialog") {
+      CONFIRM_DIALOG = null;
+    } else if (act == "ctx_select") {
+      CTX_MENU = null;
+      if (ev.cmd == "new_subsys") { create_child_subsystem(); }
+      else if (ev.cmd == "open_files") { launch_app("files", null); }
+      else if (ev.cmd == "open_player") { launch_app("player", "/Demo/helicopter-24.scene"); }
+      else if (ev.cmd == "open_charts") { launch_app("charts", null); }
+      else if (ev.cmd == "open_editor") { launch_app("editor", null); }
+      else if (ev.cmd == "open_tasks") { launch_app("tasks", null); }
+    } else if (act == "begin_drag") {
+      let w = find_win(ev.winId);
+      if (w != null) {
+        focus_window(w.id);
+        if (w.state == "maximized" && ev.mode == "move") {
+          // 从最大化拖下时自动还原宽度
+          w.state = "normal";
+          w.w = w.restoreRect != null ? w.restoreRect.w : min(560, DESKTOP_W - 40);
+          w.h = w.restoreRect != null ? w.restoreRect.h : min(380, DESKTOP_H - TASKBAR_H - 30);
+          w.x = clamp(ev.x - floor(w.w / 2), 0, max(0, DESKTOP_W - w.w));
+          w.y = max(0, ev.y - 14);
+        }
+        DRAG_STATE = {
+          mode: ev.mode,
+          dir: ev.dir != null ? ev.dir : "se",
+          winId: w.id,
+          startX: num(ev.x),
+          startY: num(ev.y),
+          origX: w.x,
+          origY: w.y,
+          origW: w.w,
+          origH: w.h
+        };
+      }
+    }
+    return null;
+  }
+
+  // 应用内部控件事件按窗口命中/归属路由给对应进程
+  if (ev.type == "app_event") {
+    let w = find_win(ev.winId);
+    if (w != null && w.state != "minimized") {
+      if (FOCUS_POLICY == "click" || ev.eventKind != "hover") {
+        focus_window(w.id);
+      }
+      if (w.ownerPid > 0) {
+        syscall("send_msg", w.ownerPid, ev.payload);
+      }
+    }
+    return null;
+  }
+
+  // 原始指针与键盘事件处理
+  if (ev.type == "pointermove") {
+    let x = num(ev.x);
+    let y = num(ev.y);
+    if (DRAG_STATE != null) {
+      let w = find_win(DRAG_STATE.winId);
+      if (w != null) {
+        let dx = x - DRAG_STATE.startX;
+        let dy = y - DRAG_STATE.startY;
+        if (DRAG_STATE.mode == "move") {
+          w.x = DRAG_STATE.origX + dx;
+          w.y = DRAG_STATE.origY + dy;
+          clamp_win_bounds(w);
+        } else if (DRAG_STATE.mode == "resize") {
+          if (index_of(DRAG_STATE.dir, "e", 0) >= 0) { w.w = DRAG_STATE.origW + dx; }
+          if (index_of(DRAG_STATE.dir, "s", 0) >= 0) { w.h = DRAG_STATE.origH + dy; }
+          if (index_of(DRAG_STATE.dir, "w", 0) >= 0) {
+            let nw = max(240, DRAG_STATE.origW - dx);
+            w.x = DRAG_STATE.origX + (DRAG_STATE.origW - nw);
+            w.w = nw;
+          }
+          if (index_of(DRAG_STATE.dir, "n", 0) >= 0) {
+            let nh = max(150, DRAG_STATE.origH - dy);
+            w.y = DRAG_STATE.origY + (DRAG_STATE.origH - nh);
+            w.h = nh;
+          }
+          clamp_win_bounds(w);
+        }
+      }
+      return null;
+    }
+    if (FOCUS_POLICY == "hover") {
+      let hw = hit_test_window(x, y);
+      if (hw != null && hw.id != FOCUSED_WIN_ID) {
+        focus_window(hw.id);
+      }
+    }
+    return null;
+  }
+
+  if (ev.type == "pointerup") {
+    if (DRAG_STATE != null) {
+      let w = find_win(DRAG_STATE.winId);
+      if (w != null && DRAG_STATE.mode == "move") {
+        let x = num(ev.x);
+        if (x <= SNAP_MARGIN) {
+          snap_window_half(w.id, "left");
+        } else if (x >= DESKTOP_W - SNAP_MARGIN) {
+          snap_window_half(w.id, "right");
+        }
+      }
+      if (w != null && w.ownerPid > 0) {
+        syscall("send_msg", w.ownerPid, { type: "resize", w: w.w, h: w.h - TITLEBAR_H });
+      }
+      DRAG_STATE = null;
+    }
+    return null;
+  }
+
+  if (ev.type == "pointerdown") {
+    let x = num(ev.x);
+    let y = num(ev.y);
+    START_OPEN = false;
+    NOTIF_OPEN = false;
+    CTX_MENU = null;
+
+    let hitW = hit_test_window(x, y);
+    if (hitW != null) {
+      focus_window(hitW.id);
+      return null;
+    }
+    FOCUSED_WIN_ID = null;
+    let ic = hit_test_icon(x, y);
+    SELECTED_ICON = ic != null ? ic.id : null;
+    return null;
+  }
+
+  if (ev.type == "dblclick") {
+    let x = num(ev.x);
+    let y = num(ev.y);
+    let hitW = hit_test_window(x, y);
+    if (hitW != null) {
+      if (y - hitW.y <= TITLEBAR_H) {
+        toggle_maximize_window(hitW.id);
+      }
+      return null;
+    }
+    let ic = hit_test_icon(x, y);
+    if (ic != null) {
+      launch_app(ic.appId, ic.filePath);
+    }
+    return null;
+  }
+
+  if (ev.type == "contextmenu") {
+    let x = num(ev.x);
+    let y = num(ev.y);
+    let hitW = hit_test_window(x, y);
+    if (hitW == null && y < DESKTOP_H - TASKBAR_H) {
+      START_OPEN = false;
+      NOTIF_OPEN = false;
+      CTX_MENU = {
+        x: clamp(x, 4, max(4, DESKTOP_W - 180)),
+        y: clamp(y, 4, max(4, DESKTOP_H - TASKBAR_H - 190)),
+        items: [
+          { cmd: "open_player", label: "打开三维场景播放器" },
+          { cmd: "open_charts", label: "打开实时图表工作台" },
+          { cmd: "open_files", label: "打开文件管理器" },
+          { cmd: "open_editor", label: "打开程序编辑器" },
+          { cmd: "open_tasks", label: "打开进程与子系统管理" },
+          { cmd: "new_subsys", label: "新建直属子系统" }
+        ]
+      };
+    }
+    return null;
+  }
+
+  if (ev.type == "keydown") {
+    if (ev.key == "Escape") {
+      START_OPEN = false;
+      NOTIF_OPEN = false;
+      CTX_MENU = null;
+      CONFIRM_DIALOG = null;
+      return null;
+    }
+    if (FOCUSED_WIN_ID != null) {
+      let fw = find_win(FOCUSED_WIN_ID);
+      if (fw != null && fw.ownerPid > 0) {
+        syscall("send_msg", fw.ownerPid, { type: "keydown", key: ev.key, ctrlKey: ev.ctrlKey, shiftKey: ev.shiftKey });
+      }
+    }
+    return null;
+  }
+}
+
+fn publish_desktop() {
+  let iconsOut = [];
+  let i = 0;
+  while (i < len(DESKTOP_ICONS)) {
+    let ic = DESKTOP_ICONS[i];
+    let r = icon_rect(i);
+    push(iconsOut, {
+      id: ic.id,
+      label: ic.label,
+      icon: ic.icon,
+      appId: ic.appId,
+      filePath: ic.filePath,
+      selected: SELECTED_ICON == ic.id,
+      x: r.x,
+      y: r.y,
+      w: r.w,
+      h: r.h
+    });
+    i += 1;
+  }
+
+  syscall("wm_present_desktop", {
+    focusPolicy: FOCUS_POLICY,
+    raiseOnFocus: RAISE_ON_FOCUS,
+    hitOrder: HIT_ORDER,
+    desktopW: DESKTOP_W,
+    desktopH: DESKTOP_H,
+    taskbarH: TASKBAR_H,
+    titlebarH: TITLEBAR_H,
+    focusedWinId: FOCUSED_WIN_ID,
+    icons: iconsOut,
+    windows: WINDOWS,
+    startOpen: START_OPEN,
+    notifOpen: NOTIF_OPEN,
+    ctxMenu: CTX_MENU,
+    confirmDialog: CONFIRM_DIALOG,
+    notifications: NOTIFICATIONS
+  });
+}
+
+fn main() {
+  syscall("register_role", "wm");
+  // 默认开机自动打开三维场景播放器（展示足够大面积，同时保留桌面图标可见）
+  launch_app("player", "/Demo/helicopter-24.scene");
+  publish_desktop();
+
+  while (true) {
+    let msg = syscall("recv_msg_wait", 0.5);
+    if (msg != null) {
+      handle_event(msg.data);
+      // 继续排空本拍内的连续指针或按键消息，减少延迟
+      let burst = 0;
+      while (burst < 16) {
+        let m2 = syscall("recv_msg");
+        if (m2 == null) { break; }
+        handle_event(m2.data);
+        burst += 1;
+      }
+    }
+    publish_desktop();
+  }
+}

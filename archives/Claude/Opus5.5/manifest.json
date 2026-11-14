@@ -236,6 +236,38 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "光线追踪渲染加速/cost.json",
+      "role": "cost",
+      "task": "光线追踪渲染加速",
+      "bytes": 404,
+      "sha256": "36732f994442c9d5e51ae7934aba3766b33dc69dfb89f20bd746514cf7b40f29"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\光线追踪渲染加速\\codex\\performance\\result.json",
+      "path": "光线追踪渲染加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "光线追踪渲染加速",
+      "bytes": 4143,
+      "sha256": "c023074aef36549491d61497c05b7c57701305b54877b7052f3d906afcd27b68"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\评分表_6.1Sol.md",
+      "path": "光线追踪渲染加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "光线追踪渲染加速",
+      "bytes": 2119,
+      "sha256": "b79c976a3fa6fb59f873c20992cfbbf935ec341a6761a4d71495a4bc4351041e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\solution.cu",
+      "path": "光线追踪渲染加速/submission/solution.cu",
+      "role": "submission",
+      "task": "光线追踪渲染加速",
+      "bytes": 18747,
+      "sha256": "48fd6b1ce703233c5e04fe34c83cca96ef04cd3719591c58b5f4e99abba5abeb"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "动态路由塔防/cost.json",
       "role": "cost",
       "task": "动态路由塔防",
@@ -769,126 +801,6 @@
       "task": "太阳雨渔港3D渲染",
       "bytes": 12817,
       "sha256": "444f104c82f9be09ec6909625f11493d146fce78d3b3fc332746091482357513"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
-      "path": "工程图纸三维还原/cost.json",
-      "role": "cost",
-      "task": "工程图纸三维还原",
-      "bytes": 491,
-      "sha256": "be4887c1ebe1998055e88e8ec660662160a1ca11b256ebbfc5ffc616444eb6c8"
-    },
-    {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\工程图纸三维还原\\codex\\main\\result.json",
-      "path": "工程图纸三维还原/grading/codex/main/result.json",
-      "role": "result",
-      "task": "工程图纸三维还原",
-      "bytes": 15500,
-      "sha256": "30bada8a7925dfb4653445190a8d1c722f6f66c138f9814474cff86363a1ff01"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\评分表_6.1Sol.md",
-      "path": "工程图纸三维还原/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "工程图纸三维还原",
-      "bytes": 3358,
-      "sha256": "baf6c7cf16ecbdd3a2d29c7369d714d713ea34edc5b0e5974f7c76069ab60e8c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第03题.json",
-      "path": "工程图纸三维还原/submission/答案/第03题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2000,
-      "sha256": "915cfcaa2c10cba0393204fc0ad2b27c63f8bc5949540cfac7bfda8154db2226"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第04题.json",
-      "path": "工程图纸三维还原/submission/答案/第04题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2616,
-      "sha256": "0b11a537a274c901dec49997691ec8111d18a6ce51252e1798435251c7371545"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第05题.json",
-      "path": "工程图纸三维还原/submission/答案/第05题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3037,
-      "sha256": "2fbaf375867640b3238afbebf138777f263f47082b02547e3f7303270b2c5838"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第06题.json",
-      "path": "工程图纸三维还原/submission/答案/第06题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2583,
-      "sha256": "432ea77fe2fb8be34136700a74f9ffbea3800d91f730c2bada533b0597cb8b20"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第07题.json",
-      "path": "工程图纸三维还原/submission/答案/第07题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2533,
-      "sha256": "0cede88c872ecac7f080c3805839b024d2f58ccdfb0dc3968499c413969c0c2d"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第08题.json",
-      "path": "工程图纸三维还原/submission/答案/第08题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2962,
-      "sha256": "f31e9588aabc696a96ee4c9b4e3b01a98ed756521b9ec912c123172b8ae429f8"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第09题.json",
-      "path": "工程图纸三维还原/submission/答案/第09题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2891,
-      "sha256": "68fd35b9e357088fd36cb81e27f32728ab6b6a9613aba1656e76a334c7fb4d11"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第10题.json",
-      "path": "工程图纸三维还原/submission/答案/第10题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3205,
-      "sha256": "93723e73322541da477613ebeff8d90a6e58f630b139bb878fd79b4039837127"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第11题.json",
-      "path": "工程图纸三维还原/submission/答案/第11题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3948,
-      "sha256": "e5ce7c723697859f0797f8c495f0f63bda6a4d4925c02c1d37543a487bf8b0ea"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第12题.json",
-      "path": "工程图纸三维还原/submission/答案/第12题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2800,
-      "sha256": "e4bfe41cca0d745d5bcf6ec564ba22a27c1d74d9d48bc9d63a7d7dd627e4ff70"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第13题.json",
-      "path": "工程图纸三维还原/submission/答案/第13题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 3284,
-      "sha256": "87a16409abe28f1805bffec700ec201a3d5544a1e15480a5a662a2cdf6ac809c"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\答案\\第14题.json",
-      "path": "工程图纸三维还原/submission/答案/第14题.json",
-      "role": "submission",
-      "task": "工程图纸三维还原",
-      "bytes": 2864,
-      "sha256": "ade6d1a3e2359edef672a09c2835f0c2458064dba6fa09681a143156243dd177"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1548,99 +1460,195 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "攻城略地/cost.json",
+      "role": "cost",
+      "task": "攻城略地",
+      "bytes": 466,
+      "sha256": "70deb7ba3c2f837fa74c52b1a0e586c85493918768c33690555ef7c2f7364b0e"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\攻城略地\\codex\\performance\\result.json",
+      "path": "攻城略地/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "攻城略地",
+      "bytes": 4339,
+      "sha256": "d5f9aba8f9e00b39c7f13fe27d7ddd3a54b6a288a0b44905ad832bfc493a5d32"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\评分表_6.1Sol.md",
+      "path": "攻城略地/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "攻城略地",
+      "bytes": 1649,
+      "sha256": "0c12c8857ee995110f0eed6e1a872db6bd4463d9699b24feaa2c0340a315a875"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\bot.cpp",
+      "path": "攻城略地/submission/bot.cpp",
+      "role": "submission",
+      "task": "攻城略地",
+      "bytes": 12255,
+      "sha256": "62a53ad3b5b0afd79837313a2484b7053dc1b6a640e33e99c9cc351853602d57"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数字电路仿真器加速/cost.json",
+      "role": "cost",
+      "task": "数字电路仿真器加速",
+      "bytes": 497,
+      "sha256": "506c9ba4fd88bcb9520aa21467d936be0a807a7eaccf66807f2423633e41765c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "数字电路仿真器加速",
+      "bytes": 6838,
+      "sha256": "3a2d599dc5e1f5c618ef21e08bb3716fb5d0b2ec8ba433d82a52f4cbc7d8601c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数字电路仿真器加速",
+      "bytes": 1941,
+      "sha256": "c274693e455a362296cd94e991d7410f97725716a0aa469d6cee0ddcdacd0853"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "数字电路仿真器加速",
+      "bytes": 41724,
+      "sha256": "09772e75cf8cbd914c8483fa36f98753367692a88a2a3fe3695d7b49ccc36437"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "数学竞赛原创试题/cost.json",
       "role": "cost",
       "task": "数学竞赛原创试题",
-      "bytes": 509,
-      "sha256": "2a0131b64c194ca31fe0b52c7e1a267a58b79b94b7cdb28b3bf9220a6d864f47"
+      "bytes": 489,
+      "sha256": "8a9ba8e98d1022cb2d60415090ee701e35fa61d3160df4232187a5020df81426"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\数学竞赛原创试题\\codex\\main\\result.json",
       "path": "数学竞赛原创试题/grading/codex/main/result.json",
       "role": "result",
       "task": "数学竞赛原创试题",
-      "bytes": 3539,
-      "sha256": "450bf47483cbd202bc2b0fa182ecc142f71329225adcc16964359c2ce913eccc"
+      "bytes": 6282,
+      "sha256": "7dea8b39497beac54ecd78ed5e1cc91f4346b3e7b1140548d6a88c63cae12c5a"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\评分表_6.1Sol.md",
       "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
       "role": "score_sheet",
       "task": "数学竞赛原创试题",
-      "bytes": 2419,
-      "sha256": "df25dd867de5e6d666d658c9f83abf5c098be3e5c9714f1072f3b8ca20a3bd02"
+      "bytes": 3368,
+      "sha256": "1f3d38dd6376d32804dbed8f6803bff374db170d2582b1cd15f1f1ed45e8a26c"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第01题.md",
       "path": "数学竞赛原创试题/submission/答案/第01题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 6620,
-      "sha256": "32763c6d8ea4e7f4425f1f37b627d97816bbf2a0dc0b88ca7ef70f83aa7a8ee5"
+      "bytes": 6349,
+      "sha256": "2acb6c32c8e1b14116489342148c00300b5d302207a7a973d9021cfcc3224090"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第02题.md",
       "path": "数学竞赛原创试题/submission/答案/第02题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 4552,
-      "sha256": "d8edcd8423a28259ddb3508ffc4b4a0e5eb17f35c66efbd7461f6acceb23a123"
+      "bytes": 6049,
+      "sha256": "478b6a2e4c6338d972e2e85a27ea8577f514995764dc648aebcc290e8371cf6a"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第03题.md",
       "path": "数学竞赛原创试题/submission/答案/第03题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 4663,
-      "sha256": "a39881bafad9abd646fb9f1172d5181d2ff83a705cb29e5fbcea793ad5bc2cbb"
+      "bytes": 3809,
+      "sha256": "651cc8ae79851ff4c3496f63a44cbadc50ec8a24ba505c52a84676f096a10d57"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第04题.md",
       "path": "数学竞赛原创试题/submission/答案/第04题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 5365,
-      "sha256": "e568fa03bd31ce24d53124b4ed0e7a0963598a5a810ae207578ea9ebc7c4e378"
+      "bytes": 4530,
+      "sha256": "6f3447dac227a3645d5c86eb52aa773a184ff3a4277221b7f73ee3871edc85e1"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第05题.md",
       "path": "数学竞赛原创试题/submission/答案/第05题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 4574,
-      "sha256": "9fe3431e27cfedfe18518f2c9dab7fef76918abfa2b40d0e6321a98e8103f5db"
+      "bytes": 4604,
+      "sha256": "8a11cf514f8532d8b7f2df8e5d4ba5364109411f812e4a38508a8d8890218a2e"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第06题.md",
       "path": "数学竞赛原创试题/submission/答案/第06题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 3713,
-      "sha256": "cee7a4953c2ea9a52303f3397e9f3d64f5ae1edf34fe6fa498f424ecdea2d247"
+      "bytes": 3782,
+      "sha256": "8f965c57d0a466d2ad8bd739e13d79b48a29a78af0d8cc7bbc4cb664e241ce3a"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第07题.md",
       "path": "数学竞赛原创试题/submission/答案/第07题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 8915,
-      "sha256": "a6595ca09573dfc2d9c1b3f7d731a611e2ca94e1521c0ff57568bdf30bdba290"
+      "bytes": 7167,
+      "sha256": "cca37c04dd325879f1ecbc0b2d4839cc30018b58b160fc97c0447dad40de4f82"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第08题.md",
       "path": "数学竞赛原创试题/submission/答案/第08题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 4810,
-      "sha256": "5b9d12efdffc81978d18c537034ace2ddeac8d7e8c62f9a9c7fac9c374f79ac0"
+      "bytes": 4836,
+      "sha256": "854c2d0f4f6b9651e1cda1382ef82f890031fa5a399c2e24d8ccb70aa79e0567"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第09题.md",
       "path": "数学竞赛原创试题/submission/答案/第09题.md",
       "role": "submission",
       "task": "数学竞赛原创试题",
-      "bytes": 6683,
-      "sha256": "e24c9312c8d887bff4b3e9df2580048880862987b162e426c9cd43d07dfb50c7"
+      "bytes": 7228,
+      "sha256": "981e07dc58dac7d1f1cc097dd565f992f4f3ff826978df25311f49b471e2d0fa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第10题.md",
+      "path": "数学竞赛原创试题/submission/答案/第10题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 2889,
+      "sha256": "4f9cb8c7ea622c46b29219812d8c1165695ad1c54af2774da648ba2ebf441f9d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第11题.md",
+      "path": "数学竞赛原创试题/submission/答案/第11题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4203,
+      "sha256": "d62b73e4947fa9e12ddc52a6e99c8d4436304a3782ab94a3dcd4c8011f1f91ea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第12题.md",
+      "path": "数学竞赛原创试题/submission/答案/第12题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4967,
+      "sha256": "6c38f9e04f9005be5f5a434202ab69e23b2c1ffee527d472715ceafa35a3a4b7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\答案\\第13题.md",
+      "path": "数学竞赛原创试题/submission/答案/第13题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 4840,
+      "sha256": "56e536a1f17a395b96d9ed019fecb1267932e144541f0bfd2f8791a6fec84ad1"
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
@@ -1804,6 +1812,126 @@
     },
     {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "机械结构重建/cost.json",
+      "role": "cost",
+      "task": "机械结构重建",
+      "bytes": 479,
+      "sha256": "a3d3d1c97b5d82b0f558313f4ced1f3cedfdd36af505bee52ad602b35cef9784"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\机械结构重建\\codex\\main\\result.json",
+      "path": "机械结构重建/grading/codex/main/result.json",
+      "role": "result",
+      "task": "机械结构重建",
+      "bytes": 15482,
+      "sha256": "c06060f07639bb570834791fe2cd3c0f180f5a2bd935e97f4f0ff1cd846761d7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\评分表_6.1Sol.md",
+      "path": "机械结构重建/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "机械结构重建",
+      "bytes": 3352,
+      "sha256": "509de496d959a251d3c7de4608e095edb0deea2832a1d6dd82861dda65c46e97"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第03题.json",
+      "path": "机械结构重建/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2000,
+      "sha256": "915cfcaa2c10cba0393204fc0ad2b27c63f8bc5949540cfac7bfda8154db2226"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第04题.json",
+      "path": "机械结构重建/submission/答案/第04题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2616,
+      "sha256": "0b11a537a274c901dec49997691ec8111d18a6ce51252e1798435251c7371545"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第05题.json",
+      "path": "机械结构重建/submission/答案/第05题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3037,
+      "sha256": "2fbaf375867640b3238afbebf138777f263f47082b02547e3f7303270b2c5838"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第06题.json",
+      "path": "机械结构重建/submission/答案/第06题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2583,
+      "sha256": "432ea77fe2fb8be34136700a74f9ffbea3800d91f730c2bada533b0597cb8b20"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第07题.json",
+      "path": "机械结构重建/submission/答案/第07题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2533,
+      "sha256": "0cede88c872ecac7f080c3805839b024d2f58ccdfb0dc3968499c413969c0c2d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第08题.json",
+      "path": "机械结构重建/submission/答案/第08题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2962,
+      "sha256": "f31e9588aabc696a96ee4c9b4e3b01a98ed756521b9ec912c123172b8ae429f8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第09题.json",
+      "path": "机械结构重建/submission/答案/第09题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2891,
+      "sha256": "68fd35b9e357088fd36cb81e27f32728ab6b6a9613aba1656e76a334c7fb4d11"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第10题.json",
+      "path": "机械结构重建/submission/答案/第10题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3205,
+      "sha256": "93723e73322541da477613ebeff8d90a6e58f630b139bb878fd79b4039837127"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第11题.json",
+      "path": "机械结构重建/submission/答案/第11题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3948,
+      "sha256": "e5ce7c723697859f0797f8c495f0f63bda6a4d4925c02c1d37543a487bf8b0ea"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第12题.json",
+      "path": "机械结构重建/submission/答案/第12题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2800,
+      "sha256": "e4bfe41cca0d745d5bcf6ec564ba22a27c1d74d9d48bc9d63a7d7dd627e4ff70"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第13题.json",
+      "path": "机械结构重建/submission/答案/第13题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 3284,
+      "sha256": "87a16409abe28f1805bffec700ec201a3d5544a1e15480a5a662a2cdf6ac809c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\答案\\第14题.json",
+      "path": "机械结构重建/submission/答案/第14题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 2864,
+      "sha256": "ade6d1a3e2359edef672a09c2835f0c2458064dba6fa09681a143156243dd177"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "果冻冲击与造浪水槽/cost.json",
       "role": "cost",
       "task": "果冻冲击与造浪水槽",
@@ -1939,30 +2067,6 @@
       "sha256": "13e35f664bf241093165bd87bf16db30e2bf674927749cec8e83003f1e14acd3"
     },
     {
-      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Claude\\Opus5.5\\数字电路仿真器加速\\codex\\performance\\result.json",
-      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
-      "role": "result",
-      "task": "数字电路仿真器加速",
-      "bytes": 1374,
-      "sha256": "57234196c4198ccf651b04ca5810c51e169f898651f6c4d5cd1c20f77c692564"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\评分表_6.1Sol.md",
-      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
-      "role": "score_sheet",
-      "task": "数字电路仿真器加速",
-      "bytes": 1420,
-      "sha256": "e28996685091a99c7b909d17aba3646667d1e57a4f7a447e105aa579890157cb"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\solution.cpp",
-      "path": "数字电路仿真器加速/submission/solution.cpp",
-      "role": "submission",
-      "task": "数字电路仿真器加速",
-      "bytes": 52309,
-      "sha256": "682e39c34610742e54756e8443d990ccaaeb97b6a0f81a5b6274ca4f5b08ca83"
-    },
-    {
       "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
       "path": "鲁班锁拆解/cost.json",
       "role": "cost",
@@ -2017,6 +2121,50 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\bvh.hpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\grader.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\reference.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\render_math.cuh",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\rt.h",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\work",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\光线追踪渲染加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\光线追踪渲染加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\动态路由塔防\\.git",
       "reason": "依赖、缓存、编译产物或题目数据"
     },
@@ -2043,26 +2191,6 @@
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\tmp",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\工程图纸三维还原",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\工程图纸三维还原.md",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\笔记",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\工程图纸三维还原\\预览",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\形式化证明题\\.git",
@@ -2093,7 +2221,331 @@
       "reason": "题面"
     },
     {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数学竞赛原创试题\\.git",
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_r0.0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_r0.5.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_r1.0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_s0.0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_s0.3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_z0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\b_z2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\dbg.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\dbg.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\fp.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\fp.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\fp2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\fp_v1.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\harness.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\harness.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\logs",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sample_bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_cont.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_h200.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_h30.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_h80.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_w10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\sp_w60.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\st.txt",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\tools",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v3_bot.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v4_bot.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_lam0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_lam03.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_lam1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_pro0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_pro1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_pro1d12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_pro1l3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_rho05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_rhoa05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_rhot05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_sl0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_sl2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_sl4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\v_sl4r.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_c1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_mp12.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_mp4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_mp8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_mp8s0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_n_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_n_nosync.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_n_rho05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_n_tw0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r03.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r05a07.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r05s07.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r05s15.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r05tw3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_r05tws3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rho0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rho05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rho07.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhoa05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhoa15.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhoa2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhos0.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhos05.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhos15.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_rhos2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_zm2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_zt1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_zt10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_zt3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\w_zt3mp4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\攻城略地.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\攻城略地\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\work",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\数据",
       "reason": "标准题只取交付答案"
     },
     {
@@ -2109,28 +2561,28 @@
       "reason": "题面"
     },
     {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\tmp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\机械结构重建",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\机械结构重建.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\笔记",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\机械结构重建\\预览",
+      "reason": "标准题只取交付答案"
+    },
+    {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
       "reason": "题面"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\.git",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\.gitignore",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\tools",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\数据",
-      "reason": "标准题只取交付答案"
-    },
-    {
-      "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\数字电路仿真器加速\\数字电路仿真器加速.md",
-      "reason": "标准题只取交付答案"
     },
     {
       "source": "H:\\AI_OneShot_Model\\Claude\\Opus5.5\\鲁班锁拆解\\.git",

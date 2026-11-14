@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Hydrogen",
+  "task": "动态路由塔防",
+  "tokens": 65223300,
+  "minutes": 90.0,
+  "time": "实际停止",
+  "cny": 6.95,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Hydrogen/动态路由塔防/run-62c33e882bbd42059b4d8a58597b14c1"
+  ]
+}

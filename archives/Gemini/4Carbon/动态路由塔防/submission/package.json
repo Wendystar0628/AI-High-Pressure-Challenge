@@ -1,0 +1,15 @@
+{
+  "name": "dynamic-routing-td",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --format=iife --outfile=dist/bundle.js"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

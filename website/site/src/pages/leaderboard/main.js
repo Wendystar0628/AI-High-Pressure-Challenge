@@ -536,7 +536,7 @@ boot(async ({ data }) => {
   // tooltip for the graphics; the breakdown focuses the category under the pointer
   ol.addEventListener('pointermove', (e) => {
     const li = e.target.closest('li.mrow');
-    // the cost and token cells: plan, token total, estimated tasks (ui/cost.js)
+    // the cost and token cells: plan, token total, conversion basis note (ui/cost.js)
     if (li && e.target.closest('.mrow-cost, .mrow-tok')) {
       if (state.view === 'parts') rows.setFocus(null);
       showTip(costTip(data, li.dataset.id), { x: e.clientX, y: e.clientY - 8 });

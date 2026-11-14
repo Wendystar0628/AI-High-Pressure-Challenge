@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Carbon",
+  "task": "星际战舰编队",
+  "tokens": 14955128,
+  "minutes": 90.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 2.11,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Carbon/星际战舰编队/run-3dff52f66acd48218daff481f8be5fee"
+  ]
+}

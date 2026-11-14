@@ -1,0 +1,68 @@
+{
+  "task": "光线追踪渲染加速",
+  "complete": true,
+  "grader": "GPT 6.1 Sol",
+  "items": [
+    {
+      "name": "渲染加速",
+      "max": 100,
+      "score": 61.0,
+      "reason": "正式 evaluate.py：基线/提交最小用时 510.631300/102.202200 ms，加速 4.996285 倍，速度分 q=60.970130。5次计时画面和12个隐藏输入全部通过，c=h=1，最终 qch 四舍五入为 61.0；源码核对未见实质性违规。"
+    }
+  ],
+  "metrics": {
+    "R_ms": 510.6313,
+    "C_ms": 102.2022,
+    "speedup": 4.996284815786744,
+    "q": 60.970129554207375,
+    "c": 1,
+    "h": 1,
+    "score_unrounded": 60.970129554207375,
+    "timed_factors": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "hidden_factors": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "formal": true,
+    "report_path": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\光线追踪渲染加速\\codex\\performance\\work\\official_evaluation\\results.json",
+    "baseline_times_ms": [
+      512.2166,
+      510.6313,
+      516.3626,
+      512.2115,
+      512.7369
+    ],
+    "submission_times_ms": [
+      102.8081,
+      102.2861,
+      102.2022,
+      102.8095,
+      104.2144
+    ],
+    "timed_exception_pixels": [
+      966,
+      966,
+      966,
+      966,
+      966
+    ],
+    "timed_exception_limit": 3232
+  },
+  "notes": "评的是作答结束时工作目录的副本，不看 git 提交；solution.cu 副本与原始 SHA256 一致。正式条件为逻辑处理器16–27、高优先级、基线/提交各5次取最小值，包含12个隐藏输入，formal=true。公开边界3项也全部通过。未发现实质性违规；扫描命中的静态指针仅复用分配且每次重建场景，两处设备回传各为4字节建树控制计数，见 work/rule_review.txt。原始提交仅填写本人的评分表。评测入口及所有记录的子进程均已退出，见 work/process_cleanup.json。"
+}

@@ -1,23 +1,24 @@
 {
-    "task":  "通用数字电路仿真器加速",
+    "task":  "数字电路仿真器加速",
     "complete":  true,
     "grader":  "GPT 6.1 Sol",
     "items":  [
                   {
                       "name":  "总分",
                       "max":  100,
-                      "score":  62.5,
-                      "reason":  "编译成功，未发现第十节第1–7条违规；7/7正确性输入及24/24性能输入均通过。官方 evaluate.py 的性能平均分和最终得分均为62.5，G=3.7504904840531053。"
+                      "score":  0,
+                      "reason":  "官方 evaluate.py 完整评测：隐藏正确性通过 5/7（第 05、06 例答案错误），9 个性能输入全部 WRONG_ANSWER，逐项得分均为 0，最终 score=0.0。基线全部通过，未见整题规则违规。"
                   }
               ],
     "metrics":  {
-                    "correctness_passed":  7,
+                    "correctness_passed":  5,
                     "correctness_total":  7,
-                    "performance_inputs":  24,
-                    "performance_passed":  24,
-                    "performance_score":  62.5,
-                    "G":  3.7504904840531053,
-                    "report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\通用数字电路仿真器加速\\codex\\performance\\work\\evaluate-report.json"
+                    "performance_passed":  0,
+                    "performance_inputs":  9,
+                    "performance_score":  0,
+                    "G":  null,
+                    "evaluation_report":  "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\DeepSeek\\V4.1Flash\\数字电路仿真器加速\\codex\\performance\\work\\evaluation_report.json"
                 },
-    "notes":  "评的是工作目录中的 solution.cpp，与最新提交 477ac037e2aa5131e7a7676f19d59c7200e64626 完全一致。源码 SHA256：456cb076e0badb5ee131a81e42a4b757a18b64826b5ffb1c32ae3c6b04e098db。副本与官方基线均使用指定 g++ -O2 -std=c++20 -march=native -fopenmp 编译；官方 evaluate.py 仅运行一次，无环境错误。"
+    "notes":  "评的是作答结束时工作目录内容的副本，不看 git 提交；复制源码与原目录 solution.cpp 的 SHA256 均为 7F752058862E29BECCE2F839660302B85BBC57BA2510ACA5515D2E66CFE979E0。按题面参数重新编译提交和官方基线，仅运行一次 evaluate.py，官方基线全部通过，无评测环境异常。提交任一输入首次失败后由官方脚本跳过该输入余下提交运行；G 为 null，不能将错误答案用时计作加速。为解释整题零分只读取该模型本题归档会话末段：13:50 曾有旧程序通过公开核对，但后续修改融合代码，13:57 的自测仍报 ROOTDIFF，最后源码保留该问题。已确认本会话启动的评测及子程序全部退出。",
+    "anomaly":  "末段修改寄存器融合后自测仍有根值不一致，最终源码保留该缺陷。"
 }

@@ -1,0 +1,22 @@
+{
+  "model": "Gemini/4Carbon",
+  "task": "动态路由塔防",
+  "tokens": 23979795,
+  "minutes": 90.0,
+  "time": "开始→截止（实际停止未知）",
+  "cny": 3.38,
+  "api_usd": null,
+  "basis": "subscription",
+  "method": "quota",
+  "plan": {
+    "name": "Google AI Ultra 20×",
+    "name_en": "Google AI Ultra 20×",
+    "price": 199.99,
+    "currency": "USD",
+    "period": "month"
+  },
+  "fitted": [],
+  "runs": [
+    "Gemini/4Carbon/动态路由塔防/run-8cf93a241b784d34803616a1b0150ece"
+  ]
+}

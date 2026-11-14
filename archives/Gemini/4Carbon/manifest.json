@@ -1,0 +1,1813 @@
+{
+  "schema": 1,
+  "model": "Gemini/4Carbon",
+  "files": [
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "AE风味动效设计编辑器/cost.json",
+      "role": "cost",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 551,
+      "sha256": "8ab85176b2034ccd7bf353f1b4cd9ca057061c91559e37ae2c022b5f6d6be89c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\AE风味动效设计编辑器\\codex\\main\\result.json",
+      "path": "AE风味动效设计编辑器/grading/codex/main/result.json",
+      "role": "result",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 8479,
+      "sha256": "40106ab11d65264c73100c33034016b9c10c906269e021a4354f105b924f735f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\评分表_6.1Sol.md",
+      "path": "AE风味动效设计编辑器/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 6210,
+      "sha256": "57d2989eddf394f1bb03a9f2590576aa96622546825b8699bb8369fb2a11f163"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\css\\style.css",
+      "path": "AE风味动效设计编辑器/submission/css/style.css",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 24426,
+      "sha256": "f2cfb09b508fab6d7d67bf6c60ff6e1a3d18854b4e18b05726fcd1827b3099ce"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\index.html",
+      "path": "AE风味动效设计编辑器/submission/index.html",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 12250,
+      "sha256": "1ef3618372cc400eca6c6aa05740fa6261f309a1bb52fe5d746e7434bc021ae2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\app.js",
+      "path": "AE风味动效设计编辑器/submission/js/app.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 40605,
+      "sha256": "0d3b94a33b04a7848311627e3e7a0b8c817ae4c88be3f331d31d4518c4863e81"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\animation.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/animation.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 43155,
+      "sha256": "9d198c92f9f7156f017358e928f14e8cb64e8e2a69c3d03443e9ca10126bad3b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\audio.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/audio.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 12642,
+      "sha256": "0cfffbfba0aaeb11c97ff05305a54490eaa579d92f9305cf6dd13987ae3fdee5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\fonts.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/fonts.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 30870,
+      "sha256": "9a81f79cef57a78a0bd48df9ffa05b219ed7860ee6bdfdf4ad25dac3737d1e32"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\geometry2d.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/geometry2d.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 62235,
+      "sha256": "249bda1c7d83ef11965f04c3b682b75402113961ecf5cc96a334334f05afd83e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\geometry3d.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/geometry3d.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 30681,
+      "sha256": "ca6711d20b2080bb2a5381bb191d62fec994bfc77bd4d0fc89238878688151dc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\math.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/math.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 18287,
+      "sha256": "f83e01381e8ab20f51258cb16e9c5abf3e790aa2ec506433582b2825d944d3a9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\nodes.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/nodes.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 52938,
+      "sha256": "1d3c84f38352a98f00f42f264497107beb4a894762134a66a01496245e3dc346"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\particles.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/particles.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 32812,
+      "sha256": "1bd015873f8f308f59ed0315145df4cd9ea0307423237f0bb2575a173b7f18ee"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\core\\scene.js",
+      "path": "AE风味动效设计编辑器/submission/js/core/scene.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 47808,
+      "sha256": "10b6f65756f1bef03cb2d6130a6fce2476a71af8ef44d26bedd68feed779ebd0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\demo\\forgeDemoProject.js",
+      "path": "AE风味动效设计编辑器/submission/js/demo/forgeDemoProject.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 33129,
+      "sha256": "2cc0cedcf59be732096b2195d7a7a1aab1fc164a9ff7bb1eecbfbdf92d4c71d5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\render\\webglRenderer.js",
+      "path": "AE风味动效设计编辑器/submission/js/render/webglRenderer.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 88964,
+      "sha256": "8fa40fd2876379cb762bbf659d3920143dbc6ae6b71c2bf89601e4936a7de13b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\ui\\canvasOverlay.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/canvasOverlay.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 59842,
+      "sha256": "f56d9aaa0562b96207afefd35723081285e7a802451b91e4be10d469d175cbaf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\ui\\inspectorView.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/inspectorView.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 83760,
+      "sha256": "85d4180e8a30c57f27337514741092c7207cecda7cd5ffbc7bc6227526c2e4d9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\ui\\nodeEditorView.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/nodeEditorView.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 42109,
+      "sha256": "7e72d23dc4100a8f445313b5fbdabc5ba52596299cc098e666814b4aa6a55003"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\js\\ui\\timelineView.js",
+      "path": "AE风味动效设计编辑器/submission/js/ui/timelineView.js",
+      "role": "submission",
+      "task": "AE风味动效设计编辑器",
+      "bytes": 86206,
+      "sha256": "b005709c108e037bc9ed663c39f3e32d7c52ecaa2271063bf554d1c790b2ba6d"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "光线追踪渲染加速/cost.json",
+      "role": "cost",
+      "task": "光线追踪渲染加速",
+      "bytes": 513,
+      "sha256": "77593663af8fe0a61c327d2425a9cf151041bde4b11125265e98c108fb286971"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\光线追踪渲染加速\\codex\\performance\\result.json",
+      "path": "光线追踪渲染加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "光线追踪渲染加速",
+      "bytes": 2074,
+      "sha256": "14a7b7b46bce1ba445c08613b834ef1cc2c839396ca3ffc679fe44e72cbb29b0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\评分表_6.1Sol.md",
+      "path": "光线追踪渲染加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "光线追踪渲染加速",
+      "bytes": 2158,
+      "sha256": "5dadbee8938ef878538957de8c0cdff1c0e6a4484bb838d6fafe29353fb47804"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\solution.cu",
+      "path": "光线追踪渲染加速/submission/solution.cu",
+      "role": "submission",
+      "task": "光线追踪渲染加速",
+      "bytes": 42860,
+      "sha256": "e0c528cf1c7cfafc1d3c91890d8d1bfd5aa6d9ce84eeae51adb1cbb4be3cf37b"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "动态路由塔防/cost.json",
+      "role": "cost",
+      "task": "动态路由塔防",
+      "bytes": 530,
+      "sha256": "8680baea3b482909530f34ebca3ac6c24b949e616abc4a581f1e3ab90574655f"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\动态路由塔防\\codex\\main\\result.json",
+      "path": "动态路由塔防/grading/codex/main/result.json",
+      "role": "result",
+      "task": "动态路由塔防",
+      "bytes": 6910,
+      "sha256": "1e1e57d6c303728cb0c4887d9316fe487f24c2baae9f0f3fcdda70684545f27c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\评分表_6.1Sol.md",
+      "path": "动态路由塔防/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "动态路由塔防",
+      "bytes": 4168,
+      "sha256": "a8c1d6420b29064cea6dc480ee9b02fbd629a19ec4a35e75655444dc6911cf17"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\index.html",
+      "path": "动态路由塔防/submission/index.html",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 12349,
+      "sha256": "31a86212bb8fddbf2bbcca6d6b5bcfeb7a8da4459d8c373e5429304daf6c1ffa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\package-lock.json",
+      "path": "动态路由塔防/submission/package-lock.json",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 14737,
+      "sha256": "686bd8619033e02a3fc3d5765cc9a968e3d3538bc984af75854adc7a5ee34be6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\package.json",
+      "path": "动态路由塔防/submission/package.json",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 301,
+      "sha256": "30645c5c0599cc0fc7df0ccf2dc7a2293e5a0c16be94e1a28ccdf2f9e4d50221"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\audio.js",
+      "path": "动态路由塔防/submission/src/audio.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 14443,
+      "sha256": "df0bfdce9fec39d665dbb9a940bbd8dc7db20169ec020e00c75608cbe62ab112"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\constants.js",
+      "path": "动态路由塔防/submission/src/constants.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 21567,
+      "sha256": "74401e80881c97eb92d954b7482be24a8b44a134eb47168487e84fa72a1d027a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\demos.js",
+      "path": "动态路由塔防/submission/src/demos.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 25957,
+      "sha256": "58ead28bf0e7b71bc4a5451f9a26be3b5c0d51f2c2035f390e4fdd5357b5833a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\main.js",
+      "path": "动态路由塔防/submission/src/main.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 17281,
+      "sha256": "a6da36d56e78383b859140ed10e5c89cfe062f0a7fcd0aba64fc4c3a3ef5afb4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\maps.js",
+      "path": "动态路由塔防/submission/src/maps.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 30527,
+      "sha256": "44807278ace49d7f242cf6199c297ec3399e46c468099ae655d9fb86e50463e5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\models.js",
+      "path": "动态路由塔防/submission/src/models.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 82921,
+      "sha256": "da1156196d0b966cd879727b4c120f877a841c2ae96cf2f2e188588801db88c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\pathfinding.js",
+      "path": "动态路由塔防/submission/src/pathfinding.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 9779,
+      "sha256": "b603f3fd22f9f86a3ab3667cc3be9d1b956b3ca7b799514228b4a00f30c35fbd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\sim.js",
+      "path": "动态路由塔防/submission/src/sim.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 84735,
+      "sha256": "08f508039e993d9915860fb411904178aa0abfcaf5139ee480d6b5be250980f6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\textures.js",
+      "path": "动态路由塔防/submission/src/textures.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 9968,
+      "sha256": "8a783921c2b37db58a203a29cb8131a4c6986327831a37380f2a91dc561b3bc7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\ui.js",
+      "path": "动态路由塔防/submission/src/ui.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 59343,
+      "sha256": "ae1360801c151402495c60a8a2a62b1bc0b043fa2e3cf7ac2a5e6649569d0818"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\src\\vfx.js",
+      "path": "动态路由塔防/submission/src/vfx.js",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 24787,
+      "sha256": "66af62fc101dec280af06f0fe1fb62857b16aeb9e1a3fa0068770e931632ecbc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\style.css",
+      "path": "动态路由塔防/submission/style.css",
+      "role": "submission",
+      "task": "动态路由塔防",
+      "bytes": 29030,
+      "sha256": "41f84e7d0d88d1dbaf5ada9effab72592ded90ad4b5d048f86a57dfa1575c843"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "太阳雨渔港3D渲染/cost.json",
+      "role": "cost",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 541,
+      "sha256": "1afab77360354a905902d34ca52cb6e621d717a7fd2cf95b0e702bd0a6c9f929"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\codex\\main\\result.json",
+      "path": "太阳雨渔港3D渲染/grading/codex/main/result.json",
+      "role": "result",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6170,
+      "sha256": "33ccc364514956f79f8dce22107293dfd0edcd25bb97db60f990cade0933bd5b"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\评分表_6.1Sol.md",
+      "path": "太阳雨渔港3D渲染/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 4165,
+      "sha256": "14169a8e65f5901e68037c842195fa66bed835bcf2be5f2680289e4b21e571d4"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\index.html",
+      "path": "太阳雨渔港3D渲染/submission/index.html",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 634,
+      "sha256": "70860787f0f071d087268befedaf09449ad9241d6b07b06da0612caefd04d05c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\package-lock.json",
+      "path": "太阳雨渔港3D渲染/submission/package-lock.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 14276,
+      "sha256": "0ec9c8f975f7d87370edda84983bac11f79ce9c8d4a8ff8ffae41a5b38a66f69"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\package.json",
+      "path": "太阳雨渔港3D渲染/submission/package.json",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 376,
+      "sha256": "546a698d7915992d9d98113b6c3205f857c8663ff1f0c946fd98bcb0d3fd1e1e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\baseAndWater.js",
+      "path": "太阳雨渔港3D渲染/submission/src/baseAndWater.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 54195,
+      "sha256": "db961f51352636f8c5428e5224a82ea12b0d2428900f200b779fc12a04568889"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\boats.js",
+      "path": "太阳雨渔港3D渲染/submission/src/boats.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 45880,
+      "sha256": "3053588c98bf85a8563f1a0b0e049b940382f28073316b681d6f1a84596bfddc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\buildings.js",
+      "path": "太阳雨渔港3D渲染/submission/src/buildings.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 45856,
+      "sha256": "11ea579f46fcc61f34144598c6a4490f3c70b176cdf7fc9e14246aa85d9831ff"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\main.js",
+      "path": "太阳雨渔港3D渲染/submission/src/main.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6229,
+      "sha256": "46a60e850a51e6e301df9d6221030e8166a4e1f1526b8b3578e96fa39aead772"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\materials.js",
+      "path": "太阳雨渔港3D渲染/submission/src/materials.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 16525,
+      "sha256": "4062a5eaf93b238c80892fee0686cc9e2be05334b0da1bd4e752062170a73a29"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\palette.js",
+      "path": "太阳雨渔港3D渲染/submission/src/palette.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 5231,
+      "sha256": "3e310509b8c933867e733eac0c52a5c7316554ef8a710726b2a3bb172f04ea21"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\postprocessing.js",
+      "path": "太阳雨渔港3D渲染/submission/src/postprocessing.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 11324,
+      "sha256": "7788ba3c6d5b7ad5f4b9100fbecacf153059b08df25c1c694e8e2e9669817903"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\prng.js",
+      "path": "太阳雨渔港3D渲染/submission/src/prng.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 1772,
+      "sha256": "895bc9ad8a8742f9747e24f23aab28c766961faa3b223a77bcd11a57eb116f8c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\propsAndLife.js",
+      "path": "太阳雨渔港3D渲染/submission/src/propsAndLife.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 69622,
+      "sha256": "970edb09203d64dcb1e01dea244c22113bcd47a34f2385c1b6ffebebb99f53ad"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\textures.js",
+      "path": "太阳雨渔港3D渲染/submission/src/textures.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 26440,
+      "sha256": "a8f180b8eb09b56fb6ff9b7beb45f0d9a6fb5c4362bbe1c61fb0a6f5dc6e277c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\src\\tourAndExport.js",
+      "path": "太阳雨渔港3D渲染/submission/src/tourAndExport.js",
+      "role": "submission",
+      "task": "太阳雨渔港3D渲染",
+      "bytes": 6067,
+      "sha256": "f0bdfaf494c7248fa681e38fce77f98d2c5899dcd1a4e05ee10b008817a72508"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "形式化证明题/cost.json",
+      "role": "cost",
+      "task": "形式化证明题",
+      "bytes": 530,
+      "sha256": "9a438a9c7ff243e3e4783744b031f00d430a80ae123fa13b866ebde55a73c34c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\形式化证明题\\codex\\main\\result.json",
+      "path": "形式化证明题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "形式化证明题",
+      "bytes": 2456,
+      "sha256": "29873a1c24ffc7ff8ec012144cdb8aa80adfff46b43c0de90b651319584febdc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\评分表_6.1Sol.md",
+      "path": "形式化证明题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "形式化证明题",
+      "bytes": 1239,
+      "sha256": "f869065fb72a082e42f8ade93faa288bd6232949a92cac9c818be82d338f9f91"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem1.lean",
+      "path": "形式化证明题/submission/Problem1.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 13788,
+      "sha256": "aa63bc2ec7bbbb8a89a44f708aa9f50ca7f609b1f70a1cd141ac7ec02bc17e78"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem2.lean",
+      "path": "形式化证明题/submission/Problem2.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 12260,
+      "sha256": "6b3f17aefd2272c7511ee80facaa48a1727bbbe04169a8484df256ef08fe5548"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem3.lean",
+      "path": "形式化证明题/submission/Problem3.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 10433,
+      "sha256": "3f85deb9e2cadc3ddd9956e76ef4fe55aa087493a3bc418d36855c16b9f6dd51"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem4.lean",
+      "path": "形式化证明题/submission/Problem4.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 19289,
+      "sha256": "aa72abf87bfe33277211c1add28dcc3e701347698b9481c7c15f82bf290d86cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem5.lean",
+      "path": "形式化证明题/submission/Problem5.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 18536,
+      "sha256": "5fe3d068dcd027b94919ee7ba0eca128dbdc5e1acfa825350e25c90aa620fd92"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\Problem6.lean",
+      "path": "形式化证明题/submission/Problem6.lean",
+      "role": "submission",
+      "task": "形式化证明题",
+      "bytes": 36797,
+      "sha256": "f6c858db8edbda5acd30b2e5c458a9f774085d23af5fb7d137a51ccc41de11ef"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "操作系统嵌套/cost.json",
+      "role": "cost",
+      "task": "操作系统嵌套",
+      "bytes": 530,
+      "sha256": "12dcea3f5216a4dbdc26da8e565f324d175c49194da25c742a2468475afd583f"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\操作系统嵌套\\codex\\main\\result.json",
+      "path": "操作系统嵌套/grading/codex/main/result.json",
+      "role": "result",
+      "task": "操作系统嵌套",
+      "bytes": 10691,
+      "sha256": "a4082145ab814af6b9b7072262b12171b10d24fced4f06eb84a21ff9467d3289"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\评分表_6.1Sol.md",
+      "path": "操作系统嵌套/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "操作系统嵌套",
+      "bytes": 10623,
+      "sha256": "b7907e7139b5f8d88f8c27558612119bfb8952bb3ccccddb566d1d34cf7a8e27"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\README.md",
+      "path": "操作系统嵌套/submission/README.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1872,
+      "sha256": "089e0210004a88c5eee6e353816430a40b97db13596d49990d001d1f6b84fb8d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\assets\\wallpapers\\amber-coast.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/amber-coast.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 815206,
+      "sha256": "8784e88d49e58bbbe50c01d8f79f8cf25c4a7bb85e8be6c0cb91742f35ba9fe2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\assets\\wallpapers\\aurora-peaks.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/aurora-peaks.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1003207,
+      "sha256": "e107a4729b01d66da8b740ce9776a8cb10c6b9598272313ade837dff9ed83ef2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\assets\\wallpapers\\emerald-canyon.png",
+      "path": "操作系统嵌套/submission/assets/wallpapers/emerald-canyon.png",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 858820,
+      "sha256": "15a2be2477f98ca95d6fa71de51771359b05b44ec6690049c29041e203d1567c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\automation.json",
+      "path": "操作系统嵌套/submission/automation.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2210,
+      "sha256": "bc19b46db1d5d131ba34486b121ceaaee1d9b4f54c2bf666e99207b1bebf0506"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\docs\\操作说明.md",
+      "path": "操作系统嵌套/submission/fixtures/docs/操作说明.md",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11136,
+      "sha256": "8821c4636f1de5edb77c2dbeb824faaa0dc73dbd4d371c9af7d8593f89113850"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\chart_recv.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/chart_recv.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3409,
+      "sha256": "1b4bdbf071113898bed48a61154956fbb28b410772f11dcf7e0f3da121ad09cd"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\charts.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/charts.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 13463,
+      "sha256": "749d96bbac733bda97a7bb054c6d57dce348d3e263945968ee04539ae54ee955"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\compiler.nbc.json",
+      "path": "操作系统嵌套/submission/fixtures/nos/compiler.nbc.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 50858,
+      "sha256": "fe79908f2e6ea9918ffc7ede7905b36feda9d163bae76e8f78c26989ea636f3f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\compiler.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/compiler.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20206,
+      "sha256": "feada906071259902417d458161a5ae42577419885567791535d7869c992b473"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\editor.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/editor.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4337,
+      "sha256": "f0c486be2e099ce79e20911a60cc32fc542ba81fc138207b8c2102441679e56e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\files.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/files.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7674,
+      "sha256": "e82cab8ef8289c54e6ca3a489cb093c7ab25f37e9f77037070511dd75a2b21b9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\flight_ctrl.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/flight_ctrl.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 4953,
+      "sha256": "e65aa453bd056cf53df11cd2295e31eb262a841fd60f26672ac4200c59d6de20"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\kernel.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/kernel.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 36449,
+      "sha256": "e4e856ce5a4efc5ca57bf68b62437c131391d94b14b1b166927ec0f52afd3f2f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\player_fx.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/player_fx.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7575,
+      "sha256": "22c21f8c9ded0f7b1d6a1c105df465f086cf35da8e66a03b85ebeafb6f00ee2a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\player_scene.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/player_scene.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 28392,
+      "sha256": "184e1e4763e90639357dabdf489f09970e3112960a5f12b498ffc1307bf9ab79"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\player_timeline.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/player_timeline.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16780,
+      "sha256": "3cd930bf9804d7e2971d35b2647b7dd2b6fc5ba31739cb30ed044688d4e8019a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\precompiled.json",
+      "path": "操作系统嵌套/submission/fixtures/nos/precompiled.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 417966,
+      "sha256": "358c953e82a234cf6a061d135060831ea58a1594ed6b1157a9ff60360c8a5983"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\receiver.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/receiver.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1348,
+      "sha256": "2a15dfc4036f456ee58e8eb3774f0636fafe912c44459d90bdd62364e2be7cc9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\sender.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/sender.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1667,
+      "sha256": "b715c11707578ad2c507692cc1bba1b2dd8b136cf7f8809b5b1c9f38ea68243d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\spin.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/spin.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 844,
+      "sha256": "4a303bf3f777cc3321a5fe968c858e61748908b2c4c7b6eb622302436471d189"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\sum.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/sum.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 800,
+      "sha256": "26e269a6089d92ab32454c5b31d2cc1759c4babcccf6d1cc673dff756cfdb12e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\tasks.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/tasks.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3473,
+      "sha256": "163c9f19f30b649a663f328b348d5cc00b97be13b80536dce29b07810c40a49a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\nos\\wm.nos",
+      "path": "操作系统嵌套/submission/fixtures/nos/wm.nos",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 22142,
+      "sha256": "f6cf40e1fc2b53e4c93e1a96bd5d4e9fb52f0966182612b93a01e3a6d6107c72"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\scenes\\helicopter-24.scene",
+      "path": "操作系统嵌套/submission/fixtures/scenes/helicopter-24.scene",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 160265,
+      "sha256": "05527aeeb6e403237e16036866a9ac59f4a951158023033b90b5e58bd6931333"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\scenes\\minimal.scene",
+      "path": "操作系统嵌套/submission/fixtures/scenes/minimal.scene",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1613,
+      "sha256": "ba9531118d0dc1ff1212ed4617002f74d5bd89dc5405bcf2da6451add5ad0d6d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\fixtures\\sheets\\sample.sheet",
+      "path": "操作系统嵌套/submission/fixtures/sheets/sample.sheet",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 1039,
+      "sha256": "a7eac44a06e59723e8292e0552286b64954666da1329c09e052ff729312804f9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\package-lock.json",
+      "path": "操作系统嵌套/submission/package-lock.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 5814,
+      "sha256": "eeef4a132e6fddf14f25557af7352682b095483dc65c2faba9ebaee4d10e2f35"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\package.json",
+      "path": "操作系统嵌套/submission/package.json",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 274,
+      "sha256": "c61c8a454d73e08ca5b007966e24751aae7c3e19ae5b1813be70a2b5417d7226"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\scripts\\bootstrap-compiler.js",
+      "path": "操作系统嵌套/submission/scripts/bootstrap-compiler.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 2725,
+      "sha256": "94e425c24b0e834d1c04d10d526ff886691d6fec3b405ad851b918f7d642b605"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\scripts\\generate-assets.js",
+      "path": "操作系统嵌套/submission/scripts/generate-assets.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 11643,
+      "sha256": "682672e6c4a13058e21405ba5e923449370bbec49d258f9ff2eda987cda22922"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\scripts\\generate-scenes.js",
+      "path": "操作系统嵌套/submission/scripts/generate-scenes.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16445,
+      "sha256": "86ada5193632728c7548589468f8e847cac66fd79be075aa87125a8dce7cdb4c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\main\\main.js",
+      "path": "操作系统嵌套/submission/src/main/main.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 10612,
+      "sha256": "a1e35e45682b82f1c1dcaec15c4da8817a6437b22fba199b67da306091176be8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\main\\preload.js",
+      "path": "操作系统嵌套/submission/src/main/preload.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 868,
+      "sha256": "4a18fc69278e2993ab6b747619148621086e2ff5cfb1e11a839cf861ed3d13e7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\engine\\spreadsheet-engine.js",
+      "path": "操作系统嵌套/submission/src/renderer/engine/spreadsheet-engine.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 16426,
+      "sha256": "a33f15cd0904290b205996b02181fc27e63c4773d5fd8e26116fa2cbdba3633c"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\engine\\system-tree.js",
+      "path": "操作系统嵌套/submission/src/renderer/engine/system-tree.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 68308,
+      "sha256": "a66a8304587f06dca14904c28cbae05bbf98f2f171b3b10ae16f200e46f4063d"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\graphics\\display-device.js",
+      "path": "操作系统嵌套/submission/src/renderer/graphics/display-device.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 43549,
+      "sha256": "56c6a8be365ce6a9ca6a0edacb7fb9f47fe934fd65b0370f8e95f46dc54b7bfb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\graphics\\icons.js",
+      "path": "操作系统嵌套/submission/src/renderer/graphics/icons.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 7455,
+      "sha256": "292bcb53b8ac135fb5aff20fd14135c25b278e7ba28340f8f00bb3305cf9a029"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\index.html",
+      "path": "操作系统嵌套/submission/src/renderer/index.html",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 767,
+      "sha256": "1a2f0e11232ab259dfdbf69ac692181e659f5eca2574f414a54c5a931ddd77e9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\styles\\main.css",
+      "path": "操作系统嵌套/submission/src/renderer/styles/main.css",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 32178,
+      "sha256": "08b198da0bd4b1e3d1fc179b1dc10e1ec8cbb0850c2990619187aa734b5808fc"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\ui\\app.js",
+      "path": "操作系统嵌套/submission/src/renderer/ui/app.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 3153,
+      "sha256": "c127017121508cdc481b30d39a3806277a4d88df2f32d92a1cdd23b344de7f6f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\ui\\projection-view.js",
+      "path": "操作系统嵌套/submission/src/renderer/ui/projection-view.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 27850,
+      "sha256": "4220ba043513e7a7c077f1c82019d7b72efafb9395217ac908c9d31075b05a0a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\ui\\root-apps.js",
+      "path": "操作系统嵌套/submission/src/renderer/ui/root-apps.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 84144,
+      "sha256": "38b99969d4af0bd7940a25d21ddd67851a4dd786b953c6798143911267a7e6ca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\ui\\root-desktop.js",
+      "path": "操作系统嵌套/submission/src/renderer/ui/root-desktop.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 55076,
+      "sha256": "12746f721325f4aa1a3a41bdfd229d954e81fcde140c0792346903fbddbb34e8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\ui\\subsystem-view.js",
+      "path": "操作系统嵌套/submission/src/renderer/ui/subsystem-view.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 62227,
+      "sha256": "4b79b2cbd5fac546727be5554e6cea3afb4e6cd25e3ab142d439bd26f8b76903"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\vm\\bootstrap-compiler.js",
+      "path": "操作系统嵌套/submission/src/renderer/vm/bootstrap-compiler.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 20563,
+      "sha256": "6b8c2160b6b9cae8fee032c1e3f9d45355ef73202453810d202847c3e72a0d86"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\src\\renderer\\vm\\nos-vm.js",
+      "path": "操作系统嵌套/submission/src/renderer/vm/nos-vm.js",
+      "role": "submission",
+      "task": "操作系统嵌套",
+      "bytes": 51505,
+      "sha256": "698c6cef1326ef9f3d2fdf63cee0fa02d27a0a784a129bf732e3d368f41d6213"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "攻城略地/cost.json",
+      "role": "cost",
+      "task": "攻城略地",
+      "bytes": 490,
+      "sha256": "ff7d3d62e47f7e0971b35a0b5b582af738ad2cd794e17986a997c4ff3dd1323d"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\攻城略地\\codex\\performance\\result.json",
+      "path": "攻城略地/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "攻城略地",
+      "bytes": 2449,
+      "sha256": "6dccfec12d44755b9347514495cd8b09d3158dbc9e98c25af283d0ef5c631118"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\评分表_6.1Sol.md",
+      "path": "攻城略地/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "攻城略地",
+      "bytes": 1643,
+      "sha256": "6cd3affa0505192ce0af52aac9181483779cb7a5cfb890a57392638eb2de49c7"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\bot.cpp",
+      "path": "攻城略地/submission/bot.cpp",
+      "role": "submission",
+      "task": "攻城略地",
+      "bytes": 34071,
+      "sha256": "cc2feb9cdd9782eb97178dc56e5e9c7c6581d314cf345b28bb01f787df394f55"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数字电路仿真器加速/cost.json",
+      "role": "cost",
+      "task": "数字电路仿真器加速",
+      "bytes": 547,
+      "sha256": "1b54ca05fe753b1e12df8dfc313a1403537d7e40f7752f664d443bb591b9b386"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\数字电路仿真器加速\\codex\\performance\\result.json",
+      "path": "数字电路仿真器加速/grading/codex/performance/result.json",
+      "role": "result",
+      "task": "数字电路仿真器加速",
+      "bytes": 3603,
+      "sha256": "e499c50e0c878d294f25c02e939dda59b6c3d992c4bba4ae7d511bd2552154ca"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\评分表_6.1Sol.md",
+      "path": "数字电路仿真器加速/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数字电路仿真器加速",
+      "bytes": 1946,
+      "sha256": "daafa76f7c27091b3ff1ca46394e0da51235da4f2b8cf6eead7f011f6de22d76"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\solution.cpp",
+      "path": "数字电路仿真器加速/submission/solution.cpp",
+      "role": "submission",
+      "task": "数字电路仿真器加速",
+      "bytes": 86925,
+      "sha256": "c863fdd865d708e07c92682fba40f5fbc1a255b4bd2eff3674eae6c2b59001da"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "数学竞赛原创试题/cost.json",
+      "role": "cost",
+      "task": "数学竞赛原创试题",
+      "bytes": 540,
+      "sha256": "2c495659a45eceb8602ad2396899fe16584656c4abb19c746983c7f3f0a2b2b0"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\数学竞赛原创试题\\codex\\main\\result.json",
+      "path": "数学竞赛原创试题/grading/codex/main/result.json",
+      "role": "result",
+      "task": "数学竞赛原创试题",
+      "bytes": 5239,
+      "sha256": "c8ab68bf8666f2fd565c3004d12de843cd881effa874a4e7673b6b595a91176f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\评分表_6.1Sol.md",
+      "path": "数学竞赛原创试题/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "数学竞赛原创试题",
+      "bytes": 3329,
+      "sha256": "5fa4ad09408524d3b187c9e443450a2c820c5e1056aecffc5d58f3e09b57f1c8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第01题.md",
+      "path": "数学竞赛原创试题/submission/答案/第01题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 12173,
+      "sha256": "6fe08c3e49526f7f428563095323614e6a85a577400ecb3b3bef1bb1335cc5c9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第02题.md",
+      "path": "数学竞赛原创试题/submission/答案/第02题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 9252,
+      "sha256": "d0c663c87e3ef6f4742b0596f736acd1f850a5478892d2291d9afd88a6fa16e6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第03题.md",
+      "path": "数学竞赛原创试题/submission/答案/第03题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 7917,
+      "sha256": "5f7e091b2b002b9e90bee2098d1f6397eb9c1e02cd93e426b5174cca670ca820"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第04题.md",
+      "path": "数学竞赛原创试题/submission/答案/第04题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 10171,
+      "sha256": "2d30833e5517d8ba85caf9616c66aeac9122eb8e942c636f1ef97f8a1a2ce7cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第05题.md",
+      "path": "数学竞赛原创试题/submission/答案/第05题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 8596,
+      "sha256": "46303b6f8e6f6b853384c9ba2a08d174874698db8ff4877b57fead06ba27c29a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第06题.md",
+      "path": "数学竞赛原创试题/submission/答案/第06题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 6406,
+      "sha256": "1f5a237e147a1940a1b5a999e9dc77ecb5e93ab11fa2e5d9adf67a9ce03516a3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第07题.md",
+      "path": "数学竞赛原创试题/submission/答案/第07题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 10806,
+      "sha256": "1bbbf6d8150c7b660fbbcecd2197e12f9cc0eea5600f074edbf610657e6d4ea3"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\答案\\第08题.md",
+      "path": "数学竞赛原创试题/submission/答案/第08题.md",
+      "role": "submission",
+      "task": "数学竞赛原创试题",
+      "bytes": 9846,
+      "sha256": "8b8233127084401df84839d9364df408146af04df3de94fc0bb42fec932da4a6"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "星际战舰编队/cost.json",
+      "role": "cost",
+      "task": "星际战舰编队",
+      "bytes": 530,
+      "sha256": "9441e5b39a3b447c131b4021500a7f0db236cf73a766c431ebee3552b09528eb"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\星际战舰编队\\codex\\main\\result.json",
+      "path": "星际战舰编队/grading/codex/main/result.json",
+      "role": "result",
+      "task": "星际战舰编队",
+      "bytes": 8098,
+      "sha256": "69f72ae610320651fe3fde8b000db5e96b1c940550feeaa600ab612c6e581447"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\评分表_6.1Sol.md",
+      "path": "星际战舰编队/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "星际战舰编队",
+      "bytes": 7310,
+      "sha256": "ea228492efbf68e6a05f97aa77e5470f8a69eb66cf41a2854889575b73982943"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\index.html",
+      "path": "星际战舰编队/submission/index.html",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 1008,
+      "sha256": "7e147613d237458d2f5aa9c3dde9595147517f20be67691bd27834a6cf8a16f9"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\01_math_rng.js",
+      "path": "星际战舰编队/submission/js/01_math_rng.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 15601,
+      "sha256": "c69a899e43293c74cb1756f719b04bff6ebbd486d293504665f9f0cd6bfcd2bf"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\02_palette_materials.js",
+      "path": "星际战舰编队/submission/js/02_palette_materials.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 7084,
+      "sha256": "79acbee8c676f19648078e79f76cf830e77c44dca6596d57ce679d3f10ed98d2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\03_voxel_core.js",
+      "path": "星际战舰编队/submission/js/03_voxel_core.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 28537,
+      "sha256": "63c4ae18b05d796ba9a4983f8dd38ee4f44d8267350a6b26d153147bfe332655"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\04_ships_weapons.js",
+      "path": "星际战舰编队/submission/js/04_ships_weapons.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 30099,
+      "sha256": "6b4219359274ac5f4d97a20f36a03a36795fe31cb30e7af92888c11a603272c6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\05_asteroids.js",
+      "path": "星际战舰编队/submission/js/05_asteroids.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 16885,
+      "sha256": "e8a58b473ce6941657a765d9025c631905fea0b5e3dcaa73c10c5cda2f0a2038"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\06_interiors.js",
+      "path": "星际战舰编队/submission/js/06_interiors.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 30160,
+      "sha256": "b46de9b549464f0682a0122a8f9542f47bbf0f764c26528f9f20dacb384727c0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\07_shaders.js",
+      "path": "星际战舰编队/submission/js/07_shaders.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 36510,
+      "sha256": "47b8682d89f9a5a70dfad9a7a42280ba8429dfc0d0b8656ecacab6f6f8dedf52"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\08_timeline_director.js",
+      "path": "星际战舰编队/submission/js/08_timeline_director.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 33186,
+      "sha256": "2297c8c0cafb18b32047882d4d67cbd7c00b78b0637f22e2be785e1926db1fc6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\js\\09_renderer_main.js",
+      "path": "星际战舰编队/submission/js/09_renderer_main.js",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 79315,
+      "sha256": "f1dbad2c95650904d363083bc64e421dcabfd2dce5eb47715d223530976e52c5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\设计说明.md",
+      "path": "星际战舰编队/submission/设计说明.md",
+      "role": "submission",
+      "task": "星际战舰编队",
+      "bytes": 6104,
+      "sha256": "10895db698654d023ce3bc1aa6da9d98ef0fa18982dbed0dea5eb8a2ae6ab740"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "机械结构重建/cost.json",
+      "role": "cost",
+      "task": "机械结构重建",
+      "bytes": 862,
+      "sha256": "4a61dfc68276148228b3d6c24a3363f9378aa30bd509a667c11d01dd03436639"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\机械结构重建\\codex\\main\\result.json",
+      "path": "机械结构重建/grading/codex/main/result.json",
+      "role": "result",
+      "task": "机械结构重建",
+      "bytes": 6769,
+      "sha256": "ef8e9cbffb8c176dd3bc581b87201a0e003636b553d6136b713ad9381e5e2c93"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\机械结构重建\\评分表_6.1Sol.md",
+      "path": "机械结构重建/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "机械结构重建",
+      "bytes": 3273,
+      "sha256": "daae3476b982a4245ac23f494719a73119ed0468a7fe9fcdca6c985efaa3a55f"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\机械结构重建\\答案\\第01题.json",
+      "path": "机械结构重建/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 9437,
+      "sha256": "1c5f0e4df4999cacc209bd8ef822dcb8c766393e0b40211b98d2458d6e28ba7e"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\机械结构重建\\答案\\第02题.json",
+      "path": "机械结构重建/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "机械结构重建",
+      "bytes": 8111,
+      "sha256": "6311f3330fc6b987ffa52b146c55e130242634fbc0a0dd48096cc2b77203cf2c"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "果冻冲击与造浪水槽/cost.json",
+      "role": "cost",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 548,
+      "sha256": "75a2e331f0fa313825b003350daf995fc0e8b0f9b495f0bd80e165444ef59f98"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\codex\\main\\result.json",
+      "path": "果冻冲击与造浪水槽/grading/codex/main/result.json",
+      "role": "result",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 6574,
+      "sha256": "4cf3cc0024565b97b0d1c6c29f3a76d4538ee959d37c32faead752d3d5423c81"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\评分表_6.1Sol.md",
+      "path": "果冻冲击与造浪水槽/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 4888,
+      "sha256": "194e916280c28e568e684758804eddf3b462d989217bf2cf0880cd8f65b83fb2"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\css\\style.css",
+      "path": "果冻冲击与造浪水槽/submission/css/style.css",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 9308,
+      "sha256": "0d1b28ad89013f084dd95388f1f168aa927e5139a2d44a9dc5c8b4121d0e36f8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\index.html",
+      "path": "果冻冲击与造浪水槽/submission/index.html",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 9250,
+      "sha256": "d8c8c8a75c243abb5963031252fec04d7dfa820a247bc4ff9f997b445b8751cb"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\audio.js",
+      "path": "果冻冲击与造浪水槽/submission/js/audio.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 13677,
+      "sha256": "fee898ade0721c04f56e0cb3ecaf0fa944ab7258596443364b9a024bdc7ade63"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\demos.js",
+      "path": "果冻冲击与造浪水槽/submission/js/demos.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 21084,
+      "sha256": "15939cf9ae48a1f731f293762d97d3cf49215ddfdb031b6dc8b44fa4b31c9475"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\fluid-gpu.js",
+      "path": "果冻冲击与造浪水槽/submission/js/fluid-gpu.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 68006,
+      "sha256": "fdb4eb64817ebd3ca5c40a512d6ed3189eb7b8e9968b1000b5cdc8b16747da21"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\gpu-core.js",
+      "path": "果冻冲击与造浪水槽/submission/js/gpu-core.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 34902,
+      "sha256": "079f955daecb31edb548770d0faf344a0dfb28f37f8adf8b66bb0f2a624e2a58"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\jelly-renderer.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly-renderer.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 22353,
+      "sha256": "1dd6494b4ed06ebaedf51428445bf4c7afedb782468d3af0db3efc97bc45d2e5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\jelly-sim.js",
+      "path": "果冻冲击与造浪水槽/submission/js/jelly-sim.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 59365,
+      "sha256": "98d0a1f3fb820812a6a4def3fda97bbe64282eb4acde0061f53861694eebe0d6"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\main.js",
+      "path": "果冻冲击与造浪水槽/submission/js/main.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 17029,
+      "sha256": "57b7f65b5049667f3806f81c8654895a5281d547b7483da090fa6cce69c45294"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\math.js",
+      "path": "果冻冲击与造浪水槽/submission/js/math.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 11590,
+      "sha256": "07e7c6155a6d0e76443b5ebc6b84defb1e5a9199479306e0a606fd4cdbdf05e0"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\js\\tank-renderer.js",
+      "path": "果冻冲击与造浪水槽/submission/js/tank-renderer.js",
+      "role": "submission",
+      "task": "果冻冲击与造浪水槽",
+      "bytes": 50716,
+      "sha256": "bd74256d28281ae7717b440072ecc197fe7dec345114cfb1be9184a1a04540c3"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\usage.json",
+      "path": "鲁班锁拆解/cost.json",
+      "role": "cost",
+      "task": "鲁班锁拆解",
+      "bytes": 523,
+      "sha256": "6e948b5b1f5958f4794f5508007cbfa48ea8221f5964907391aae155f0206f10"
+    },
+    {
+      "source": "E:\\Project\\AI_OneShot_Bench\\orchestrator\\grading\\Gemini\\4Carbon\\鲁班锁拆解\\codex\\main\\result.json",
+      "path": "鲁班锁拆解/grading/codex/main/result.json",
+      "role": "result",
+      "task": "鲁班锁拆解",
+      "bytes": 2878,
+      "sha256": "158fb869c48dfa82556640824fc56e54bede3c70f05dc4ff8106696971e62e08"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\评分表_6.1Sol.md",
+      "path": "鲁班锁拆解/scores/评分表_6.1Sol.md",
+      "role": "score_sheet",
+      "task": "鲁班锁拆解",
+      "bytes": 1808,
+      "sha256": "8e9aa146cee46a8fcca08dff4a64e0e0f0593ad473594ef60c8efca1c717e2f5"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第01题.json",
+      "path": "鲁班锁拆解/submission/答案/第01题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 630,
+      "sha256": "98221414a7d5e2be7305254ac7c35fd5b2ffe9d46d8ddd383dcf0ed6e7b894fa"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第02题.json",
+      "path": "鲁班锁拆解/submission/答案/第02题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 722,
+      "sha256": "0f5f83146de47019949c087356e790e4041d3653099c59fcf55dfb424ae292da"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第03题.json",
+      "path": "鲁班锁拆解/submission/答案/第03题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 935,
+      "sha256": "2b6ef43b9e1cf3752cfe13b56c0af71abd6c1892d1af9e2fa37c7a78a549ebc8"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第04题.json",
+      "path": "鲁班锁拆解/submission/答案/第04题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 732,
+      "sha256": "9e8a48f25275f7c55aea4227311c44919f663af82d50d5fb3fc2153a81521f8a"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第05题.json",
+      "path": "鲁班锁拆解/submission/答案/第05题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 1207,
+      "sha256": "bcd6e33c4fd2d4c4c17eb0791d6bffe63b9d9162b8cab2dae87fadddb7492df1"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第06题.json",
+      "path": "鲁班锁拆解/submission/答案/第06题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 972,
+      "sha256": "bd118b15ca75b9cc65f49cb82fc9cb2672b8bbf3c4cb199d5acacc58c9d78a68"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\答案\\第07题.json",
+      "path": "鲁班锁拆解/submission/答案/第07题.json",
+      "role": "submission",
+      "task": "鲁班锁拆解",
+      "bytes": 2391,
+      "sha256": "c40169e82b17d1bc43faffdc3415a48ee5efab2ccfd32275fbb06e2973d5f5af"
+    }
+  ],
+  "excluded": [
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\AE风味动效设计编辑器\\AE风味动效设计编辑器.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\analyze_scene.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\bvh.hpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\cub_sort_helper.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\exp.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\exp2_bvh4_woop.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\exp3_bvh4_nospill.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\exp4_wavefront.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\exp5_cwbvh.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\fast_prof_build.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\grader.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\grader.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\prof_bvh4_breakdown.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\prof_v1.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\prof_v1.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\prof_v1.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_base.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_base.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_base.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_stats.build.log",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_stats.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\profile_stats.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\reference.cu",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\render_math.cuh",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\rt.h",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\run_ncu.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\run_prof_v1.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\run_profile.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\smoke_test.py",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\tmp_b1.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\tmp_exp_out.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\tmp_prof_out.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\tmp_prof_v1.bin",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\光线追踪渲染加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\光线追踪渲染加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\dist",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\动态路由塔防\\动态路由塔防.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\bundle.js",
+      "reason": "构建输出；生成入口 package.json"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\太阳雨渔港3D渲染\\太阳雨渔港3D渲染.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\形式化证明题\\形式化证明题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\node_modules",
+      "reason": "依赖、缓存、编译产物或题目数据"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\操作系统嵌套\\操作系统嵌套.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\bot.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\dev",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\攻城略地.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\攻城略地\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze10.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze10.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze11.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze11.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze3.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze4.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze4.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze5.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze5.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze6.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze6.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze7.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze7.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze8.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze8.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze9.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\analyze9.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\grader.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\profile_v2.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\profile_v2.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\profile_v3.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\profile_v3.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\unit_test.cpp",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\unit_test.exe",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\数字电路仿真器加速.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数字电路仿真器加速\\数据",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\数学竞赛原创试题.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\数学竞赛原创试题\\题目",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\星际战舰编队\\星际战舰编队.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\机械结构重建\\机械结构重建",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\机械结构重建\\机械结构重建.md",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\果冻冲击与造浪水槽\\果冻冲击与造浪水槽.md",
+      "reason": "题面"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\鲁班锁拆解",
+      "reason": "标准题只取交付答案"
+    },
+    {
+      "source": "H:\\AI_OneShot_Model\\Gemini\\4Carbon\\鲁班锁拆解\\鲁班锁拆解.md",
+      "reason": "标准题只取交付答案"
+    }
+  ],
+  "missing_answers": []
+}
