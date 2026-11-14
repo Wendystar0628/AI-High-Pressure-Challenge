@@ -7,6 +7,8 @@ import { hasCosts } from '../../ui/cost.js';
 /** Sorting by test cost: cheapest first, or (cost-desc) dearest first. */
 export const COST_SORTS = ['cost', 'cost-desc'];
 export const isCostSort = (k) => COST_SORTS.includes(k);
+/** Sorting by one part of the total (a kind of tasks or a category): the bar and the big number show that part. */
+export const isPartSort = (k) => k !== 'total' && !isCostSort(k);
 
 export const VIEWS = ['total', 'pass', 'parts', 'kinds', 'matrix', 'compare'];
 export const PASS = 60;
@@ -104,9 +106,10 @@ const maxOf = (vals) => {
  *   info: Map<id, { id, model, status, total, totalRank, officialRank, delta, sortRank, sortValue,
  *                   std, des, cats:{k}, tasks:{k}, contrib:{k} }>,
  *   order: [id]   (sorted by S.sort; ranked first, then the rest),
- *   best: { total, std, des, cat:{k}, task:{k}, contrib:{k} },
+ *   best: { total, std, des, cat:{k}, task:{k}, contrib:{k}, sort },   (sort: the best value of a score sort)
  *   weights: effective weights {k: pct} (official when not custom),
- *   pass: { yes, no }
+ *   pass: { yes, no }   (by the sorted score: the total, or the part sorted by),
+ *   costMax: the largest test cost (¥) of a ranked model, or null
  * }
  */
 export function compute(data, S) {
@@ -170,13 +173,18 @@ export function compute(data, S) {
     task: Object.fromEntries(data.tasks.map((k) => [k.key, maxOf(ranked.map((x) => x.tasks[k.key]))])),
     contrib: Object.fromEntries(data.categories.map((c) => [c.key, maxOf(ranked.map((x) => x.contrib[c.key]))])),
   };
-  const passYes = ranked.filter((x) => x.total != null && round1(x.total) >= PASS).length;
+  const part = isPartSort(S.sort);
+  best.sort = part ? maxOf(ranked.map((x) => x.sortValue)) : best.total;
+  const passOf = (x) => (part ? x.sortValue : x.total);
+  const passYes = ranked.filter((x) => passOf(x) != null && round1(passOf(x)) >= PASS).length;
+  const costs = ranked.map((x) => data.score(x.id)?.cost?.cny).filter((v) => v != null && Number.isFinite(+v));
   return {
     info,
     order: sorted.map((e) => e.id),
     best,
     weights,
-    pass: { yes: passYes, no: ranked.filter((x) => x.total != null).length - passYes },
+    pass: { yes: passYes, no: ranked.filter((x) => passOf(x) != null).length - passYes },
+    costMax: costs.length ? Math.max(...costs.map(Number)) : null,
   };
 }
 

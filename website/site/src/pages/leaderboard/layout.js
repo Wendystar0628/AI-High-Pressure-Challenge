@@ -93,3 +93,18 @@ export function fitText(textEl, full, maxW) {
   textEl.textContent = '';
   return false;
 }
+
+/**
+ * The top of the ¥ scale used when sorting by test cost: five equal steps, each a round amount
+ * (1, 2, 2.5 or 5 × 10ⁿ), so the 20 / 40 / 60 / 80 grid lines of the 0–100 scale fall on round amounts.
+ */
+export function costTop(max) {
+  if (!(max > 0)) return 1;
+  const raw = max / 5;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((f) => f * mag).find((s) => s >= raw - 1e-9);
+  return step * 5;
+}
+
+/** The ¥ scale onto the same range as the 0–100 scale (scaleX). */
+export const scaleCost = (W, max) => scaleX(W).copy().domain([0, costTop(max)]);

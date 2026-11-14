@@ -2,6 +2,7 @@
 // column of a header row, so its scale lines up with every row:
 //   total / kinds / compare: 0 … 100 and the pass line label
 //   pass:   −60 … +40 (0 at 60), "及格 4 │ 未及格 3" at the right end
+//   total / pass sorted by test cost: ¥0 … ¥top (layout.js costTop), no pass line
 //   parts:  the legend (two kind groups, 10 categories with weights), hover = focus
 //   matrix: the column heads (category icon, name, weight; or task numbers)
 // Groups whose content kind changes are wiped in again (stage 1 of a switch).
@@ -9,8 +10,8 @@ import { svg as svgEl, t, pick, fmtPct, links, iconURL, inlineSVG, round1 } from
 import { starPath, fill } from '../../charts/index.js';
 import { attachTip, hideTip } from '../../ui/index.js';
 import { dur, css, reduced } from '../../motion.js';
-import { scaleX, columns, kindSpans, catSpans, fitText, AXIS_H } from './layout.js';
-import { PASS } from './model.js';
+import { scaleX, columns, kindSpans, catSpans, fitText, costTop, AXIS_H } from './layout.js';
+import { PASS, isCostSort } from './model.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const Y1 = 9; // kind bands
@@ -36,10 +37,11 @@ export function createAxis({ data, state, computed, onFocus }) {
   };
 
   function signature(view) {
+    const cost = (view === 'total' || view === 'pass') && isCostSort(state.sort);
     return {
-      ticks: view === 'pass' ? 'pass' : view === 'total' || view === 'kinds' || view === 'compare' ? 'pct' : '',
-      passlabel: view === 'total' || view === 'pass' || view === 'kinds' || view === 'compare' ? 'on' : '',
-      right: view === 'pass' ? 'pass' : view === 'kinds' ? 'kinds' : '',
+      ticks: cost ? 'cost' : view === 'pass' ? 'pass' : view === 'total' || view === 'kinds' || view === 'compare' ? 'pct' : '',
+      passlabel: !cost && (view === 'total' || view === 'pass' || view === 'kinds' || view === 'compare') ? 'on' : '',
+      right: view === 'pass' && !cost ? 'pass' : view === 'kinds' ? 'kinds' : '',
       cols: view === 'parts' ? 'legend' : view === 'matrix' ? `matrix-${state.cols}` : '',
     };
   }
@@ -49,9 +51,12 @@ export function createAxis({ data, state, computed, onFocus }) {
     if (!kind) return;
     // a narrow plot (phone width) keeps 0, the pass line and 100
     const narrow = x(100) - x(0) < 170;
+    // by test cost the same six positions carry round amounts (the ¥ scale ends at costTop)
+    const top = kind === 'cost' ? costTop(computed().costMax) : 0;
+    const yuan = (v) => `¥${+((top * v) / 100).toFixed(2)}`;
     for (const v of narrow ? [0, 60, 100] : [0, 20, 40, 60, 80, 100]) {
-      const label = kind === 'pass' ? (v === PASS ? '0' : v > PASS ? `+${v - PASS}` : `−${PASS - v}`) : String(v);
-      text(g, { class: `tick-label${v === PASS ? ' is-pass' : ''}`, x: x(v), y: Y3, 'text-anchor': v === 0 ? 'start' : 'middle' }, label);
+      const label = kind === 'cost' ? yuan(v) : kind === 'pass' ? (v === PASS ? '0' : v > PASS ? `+${v - PASS}` : `−${PASS - v}`) : String(v);
+      text(g, { class: `tick-label${v === PASS && kind !== 'cost' ? ' is-pass' : ''}`, x: x(v), y: Y3, 'text-anchor': v === 0 ? 'start' : 'middle' }, label);
     }
   }
 

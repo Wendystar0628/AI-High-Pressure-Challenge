@@ -14,6 +14,13 @@
 .page-leaderboard .lb-board.has-cost {
   --lb-grid: 2rem var(--lb-rank-w) 1.5rem minmax(9rem, var(--lb-name-w)) minmax(4rem, 1fr) 4.75rem var(--lb-cost-w) var(--lb-tok-w);
 }
+/* sorted by a part of the total (a kind or a category): the score column also holds the total in small grey */
+.page-leaderboard .lb-board.is-by-part {
+  --lb-grid: 2rem var(--lb-rank-w) 1.5rem minmax(9rem, var(--lb-name-w)) minmax(4rem, 1fr) 7.25rem;
+}
+.page-leaderboard .lb-board.has-cost.is-by-part {
+  --lb-grid: 2rem var(--lb-rank-w) 1.5rem minmax(9rem, var(--lb-name-w)) minmax(4rem, 1fr) 7.25rem var(--lb-cost-w) var(--lb-tok-w);
+}
 @media (min-width: 1360px) {
   .page-leaderboard {
     --lb-name-w: 15rem;
@@ -317,6 +324,25 @@
   font-weight: 600;
   font-stretch: var(--st-wide);
 }
+.lb-tot {
+  margin-right: 0.5rem;
+  color: var(--st-ink-2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-stretch: var(--st-wide);
+  letter-spacing: 0;
+}
+.mrow-head .lb-tot {
+  font-size: 0.62rem;
+}
+.lb-h-part {
+  color: var(--st-ink);
+  white-space: nowrap;
+}
+.lb-board.is-by-part .lb-h-score {
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+}
 .lb-rank-sub.is-up {
   color: var(--text-lime);
 }
@@ -488,6 +514,11 @@
 .lb-svg[data-grid='pass'] .lb-band {
   opacity: 1;
 }
+/* sorted by test cost: no pass line, 60 is a plain grid line of the ¥ scale */
+.lb-svg[data-grid='cost'] .lb-pass {
+  stroke: var(--st-rule);
+  stroke-dasharray: none;
+}
 .lb-svg[data-grid='none'] .lb-grid {
   opacity: 0;
 }
@@ -509,6 +540,25 @@
 }
 .mrow:is(:hover, :focus-within, .is-checked) .lb-seg {
   fill: var(--series-deep);
+}
+/* the total and pass views sorted by a part: one bar in that part's legend colour; by test cost: one grey bar */
+.lb-svg[data-metric='part'][data-look='total'] .lb-seg,
+.lb-svg[data-metric='part'][data-look='pass'] .lb-seg {
+  fill: var(--metric-c);
+  stroke: var(--metric-edge);
+  stroke-width: 1;
+}
+.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='part'][data-look='total'] .lb-seg,
+.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='part'][data-look='pass'] .lb-seg {
+  fill: color-mix(in srgb, var(--metric-c) 80%, var(--st-ink));
+}
+.lb-svg[data-metric='cost'][data-look='total'] .lb-seg,
+.lb-svg[data-metric='cost'][data-look='pass'] .lb-seg {
+  fill: color-mix(in srgb, var(--st-ink) 34%, var(--st-panel));
+}
+.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='cost'][data-look='total'] .lb-seg,
+.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='cost'][data-look='pass'] .lb-seg {
+  fill: color-mix(in srgb, var(--st-ink) 58%, var(--st-panel));
 }
 /* pass line: under 60 is neutral grey with a thin edge */
 .lb-svg[data-look='pass'].is-below .lb-seg {
@@ -966,6 +1016,15 @@
   }
   .page-leaderboard .lb-board.has-cost {
     --lb-grid: 0 1.75rem 1rem minmax(0, 1fr) max-content;
+  }
+  /* sorted by a part: the score cell (grey total, then the part's score) takes the width it needs */
+  .page-leaderboard .lb-board.is-by-part,
+  .page-leaderboard .lb-board.has-cost.is-by-part {
+    --lb-grid: 0 1.75rem 1rem minmax(0, 1fr) max-content;
+  }
+  .lb-tot {
+    margin-right: 0.3rem;
+    font-size: 0.66rem;
   }
   .lb-head {
     grid-template-columns: minmax(0, 1fr);

@@ -6,6 +6,9 @@
 // weights, grain and the open side panel live in the address. When the data
 // carries test costs, every row also shows its cost right of the score
 // (ui/cost.js), with the conversion rule as a second foot line.
+// Sorting by a part of the total (a kind or a category) turns the big number
+// into that part's score, with the total beside it in small grey; the total and
+// pass views then draw that part (rows.js). Sorting by cost draws the cost.
 import './style.css';
 import { boot, registerShortcut, setPanelOrder } from '../../shell/index.js';
 import { h, t, pick, links, getParam, setParams, fmtDate, fmtScore, fmtRank, modelLabel, iconURL, DASH } from '../../core/index.js';
@@ -13,7 +16,7 @@ import { createToolbar, createModelList, scoreTable, getCompare, onCompareChange
 import { exportButton, rowsToSVG } from '../../charts/index.js';
 import { dur, css, reduced, stagger, isInView, play } from '../../motion.js';
 import { scramble } from '../../vendor/stellar/fx.js';
-import { VIEWS, PASS, compute, officialWeights, isOfficial, parseWeights, formatWeights, sortKeys, headFigures, isCostSort } from './model.js';
+import { VIEWS, PASS, compute, officialWeights, isOfficial, parseWeights, formatWeights, sortKeys, headFigures, isCostSort, isPartSort, isTop } from './model.js';
 import { createRows, axisChanges } from './rows.js';
 import { createAxis } from './axis.js';
 import { createCompare } from './compare.js';
@@ -55,6 +58,9 @@ boot(async ({ data }) => {
   const sortName = (k) =>
     k === 'total' ? t('common.score.total') : k === 'standard' || k === 'design' ? t(`common.kind.${k}`) : isCostSort(k) ? t(`leaderboard.sort.${k === 'cost' ? 'cost' : 'costDesc'}`) : pick(data.category(k), 'name');
   const viewName = (v) => t(`leaderboard.views.${v}`);
+  // the short name in the score column head: 主动设计题, 数学推理 …
+  const sortShort = (k) => pick(data.category(k) ?? {}, 'short') || sortName(k);
+  const totalName = () => (state.custom ? t('common.score.custom') : t('common.score.total'));
 
   // ---------------- page head ----------------
   factsEl.replaceChildren(
@@ -190,18 +196,22 @@ boot(async ({ data }) => {
     plot: (cell, entry, ctx) => rows.plot(cell, entry, ctx),
     empty: t('common.toolbar.noMatch'),
   });
-  const rows = createRows({ data, state, computed, list });
+  const rows = createRows({ data, state, computed, list, sortLabel: sortName });
 
   function entries({ keepOrder = false } = {}) {
     const ids = keepOrder ? currentIds() : C.order.filter((id) => tb.matches(id));
+    const part = isPartSort(state.sort);
     return ids.map((id) => {
       const it = C.info.get(id);
       const rank = frozen ? frozen.info.get(id)?.totalRank ?? null : it.totalRank;
+      // the big number: the part sorted by (its best highlighted), else the total
+      if (part) return { id, model: it.model, value: it.sortValue, rank, ranked: it.total != null, best: it.status === 'ranked' && isTop(it.sortValue, C.best.sort) };
       return { id, model: it.model, value: it.total, rank, ranked: it.total != null };
     });
   }
 
-  // rank cell (the shared rank hook): the rank by the chosen sort, with the custom-weights move or the sort value beside it
+  // rank cell (the shared rank hook): the rank by the chosen sort, with the custom-weights move beside it (sorted by the total);
+  // sorted by a part, the score cell gets the total in small grey before the part's score
   function paintRow(li, entry, ctx) {
     const src = frozen ?? C;
     const it = src.info.get(entry.id);
@@ -219,11 +229,9 @@ boot(async ({ data }) => {
         sub = `${it.delta > 0 ? '▲' : '▼'}${Math.abs(it.delta)}`;
         cls = it.delta > 0 ? 'is-up' : 'is-down';
       }
-    } else {
-      rank = it.sortRank;
-      if (rank != null) sub = isCostSort(state.sort) ? fmtCNY(it.sortValue) : fmtScore(it.sortValue);
-    }
+    } else rank = it.sortRank;
     const costSort = isCostSort(state.sort);
+    if (isPartSort(state.sort)) li.querySelector('.mrow-score')?.prepend(h('small.lb-tot', fmtScore(now.total)));
     if (rank == null && costSort && it.status === 'ranked') {
       // by cost, a model without an amount (数据暂缺) has no rank: a dash, after the priced ones
       rankCell.replaceChildren(h('b.lb-rank-n', DASH));
@@ -241,14 +249,14 @@ boot(async ({ data }) => {
     // what a screen reader hears for the row
     const score = fmtScore(now.total);
     if (now.total == null && state.sort === 'total') return;
-    if (state.sort === 'total') sr.textContent = t('leaderboard.row.aria', { rank: it.totalRank, name, label: state.custom ? t('common.score.custom') : t('common.score.total'), score });
+    if (state.sort === 'total') sr.textContent = t('leaderboard.row.aria', { rank: it.totalRank, name, label: totalName(), score });
     else if (costSort)
-      sr.textContent = rank == null ? t('leaderboard.row.ariaCostNone', { name, score }) : t('leaderboard.row.ariaCost', { by: sortName(state.sort), rank, name, value: fmtCNY(it.sortValue), score });
+      sr.textContent = rank == null ? t('leaderboard.row.ariaCostNone', { name, label: totalName(), score }) : t('leaderboard.row.ariaCost', { by: sortName(state.sort), rank, name, value: fmtCNY(it.sortValue), label: totalName(), score });
     else
       sr.textContent =
         rank == null
-          ? t('leaderboard.row.ariaSortNone', { by: sortName(state.sort), name, score })
-          : t('leaderboard.row.ariaSort', { by: sortName(state.sort), rank, name, value: fmtScore(it.sortValue), score });
+          ? t('leaderboard.row.ariaSortNone', { by: sortName(state.sort), name, label: totalName(), score })
+          : t('leaderboard.row.ariaSort', { by: sortName(state.sort), rank, name, value: fmtScore(it.sortValue), label: totalName(), score });
   }
 
   // ---------------- measuring ----------------
@@ -280,9 +288,12 @@ boot(async ({ data }) => {
       const by = isCostSort(state.sort) ? t(`leaderboard.sort.${state.sort === 'cost' ? 'costBy' : 'costByDesc'}`) : pick(data.category(state.sort) ?? {}, 'short') || sortName(state.sort);
       hRank.replaceChildren(...[h('span', t('leaderboard.head.rank')), state.sort !== 'total' ? h('small.lb-h-by', by) : null].filter(Boolean));
       hName.textContent = t('leaderboard.head.model');
-      hScore.textContent = state.custom ? t('common.score.custom') : t('common.score.total');
+      // sorted by a part: its name over the big numbers, the total over the small grey ones
+      if (isPartSort(state.sort)) hScore.replaceChildren(h('small.lb-tot', totalName()), h('span.lb-h-part', sortShort(state.sort)));
+      else hScore.textContent = totalName();
     }
     board.dataset.view = v;
+    board.classList.toggle('is-by-part', isPartSort(state.sort));
     if (hCostBtn) {
       const on = isCostSort(state.sort);
       hCostBtn.textContent = on ? t(`leaderboard.sort.${state.sort === 'cost' ? 'costBy' : 'costByDesc'}`) : t('common.cost.label');
@@ -367,7 +378,10 @@ boot(async ({ data }) => {
     sortSel.value = k;
     setParams({ sort: k === 'total' ? null : k });
     C = compute(data, state);
+    // the score column widens for the grey total (or narrows back): measure the plot first, so the bars morph on the new width
     paintHeads();
+    measure();
+    if (state.view !== 'compare') axis.render(state.view, { animate: true });
     refresh();
     if (!reduced())
       setTimeout(() => {
@@ -463,7 +477,10 @@ boot(async ({ data }) => {
   }
 
   // ---------------- weights ----------------
+  // the weights only change the total: moving them goes back to sorting by the total
+  const toTotal = () => state.sort !== 'total' && setSort('total');
   function weightsInput() {
+    toTotal();
     if (!state.dragging) {
       state.dragging = true;
       frozen = C;
@@ -476,6 +493,7 @@ boot(async ({ data }) => {
   }
   let commitTimer = 0;
   function weightsCommit(wait) {
+    toTotal();
     clearTimeout(commitTimer);
     commitTimer = setTimeout(() => {
       state.dragging = false;

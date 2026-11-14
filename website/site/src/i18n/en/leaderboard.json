@@ -72,11 +72,11 @@
     "passCount": "Passed {a} │ Below {b}"
   },
   "row": {
-    "ariaCost": "Rank {rank} by {by}, {name}, test cost {value}, total {score}",
-    "ariaCostNone": "No test cost data, {name}, total {score}",
+    "ariaCost": "Rank {rank} by {by}, {name}, test cost {value}, {label} {score}",
+    "ariaCostNone": "No test cost data, {name}, {label} {score}",
     "aria": "Rank {rank}, {name}, {label} {score}",
-    "ariaSort": "Rank {rank} in {by}, {name}, {by} {value}, total {score}",
-    "ariaSortNone": "No {by} score yet, {name}, total {score}"
+    "ariaSort": "Rank {rank} by {by}, {name}, {by} {value}, {label} {score}",
+    "ariaSortNone": "No {by} score yet, {name}, {label} {score}"
   },
   "tip": {
     "part": "{cat} {v} × {w} = {c}",

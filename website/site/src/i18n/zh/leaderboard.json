@@ -66,11 +66,11 @@
     "passCount": "及格 {a} │ 未及格 {b}"
   },
   "row": {
-    "ariaCost": "按{by}第 {rank} 名，{name}，测试开销 {value}，总分 {score} 分",
-    "ariaCostNone": "测试开销暂无数据，{name}，总分 {score} 分",
+    "ariaCost": "按{by}第 {rank} 名，{name}，测试开销 {value}，{label} {score} 分",
+    "ariaCostNone": "测试开销暂无数据，{name}，{label} {score} 分",
     "aria": "第 {rank} 名，{name}，{label} {score} 分",
-    "ariaSort": "{by}第 {rank} 名，{name}，{by} {value} 分，总分 {score} 分",
-    "ariaSortNone": "{by}未出分，{name}，总分 {score} 分"
+    "ariaSort": "按{by}第 {rank} 名，{name}，{by} {value} 分，{label} {score} 分",
+    "ariaSortNone": "{by}未出分，{name}，{label} {score} 分"
   },
   "tip": {
     "part": "{cat} {v} × {w} = {c}",
