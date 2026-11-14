@@ -45,13 +45,11 @@ const lum = (str) => {
 };
 const onColour = (key) => (lum(resolve(CATEGORY_VAR[key] ?? '--series')) > 0.3 ? 'var(--st-on-flare)' : '#ffffff');
 
-/** The look of a sort's bar: 'total' │ 'cost' │ 'part' (with its colour and edge). */
+/** The kind of a sort's bar: 'total' │ 'cost' │ 'part' (all drawn in the one series colour). */
 export function metricOf(key) {
   if (key === 'total') return { kind: 'total' };
   if (isCostSort(key)) return { kind: 'cost' };
-  if (key === 'standard') return { kind: 'part', c: 'var(--kind-standard)', edge: 'var(--lime-edge)' };
-  if (key === 'design') return { kind: 'part', c: 'var(--v-500)', edge: 'none' };
-  return { kind: 'part', c: fill.category(key), edge: needsEdge(key) ? 'var(--lime-edge)' : 'none' };
+  return { kind: 'part' };
 }
 
 export function createRows({ data, state, computed, list, sortLabel = (k) => k }) {
@@ -370,8 +368,6 @@ export function createRows({ data, state, computed, list, sortLabel = (k) => k }
     const mv = metric.kind === 'cost' ? null : metricValue(info);
     svg.classList.toggle('is-below', mv != null && round1(mv) < PASS);
     svg.dataset.metric = metric.kind;
-    svg.style.setProperty('--metric-c', metric.c ?? 'var(--series)');
-    svg.style.setProperty('--metric-edge', metric.edge ?? 'none');
     svg.classList.toggle('is-checked', li.classList.contains('is-checked'));
 
     // grid: 60 becomes the solid cyan base line in the pass view (stage 1)

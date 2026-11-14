@@ -541,25 +541,6 @@
 .mrow:is(:hover, :focus-within, .is-checked) .lb-seg {
   fill: var(--series-deep);
 }
-/* the total and pass views sorted by a part: one bar in that part's legend colour; by test cost: one grey bar */
-.lb-svg[data-metric='part'][data-look='total'] .lb-seg,
-.lb-svg[data-metric='part'][data-look='pass'] .lb-seg {
-  fill: var(--metric-c);
-  stroke: var(--metric-edge);
-  stroke-width: 1;
-}
-.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='part'][data-look='total'] .lb-seg,
-.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='part'][data-look='pass'] .lb-seg {
-  fill: color-mix(in srgb, var(--metric-c) 80%, var(--st-ink));
-}
-.lb-svg[data-metric='cost'][data-look='total'] .lb-seg,
-.lb-svg[data-metric='cost'][data-look='pass'] .lb-seg {
-  fill: color-mix(in srgb, var(--st-ink) 34%, var(--st-panel));
-}
-.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='cost'][data-look='total'] .lb-seg,
-.mrow:is(:hover, :focus-within, .is-checked) .lb-svg[data-metric='cost'][data-look='pass'] .lb-seg {
-  fill: color-mix(in srgb, var(--st-ink) 58%, var(--st-panel));
-}
 /* pass line: under 60 is neutral grey with a thin edge */
 .lb-svg[data-look='pass'].is-below .lb-seg {
   fill: var(--pending-fill);
