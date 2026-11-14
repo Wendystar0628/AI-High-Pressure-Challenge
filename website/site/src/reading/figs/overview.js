@@ -57,12 +57,12 @@ export function heroFigure({ data, c, vars }) {
         const short = pick(task, 'short');
         const room = w - 16;
         text(a, x + 8, cy + 4.5, no, 'tn tb tof');
-        const noW = measure(no, 13, 700) * 1.12 + 9;
+        const noW = measure(no, 13, 700) * 1.12 + 7;
         const nameW = measure(short, 13, 400);
         const mW = measure(String(task.minutes), 12.5, 400);
         if (noW + nameW <= room) text(a, x + 8 + noW, cy + 4.5, short, 'tof');
         else text(a, x + 8 + noW, cy + 4.5, ellipsis(short, room - noW), 'tof');
-        if (noW + nameW + mW + 14 <= room) text(a, x + w - 8, cy + 4.5, String(task.minutes), 'tn tof tsoft', 'end');
+        if (noW + nameW + mW + 6 <= room) text(a, x + w - 8, cy + 4.5, String(task.minutes), 'tn tof tsoft', 'end');
         x += w + GAP;
       }
       y += step;

@@ -1,4 +1,4 @@
-// /tasks/ 题目拆解: the entry to the 13 task pages, grouped by category
+// /tasks/ 题目详情: the entry to the 13 task pages, grouped by category
 // (website/docs/tasks.md 一). Everything here comes from data/tasks.json.
 import '../../reading/reading.css';
 import './style.css';

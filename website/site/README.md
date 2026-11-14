@@ -65,7 +65,7 @@ site/
   src/
     vendor/stellar/          技能的 stellar.css、fx.js、tokens.json、星图（sync 拷入，不要手改）
     core/  shell/  charts/  ui/  styles/  motion.js     骨架方
-    reading/                 阅读页工具：左栏与目录 reading.js/.css、长文 rich.js（块与行内标记、代码块）、公式 tex.js（TeX 转 MathML，不依赖 DOM）、content.js、图示 figs/（说明页、题目拆解、题目页共用）
+    reading/                 阅读页工具：左栏与目录 reading.js/.css、长文 rich.js（块与行内标记、代码块）、公式 tex.js（TeX 转 MathML，不依赖 DOM）、content.js、图示 figs/（说明页、题目详情、题目页共用）
     i18n/zh/common.json  i18n/en/common.json            骨架方
     i18n/<zh|en>/<页面类型>.json                         各页负责人（已建好空壳）
     pages/<类型>/main.js 及本页的样式和部件               各页负责人

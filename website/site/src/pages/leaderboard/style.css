@@ -541,6 +541,15 @@
 .mrow:is(:hover, :focus-within, .is-checked) .lb-seg {
   fill: var(--series-deep);
 }
+/* sorted by the standard tasks or one of their categories: the lime of the standard kind */
+.lb-svg.is-std:is([data-look='total'], [data-look='pass']:not(.is-below)) .lb-seg {
+  fill: var(--kind-standard);
+  stroke: var(--lime-edge);
+  stroke-width: 1;
+}
+.mrow:is(:hover, :focus-within, .is-checked) .lb-svg.is-std:is([data-look='total'], [data-look='pass']:not(.is-below)) .lb-seg {
+  fill: var(--kind-standard-deep);
+}
 /* pass line: under 60 is neutral grey with a thin edge */
 .lb-svg[data-look='pass'].is-below .lb-seg {
   fill: var(--pending-fill);

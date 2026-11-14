@@ -16,7 +16,7 @@
 | `deepseek` | DeepSeek | 蓝 | deepseek |
 | `qwen` | 通义千问（阿里） | 紫 | Qwen |
 | `hunyuan` | 腾讯混元 | 蓝 | 腾讯混元 |
-| `kimi` | Kimi（月之暗面） | 白字蓝点，只用于深色底 | KIMI |
+| `kimi` | Kimi（月之暗面） | 黑底圆角方块上白字蓝点（按 lobehub `Kimi.Avatar`：#000 底、图形占 60%），深浅底都能看清 | KIMI |
 | `zhipu` | 智谱，GLM 系列 | 蓝 | 智谱·AI |
 | `zai` | Z.ai，智谱的国际品牌，GLM 系列 | 无 | Z.ai |
 | `doubao` | 豆包（字节跳动） | 蓝绿紫 | 豆包大模型 |

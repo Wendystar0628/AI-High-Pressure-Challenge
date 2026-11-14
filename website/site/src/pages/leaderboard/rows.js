@@ -45,11 +45,12 @@ const lum = (str) => {
 };
 const onColour = (key) => (lum(resolve(CATEGORY_VAR[key] ?? '--series')) > 0.3 ? 'var(--st-on-flare)' : '#ffffff');
 
-/** The kind of a sort's bar: 'total' │ 'cost' │ 'part' (all drawn in the one series colour). */
-export function metricOf(key) {
+/** The kind of a sort's bar: 'total' │ 'cost' │ 'part'; std marks a standard-task part (drawn lime, the rest in the series colour). */
+export function metricOf(key, data) {
   if (key === 'total') return { kind: 'total' };
   if (isCostSort(key)) return { kind: 'cost' };
-  return { kind: 'part' };
+  const std = key === 'standard' || (key !== 'design' && data?.category(key)?.kind === 'standard');
+  return { kind: 'part', std };
 }
 
 export function createRows({ data, state, computed, list, sortLabel = (k) => k }) {
@@ -362,12 +363,13 @@ export function createRows({ data, state, computed, list, sortLabel = (k) => k }
 
     const T = target(info, view, li);
     const v = info.total;
-    const metric = metricOf(state.sort);
+    const metric = metricOf(state.sort, data);
     const barView = view === 'total' || view === 'pass';
     // the value the single bar of the total and pass views stands for (the total, the part sorted by; the cost is not scored)
     const mv = metric.kind === 'cost' ? null : metricValue(info);
     svg.classList.toggle('is-below', mv != null && round1(mv) < PASS);
     svg.dataset.metric = metric.kind;
+    svg.classList.toggle('is-std', !!metric.std);
     svg.classList.toggle('is-checked', li.classList.contains('is-checked'));
 
     // grid: 60 becomes the solid cyan base line in the pass view (stage 1)

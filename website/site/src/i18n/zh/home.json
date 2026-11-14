@@ -90,7 +90,7 @@
     },
     "tasks": {
       "eyebrow": "Tasks",
-      "name": "题目拆解",
+      "name": "题目详情",
       "line": "题面、考点、各模型得分",
       "count": "{n} 道题"
     },

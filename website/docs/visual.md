@@ -91,7 +91,7 @@
 | 首页首屏 | `orbit/orbit-corner-br` 从右下伸出，衬在星盘后面；星盘外圈刻度照 `dial/dial-ring` 的画法 | 0.2 |
 | 第一名徽记 | `rays/rays-burst-light`（深色用 `-dark`），首页前五名和模型得分页的第一名 | 1 |
 | 段落分隔 | `constellation/constellation-strip`（首页）、`orbit/orbit-divider`（说明页）、`rays/rays-divider`（榜单页的两组之间）；同一页只用一种 | 1 |
-| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；题目类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目拆解 `constellation/constellation-pair`；模型得分 `rays/rays-fan-up`；猜你想问 `star/star-cluster`（紫 300） | 0.5 |
+| 页头横幅 | 排行总榜 `dial/dial-quarter-tr`；题目类别榜 `dial/dial-arc-wide`；说明页 `trails/trails-wide`；题目详情 `constellation/constellation-pair`；模型得分 `rays/rays-fan-up`；猜你想问 `star/star-cluster`（紫 300） | 0.5 |
 | 看板角 | `starfield/starfield-panel`，每页只给最重要的一块看板 | 0.5 |
 | 空状态 | 没有数据 `orbit/orbit-nested`；未出分 `star/star-outline`；评测中 `trails/trails-center` | 1 |
 | 页脚 | `sphere/sphere-horizon` 从页脚下沿升起 | 0.5 |

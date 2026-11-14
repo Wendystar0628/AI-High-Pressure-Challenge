@@ -31,11 +31,11 @@
       "en": "FAQ"
     },
     "tasks": {
-      "title": "题目拆解",
+      "title": "题目详情",
       "en": "Tasks"
     },
     "task": {
-      "title": "题目拆解",
+      "title": "题目详情",
       "en": "Task"
     },
     "model": {
@@ -53,7 +53,7 @@
     "categoriesEn": "Categories",
     "models": "模型得分",
     "modelsEn": "Models",
-    "tasks": "题目拆解",
+    "tasks": "题目详情",
     "tasksEn": "Tasks",
     "about": "挑战赛说明",
     "aboutEn": "About",
