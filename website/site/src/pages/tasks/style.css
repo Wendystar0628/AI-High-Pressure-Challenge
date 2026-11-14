@@ -93,3 +93,31 @@ body[data-lang='en'] .tks-gh-l .st-pair > :last-child {
   color: var(--st-ink);
   font-weight: 600;
 }
+
+/* narrow screens: No. and name on the first line; kind, time bar and weight on the second */
+@media (max-width: 759px) {
+  .tks-recs .st-record.tks-rec {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'tag name name'
+      'kind time w';
+    gap: 0.4rem 0.9rem;
+    padding-block: 0.7rem;
+  }
+  .tks-rec .st-tag {
+    grid-area: tag;
+  }
+  .tks-rec .name {
+    grid-area: name;
+  }
+  .tks-kind {
+    grid-area: kind;
+  }
+  .tks-time {
+    grid-area: time;
+    grid-template-columns: minmax(3rem, 1fr) auto;
+  }
+  .tks-w {
+    grid-area: w;
+  }
+}

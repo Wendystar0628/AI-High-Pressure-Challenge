@@ -325,6 +325,10 @@ body[data-lang='en'] .rd-h4 {
   background: var(--st-paper);
   overflow-wrap: anywhere;
 }
+/* in tables (which scroll sideways in their wrap) code breaks only at natural points, so a short token like NAND stays whole */
+.rd-paper .rd-table code {
+  overflow-wrap: normal;
+}
 .rd-paper strong {
   font-weight: 700;
 }

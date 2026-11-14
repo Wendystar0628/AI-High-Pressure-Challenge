@@ -1090,6 +1090,42 @@
   }
 }
 
+/* 总分怎么合成 on a phone: name and total on one line, the ten cells across the full width below; heads keep only the icon */
+@media (max-width: 640px) {
+  .cmp {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .cmp-row > .cmp-name {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .cmp-row > .cmp-total {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .cmp-row > .cmp-bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-bottom: 0.5rem;
+  }
+  .cmp-row:not(.cmp-headrow, .cmp-grouprow) > :is(.cmp-name, .cmp-total) {
+    padding-top: 0.45rem;
+  }
+  .cmp-grouprow > :is(.cmp-name, .cmp-total) {
+    display: none;
+  }
+  .cmp-grouprow > .cmp-bar {
+    grid-row: 1;
+  }
+  .cmp-head {
+    justify-items: center;
+    padding-inline: 0;
+  }
+  .cmp-head :is(.cmp-head-w, .cmp-head-name) {
+    display: none;
+  }
+}
+
 /* the marker's ink edge shows once the flare stroke has swept across */
 @keyframes home-edge {
   from {

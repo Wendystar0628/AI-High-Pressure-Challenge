@@ -32,6 +32,16 @@
   box-shadow: none;
 }
 
+/* phones: the table scrolls sideways in its wrap, so keep task names on one line instead of squeezing them */
+@media (max-width: 759px) {
+  .rd-overview td > a {
+    white-space: nowrap;
+  }
+  .rd-overview .rd-deliv {
+    min-width: 11rem;
+  }
+}
+
 /* 03 a category */
 .rd-cat {
   margin-top: 3rem;

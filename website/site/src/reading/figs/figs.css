@@ -342,3 +342,15 @@ body[data-lang='en'] .rd-fig-title {
     opacity: 0;
   }
 }
+
+/* phones: shrinking the 720-wide figure to the screen leaves 4–5px text; keep it at least 520px wide and let it scroll sideways in its body */
+@media (max-width: 759px) {
+  .rd-fig-body {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-block: 0.4rem;
+  }
+  .rd-fig-body > .rd-svg {
+    min-width: 520px;
+  }
+}
