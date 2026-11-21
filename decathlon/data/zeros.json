@@ -1,0 +1,182 @@
+{
+  "reasons": {
+    "formal-proof": {
+      "hy4": {
+        "kind": "none",
+        "zh": "只留下两份查询求和写法、收敛定义等用法的试验脚本，时间耗在检索现成定理和推敲思路上；八道题均未写出正式定理，没有任何可核验的证明。",
+        "en": "Left only two scripts probing summation syntax, convergence definitions and other library features, spending time searching for existing theorems and considering approaches. None of the eight required theorems was written, leaving no proofs to verify."
+      },
+      "mimo-v2-6-pro": {
+        "kind": "none",
+        "zh": "八份文件都只抄了命题声明，证明用占位符留空，连所需数学库也没有导入；逐题检查全部出现语法或未知符号错误，没有一份完整证明可计分。",
+        "en": "All eight files contained only theorem statements with proof placeholders and omitted the required mathematics library imports. Every file failed compilation with syntax errors or unknown symbols, leaving no completed proof to assess."
+      },
+      "ernie-5-5-flash": {
+        "kind": "none",
+        "zh": "只写了第 1 题的部分证明和辅助引理，其中几处条件用错，编译失败，结尾仍是证明占位符；其余七题未交，没有一题完成。",
+        "en": "Submitted a partial proof and supporting lemmas for problem 1, but with several conditions wrong; it failed to compile and still ended in a proof placeholder. The other seven problems were missing, so none is complete."
+      },
+      "longcat-2-5": {
+        "kind": "none",
+        "zh": "八份文件都能编译，但证明部分全是 sorry（暂不证明的占位符）；核查发现所有结论都依赖这些空缺，八道题没有一题得到实际证明。",
+        "en": "All eight files compiled, but each proof consisted solely of sorry, a placeholder that admits a claim without proving it. Every conclusion depended on that placeholder, leaving none of the eight problems actually proved."
+      },
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "只交第 1 题的证明框架，留有 12 处未证明的占位符，还写错积分工具名称、调用不存在的求导方法；编译未能建立主定理，其余七题也没有提交。",
+        "en": "Submitted only a Problem 1 outline with 12 proof placeholders, an incorrect integration namespace name and nonexistent differentiation methods. Compilation failed to establish the main theorem, and the remaining seven problems were not submitted."
+      },
+      "step-5-preview": {
+        "kind": "crash",
+        "zh": "只交了第 1 题的证明，却把等式方向写反，还引用了数学库中不存在的名称；编译报出 85 处错误，无法核验为有效证明，其余七题也未提交。",
+        "en": "Submitted only a proof for problem 1, reversing equalities and referencing names absent from the mathematics library. Compilation reported 85 errors, leaving no verifiable valid proof; the other seven problems were not submitted."
+      },
+      "minimax-m3-1-flash": {
+        "kind": "none",
+        "zh": "只留下查询有限集合计数用法的草稿，没有八题中的任何正式定理；结束前仍在反复推敲第 1 题，思路始终没写成可检查的证明。",
+        "en": "Left only a scratch file querying finite-set counting functions, with none of the eight required theorems. At the end it was still reworking problem 1, without turning its ideas into a verifiable proof."
+      }
+    },
+    "math-olympiad": {
+      "hy4": {
+        "kind": "none",
+        "zh": "读完 24 题后没建答案目录，截止前还在反复推第 1 题，发现之前的推算不成立又重来；最终一份解答也没保存，24 题全部缺交。",
+        "en": "Read all 24 problems but never created an answers folder. Near the deadline it was still reworking problem 1 after finding its earlier calculation did not hold; no solution was saved, so all 24 are missing."
+      },
+      "mimo-v2-6-pro": {
+        "kind": "none",
+        "zh": "27 次工具调用全是读文件或列目录，没有一次写答案；之后一直推理到结束，连答案目录都没建，24 题全部缺交。",
+        "en": "All 27 tool calls read files or listed folders; none wrote an answer. It kept reasoning until time ran out and never even created the answers folder, so all 24 are missing."
+      },
+      "grok-4-7": {
+        "kind": "none",
+        "zh": "读完题只建了空的答案目录，说要保存第 4、5 题的完整解答，结束时却还在手算第 4 题；24 题没有一份答案文件。",
+        "en": "After reading the problems it created only an empty answers folder. It said it would save full solutions to problems 4 and 5, but at the end it was still working problem 4 by hand; none of the 24 has an answer file."
+      },
+      "longcat-2-5": {
+        "kind": "none",
+        "zh": "读完 24 题只建了空的答案目录，之后一直在想，结束时还在回忆一道几何题要用的结论、反复猜数值；没保存任何证明，24 题全部缺交。",
+        "en": "Read all 24 problems and created only an empty answers folder. At the end it was still trying to recall a result for a geometry problem and guessing values; no proof was saved, so all 24 are missing."
+      },
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "读完 24 题后一直推理，结束时还卡在第 6 题、反复换思路；没建答案目录，也没保存其他题的解答，24 题全部缺交。",
+        "en": "After reading all 24 problems it kept reasoning and was still stuck on problem 6 at the end, switching approaches again and again. No answers folder was created and no other solution saved, so all 24 are missing."
+      }
+    },
+    "raytracing": {
+      "grok-4-7": {
+        "kind": "slow",
+        "zh": "提交了完整的 GPU 渲染实现，每个像素的采样仍由单个线程依次计算；画面检查全部通过，但渲染需 3177 毫秒，原程序仅 514 毫秒，耗时为其 6.18 倍，未达计分门槛。",
+        "en": "Submitted a complete GPU renderer, with each thread computing one pixel's samples sequentially. All image checks passed, but rendering took 3,177 ms versus the original's 514 ms, or 6.18 times as long, below the performance threshold for points."
+      },
+      "step-5-preview": {
+        "kind": "wrong",
+        "zh": "提交的并行建树程序把根节点和首个子节点都编号为 0，子节点覆盖根节点，导致大量物体漏渲染；虽快约 2.83 倍，5 次画面检查仍全失败，每次约 97 万个像素与标准画面不符。",
+        "en": "The parallel scene-tree builder assigned index 0 to both the root and its first child, overwriting the root and omitting much of the scene. Despite a 2.83× speedup, all five image checks failed, with about 970,000 pixels outside tolerance each time."
+      }
+    },
+    "circuit": {
+      "longcat-2-5": {
+        "kind": "wrong",
+        "zh": "提交了批量并行仿真程序，却先更新存储电路状态的触发器，再读取输出，读成了下一时刻的值；9 项性能输出虽通过，7 项正确性检查全错，无法获得分数。",
+        "en": "Submitted a batch-parallel simulator, but updated the state-holding flip-flops before reading outputs, using the next state instead of the current one. All nine performance outputs passed, but all seven correctness checks failed, eliminating any points."
+      },
+      "dots3-note-preview": {
+        "kind": "crash",
+        "zh": "提交的批量仿真程序能编译，但处理不足一批的数据时，移动二进制位的次数可能算成负数；实测出现非法内存访问和堆损坏，7 项正确性、9 项性能测试全部崩溃。",
+        "en": "The batch simulator compiled, but its partial-batch handling could calculate a negative bit-shift count. Runs reported illegal memory accesses and heap corruption; all seven correctness and nine performance inputs crashed."
+      },
+      "step-5-preview": {
+        "kind": "crash",
+        "zh": "提交了运行时生成机器指令的仿真程序，但生成的代码在样例预热阶段就触发非法指令；7 项正确性和 9 项性能测试全部崩溃，尚未开始正式计时，没有有效成绩。",
+        "en": "Submitted a simulator that generates machine instructions at runtime, but its generated code triggered an illegal instruction during sample warm-up. All seven correctness and nine performance inputs crashed before timed simulation, producing no valid result."
+      }
+    },
+    "conquest": {
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "反复读题、查看示例并构思策略，首段会话接口报错后，续跑仍停在读题和整理摘要；最终未写出 bot.cpp，编译报源文件缺失，没有程序可以参加对局。",
+        "en": "Repeatedly read the specification and examples and considered strategies. After an API error ended the first session, the continuation still only read and summarized; no bot.cpp was written, compilation reported the missing source file, and no program could enter a match."
+      },
+      "step-5-preview": {
+        "kind": "slow",
+        "zh": "提交了可正常对局的策略程序，实现了留兵防守和扩张进攻；但 480 局仅 6 胜 474 负，胜率只有 1.25%，对战实力未达计分门槛。",
+        "en": "Submitted a working strategy program with defensive reserves and expansion attacks, but won only 6 of 480 games and lost 474. Its 1.25% win rate left its playing strength below the threshold for points."
+      }
+    },
+    "luban": {
+      "claude-haiku-5-5": {
+        "kind": "none",
+        "zh": "读过题面和第 1 题零件数据后持续推演，直到触发输出长度上限报错；恢复会话后仍未写出任何答案，八题没有一条可验证的拆解路线。",
+        "en": "After reading the instructions and first puzzle's piece data, prolonged reasoning hit the output limit. The resumed session still produced no answer files, leaving all eight puzzles without a verifiable disassembly route."
+      },
+      "hy4": {
+        "kind": "rule",
+        "zh": "只交了第 1 题一条 8 步路线，其余七题缺交；这条路线是用自编搜索脚本批量试探移动、再调检查器筛掉碰撞得到的，违反手工推理要求，不能计分。",
+        "en": "Handed in one eight-move route for puzzle 1 and left the other seven blank. That route came from a custom search script that tried moves in bulk and used the checker to weed out collisions, against the manual-reasoning rule, so it earns nothing."
+      },
+      "ernie-5-5-flash": {
+        "kind": "wrong",
+        "zh": "交齐八份路线，但第 1 题只有两次位移，没有把零件移出；其余七题第一步就发生碰撞。八题均未完成一次合法分离，没有有效拆解进展可计分。",
+        "en": "Submitted eight routes, but the first contained only two shifts without separating any pieces; the other seven collided on their first move. None achieved even one valid separation, leaving no disassembly progress eligible for credit."
+      },
+      "longcat-2-5": {
+        "kind": "wrong",
+        "zh": "只留下第 1 题的试答文件，第 4 条指令把 A 零件向外移出时发生碰撞，此前没有完成任何分离；其余七题未交，八题均无可计分的拆解进展。",
+        "en": "Left only a trial answer for the first puzzle. Its fourth instruction collided while removing piece A, before any valid separation; the other seven puzzles were unanswered, leaving no disassembly progress eligible for credit."
+      },
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "反复读取第 1 题零件数据、整理摘要并处理命令和编码问题，86 次工具调用后仍未创建答案目录，也没有检查拆解路线；八题全部缺交。",
+        "en": "Repeatedly reread the first puzzle's piece data, wrote summaries, and dealt with command and encoding issues. After 86 tool calls, no answer directory or route checks existed; all eight puzzles remained unanswered."
+      },
+      "step-5-preview": {
+        "kind": "wrong",
+        "zh": "只留下第 1 题的七份试探路线，检查全部在首次分离前碰撞，最后一份在第五条指令移出 A 零件时仍撞件；其余七题未交，没有可计分的拆解进展。",
+        "en": "Left seven trial routes for puzzle 1; all collided before the first separation. The final route still collided while removing piece A on its fifth instruction; the other seven puzzles were unanswered, leaving no disassembly progress eligible for credit."
+      },
+      "minimax-m3-1-flash": {
+        "kind": "wrong",
+        "zh": "只留下第 1 题一份三步试答，第三条指令移出 A 零件时发生碰撞，尚未完成任何分离；其余七题未交，八题均无可计分的拆解进展。",
+        "en": "Left only one three-move trial route for puzzle 1. Its third instruction collided while removing piece A, before any separation; the other seven puzzles were unanswered, leaving no disassembly progress eligible for credit."
+      }
+    },
+    "drawing": {
+      "mimo-v2-6-pro": {
+        "kind": "none",
+        "zh": "反复缩放图片、整理尺寸资料并声称要调用读图工具，还搜索了目录外的旧题记忆；直到结束答案目录仍为空，25 题没有一份建模结果可供核验。",
+        "en": "Repeatedly resized images, organized dimension data, and announced image-reading tool calls; it also searched memories of earlier tasks outside the working directory. The answer directory remained empty at the end, with no model submitted for any of the 25 problems."
+      },
+      "ernie-5-5-flash": {
+        "kind": "rule",
+        "zh": "交齐 25 份建模答案，但用自编脚本调用建模内核重建实体，逐步算出体积和外包尺寸，超出只许手工推理和预览的范围；25 题都涉及，按规定全部记 0。",
+        "en": "All 25 models were handed in, but custom scripts drove the geometry engine to rebuild the solids and compute volumes and bounding sizes step by step, beyond the allowed manual reasoning and previews. All 25 problems were involved, so all score 0."
+      },
+      "longcat-2-5": {
+        "kind": "rule",
+        "zh": "交齐 25 份建模答案，但用自编脚本按三角函数算出斜轴朝向、孔口位置和装配角度，再批量写进答案；这些量规定要手工推理得出，按违规记 0。",
+        "en": "All 25 models were handed in, but custom scripts used trigonometry to compute inclined-axis directions, hole positions and assembly angles, then wrote them into the answers in bulk. These must be worked out by hand, so the violation scores 0."
+      }
+    },
+    "jelly-tank": {
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "60 分钟里反复读题、查询目录和运行环境、推演方案，26 次工具调用没有一次写入作品文件；最终只留下题面，没有网页入口、模拟代码或可验证的演示。",
+        "en": "Spent 60 minutes rereading instructions, inspecting directories and the environment, and planning. None of its 26 tool calls wrote a project file; only the task statement remained, with no webpage entry point, simulation code, or verifiable demo."
+      }
+    },
+    "nested-os": {
+      "mimo-v2-6-pro": {
+        "kind": "crash",
+        "zh": "写出了桌面项目代码，却只做过内核脚本测试，没启动完整作品；播放器和图表模块的相对引用路径少退了一层，导致入口加载失败，一直卡在启动页，所有功能均无法验证。",
+        "en": "Wrote the desktop project but tested only its kernel script, never launching the complete app. Player and chart imports traversed one directory level too few, so startup dependencies failed to load; the window stayed on the boot screen and no functionality could be verified."
+      },
+      "dots3-note-preview": {
+        "kind": "none",
+        "zh": "读题后会话末段持续重复输出“1pro”，没有转入编写实现；目录里唯一留下的文件与原题面完全相同，没有项目源码、启动入口或资源，整题无交付内容可验证。",
+        "en": "After reading the task, the session ended in repeated output of “1pro” without implementing anything. The only remaining file exactly matched the original task statement; there was no project source, launch entry point, or assets to verify."
+      }
+    }
+  }
+}

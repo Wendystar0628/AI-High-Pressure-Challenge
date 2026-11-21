@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>页面未找到</title>
+<script>
+const path = location.pathname;
+const mounts = ["/decathlon/"];
+const hubHome = ['/', '/index.html', '/en', '/en/', '/en/index.html'].includes(path);
+if (!hubHome && !mounts.some(base => path === base.slice(0, -1) || path.startsWith(base))) {
+  const target = "/decathlon" + path;
+  const canonical = document.createElement('link');
+  canonical.rel = 'canonical';
+  canonical.href = "https://octathlon.wendystars.com" + target;
+  document.head.append(canonical);
+  location.replace(target + location.search + location.hash);
+}
+</script>
+<p>没有找到此页面。<a href="/">返回总站首页</a></p>
+</html>

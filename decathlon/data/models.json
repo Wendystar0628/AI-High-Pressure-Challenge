@@ -1,0 +1,445 @@
+[
+  {
+    "id": "claude-opus-5-5",
+    "key": "Claude/Opus5.5",
+    "name": "Claude Opus 5.5",
+    "short": "Opus5.5",
+    "aliases": [
+      "Opus",
+      "Opus 5.5"
+    ],
+    "vendor": "Anthropic",
+    "region": "us",
+    "logo": "claude",
+    "agent": "Claude Code",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "key": "Claude/Sonnet5.5",
+    "name": "Claude Sonnet 5.5",
+    "short": "Sonnet5.5",
+    "aliases": [
+      "Sonnet",
+      "Sonnet 5.5"
+    ],
+    "vendor": "Anthropic",
+    "region": "us",
+    "logo": "claude",
+    "agent": "Claude Code",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "claude-haiku-5-5",
+    "key": "Claude/Haiku5.5",
+    "name": "Claude Haiku 5.5",
+    "short": "Haiku5.5",
+    "aliases": [
+      "Haiku",
+      "Haiku 5.5"
+    ],
+    "vendor": "Anthropic",
+    "region": "us",
+    "logo": "claude",
+    "agent": "Claude Code",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "gpt-6-1-terra",
+    "key": "GPT/6.1Terra",
+    "name": "GPT 6.1 Terra",
+    "short": "6.1Terra",
+    "aliases": [
+      "Terra",
+      "6.1 Terra"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "gpt-6-astra",
+    "key": "GPT/6Astra",
+    "name": "GPT 6 Astra",
+    "short": "6Astra",
+    "aliases": [
+      "Astra",
+      "6 Astra"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "gpt-6-luna",
+    "key": "GPT/6Luna",
+    "name": "GPT 6 Luna",
+    "short": "6Luna",
+    "aliases": [
+      "Luna",
+      "6 Luna"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "gpt-5-6-sol",
+    "key": "GPT/5.6Sol",
+    "name": "GPT 5.6 Sol",
+    "short": "5.6Sol",
+    "aliases": [
+      "5.6 Sol",
+      "GPT-5.6 Sol"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-12"
+  },
+  {
+    "id": "hy4",
+    "key": "Hy/Hy4",
+    "name": "Hy4",
+    "short": "Hy4",
+    "aliases": [
+      "Hy",
+      "Hunyuan",
+      "混元",
+      "Tencent Hy4"
+    ],
+    "vendor": "Tencent",
+    "region": "cn",
+    "logo": "hunyuan",
+    "agent": "CodeBuddy Code",
+    "effort": "high",
+    "tested": "2026-11-13"
+  },
+  {
+    "id": "gemini-4-carbon",
+    "key": "Gemini/4Carbon",
+    "name": "Gemini 4 Carbon",
+    "short": "4Carbon",
+    "aliases": [
+      "Carbon",
+      "Gemini Carbon",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
+    "vendor": "Google",
+    "region": "us",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "high",
+    "tested": "2026-11-13"
+  },
+  {
+    "id": "gemini-4-hydrogen",
+    "key": "Gemini/4Hydrogen",
+    "name": "Gemini 4 Hydrogen",
+    "short": "4Hydrogen",
+    "aliases": [
+      "Hydrogen",
+      "Gemini Hydrogen",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
+    "vendor": "Google",
+    "region": "us",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "xhigh",
+    "tested": "2026-11-13"
+  },
+  {
+    "id": "qwen4-max",
+    "key": "Qwen/4Max",
+    "name": "Qwen4 Max Preview",
+    "short": "4Max Preview",
+    "aliases": [
+      "Qwen4",
+      "Qwen 4 Max",
+      "qwen4-max-preview",
+      "千问",
+      "通义千问"
+    ],
+    "vendor": "Alibaba",
+    "region": "cn",
+    "logo": "qwen",
+    "agent": "Qwen Code",
+    "effort": "xhigh",
+    "tested": "2026-11-15"
+  },
+  {
+    "id": "mimo-v2-6-pro",
+    "key": "MiMo/V2.6Pro",
+    "name": "MiMo V2.6 Pro",
+    "short": "V2.6Pro",
+    "aliases": [
+      "MiMo",
+      "V2.6 Pro",
+      "MiMo Pro",
+      "Xiaomi MiMo"
+    ],
+    "vendor": "Xiaomi",
+    "region": "cn",
+    "logo": "xiaomimimo",
+    "agent": "MiMo Code",
+    "effort": "high",
+    "tested": "2026-11-12"
+  },
+  {
+    "id": "kimi-k3-1-pro",
+    "key": "Kimi/K3.1Pro",
+    "name": "Kimi K3.1 Pro",
+    "short": "K3.1Pro",
+    "aliases": [
+      "K3.1 Pro",
+      "Kimi 3.1 Pro",
+      "Kimi K3.1",
+      "月之暗面",
+      "Moonshot"
+    ],
+    "vendor": "Moonshot AI",
+    "region": "cn",
+    "logo": "kimi",
+    "agent": "Kimi Code",
+    "effort": "max",
+    "tested": "2026-11-15"
+  },
+  {
+    "id": "ernie-5-5-flash",
+    "key": "ERNIE/5.5Flash",
+    "name": "ERNIE 5.5 Flash",
+    "short": "5.5Flash",
+    "aliases": [
+      "ERNIE 5.5",
+      "ERNIE 5.5 Flash Preview",
+      "ernie-5.5-flash-preview",
+      "文心",
+      "文心5.5",
+      "百度",
+      "Baidu"
+    ],
+    "vendor": "Baidu",
+    "region": "cn",
+    "logo": "wenxin",
+    "agent": "OpenCode",
+    "effort": "high",
+    "tested": "2026-11-16"
+  },
+  {
+    "id": "grok-4-7",
+    "key": "xAI/Grok4.7",
+    "name": "Grok 4.7",
+    "short": "4.7",
+    "aliases": [
+      "Grok 4.7",
+      "grok-4.7",
+      "grok-4.7-build",
+      "Grok",
+      "xAI"
+    ],
+    "vendor": "xAI",
+    "region": "us",
+    "logo": "grok",
+    "agent": "Grok Build",
+    "effort": "xhigh",
+    "tested": "2026-11-16"
+  },
+  {
+    "id": "longcat-2-5",
+    "key": "Meituan/LongCat2.5",
+    "name": "LongCat-2.5",
+    "short": "2.5",
+    "aliases": [
+      "LongCat 2.5",
+      "LongCat",
+      "龙猫",
+      "美团",
+      "Meituan"
+    ],
+    "vendor": "Meituan",
+    "region": "cn",
+    "logo": "longcat",
+    "agent": "OpenCode",
+    "effort": "max",
+    "tested": "2026-11-16"
+  },
+  {
+    "id": "dots3-note-preview",
+    "key": "Dots/Dots3NotePreview",
+    "name": "dots3-note preview",
+    "short": "dots3-note",
+    "aliases": [
+      "dots3",
+      "dots3-note",
+      "dots3-note-prev",
+      "小红书",
+      "点点",
+      "Dots",
+      "RedNote"
+    ],
+    "vendor": "Xiaohongshu",
+    "region": "cn",
+    "logo": "dots",
+    "agent": "OpenCode",
+    "effort": "max",
+    "tested": "2026-11-16"
+  },
+  {
+    "id": "step-5-preview",
+    "key": "StepFun/Step5Preview",
+    "name": "Step 5 Preview",
+    "short": "Step5",
+    "aliases": [
+      "Step 5",
+      "Step5",
+      "step-5-preview",
+      "阶跃",
+      "阶跃星辰",
+      "StepFun"
+    ],
+    "vendor": "StepFun",
+    "region": "cn",
+    "logo": "stepfun",
+    "agent": "OpenCode",
+    "effort": "high",
+    "tested": "2026-11-17"
+  },
+  {
+    "id": "gpt-6-2-astra",
+    "key": "GPT/6.2Astra",
+    "name": "GPT 6.2 Astra",
+    "short": "6.2Astra",
+    "aliases": [
+      "6.2 Astra",
+      "gpt-6.2-astra"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-18"
+  },
+  {
+    "id": "gpt-6-2-sol",
+    "key": "GPT/6.2Sol",
+    "name": "GPT 6.2 Sol",
+    "short": "6.2Sol",
+    "aliases": [
+      "6.2 Sol",
+      "gpt-6.2-sol"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-18"
+  },
+  {
+    "id": "gpt-6-1-sol",
+    "key": "GPT/6.1Sol",
+    "name": "GPT 6.1 Sol",
+    "short": "6.1Sol",
+    "aliases": [
+      "Sol",
+      "6.1 Sol"
+    ],
+    "vendor": "OpenAI",
+    "region": "us",
+    "logo": "openai",
+    "agent": "Codex",
+    "effort": "xhigh",
+    "tested": "2026-11-04"
+  },
+  {
+    "id": "claude-fable-5-2",
+    "key": "Claude/Fable5.2",
+    "name": "Claude Fable 5.2",
+    "short": "Fable5.2",
+    "aliases": [
+      "Fable",
+      "Fable 5.2"
+    ],
+    "vendor": "Anthropic",
+    "region": "us",
+    "logo": "claude",
+    "agent": "Claude Code",
+    "effort": "xhigh",
+    "tested": "2026-11-18"
+  },
+  {
+    "id": "gemini-4-neon",
+    "key": "Gemini/4Neon",
+    "name": "Gemini 4 Neon",
+    "short": "4Neon",
+    "aliases": [
+      "Neon",
+      "Gemini Neon",
+      "Gemini 4",
+      "Google",
+      "谷歌"
+    ],
+    "vendor": "Google",
+    "region": "us",
+    "logo": "gemini",
+    "agent": "Antigravity CLI",
+    "effort": "xhigh",
+    "tested": "2026-11-19"
+  },
+  {
+    "id": "deepseek-v4-1-flash",
+    "key": "DeepSeek/V4.1Flash",
+    "name": "DeepSeek V4.1 Flash",
+    "short": "V4.1Flash",
+    "aliases": [
+      "DeepSeek",
+      "V4.1 Flash",
+      "DeepSeek Flash"
+    ],
+    "vendor": "DeepSeek",
+    "region": "cn",
+    "logo": "deepseek",
+    "agent": "DeepSeek Harness",
+    "effort": "max",
+    "tested": "2026-11-12"
+  },
+  {
+    "id": "minimax-m3-1-flash",
+    "key": "MiniMax/M3.1Flash",
+    "name": "MiniMax M3.1 Flash",
+    "short": "M3.1Flash",
+    "aliases": [
+      "M3.1 Flash",
+      "MiniMax M3.1",
+      "MiniMax-M3.1-Flash",
+      "Space Bunny",
+      "MiniMax"
+    ],
+    "vendor": "MiniMax",
+    "region": "cn",
+    "logo": "minimax",
+    "agent": "MiniMax Code",
+    "effort": "max",
+    "tested": "2026-11-17"
+  }
+]

@@ -1,0 +1,1 @@
+var e=e=>+e.toFixed(2);function t(t,n,r,i=.4){let a=(i/Math.SQRT2-.25)*2*r,o=r;return`M${e(t)} ${e(n-o)}q${e(a)} ${e(o-a)} ${e(o)} ${e(o)}q${e(a-o)} ${e(a)} ${e(-o)} ${e(o)}q${e(-a)} ${e(a-o)} ${e(-o)} ${e(-o)}q${e(o-a)} ${e(-a)} ${e(o)} ${e(-o)}z`}var n=(e,n=.4)=>t(0,0,e,n),r=(e,t=3.4)=>t*Math.sqrt(Math.max(0,e));export{t as n,r,n as t};

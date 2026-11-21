@@ -1,0 +1,45 @@
+{
+  "updated": "2026-11-21",
+  "topics": [
+    {
+      "id": "decathlon",
+      "name": "AI十项全能",
+      "name_en": "AI Decathlon",
+      "status": "online",
+      "url": "/decathlon/",
+      "tasks": 13,
+      "categories": 10,
+      "ranked": 25,
+      "updated": "2026-11-21",
+      "top": [
+        {
+          "id": "gpt-6-2-astra",
+          "name": "GPT 6.2 Astra",
+          "short": "6.2Astra",
+          "vendor": "OpenAI",
+          "logo": "openai",
+          "effort": "xhigh",
+          "total": 84.0
+        },
+        {
+          "id": "gpt-6-2-sol",
+          "name": "GPT 6.2 Sol",
+          "short": "6.2Sol",
+          "vendor": "OpenAI",
+          "logo": "openai",
+          "effort": "xhigh",
+          "total": 74.3
+        },
+        {
+          "id": "gemini-4-neon",
+          "name": "Gemini 4 Neon",
+          "short": "4Neon",
+          "vendor": "Google",
+          "logo": "gemini",
+          "effort": "xhigh",
+          "total": 70.6
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN" data-lang="zh" data-root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI全能测评</title>
+    <meta name="description" content="给 AI 编程智能体出的限时挑战测评，每个专题有自己的题目和排行榜。" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f4f5f7" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=9f96ef1f" />
+    <link rel="alternate" hreflang="zh-CN" href="/" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <script>(function(){var here="zh",alt="./en/",q;try{q=new URLSearchParams(location.search)}catch(e){q=null}
+try{var p=localStorage.getItem('octa.lang'),inside=false;try{inside=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(e){}
+if(p!=='zh'&&p!=='en'){p=/^zh/i.test(navigator.language||'')?'zh':'en';localStorage.setItem('octa.lang',p)}
+if(p!==here&&!inside&&!(q&&q.has('stay')))location.replace(alt+location.search+location.hash)}catch(e){}})();</script>
+    <link rel="stylesheet" href="./hub.css?v=8d907a6b" />
+    <script type="application/json" id="hub-data">{"lang":"zh","text":{"skip":"跳到专题","topics":"专题","tasks":"题目","categories":"类别","ranked":"上榜型号","top":"前 3 名","updated":"更新于 {date}","dataUpdated":"数据更新于 {date}","open":"进入专题","draft":"草稿","draftNote":"只在本地预览","noTop":"还没有上榜型号。","empty":"还没有上线的专题。","failed":"专题列表没有读出来，请刷新页面重试。","repo":"GitHub 仓库","langLabel":"语言","score":"{score} 分","rank":"第 {n} 名"},"accents":{"decathlon":"#7a3cf0"},"colorLogos":["claude","deepseek","dots","doubao","gemini","hunyuan","kimi","longcat","minimax","qwen","wenxin","zai","zhipu"]}</script>
+    <script type="module" src="./hub.js?v=3e245046"></script>
+  </head>
+  <body>
+    <a class="skip" href="#topics">跳到专题</a>
+    <header class="mast">
+      <div class="mast-bar">
+        <span class="mast-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M8 23V17M13 23V11M18 23V14M23 23V8" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+        <nav class="lang" aria-label="语言"><a href="./" hreflang="zh-CN" lang="zh-CN" data-lang-switch="zh" aria-current="true">中</a><span aria-hidden="true">/</span><a href="./en/" hreflang="en" lang="en" data-lang-switch="en">EN</a></nav>
+      </div>
+      <h1 class="mast-name">AI全能测评</h1>
+      <p class="mast-other" lang="en">AI All-Round Bench</p>
+      <p class="mast-intro">给 AI 编程智能体出的限时挑战测评，每个专题有自己的题目和排行榜。</p>
+      <div class="ruler" aria-hidden="true"></div>
+    </header>
+    <main id="topics" tabindex="-1">
+      <h2 class="sr-only">专题</h2>
+      <ol class="topics" data-slot="topics" aria-busy="true"></ol>
+    </main>
+    <footer class="foot">
+      <p class="foot-name">AI全能测评<span class="foot-date" data-slot="updated"></span></p>
+      <p class="foot-links"><a href="https://github.com/Wendystar0628/AI-High-Pressure-Challenge" target="_blank" rel="noopener">GitHub 仓库</a><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2025171371号-1</a></p>
+    </footer>
+  </body>
+</html>
